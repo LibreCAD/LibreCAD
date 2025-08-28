@@ -272,6 +272,18 @@ void LC_ActionModifyDuplicate::updateMouseButtonHints(){
     }
 }
 
+bool LC_ActionModifyDuplicate::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "offsetX") {
+        setOffsetX(distance);
+        return true;
+    }
+    if (tag == "offsetY") {
+        setOffsetY(distance);
+        return true;
+    }
+    return false;
+}
+
 LC_ActionOptionsWidget* LC_ActionModifyDuplicate::createOptionsWidget(){
     return new LC_DuplicateOptions();
 }

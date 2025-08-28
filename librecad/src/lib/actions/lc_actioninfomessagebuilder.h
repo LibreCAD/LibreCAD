@@ -38,6 +38,7 @@ public:
     LC_ActionInfoMessageBuilder& string(const QString& name, const QString& value = nullptr);
     LC_ActionInfoMessageBuilder& vector(const QString& name, const RS_Vector& value);
     LC_ActionInfoMessageBuilder& relative(const QString& name, const RS_Vector& value);
+    LC_ActionInfoMessageBuilder& polar(const QString& name, const RS_Vector& value);
     LC_ActionInfoMessageBuilder& relativePolar(const QString& name, const RS_Vector& value);
     LC_ActionInfoMessageBuilder& relative(const RS_Vector& value);
     LC_ActionInfoMessageBuilder& relativePolar(const RS_Vector& value);

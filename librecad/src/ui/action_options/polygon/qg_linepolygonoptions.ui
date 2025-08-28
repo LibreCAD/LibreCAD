@@ -44,33 +44,14 @@
    <property name="bottomMargin">
     <number>1</number>
    </property>
-   <item row="1" column="0">
-    <widget class="QLabel" name="lNumber">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>Number:</string>
-     </property>
-     <property name="wordWrap">
-      <bool>false</bool>
+   <item row="1" column="4">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
      </property>
     </widget>
    </item>
-   <item row="1" column="5">
-    <widget class="QCheckBox" name="cbRadius">
-     <property name="toolTip">
-      <string>If checked, vertexes of polygon will be rounded. </string>
-     </property>
-     <property name="text">
-      <string>Radius</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="8">
+   <item row="1" column="9">
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -83,27 +64,23 @@
      </property>
     </spacer>
    </item>
-   <item row="1" column="4">
-    <widget class="Line" name="line">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
-    <widget class="Line" name="line_2">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="3">
-    <widget class="QCheckBox" name="cbPolyline">
+   <item row="1" column="8">
+    <widget class="QCheckBox" name="cbVertexToVertex">
      <property name="toolTip">
-      <string>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </string>
+      <string>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </string>
      </property>
      <property name="text">
-      <string>Polyline</string>
+      <string>Vertex to Vertex</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="5">
+    <widget class="QCheckBox" name="cbRadius">
+     <property name="toolTip">
+      <string>If checked, vertexes of polygon will be rounded. </string>
+     </property>
+     <property name="text">
+      <string>Radius</string>
      </property>
     </widget>
    </item>
@@ -120,6 +97,22 @@
      </property>
     </widget>
    </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="lNumber">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>Number:</string>
+     </property>
+     <property name="wordWrap">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
    <item row="1" column="6">
     <widget class="QLineEdit" name="leRadius">
      <property name="toolTip">
@@ -127,20 +120,43 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="7">
-    <widget class="QCheckBox" name="cbVertexToVertex">
+   <item row="1" column="3">
+    <widget class="QCheckBox" name="cbPolyline">
      <property name="toolTip">
-      <string>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </string>
+      <string>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </string>
      </property>
      <property name="text">
-      <string>Vertex to Vertex</string>
+      <string>Polyline</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="7">
+    <widget class="QToolButton" name="tbPickRadius">
+     <property name="toolTip">
+      <string>Pick radius from drawing</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_distance.lci</normaloff>:/icons/interactive_pick_distance.lci</iconset>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../../../../res/icons/icons.qrc"/>
+ </resources>
  <connections/>
  <slots>
   <slot>updateNumber(int)</slot>

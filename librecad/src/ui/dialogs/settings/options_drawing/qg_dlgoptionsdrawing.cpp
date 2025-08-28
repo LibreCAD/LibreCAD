@@ -277,6 +277,11 @@ void QG_DlgOptionsDrawing::setupDimStylesTab() {
     connect(lvDimStyles, &QListView::customContextMenuRequested, this,
             &QG_DlgOptionsDrawing::onDimStylesListMenuRequested);
     connect(lvDimStyles, &QListView::doubleClicked, this, &QG_DlgOptionsDrawing::onDimStyleDoubleClick);
+
+    // fixme - sand - hide for now, so far all blocks are created by default. Later, only requried blocks may be included
+    // yet this is also related to unused elements purging, so rework this later.
+
+    dbDimEmbeddArrowBlocks->setVisible(false);
 }
 
 void QG_DlgOptionsDrawing::collectStylesUsage(QMap<QString, int>& map) {

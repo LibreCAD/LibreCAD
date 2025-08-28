@@ -45,6 +45,9 @@ QG_ArcTangentialOptions::QG_ArcTangentialOptions()
     connect(ui->rbAngle, &QRadioButton::clicked, this, &QG_ArcTangentialOptions::onAngleClicked);
     connect(ui->leRadius, &QLineEdit::editingFinished, this, &QG_ArcTangentialOptions::onRadiusEditingFinished);
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &QG_ArcTangentialOptions::onAngleEditingFinished);
+
+    pickDistanceSetup("radius", ui->tbPickRadius, ui->leRadius);
+    pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);
 }
 
 QG_ArcTangentialOptions::~QG_ArcTangentialOptions() = default;
@@ -70,7 +73,6 @@ void QG_ArcTangentialOptions::doSaveSettings(){
 
 void QG_ArcTangentialOptions::doSetAction(RS_ActionInterface *a, bool update){
     m_action = dynamic_cast<RS_ActionDrawArcTangential *>(a);
-
     QString radius;
     QString angle;
     bool byRadius;
@@ -115,7 +117,9 @@ void QG_ArcTangentialOptions::setByRadiusToActionAndView(bool byRadius) {
     ui->rbRadius->setChecked(byRadius);
     ui->rbAngle->setChecked(!byRadius);
     ui->leRadius->setEnabled(byRadius);
+    ui->tbPickRadius->setEnabled(byRadius);
     ui->leAngle->setEnabled(!byRadius);
+    ui->tbPickAngle->setEnabled(!byRadius);
 }
 
 void QG_ArcTangentialOptions::onRadiusEditingFinished(){

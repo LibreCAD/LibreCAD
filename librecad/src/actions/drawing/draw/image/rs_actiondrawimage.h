@@ -85,5 +85,6 @@ protected:
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void updateMouseButtonHints() override;
     void doTrigger() override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angle) override;
 };
 #endif

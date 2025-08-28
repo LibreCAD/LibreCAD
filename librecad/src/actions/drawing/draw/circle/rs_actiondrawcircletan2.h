@@ -44,9 +44,7 @@ public:
     void finish(bool updateTB) override;
     void setRadius(double);
     double getRadius() const;
-
     void drawSnapper() override;
-
 protected:
     /**
  * Action States.
@@ -71,5 +69,6 @@ protected:
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void updateMouseButtonHints() override;
     void doTrigger() override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 #endif

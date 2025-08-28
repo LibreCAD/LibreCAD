@@ -466,3 +466,15 @@ RS2::CursorType LC_ActionModifyLineGap::doGetMouseCursor(int status) {
             return RS2::NoCursorChange;
     }
 }
+
+bool LC_ActionModifyLineGap::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "size") {
+        setGapSize(distance);
+        return true;
+    }
+    if (tag == "snap") {
+        setSnapDistance(distance);
+        return true;
+    }
+    return false;
+}

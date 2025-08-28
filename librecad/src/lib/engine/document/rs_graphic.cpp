@@ -31,6 +31,7 @@
 #include "dxf_format.h"
 #include "lc_dimstyletovariablesmapper.h"
 #include "lc_defaults.h"
+#include "lc_dimarrowregistry.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
@@ -974,4 +975,5 @@ void RS_Graphic::updateFallbackDimStyle(LC_DimStyle* style) {
 void RS_Graphic::replaceDimStylesList(const QString& defaultStyleName, const QList<LC_DimStyle*>& styles) {
     setDefaultDimStyleName(defaultStyleName);
     dimstyleList.replaceStyles(styles);
+    LC_DimArrowRegistry::insertStandardArrowBlocks(this, styles);
 }

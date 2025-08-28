@@ -38,6 +38,7 @@
 #include "LC_DlgParabola.h"
 
 #include "lc_dlgdimension.h"
+#include "lc_dlgentityproperties.h"
 #include "lc_dlgsplinepoints.h"
 #include "lc_parabola.h"
 #include "qc_applicationwindow.h"
@@ -97,8 +98,7 @@ class LC_EntityPropertiesDlg;
  * @param ow Pointer to widget that can host option widgets.
  */
 QG_DialogFactory::QG_DialogFactory(QWidget* parent, [[maybe_unused]]QToolBar* optionsToolbar, [[maybe_unused]] LC_SnapOptionsWidgetsHolder* snapOptionsHolder)
-    : parent(parent)
-{
+    : parent(parent){
 }
 
 
@@ -723,7 +723,12 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity *entity, LC_GraphicVi
     if (!entity) return false;
 
     bool ret = false;
-    LC_EntityPropertiesDlg* editDialog;
+
+    // fixme Sand - RESTORE!!!! Rework via EntityPropertiesEditor or, even better, via switchToAction!!!
+    // LC_DlgEntityProperties* dlg = new LC_DlgEntityProperties(parent, viewport, entity);
+    // ret = dlg->exec() == QDialog::Accepted;
+    // delete dlg;
+  /*  LC_EntityPropertiesDlg* editDialog;
     bool hasDialog = true;
 
     switch (entity->rtti()) {
@@ -804,7 +809,7 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity *entity, LC_GraphicVi
             ret = true;
         }
         delete editDialog;
-    }
+    }*/
 
     return ret;
 }

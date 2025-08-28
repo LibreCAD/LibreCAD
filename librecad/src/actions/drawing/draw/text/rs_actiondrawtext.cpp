@@ -274,6 +274,14 @@ double RS_ActionDrawText::getUcsAngleDegrees() const{
     return m_ucsBasicAngleDegrees;
 }
 
-LC_ActionOptionsWidget* RS_ActionDrawText::createOptionsWidget(){
+bool RS_ActionDrawText::doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) {
+    if (tag == "angle") {
+        setUcsAngleDegrees(RS_Math::rad2deg(angleRad));
+        return true;
+    }
+    return false;
+}
+
+LC_ActionOptionsWidget* RS_ActionDrawText::createOptionsWidget() {
     return new QG_TextOptions();
 }

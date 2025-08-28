@@ -1223,9 +1223,13 @@ void LC_MenuFactory::createGVMenuView(QMenu* ctxMenu) {
 
 
 void LC_MenuFactory::createGVEditPropertiesAction(QMenu* menu, QG_GraphicView* graphicView, RS_Entity* entity) {
-    QAction* propertiesAction;
-    propertiesAction = menu->QWidget::addAction(QIcon(":/icons/properties.lci"), tr("Edit Properties"));
-    connect(propertiesAction, &QAction::triggered, this, [this, entity, graphicView]() {
+    QString actionName = tr("Edit Properties");
+    createGVEditPropertiesAction(menu, graphicView, entity, actionName);
+}
+
+void LC_MenuFactory::createGVEditPropertiesAction(QMenu* menu, QG_GraphicView* graphicView, RS_Entity* entity, const QString &actionText) {
+    QAction* propertiesAction = menu->QWidget::addAction(QIcon(":/icons/properties.lci"), actionText);
+    connect(propertiesAction, &QAction::triggered, this, [entity, graphicView]() {
             graphicView->launchEditProperty(entity);
     });
 }
@@ -1707,17 +1711,18 @@ void LC_MenuFactory::createGVMenuEntitySpecific(QMenu* contextMenu, QG_GraphicVi
             case RS2::EntityInsert: {
                 auto insert = static_cast<RS_Insert*>(entity);
                 // For an insert, show the menu entry to edit the block instead
-                QAction* propertiesAction = contextMenu->addAction(QIcon(":/icons/properties.lci"),
-                                                                   QString{"%1: %2"}.arg(tr("Edit Block")).arg(
-                                                                       insert->getName().left(g_MaxBlockNameLength)));
+                createGVEditPropertiesAction(contextMenu, graphicView, entity);
+                auto editActionText = QString{"%1: %2"}.arg(tr("Edit Block")).arg(
+                    insert->getName().left(g_MaxBlockNameLength));
 
-                connect(propertiesAction, &QAction::triggered, this, [this, entity, graphicView]() {
-                    graphicView->launchEditProperty(entity);
-                });
+                createGVEditPropertiesAction(contextMenu, graphicView, entity, editActionText);
+
 
                 addProxyActions(contextMenu, entity, pos, actionContext, {
                                     "BlocksExplode"
                                 });
+
+                createGVMenuModifyGeneral(contextMenu, graphicView, entity, pos, actionContext);
 
                 break;
             }
@@ -1803,6 +1808,7 @@ void LC_MenuFactory::createGVMenuEntitySpecific(QMenu* contextMenu, QG_GraphicVi
 
     addProxyActionsSubMenu(contextMenu, tr("Info"), ":/icons/measure.lci", entity, pos, actionContext, {
                                "EntityInfo",
+                               "InfoPoint",
                                "InfoDist2",
                                "InfoDist",
                                "InfoDist3",

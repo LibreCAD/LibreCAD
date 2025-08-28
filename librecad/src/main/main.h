@@ -27,11 +27,15 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include <QMainWindow>
 #include<QStringList>
+#include <QPushButton>
+#include <QLabel>
 
 #define STR(x)   #x
 #define XSTR(x)  STR(x)
 
+class QMainWindow;
 /**
  * @brief handleArgs
  * @param argc cli argument counter from main()
@@ -48,5 +52,64 @@ QStringList handleArgs(int argc, char** argv, const QList<int>& argClean);
  *         "ALPHA" - if LC_VERSION contains alpha
  */
 QString LCReleaseLabel();
+
+#include <QApplication>
+#include <QMainWindow>
+#include <QDialog>
+#include <QPushButton>
+#include <QLabel>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QEvent>
+#include <QMouseEvent>
+#include <QDebug>
+#include <QMenuBar>
+#include <QMenu>
+#include <QAction>
+#include <QTimer>
+#include <QFrame>
+
+// Overlay widget to dim the background
+class OverlayWidget : public QWidget
+{
+public:
+    explicit OverlayWidget(QWidget* parent = nullptr) : QWidget(parent)
+    {
+        setAttribute(Qt::WA_TransparentForMouseEvents, false);
+        setStyleSheet("background-color: rgba(0, 0, 0, 100);");
+    }
+
+protected:
+    void paintEvent(QPaintEvent* event) override
+    {
+        QWidget::paintEvent(event);
+    }
+};
+
+// Main window class
+class MainWindow : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    MainWindow(QWidget* parent = nullptr);
+protected:
+    void resizeEvent(QResizeEvent* event) override;
+private slots:
+    void showModalDialog();
+    void onTargetClicked();
+    void showAboutDialog();
+
+private:
+    void enableOnlyTargetWidget();
+    void restoreUI();
+
+    bool eventFilter(QObject* obj, QEvent* event) override;
+
+    QPushButton* targetWidget;
+    QPushButton* otherWidget1;
+    QLabel* otherWidget2;
+    OverlayWidget* overlay;
+};
 
 #endif

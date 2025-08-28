@@ -76,7 +76,7 @@ protected:
     void updateMouseButtonHints() override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
-
     void doTrigger() override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) override;
 };
 #endif

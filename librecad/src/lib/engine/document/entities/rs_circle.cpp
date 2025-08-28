@@ -96,6 +96,11 @@ RS_Circle::RS_Circle(RS_EntityContainer* parent,
     calculateBorders();
 }
 
+RS_Circle::RS_Circle(const RS_CircleData& d)
+    :LC_CachedLengthEntity(nullptr), data(d) {
+        calculateBorders();
+}
+
 RS_Entity* RS_Circle::clone() const {
     auto c = new RS_Circle(*this);
     return c;

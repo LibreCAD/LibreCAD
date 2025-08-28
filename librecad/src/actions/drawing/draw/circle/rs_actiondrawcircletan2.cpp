@@ -99,6 +99,14 @@ void RS_ActionDrawCircleTan2::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawCircleTan2::trigger(): entity added: %lu", circle->getId());
 }
 
+bool RS_ActionDrawCircleTan2::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "radius") {
+        setRadius(distance);
+        return true;
+    }
+    return false;
+}
+
 void RS_ActionDrawCircleTan2::drawSnapper() {
     // disable snapper for action
 }

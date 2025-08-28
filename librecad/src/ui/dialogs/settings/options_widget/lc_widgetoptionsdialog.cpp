@@ -66,8 +66,8 @@ LC_WidgetOptionsDialog::LC_WidgetOptionsDialog(QWidget* parent)
         if (!sheet_path.isEmpty() && QFile::exists(sheet_path))
             stylesheet_field->setText(sheet_path);
 
-        bool allow_theme = LC_GET_BOOL("AllowTheme", false);
-        theme_checkbox->setChecked(allow_theme);
+        // bool allow_theme = LC_GET_BOOL("AllowTheme", false);
+        // theme_checkbox->setChecked(allow_theme);
 
         bool allow_toolbar_icon_size = LC_GET_BOOL("AllowToolbarIconSize", false);
         toolbar_icon_size_checkbox->setChecked(allow_toolbar_icon_size);
@@ -98,6 +98,9 @@ LC_WidgetOptionsDialog::LC_WidgetOptionsDialog(QWidget* parent)
 
         bool dockWidgetsFlatIcons = LC_GET_BOOL("DockWidgetsFlatIcons", true);
         cbDockWidgetsFlatButtons->setChecked(dockWidgetsFlatIcons);
+
+        bool pickValuesButtonsFlatIcons = LC_GET_BOOL("PickValueButtonsFlatIcons", true);
+        cbFlatPickValuesButtons->setChecked(pickValuesButtonsFlatIcons);
 
         int docWidgetsIconSize = LC_GET_INT("DockWidgetsIconSize", 16);
         sbDocWidgtetIconSize->setValue(docWidgetsIconSize);
@@ -332,7 +335,10 @@ void LC_WidgetOptionsDialog::accept() {
            // nothing to do
         }
 
-        bool allow_theme = theme_checkbox->isChecked();
+        bool pickValuesButtonsFlatIcons = cbFlatPickValuesButtons->isChecked();
+        LC_SET("PickValueButtonsFlatIcons", pickValuesButtonsFlatIcons);
+
+        bool allow_theme = false; //theme_checkbox->isChecked();
         LC_SET("AllowTheme", allow_theme);
         int allow_toolbar_icon_size = toolbar_icon_size_checkbox->isChecked();
         LC_SET("AllowToolbarIconSize", allow_toolbar_icon_size);

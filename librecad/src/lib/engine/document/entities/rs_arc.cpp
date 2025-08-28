@@ -113,6 +113,11 @@ RS_Arc::RS_Arc(RS_EntityContainer* parent,
     calculateBorders();
 }
 
+RS_Arc::RS_Arc(const RS_ArcData& d)
+    : LC_CachedLengthEntity(nullptr), data(d) {
+    calculateBorders();
+}
+
 RS_Entity* RS_Arc::clone() const {
 	RS_Arc* a = new RS_Arc(*this);
 	return a;
@@ -195,8 +200,9 @@ bool RS_Arc::createFrom2PDirectionAngle(
     const RS_Vector& startPoint,
     const RS_Vector& endPoint,
     double direction1, double angleLength) {
-    if (angleLength <= RS_TOLERANCE_ANGLE || angleLength > 2. * M_PI - RS_TOLERANCE_ANGLE)
+    if (angleLength <= RS_TOLERANCE_ANGLE || angleLength > 2. * M_PI - RS_TOLERANCE_ANGLE) {
         return false;
+    }
     RS_Line l0{nullptr, startPoint, startPoint - RS_Vector{direction1}};
     double const halfA = 0.5 * angleLength;
     l0.rotate(startPoint, halfA);
@@ -217,8 +223,9 @@ bool RS_Arc::createFrom2PDirectionAngle(
     l1 = RS_Line{nullptr, startPoint, startPoint + RS_Vector{direction1 + M_PI_2}};
 
     auto const sol = RS_Information::getIntersection(&l0, &l1, false);
-    if (sol.size() == 0)
+    if (sol.size() == 0) {
         return false;
+    }
 
     data.center = sol.at(0);
 

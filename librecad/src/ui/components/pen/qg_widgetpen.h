@@ -36,6 +36,7 @@ class QG_WidgetPen : public QWidget, public Ui::QG_WidgetPen{
     Q_OBJECT
 public:
     QG_WidgetPen(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
+    void disableVerticalSpacer();
     ~QG_WidgetPen();
     bool isColorUnchanged();
     bool isLineTypeUnchanged();

@@ -131,6 +131,7 @@ protected:
     void previewRefSelectablePoint(const RS_Vector &coord);
     void previewRefPoints(const std::vector<RS_Vector>& points);
     RS_Arc* previewRefArc(const RS_Vector &center, const RS_Vector &startPoint, const RS_Vector &mouse, bool determineReversal);
+    RS_Arc* previewRefArc(bool reversed, const RS_Vector &center, const RS_Vector &startPoint, const RS_Vector &mouse);
     RS_Circle* previewRefCircle(const RS_Vector &center, const double radius);
     RS_Arc *previewRefArc(const RS_ArcData &arcData);
     LC_RefEllipse *previewRefEllipse(const RS_EllipseData &arcData);

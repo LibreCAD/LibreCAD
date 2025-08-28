@@ -24,8 +24,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define LC_ACTIONOPTIONSWIDGET_H
 
 #include <QWidget>
+#include <QToolButton>
+
+#include "lc_actioncontext.h"
 #include "rs.h"
 
+class QLineEdit;
 class RS_ActionInterface;
 
 /**
@@ -39,6 +43,7 @@ public:
     explicit LC_ActionOptionsWidget(QWidget *parent = nullptr, Qt::WindowFlags fl = {});
     ~LC_ActionOptionsWidget() override;
     void setAction(RS_ActionInterface * a, bool update = false);
+    void requestFocusForTag(const QString& tag);
     /**
      * Called externally when the widget should be hidded
      */
@@ -50,6 +55,12 @@ public:
      */
     virtual void updateUI([[maybe_unused]]int mode){};
 protected:
+    LC_ActionContext* m_actionContext{nullptr};
+    LC_LateCompletionRequestor* m_laterCompletionRequestor{nullptr};
+
+    bool m_interactiveInputControlsVisible {true};
+    bool m_interactiveInputControlsAutoRaise {true};
+
     /**
      * Default workflow for saving settings values
      */
@@ -96,6 +107,12 @@ protected:
     QString fromDouble(double value);
     bool toDouble(const QString &strValue, double &res, double notMeaningful, bool positiveOnly);
     bool toDoubleAngleDegrees(const QString &strValue, double &res, double notMeaningful, bool positiveOnly);
+
+    void connectInteractiveInputButton(QToolButton* button, LC_ActionContext::InteractiveInputInfo::InputType inputType,
+                                     QString tag);
+    void pickDistanceSetup(QString tag, QToolButton* button, QLineEdit* lineedit);
+    void pickAngleSetup(QString tag, QToolButton* button, QLineEdit* editor);
+    void onInteractiveInputButtonClicked(bool checked);
 protected slots:
     virtual void languageChange() {}
 };

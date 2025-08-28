@@ -60,7 +60,11 @@
 #include "lc_actionfileexportmakercam.h"
 #include "lc_actioninfo3pointsangle.h"
 #include "lc_actioninfopickcoordinates.h"
+#include "lc_actioninfopoint.h"
 #include "lc_actioninfoproperties.h"
+#include "lc_actioninteractivepickangle.h"
+#include "lc_actioninteractivepickdistance.h"
+#include "lc_actioninteractivepickposition.h"
 #include "lc_actionlayerscmd.h"
 #include "lc_actionlayersexport.h"
 #include "lc_actionlayerstoggleconstruction.h"
@@ -88,6 +92,7 @@
 #include "lc_actionsplineremovebetween.h"
 #include "lc_actionucsbydimordinate.h"
 #include "lc_actionucscreate.h"
+#include "pick/lc_actioninteractivepickposition.h"
 #include "rs_actionblocksadd.h"
 #include "rs_actionblocksattributes.h"
 #include "rs_actionblockscreate.h"
@@ -731,7 +736,7 @@ namespace InnerFactory{
                 return new RS_ActionModifyRotate2(ctx);
             }
             case RS2::ActionModifyEntity: {
-                return new RS_ActionModifyEntity(ctx, static_cast<RS_Entity*>(data));
+                return new RS_ActionModifyEntity(ctx);
             }
             case RS2::ActionModifyTrim: {
                 return new RS_ActionModifyTrim(ctx, false);
@@ -804,6 +809,9 @@ namespace InnerFactory{
             }
             case RS2::ActionInfoDistPoint2Entity: {
                 return new RS_ActionInfoDist2(ctx, true);
+            }
+            case RS2::ActionInfoPoint: {
+                return new LC_ActionInfoPoint(ctx);
             }
             case RS2::ActionInfoAngle: {
                 return new RS_ActionInfoAngle(ctx);
@@ -967,6 +975,15 @@ namespace InnerFactory{
             }
             case RS2::ActionDimOrdRebase: {
                 return new LC_ActionDimOrdinateRebase(ctx);
+            }
+            case RS2::ActionInteractivePickPoint: {
+                return new LC_ActionInteractivePickPosition(ctx);
+            }
+            case RS2::ActionInteractivePickLength: {
+                return new LC_ActionInteractivePickDistance(ctx);
+            }
+            case RS2::ActionInteractivePickAngle: {
+                return new LC_ActionInteractivePickAngle(ctx);
             }
             default:
                 RS_DEBUG->print(RS_Debug::D_WARNING,

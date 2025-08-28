@@ -162,6 +162,7 @@ public:
     void setTypeToSelect(RS2::EntityType mType);
 
     void setForcedActionKillAllowed(bool forcedActionKillAllowed);
+
     virtual QString obtainEntityDescription(RS_Entity *entity, RS2::EntityDescriptionLevel shortDescription);
 
     LC_InfoCursorOverlayPrefs* getInfoCursorOverlayPreferences();
@@ -190,6 +191,7 @@ protected:
     LC_WidgetViewPortRenderer* getRenderer() const;
     void resizeEvent(QResizeEvent *event) override;
     void onViewportRedrawNeeded() override;
+    bool isForecedActionKillAllowed(){return forcedActionKillAllowed;}
 private:
     std::unique_ptr<RS_EventHandler> m_eventHandler;
     RS_EntityContainer *container = nullptr;

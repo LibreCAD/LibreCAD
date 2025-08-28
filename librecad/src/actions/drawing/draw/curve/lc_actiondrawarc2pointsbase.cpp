@@ -48,6 +48,16 @@ void LC_ActionDrawArc2PointsBase::doTrigger() {
     }
 }
 
+bool LC_ActionDrawArc2PointsBase::doUpdateAngleByInteractiveInput(const QString& tag, double angle) {
+    setParameter(angle);
+    return true;
+}
+
+bool LC_ActionDrawArc2PointsBase::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    setParameter(distance);
+    return true;
+}
+
 void LC_ActionDrawArc2PointsBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     RS_Vector mouse = e->snapPoint;
     switch (status){

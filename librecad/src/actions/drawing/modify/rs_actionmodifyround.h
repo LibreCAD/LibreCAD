@@ -79,5 +79,6 @@ protected:
     void updateMouseButtonHints() override;
     void doTrigger() override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 #endif

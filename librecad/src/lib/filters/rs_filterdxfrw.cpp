@@ -2767,7 +2767,7 @@ void RS_FilterDXFRW::writeLayers(){
         if( l->isConstruction()) {
             lay.extData.push_back(new DRW_Variant(1001, "LibreCad"));
             lay.extData.push_back(new DRW_Variant(1070, 1));
-            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_FilterDXF::writeLayers: layer %s saved as construction layer", lay.name.c_str());
+            // RS_DEBUG->print(RS_Debug::D_WARNING, "RS_FilterDXF::writeLayers: layer %s saved as construction layer", lay.name.c_str());
         }
         dxfW->writeLayer(&lay);
     }

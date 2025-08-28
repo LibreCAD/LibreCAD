@@ -283,6 +283,14 @@ void RS_ActionPolylineEquidistant::doTrigger() {
     }
 }
 
+bool RS_ActionPolylineEquidistant::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "spacing") {
+        setDist(distance);
+        return true;
+    }
+    return false;
+}
+
 void RS_ActionPolylineEquidistant::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     deleteSnapper();
     if (status == ChooseEntity){

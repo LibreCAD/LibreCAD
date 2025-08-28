@@ -73,6 +73,14 @@ void RS_ActionModifyTrimAmount::doTrigger() {
     setStatus(ChooseTrimEntity);
 }
 
+bool RS_ActionModifyTrimAmount::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if ("length" == tag) {
+        setDistance(distance);
+        return true;
+    }
+    return false;
+}
+
 double RS_ActionModifyTrimAmount::determineDistance(const RS_AtomicEntity *e) const{
     double d;
     if (m_distanceIsTotalLength){

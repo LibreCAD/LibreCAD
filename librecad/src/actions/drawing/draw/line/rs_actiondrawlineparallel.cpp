@@ -26,9 +26,11 @@
 
 #include "rs_actiondrawlineparallel.h"
 
+#include "lc_actioncontext.h"
 #include "qg_lineparalleloptions.h"
 #include "rs_creation.h"
 #include "rs_debug.h"
+#include "rs_graphicview.h"
 
 namespace {
     //this holds a list of entity types which supports tangent
@@ -69,6 +71,14 @@ int RS_ActionDrawLineParallel::getNumber() const{
 
 void RS_ActionDrawLineParallel::setNumber(int n){
     m_numberToCreate = n;
+}
+
+bool RS_ActionDrawLineParallel::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "distance") {
+        setDistance(distance);
+        return true;
+    }
+    return false;
 }
 
 void RS_ActionDrawLineParallel::doTrigger() {

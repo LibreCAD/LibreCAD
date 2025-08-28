@@ -63,6 +63,7 @@ protected:
     bool doCheckMayDrawPreview(LC_MouseEvent *event, int status) override;
     void doCreateEntitiesOnTrigger(RS_Entity *entity, QList<RS_Entity *> &list) override;
     void updateMouseButtonHints() override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 private:
     /**
      * entity for which duplicate will be created

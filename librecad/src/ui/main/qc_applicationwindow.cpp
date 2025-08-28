@@ -271,6 +271,12 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow *w, bool activateNext) {
         parentWindow->removeChildWindow(w);
     }
 
+    auto graphic = w->getDocument()->getGraphic();
+    if (graphic != nullptr) {
+        auto view = w->getGraphicView();
+        graphic->removeLayerListListener(view);
+    }
+
     for (auto &&child : std::as_const(w->getChildWindows())) {// block editors and print previews; just force these closed
         doClose(child, false); // they belong to the document (changes already saved there)
     }

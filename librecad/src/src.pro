@@ -180,6 +180,7 @@ INCLUDEPATH += \
     actions/drawing/draw/text \
     actions/drawing/edit \
     actions/drawing/info \
+    actions/drawing/pick \
     actions/drawing/modify \
     actions/drawing/pen \
     actions/drawing/rel_zero \
@@ -324,9 +325,14 @@ HEADERS += \
     actions/drawing/draw/point/lc_actionselectpoints.h \
     actions/drawing/draw/polyline/lc_actionpolylinearcstolines.h \
     actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.h \
+    actions/drawing/info/lc_actioninfopoint.h \
     actions/drawing/modify/lc_actionmodifyalign.h \
     actions/drawing/modify/lc_actionmodifyalignref.h \
     actions/drawing/modify/lc_actionmodifyalignsingle.h \
+    actions/drawing/pick/lc_actioninteractivepickangle.h \
+    actions/drawing/pick/lc_actioninteractivepickbase.h \
+    actions/drawing/pick/lc_actioninteractivepickdistance.h \
+    actions/drawing/pick/lc_actioninteractivepickposition.h \
     actions/drawing/selection/lc_actionsingleentityselectbase.h \
     lib/actions/lc_actioninfomessagebuilder.h \
     lib/actions/lc_overlayboxaction.h \
@@ -459,8 +465,10 @@ HEADERS += \
     lib/gui/lc_coordinates_parser.h \
     lib/gui/lc_graphicviewport.h \
     lib/gui/lc_graphicviewportlistener.h \
+    lib/gui/lc_latecompletionrequestor.h \
     lib/gui/render/headless/lc_printviewportrenderer.h \
     lib/gui/render/lc_graphicviewportrenderer.h \
+    lib/modification/lc_division.h \
     plugins/lc_plugininvoker.h \
     lib/actions/lc_actioncontext.h \
     ui/components/creators/lc_creatorinvoker.h \
@@ -469,7 +477,23 @@ HEADERS += \
     ui/dialogs/creators/lc_dlgwidgetcreator.h \
     ui/components/creators/lc_menuactivator.h \
     ui/dialogs/creators/lc_dlgnewwidget.h \
+    ui/dialogs/entity/lc_arcpropertieseditingwidget.h \
+    ui/dialogs/entity/lc_circlepropertieseditingwidget.h \
     ui/dialogs/entity/lc_dlgdimension.h \
+    ui/dialogs/entity/lc_dlgentityproperties.h \
+    ui/dialogs/entity/lc_ellipsepropertieseditingwidget.h \
+    ui/dialogs/entity/lc_entitypropertieseditor.h \
+    ui/dialogs/entity/lc_entitypropertieseditorsupport.h \
+    ui/dialogs/entity/lc_entitypropertieseditorwidget.h \
+    ui/dialogs/entity/lc_imagepropertieseditingwidget.h \
+    ui/dialogs/entity/lc_insertpropertieseditingwidget.h \
+    ui/dialogs/entity/lc_linepropertieseditingwidget.h \
+    ui/dialogs/entity/lc_parabolapropertieseditingwidget.h \
+    ui/dialogs/entity/lc_pointpickbutton.h \
+    ui/dialogs/entity/lc_pointpropertieseditingwidget.h \
+    ui/dialogs/entity/lc_polylinepropertieseditingwidget.h \
+    ui/dialogs/entity/lc_splinepointspropertieseditingwidget.h \
+    ui/dialogs/entity/lc_splinepropertieseditingwidget.h \
     ui/dialogs/file/export/image/lc_exporttoimageservice.h \
     ui/dialogs/file/export/layers/lc_exportlayersdialogservice.h \
     ui/dialogs/lc_inputtextdialog.h \
@@ -610,9 +634,14 @@ SOURCES += \
     actions/drawing/draw/point/lc_actiondrawpointslattice.cpp \
     actions/drawing/draw/point/lc_actionpastetopoints.cpp \
     actions/drawing/draw/point/lc_actionselectpoints.cpp \
+    actions/drawing/info/lc_actioninfopoint.cpp \
     actions/drawing/modify/lc_actionmodifyalign.cpp \
     actions/drawing/modify/lc_actionmodifyalignref.cpp \
     actions/drawing/modify/lc_actionmodifyalignsingle.cpp \
+    actions/drawing/pick/lc_actioninteractivepickangle.cpp \
+    actions/drawing/pick/lc_actioninteractivepickbase.cpp \
+    actions/drawing/pick/lc_actioninteractivepickdistance.cpp \
+    actions/drawing/pick/lc_actioninteractivepickposition.cpp \
     actions/drawing/selection/lc_actionsingleentityselectbase.cpp \
     lib/actions/lc_actioninfomessagebuilder.cpp \
     lib/actions/lc_overlayboxaction.cpp \
@@ -658,7 +687,9 @@ SOURCES += \
     lib/gui/lc_coordinates_parser.cpp \
     lib/gui/lc_graphicviewport.cpp \
     lib/gui/lc_graphicviewportlistener.cpp \
+    lib/gui/lc_latecompletionrequestor.cpp \
     lib/gui/render/headless/lc_printviewportrenderer.cpp \
+    lib/modification/lc_division.cpp \
     plugins/lc_plugininvoker.cpp \
     lib/actions/lc_actioncontext.cpp \
     ui/components/creators/lc_creatorinvoker.cpp \
@@ -667,8 +698,24 @@ SOURCES += \
     ui/dialogs/creators/lc_dlgwidgetcreator.cpp \
     ui/components/creators/lc_menuactivator.cpp \
     ui/dialogs/creators/lc_dlgnewwidget.cpp \
+    ui/dialogs/entity/lc_arcpropertieseditingwidget.cpp \
+    ui/dialogs/entity/lc_circlepropertieseditingwidget.cpp \
     ui/dialogs/entity/lc_dlgdimension.cpp \
+    ui/dialogs/entity/lc_dlgentityproperties.cpp \
     ui/dialogs/entity/lc_dlgtolerance.cpp \
+    ui/dialogs/entity/lc_ellipsepropertieseditingwidget.cpp \
+    ui/dialogs/entity/lc_entitypropertieseditor.cpp \
+    ui/dialogs/entity/lc_entitypropertieseditorsupport.cpp \
+    ui/dialogs/entity/lc_entitypropertieseditorwidget.cpp \
+    ui/dialogs/entity/lc_imagepropertieseditingwidget.cpp \
+    ui/dialogs/entity/lc_insertpropertieseditingwidget.cpp \
+    ui/dialogs/entity/lc_linepropertieseditingwidget.cpp \
+    ui/dialogs/entity/lc_parabolapropertieseditingwidget.cpp \
+    ui/dialogs/entity/lc_pointpickbutton.cpp \
+    ui/dialogs/entity/lc_pointpropertieseditingwidget.cpp \
+    ui/dialogs/entity/lc_polylinepropertieseditingwidget.cpp \
+    ui/dialogs/entity/lc_splinepointspropertieseditingwidget.cpp \
+    ui/dialogs/entity/lc_splinepropertieseditingwidget.cpp \
     ui/dialogs/file/export/image/lc_exporttoimageservice.cpp \
     ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp \
     ui/dialogs/lc_inputtextdialog.cpp \
@@ -1678,9 +1725,22 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dialogs/actions/qg_layerdialog.ui \
        ui/dialogs/creators/lc_dlgnewwidget.ui \
        ui/dialogs/entity/LC_DlgParabola.ui \
+       ui/dialogs/entity/lc_arcpropertieseditingwidget.ui \
+       ui/dialogs/entity/lc_circlepropertieseditingwidget.ui \
        ui/dialogs/entity/lc_dlgdimension.ui \
+       ui/dialogs/entity/lc_dlgentityproperties.ui \
        ui/dialogs/entity/lc_dlgtolerance.ui \
        ui/dialogs/entity/lc_dlgsplinepoints.ui \
+       ui/dialogs/entity/lc_ellipsepropertieseditingwidget.ui \
+       ui/dialogs/entity/lc_imagepropertieseditingwidget.ui \
+       ui/dialogs/entity/lc_insertpropertieseditingwidget.ui \
+       ui/dialogs/entity/lc_linepropertieseditingwidget.ui \
+       ui/dialogs/entity/lc_parabolapropertieseditingwidget.ui \
+       ui/dialogs/entity/lc_pointpickbutton.ui \
+       ui/dialogs/entity/lc_pointpropertieseditingwidget.ui \
+       ui/dialogs/entity/lc_polylinepropertieseditingwidget.ui \
+       ui/dialogs/entity/lc_splinepointspropertieseditingwidget.ui \
+       ui/dialogs/entity/lc_splinepropertieseditingwidget.ui \
        ui/dialogs/entity/qg_blockdialog.ui \
        ui/dialogs/entity/qg_dimensionlabeleditor.ui \
        ui/dialogs/entity/qg_dlgarc.ui \

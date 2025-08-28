@@ -67,6 +67,22 @@ double RS_ActionDrawLineRelAngle::getAngle() const {
     return adjustRelativeAngleSignByBasis(RS_Math::rad2deg(m_relativeAngleRad));
 }
 
+bool RS_ActionDrawLineRelAngle::doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) {
+    if (tag == "angle") {
+        m_relativeAngleRad = adjustRelativeAngleSignByBasis(angleRad);
+        return true;
+    }
+    return false;
+}
+
+bool RS_ActionDrawLineRelAngle::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "distance") {
+        setLength(distance);
+        return true;
+    }
+    return false;
+}
+
 RS2::ActionType RS_ActionDrawLineRelAngle::rtti() const{
     if( m_fixedAngle && RS_Math::getAngleDifference(m_relativeAngleRad, M_PI_2) < RS_TOLERANCE_ANGLE) {
         return RS2::ActionDrawLineOrthogonal;

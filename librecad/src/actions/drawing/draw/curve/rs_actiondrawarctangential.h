@@ -51,7 +51,6 @@ public:
     double getAngle() const;
     void setByRadius(bool status = true);
     bool getByRadius() const;
-
 protected:
     /**
  * Action States.
@@ -96,5 +95,7 @@ protected:
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void updateMouseButtonHints() override;
     void doTrigger() override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angle) override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 #endif

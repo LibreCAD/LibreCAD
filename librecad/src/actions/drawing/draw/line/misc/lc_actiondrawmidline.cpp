@@ -65,6 +65,14 @@ void LC_ActionDrawMidLine::doTrigger() {
     setStatus(SetEntity1);
 }
 
+bool LC_ActionDrawMidLine::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "offset") {
+        setOffset(distance);
+        return true;
+    }
+    return false;
+}
+
 void LC_ActionDrawMidLine::setupCenterlinePenLayer(RS_Line* line) const{
     line->setLayerToActive(); // fixme - sand - change to some annotation layer?
     RS2::LineType lineType = getLineTypeForCenterLine();

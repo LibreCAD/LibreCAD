@@ -39,6 +39,7 @@ QG_LinePolygonOptions::QG_LinePolygonOptions()
     connect(ui->cbRadius, &QCheckBox::toggled, this, &QG_LinePolygonOptions::onRadiusToggled);
     connect(ui->cbVertexToVertex, &QCheckBox::toggled, this, &QG_LinePolygonOptions::onVertexToggled);
     connect(ui->leRadius, &QLineEdit::editingFinished, this, &QG_LinePolygonOptions::onRadiusEditingFinished);
+    pickDistanceSetup("radius", ui->tbPickRadius, ui->leRadius);
 }
 
 /*
@@ -135,6 +136,8 @@ void QG_LinePolygonOptions::setPolylineToActionAndView(bool val) {
 void QG_LinePolygonOptions::setRoundedToActionAndView(bool val) {
     m_action->setCornersRounded(val);
     ui->cbRadius->setChecked(val);
+    ui->leRadius->setEnabled(!val);
+    ui->tbPickRadius->setEnabled(!val);
 }
 
 void QG_LinePolygonOptions::setVertexVertexToActionAndView(bool val) {

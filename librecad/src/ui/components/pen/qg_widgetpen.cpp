@@ -50,6 +50,10 @@ QG_WidgetPen::QG_WidgetPen(QWidget* parent, Qt::WindowFlags fl)
 //    setTabOrder(cbWidth, cbLineType); // cbColor to cbWidth to cbLineType
 }
 
+void QG_WidgetPen::disableVerticalSpacer() {
+    vsSpacerVertical->changeSize(0,0);
+}
+
 void QG_WidgetPen::onColorChanged([[maybe_unused]]const RS_Color& color) {
     notifyPenChanged();
 }

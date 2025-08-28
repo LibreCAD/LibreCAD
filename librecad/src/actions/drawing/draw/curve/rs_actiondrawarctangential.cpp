@@ -76,6 +76,22 @@ void RS_ActionDrawArcTangential::doTrigger() {
     }
 }
 
+bool RS_ActionDrawArcTangential::doUpdateAngleByInteractiveInput(const QString& tag, double angle) {
+    if (tag == "angle") {
+        setAngle(angle);
+        return true;
+    }
+    return false;
+}
+
+bool RS_ActionDrawArcTangential::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "radius") {
+        setRadius(distance);
+        return true;
+    }
+    return false;
+}
+
 void RS_ActionDrawArcTangential::preparePreview() {
     if (m_baseEntity && m_point.valid) {
         RS_Vector startPoint;

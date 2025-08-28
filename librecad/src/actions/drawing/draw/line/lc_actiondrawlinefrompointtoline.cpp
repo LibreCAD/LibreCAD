@@ -227,6 +227,26 @@ void LC_ActionDrawLineFromPointToLine::doPreparePreviewEntities([[maybe_unused]]
     }
 }
 
+bool LC_ActionDrawLineFromPointToLine::doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) {
+    if (tag == "angle") {
+        setAngleDegrees(RS_Math::rad2deg(angleRad));
+        return true;
+    }
+    return false;
+}
+
+bool LC_ActionDrawLineFromPointToLine::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "offset") {
+        setEndOffset(distance);
+        return true;
+    }
+    if (tag == "length") {
+        setLength(distance);
+        return true;
+    }
+    return false;
+}
+
 /**
  * processing of coordinates for start point via mouse click or command widget
  * @param coord
@@ -280,9 +300,9 @@ RS_Line *LC_ActionDrawLineFromPointToLine::createLineFromPointToTarget(RS_Line *
     else{
         // determine which angle should be used - normal or alternate
         // alternative angle allows to simplify angle setting - so in ui the angle is within 0..90 degrees.
-        double angleToUse = m_angle;
+        double angleToUse = m_angleDegrees;
         if (m_alternativeActionMode){
-            angleToUse = -m_angle;
+            angleToUse = -m_angleDegrees;
         }
         double resultingAngle = RS_Math::deg2rad(angleToUse);
         vectorAngle = resultingAngle;

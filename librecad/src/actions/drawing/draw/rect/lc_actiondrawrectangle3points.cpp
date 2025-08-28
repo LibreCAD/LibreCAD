@@ -128,7 +128,7 @@ LC_AbstractActionDrawRectangle::ShapeData LC_ActionDrawRectangle3Points::createP
                 double baseAngle = m_actionData->corner1.angleTo(m_actionData->corner2);
                 if (m_createQuadrangle){
                     if (m_innerAngleIsFixed){
-                        double innerAngleRad = RS_Math::deg2rad(m_innerAngle);
+                        double innerAngleRad = RS_Math::deg2rad(m_innerAngleDegrees);
                         double actualAngle = baseAngle + innerAngleRad;
                         m_actionData->corner3 = calculatePossibleEndpointForAngle(snapPoint, m_actionData->corner2, actualAngle);
                     } else {
@@ -479,7 +479,7 @@ switch (getStatus()) {
 void LC_ActionDrawRectangle3Points::processCommandValue(double value, bool &toMainStatus){
     switch (getStatus()){
         case SetInnerAngle:
-            m_innerAngle = value;
+            m_innerAngleDegrees = value;
             updateOptions();
             restoreMainStatus();
             break;
@@ -518,7 +518,7 @@ void LC_ActionDrawRectangle3Points::processCommandValue(double value, bool &toMa
 double LC_ActionDrawRectangle3Points::getActualInnerAngle() const{
     double result = M_PI / 2;
     if (m_createQuadrangle && m_innerAngleIsFixed){
-        result = RS_Math::deg2rad(m_innerAngle);
+        result = RS_Math::deg2rad(m_innerAngleDegrees);
     }
     return result;
 }
@@ -610,6 +610,34 @@ void LC_ActionDrawRectangle3Points::doUpdateMouseButtonHints(int status){
             LC_AbstractActionDrawRectangle::doUpdateMouseButtonHints(status);
             break;
     }
+}
+
+bool LC_ActionDrawRectangle3Points::doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) {
+    if (tag == "angleBase") {
+        setAngleRadians(angleRad);
+        return true;
+    }
+    if (tag == "angleInner") {
+        setFixedInnerAngle(RS_Math::rad2deg(angleRad));
+        return true;
+    }
+    return false;
+}
+
+bool LC_ActionDrawRectangle3Points::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "radius") {
+        setRadius(distance);
+        return true;
+    }
+    if (tag == "lengthX") {
+        setLengthX(distance);
+        return true;
+    }
+    if (tag == "lengthY") {
+        setLengthY(distance);
+        return true;
+    }
+    return false;
 }
 
 LC_ActionOptionsWidget* LC_ActionDrawRectangle3Points::createOptionsWidget(){

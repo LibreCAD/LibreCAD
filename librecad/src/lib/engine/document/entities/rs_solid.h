@@ -78,6 +78,7 @@ class RS_Solid : public RS_AtomicEntity
 public:
     RS_Solid(RS_EntityContainer* parent,
              const RS_SolidData& d);
+        RS_Solid(const RS_SolidData& d);
 
     RS_Entity* clone() const override;
 

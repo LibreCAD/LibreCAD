@@ -1946,7 +1946,7 @@ void LC_LayerTreeWidget::setGraphicView(RS_GraphicView *gview){
     }
     else {
         auto doc = gview->getContainer()->getDocument();
-        setLayerList(doc->getLayerList());
+        setLayerList(gview->getGraphic(true)->getLayerList());
         m_document = doc;
     }
 }

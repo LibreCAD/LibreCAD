@@ -126,6 +126,14 @@ void RS_ActionModifyMoveRotate::onMouseMoveEventSelected(int status, LC_MouseEve
     }
 }
 
+bool RS_ActionModifyMoveRotate::doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) {
+    if (tag == "angle") {
+        setAngle(angleRad);
+        return true;
+    }
+    return false;
+}
+
 void RS_ActionModifyMoveRotate::previewRefPointsForMultipleCopies() {
     if (m_actionData->data.multipleCopies){
         int numPoints = m_actionData->data.number;
@@ -300,8 +308,8 @@ QStringList RS_ActionModifyMoveRotate::getAvailableCommands(){
     return cmd;
 }
 
-void RS_ActionModifyMoveRotate::setAngle(double a){
-    m_actionData->data.angle = adjustRelativeAngleSignByBasis(a);
+void RS_ActionModifyMoveRotate::setAngle(double angleRad){
+    m_actionData->data.angle = adjustRelativeAngleSignByBasis(angleRad);
 }
 
 double RS_ActionModifyMoveRotate::getAngle() const{

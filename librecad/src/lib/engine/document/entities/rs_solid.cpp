@@ -123,6 +123,12 @@ RS_Solid::RS_Solid(RS_EntityContainer* parent,
     calculateBorders();
 }
 
+RS_Solid::RS_Solid(const RS_SolidData& d) :
+    RS_AtomicEntity(nullptr),
+    data(d) {
+    calculateBorders();
+}
+
 RS_Entity* RS_Solid::clone() const{
     auto* s = new RS_Solid(*this);
     return s;

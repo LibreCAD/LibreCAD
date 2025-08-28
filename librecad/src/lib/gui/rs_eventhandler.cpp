@@ -140,6 +140,15 @@ void RS_EventHandler::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
+void RS_EventHandler::notifyLastActionFinished() {
+    std::shared_ptr<RS_ActionInterface> &lastAction = m_currentActions.last();
+    int lastActionStatus = lastAction->getStatus();
+    if (lastActionStatus < 0){
+        uncheckQAction();
+    }
+    cleanUp();
+}
+
 void RS_EventHandler::checkLastActionCompletedAndUncheckQAction(const std::shared_ptr<RS_ActionInterface> &lastAction) {
     int lastActionStatus = lastAction->getStatus();
     if (lastActionStatus < 0){
@@ -513,19 +522,21 @@ QAction* RS_EventHandler::getQAction(){
   return m_QAction;
 }
 
-void RS_EventHandler::setQAction(QAction *action) {
-//    LC_ERR << __func__ << "()";
+void RS_EventHandler::setQAction(QAction* action, bool killOtherActions) {
+    //    LC_ERR << __func__ << "()";
     debugActions();
-    if (m_QAction != nullptr && action != nullptr && m_QAction != action) {
-        auto property = action->property("RS2:actionType");
-        if (property.isValid()) {
-            int rtti = property.toInt();
-             if (rtti != RS2::ActionZoomPan && rtti != RS2::ActionSetRelativeZero) {
-                 killAllActions();
-             }
-        }
-        else {
-            killAllActions();
+    if (killOtherActions) {
+        if (m_QAction != nullptr && action != nullptr && m_QAction != action) {
+            auto property = action->property("RS2:actionType");
+            if (property.isValid()) {
+                int rtti = property.toInt();
+                if (rtti != RS2::ActionZoomPan && rtti != RS2::ActionSetRelativeZero) {
+                    killAllActions();
+                }
+            }
+            else {
+                killAllActions();
+            }
         }
     }
     m_QAction = action;

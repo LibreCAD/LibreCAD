@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>151</width>
+    <width>200</width>
     <height>24</height>
    </rect>
   </property>
@@ -26,6 +26,16 @@
    <property name="bottomMargin">
     <number>1</number>
    </property>
+   <item row="0" column="3">
+    <widget class="QCheckBox" name="cbFreeAngle">
+     <property name="toolTip">
+      <string>Specifies whether X-Axis angle is defined by entered value or by mouse position</string>
+     </property>
+     <property name="text">
+      <string>Free</string>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
@@ -43,7 +53,7 @@
      </property>
      <property name="maximumSize">
       <size>
-       <width>60</width>
+       <width>80</width>
        <height>16777215</height>
       </size>
      </property>
@@ -53,17 +63,23 @@
     </widget>
    </item>
    <item row="0" column="2">
-    <widget class="QCheckBox" name="cbFreeAngle">
+    <widget class="QToolButton" name="tbPickAngle">
      <property name="toolTip">
-      <string>Specifies whether X-Axis angle is defined by entered value or by mouse position</string>
+      <string>Pick angle from drawing</string>
      </property>
      <property name="text">
-      <string>Free</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_angle.lci</normaloff>:/icons/interactive_pick_angle.lci</iconset>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../../../res/icons/icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

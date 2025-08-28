@@ -23,6 +23,7 @@
 
 #include "lc_actioncontext.h"
 #include "rs_document.h"
+#include "rs_graphicview.h"
 
 RS_EntityContainer * LC_ActionContext::getEntityContainer(){
     return m_entityContainer;
@@ -57,4 +58,45 @@ RS_Entity* LC_ActionContext::getContextMenuActionContextEntity() {
 
 RS_Vector LC_ActionContext::getContextMenuActionClickPosition() {
     return m_contextMenuClickPosition;
+}
+
+void LC_ActionContext::interactiveInputStart(InteractiveInputInfo::InputType inputType,
+    LC_LateCompletionRequestor* requestor, const QString& tag) {
+    interactiveInputRequest(inputType, requestor, tag);
+    getGraphicView()->setForcedActionKillAllowed(false);
+    interactiveInputInvoke(inputType);
+}
+
+void LC_ActionContext::interactiveInputRequestCancel() {
+    m_interactiveInputInfo.m_requestor = nullptr;
+    m_interactiveInputInfo.m_inputType = InteractiveInputInfo::NOTNEEDED;
+    m_interactiveInputInfo.m_requestorTag = "";
+    m_interactiveInputInfo.m_state = InteractiveInputInfo::NONE;
+    getGraphicView()->setForcedActionKillAllowed(true);
+}
+
+void LC_ActionContext::interactiveInputInvoke(InteractiveInputInfo::InputType inputType) {
+    switch (inputType) {
+        case InteractiveInputInfo::DISTANCE: {
+            setCurrentAction(RS2::ActionInteractivePickLength, nullptr);
+            break;
+        }
+        case InteractiveInputInfo::ANGLE: {
+            setCurrentAction(RS2::ActionInteractivePickAngle, nullptr);
+            break;
+        }
+        case InteractiveInputInfo::POINT: {
+            setCurrentAction(RS2::ActionInteractivePickPoint, nullptr);
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+void LC_ActionContext::interactiveInputRequest(InteractiveInputInfo::InputType inputType, LC_LateCompletionRequestor* requestor, const QString &tag) {
+    m_interactiveInputInfo.m_requestor = requestor;
+    m_interactiveInputInfo.m_inputType = inputType;
+    m_interactiveInputInfo.m_requestorTag = tag;
+    m_interactiveInputInfo.m_state = InteractiveInputInfo::REQUESTED;
 }

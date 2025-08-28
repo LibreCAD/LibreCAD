@@ -418,7 +418,7 @@ void RS_ActionInterface::hideOptions() {
     }
 }
 
-void RS_ActionInterface::updateOptions(){
+void RS_ActionInterface::updateOptions(const QString &tagToFocus){
     if (m_optionWidget == nullptr){
         LC_ActionOptionsWidget* widget = createOptionsWidget();
         if (widget != nullptr){
@@ -437,6 +437,9 @@ void RS_ActionInterface::updateOptions(){
         }
         else{
             m_optionWidget->setAction(this, true);
+        }
+        if (!tagToFocus.isEmpty()) {
+            m_optionWidget->requestFocusForTag(tagToFocus);
         }
     }
 }
@@ -464,6 +467,34 @@ void RS_ActionInterface::showOptions() {
             }
         }
     }
+}
+
+void RS_ActionInterface::onLateRequestCompleted(bool shouldBeSkipped) {
+    if (!shouldBeSkipped) {
+        auto inputInfo = m_actionContext->getInteractiveInputInfo();
+        bool updated = false;
+        auto requestorTag = inputInfo->m_requestorTag;
+        switch (inputInfo->m_inputType) {
+            case LC_ActionContext::InteractiveInputInfo::ANGLE: {
+                updated = doUpdateAngleByInteractiveInput(requestorTag, inputInfo->m_angleRad);
+                break;
+            }
+            case LC_ActionContext::InteractiveInputInfo::DISTANCE: {
+                updated = doUpdateDistanceByInteractiveInput(requestorTag, inputInfo->m_distance);
+                break;
+            }
+            case LC_ActionContext::InteractiveInputInfo::POINT: {
+                updated = doUpdatePointByInteractiveInput(requestorTag, inputInfo->m_wcsPoint);
+                break;
+            }
+            default:
+                break;
+        }
+        if (updated) {
+            updateOptions(requestorTag);
+        }
+    }
+    m_actionContext->interactiveInputRequestCancel();
 }
 
 LC_ActionOptionsWidget* RS_ActionInterface::createOptionsWidget(){

@@ -237,6 +237,14 @@ void LC_ActionDrawCircleByArc::updateMouseButtonHints(){
     }
 }
 
+bool LC_ActionDrawCircleByArc::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "radiusShift") {
+        setRadiusShift(distance);
+        return true;
+    }
+    return false;
+}
+
 RS2::CursorType LC_ActionDrawCircleByArc::doGetMouseCursor([[maybe_unused]]int status){
     return RS2::SelectCursor;
 }

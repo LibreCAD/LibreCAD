@@ -39,7 +39,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>7</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="tabAppearance">
       <attribute name="title">
@@ -4328,23 +4328,26 @@
           <string>Program Defaults</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_17">
-          <item row="7" column="0">
-           <widget class="QCheckBox" name="cbChangingViewOnlyModifiesDrawing">
+          <item row="10" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbInteractiveInputInActionToolbarEnabled">
             <property name="toolTip">
-             <string>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </string>
+             <string>If selected, controls for picking values from drawing are available in Tool Options toolbar, allowing to pick length and angle values from drawing. </string>
             </property>
             <property name="text">
-             <string>Changing view only modifies drawing</string>
+             <string>Tool options toolbar includes pick values controls</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QCheckBox" name="cbPersistentDialogs">
+          <item row="9" column="0">
+           <widget class="QCheckBox" name="cbExpandToolsMenuTillEntity">
             <property name="toolTip">
-             <string>If checked, dialogs will be positioned and resized to position/size of last invocation.</string>
+             <string>If selected, separate menu will be created for each group of entity-related commands. Otherwise, these command will be under the same menu. </string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">margin-left:15px</string>
             </property>
             <property name="text">
-             <string>Persistent dialogs location and size</string>
+             <string>Separate menu per entity</string>
             </property>
            </widget>
           </item>
@@ -4358,16 +4361,43 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
-           <widget class="QCheckBox" name="cbPersistentDialogSizeOnly">
+          <item row="1" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbShowKeyboardShortcutsInToolTips">
             <property name="toolTip">
-             <string>If checked, location of dialog will not be saved, but size will</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">margin-left:15px</string>
+             <string>If checked, keyboard shortcut will be shown in tooltip for action</string>
             </property>
             <property name="text">
-             <string>Persist dialog size only</string>
+             <string>Show keyboard shortcuts in actions tooltips</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QCheckBox" name="cbExpandToolsMenu">
+            <property name="toolTip">
+             <string>If selected, menu will include top-level items for drawing tools. Otherwise, they will under the same menu item. </string>
+            </property>
+            <property name="text">
+             <string>Expand &quot;Tools&quot; commands in menu</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QCheckBox" name="cbTabCloseButton">
+            <property name="toolTip">
+             <string>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</string>
+            </property>
+            <property name="text">
+             <string>Show Close button on drawings tabs</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbShowCurrentActionIconInOptions">
+            <property name="toolTip">
+             <string>If checked, the icon for current action will be shown in options toolbar before action's options</string>
+            </property>
+            <property name="text">
+             <string>Show current command icon in options toolbar</string>
             </property>
            </widget>
           </item>
@@ -4385,46 +4415,13 @@
             </item>
            </widget>
           </item>
-          <item row="8" column="0">
-           <widget class="QCheckBox" name="cbExpandToolsMenu">
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="cbPersistentDialogs">
             <property name="toolTip">
-             <string>If selected, menu will include top-level items for drawing tools. Otherwise, they will under the same menu item. </string>
+             <string>If checked, dialogs will be positioned and resized to position/size of last invocation.</string>
             </property>
             <property name="text">
-             <string>Expand &quot;Tools&quot; commands in menu</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbShowCurrentActionIconInOptions">
-            <property name="toolTip">
-             <string>If checked, the icon for current action will be shown in options toolbar before action's options</string>
-            </property>
-            <property name="text">
-             <string>Show current command icon in options toolbar</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="0">
-           <widget class="QCheckBox" name="cbExpandToolsMenuTillEntity">
-            <property name="toolTip">
-             <string>If selected, separate menu will be created for each group of entity-related commands. Otherwise, these command will be under the same menu. </string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">margin-left:15px</string>
-            </property>
-            <property name="text">
-             <string>Separate menu per entity</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbShowKeyboardShortcutsInToolTips">
-            <property name="toolTip">
-             <string>If checked, keyboard shortcut will be shown in tooltip for action</string>
-            </property>
-            <property name="text">
-             <string>Show keyboard shortcuts in actions tooltips</string>
+             <string>Persistent dialogs location and size</string>
             </property>
            </widget>
           </item>
@@ -4435,13 +4432,26 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
-           <widget class="QCheckBox" name="cbTabCloseButton">
+          <item row="7" column="0">
+           <widget class="QCheckBox" name="cbChangingViewOnlyModifiesDrawing">
             <property name="toolTip">
-             <string>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</string>
+             <string>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </string>
             </property>
             <property name="text">
-             <string>Show Close button on drawings tabs</string>
+             <string>Changing view only modifies drawing</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="cbPersistentDialogSizeOnly">
+            <property name="toolTip">
+             <string>If checked, location of dialog will not be saved, but size will</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">margin-left:15px</string>
+            </property>
+            <property name="text">
+             <string>Persist dialog size only</string>
             </property>
            </widget>
           </item>
@@ -5720,8 +5730,8 @@
  </tabstops>
  <resources>
   <include location="../../../../../res/controls/controls.qrc"/>
-  <include location="../../../../../res/icons/icons.qrc"/>
   <include location="../../../../../res/controls/controls.qrc"/>
+  <include location="../../../../../res/icons/icons.qrc"/>
  </resources>
  <connections>
   <connection>

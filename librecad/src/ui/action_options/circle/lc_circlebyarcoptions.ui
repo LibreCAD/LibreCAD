@@ -26,17 +26,37 @@
    <property name="bottomMargin">
     <number>1</number>
    </property>
-   <item row="0" column="0">
-    <widget class="QCheckBox" name="cbReplace">
-     <property name="toolTip">
-      <string>If checked, original arc will be removed</string>
-     </property>
+   <item row="0" column="5">
+    <widget class="QLabel" name="label">
      <property name="text">
-      <string>Replace arc</string>
+      <string>Pen:</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="7">
+   <item row="0" column="1">
+    <widget class="QLabel" name="lblRadiusShift">
+     <property name="toolTip">
+      <string>Delta of circle's radius to arc's radius</string>
+     </property>
+     <property name="text">
+      <string>Radius Shift:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="9">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="8">
     <widget class="QComboBox" name="cbLayer">
      <property name="toolTip">
       <string>Layer to which created circle should be placed</string>
@@ -70,13 +90,13 @@
     </widget>
    </item>
    <item row="0" column="4">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Pen:</string>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
      </property>
     </widget>
    </item>
-   <item row="0" column="5">
+   <item row="0" column="6">
     <widget class="QComboBox" name="cbPen">
      <property name="toolTip">
       <string>Pen to apply to created circle</string>
@@ -98,45 +118,41 @@
      </item>
     </widget>
    </item>
-   <item row="0" column="6">
+   <item row="0" column="7">
     <widget class="QLabel" name="label_2">
      <property name="text">
       <string>Layer:</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QLabel" name="lblRadiusShift">
+   <item row="0" column="0">
+    <widget class="QCheckBox" name="cbReplace">
      <property name="toolTip">
-      <string>Delta of circle's radius to arc's radius</string>
+      <string>If checked, original arc will be removed</string>
      </property>
      <property name="text">
-      <string>Radius Shift:</string>
+      <string>Replace arc</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="8">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>0</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
    <item row="0" column="3">
-    <widget class="Line" name="line">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
+    <widget class="QToolButton" name="tbPickRadius">
+     <property name="toolTip">
+      <string>Pick offset value from drawing</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_distance.lci</normaloff>:/icons/interactive_pick_distance.lci</iconset>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../../../res/icons/icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

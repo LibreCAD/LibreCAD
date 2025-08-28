@@ -27,6 +27,8 @@
 #ifndef RS_ACTIONINTERFACE_H
 #define RS_ACTIONINTERFACE_H
 
+#include "lc_actioncontext.h"
+#include "lc_latecompletionrequestor.h"
 #include "lc_modifiersinfo.h"
 #include "rs.h"
 #include "rs_math.h"
@@ -61,7 +63,7 @@ namespace{
  */
 //fixme - actually, inheritance from snapper is rather bad design... not all actions (say, file open or print-preview) should be
 // inherited from snapper - only ones that really work with drawing should be snap-aware
-class RS_ActionInterface : public RS_Snapper {
+class RS_ActionInterface : public RS_Snapper, public LC_LateCompletionRequestor {
 Q_OBJECT
 public:
     enum ActionStatus {
@@ -96,6 +98,7 @@ public:
     void resume() override;
     virtual void hideOptions();
     virtual void showOptions();
+    void onLateRequestCompleted(bool shouldBeSkipped) override;
 private:
     /**
      * Current status of the action. After an action has
@@ -150,7 +153,7 @@ protected:
     void updateSelectionWidget(int countSelected, double selectedLength) const;
 
     virtual LC_ActionOptionsWidget* createOptionsWidget();
-    void updateOptions();
+    void updateOptions(const QString& tagToFocus = "");
     void updateOptionsUI(int mode);
 
     virtual RS2::CursorType doGetMouseCursor(int status);
@@ -205,6 +208,10 @@ protected:
     void undoCycleEnd() const;
     void undoCycleStart() const;
     void setPenAndLayerToActive(RS_Entity* e);
+
+    virtual bool doUpdateAngleByInteractiveInput([[maybe_unused]]const QString& tag,[[maybe_unused]] double angleRad) {return false;}
+    virtual bool doUpdateDistanceByInteractiveInput([[maybe_unused]]const QString& tag, [[maybe_unused]]double distance) {return false;}
+    virtual bool doUpdatePointByInteractiveInput([[maybe_unused]]const QString& tag, [[maybe_unused]]RS_Vector &point) {return false;}
 
 };
 #endif

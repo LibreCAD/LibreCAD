@@ -184,6 +184,9 @@ public:
      * @return block name chain to the block that contain searched insert
      */
     QStringList findNestedInsert(const QString& bName);
+   void addByBlockLine(const RS_Vector& start, const RS_Vector& end);
+
+   void addByBlockEntity(RS_Entity* entity);
 
 protected:
 //! Block data

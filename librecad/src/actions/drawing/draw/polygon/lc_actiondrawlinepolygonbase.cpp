@@ -82,6 +82,14 @@ void LC_ActionDrawLinePolygonBase::doTrigger() {
     }
 }
 
+bool LC_ActionDrawLinePolygonBase::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "radius") {
+        setRoundingRadius(distance);
+        return true;
+    }
+    return false;
+}
+
 void LC_ActionDrawLinePolygonBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     RS_Vector mouse = e->snapPoint;
     switch (status) {

@@ -607,3 +607,31 @@ RS2::CursorType LC_ActionDrawSliceDivide::doGetMouseCursor([[maybe_unused]]int s
 LC_ActionOptionsWidget* LC_ActionDrawSliceDivide::createOptionsWidget(){
     return new LC_SliceDivideOptions();
 }
+
+bool LC_ActionDrawSliceDivide::doUpdateAngleByInteractiveInput(const QString& tag, double angle) {
+    if (tag == "angle") {
+        setTickAngleDegrees(RS_Math::rad2deg(angle));
+        return true;
+    }
+    if (tag == "angleCircle") {
+        setCircleStartTickAngleDegrees(RS_Math::rad2deg(angle));
+        return true;
+    }
+    return false;
+}
+
+bool LC_ActionDrawSliceDivide::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "length") {
+        setTickLength(distance);
+        return true;
+    }
+    if (tag == "offset") {
+        setTickOffset(distance);
+        return true;
+    }
+    if (tag == "distance") {
+        setTickOffset(distance);
+        return true;
+    }
+    return false;
+}

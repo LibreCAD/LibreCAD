@@ -79,7 +79,8 @@ void LC_ActionFactory::initActionGroupManager(LC_ActionGroupManager* agm) {
         {"ucs", tr("UCS"), tr("UCS operations"), ":/icons/set_ucs.lci"},
         {"widgets", tr("Widgets"), tr("Widgets management"), ":/icons/dockwidgets_bottom.lci", false},
         {"infoCursor", tr("InfoCursor"), tr("Informational Cursor"), ":/icons/info_cursor_enable.lci", false},
-        {"entity_layer", tr("Entity Layer"), tr("Entity's Layer"), ":/icons/layer_list.lci", false}
+        {"entity_layer", tr("Entity Layer"), tr("Entity's Layer"), ":/icons/layer_list.lci", false},
+        {"interactive_pick", tr("Interactive"), tr("Interactive Pick"), ":/icons/interactive_pick_point.lci", true}
     },agm);
 
     auto fileGroup = agm->getGroupByName("file");
@@ -141,6 +142,7 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useT
     createEditActions(a_map, agm->getGroupByName("edit"));
 
     createEntityLayerActions(a_map, agm->getGroupByName("entity_layer"));
+    createInteractivePickActions(a_map, agm->getGroupByName("interactive_pick"));
 
     for (QAction* value: std::as_const(a_map)){
         if (value != nullptr) {
@@ -162,7 +164,6 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useT
     createWidgetActionsUncheckable(a_map, agm->getGroupByName("widgets"));
     createEditActionsUncheckable(a_map, agm->getGroupByName("edit"));
     createDrawDimensionsUncheckable(a_map, agm->getGroupByName("dimension"));
-
 
     setupCreatedActions(a_map);
     setDefaultShortcuts(a_map, agm);
@@ -493,6 +494,7 @@ void LC_ActionFactory::createOrderActionsUncheckable(QMap<QString, QAction *> &m
 void LC_ActionFactory::createInfoActions(QMap<QString, QAction *> &map, QActionGroup *group) const {
     createActionHandlerActions(map, group, {
         // {"InfoInside",       RS2::ActionInfoInside,           tr("Point inside contour"),               ""},
+        {"InfoPoint",        RS2::ActionInfoPoint,            tr("&Point Coordinates"),                 ":/icons/info_point.lci"},
         {"InfoDist",         RS2::ActionInfoDistPoint2Point,  tr("&Distance Point to Point"),           ":/icons/distance_point_to_point.lci"},
         {"InfoDist2",        RS2::ActionInfoDistEntity2Point, tr("Distance &Entity to Point"),          ":/icons/distance_entity_to_point.lci"},
         {"InfoDist3",        RS2::ActionInfoDistPoint2Entity, tr("Distance &Point to Entity"),          ":/icons/distance_point_to_entity.lci"},
@@ -510,7 +512,7 @@ void LC_ActionFactory::createViewActions(QMap<QString, QAction*>& map, QActionGr
         {"ZoomWindow",RS2::ActionZoomWindow, tr("&Window Zoom"), ":/icons/zoom_window.lci","zoom-select"}});
 
     createMainWindowActions(map, group, {
-        {"Fullscreen",       &QC_ApplicationWindow::toggleFullscreen,     tr("&Fullscreen")},
+        {"Fullscreen",       &QC_ApplicationWindow::toggleFullscreen,     tr("&Fullscreen"),           ":/icons/fullscreen.lci"},
         {"ViewGrid",         &QC_ApplicationWindow::slotViewGrid,         tr("&Grid"),                 ":/icons/grid.lci"},
         {"ViewDraft",        &QC_ApplicationWindow::slotViewDraft,        tr("&Draft"),                ":/icons/draft.lci"},
         {"ViewLinesDraft",   &QC_ApplicationWindow::slotViewDraftLines,   tr("&Draft Lines"),          ":/icons/draftLineWidth.lci"},
@@ -674,6 +676,13 @@ void LC_ActionFactory::createDrawDimensionsUncheckable(QMap<QString, QAction *> 
     });
 }
 
+void LC_ActionFactory::createInteractivePickActions(QMap<QString, QAction *> &map, QActionGroup *group) const {
+    createActionHandlerActions(map, group, {
+        {"PickPoint",    RS2::ActionInteractivePickPoint,  tr("Pick Point"),   ":/icons/interactive_pick_point.lci"},
+        {"PickDistance", RS2::ActionInteractivePickLength, tr("Pick Distance"),":/icons/interactive_pick_distance.lci"},
+        {"PickAngle",    RS2::ActionInteractivePickAngle,  tr("Pick Angle"),   ":/icons/interactive_pick_angle.lci"}
+    });
+}
 
 void LC_ActionFactory::createEditActions(QMap<QString, QAction*>& map, QActionGroup* group) const {
     createActionHandlerActions(map, group, {
@@ -793,7 +802,10 @@ void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, LC_Acti
 void LC_ActionFactory::markNotEditableActionsShortcuts(const QMap<QString, QAction *> &map) {
     // placeholder for exclusion of some actions (by name) from editing in shortcuts mapping dialog
     makeActionsShortcutsNonEditable(map, {
-        "RestrictNothing"
+        "RestrictNothing",
+        "PickPoint",
+        "PickDistance",
+        "PickAngle"
     });
 }
 
@@ -1002,6 +1014,7 @@ void LC_ActionFactory::fillActionLists(QMap<QString, QAction *> &map){
                     }, map);
 
     fillActionsList(info_actions, {
+                        "InfoPoint",
                         "InfoDist",
                         "InfoDist2",
                         "InfoDist3",

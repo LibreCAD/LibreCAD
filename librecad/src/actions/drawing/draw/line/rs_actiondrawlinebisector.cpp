@@ -71,6 +71,14 @@ int RS_ActionDrawLineBisector::getNumber() const{
     return m_numberToCreate;
 }
 
+bool RS_ActionDrawLineBisector::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "length") {
+        setLength(distance);
+        return true;
+    }
+    return false;
+}
+
 void RS_ActionDrawLineBisector::init(int status){
     if (status >= 0){
         invalidateSnapSpot();

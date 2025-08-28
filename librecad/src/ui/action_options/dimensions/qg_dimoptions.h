@@ -64,15 +64,14 @@ public slots:
     void onDimStyleChanged(int index);
     void updateUI(int mode) override;
 protected:
+    RS_ActionDimension* m_action = nullptr;
+    std::unique_ptr<Ui::Ui_DimOptions> ui;
+    LC_StylesListModel* m_dimItemsListModel = nullptr;
     void initStylesCombobox(RS_Graphic *graphic);
     void updateAngle( const QString& a );
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
     bool checkActionRttiValid(RS2::ActionType actionType) override;
-private:
-    RS_ActionDimension* m_action = nullptr;
-    std::unique_ptr<Ui::Ui_DimOptions> ui;
-    LC_StylesListModel* m_dimItemsListModel = nullptr;
 };
 
 #endif // QG_DIMOPTIONS_H

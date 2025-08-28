@@ -49,10 +49,10 @@ public:
     RS_Vector getNearestPointOnEntity(const RS_Vector& coord, bool onEntity, double* dist, RS_Entity** entity) const override;
     double getDistanceToPoint(const RS_Vector& coord, RS_Entity** entity, RS2::ResolveLevel level,
                               double solidDist) const override;
-    double getAngle() const{return m_angle;}
-    void setAngle(double angle){m_angle = angle;}
-    double getArrowSize() const{return m_arrowSize;}
-    RS_Vector getPosition() const{return m_position;}
+    double getAngle() const {return m_angle;}
+    void setAngle(double angle) {m_angle = angle;}
+    double getArrowSize() const {return m_arrowSize;}
+    RS_Vector getPosition() const {return m_position;}
     RS_Vector getDimLinePoint () const {return m_dimLinePoint;}
 protected:
     void setDistPtr(double* dist, double value) const;

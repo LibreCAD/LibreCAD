@@ -97,6 +97,18 @@ void RS_ActionModifyBevel::doTrigger() {
     }
 }
 
+bool RS_ActionModifyBevel::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "length1") {
+        setLength1(distance);
+        return true;
+    }
+    if (tag == "length2") {
+        setLength2(distance);
+        return true;
+    }
+    return false;
+}
+
 void RS_ActionModifyBevel::drawSnapper() {
     // disable snapper
 }

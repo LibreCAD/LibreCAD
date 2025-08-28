@@ -7,30 +7,30 @@ project(LibreCAD VERSION 2.2.2)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-#LOCAL
-#set(CMAKE_VERBOSE_MAKEFILE ON)
-#set(MIN_GW_PATH_PREFIX "d:\\Qt\\QT6\\6.9.0\\msvc2022_64")
-#
-#set(Boost_DEBUG ON)
-#
-#set(BOOST_DIR "c:\\Local\\boost_1_84_0")
-#set(BOOST_ROOT "c:\\Local\\boost_1_84_0")
-#set(Boost_DIR "c:\\Local\\boost_1_84_0")
+#LOCAL -----
+set(CMAKE_VERBOSE_MAKEFILE ON)
+set(MIN_GW_PATH_PREFIX "d:\\Qt\\QT6\\6.9.0\\msvc2022_64")
+
+set(Boost_DEBUG ON)
+
+set(BOOST_DIR "c:\\Local\\boost_1_84_0")
+set(BOOST_ROOT "c:\\Local\\boost_1_84_0")
+set(Boost_DIR "c:\\Local\\boost_1_84_0")
 #set(Boost_DIR "c:\\Local\\boost_1_84_0\\tools\\boost_install")
 #set(Boost_DIR "c:\\Local\\boost_1_84_0\\tools\\cmake\\config\\")
 #set(BOOST_DIR "	c:\\Local\\boost_1_84_0\\tools\\cmake\\config\\")
-#set(Boost_INCLUDE_DIR "c:\\Local\\boost_1_84_0")
-#
-#set(CMAKE_PREFIX_PATH "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
-#
-#set(Qt6_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
-#set(Qt6Core_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6Core")
-#set(Qt6Svg_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6Svg")
-#set(Qt6CoreTools_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6CoreTools")
-#set(Qt6Gui_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\QtGui")
-#set(QtNetwork_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\QtNetwork")
-#set (CMAKE_INSTALL_PREFIX "Z:/LC_BUILD_PROD")
-#
+set(Boost_INCLUDE_DIR "c:\\Local\\boost_1_84_0")
+
+set(CMAKE_PREFIX_PATH "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
+
+set(Qt6_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
+set(Qt6Core_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6Core")
+set(Qt6Svg_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6Svg")
+set(Qt6CoreTools_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6CoreTools")
+set(Qt6Gui_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\QtGui")
+set(QtNetwork_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\QtNetwork")
+set (CMAKE_INSTALL_PREFIX "Z:/LC_BUILD_PROD")
+
 
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -167,6 +167,7 @@ include_directories(librecad/src/actions/drawing/draw/image)
 include_directories(librecad/src/actions/drawing/draw/hatch)
 include_directories(librecad/src/actions/drawing/modify)
 include_directories(librecad/src/actions/drawing/info)
+include_directories(librecad/src/actions/drawing/pick)
 include_directories(librecad/src/actions/drawing/selection)
 include_directories(librecad/src/actions/drawing/zoom)
 include_directories(librecad/src/actions/drawing/pen)
@@ -514,6 +515,16 @@ set(SOURCES
         librecad/src/actions/drawing/info/rs_actioninfoinside.h
         librecad/src/actions/drawing/info/rs_actioninfototallength.cpp
         librecad/src/actions/drawing/info/rs_actioninfototallength.h
+        librecad/src/actions/drawing/info/lc_actioninfopoint.h
+        librecad/src/actions/drawing/info/lc_actioninfopoint.cpp
+        librecad/src/actions/drawing/pick/lc_actioninteractivepickbase.h
+        librecad/src/actions/drawing/pick/lc_actioninteractivepickbase.cpp
+        librecad/src/actions/drawing/pick/lc_actioninteractivepickangle.h
+        librecad/src/actions/drawing/pick/lc_actioninteractivepickangle.cpp
+        librecad/src/actions/drawing/pick/lc_actioninteractivepickdistance.h
+        librecad/src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp
+        librecad/src/actions/drawing/pick/lc_actioninteractivepickposition.h
+        librecad/src/actions/drawing/pick/lc_actioninteractivepickposition.cpp
         librecad/src/actions/dock_widgets/layer/rs_actionlayersadd.h
         librecad/src/actions/dock_widgets/layer/rs_actionlayersadd.cpp
         librecad/src/actions/dock_widgets/layer/rs_actionlayersadd.h
@@ -934,6 +945,8 @@ set(SOURCES
         librecad/src/ui/action_options/modify/qg_beveloptions.h
         librecad/src/ui/dialogs/entity/qg_blockdialog.cpp
         librecad/src/ui/dialogs/entity/qg_blockdialog.h
+        librecad/src/ui/dialogs/entity/lc_pointpickbutton.h
+        librecad/src/ui/dialogs/entity/lc_pointpickbutton.cpp
         librecad/src/ui/action_options/circle/qg_circleoptions.cpp
         librecad/src/ui/action_options/circle/qg_circleoptions.h
         librecad/src/ui/action_options/circle/qg_circletan2options.cpp
@@ -1460,6 +1473,8 @@ set(SOURCES
         librecad/src/lib/engine/overlays/references/lc_refconstructionline.cpp
         librecad/src/lib/modification/lc_align.h
         librecad/src/lib/modification/lc_align.cpp
+        librecad/src/lib/modification/lc_division.h
+        librecad/src/lib/modification/lc_division.cpp
         librecad/src/actions/drawing/modify/lc_actionmodifyalignsingle.h
         librecad/src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp
         librecad/src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon4.h
@@ -1516,6 +1531,8 @@ set(SOURCES
         librecad/src/lib/gui/lc_graphicviewport.cpp
         librecad/src/lib/gui/render/lc_graphicviewportrenderer.h
         librecad/src/lib/gui/render/lc_graphicviewportrenderer.cpp
+        librecad/src/lib/gui/lc_latecompletionrequestor.h
+        librecad/src/lib/gui/lc_latecompletionrequestor.cpp
         librecad/src/lib/engine/overlays/lc_overlaysmanager.h
         librecad/src/lib/engine/overlays/lc_overlaysmanager.cpp
         librecad/src/lib/gui/render/widget/lc_widgetviewportrenderer.h
@@ -1548,6 +1565,36 @@ set(SOURCES
         librecad/src/ui/components/status_bar/lc_anglesbasiswidget.h
         librecad/src/ui/dialogs/entity/lc_entitypropertiesdlg.h
         librecad/src/ui/dialogs/entity/lc_entitypropertiesdlg.cpp
+        librecad/src/ui/dialogs/entity/lc_entitypropertieseditor.h
+        librecad/src/ui/dialogs/entity/lc_entitypropertieseditor.cpp
+        librecad/src/ui/dialogs/entity/lc_entitypropertieseditorwidget.h
+        librecad/src/ui/dialogs/entity/lc_entitypropertieseditorwidget.cpp
+        librecad/src/ui/dialogs/entity/lc_entitypropertieseditorsupport.h
+        librecad/src/ui/dialogs/entity/lc_entitypropertieseditorsupport.cpp
+        librecad/src/ui/dialogs/entity/lc_pointpropertieseditingwidget.h
+        librecad/src/ui/dialogs/entity/lc_pointpropertieseditingwidget.cpp
+        librecad/src/ui/dialogs/entity/lc_linepropertieseditingwidget.h
+        librecad/src/ui/dialogs/entity/lc_linepropertieseditingwidget.cpp
+        librecad/src/ui/dialogs/entity/lc_arcpropertieseditingwidget.h
+        librecad/src/ui/dialogs/entity/lc_arcpropertieseditingwidget.cpp
+        librecad/src/ui/dialogs/entity/lc_circlepropertieseditingwidget.h
+        librecad/src/ui/dialogs/entity/lc_circlepropertieseditingwidget.cpp
+        librecad/src/ui/dialogs/entity/lc_ellipsepropertieseditingwidget.h
+        librecad/src/ui/dialogs/entity/lc_ellipsepropertieseditingwidget.cpp
+        librecad/src/ui/dialogs/entity/lc_polylinepropertieseditingwidget.h
+        librecad/src/ui/dialogs/entity/lc_polylinepropertieseditingwidget.cpp
+        librecad/src/ui/dialogs/entity/lc_splinepropertieseditingwidget.h
+        librecad/src/ui/dialogs/entity/lc_splinepropertieseditingwidget.cpp
+        librecad/src/ui/dialogs/entity/lc_splinepointspropertieseditingwidget.h
+        librecad/src/ui/dialogs/entity/lc_splinepointspropertieseditingwidget.cpp
+        librecad/src/ui/dialogs/entity/lc_imagepropertieseditingwidget.h
+        librecad/src/ui/dialogs/entity/lc_imagepropertieseditingwidget.cpp
+        librecad/src/ui/dialogs/entity/lc_insertpropertieseditingwidget.h
+        librecad/src/ui/dialogs/entity/lc_insertpropertieseditingwidget.cpp
+        librecad/src/ui/dialogs/entity/lc_parabolapropertieseditingwidget.h
+        librecad/src/ui/dialogs/entity/lc_parabolapropertieseditingwidget.cpp
+        librecad/src/ui/dialogs/entity/lc_dlgentityproperties.h
+        librecad/src/ui/dialogs/entity/lc_dlgentityproperties.cpp
         librecad/src/lib/engine/utils/lc_rectregion.h
         librecad/src/lib/engine/utils/lc_rectregion.cpp
         librecad/src/ui/dialogs/settings/options_widget/lc_iconengineshared.cpp

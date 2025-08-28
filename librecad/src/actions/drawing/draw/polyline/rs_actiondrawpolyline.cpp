@@ -271,7 +271,7 @@ double RS_ActionDrawPolyline::solveBulge(const RS_Vector &mouse){
                     direction = RS_Math::correctAngle(lastentity->getDirection2() + M_PI);
                 }
                 suc = arc.createFrom2PDirectionAngle(m_actionData->point, mouse,
-                                                      direction, RS_Math::deg2rad(m_angle));
+                                                      direction, RS_Math::deg2rad(m_angleDegrees));
                 if (suc){
                     m_actionData->arc_data = arc.getData();
                     b = arc.getBulge();
@@ -293,13 +293,13 @@ double RS_ActionDrawPolyline::solveBulge(const RS_Vector &mouse){
         break;*/
         case Ang: {
             if (m_prepend){
-                b = std::tan(m_reversed * m_angle * M_PI / 720.0);
+                b = std::tan(m_reversed * m_angleDegrees * M_PI / 720.0);
 //                b = std::tan(m_reversed * -1 * m_angle * M_PI / 720.0);
                 suc = arc.createFrom2PBulge( mouse, m_actionData->point,b);
 //                suc = arc.createFrom2PBulge(pPoints->point, mouse, b);
             }
             else{
-               b = std::tan(m_reversed * m_angle * M_PI / 720.0);
+               b = std::tan(m_reversed * m_angleDegrees * M_PI / 720.0);
                suc = arc.createFrom2PBulge(m_actionData->point, mouse, b);
             }
             if (suc) {
@@ -426,12 +426,12 @@ double RS_ActionDrawPolyline::getRadius() const{
     return m_radius;
 }
 
-void RS_ActionDrawPolyline::setAngle(double a){
-    m_angle = a;
+void RS_ActionDrawPolyline::setAngleDegrees(double a){
+    m_angleDegrees = a;
 }
 
 double RS_ActionDrawPolyline::getAngle() const{
-    return m_angle;
+    return m_angleDegrees;
 }
 
 void RS_ActionDrawPolyline::setReversed(bool c){
@@ -440,6 +440,22 @@ void RS_ActionDrawPolyline::setReversed(bool c){
 
 bool RS_ActionDrawPolyline::isReversed() const{
     return m_reversed == -1;
+}
+
+bool RS_ActionDrawPolyline::doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) {
+    if (tag == "angle") {
+        setAngleDegrees(RS_Math::rad2deg(angleRad));
+        return true;
+    }
+    return false;
+}
+
+bool RS_ActionDrawPolyline::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "radius") {
+        setRadius(distance);
+        return true;
+    }
+    return false;
 }
 
 QString RS_ActionDrawPolyline::prepareCommand(RS_CommandEvent *e) const {

@@ -41,6 +41,7 @@ QG_DlgEllipse:: QG_DlgEllipse(QWidget *parent, LC_GraphicViewport *pViewport, RS
     :LC_EntityPropertiesDlg(parent, "EllipseProperties", pViewport){
     setupUi(this);
     setEntity(ellipse);
+    wPen->disableVerticalSpacer();
 }
 
 /*

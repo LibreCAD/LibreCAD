@@ -389,6 +389,26 @@ void LC_ActionDrawCross::updateMouseButtonHints(){
     }
 }
 
+bool LC_ActionDrawCross::doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) {
+    if (tag == "angle") {
+        setCrossAngleDegrees(RS_Math::rad2deg(angleRad));
+        return true;
+    }
+    return false;
+}
+
+bool LC_ActionDrawCross::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "x") {
+        setXLength(distance);
+        return true;
+    }
+    if (tag == "y") {
+        setYLength(distance);
+        return true;
+    }
+    return false;
+}
+
 /**
  * Returns mouse cursor for action
  * @param status

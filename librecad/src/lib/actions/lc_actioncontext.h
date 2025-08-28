@@ -22,6 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ACTIONCONTEXT_H
 #define LC_ACTIONCONTEXT_H
 
+#include <QString>
+#include "lc_latecompletionrequestor.h"
 #include "rs.h"
 #include "rs_vector.h"
 
@@ -75,13 +77,43 @@ public:
     void clearContextMenuActionContext();
     RS_Entity* getContextMenuActionContextEntity();
     RS_Vector getContextMenuActionClickPosition();
+
+    struct InteractiveInputInfo {
+        enum State {
+            NONE,
+            REQUESTED
+        };
+
+        enum InputType {
+            POINT,
+            DISTANCE,
+            ANGLE,
+            NOTNEEDED,
+        };
+
+        State m_state;
+        double m_distance {0};
+        double m_angleRad{0};
+        RS_Vector m_wcsPoint;
+        InputType m_inputType;
+        QString m_requestorTag;
+        LC_LateCompletionRequestor* m_requestor {nullptr};
+    };
+
+    void interactiveInputStart(InteractiveInputInfo::InputType inputType, LC_LateCompletionRequestor* m_requestor, const QString &tag);
+    void interactiveInputRequestCancel();
+    InteractiveInputInfo* getInteractiveInputInfo(){return &m_interactiveInputInfo;}
 protected:
+    InteractiveInputInfo m_interactiveInputInfo;
     RS_EntityContainer * m_entityContainer {nullptr};
     RS_GraphicView * m_graphicView {nullptr};
     int m_selectionCount{0};
     RS_Vector m_contextMenuClickPosition {false};
     RS_Entity* m_contextMenuActionEntity {nullptr};
     bool m_uselectContextMenuActionEntity {false};
+
+    void interactiveInputInvoke(InteractiveInputInfo::InputType inputType);
+    void interactiveInputRequest(InteractiveInputInfo::InputType inputType, LC_LateCompletionRequestor* m_requestor, const QString &tag);
 };
 
 #endif // LC_ACTIONCONTEXT_H

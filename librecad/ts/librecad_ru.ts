@@ -6785,7 +6785,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="657"/>
         <source>YES</source>
-        <translation></translation>
+        <translation>ДА</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="664"/>

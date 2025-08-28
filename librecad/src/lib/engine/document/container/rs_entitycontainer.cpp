@@ -174,7 +174,8 @@ RS_EntityContainer& RS_EntityContainer::operator = (RS_EntityContainer&& other){
 RS_EntityContainer::~RS_EntityContainer() {
     if (autoDelete) {
         while (!m_entities.isEmpty()) {
-            delete m_entities.takeFirst();
+            auto e = m_entities.takeFirst();
+            delete e;
         }
     } else
         m_entities.clear();
@@ -711,11 +712,10 @@ void RS_EntityContainer::calculateBorders() {
 
     resetBorders();
     for (RS_Entity *e: *this) {
-        RS_Layer *layer = e->getLayer();
         //        RS_DEBUG->print("RS_EntityContainer::calculateBorders: "
         //                        "isVisible: %d", (int)e->isVisible());
 
-        if (e->isVisible() && !(layer && layer->isFrozen())) {
+        if (e != nullptr && e->isVisible()) {
             e->calculateBorders();
             adjustBorders(e);
         }

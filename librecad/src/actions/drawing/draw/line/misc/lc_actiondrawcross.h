@@ -39,12 +39,12 @@ public:
 
     double getLenX() const {return m_lenX;};
     double getLenY() const {return m_lenY;};
-    double getCrossAngle() const{return m_ucsBasisAngleDegrees;};
+    double getCrossAngleDegrees() const{return m_ucsBasisAngleDegrees;};
     int getCrossMode() const{return m_crossSizeMode;};
 
     void setXLength(double d) {m_lenX = d;};
     void setYLength(double d) {m_lenY = d;};
-    void setCrossAngle(double d) { m_ucsBasisAngleDegrees = d;};
+    void setCrossAngleDegrees(double d) { m_ucsBasisAngleDegrees = d;};
     void setCrossMode(int i) {m_crossSizeMode = i;};
 protected:
     enum Status {
@@ -105,6 +105,8 @@ protected:
     void updateMouseButtonHints() override;
     LC_CrossData createCrossDataForEntity(RS_Entity *ent) const;
     LC_ActionOptionsWidget* createOptionsWidget() override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 
 #endif //LC_ACTIONDRAWCROSS_H

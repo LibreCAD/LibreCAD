@@ -47,7 +47,7 @@ void LC_ActionPasteToPoints::doTrigger(bool keepSelected) {
     RS_Modification m(*m_container, m_viewport, false);
     for (auto p: m_selectedEntities){
         RS_Vector currentPoint = p->getCenter();
-        const RS_PasteData &pasteData = RS_PasteData(currentPoint, m_scaleFactor , m_angle, false, "");
+        const RS_PasteData &pasteData = RS_PasteData(currentPoint, m_scaleFactor , m_angleRad, false, "");
         m.paste(pasteData);
         // fixme - some progress is needed there, ++++ speed improvement for paste operation!!
 //        LC_ERR << "Paste: " << currentPoint;
@@ -62,6 +62,14 @@ void LC_ActionPasteToPoints::doTrigger(bool keepSelected) {
     undoCycleEnd();
 }
 
+bool LC_ActionPasteToPoints::doUpdateAngleByInteractiveInput(const QString& tag, double angle) {
+    if (tag == "angle") {
+        setAngle(angle);
+        return true;
+    }
+    return false;
+}
+
 bool LC_ActionPasteToPoints::isAllowTriggerOnEmptySelection() {
     return false;
 }
@@ -71,11 +79,11 @@ LC_ActionOptionsWidget *LC_ActionPasteToPoints::createOptionsWidget() {
 }
 
 double LC_ActionPasteToPoints::getAngle() const {
-    return m_angle;
+    return m_angleRad;
 }
 
 void LC_ActionPasteToPoints::setAngle(double a) {
-    m_angle = a;
+    m_angleRad = a;
 }
 
 double LC_ActionPasteToPoints::getScaleFactor() const {

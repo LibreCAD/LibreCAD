@@ -27,6 +27,7 @@
 #ifndef RS_ACTIONDRAWLINEPARALLEL_H
 #define RS_ACTIONDRAWLINEPARALLEL_H
 
+#include "lc_latecompletionrequestor.h"
 #include "rs_previewactioninterface.h"
 
 class RS_Vector;
@@ -67,6 +68,7 @@ private:
     RS_Entity *m_entity = nullptr;
 protected:
     void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 private:
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

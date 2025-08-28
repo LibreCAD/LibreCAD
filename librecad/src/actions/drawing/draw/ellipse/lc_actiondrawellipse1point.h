@@ -39,6 +39,7 @@ public:
     void setMajorRadius(double val);
     void setMinorRadius(double val);
     void setUcsMajorAngleDegrees(double ucsBasisAngleDegrees);
+    void setUcsMajorAngle(double ucsBasisAngleRad);
     void setHasAngle(bool val);
     void setAngleFree(bool val);
     bool isReversed() const override;
@@ -53,7 +54,7 @@ enum Status{
     };
 
     struct ActionData;
-    std::unique_ptr<ActionData> m_ActionData;
+    std::unique_ptr<ActionData> m_actionData;
     void toSetPointStatus();
     LC_ActionOptionsWidget *createOptionsWidget() override;
     void updateMouseButtonHints() override;
@@ -63,8 +64,9 @@ enum Status{
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void doTrigger() override;
-
     RS_Vector getMajorP();
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 
 #endif // LC_ACTIONDRAWELLIPSE1POINT_H

@@ -38,6 +38,7 @@ QG_RoundOptions::QG_RoundOptions()
     ui->setupUi(this);
     connect(ui->leRadius, &QLineEdit::editingFinished, this, &QG_RoundOptions::onRadiusEditingFinished);
     connect(ui->cbTrim, &QCheckBox::toggled, this, &QG_RoundOptions::onTrimToggled);
+    pickDistanceSetup("radius", ui->tbPickRadius, ui->leRadius);
 }
 
 /*

@@ -422,6 +422,7 @@ namespace RS2 {
         ActionLockRelativeZero,
         ActionUnlockRelativeZero,
 
+        ActionInfoPoint,
         ActionInfoInside,
         ActionInfoDistPoint2Point,
         ActionInfoDistEntity2Point,
@@ -494,6 +495,10 @@ namespace RS2 {
         ActionDimOrdByOriginSelect,
         ActionDimOrdRebase,
         ActionGTDFCFrame,
+
+        ActionInteractivePickPoint,
+        ActionInteractivePickLength,
+        ActionInteractivePickAngle,
         /** Needed to loop through all actions */
         ActionLast
     };

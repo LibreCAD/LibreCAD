@@ -247,6 +247,14 @@ void RS_ActionModifyRound::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     }
 }
 
+bool RS_ActionModifyRound::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "radius") {
+        setRadius(distance);
+        return true;
+    }
+    return false;
+}
+
 void RS_ActionModifyRound::previewEntityModifications(const RS_Entity *original, RS_Entity *modified, RS_Vector& roundPoint, int mode){
     bool decreased = modified->getLength() < original->getLength();
     if (isLine(modified)){ // fixme - support of polyline

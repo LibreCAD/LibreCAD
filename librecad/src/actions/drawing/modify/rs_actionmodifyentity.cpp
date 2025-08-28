@@ -26,67 +26,128 @@
 
 #include "rs_actionmodifyentity.h"
 
+
+#include "lc_entitypropertieseditor.h"
 #include "lc_quickinfowidget.h"
 #include "qc_applicationwindow.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_entity.h"
+#include "rs_eventhandler.h"
 #include "rs_graphicview.h"
 #
-RS_ActionModifyEntity::RS_ActionModifyEntity(LC_ActionContext *actionContext, RS_Entity *entity)
-		:RS_PreviewActionInterface("Modify Entity", actionContext, RS2::ActionModifyEntity)
-		,m_entity(entity){
-   m_modifyCursor = entity == nullptr;
+RS_ActionModifyEntity::RS_ActionModifyEntity(LC_ActionContext *actionContext)
+		:RS_PreviewActionInterface("Modify Entity", actionContext, RS2::ActionModifyEntity){
+}
+
+RS_ActionModifyEntity::~RS_ActionModifyEntity() {
+    delete m_propertiesEditor;
+}
+
+void RS_ActionModifyEntity::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
+    m_entity = contextEntity;
+    m_invokedForSingleEntity = true;
+    m_modifyCursor = false;
 }
 
 void RS_ActionModifyEntity::init(int status) {
     RS_PreviewActionInterface::init(status);
     if (m_entity != nullptr) {
         trigger();
-        finish(false);
     }
 }
 
-void RS_ActionModifyEntity::doTrigger() {
-    if (m_entity != nullptr) {
-        std::unique_ptr<RS_Entity> clone{m_entity->clone()};
-        bool selected = m_entity->isSelected();
-        // RAII style: restore the highlighted status
-        std::shared_ptr<bool> scopedFlag(&selected, [this](bool* pointer) {
-            if (pointer != nullptr && m_entity->isSelected() != *pointer) {
-                setDisplaySelected(*pointer);
-            }});
-        // Always show the entity being edited as "Selected"
-        setDisplaySelected(true);
+void  RS_ActionModifyEntity::notifyFinished() {
+    m_graphicView->setForcedActionKillAllowed(true);
+    m_graphicView->getEventHandler()->notifyLastActionFinished();
+}
 
-        unsigned long originalEntityId = m_entity->getId();
-
-        m_graphicView->setForcedActionKillAllowed(false);
-        auto clonedEntity = clone.get();
-        if (RS_DIALOGFACTORY->requestModifyEntityDialog(clonedEntity, m_viewport)) {
-            m_container->addEntity(clonedEntity);
-
-            m_entity->setSelected(false);
-            clone->setSelected(false);
-
-            if (m_document != nullptr) {
-                undoCycleReplace(m_entity, clonedEntity);
-            }
-
-            unsigned long cloneEntityId = clone->getId();
-
-            // hm... probably there is a better way to notify (signal, broadcasting etc) without direct dependency?
-            LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
-            if (entityInfoWidget != nullptr){
-                entityInfoWidget->onEntityPropertiesEdited(originalEntityId, cloneEntityId);
-            }
-
-            clone.release();
+void RS_ActionModifyEntity::onLateRequestCompleted(bool shouldBeSkipped) {
+    if (shouldBeSkipped) {
+        if (m_invokedForSingleEntity) {
+            m_entity = nullptr;
+            delete m_clonedEntity;
+            finish(false);
+            notifyFinished();
         }
-        m_graphicView->setForcedActionKillAllowed(true);
-    } else {
-        RS_DEBUG->print("RS_ActionModifyEntity::trigger: Entity is NULL\n");
+        else {
+            setStatus(ShowDialog);
+        }
+    }
+    else {
+        setStatus(EditComplete);
+        completeEditing();
+        if (m_invokedForSingleEntity) {
+            finish(false);
+            notifyFinished();
+        }
+        else {
+            setStatus(ShowDialog);
+        }
+    }
+}
+
+void RS_ActionModifyEntity::completeEditing() {
+    m_clonedEntity->update();
+
+    m_entity->setSelected(false);
+    m_clonedEntity->setSelected(false);
+
+    m_clonedEntity->calculateBorders();
+    m_container->addEntity(m_clonedEntity);
+
+    m_entity->setSelected(false);
+    m_clonedEntity->setSelected(false);
+
+    unsigned long cloneEntityId = m_clonedEntity->getId();
+    unsigned long originalEntityId = m_entity->getId();
+
+    if (m_document != nullptr) {
+        undoCycleReplace(m_entity, m_clonedEntity);
+    }
+
+    // hm... probably there is a better way to notify (signal, broadcasting etc) without direct dependency?
+    LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
+    if (entityInfoWidget != nullptr){
+        entityInfoWidget->onEntityPropertiesEdited(originalEntityId, cloneEntityId);
+    }
+    m_graphicView->redraw(RS2::RedrawDrawing);
+}
+
+void RS_ActionModifyEntity::doTrigger() {
+    int status = getStatus();
+    if (status == ShowDialog) {
+        if (m_entity != nullptr) {
+            bool selected = m_entity->isSelected();
+            // RAII style: restore the highlighted status
+            /*std::shared_ptr<bool> scopedFlag(&selected, [this](bool* pointer) {
+                if (pointer != nullptr && m_entity->isSelected() != *pointer) {
+                    setDisplaySelected(*pointer);
+                }});*/
+            // Always show the entity being edited as "Selected"
+            setDisplaySelected(true);
+
+            // m_graphicView->setForcedActionKillAllowed(false);
+            m_clonedEntity = m_entity->clone();
+            m_propertiesEditor = new LC_EntityPropertiesEditor(m_actionContext, this);
+            setStatus(InEditing);
+
+            m_graphicView->setForcedActionKillAllowed(false);
+            m_propertiesEditor->editEntity(m_actionContext->getGraphicView(), m_clonedEntity, m_viewport);
+
+
+            /*if (RS_DIALOGFACTORY->requestModifyEntityDialog(m_clonedEntity, m_viewport)) {
+
+            }*/
+            // m_graphicView->setForcedActionKillAllowed(true);
+        } else {
+            RS_DEBUG->print("RS_ActionModifyEntity::trigger: Entity is NULL\n");
+        }
+    }
+    else if (status == InEditing) {
+        // m_graphicView->setForcedActionKillAllowed(true);
+        completeEditing();
+        setStatus(EditComplete);
     }
 }
 
@@ -97,16 +158,20 @@ void RS_ActionModifyEntity::setDisplaySelected(bool highlighted){
 }
 
 void RS_ActionModifyEntity::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
-    RS_Entity* entity = catchAndDescribe(e);
-    if (entity != nullptr){
-        highlightHoverWithRefPoints(entity, true);
+    if (status == ShowDialog) {
+        RS_Entity* entity = catchAndDescribe(e);
+        if (entity != nullptr){
+            highlightHoverWithRefPoints(entity, true);
+        }
     }
 }
 
 void RS_ActionModifyEntity::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
-    m_entity = catchEntityByEvent(e);
-    if (m_entity != nullptr) {
-        trigger();
+    if (status == ShowDialog) {
+        m_entity = catchEntityByEvent(e);
+        if (m_entity != nullptr) {
+            trigger();
+        }
     }
 }
 

@@ -42,9 +42,7 @@ public:
     ~RS_ActionDrawLineAngle() override;
     void reset();
     void init(int status) override;
-    void preparePreview();
     QStringList getAvailableCommands() override;
-    bool checkMayAlternateDirection();
     void setSnapPoint(int sp);
     int getSnapPoint() const;
     void setUcsAngleDegrees(double ucsRelAngle);
@@ -72,6 +70,7 @@ protected:
     bool m_alternateDirection = false;
     bool m_orthoToAnglesBasis = false;
 
+    void preparePreview();
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
@@ -82,5 +81,7 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void doTrigger() override;
     void initFromSettings() override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 #endif

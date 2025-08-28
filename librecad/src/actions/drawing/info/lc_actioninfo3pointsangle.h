@@ -40,6 +40,7 @@ protected:
     RS_Vector m_point1{false};
     RS_Vector m_point2{false};
     RS_Vector m_point3{false};
+    bool m_restartFromNewPoint = false;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

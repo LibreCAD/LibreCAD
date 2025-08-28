@@ -153,23 +153,27 @@ void RS_ActionDrawLineAngle::preparePreview(){
         else if (m_actionType == RS2::ActionDrawLineHorizontal){
             angle = M_PI_2;
         }
+        else {
+            angle = M_PI - angle;
+        }
+
     }
-    double angleRad = adjustRelativeAngleSignByBasis(angle);
+    double wcsAngleRad = adjustRelativeAngleSignByBasis(angle);
     if (hasFixedAngle()) {
         if (m_orthoToAnglesBasis) {
-            angleRad = toWorldAngleFromUCSBasis(angleRad);
+            wcsAngleRad = toWorldAngleFromUCSBasis(wcsAngleRad);
         } else {
-            angleRad = toWorldAngle(angleRad);
+            wcsAngleRad = toWorldAngle(wcsAngleRad);
         }
     }
     else{
-        angleRad = toWorldAngleFromUCSBasis(angleRad);
+        wcsAngleRad = toWorldAngleFromUCSBasis(wcsAngleRad);
     }
 
     if (m_actionData->snpPoint == SNAP_END){
-        p2.setPolar(-m_actionData->length, angleRad);
+        p2.setPolar(-m_actionData->length, wcsAngleRad);
     } else {
-        p2.setPolar(m_actionData->length, angleRad);
+        p2.setPolar(m_actionData->length, wcsAngleRad);
     }
 
     // Middle:
@@ -299,20 +303,10 @@ QStringList RS_ActionDrawLineAngle::getAvailableCommands(){
     }
     return cmd;
 }
-
-bool RS_ActionDrawLineAngle::checkMayAlternateDirection() {
-   return hasFixedAngle();
-}
-
 void RS_ActionDrawLineAngle::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetPos:
-            if (checkMayAlternateDirection()) {
-                updateMouseWidgetTRCancel(tr("Specify position"), MOD_SHIFT_AND_CTRL(MSG_REL_ZERO, tr("Alternate Direction")));
-            }
-            else {
-                updateMouseWidgetTRCancel(tr("Specify position"), MOD_SHIFT_RELATIVE_ZERO);
-            }
+            updateMouseWidgetTRCancel(tr("Specify position"), MOD_SHIFT_AND_CTRL(MSG_REL_ZERO, tr("Alternate Direction")));
             break;
         case SetAngle:
             updateMouseWidgetTRBack(tr("Enter angle:"));
@@ -335,4 +329,20 @@ LC_ActionOptionsWidget* RS_ActionDrawLineAngle::createOptionsWidget(){
 
 void RS_ActionDrawLineAngle::setInAngleBasis(bool b) {
   m_orthoToAnglesBasis = b;
+}
+
+bool RS_ActionDrawLineAngle::doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) {
+    if (tag == "angle") {
+        m_actionData->ucsBasisAngleRad = angleRad;
+        return true;
+    }
+    return false;
+}
+
+bool RS_ActionDrawLineAngle::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "length") {
+        setLength(distance);
+        return true;
+    }
+    return false;
 }

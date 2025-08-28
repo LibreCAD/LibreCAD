@@ -42,8 +42,8 @@ public:
     int getLineSnapMode() const{return m_lineSnapMode;};
     void setOrthogonal(bool value){m_orthogonalMode = value;};
     bool getOrthogonal() const{return m_orthogonalMode;};
-    void setAngle(double ang){m_angle = ang;};
-    double getAngle() const{return m_angle;};
+    void setAngleDegrees(double ang){m_angleDegrees = ang;};
+    double getAngleDegrees() const{return m_angleDegrees;};
     int getSizeMode() const{return m_sizeMode;};
     void setSizeMode(int mode){m_sizeMode = mode;};
     void setLength(double len){m_length = len;};
@@ -96,7 +96,7 @@ protected:
      * -90..0 - will be closer to right corner of target line (considering that start point is located above the target line).
      * In Alternative action mode (SHIFT pressed with mouse), alternative (mirrored) angle will be used instead of provided one
      */
-    double m_angle = 0.0;
+    double m_angleDegrees = 0.0;
     /**
      * controls the mode for line length calculation
      */
@@ -130,5 +130,7 @@ protected:
     void doBack(LC_MouseEvent *pEvent, int status) override;
     void doFinish(bool updateTB) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 #endif // LC_ACTIONDRAWLINEFROMPOINTTOLINE_H

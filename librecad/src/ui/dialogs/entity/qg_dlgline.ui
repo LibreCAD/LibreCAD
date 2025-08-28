@@ -28,15 +28,15 @@
   <property name="windowTitle">
    <string>Line</string>
   </property>
-  <layout class="QVBoxLayout">
-   <item>
+  <layout class="QFormLayout" name="formLayout">
+   <item row="0" column="0">
     <widget class="QLabel" name="lId">
      <property name="text">
       <string>ID: </string>
      </property>
     </widget>
    </item>
-   <item>
+   <item row="1" column="0">
     <layout class="QHBoxLayout">
      <item>
       <layout class="QVBoxLayout">
@@ -220,7 +220,7 @@
      </item>
     </layout>
    </item>
-   <item>
+   <item row="2" column="0">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>

@@ -587,6 +587,8 @@ void QG_DlgOptionsGeneral::init(){
         bool anglesCounterClockwise = LC_GET_BOOL("AnglesCounterClockwise", true);
         rbDefAngleBasePositive->setChecked(anglesCounterClockwise);
         leDefAngleBaseZero->setText(defaultAnglesBase);
+
+        cbInteractiveInputInActionToolbarEnabled->setChecked(LC_GET_BOOL("InteractiveInputEnabled", true));
     }
     LC_GROUP_END();
 
@@ -890,6 +892,7 @@ void QG_DlgOptionsGeneral::ok(){
 
             LC_SET("AnglesBaseAngle", leDefAngleBaseZero->text());
             LC_SET("AnglesCounterClockwise", rbDefAngleBasePositive->isChecked());
+            LC_SET("InteractiveInputEnabled", cbInteractiveInputInActionToolbarEnabled->isChecked());
         }
         LC_GROUP_END();
 
@@ -1296,10 +1299,12 @@ void QG_DlgOptionsGeneral::initReferencePoints(){
     if (!ok) {
         pdsize = LC_DEFAULTS_PDSize;
     }
-    if (pdsize <= 0.0)
+    if (pdsize <= 0.0) {
         rbRelSize->setChecked(true);
-    else
+    }
+    else {
         rbAbsSize->setChecked(true);
+    }
 
     lePointSize->setText(QString::number(std::abs(pdsize), 'g', 6));
 

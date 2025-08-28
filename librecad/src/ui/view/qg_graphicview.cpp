@@ -235,7 +235,8 @@ void QG_GraphicView::editAction( RS_Entity& entity){
             break;
         }
         default:{
-            switchToAction(RS2::ActionModifyEntity, &entity);
+            m_actionContext->saveContextMenuActionContext(&entity,RS_Vector(false), entity.isSelected());
+            switchToAction(RS2::ActionModifyEntity);
         }
     }
 }
@@ -582,7 +583,10 @@ void QG_GraphicView::mousePressEvent(QMouseEvent* event){
 
 void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e){
     // LC_ERR << "MOUSE DOUBLE CLICK";
-    if (!getEventHandler()->hasAction()) {
+    if (getEventHandler()->hasAction()) {
+
+    }
+    else {
         auto defaultAction = getEventHandler()->getDefaultAction();
         RS_Vector clickPos;
         RS_Entity* entity = catchContextEntity(e, clickPos);
@@ -594,11 +598,18 @@ void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e){
                 invokeContextMenuForMouseEvent(e);
             }
         }
-        else if (defaultAction == nullptr) {
-            showEntityPropertiesDialog(entity);
-        }
-        else if (defaultAction->getStatus() == RS_ActionInterface::InitialActionStatus) {
-            showEntityPropertiesDialog(entity);
+        else {
+            if (e->button() == Qt::LeftButton && e->modifiers() == Qt::NoModifier) {
+                if (defaultAction == nullptr) {
+                    showEntityPropertiesDialog(entity);
+                }
+                else if (defaultAction->getStatus() == RS_ActionInterface::InitialActionStatus) {
+                    showEntityPropertiesDialog(entity);
+                }
+            }
+            else {
+                invokeContextMenuForMouseEvent(e);
+            }
         }
     }
     /*else {
@@ -1394,7 +1405,8 @@ void QG_GraphicView::setCursorHiding(bool state){
 }
 
 void QG_GraphicView::setCurrentQAction(QAction* q_action){
-    getEventHandler()->setQAction(q_action);
+    bool forcedActionKillAllowed = isForecedActionKillAllowed();
+    getEventHandler()->setQAction(q_action, forcedActionKillAllowed);
 
     if (m_recent_actions.contains(q_action)){
         m_recent_actions.removeOne(q_action);

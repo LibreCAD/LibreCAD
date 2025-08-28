@@ -26,6 +26,8 @@
 #include <QObject>
 #include <QString>
 
+#include "rs_graphic.h"
+
 class RS_Vector;
 class RS_Entity;
 class RS_EntityContainer;
@@ -84,6 +86,13 @@ public:
     static bool isStandardBlockName(const QString& blockName);
     static bool getArrowInfoByBlockName(const QString& blockName, ArrowInfo &found);
     static bool getArrowInfoByType(ArrowType type, ArrowInfo & found);
+    static void insertStandardArrowBlock(RS_EntityContainer* container, RS_BlockList* blocksList, ArrowInfo arrowInfo);
+    static void insertStandardArrowBlock(RS_EntityContainer* container, RS_BlockList* blocksList, ArrowInfo* arrowInfo);
+    static void collectUsedArrowTypes(const QList<LC_DimStyle*>& list, QSet<QString>& uniqueArrowBlockNames);
+    static void insertStandardArrowBlocks(RS_Graphic* graphic, const QList<LC_DimStyle*>& styles);
+
+    static void fillArrowBlockByEntities(RS_Block* block, ArrowType arrow);
+    static void insertStandardArrowBlock(RS_EntityContainer* container, RS_BlockList* blocksList, ArrowType arrowType);
     static void fillDefaultArrowTypes(std::vector<ArrowInfo>& arrowTypes);
     static bool isObliqueOrArchArrow(const QString& blockName);
 
@@ -95,6 +104,7 @@ protected:
 private:
     static std::vector<ArrowInfo> m_defaultArrowsInfo;
     static void init();
+    void insertStandardArrowBlocks(RS_EntityContainer* container);
 };
 
 #endif // LC_DIMARROWREGISTRY_H

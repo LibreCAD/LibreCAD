@@ -88,6 +88,14 @@ void RS_ActionDrawCircleCR::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     }
 }
 
+bool RS_ActionDrawCircleCR::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "radius") {
+        setRadius(distance);
+        return true;
+    }
+    return false;
+}
+
 void RS_ActionDrawCircleCR::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
     switch (status) {
         case SetCenter: {

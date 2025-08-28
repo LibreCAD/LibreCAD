@@ -116,8 +116,8 @@ protected:
     void doFinish(bool updateTB) override;
     void createPreviewEntities(GapData *data, QList<RS_Entity *> &list, bool startPointNoSelected) const;
     void updateMouseButtonHints() override;
-
     RS2::CursorType doGetMouseCursor(int status) override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 
 #endif // LC_ACTIONMODIFYLINEGAP_H

@@ -362,5 +362,12 @@
         <file alias="dim_regenerate.lci">dim_regenerate.svg</file>
         <file alias="dim_modify_style.lci">dim_modify_style.svg</file>
         <file alias="layer_list.lci">layer_list.svg</file>
+        <file alias="interactive_pick_distance.lci">interactive_pick_distance.svg</file>
+        <file alias="interactive_pick_point.lci">interactive_pick_point.svg</file>
+        <file alias="interactive_pick_angle.lci">interactive_pick_angle.svg</file>
+        <file alias="info_point.lci">info_point.svg</file>
+        <file alias="ui_corner_bottom.lci">ui_corner_bottom.svg</file>
+        <file alias="ui_corner_top.lci">ui_corner_top.svg</file>
+        <file alias="fullscreen.lci">fullscreen.svg</file>
     </qresource>
 </RCC>

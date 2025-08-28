@@ -73,6 +73,7 @@ protected:
     RS2::LineType getLineTypeForCenterLine() const;
     void setupCenterlinePenLayer(RS_Line* line) const;
     void doTrigger() override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 
 #endif // LC_ACTIONDRAWMIDLINE_H

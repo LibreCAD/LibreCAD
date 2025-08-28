@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>221</width>
-    <height>22</height>
+    <width>249</width>
+    <height>24</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -44,8 +44,8 @@
    <property name="bottomMargin">
     <number>1</number>
    </property>
-   <item row="0" column="0">
-    <widget class="QLabel" name="lLength">
+   <item row="0" column="3">
+    <widget class="QLabel" name="lNumber">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -53,7 +53,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Spacing:</string>
+      <string>Copies:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -82,8 +82,8 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="2">
-    <widget class="QLabel" name="lNumber">
+   <item row="0" column="0">
+    <widget class="QLabel" name="lLength">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -91,7 +91,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Copies:</string>
+      <string>Spacing:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -101,14 +101,7 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="3">
-    <widget class="QSpinBox" name="sbNumber">
-     <property name="toolTip">
-      <string>Number of copies</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="4">
+   <item row="0" column="5">
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -121,10 +114,33 @@
      </property>
     </spacer>
    </item>
+   <item row="0" column="4">
+    <widget class="QSpinBox" name="sbNumber">
+     <property name="toolTip">
+      <string>Number of copies</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QToolButton" name="tbPickSpacing">
+     <property name="toolTip">
+      <string>Pick spacing from drawing</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_distance.lci</normaloff>:/icons/interactive_pick_distance.lci</iconset>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../../../../res/icons/icons.qrc"/>
+ </resources>
  <connections/>
  <slots>
   <slot>updateDist()</slot>

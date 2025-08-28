@@ -30,6 +30,7 @@ LC_UCSSetOptions::LC_UCSSetOptions()
     ui->setupUi(this);
     connect(ui->cbFreeAngle, &QCheckBox::clicked, this, &LC_UCSSetOptions::cbFreeAngleClicked);
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_UCSSetOptions::onAngleEditingFinished);
+    pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);
 }
 
 LC_UCSSetOptions::~LC_UCSSetOptions(){
@@ -85,12 +86,9 @@ void LC_UCSSetOptions::setAngleToActionAndView(QString val) {
 void LC_UCSSetOptions::setAngleIsFreeToActionAndView(bool val) {
     ui->cbFreeAngle->setChecked(val);
     m_action->setFixedAngle(!val);
-    if (val){
-        ui->leAngle->setEnabled(false);
-    }
-    else{
-        ui->leAngle->setEnabled(true);
-    }
+    bool showAngle = !val;
+    ui->leAngle->setEnabled(showAngle);
+    ui->tbPickAngle->setEnabled(showAngle);
 }
 
 void LC_UCSSetOptions::onAngleEditingFinished() {

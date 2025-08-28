@@ -459,6 +459,30 @@ void LC_ActionDrawLineAngleRel::updateMouseButtonHints() {
     }
 }
 
+bool LC_ActionDrawLineAngleRel::doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) {
+    if (tag == "angle") {
+        setTickAngleDegrees(RS_Math::rad2deg(angleRad));
+        return true;
+    }
+    return false;
+}
+
+bool LC_ActionDrawLineAngleRel::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "length") {
+        setTickLength(distance);
+        return true;
+    }
+    if (tag == "offset") {
+        setTickOffset(distance);
+        return true;
+    }
+    if (tag == "snapDistance") {
+        setSnapDistance(distance);
+        return true;
+    }
+    return false;
+}
+
 LC_ActionOptionsWidget* LC_ActionDrawLineAngleRel::createOptionsWidget(){
     return new LC_LineAngleRelOptions();
 }
