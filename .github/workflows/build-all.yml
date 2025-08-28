@@ -311,12 +311,12 @@ jobs:
       - name: Install Qt6
         uses: jurplel/install-qt-action@v4
         with:
-          version: '6.9.*'
-          host: 'windows'
-          arch: 'win64_msvc2022_arm64_cross_compiled'
+          version: '6.10.*'
+          host: 'windows_arm64'
+          arch: 'win64_msvc2022_arm64'
           target: 'desktop'
           tools-only: 'false'
-          modules: 'qt3d qt5compat qtimageformats qtshadertools'
+          modules: 'qt5compat qtimageformats qtshadertools'
           tools: 'tools_cmake'
 
       - name: (3) Add MSBuild to PATH
