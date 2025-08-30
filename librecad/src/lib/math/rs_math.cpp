@@ -202,11 +202,11 @@ double RS_Math::correctAngle0ToPi(double a) {
     return std::abs(std::remainder(a, g_twoPi));
 }
 
-void RS_Math::calculateAngles(double &angle, double& complimentary, double& supplimentary, double& alt) {
+void RS_Math::calculateAngles(double &angle, double& complementary, double& supplementary, double& alt) {
     angle = correctAngle0ToPi(angle);
-    complimentary = M_PI_2 - angle;
-    supplimentary = M_PI - angle;
-    alt =  M_PI + supplimentary;
+    complementary = M_PI_2 - angle;
+    supplementary = M_PI - angle;
+    alt =  M_PI + supplementary;
 }
 
 /**

@@ -26,16 +26,20 @@
 
 #include "rs_actionmodifyentity.h"
 
-
+#include "lc_dlgdimension.h"
 #include "lc_entitypropertieseditor.h"
 #include "lc_quickinfowidget.h"
 #include "qc_applicationwindow.h"
+#include "qg_dlghatch.h"
+#include "qg_dlgmtext.h"
+#include "qg_dlgtext.h"
 #include "rs_debug.h"
-#include "rs_dialogfactoryinterface.h"
+#include "rs_dimension.h"
 #include "rs_entity.h"
 #include "rs_eventhandler.h"
 #include "rs_graphicview.h"
-#
+#include "rs_text.h"
+
 RS_ActionModifyEntity::RS_ActionModifyEntity(LC_ActionContext *actionContext)
 		:RS_PreviewActionInterface("Modify Entity", actionContext, RS2::ActionModifyEntity){
 }
@@ -128,19 +132,86 @@ void RS_ActionModifyEntity::doTrigger() {
             setDisplaySelected(true);
 
             // m_graphicView->setForcedActionKillAllowed(false);
-            m_clonedEntity = m_entity->clone();
+
             m_propertiesEditor = new LC_EntityPropertiesEditor(m_actionContext, this);
             setStatus(InEditing);
 
             m_graphicView->setForcedActionKillAllowed(false);
-            m_propertiesEditor->editEntity(m_actionContext->getGraphicView(), m_clonedEntity, m_viewport);
 
+            LC_EntityPropertiesDlg* editDialog {nullptr};
+            QWidget* parent = QC_ApplicationWindow::getAppWindow().get();
+            m_clonedEntity = m_entity->clone();
+            bool hasDialog = true;
+            switch (m_entity->rtti()) {
+                case RS2::EntityPoint:
+                case RS2::EntityLine:
+                case RS2::EntityArc:
+                case RS2::EntityCircle:
+                case RS2::EntityEllipse:
+                case RS2::EntityParabola:
+                case RS2::EntitySpline:
+                case RS2::EntitySplinePoints:
+                case RS2::EntityInsert:
+                case RS2::EntityPolyline:
+                case RS2::EntityImage: {
+                    // editing via delayed invocation in editor to support interactive input
+                    m_propertiesEditor->editEntity(parent, m_clonedEntity, m_viewport);
+                    hasDialog = false;
+                    break;
+                }
+                case RS2::EntityDimAligned:
+                case RS2::EntityDimAngular:
+                case RS2::EntityDimDiametric:
+                case RS2::EntityDimRadial:
+                case RS2::EntityDimArc:
+                case RS2::EntityDimOrdinate:
+                case RS2::EntityDimLinear: {
+                    editDialog = new LC_DlgDimension(parent, m_viewport, static_cast<RS_Dimension*>(m_clonedEntity));
+                    break;
+                }
+                case RS2::EntityMText: {
+                    editDialog = new QG_DlgMText(parent, m_viewport, static_cast<RS_MText*>(m_clonedEntity), false);
+                    break;
+                }
+                case RS2::EntityText: {
+                    editDialog = new QG_DlgText(parent, m_viewport, static_cast<RS_Text*>(m_clonedEntity), false);
+                    break;
+                }
+                case RS2::EntityHatch: {
+                    editDialog = new QG_DlgHatch(parent, m_viewport, static_cast<RS_Hatch*>(m_clonedEntity), false);
+                    break;
+                }
+                default:
+                    hasDialog = false;
+                    break;
+            }
 
-            /*if (RS_DIALOGFACTORY->requestModifyEntityDialog(m_clonedEntity, m_viewport)) {
+            if (hasDialog) {
+                m_graphicView->setForcedActionKillAllowed(false);
+                if (editDialog->exec()) {
+                    editDialog->updateEntity();
+                    m_container->addEntity(m_clonedEntity);
 
-            }*/
-            // m_graphicView->setForcedActionKillAllowed(true);
-        } else {
+                    if (m_document != nullptr) {
+                        undoCycleReplace(m_entity, m_clonedEntity);
+                    }
+                    if (!selected) {
+                        m_clonedEntity->setSelected(false);
+                    }
+                }
+                else {
+                    if (!selected) {
+                        m_entity->setSelected(false);
+                    }
+                    delete m_clonedEntity;
+                }
+                m_graphicView->setForcedActionKillAllowed(true);
+                m_graphicView->redraw(RS2::RedrawDrawing);
+                setStatus(ShowDialog);
+                delete editDialog;
+            }
+        }
+        else {
             RS_DEBUG->print("RS_ActionModifyEntity::trigger: Entity is NULL\n");
         }
     }

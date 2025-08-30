@@ -28,6 +28,7 @@
 #include "lc_actioncontext.h"
 #include "lc_dlgentityproperties.h"
 #include "lc_latecompletionrequestor.h"
+#include "qc_applicationwindow.h"
 #include "rs_graphicview.h"
 
 LC_EntityPropertiesEditor::LC_EntityPropertiesEditor(LC_ActionContext* actionContext,  LC_LateCompletionRequestor* requestor)
@@ -73,25 +74,28 @@ void LC_EntityPropertiesEditor::showEntityPropertiesDialog() {
         inputType = LC_ActionContext::InteractiveInputInfo::NOTNEEDED;
     }
 
-    auto* dlg = new LC_DlgEntityProperties(m_parent, m_viewport, m_entity,
-        inputType,  interactiveInputTag, interactiveInputValueOne, interactiveInputValueTwo);
+    auto* dlg = new LC_DlgEntityProperties(m_parent, m_viewport, m_entity, inputType, interactiveInputTag,
+                                           interactiveInputValueOne, interactiveInputValueTwo);
 
     int result = dlg->exec();
     if ( result == QDialog::Accepted) {
         auto interactiveInputRequestType = dlg->isInteractiveInputRequested();
         if (interactiveInputRequestType == LC_ActionContext::InteractiveInputInfo::NOTNEEDED) { // normal closing of the dialog
+            QC_ApplicationWindow::getAppWindow()->updateActionsAndWidgetsForPrintPreview(false);
             m_actionContext->interactiveInputRequestCancel();
             m_lateCompletionRequestor->onLateRequestCompleted(false);
             delete dlg;
         }
         else { // interactive input requested
             m_actionContext->interactiveInputStart(interactiveInputRequestType, this, dlg->getInteractiveInputTag());
+            QC_ApplicationWindow::getAppWindow()->updateActionsAndWidgetsForPrintPreview(true);
             delete dlg;
         }
     }
     else { // notify about cancel of the dialog
         delete dlg;
         m_actionContext->interactiveInputRequestCancel();
+        QC_ApplicationWindow::getAppWindow()->updateActionsAndWidgetsForPrintPreview(false);
         m_lateCompletionRequestor->onLateRequestCompleted(true);
     }
 }

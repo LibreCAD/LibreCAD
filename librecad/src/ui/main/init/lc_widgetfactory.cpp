@@ -429,6 +429,18 @@ void LC_WidgetFactory::initStatusBar() {
     m_appWin->m_statusbarManager = new LC_QTStatusbarManager(status_bar);
     m_appWin->m_statusbarManager->loadSettings();
 
+    auto selectionActionsButton = m_appWin->m_selectionWidget->tbSelectionActions;
+    bool showExtendedActionsInStatusBar = true;
+    if (showExtendedActionsInStatusBar) {
+        selectionActionsButton->setPopupMode(QToolButton::MenuButtonPopup);
+        selectionActionsButton->setDefaultAction(m_agm->getActionByName("DeselectAll"));
+        selectionActionsButton->addActions(m_actionFactory->select_actions);
+        selectionActionsButton->setAutoRaise(true);
+    }
+    else {
+        selectionActionsButton->setVisible(false);
+    }
+
     bool useClassicalStatusBar = LC_GET_ONE_BOOL("Startup", "UseClassicStatusBar", false);
     if (useClassicalStatusBar) {
         status_bar->addWidget(m_appWin->m_coordinateWidget);

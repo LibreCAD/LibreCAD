@@ -25,9 +25,6 @@
 #define LC_MENUACTIVATOR_H
 #include <QString>
 
-namespace RS2 {
-    enum EntityType : unsigned;
-}
 
 class QMouseEvent;
 

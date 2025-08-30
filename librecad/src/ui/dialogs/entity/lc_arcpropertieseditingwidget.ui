@@ -319,22 +319,6 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="0">
-       <widget class="QCheckBox" name="cbReversed">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="toolTip">
-         <string>Defines whether arc is reversed (clockwise)</string>
-        </property>
-        <property name="text">
-         <string>Reversed</string>
-        </property>
-       </widget>
-      </item>
       <item row="6" column="0">
        <spacer name="spacer58">
         <property name="orientation">
@@ -350,6 +334,22 @@
          </size>
         </property>
        </spacer>
+      </item>
+      <item row="5" column="0" colspan="3">
+       <widget class="QCheckBox" name="cbReversed">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>Defines whether arc is reversed (clockwise)</string>
+        </property>
+        <property name="text">
+         <string>Reversed</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

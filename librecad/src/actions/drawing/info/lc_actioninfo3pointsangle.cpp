@@ -46,12 +46,12 @@ void LC_ActionInfo3PointsAngle::doTrigger() {
     QString p3X = formatLinear(ucsPoint3.x);
     QString p3Y = formatLinear(ucsPoint3.y);
 
-    double angleComplimentary, angleSupplimentary, alt;
-    RS_Math::calculateAngles(angle, angleComplimentary, angleSupplimentary,  alt);
+    double angleComplementary, angleSupplementary, alt;
+    RS_Math::calculateAngles(angle, angleComplementary, angleSupplementary,  alt);
 
     QString strAngle = formatAngleRaw(angle);
-    QString complimenatryStr = formatAngleRaw(angleComplimentary);
-    QString supplimentaryStr = formatAngleRaw(angleSupplimentary);
+    QString complimenatryStr = formatAngleRaw(angleComplementary);
+    QString supplimentaryStr = formatAngleRaw(angleSupplementary);
     QString altStr = formatAngleRaw(alt);
 
     const QString &msgTemplate = tr("Angle: %1\nComplementary: %2\nSupplementary: %3\nAlternative: %4\nStart Edge Point: (%5 , %6)\nIntersection Point :(%7, %8)\nEnd Edge Point: (%9 , %10)");
@@ -198,13 +198,13 @@ void LC_ActionInfo3PointsAngle::updateInfoCursor(const RS_Vector &mouse, const R
     if (m_infoCursorOverlayPrefs->enabled) {
         double angle = LC_LineMath::angleFor3Points(m_point1, point2, mouse);
 
-        double angleComplimentary, angleSupplimentary, angleAlt;
-        RS_Math::calculateAngles(angle, angleComplimentary, angleSupplimentary, angleAlt);
+        double angleComplementary, angleSupplementary, angleAlt;
+        RS_Math::calculateAngles(angle, angleComplementary, angleSupplementary, angleAlt);
 
         msg(tr("Angle Info"))
             .rawAngle(tr("Angle:"), angle)
-            .rawAngle(tr("Complimentary:"), angleComplimentary)
-            .rawAngle(tr("Supplementary:"), angleSupplimentary)
+            .rawAngle(tr("Complementary:"), angleComplementary)
+            .rawAngle(tr("Supplementary:"), angleSupplementary)
             .rawAngle(tr("Alternative: "), angleAlt)
             .vector(tr("From:"), startPoint)
             .vector(tr("Intersection:"), point2)

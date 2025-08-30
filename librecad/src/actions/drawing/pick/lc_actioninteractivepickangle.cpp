@@ -216,13 +216,13 @@ void LC_ActionInteractivePickAngle::updateInfoCursor2(const RS_Vector &point2, c
         double angle2 = intersection.angleTo(point2);
         double angle = LC_LineMath::angleFor3Points(m_point1, intersection, point2);
 
-        double angleComplimentary, angleSupplimentary, angleAlt;
-        RS_Math::calculateAngles(angle, angleComplimentary, angleSupplimentary, angleAlt);
+        double angleComplementary, angleSupplementary, angleAlt;
+        RS_Math::calculateAngles(angle, angleComplementary, angleSupplementary, angleAlt);
 
         msgStart().string(tr("Angle Info"))
         .rawAngle(tr("Angle:"), angle)
-        .rawAngle(tr("Complementary:"), angleComplimentary)
-        .rawAngle(tr("Supplementary:"), angleSupplimentary)
+        .rawAngle(tr("Complementary:"), angleComplementary)
+        .rawAngle(tr("Supplementary:"), angleSupplementary)
         .rawAngle(tr("Alternative: "), angleAlt)
         .vector(tr("Intersection:"), intersection)
                .wcsAngle(tr("Line 1 Angle:"), angle1)
@@ -244,9 +244,9 @@ void LC_ActionInteractivePickAngle::onMouseLeftButtonRelease(int status, LC_Mous
                     m_angle = RS_Math::correctAngle0ToPi(ucsAngle);
 
                     if (e->isShift) {
-                        double angleComplimentary, angleSupplimentary, angleAlt;
-                        RS_Math::calculateAngles(m_angle, angleComplimentary, angleSupplimentary, angleAlt);
-                        m_angle = angleSupplimentary;
+                        double angleComplementary, angleSupplementary, angleAlt;
+                        RS_Math::calculateAngles(m_angle, angleComplementary, angleSupplementary, angleAlt);
+                        m_angle = angleSupplementary;
                     }
 
                     m_mayTrigger = true;
@@ -331,9 +331,9 @@ void LC_ActionInteractivePickAngle::onCoordinateEvent(int status,[[maybe_unused]
             m_mayTrigger = true;
             m_angle = LC_LineMath::angleFor3Points(m_point1, m_point2, m_point3);
             if (m_pickAlternative) {
-                double angleComplimentary, angleSupplimentary, angleAlt;
-                RS_Math::calculateAngles(m_angle, angleComplimentary, angleSupplimentary, angleAlt);
-                m_angle = angleSupplimentary;
+                double angleComplementary, angleSupplementary, angleAlt;
+                RS_Math::calculateAngles(m_angle, angleComplementary, angleSupplementary, angleAlt);
+                m_angle = angleSupplementary;
             }
             trigger();
             break;
@@ -359,7 +359,7 @@ void LC_ActionInteractivePickAngle::updateMouseButtonHints() {
             break;
         }
         case SetSecondLine: {
-            updateMouseWidgetTRBack(tr("Specify second line"), MOD_SHIFT_AND_CTRL(tr("Pick Complimentary"), tr("Pick Supplementary")));
+            updateMouseWidgetTRBack(tr("Specify second line"), MOD_SHIFT_AND_CTRL(tr("Pick Complementary"), tr("Pick Supplementary")));
             break;
         }
         default:
@@ -372,13 +372,13 @@ void LC_ActionInteractivePickAngle::updateInfoCursor(const RS_Vector &mouse, con
 
         double angle = LC_LineMath::angleFor3Points(m_point1, point2, mouse);
 
-        double angleComplimentary, angleSupplimentary, angleAlt;
-        RS_Math::calculateAngles(angle, angleComplimentary, angleSupplimentary, angleAlt);
+        double angleComplementary, angleSupplementary, angleAlt;
+        RS_Math::calculateAngles(angle, angleComplementary, angleSupplementary, angleAlt);
 
         msg(tr("Pick Angle"))
             .rawAngle(tr("Angle:"), angle)
-            .rawAngle(tr("Complimentary:"), angleComplimentary)
-            .rawAngle(tr("Supplementary:"), angleSupplimentary)
+            .rawAngle(tr("Complementary:"), angleComplementary)
+            .rawAngle(tr("Supplementary:"), angleSupplementary)
             .rawAngle(tr("Alternative: "), angleAlt)
             .vector(tr("From:"), startPoint)
             .vector(tr("Intersection:"), point2)

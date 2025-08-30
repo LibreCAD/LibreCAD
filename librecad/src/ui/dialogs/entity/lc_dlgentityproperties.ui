@@ -95,7 +95,7 @@
             </size>
            </property>
            <property name="toolTip">
-            <string>Layer of ellipse</string>
+            <string>Layer of entity</string>
            </property>
           </widget>
          </item>

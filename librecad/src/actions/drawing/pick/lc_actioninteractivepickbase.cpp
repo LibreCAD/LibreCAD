@@ -23,6 +23,8 @@
 
 #include "lc_actioninteractivepickbase.h"
 
+#include <QKeyEvent>
+
 #include "lc_actioncontext.h"
 
 LC_ActionInteractivePickBase::LC_ActionInteractivePickBase(const char* name, LC_ActionContext* actionContext, RS2::ActionType actionType)
@@ -33,6 +35,19 @@ void LC_ActionInteractivePickBase::doTrigger() {
         storeInteractiveInput();
     }
     finish();
+}
+
+void LC_ActionInteractivePickBase::keyPressEvent(QKeyEvent* e) {
+    switch (e->key()) {
+        case Qt::Key_Escape: {
+            skipInteractiveInput();
+            finish(false);
+            break;
+        }
+        default: {
+            RS_PreviewActionInterface::keyPressEvent(e);
+        }
+    }
 }
 
 void LC_ActionInteractivePickBase::skipInteractiveInput() {

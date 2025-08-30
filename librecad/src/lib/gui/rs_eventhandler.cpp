@@ -392,7 +392,6 @@ bool RS_EventHandler::setCurrentAction(std::shared_ptr<RS_ActionInterface> actio
  * is launched to reduce confusion.
  */
 void RS_EventHandler::killSelectActions() {
-
     for (auto it=m_currentActions.begin();it != m_currentActions.end();){
         RS2::ActionType rtti = (*it)->rtti();
         if (rtti == RS2::ActionSelectSingle ||

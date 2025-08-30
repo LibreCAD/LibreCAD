@@ -147,7 +147,7 @@
    <item row="0" column="2">
     <widget class="QToolButton" name="tbPickMajor">
      <property name="toolTip">
-      <string>Pick major action from drawing</string>
+      <string>Pick major actions from drawing</string>
      </property>
      <property name="text">
       <string/>

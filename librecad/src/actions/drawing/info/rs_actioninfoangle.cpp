@@ -86,17 +86,17 @@ void RS_ActionInfoAngle::doTrigger() {
             if (m_actionData->m_entity1 != nullptr){
                 auto line = dynamic_cast<RS_Line*>(m_actionData->m_entity1);
                 double wcsLineAngle = line->getAngle1();
-                double angleComplimentary, angleSupplimentary, alt;
+                double angleComplementary, angleSupplementary, alt;
 
                 double uscsAngle = toUCSBasisAngle(wcsLineAngle);
-                RS_Math::calculateAngles(uscsAngle, angleComplimentary, angleSupplimentary,  alt);
+                RS_Math::calculateAngles(uscsAngle, angleComplementary, angleSupplementary,  alt);
 
                /*angleComplimentary = toUCSBasisAngle(angleComplimentary);
                 angleSupplimentary = toUCSBasisAngle(angleSupplimentary);*/
 
                 QString strAngle = formatAngleRaw(uscsAngle);
-                QString complimenatryStr = formatAngleRaw(angleComplimentary);
-                QString supplimentaryStr = formatAngleRaw(angleSupplimentary);
+                QString complimenatryStr = formatAngleRaw(angleComplementary);
+                QString supplimentaryStr = formatAngleRaw(angleSupplementary);
                 QString altStr = formatAngleRaw(alt);
 
                 commandMessage("---");
@@ -118,12 +118,12 @@ void RS_ActionInfoAngle::doTrigger() {
                     double angle2 = m_actionData->intersection.angleTo(m_actionData->point2);
                     double angle = remainder(angle2 - angle1, 2. * M_PI);
 
-                    double angleComplimentary, angleSupplimentary, alt;
-                    RS_Math::calculateAngles(angle, angleComplimentary, angleSupplimentary,  alt);
+                    double angleComplementary, angleSupplementary, alt;
+                    RS_Math::calculateAngles(angle, angleComplementary, angleSupplementary,  alt);
 
                     QString str = formatAngleRaw(angle);
-                    QString complimenatryStr = formatAngleRaw(angleComplimentary);
-                    QString supplimentaryStr = formatAngleRaw(angleSupplimentary);
+                    QString complimenatryStr = formatAngleRaw(angleComplementary);
+                    QString supplimentaryStr = formatAngleRaw(angleSupplementary);
                     QString altStr = formatAngleRaw(alt);
 
                     RS_Vector ucsIntersection = toUCS(m_actionData->intersection);
@@ -265,14 +265,14 @@ RS2::CursorType RS_ActionInfoAngle::doGetMouseCursor([[maybe_unused]] int status
 void RS_ActionInfoAngle::updateInfoCursor1(RS_Line* line) {
     if (m_infoCursorOverlayPrefs->enabled) {
         double wcsLineAngle = line->getAngle1();
-        double angleComplimentary, angleSupplimentary, alt;
+        double angleComplementary, angleSupplementary, alt;
         double uscsAngle = toUCSBasisAngle(wcsLineAngle);
-        RS_Math::calculateAngles(uscsAngle, angleComplimentary, angleSupplimentary,  alt);
+        RS_Math::calculateAngles(uscsAngle, angleComplementary, angleSupplementary,  alt);
 
         msgStart().string(tr("Angle Info"))
                   .rawAngle(tr("Angle:"), uscsAngle)
-                  .rawAngle(tr("Complementary:"), angleComplimentary)
-                  .rawAngle(tr("Supplementary:"), angleSupplimentary)
+                  .rawAngle(tr("Complementary:"), angleComplementary)
+                  .rawAngle(tr("Supplementary:"), angleSupplementary)
                   .rawAngle(tr("Alternative: "), alt)
                   .vector(tr("Line From:"), line->getStartpoint())
                   .vector(tr("Line To:"), line->getEndpoint())
@@ -288,13 +288,13 @@ void RS_ActionInfoAngle::updateInfoCursor2(const RS_Vector &point2, const RS_Vec
         double angle1 = intersection.angleTo(m_actionData->point1);
         double angle2 = intersection.angleTo(point2);
 
-        double angleComplimentary, angleSupplimentary, angleAlt;
-        RS_Math::calculateAngles(angle, angleComplimentary, angleSupplimentary, angleAlt);
+        double angleComplementary, angleSupplementary, angleAlt;
+        RS_Math::calculateAngles(angle, angleComplementary, angleSupplementary, angleAlt);
 
         msgStart().string(tr("Angle Info"))
         .rawAngle(tr("Angle:"), angle)
-        .rawAngle(tr("Complementary:"), angleComplimentary)
-        .rawAngle(tr("Supplementary:"), angleSupplimentary)
+        .rawAngle(tr("Complementary:"), angleComplementary)
+        .rawAngle(tr("Supplementary:"), angleSupplementary)
         .rawAngle(tr("Alternative: "), angleAlt)
         .vector(tr("Intersection:"), intersection)
                .wcsAngle(tr("Line 1 Angle:"), angle1)

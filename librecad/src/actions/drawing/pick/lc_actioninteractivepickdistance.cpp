@@ -190,7 +190,7 @@ void LC_ActionInteractivePickDistance::onMouseLeftButtonRelease(int status, LC_M
     RS_Vector snap = e->snapPoint;
     switch (status){
         case SetPoint1:{
-            RS_Entity* entity = catchEntity(e->graphPoint, g_enTypeList, RS2::ResolveAllButTextImage);
+            RS_Entity* entity = catchEntity(e->graphPoint, g_enTypeList, RS2::ResolveAll);
             if (entity != nullptr) {
                 if (e->isShift) {
                     if (isLine(entity)) {

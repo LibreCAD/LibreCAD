@@ -81,7 +81,7 @@ namespace RS_Math {
     //! \brief correct angle to be unsigned [0, +PI)
     double correctAngle0ToPi(double a);
 
-    void calculateAngles(double &angle, double &complimentary, double &supplimentary, double &alt);
+    void calculateAngles(double &angle, double &complementary, double &supplementary, double &alt);
 
     //! \brief angular difference
     double getAngleDifference(double a1, double a2, bool reversed = false);

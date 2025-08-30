@@ -92,6 +92,11 @@ void LC_MenuFactory::doCreateMenus(QMenuBar* menu_bar, bool firstCreation) {
         createEditMenu(menu_bar, topMenuMenus);
         createViewMenu(menu_bar, topMenuMenus);
         createPluginsMenu(menu_bar, topMenuMenus);
+        if (m_menuOptions.expandToolsMenu) {
+            auto select = menu(tr("&Select"), "select", menu_bar);
+            select->addActions(m_actionFactory->select_actions);
+            topMenuMenus << select;
+        }
         createToolsMenu(menu_bar, topMenuMenus);
         createWorkspaceMenu(menu_bar, topMenuMenus);
         prepareWorkspaceMenuComponents();
@@ -106,6 +111,9 @@ void LC_MenuFactory::doCreateMenus(QMenuBar* menu_bar, bool firstCreation) {
         topMenuMenus << m_menuView;
         topMenuMenus << m_menuPlugins;
         if (m_menuOptions.expandToolsMenu) {
+            auto select = menu(tr("&Select"), "select", menu_bar);
+            select->addActions(m_actionFactory->select_actions);
+            topMenuMenus << select;
             // fixme - sand - icons - potentially this may lead to the waste if menus are switched often (which is hardly the case but still).
             // this is due to the fact that menubar.clear() does not delete original actions/sub menus, but just removes them from the list.
             // From the other side, as menubar is the owner for them, they will be deleted as menu bar will be deleted.

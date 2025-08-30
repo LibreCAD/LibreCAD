@@ -138,7 +138,6 @@ void RS_ActionDefault::keyPressEvent(QKeyEvent *e){
         default:
             e->ignore();
     }
-
 }
 
 void RS_ActionDefault::keyReleaseEvent(QKeyEvent *e){

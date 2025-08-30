@@ -27,6 +27,8 @@
 #include "rs_math.h"
 #include "ui_lc_insertpropertieseditingwidget.h"
 
+#define ALLOW_PICK_SCALE false
+
 LC_InsertPropertiesEditingWidget::LC_InsertPropertiesEditingWidget(QWidget *parent)
     : LC_EntityPropertiesEditorWidget(parent)
     , ui(new Ui::LC_InsertPropertiesEditingWidget){
@@ -40,6 +42,10 @@ LC_InsertPropertiesEditingWidget::LC_InsertPropertiesEditingWidget(QWidget *pare
     connect(ui->leCols, &QLineEdit::editingFinished, this, &LC_InsertPropertiesEditingWidget::onRowsEditingFinished);
     connect(ui->leColSpacing, &QLineEdit::editingFinished, this, &LC_InsertPropertiesEditingWidget::onSpacingEditingFinished);
     connect(ui->leRowSpacing, &QLineEdit::editingFinished, this, &LC_InsertPropertiesEditingWidget::onSpacingEditingFinished);
+    if (!ALLOW_PICK_SCALE) {
+        ui->tbPIckScaleX->setVisible(false);
+        ui->tbPIckScaleY->setVisible(false);
+    }
 }
 
 LC_InsertPropertiesEditingWidget::~LC_InsertPropertiesEditingWidget(){
@@ -73,8 +79,10 @@ void LC_InsertPropertiesEditingWidget::onSpacingEditingFinished() {
 
 void LC_InsertPropertiesEditingWidget::setupInteractiveInputWidgets() {
     pickPointSetup(ui->wPickInsertionPoint, "insert", ui->leInsertionPointX, ui->leInsertionPointY);
-    pickDistanceSetup(ui->tbPIckScaleX,  "scaleX",ui->leScaleX);
-    pickDistanceSetup(ui->tbPIckScaleY, "scaleY",ui->leScaleY);
+    if (!ALLOW_PICK_SCALE) {
+        pickDistanceSetup(ui->tbPIckScaleX,  "scaleX",ui->leScaleX);
+        pickDistanceSetup(ui->tbPIckScaleY, "scaleY",ui->leScaleY);
+    }
     pickAngleSetup(ui->tbPickAngle, "angle",ui->leAngle);
     pickDistanceSetup(ui->tbPickRowSpacing,  "rowSpacing",ui->leRowSpacing);
     pickDistanceSetup(ui->tbPickRowSpacing,  "colSpacing",ui->leColSpacing);

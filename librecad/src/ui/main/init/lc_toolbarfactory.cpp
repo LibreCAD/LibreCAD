@@ -163,13 +163,14 @@ QToolBar * LC_ToolbarFactory::createEntityLayersToolbar(const QSizePolicy  &tbPo
                 "EntityLayerActivate",
             }, 1);
 
-    QToolButton *btn = new QToolButton;
+    auto *btn = new QToolButton;
     btn->setDefaultAction(m_agm->getActionByName("EntityLayerView"));
     btn->setPopupMode(QToolButton::ToolButtonPopupMode::MenuButtonPopup);
     btn->addAction(m_agm->getActionByName("EntityLayerHideOthers"));
     btn->addAction(m_agm->getActionByName("EntityLayerLock"));
     btn->addAction(m_agm->getActionByName("EntityLayerConstruction"));
     btn->addAction(m_agm->getActionByName("EntityLayerPrint"));
+    btn->addAction(m_agm->getActionByName("LayersDefreezeAll"));
 
     result->addWidget(btn);
 

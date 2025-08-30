@@ -1567,18 +1567,36 @@ bool QC_ApplicationWindow::tryCloseAllBeforeExist() {
  */
 void QC_ApplicationWindow::keyPressEvent(QKeyEvent *e) {
     switch (e->key()) {
-        case Qt::Key_Escape:
-            slotKillAllActions();
-            // fall-through
+        case Qt::Key_Escape: {
+            bool doDefaultProcessing = true;
+            RS_GraphicView *graphicView = getCurrentGraphicView();
+            if (graphicView != nullptr) {
+                auto currentAction = m_actionHandler->getCurrentAction();
+                RS2::ActionType actionType = currentAction->rtti();
+                if (RS2::isInteractiveInputAction(actionType)) {
+                    graphicView->keyPressEvent(e);
+                    e->accept();
+                    doDefaultProcessing = false;
+                }
+            }
+            if (doDefaultProcessing){
+                slotKillAllActions();
+                onEnterKey();
+                e->accept();
+            }
+            break;
+        }
+
         case Qt::Key_Return:
         case Qt::Key_Enter:
+            slotKillAllActions();
             onEnterKey();
             e->accept();
             break;
 
         case Qt::Key_Plus:
         case Qt::Key_Equal:
-            m_actionHandler-> setCurrentAction(RS2::ActionZoomIn);
+            m_actionHandler->setCurrentAction(RS2::ActionZoomIn);
             e->accept();
             break;
 

@@ -32,6 +32,7 @@ public:
     explicit LC_ActionInteractivePickBase(const char* name, LC_ActionContext* actionContext, RS2::ActionType actionType);
     void doTrigger() override;
     ~LC_ActionInteractivePickBase() override = default;
+    void keyPressEvent(QKeyEvent* e) override;
 protected:
     void skipInteractiveInput();
     void storeInteractiveInput();

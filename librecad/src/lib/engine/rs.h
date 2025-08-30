@@ -503,6 +503,12 @@ namespace RS2 {
         ActionLast
     };
 
+    inline bool isInteractiveInputAction(ActionType type) {
+        return type == ActionInteractivePickPoint ||
+               type == ActionInteractivePickLength ||
+               type == ActionInteractivePickAngle;
+    }
+
     /**
     * Entity ending. Used for returning which end of an entity is meant.
      */

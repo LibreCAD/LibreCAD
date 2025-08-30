@@ -396,7 +396,7 @@
         </property>
        </widget>
       </item>
-      <item row="7" column="0">
+      <item row="7" column="0" colspan="3">
        <widget class="QCheckBox" name="cbReversed">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">

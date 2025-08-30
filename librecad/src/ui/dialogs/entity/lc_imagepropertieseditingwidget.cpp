@@ -31,6 +31,8 @@
 #include "rs_units.h"
 #include "ui_lc_imagepropertieseditingwidget.h"
 
+#define ALLOW_PICK_SCALE false
+
 LC_ImagePropertiesEditingWidget::LC_ImagePropertiesEditingWidget(QWidget *parent)
     : LC_EntityPropertiesEditorWidget(parent)
     , ui(new Ui::LC_ImagePropertiesEditingWidget){
@@ -44,6 +46,9 @@ LC_ImagePropertiesEditingWidget::LC_ImagePropertiesEditingWidget(QWidget *parent
     connect(ui->leDPI, &QLineEdit::editingFinished, this, &LC_ImagePropertiesEditingWidget::onDPIChanged);
     connect(ui->pbFile, &QPushButton::toggled, this,&LC_ImagePropertiesEditingWidget::onImageFileClick);
     connect(ui->lePath, &QLineEdit::textChanged, this, &LC_ImagePropertiesEditingWidget::onPathChanged);
+    if (!ALLOW_PICK_SCALE) {
+        ui->tbPickScale->setVisible(false);
+    }
 }
 
 LC_ImagePropertiesEditingWidget::~LC_ImagePropertiesEditingWidget(){
@@ -115,6 +120,8 @@ void LC_ImagePropertiesEditingWidget::setupInteractiveInputWidgets() {
     pickPointSetup(ui->wPickInsertionPoint, "insert", ui->leInsertX, ui->leInsertY);
     pickDistanceSetup(ui->tbPickWidth, "width", ui->leWidth);
     pickDistanceSetup(ui->tbPickHeight, "height", ui->leHeight);
-    pickDistanceSetup(ui->tbPickScale, "scale", ui->leScale);
     pickAngleSetup(ui->tbPickAngle, "angle", ui->leAngle);
+    if (!ALLOW_PICK_SCALE) {
+        pickDistanceSetup(ui->tbPickScale, "scale", ui->leScale);
+    }
 }
