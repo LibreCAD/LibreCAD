@@ -34,7 +34,7 @@
      <item>
       <widget class="QToolButton" name="tbAddView">
        <property name="toolTip">
-        <string>Create vew for current zoom and offset of drawing</string>
+        <string>Create view for current zoom and offset of drawing</string>
        </property>
        <property name="styleSheet">
         <string notr="true"/>
