@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>215</width>
+    <width>239</width>
     <height>38</height>
    </rect>
   </property>
@@ -70,20 +70,20 @@
    <item row="0" column="2">
     <widget class="QLabel" name="lLabel">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="minimumSize">
       <size>
-       <width>46</width>
+       <width>50</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>120</width>
+       <width>16777215</width>
        <height>16777215</height>
       </size>
      </property>
@@ -104,20 +104,20 @@
    <item row="0" column="3">
     <widget class="QLabel" name="lLabelLength">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="minimumSize">
       <size>
-       <width>65</width>
+       <width>85</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>600</width>
+       <width>16777215</width>
        <height>16777215</height>
       </size>
      </property>
@@ -151,14 +151,14 @@
    <item row="1" column="2">
     <widget class="QLabel" name="lEntities">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="maximumSize">
       <size>
-       <width>120</width>
+       <width>16777215</width>
        <height>16777215</height>
       </size>
      </property>
@@ -185,14 +185,14 @@
    <item row="1" column="3">
     <widget class="QLabel" name="lTotalLength">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="maximumSize">
       <size>
-       <width>120</width>
+       <width>16777215</width>
        <height>16777215</height>
       </size>
      </property>

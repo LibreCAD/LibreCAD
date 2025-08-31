@@ -39,28 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Markoa</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Gorde</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Markoa</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Gorde</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/dialogs/entity/LC_DlgParabola.ui" line="26"/>
@@ -278,10 +256,6 @@
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="189"/>
         <source>Select arc entity</source>
         <translation>Hautatu arku entitatea</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="192"/>
@@ -581,17 +555,9 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>Lehen puntua adierazi</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="233"/>
         <source>Specify second point</source>
         <translation>Bigarren puntua aukeratu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="236"/>
@@ -877,25 +843,9 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawLinePolygonCenTan</name>
     <message>
-        <source>Specify center</source>
-        <translation type="vanished">Zehaztu zentroa</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon3.cpp" line="51"/>
         <source>Specify a tangent</source>
         <translation>Zehaztu ukitzailea</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Sartu zenbakia:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Ez da baliozko zenbakia. Saiatu 1..9999</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ez da baliozko adierazpena</translation>
     </message>
 </context>
 <context>
@@ -1253,10 +1203,6 @@ or [%2]</source>
         <translation>Lehen kontrol puntua zehaztu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
         <source>Specify next control point or [%1]</source>
         <translation>Hurrengo kontrol puntua zehaztu edo [%1]</translation>
@@ -1579,19 +1525,6 @@ or [%2]</source>
         <translation>Zirkulua &amp;Inscribed</translation>
     </message>
     <message>
-        <source>Tangential 2 Circles, Radius</source>
-        <comment>circle tangential with two circles, and given radius</comment>
-        <translation type="vanished">Tangente 2 Zirkulu, Erradioa</translation>
-    </message>
-    <message>
-        <source>Tangential 2 Circles, 1 Point</source>
-        <translation type="vanished">Tangente 2 Zirkulu, Puntu 1</translation>
-    </message>
-    <message>
-        <source>Tangential &amp;3 Circles</source>
-        <translation type="vanished">Tangente &amp;3 Zirkulu</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
         <source>Tangential, 2 P&amp;oints</source>
         <translation>Tangente, 2 P&amp;untu</translation>
@@ -1687,10 +1620,6 @@ or [%2]</source>
         <translation>Sortu &amp;Tarte bereko polilineak</translation>
     </message>
     <message>
-        <source>Create Polyline from Existing &amp;Segments</source>
-        <translation type="vanished">Polilinea Sortu Uneko &amp;Segmentuekin</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="327"/>
         <source>&amp;MText</source>
         <translation>&amp;MTestua</translation>
@@ -1756,10 +1685,6 @@ or [%2]</source>
         <translation>&amp;Ezabatu</translation>
     </message>
     <message>
-        <source>Delete Freehand</source>
-        <translation type="vanished">Ezabatu Eskuz</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="368"/>
         <source>&amp;Move / Copy</source>
         <translation>&amp;Mugitu / Kopiatu</translation>
@@ -1768,10 +1693,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="369"/>
         <source>Re&amp;vert direction</source>
         <translation>Itzuli &amp; norabidea</translation>
-    </message>
-    <message>
-        <source>Ctrl+R</source>
-        <translation type="vanished">Ctrl+R</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="370"/>
@@ -1849,17 +1770,9 @@ or [%2]</source>
         <translation>&amp;Testua letretan bihurtu</translation>
     </message>
     <message>
-        <source>Point inside contour</source>
-        <translation type="vanished">Barruko puntua aukeratu</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="498"/>
         <source>&amp;Distance Point to Point</source>
         <translation>&amp;Distantzia Puntutik Puntura</translation>
-    </message>
-    <message>
-        <source>&amp;Distance Entity to Point</source>
-        <translation type="vanished">&amp;Distantzia Entitatetik Puntura</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="501"/>
@@ -1867,17 +1780,9 @@ or [%2]</source>
         <translation>Bi marren arteko Ang&amp;elua</translation>
     </message>
     <message>
-        <source>&amp;Total length of selected entities</source>
-        <translation type="vanished">&amp; Aukeratutako entitateen luzera osoa</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="503"/>
         <source>Polygonal &amp;Area</source>
         <translation>Azalera &amp;Poligonala</translation>
-    </message>
-    <message>
-        <source>&amp;Selection pointer</source>
-        <translation type="vanished">&amp;Selection pointer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="660"/>
@@ -1905,10 +1810,6 @@ or [%2]</source>
         <translation>&amp;Itsatsi</translation>
     </message>
     <message>
-        <source>move to bottom</source>
-        <translation type="vanished">Behera mugitu</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="190"/>
         <source>Polygo&amp;n (Tan,Tan)</source>
         <translation type="unfinished"></translation>
@@ -1932,10 +1833,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="233"/>
         <source>Paste to Points</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tangential 2 Circles, Radius</source>
-        <translation type="obsolete">Tangente 2 Zirkulu, Erradioa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="269"/>
@@ -2609,18 +2506,6 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>lower after entity</source>
-        <translation type="vanished">entitate azpian jarri</translation>
-    </message>
-    <message>
-        <source>raise over entity</source>
-        <translation type="vanished">entitate gainean jarri</translation>
-    </message>
-    <message>
-        <source>move to top</source>
-        <translation type="vanished">Gora mugitu</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="499"/>
         <source>Distance &amp;Entity to Point</source>
         <translation type="unfinished"></translation>
@@ -2769,10 +2654,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="563"/>
         <source>Current &amp;Drawing Preferences</source>
         <translation>Uneko &amp;Irudiko Lehentasunak</translation>
-    </message>
-    <message>
-        <source>&amp;Delete selected</source>
-        <translation type="vanished">&amp;Kendu aukeratutakoa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="652"/>
@@ -3022,14 +2903,6 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Menu Creator</source>
-        <translation type="vanished">Menu Sortzailea</translation>
-    </message>
-    <message>
-        <source>Toolbar Creator</source>
-        <translation type="vanished">Tresnakutxa Sortzailea</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="639"/>
         <source>&amp;Save View</source>
         <translation type="unfinished"></translation>
@@ -3210,61 +3083,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionGroupManager</name>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Zirkulua</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="obsolete">Kurba</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="obsolete">Arkua</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Editatu</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">Elipsea</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Fitxategia</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Info</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Marra</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">Aldatu</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="obsolete">Aukerak</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">Polilinea</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="obsolete">Aukeratu</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">Ikusi</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionInfo3PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="141"/>
@@ -3280,10 +3098,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="149"/>
         <source>Select second edge point of angle</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Info</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="189"/>
@@ -3751,10 +3565,6 @@ End Edge Point: (%9 , %10)</source>
         <source>visible</source>
         <comment>Layers to export</comment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation type="vanished">&quot;% 1&quot; geruza &quot;% 2&quot; gisa gordetzen </translation>
     </message>
 </context>
 <context>
@@ -4903,14 +4713,6 @@ Are you sure you are going to discard changes?</source>
 <context>
     <name>LC_CreatorInvoker</name>
     <message>
-        <source>Menu Creator</source>
-        <translation type="obsolete">Menu Sortzailea</translation>
-    </message>
-    <message>
-        <source>Menu Assigner</source>
-        <translation type="obsolete">Menu Assigner</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="83"/>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="115"/>
         <source>Toolbar: %1 (Custom)</source>
@@ -5353,21 +5155,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="108"/>
         <source>System</source>
         <translation type="unfinished">Sistema</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Geruza:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Arkatza</translation>
     </message>
 </context>
 <context>
@@ -6712,10 +6499,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="332"/>
         <source>Edit style override</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="obsolete">...</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="346"/>
@@ -8370,10 +8153,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.ui" line="379"/>
         <source>Top</source>
         <translation type="unfinished">Gora</translation>
-    </message>
-    <message>
-        <source>Menu Creator</source>
-        <translation type="obsolete">Menu Sortzailea</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="59"/>
@@ -10904,10 +10683,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="1788"/>
         <source>Order</source>
         <translation type="unfinished">Order</translation>
-    </message>
-    <message>
-        <source>Dock Wid&amp;gets</source>
-        <translation type="obsolete">Dock Wid&amp;gets</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="475"/>
@@ -16130,10 +15905,6 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished">Liburutegia</translation>
     </message>
     <message>
-        <source>Command line</source>
-        <translation type="obsolete">Komando Lerroa</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="260"/>
         <source>Dock</source>
         <translation>Panela</translation>
@@ -16143,26 +15914,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="284"/>
         <source>Float</source>
         <translation>Flotatu</translation>
-    </message>
-    <message>
-        <source>Lines</source>
-        <translation type="vanished">Marrak</translation>
-    </message>
-    <message>
-        <source>Circles</source>
-        <translation type="vanished">Zirkuluak</translation>
-    </message>
-    <message>
-        <source>Freehand</source>
-        <translation type="vanished">Esku hutsez</translation>
-    </message>
-    <message>
-        <source>Ellipses</source>
-        <translation type="vanished">Elipseak</translation>
-    </message>
-    <message>
-        <source>PolyLines</source>
-        <translation type="vanished">Polilerroak</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="101"/>
@@ -16183,10 +15934,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="96"/>
         <source>Circle</source>
         <translation type="unfinished">Zirkulua</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="obsolete">Kurba</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="99"/>
@@ -16220,29 +15967,9 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished">Order</translation>
     </message>
     <message>
-        <source>Layer List</source>
-        <translation type="obsolete">Geruza Zerrenda</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="212"/>
         <source>Entity Info</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="obsolete">Bloke Zerrenda</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Fitxategia</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Editatu</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">Ikusi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="164"/>
@@ -16263,126 +15990,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="98"/>
         <source>Spline</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap Selection</source>
-        <translation type="obsolete">Hautapena behartu</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Arkatza</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="obsolete">Tresna Aukerak</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="obsolete">Dock Areas</translation>
-    </message>
-    <message>
-        <source>Categories</source>
-        <translation type="obsolete">Kategoriak</translation>
-    </message>
-    <message>
-        <source>Dimensions</source>
-        <translation type="vanished">Akotazioak</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="obsolete">&amp;Fitxategia</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="obsolete">Inportatu</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="obsolete">Esportatu</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="obsolete">&amp;Aukerak</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="obsolete">&amp;Editatu</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="obsolete">Pl&amp;uginak</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="obsolete">&amp;Ikusi</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="obsolete">&amp;Tresnak</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="obsolete">&amp;Marra</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="obsolete">&amp;Zirkulua</translation>
-    </message>
-    <message>
-        <source>&amp;Curve</source>
-        <translation type="obsolete">&amp;Kurba</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="obsolete">&amp;Arkua</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="obsolete">&amp;Elipsea</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="obsolete">&amp;Polilinea</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="obsolete">&amp;Aukeratu</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="obsolete">Neurr&amp;iak</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="obsolete">&amp;Eraldatu</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="obsolete">&amp;Argibideak</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="obsolete">&amp;Order</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="obsolete">&amp;Irudiak</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="obsolete">L&amp;aguntza</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="obsolete">Informazioa</translation>
-    </message>
-    <message>
-        <source>Dock Wid&amp;gets</source>
-        <translation type="obsolete">Dock Wid&amp;gets</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="obsolete">&amp;Tresna barra</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="138"/>
@@ -16513,10 +16120,6 @@ Warning: this action can NOT be undone!</source>
         <source>Modify</source>
         <translation type="unfinished">Aldatu</translation>
     </message>
-    <message>
-        <source>Measure</source>
-        <translation type="vanished">Neurriak</translation>
-    </message>
 </context>
 <context>
     <name>LC_WidgetOptionsDialog</name>
@@ -16557,10 +16160,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="503"/>
         <source>For &quot;classic&quot; statusbar only. </source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="vanished">Orokorra</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="113"/>
@@ -16740,14 +16339,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="654"/>
         <source>Number of columns for actions in left toolbar.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>side length in pixels</source>
-        <translation type="vanished">Aldearen neurria pixeletan</translation>
-    </message>
-    <message>
-        <source>Use themed icons</source>
-        <translation type="vanished">Use themed icons</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp" line="216"/>
@@ -16931,62 +16522,6 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp;Fitxategia</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">&amp;Editatu</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">&amp;Ikusi</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&amp;Aukeratu</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&amp;Marra</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&amp;Zirkulua</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&amp;Elipsea</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">&amp;Eraldatu</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp;Argibideak</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">Informazioa</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">L&amp;aguntza</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">&amp;Cascade</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">&amp;Tile</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">Tile &amp;Horizontally</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="795"/>
         <source>Creating new file...</source>
         <translation>Fitxategi berri bat sortzen...</translation>
@@ -17017,14 +16552,6 @@ Warning: this action can NOT be undone!</source>
         <translation>Aplikaziotik aterazen...</translation>
     </message>
     <message>
-        <source>Layer List</source>
-        <translation type="vanished">Geruza Zerrenda</translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="vanished">Bloke Zerrenda</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="196"/>
         <source>Print preview for %1</source>
         <translation>%1 Inprimatzeko aurrebista </translation>
@@ -17045,33 +16572,9 @@ Warning: this action can NOT be undone!</source>
         <translation>Irudia gordeta: %1</translation>
     </message>
     <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">Irudia esportatzen...</translation>
-    </message>
-    <message>
-        <source>Exported: %1</source>
-        <translation type="vanished">Esportatuta: %1</translation>
-    </message>
-    <message>
-        <source>Exporting...</source>
-        <translation type="vanished">Esportatzen...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">Esportazioa bukatua</translation>
-    </message>
-    <message>
-        <source>Export failed!</source>
-        <translation type="vanished">Esportazioan huts!</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1275"/>
         <source>Printing complete</source>
         <translation>Inprimaketa bukatua</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="vanished">Komando Lerroa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="741"/>
@@ -17086,10 +16589,6 @@ Please check the permissions.</source>
         <translation>Ezin fitxategia ireki
 %1
 Baimenak ikusi.</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">&amp;Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1113"/>
@@ -17113,22 +16612,6 @@ Baimenak ikusi.
 </translation>
     </message>
     <message>
-        <source>Import</source>
-        <translation type="vanished">Inportatu</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">&amp;Tresna barra</translation>
-    </message>
-    <message>
-        <source>Compiled on: %1</source>
-        <translation type="vanished">Konpilatzen: %1</translation>
-    </message>
-    <message>
-        <source>Version: %1</source>
-        <translation type="vanished">Bertsioa: %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="988"/>
         <source>Warning: File already opened : </source>
         <translation>Oharra: Fitxategia jada irekita dago</translation>
@@ -17142,14 +16625,6 @@ Baimenak ikusi.
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="249"/>
         <source> , please check the filename and permissions.</source>
         <translation>    , mesedez, izena eta baimenak ikusi.</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">Tile &amp;Vertically</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">Erlai&amp;tza modua</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="813"/>
@@ -17167,53 +16642,9 @@ Baimenak ikusi.
         <translation>Auto gordeketa huts egin du</translation>
     </message>
     <message>
-        <source>File</source>
-        <translation type="vanished">Fitxategia</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Editatu</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="vanished">Ikusi</translation>
-    </message>
-    <message>
-        <source>Snap Selection</source>
-        <translation type="vanished">Hautapena behartu</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="vanished">Tresna Aukerak</translation>
-    </message>
-    <message>
-        <source>Export as</source>
-        <translation type="vanished">Esportatu honela</translation>
-    </message>
-    <message>
-        <source>Compiler: Clang %1.%2.%3</source>
-        <translation type="vanished">Konpilatzailea: Clang %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation type="vanished">Konpilatzailea: GNU GCC %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Qt Version: %1</source>
-        <translation type="vanished">Qt Bertsioa: %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="207"/>
         <source>Draft Mode</source>
         <translation>Draft Modua</translation>
-    </message>
-    <message>
-        <source>Export as PDF</source>
-        <translation type="vanished">PDF modura esportatu</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">Esportatu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1001"/>
@@ -17230,153 +16661,9 @@ Ikus ea dagoen eta baimenak.</translation>
         <translation>Ez dago &apos;%1&apos; fitxategirik.</translation>
     </message>
     <message>
-        <source>Categories</source>
-        <translation type="vanished">Kategoriak</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="vanished">&amp;Order</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">Order</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">Aukeratu</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Marra</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Zirkulua</translation>
-    </message>
-    <message>
-        <source>&amp;Curve</source>
-        <translation type="vanished">&amp;Kurba</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="vanished">Kurba</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Elipsea</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polilinea</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">Neurria</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">Aldatu</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Info</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Arkatza</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1678"/>
         <source>Opening recent file...</source>
         <translation>Duela gutxiko fitxategia irekitzen...</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="vanished">Dock Areas</translation>
-    </message>
-    <message>
-        <source>Grid Status</source>
-        <translation type="vanished">Grid Status</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="vanished">Toolbars</translation>
-    </message>
-    <message>
-        <source>Dockwidgets</source>
-        <translation type="vanished">Dockwidgets</translation>
-    </message>
-    <message>
-        <source>Device Options</source>
-        <translation type="vanished">Tresna Aukerak</translation>
-    </message>
-    <message>
-        <source>Device</source>
-        <translation type="vanished">Tresna</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">&amp;Aukerak</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">Pl&amp;uginak</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="vanished">Neurr&amp;iak</translation>
-    </message>
-    <message>
-        <source>Dock Wid&amp;gets</source>
-        <translation type="vanished">Dock Wid&amp;gets</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">Erabili berri Fitxategiak</translation>
-    </message>
-    <message>
-        <source>Compiler: Microsoft Visual C++</source>
-        <translation type="vanished">Compiler: Microsoft Visual C++</translation>
-    </message>
-    <message>
-        <source>Boost Version: %1.%2.%3</source>
-        <translation type="vanished">Boost Version: %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation type="obsolete">Kopiatu</translation>
-    </message>
-    <message>
-        <source>Contributors</source>
-        <translation type="vanished">Laguntzaileak</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation type="vanished">Lizentzia</translation>
-    </message>
-    <message>
-        <source>System</source>
-        <translation type="vanished">Sistema</translation>
-    </message>
-    <message>
-        <source>Toolbar Creator</source>
-        <translation type="vanished">Toolbar Creator</translation>
-    </message>
-    <message>
-        <source>Menu Creator</source>
-        <translation type="vanished">Menu Sortzailea</translation>
-    </message>
-    <message>
-        <source>Menu Assigner</source>
-        <translation type="vanished">Menu Assigner</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="vanished">&amp;Tresnak</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="vanished">&amp;Irudiak</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="226"/>
@@ -17387,16 +16674,6 @@ Ikus ea dagoen eta baimenak.</translation>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
         <source>Save cancelled</source>
         <translation>Gordetzea bertan behera utzi da</translation>
-    </message>
-    <message>
-        <source>Closing Drawing</source>
-        <translation type="obsolete">Irudia izten</translation>
-    </message>
-    <message>
-        <source>Save changes to the following item?
-%1</source>
-        <translation type="vanished">Hurrengo elementuan aldaketak gorde nahi dituzu?
-%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="361"/>
@@ -17419,38 +16696,6 @@ Ikus ea dagoen eta baimenak.</translation>
         <translation>Gorde %1 &amp;honela...</translation>
     </message>
     <message>
-        <source>&amp;Window mode</source>
-        <translation type="vanished">&amp;Leiho mota</translation>
-    </message>
-    <message>
-        <source>&amp;Layout</source>
-        <translation type="vanished">&amp;Diseinua</translation>
-    </message>
-    <message>
-        <source>Rounded</source>
-        <translation type="vanished">Biribildua</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="vanished">Hirukia</translation>
-    </message>
-    <message>
-        <source>North</source>
-        <translation type="vanished">Iparra</translation>
-    </message>
-    <message>
-        <source>South</source>
-        <translation type="vanished">Hegoa</translation>
-    </message>
-    <message>
-        <source>East</source>
-        <translation type="vanished">Ekialdea</translation>
-    </message>
-    <message>
-        <source>West</source>
-        <translation type="vanished">Mendebaldea</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1090"/>
         <source>Save All cancelled</source>
         <translation type="unfinished"></translation>
@@ -17461,15 +16706,6 @@ Ikus ea dagoen eta baimenak.</translation>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1228"/>
         <source>Close All cancelled</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Float</source>
-        <translation type="obsolete">Flotatu</translation>
-    </message>
-    <message>
-        <source>Dock</source>
-        <comment>Dock the command widget to the main window</comment>
-        <translation type="obsolete">Panela</translation>
     </message>
 </context>
 <context>
@@ -17504,25 +16740,9 @@ Ikus ea dagoen eta baimenak.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
         <source>Current Layer</source>
         <translation>Uneko Geruza</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -17555,80 +16775,6 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>QG_BlockWidget</name>
-    <message>
-        <source>Rename the active block</source>
-        <translation type="vanished">Uneko blokea berrizendatu</translation>
-    </message>
-    <message>
-        <source>Edit the active block
-in a separate window</source>
-        <translation type="vanished">Uneko blokea editatu 
-beste lehio batean</translation>
-    </message>
-    <message>
-        <source>Insert the active block</source>
-        <translation type="vanished">Uneko blokea sartu</translation>
-    </message>
-    <message>
-        <source>Block Menu</source>
-        <translation type="vanished">Blokeen Menua</translation>
-    </message>
-    <message>
-        <source>&amp;Defreeze all Blocks</source>
-        <translation type="vanished">&amp;Bloke guztiak ikusi</translation>
-    </message>
-    <message>
-        <source>&amp;Freeze all Blocks</source>
-        <translation type="vanished">&amp;Bloke guztiak ezkutatu</translation>
-    </message>
-    <message>
-        <source>&amp;Add Block</source>
-        <translation type="vanished">&amp;Blokea Gaineratu</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Block</source>
-        <translation type="vanished">&amp;Blokea Kendu</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Block</source>
-        <translation type="vanished">&amp;Blokea Editatu</translation>
-    </message>
-    <message>
-        <source>&amp;Toggle Visibility</source>
-        <translation type="vanished">&amp; Ikusgarritasuna Txandakatu</translation>
-    </message>
-    <message>
-        <source>Show all blocks</source>
-        <translation type="vanished">Bloke guztiak erakutsi</translation>
-    </message>
-    <message>
-        <source>Hide all blocks</source>
-        <translation type="vanished">Bloke guztiak ezkutatu</translation>
-    </message>
-    <message>
-        <source>&amp;Rename Block</source>
-        <translation type="vanished">&amp;Blokea Berrizendatu</translation>
-    </message>
-    <message>
-        <source>&amp;Insert Block</source>
-        <translation type="vanished">&amp;Blokea Sartu</translation>
-    </message>
-    <message>
-        <source>&amp;Create New Block</source>
-        <translation type="vanished">&amp;Bloke berri bat sortu</translation>
-    </message>
-    <message>
-        <source>Create Block</source>
-        <translation type="vanished">Blokea sortu</translation>
-    </message>
-    <message>
-        <source>Add an empty block</source>
-        <translation type="vanished">Bloke bat gaineratu</translation>
-    </message>
-    <message>
-        <source>save the active block to a file</source>
-        <translation type="vanished">uneko blokea fitxategi batean gorde</translation>
-    </message>
     <message>
         <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="183"/>
         <source>Filter</source>
@@ -17850,10 +16996,6 @@ beste lehio batean</translation>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="321"/>
         <source>Float</source>
         <translation type="unfinished">Flotatu</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="obsolete">Komando Lerroa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="322"/>
@@ -18189,44 +17331,6 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="vanished">Kota lineala</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Geruza:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometria</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angelua:</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Arkatza</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Geruza:</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">Kota</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Arkatza</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgEllipse</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="26"/>
@@ -18304,18 +17408,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="130"/>
         <source>Rotation angle for the major axis of ellipse, degrees</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="vanished">Bukaerako Angelula:</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="vanished">Hasierako Angelua:</translation>
-    </message>
-    <message>
-        <source>Rotation:</source>
-        <translation type="vanished">Biraketa:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="276"/>
@@ -18581,18 +17673,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="129"/>
         <source>Command Language:</source>
         <translation>Komandoen Hizkuntza:</translation>
-    </message>
-    <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
-&lt;/font&gt;
-&lt;br&gt;
-Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
-(You can changes these settings later.)</source>
-        <translation type="vanished">&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
-&lt;/font&gt;
-&lt;br&gt;
-Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt;
-(Aldaketa hauek gero ere egin ditzakezu.)</translation>
     </message>
 </context>
 <context>
@@ -19714,10 +18794,6 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
         <source>Move/Copy Options</source>
         <translation>Mugitu/Kopiatu Aukerak</translation>
     </message>
-    <message>
-        <source>Number of copies. Maximum 100</source>
-        <translation type="vanished">Kopia kopurua, Gehienez 100</translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgMoveRotate</name>
@@ -19760,10 +18836,6 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="163"/>
         <source>Multiple Copies</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">Kopia &amp;Anitzak</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="41"/>
@@ -23397,13 +22469,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgpoint.ui" line="26"/>
@@ -24788,38 +23853,14 @@ The contents of a Construction Layer should not appear in printout.</source>
 <context>
     <name>QG_LayerWidget</name>
     <message>
-        <source>&amp;Add Layer</source>
-        <translation type="obsolete">&amp;Geruza gehitu</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Layer</source>
-        <translation type="obsolete">&amp;Geruza kendu</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="249"/>
         <source>Looking for matching layer names</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Toggle &amp;Construction Layer</source>
-        <translation type="obsolete">Toggle &amp;Construction Layer</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="247"/>
         <source>Filter</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toggle Layer Loc&amp;k</source>
-        <translation type="obsolete">Toggle Layer Loc&amp;k</translation>
-    </message>
-    <message>
-        <source>&amp;Export Selected Layer(s)</source>
-        <translation type="obsolete">E&amp;sportatu hautatutako geruza(k)</translation>
-    </message>
-    <message>
-        <source>Export &amp;Visible Layer(s)</source>
-        <translation type="obsolete">Esportatu &amp;ikusgai dauden geruza(k)</translation>
     </message>
 </context>
 <context>
@@ -25002,10 +24043,6 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation type="unfinished">Sagua</translation>
     </message>
     <message>
-        <source>Right</source>
-        <translation type="obsolete">Eskuma</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/status_bar/qg_mousewidget.ui" line="229"/>
         <source>Left</source>
         <translation type="unfinished">Ezkerra</translation>
@@ -25180,10 +24217,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="250"/>
         <source>By Layer</source>
         <translation type="unfinished">Geruzen bitartez</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation type="obsolete">Geruzen bitartez</translation>
     </message>
 </context>
 <context>
@@ -27203,54 +26236,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Circle</source>
-        <translation type="obsolete">Zirkulua</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="obsolete">Kurba</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Editatu</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">Elipsea</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Fitxategia</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Info</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Marra</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">Aldatu</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="obsolete">Aukerak</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">Polilinea</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="obsolete">Aukeratu</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">Ikusi</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="87"/>
         <source>All</source>
         <translation type="unfinished"></translation>
@@ -29162,10 +28147,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export as PDF</source>
-        <translation type="obsolete">PDF modura esportatu</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="44"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
@@ -29629,10 +28610,6 @@ Do you want to replace it?</source>
         <source>Specify reference point</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionBlocksExplode</name>
@@ -29663,10 +28640,6 @@ Do you want to replace it?</source>
         <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="349"/>
         <source>Specify reference point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="352"/>
@@ -29897,21 +28870,6 @@ This block cannot be inserted.</source>
         <source>Choose second edge</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDimAligned</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDimAngular</name>
@@ -29919,10 +28877,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="216"/>
         <source>Select first line</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="219"/>
@@ -29941,22 +28895,11 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDimDiametric</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDimLeader</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="182"/>
         <source>Specify target point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="185"/>
@@ -29996,21 +28939,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="221"/>
         <source>Snap to Adjacent Dim</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDimRadial</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
     </message>
 </context>
 <context>
@@ -30061,17 +28989,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="500"/>
         <source>Specify radius</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="507"/>
@@ -30102,17 +29022,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="233"/>
         <source>Specify second point</source>
         <translation type="unfinished">Bigarren puntua aukeratu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="230"/>
@@ -30138,17 +29050,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="277"/>
         <source>Specify end angle</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="279"/>
@@ -30169,14 +29073,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished">Zehaztu zentroa</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="129"/>
         <source>Specify point on circle</source>
         <translation type="unfinished"></translation>
@@ -30195,17 +29091,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished">Lehen puntua adierazi</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="156"/>
         <source>Specify second point</source>
         <translation type="unfinished">Bigarren puntua aukeratu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
 </context>
 <context>
@@ -30221,17 +29109,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished">Lehen puntua adierazi</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="175"/>
         <source>Specify second point</source>
         <translation type="unfinished">Bigarren puntua aukeratu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="178"/>
@@ -30252,17 +29132,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="177"/>
         <source>Specify circle radius</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="146"/>
@@ -30288,17 +29160,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="216"/>
         <source>Specify the second line</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="219"/>
@@ -30309,17 +29173,9 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircleTan1_2P</name>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="463"/>
         <source>Specify the first point on the tangent circle</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="466"/>
@@ -30345,17 +29201,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="280"/>
         <source>Specify the second line/arc/circle</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="283"/>
@@ -30376,14 +29224,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="341"/>
         <source>Specify the another line/arc/circle</source>
         <translation type="unfinished"></translation>
@@ -30401,14 +29241,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="509"/>
         <source>Select the center of the tangent circle</source>
@@ -30443,17 +29275,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="276"/>
         <source>Specify the second point on ellipse</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="279"/>
@@ -30486,17 +29310,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="339"/>
         <source>Specify endpoint of major axis</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="342"/>
@@ -30522,10 +29338,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="246"/>
         <source>Specify the first point on ellipse</source>
         <translation type="unfinished"></translation>
@@ -30534,10 +29346,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="249"/>
         <source>Specify the second point on ellipse</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="252"/>
@@ -30558,17 +29366,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="195"/>
         <source>Specify second focus of ellipse</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="198"/>
@@ -30594,17 +29394,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="310"/>
         <source>Specify the second line</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="313"/>
@@ -30690,10 +29482,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="270"/>
         <source>Enter angle:</source>
         <translation type="unfinished"></translation>
@@ -30721,17 +29509,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished">Lehen puntua adierazi</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="274"/>
         <source>Specify next point or [%1]</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="276"/>
@@ -30773,17 +29553,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="312"/>
         <source>Enter angle:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="315"/>
@@ -30810,17 +29582,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="268"/>
         <source>Select second line</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="271"/>
@@ -30846,10 +29610,6 @@ This block cannot be inserted.</source>
         <source>Click and drag to draw a line</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineHorVert</name>
@@ -30859,17 +29619,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished">Lehen puntua adierazi</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="117"/>
         <source>Specify second point</source>
         <translation type="unfinished">Bigarren puntua aukeratu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
 </context>
 <context>
@@ -30886,17 +29638,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="255"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
 </context>
 <context>
@@ -30905,10 +29649,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="135"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="109"/>
@@ -30940,17 +29680,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="177"/>
         <source>Specify through point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="110"/>
@@ -30983,17 +29715,9 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLinePolygonCenCor</name>
     <message>
-        <source>Specify center</source>
-        <translation type="obsolete">Zehaztu zentroa</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon.cpp" line="41"/>
         <source>Specify a corner</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="obsolete">Sartu zenbakia:</translation>
     </message>
 </context>
 <context>
@@ -31004,17 +29728,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="92"/>
         <source>Specify second corner</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
 </context>
 <context>
@@ -31050,17 +29766,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="144"/>
         <source>Specify second corner</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
 </context>
 <context>
@@ -31087,17 +29795,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="251"/>
         <source>Specify position</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
 </context>
 <context>
@@ -31114,29 +29814,13 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent2</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="215"/>
         <source>Select first circle/ellipse/parabola</source>
@@ -31161,25 +29845,13 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="189"/>
         <source>Enter text:</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawPoint</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/rs_actiondrawpoint.cpp" line="77"/>
         <source>Specify location</source>
@@ -31194,17 +29866,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished">Lehen puntua adierazi</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="756"/>
         <source>Specify next point or [%1]</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="758"/>
@@ -31277,17 +29941,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished">Lehen kontrol puntua zehaztu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="227"/>
         <source>Specify next control point or [%1]</source>
         <translation type="unfinished">Hurrengo kontrol puntua zehaztu edo [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="229"/>
@@ -31313,29 +29969,14 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="247"/>
         <source>Enter text:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="243"/>
         <source>Specify second point</source>
         <translation type="unfinished">Bigarren puntua aukeratu</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditCopy</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
     </message>
 </context>
 <context>
@@ -31398,13 +30039,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditUndo</name>
     <message>
         <location filename="../src/actions/drawing/edit/rs_actioneditundo.cpp" line="55"/>
@@ -31434,10 +30068,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="250"/>
         <source>Single Line Mode</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Info</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="103"/>
@@ -31529,17 +30159,9 @@ Intersection :@(%7, %8)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
         <source>Specify second line</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
 </context>
 <context>
@@ -31569,10 +30191,6 @@ Intersection :@(%7, %8)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="178"/>
         <source>Specify first point of polygon</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
@@ -31633,17 +30251,9 @@ End: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="160"/>
         <source>Specify second point of distance</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
 </context>
 <context>
@@ -31698,18 +30308,10 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="279"/>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="282"/>
         <source>Specify point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
 </context>
 <context>
@@ -31728,10 +30330,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="82"/>
         <source>Specify point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
     </message>
 </context>
 <context>
@@ -31807,10 +30405,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="194"/>
         <source>Specify reference point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="197"/>
@@ -31910,17 +30504,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="369"/>
         <source>Select second entity</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="372"/>
@@ -31961,17 +30547,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="144"/>
         <source>Specify cutting point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="114"/>
@@ -32005,17 +30583,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="151"/>
         <source>Specify second break point on the same polyline</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="89"/>
@@ -32059,22 +30629,11 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionModifyDeleteQuick</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionModifyEntity</name>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyentity.cpp" line="263"/>
         <source>Click on entity to modify</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
     </message>
 </context>
 <context>
@@ -32148,17 +30707,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="249"/>
         <source>Specify second point of mirror line</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
 </context>
 <context>
@@ -32199,17 +30750,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
         <source>Specify target point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
 </context>
 <context>
@@ -32269,17 +30812,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="325"/>
         <source>Specify target point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="328"/>
@@ -32325,10 +30860,6 @@ Point: (%8 , %9)</source>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionModifyRevertDirection</name>
@@ -32354,10 +30885,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="588"/>
         <source>Specify reference point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="132"/>
@@ -32494,17 +31021,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="179"/>
         <source>Specify relative reference point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
 </context>
 <context>
@@ -32514,10 +31033,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="362"/>
         <source>Not a valid expression</source>
         <translation type="unfinished">Ez da baliozko adierazpena</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="229"/>
@@ -32545,10 +31060,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
         <translation type="unfinished"></translation>
@@ -32556,10 +31067,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="169"/>
         <source>Scale</source>
@@ -32644,17 +31151,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="199"/>
         <source>Specify second corner</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="79"/>
@@ -32708,17 +31207,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="202"/>
         <source>Select limiting entity</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="112"/>
@@ -32773,10 +31264,6 @@ Point: (%8 , %9)</source>
         <source>Select line/arc to trim OR enter length value:</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionOrder</name>
@@ -32804,10 +31291,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="130"/>
         <source>Choose entity for order</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
     </message>
 </context>
 <context>
@@ -32839,17 +31322,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="171"/>
         <source>Specify adding node&apos;s point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
 </context>
 <context>
@@ -32878,14 +31353,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="299"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="125"/>
@@ -32917,17 +31384,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="145"/>
         <source>Specify deleting node&apos;s point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="128"/>
@@ -32975,17 +31434,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="198"/>
         <source>Specify first node</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="201"/>
@@ -33016,10 +31467,6 @@ Point: (%8 , %9)</source>
         <source>Choose the original polyline</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionPolylineSegment</name>
@@ -33032,10 +31479,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="357"/>
         <source>Choose one of the segments on the original polyline</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="335"/>
@@ -33077,17 +31520,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="186"/>
         <source>Specify first segment</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="189"/>
@@ -33169,13 +31604,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectContour</name>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="63"/>
@@ -33206,17 +31634,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="176"/>
         <source>Choose second point of intersection line</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
 </context>
 <context>
@@ -33242,10 +31662,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="116"/>
         <source>De-Selecting</source>
@@ -33297,10 +31713,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="163"/>
         <source>Click and drag for the selection window</source>
         <translation type="unfinished"></translation>
@@ -33313,10 +31725,6 @@ Point: (%8 , %9)</source>
         <source>Set relative Zero</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionSnapIntersectionManual</name>
@@ -33324,10 +31732,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="142"/>
         <source>Select first entity</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="145"/>
@@ -33356,10 +31760,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="108"/>
         <source>Zoom panning</source>
         <translation type="unfinished"></translation>
@@ -33373,17 +31773,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Utzi</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="143"/>
         <source>Specify second edge</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Atzera</translation>
     </message>
 </context>
 <context>
@@ -33650,13 +32042,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Angelua:</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -33828,10 +32213,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="106"/>
         <source>Scale Factor</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="obsolete">DPI</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="120"/>
@@ -34855,10 +33236,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Middle Points:</source>
-        <translation type="vanished">Erdiko Puntuak:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
         <source>Number of equidistant division points</source>
         <translation>Distantzia berdineko puntu kopurua</translation>
@@ -34976,13 +33353,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="50"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
         <translation>Jarritako luzera luzera osoa bezala erabiliko da, luzera luzatu ordez.</translation>
-    </message>
-</context>
-<context>
-    <name>WidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Markoa</translation>
     </message>
 </context>
 </TS>

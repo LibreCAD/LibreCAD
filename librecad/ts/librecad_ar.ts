@@ -258,10 +258,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="192"/>
         <source>Specify dimension arc location</source>
         <translation type="unfinished"></translation>
@@ -559,10 +555,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>حدد النقطة الأولى</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="233"/>
         <source>Specify second point</source>
         <translation>حدد النقطة الثانية</translation>
@@ -854,10 +846,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon3.cpp" line="51"/>
         <source>Specify a tangent</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="obsolete">ليس عددا صحيحا. محاولة 1..9999</translation>
     </message>
 </context>
 <context>
@@ -1213,10 +1201,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="214"/>
         <source>Specify first control point</source>
         <translation>حدد أول نقطة تحكم </translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
@@ -1871,26 +1855,14 @@ or [%2]</source>
         <translation>المسافة من نقطة إلى نقطة</translation>
     </message>
     <message>
-        <source>&amp;Distance Entity to Point</source>
-        <translation type="vanished">المسافة من كيان إلى نقطة</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="501"/>
         <source>An&amp;gle between two lines</source>
         <translation type="unfinished">زاوية بين خطين</translation>
     </message>
     <message>
-        <source>&amp;Total length of selected entities</source>
-        <translation type="vanished">مجموع أطوال الكيانات المختارة</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="503"/>
         <source>Polygonal &amp;Area</source>
         <translation>مساحة متعدد اﻷضلاع</translation>
-    </message>
-    <message>
-        <source>&amp;Selection pointer</source>
-        <translation type="vanished">اختيار مؤشر</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="660"/>
@@ -2769,10 +2741,6 @@ or [%2]</source>
         <translation>تفضيلات الرسم الحالية</translation>
     </message>
     <message>
-        <source>&amp;Delete selected</source>
-        <translation type="vanished">احذف المختار</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="652"/>
         <source>Select &amp;All</source>
         <translation type="unfinished"></translation>
@@ -3112,61 +3080,6 @@ or [%2]</source>
         <location filename="../src/actions/file/lc_actionfileexportmakercam.cpp" line="106"/>
         <source>Export as</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionGroupManager</name>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">دائرة</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="obsolete">منحنى</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="obsolete">شريحة</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">تحرير</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">قطْع ناقص</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">ملف</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">الأبعاد</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">خط</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="obsolete">نقطة</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">تعديل</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">متعدّد خطوط</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="obsolete">وثب</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">مشاهدة</translation>
     </message>
 </context>
 <context>
@@ -5241,13 +5154,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="108"/>
         <source>System</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">طبقة:</translation>
     </message>
 </context>
 <context>
@@ -9613,10 +9519,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="282"/>
         <source>Flat List Mode)</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Layer Menu</source>
-        <translation type="obsolete">قائمة الطبقة</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="651"/>
@@ -16002,10 +15904,6 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Command line</source>
-        <translation type="obsolete">سطر الأوامر</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="260"/>
         <source>Dock</source>
         <translation type="unfinished"></translation>
@@ -16015,18 +15913,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="284"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lines</source>
-        <translation type="obsolete">خطوط</translation>
-    </message>
-    <message>
-        <source>Circles</source>
-        <translation type="obsolete">دوائر</translation>
-    </message>
-    <message>
-        <source>Ellipses</source>
-        <translation type="obsolete">قطَع ناقصة</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="101"/>
@@ -16047,10 +15933,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="96"/>
         <source>Circle</source>
         <translation type="unfinished">دائرة</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="obsolete">منحنى</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="99"/>
@@ -16084,25 +15966,9 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Layer List</source>
-        <translation type="obsolete">قائمة الطبقة</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="212"/>
         <source>Entity Info</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">ملف</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">تحرير</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">مشاهدة</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="164"/>
@@ -16123,66 +15989,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="98"/>
         <source>Spline</source>
         <translation type="unfinished">شريحة</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="obsolete">خيارات الأداة</translation>
-    </message>
-    <message>
-        <source>Dimensions</source>
-        <translation type="obsolete">الأبعاد</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="obsolete">ملف</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="obsolete">استيراد</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="obsolete">تصدير</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="obsolete">خيارات</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="obsolete">تحرير</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="obsolete">عرض</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="obsolete">خط</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="obsolete">دائرة</translation>
-    </message>
-    <message>
-        <source>&amp;Curve</source>
-        <translation type="obsolete">منحنى</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="obsolete">وقوس</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="obsolete">قطْع ناقص</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="obsolete">متعدّد خطوط</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="obsolete">تعديل</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="138"/>
@@ -16715,34 +16521,6 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <source>&amp;File</source>
-        <translation type="vanished">ملف</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">تحرير</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">عرض</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">خط</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">دائرة</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">قطْع ناقص</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">تعديل</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="795"/>
         <source>Creating new file...</source>
         <translation>إنشاء ملف جديد ...</translation>
@@ -16778,10 +16556,6 @@ Warning: this action can NOT be undone!</source>
         <translation>الخروج من التطبيق ...</translation>
     </message>
     <message>
-        <source>Layer List</source>
-        <translation type="vanished">قائمة الطبقة</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="196"/>
         <source>Print preview for %1</source>
         <translation></translation>
@@ -16802,25 +16576,9 @@ Warning: this action can NOT be undone!</source>
         <translation></translation>
     </message>
     <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">تصدير الرسم...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">أكتمل التصدير</translation>
-    </message>
-    <message>
-        <source>Export failed!</source>
-        <translation type="vanished">فشل التصدير!</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1275"/>
         <source>Printing complete</source>
         <translation>اكتملت الطباعة</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="vanished">سطر الأوامر</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="741"/>
@@ -16833,10 +16591,6 @@ Warning: this action can NOT be undone!</source>
 %1
 Please check the permissions.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">متعدّد خطوط</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1113"/>
@@ -16855,10 +16609,6 @@ Please check the permissions.</source>
 Please check the permissions.
 Auto-save disabled.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">استيراد</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="988"/>
@@ -16891,33 +16641,9 @@ Auto-save disabled.</source>
         <translation>فشل الحفظ التلقائي </translation>
     </message>
     <message>
-        <source>File</source>
-        <translation type="vanished">ملف</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">تحرير</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="vanished">مشاهدة</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="vanished">خيارات الأداة</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="207"/>
         <source>Draft Mode</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export as PDF</source>
-        <translation type="obsolete">تصدير بتنسيق بي دي اف</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">تصدير</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1001"/>
@@ -16932,46 +16658,6 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Line</source>
-        <translation type="obsolete">خط</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">دائرة</translation>
-    </message>
-    <message>
-        <source>&amp;Curve</source>
-        <translation type="vanished">منحنى</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="vanished">منحنى</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">قطْع ناقص</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">متعدّد خطوط</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">الأبعاد</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">تعديل</translation>
-    </message>
-    <message>
-        <source>Device Options</source>
-        <translation type="vanished">خيارات الجهاز</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">خيارات</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="226"/>
         <source>Saving drawing: %1</source>
         <translation type="unfinished"></translation>
@@ -16980,10 +16666,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
         <source>Save cancelled</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Closing Drawing</source>
-        <translation type="obsolete">إغلاق الرسم</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="361"/>
@@ -17085,18 +16767,6 @@ Please check its existence and permissions.</source>
 </context>
 <context>
     <name>QG_BlockWidget</name>
-    <message>
-        <source>&amp;Edit Block</source>
-        <translation type="vanished">تحرير كتلة</translation>
-    </message>
-    <message>
-        <source>Create Block</source>
-        <translation type="obsolete">إنشاء كتلة</translation>
-    </message>
-    <message>
-        <source>save the active block to a file</source>
-        <translation type="vanished">حفظ الكتلة النشطة إلى ملف</translation>
-    </message>
     <message>
         <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="183"/>
         <source>Filter</source>
@@ -17318,10 +16988,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="321"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="obsolete">سطر الأوامر</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="322"/>
@@ -17657,32 +17323,6 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="vanished">بُعْد خطي </translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">طبقة:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">زاوية:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">طبقة:</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">الأبعاد</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgEllipse</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="26"/>
@@ -17760,14 +17400,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="130"/>
         <source>Rotation angle for the major axis of ellipse, degrees</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="vanished">زاوية نِهَايَة:</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="vanished">زاوية بِدَايَة:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="276"/>
@@ -19154,10 +18786,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <source>Move/Copy Options</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Number of copies. Maximum 100</source>
-        <translation type="vanished">عدد النسخ. الحد الأقصى 100</translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgMoveRotate</name>
@@ -20482,10 +20110,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4328"/>
         <source>Program Defaults</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Drawing unit.</source>
-        <translation type="vanished">وحدة الرسم.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4736"/>
@@ -22837,13 +22461,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">إلغاء</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgpoint.ui" line="26"/>
@@ -24228,34 +23845,6 @@ The contents of a Construction Layer should not appear in printout.</source>
 <context>
     <name>QG_LayerWidget</name>
     <message>
-        <source>Show all layers</source>
-        <translation type="vanished">إظهار كافة الطبقات</translation>
-    </message>
-    <message>
-        <source>Hide all layers</source>
-        <translation type="vanished">إخفاء كافة الطبقات</translation>
-    </message>
-    <message>
-        <source>Add a layer</source>
-        <translation type="vanished">أضف طبقة</translation>
-    </message>
-    <message>
-        <source>Modify layer attributes / rename</source>
-        <translation type="vanished">تعديل سمات الطبقة / إعادة تسمية</translation>
-    </message>
-    <message>
-        <source>Layer Menu</source>
-        <translation type="vanished">قائمة الطبقة</translation>
-    </message>
-    <message>
-        <source>&amp;Add Layer</source>
-        <translation type="vanished">إضافة طبقة</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Layer</source>
-        <translation type="vanished">حذف طبقة</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="249"/>
         <source>Looking for matching layer names</source>
         <translation>بحث عن أسماء الطبقات المتطابقة</translation>
@@ -24544,50 +24133,6 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>QG_SnapToolBar</name>
-    <message>
-        <source>Snap</source>
-        <translation type="vanished">وثب</translation>
-    </message>
-    <message>
-        <source>Snap to Endpoints</source>
-        <translation type="vanished">الوثب إلى نقاط النهاية</translation>
-    </message>
-    <message>
-        <source>Snap to equidistant points of entity</source>
-        <translation type="vanished">الوثب إلى نقاط متساوية البعد من الكيان</translation>
-    </message>
-    <message>
-        <source>Snap to center points</source>
-        <translation type="vanished">الوثب إلى نقاط المركز </translation>
-    </message>
-    <message>
-        <source>Snap to closest point on entity</source>
-        <translation type="vanished">الوثب إلى أقرب نقطة من الكيان</translation>
-    </message>
-    <message>
-        <source>Snap to point with given distance to endpoint</source>
-        <translation type="vanished">وثب إلى نقطة بالمسافة المعينة إلى نقطة النهاية</translation>
-    </message>
-    <message>
-        <source>Free Snap</source>
-        <translation type="vanished">وثب حُر</translation>
-    </message>
-    <message>
-        <source>Snap on Endpoints</source>
-        <translation type="vanished">الوثب إلى نقاط النهاية</translation>
-    </message>
-    <message>
-        <source>Snap on Entity</source>
-        <translation type="vanished">وثب إلى الكيان</translation>
-    </message>
-    <message>
-        <source>Snap Center</source>
-        <translation type="vanished">وثب إلى المركز</translation>
-    </message>
-    <message>
-        <source>Snap Distance</source>
-        <translation type="vanished">مسافة الوثب</translation>
-    </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="169"/>
         <source>Relative zero position is %1</source>
@@ -26148,10 +25693,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>chord length</source>
-        <translation type="obsolete">طول الوتر</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1059"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1165"/>
         <source>columns</source>
@@ -26485,10 +26026,6 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="433"/>
         <source>Command not found: %1</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Accepted keycode: %1</source>
-        <translation type="obsolete">رمز المفتاح المقبول: 1%</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="472"/>
@@ -26862,50 +26399,6 @@ Do you want to replace it?</source>
         <source>mp</source>
         <comment>modify properties</comment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">دائرة</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="obsolete">منحنى</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">تحرير</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">قطْع ناقص</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">ملف</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">الأبعاد</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">خط</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">تعديل</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">متعدّد خطوط</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="obsolete">وثب</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">مشاهدة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="87"/>
@@ -28813,10 +28306,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export as PDF</source>
-        <translation type="obsolete">تصدير بتنسيق بي دي اف</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="44"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
@@ -29121,10 +28610,6 @@ Do you want to replace it?</source>
         <source>Specify reference point</source>
         <translation>حدد نقطة مرجعية</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionBlocksExplode</name>
@@ -29155,10 +28640,6 @@ Do you want to replace it?</source>
         <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="349"/>
         <source>Specify reference point</source>
         <translation>حدد نقطة مرجعية</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="352"/>
@@ -29391,34 +28872,11 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDimAligned</name>
-    <message>
-        <source>Specify first extension line origin</source>
-        <translation type="vanished">حدد منشأ أول خط أمتداد</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
-        <source>Specify second extension line origin</source>
-        <translation type="vanished">حدد منشأ ثاني خط أمتداد</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation type="vanished">حدد موقع خط البُعْد</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDimAngular</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="216"/>
         <source>Select first line</source>
         <translation>اختر الخط الأول</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="219"/>
@@ -29437,34 +28895,11 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDimDiametric</name>
-    <message>
-        <source>Not a circle or arc entity</source>
-        <translation type="vanished">لَيْسَ كيان دائرة أو قوس</translation>
-    </message>
-    <message>
-        <source>Select arc or circle entity</source>
-        <translation type="vanished">حدد كيان قوس أو دائرة</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation type="vanished">حدد موقع خط الأبعاد</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDimLeader</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="182"/>
         <source>Specify target point</source>
         <translation>حدد نقطة هدف</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="185"/>
@@ -29483,14 +28918,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="120"/>
         <source>Not a valid expression</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify first extension line origin</source>
-        <translation type="vanished">حدد منشأ أول خط أمتداد</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="211"/>
@@ -29512,29 +28939,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="221"/>
         <source>Snap to Adjacent Dim</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter dimension line angle:</source>
-        <translation type="obsolete">أدخل زاوية خط البُعْد:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDimRadial</name>
-    <message>
-        <source>Not a circle or arc entity</source>
-        <translation type="vanished">لَيْسَ كيان دائرة أو قوس</translation>
-    </message>
-    <message>
-        <source>Select arc or circle entity</source>
-        <translation type="vanished">حدد كيان قوس أو دائرة</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
-        <source>Specify dimension line position or enter angle:</source>
-        <translation type="vanished">حدد موضع خط البعد أو أدخل زاوية:</translation>
     </message>
 </context>
 <context>
@@ -29562,10 +28966,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="496"/>
         <source>Specify center</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="500"/>
@@ -29608,14 +29008,6 @@ This block cannot be inserted.</source>
         <source>Use alternative arc point</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Specify chord length:</source>
-        <translation type="vanished">حدد طول الوتر:</translation>
-    </message>
-    <message>
-        <source>Specify end angle or [angle/chord length]</source>
-        <translation type="vanished">حدد زاوية النهاية أو [زاوية / طول وتر]</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawArc3P</name>
@@ -29630,17 +29022,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished">حدد ثالث نقطة</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="233"/>
         <source>Specify second point</source>
         <translation>حدد النقطة الثانية</translation>
-    </message>
-    <message>
-        <source>Specify endpoint</source>
-        <translation type="vanished">حدد نقطة النهاية</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="230"/>
@@ -29654,10 +29038,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="273"/>
         <source>Specify base entity</source>
         <translation>حدد قاعدة كيان </translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="277"/>
@@ -29693,10 +29073,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="129"/>
         <source>Specify point on circle</source>
         <translation type="unfinished"></translation>
@@ -29715,10 +29091,6 @@ This block cannot be inserted.</source>
         <translation>حدد أول نقطة</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="156"/>
         <source>Specify second point</source>
         <translation>حدد ثاني نقطة</translation>
@@ -29735,10 +29107,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="172"/>
         <source>Specify first point</source>
         <translation>حدد أول نقطة</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="175"/>
@@ -29762,10 +29130,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="174"/>
         <source>Specify circle center</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="177"/>
@@ -29796,10 +29160,6 @@ This block cannot be inserted.</source>
         <translation>حدد الخط الأول</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="216"/>
         <source>Specify the second line</source>
         <translation>حدد الخط الثاني</translation>
@@ -29812,10 +29172,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan1_2P</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="463"/>
         <source>Specify the first point on the tangent circle</source>
@@ -29845,10 +29201,6 @@ This block cannot be inserted.</source>
         <translation>حدد أول خط/قوس/دائرة</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="280"/>
         <source>Specify the second line/arc/circle</source>
         <translation>حدد ثاني خط/قوس/دائرة</translation>
@@ -29872,14 +29224,6 @@ This block cannot be inserted.</source>
         <translation>حدد خط/قوس/دائرة</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
-        <source>Specify the another arc/circle</source>
-        <translation type="vanished">حدد قوس/دائرة آخر</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="341"/>
         <source>Specify the another line/arc/circle</source>
         <translation type="unfinished"></translation>
@@ -29897,10 +29241,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="509"/>
         <source>Select the center of the tangent circle</source>
@@ -29933,10 +29273,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="273"/>
         <source>Specify the first point on ellipse</source>
         <translation>حدد النقطة الأولى في القطْع الناقص</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="276"/>
@@ -29974,10 +29310,6 @@ This block cannot be inserted.</source>
         <translation>حدد مركز القطْع الناقص</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="339"/>
         <source>Specify endpoint of major axis</source>
         <translation>حدد نقطة النهاية من المحور الرئيسي</translation>
@@ -30004,10 +29336,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="243"/>
         <source>Specify the center of ellipse</source>
         <translation>حدد مركز القطْع الناقص</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="246"/>
@@ -30038,10 +29366,6 @@ This block cannot be inserted.</source>
         <translation>حدد أول مَرْكَز  في القطع الناقص</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="195"/>
         <source>Specify second focus of ellipse</source>
         <translation>حدد ثاني مَرْكَز في القطع الناقص</translation>
@@ -30068,10 +29392,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="307"/>
         <source>Specify the first line</source>
         <translation>حدد الخط الأول</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="310"/>
@@ -30162,10 +29482,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished">حدد نقطة مرجعية</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="270"/>
         <source>Enter angle:</source>
         <translation>ادخل زاوية:</translation>
@@ -30191,10 +29507,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="252"/>
         <source>Specify first point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="274"/>
@@ -30241,10 +29553,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="312"/>
         <source>Enter angle:</source>
         <translation>ادخل زاوية:</translation>
@@ -30267,10 +29575,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="265"/>
         <source>Select first line</source>
         <translation>اختر أول خط</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="136"/>
@@ -30306,10 +29610,6 @@ This block cannot be inserted.</source>
         <source>Click and drag to draw a line</source>
         <translation>انقر واسحب لرسم خط</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineHorVert</name>
@@ -30317,10 +29617,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="114"/>
         <source>Specify first point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="117"/>
@@ -30342,10 +29638,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="255"/>
         <source>Select circle, arc or ellipse</source>
         <translation>اِخْتار دائرة، قوس أو قطْع ناقص</translation>
@@ -30357,10 +29649,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="135"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
         <translation>حدد مسافة &lt;1٪&gt; أو حدد كيان أو [2٪]</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="109"/>
@@ -30390,10 +29678,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="174"/>
         <source>Select entity</source>
         <translation>اختيار كيان</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="110"/>
@@ -30435,14 +29719,6 @@ This block cannot be inserted.</source>
         <source>Specify a corner</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">أخل رقم:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">ليس عددا صحيحا. محاولة 1..9999</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLinePolygonCorCor</name>
@@ -30452,21 +29728,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="92"/>
         <source>Specify second corner</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">عدد:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">ليس عددا صحيحا. محاولة 1..9999</translation>
     </message>
 </context>
 <context>
@@ -30502,10 +29766,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="144"/>
         <source>Specify second corner</source>
         <translation type="unfinished"></translation>
@@ -30535,10 +29795,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="251"/>
         <source>Specify position</source>
         <translation type="unfinished"></translation>
@@ -30558,10 +29814,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
         <source>Select circle, arc or ellipse</source>
         <translation>اِخْتار دائرة، قوس أو قطْع ناقص</translation>
@@ -30569,10 +29821,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent2</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="215"/>
         <source>Select first circle/ellipse/parabola</source>
@@ -30597,10 +29845,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="189"/>
         <source>Enter text:</source>
         <translation type="unfinished"></translation>
@@ -30608,10 +29852,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawPoint</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/rs_actiondrawpoint.cpp" line="77"/>
         <source>Specify location</source>
@@ -30624,10 +29864,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="725"/>
         <source>Specify first point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="756"/>
@@ -30705,10 +29941,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished">حدد أول نقطة تحكم </translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="227"/>
         <source>Specify next control point or [%1]</source>
         <translation type="unfinished">حدد نقطة التحكم التالية أو [1%]</translation>
@@ -30737,10 +29969,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="247"/>
         <source>Enter text:</source>
         <translation type="unfinished"></translation>
@@ -30749,17 +29977,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="243"/>
         <source>Specify second point</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditCopy</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="obsolete">حدد نقطة مرجعية</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
 </context>
 <context>
@@ -30819,13 +30036,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="185"/>
         <source>Paste Multiple</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
 </context>
 <context>
@@ -30949,17 +30159,9 @@ Intersection :@(%7, %8)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
         <source>Specify second line</source>
         <translation>حدد ثاني خط</translation>
-    </message>
-    <message>
-        <source>Angle: %1</source>
-        <translation type="vanished">زاوية: 1%</translation>
     </message>
 </context>
 <context>
@@ -30989,10 +30191,6 @@ Intersection :@(%7, %8)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="178"/>
         <source>Specify first point of polygon</source>
         <translation>حدد النقطة الأولى من المضلع</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
@@ -31053,25 +30251,13 @@ End: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="160"/>
         <source>Specify second point of distance</source>
         <translation>حدد ثاني نقطة</translation>
     </message>
-    <message>
-        <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
-        <translation type="obsolete">المسافة:1٪ الديكارتي: (2٪، 3٪)، القطبي: (4٪ &lt;5٪ {1 ?} {2 ?} {3)?} {4&lt;?} {5)?}</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1</source>
-        <translation type="vanished">المسافة: 1%</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="92"/>
         <source>Distance: %1
@@ -31122,10 +30308,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="279"/>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="282"/>
         <source>Specify point</source>
@@ -31148,10 +30330,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="82"/>
         <source>Specify point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
 </context>
 <context>
@@ -31227,10 +30405,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="194"/>
         <source>Specify reference point</source>
         <translation type="unfinished">حدد نقطة مرجعية</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="197"/>
@@ -31330,10 +30504,6 @@ Point: (%8 , %9)</source>
         <translation>اِخْتار أول كيان</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="369"/>
         <source>Select second entity</source>
         <translation>اِخْتار ثاني كيان</translation>
@@ -31372,17 +30542,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cutting point is not on entity.</source>
-        <translation type="vanished">نقطة القطع ليست على الكيان.</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="141"/>
         <source>Specify entity to cut</source>
         <translation>حدد كيان للقطع</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="144"/>
@@ -31419,10 +30581,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="148"/>
         <source>Specify first break point on a polyline</source>
         <translation>حدد أول نقطة قطع على متعدّد الخطوط</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="151"/>
@@ -31471,26 +30629,11 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionModifyDeleteQuick</name>
-    <message>
-        <source>Pick entity to delete</source>
-        <translation type="vanished">اِخْتار كيان للحذف</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionModifyEntity</name>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyentity.cpp" line="263"/>
         <source>Click on entity to modify</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">إلغاء</translation>
     </message>
 </context>
 <context>
@@ -31564,10 +30707,6 @@ Point: (%8 , %9)</source>
         <translation>حدد النقطة الأولى من خط المرآة</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="249"/>
         <source>Specify second point of mirror line</source>
         <translation>حدد النقطة الثانية من خط المرآة</translation>
@@ -31611,17 +30750,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
         <source>Specify target point</source>
         <translation type="unfinished">حدد نقطة هدف</translation>
-    </message>
-    <message>
-        <source>Invalid number of copies, use %1 </source>
-        <translation type="vanished">عدد غير صالح من النسخ، استخدام 1٪</translation>
     </message>
 </context>
 <context>
@@ -31679,10 +30810,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="342"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="325"/>
@@ -31894,10 +31021,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="179"/>
         <source>Specify relative reference point</source>
         <translation type="unfinished"></translation>
@@ -31937,10 +31060,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
         <translation type="unfinished"></translation>
@@ -31948,14 +31067,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="obsolete">حدد نقطة مرجعية</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="169"/>
         <source>Scale</source>
@@ -32040,10 +31151,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="79"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="91"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="111"/>
@@ -32100,10 +31207,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="112"/>
         <source>Trim</source>
         <translation type="unfinished">تقليم</translation>
@@ -32142,14 +31245,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyTrimAmount</name>
     <message>
-        <source>No entity found. </source>
-        <translation type="vanished">لم يُعثر على كيان.</translation>
-    </message>
-    <message>
-        <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation type="vanished">الكيان المختار هو في كتلة. يرجى تحرير الكتلة.</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="173"/>
         <source>No entity found.</source>
         <translation type="unfinished"></translation>
@@ -32168,10 +31263,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="236"/>
         <source>Select line/arc to trim OR enter length value:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select entity to trim or enter distance:</source>
-        <translation type="vanished">اِخْتار كيان للتقليم أو ادخل المسافة:</translation>
     </message>
 </context>
 <context>
@@ -32201,10 +31292,6 @@ Point: (%8 , %9)</source>
         <source>Choose entity for order</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionPolylineAdd</name>
@@ -32233,10 +31320,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="168"/>
         <source>Specify polyline to add nodes</source>
         <translation>حدد متعدّد خطوط لإضافة عُقد</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="171"/>
@@ -32272,14 +31355,6 @@ Point: (%8 , %9)</source>
         <translation>حدد متعدّد خطوط في مكان ما بالقرب من نقطة البداية أو النهاية</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="obsolete">حدد نقطة تالية</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="125"/>
         <source>Can not append nodes in a closed polyline.</source>
         <translation>لا يمكن أرفاق عقد في متعدّد خطوط مغلق.</translation>
@@ -32307,10 +31382,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="142"/>
         <source>Specify polyline to delete node</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="145"/>
@@ -32363,10 +31434,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="198"/>
         <source>Specify first node</source>
         <translation type="unfinished"></translation>
@@ -32400,10 +31467,6 @@ Point: (%8 , %9)</source>
         <source>Choose the original polyline</source>
         <translation>اختار متعدّد الخطوط الأصلي</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionPolylineSegment</name>
@@ -32416,10 +31479,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="357"/>
         <source>Choose one of the segments on the original polyline</source>
         <translation>اختار واحد من القطاعات في متعدّد الخطوط الأصلي</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="335"/>
@@ -32456,17 +31515,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No Segment found on entity.</source>
-        <translation type="vanished">لم يُعثر على قطعة في الكيان.</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="183"/>
         <source>Specify polyline to trim</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="186"/>
@@ -32553,17 +31604,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">ليس هناك كيان مُختار</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectContour</name>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="63"/>
@@ -32594,10 +31634,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="176"/>
         <source>Choose second point of intersection line</source>
         <translation>اختار ثاني نقطة تقاطع خط</translation>
@@ -32626,10 +31662,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="116"/>
         <source>De-Selecting</source>
@@ -32693,10 +31725,6 @@ Point: (%8 , %9)</source>
         <source>Set relative Zero</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionSnapIntersectionManual</name>
@@ -32732,10 +31760,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="108"/>
         <source>Zoom panning</source>
         <translation type="unfinished"></translation>
@@ -32747,10 +31771,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="140"/>
         <source>Specify first edge</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="143"/>
@@ -33019,17 +32039,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/circle/qg_circletan2options.ui" line="82"/>
         <source>Pick radius from drawing</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Linear Dimension Options</source>
-        <translation type="obsolete">خيارات البُعْد الخطي</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">زاوية:</translation>
     </message>
 </context>
 <context>
@@ -33637,17 +32646,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">خيارات المضلع</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">عدد الحواف</translation>
-    </message>
-</context>
-<context>
     <name>Ui_LinePolygonOptions</name>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="32"/>
@@ -33847,14 +32845,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="79"/>
         <source>Multiple Copies</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">المسافة:</translation>
-    </message>
-    <message>
-        <source>Offset from original entity</source>
-        <translation type="obsolete">الإزاحة من الكيان الأصلي</translation>
     </message>
 </context>
 <context>
@@ -34232,10 +33222,6 @@ Point: (%8 , %9)</source>
         <source>Pick distance from drawing.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">المسافة:</translation>
-    </message>
 </context>
 <context>
     <name>Ui_SnapMiddleOptions</name>
@@ -34248,10 +33234,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="59"/>
         <source>Snap Middle Points:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Middle Points:</source>
-        <translation type="obsolete">النقاط المتوسطة:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>

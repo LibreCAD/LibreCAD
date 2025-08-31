@@ -430,12 +430,18 @@ void LC_WidgetFactory::initStatusBar() {
     m_appWin->m_statusbarManager->loadSettings();
 
     auto selectionActionsButton = m_appWin->m_selectionWidget->tbSelectionActions;
-    bool showExtendedActionsInStatusBar = true;
+    bool showExtendedActionsInStatusBar = true; // fixme - sand - add options for this?
     if (showExtendedActionsInStatusBar) {
         selectionActionsButton->setPopupMode(QToolButton::MenuButtonPopup);
-        selectionActionsButton->setDefaultAction(m_agm->getActionByName("DeselectAll"));
         selectionActionsButton->addActions(m_actionFactory->select_actions);
         selectionActionsButton->setAutoRaise(true);
+        auto deselectAll = m_agm->getActionByName("DeselectAll");
+        selectionActionsButton->setDefaultAction(deselectAll);
+        selectionActionsButton->setCheckable(true);
+
+        /*connect(selectionActionsButton, &QToolButton::triggered, [deselectAll] (bool){
+            deselectAll->triggered(true);
+        });*/
     }
     else {
         selectionActionsButton->setVisible(false);

@@ -26,13 +26,13 @@
 #include <QMouseEvent>
 
 #include "lc_defaultactioncontext.h"
+#include "lc_eventhandler.h"
 #include "lc_graphicviewport.h"
 #include "lc_graphicviewrenderer.h"
 #include "qc_applicationwindow.h"
 #include "qg_actionhandler.h"
 #include "rs_actioninterface.h"
 #include "rs_dimension.h"
-#include "rs_eventhandler.h"
 #include "rs_fileio.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"

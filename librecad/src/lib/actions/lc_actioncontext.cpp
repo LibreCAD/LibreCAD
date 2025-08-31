@@ -63,7 +63,6 @@ RS_Vector LC_ActionContext::getContextMenuActionClickPosition() {
 void LC_ActionContext::interactiveInputStart(InteractiveInputInfo::InputType inputType,
     LC_LateCompletionRequestor* requestor, const QString& tag) {
     interactiveInputRequest(inputType, requestor, tag);
-    getGraphicView()->setForcedActionKillAllowed(false);
     interactiveInputInvoke(inputType);
 }
 
@@ -72,7 +71,6 @@ void LC_ActionContext::interactiveInputRequestCancel() {
     m_interactiveInputInfo.m_inputType = InteractiveInputInfo::NOTNEEDED;
     m_interactiveInputInfo.m_requestorTag = "";
     m_interactiveInputInfo.m_state = InteractiveInputInfo::NONE;
-    getGraphicView()->setForcedActionKillAllowed(true);
 }
 
 void LC_ActionContext::interactiveInputInvoke(InteractiveInputInfo::InputType inputType) {

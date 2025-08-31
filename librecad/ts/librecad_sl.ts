@@ -258,10 +258,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="192"/>
         <source>Specify dimension arc location</source>
         <translation type="unfinished"></translation>
@@ -557,10 +553,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="230"/>
         <source>Specify first point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="233"/>
@@ -1209,10 +1201,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="214"/>
         <source>Specify first control point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
@@ -1885,10 +1873,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="503"/>
         <source>Polygonal &amp;Area</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Selection pointer</source>
-        <translation type="obsolete">&amp;Kazalec izbire</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="660"/>
@@ -3096,33 +3080,6 @@ or [%2]</source>
         <location filename="../src/actions/file/lc_actionfileexportmakercam.cpp" line="106"/>
         <source>Export as</source>
         <translation type="unfinished">Izvozi kot</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionGroupManager</name>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Krog</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Urejanje</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">Elipsa</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Datoteka</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">Mere</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">Pogled</translation>
     </message>
 </context>
 <context>
@@ -5197,17 +5154,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="108"/>
         <source>System</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Plast:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometrija</translation>
     </message>
 </context>
 <context>
@@ -15963,10 +15909,6 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Command line</source>
-        <translation type="obsolete">Ukazna vrstica</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="254"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="283"/>
         <source>Cmd</source>
@@ -15982,14 +15924,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="284"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Circles</source>
-        <translation type="obsolete">Krožnice</translation>
-    </message>
-    <message>
-        <source>Ellipses</source>
-        <translation type="obsolete">Elipse</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="101"/>
@@ -16110,29 +16044,9 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Layer List</source>
-        <translation type="obsolete">Seznam plasti</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="212"/>
         <source>Entity Info</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="obsolete">Seznam blokov</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Datoteka</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Urejanje</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">Pogled</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="164"/>
@@ -16153,78 +16067,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="98"/>
         <source>Spline</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap Selection</source>
-        <translation type="obsolete">Izbira pripenjanja</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="obsolete">Možnosti orodij</translation>
-    </message>
-    <message>
-        <source>Dimensions</source>
-        <translation type="obsolete">Dimenzije</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="obsolete">&amp;Datoteka</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="obsolete">Uvoz</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="obsolete">&amp;Urejanje</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="obsolete">&amp;Pogled</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="obsolete">&amp;Črta</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="obsolete">&amp;Krog</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="obsolete">&amp;Lok</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="obsolete">&amp;Elipsa</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="obsolete">&amp;Lomljenka</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="obsolete">&amp;Izberi</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="obsolete">&amp;Uredi</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="obsolete">&amp;Info</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="obsolete">Po&amp;moč</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="obsolete">O...</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="obsolete">&amp;Orodjarne</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="421"/>
@@ -16679,62 +16521,6 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp;Datoteka</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">&amp;Urejanje</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">&amp;Pogled</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&amp;Izberi</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&amp;Črta</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&amp;Krog</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&amp;Elipsa</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">&amp;Uredi</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp;Info</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">O...</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">Po&amp;moč</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">&amp;Kaskada</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">&amp;Razvrsti</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">Razpostavi &amp;vodoravno</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="795"/>
         <source>Creating new file...</source>
         <translation>Izdelujem novo datoteko...</translation>
@@ -16770,14 +16556,6 @@ Warning: this action can NOT be undone!</source>
         <translation>Zapiram program...</translation>
     </message>
     <message>
-        <source>Layer List</source>
-        <translation type="vanished">Seznam plasti</translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="vanished">Seznam blokov</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="196"/>
         <source>Print preview for %1</source>
         <translation>Predogled tiskanja za %1</translation>
@@ -16798,33 +16576,9 @@ Warning: this action can NOT be undone!</source>
         <translation>Shranjena risba %1</translation>
     </message>
     <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">Izvažam risbo...</translation>
-    </message>
-    <message>
-        <source>Exported: %1</source>
-        <translation type="vanished">Izvoženo: %1</translation>
-    </message>
-    <message>
-        <source>Exporting...</source>
-        <translation type="vanished">Izvažam...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">Izvoz dokončan</translation>
-    </message>
-    <message>
-        <source>Export failed!</source>
-        <translation type="vanished">Izvoz ni uspel!</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1275"/>
         <source>Printing complete</source>
         <translation>Tiskanje dokončano</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="vanished">Ukazna vrstica</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="741"/>
@@ -16839,10 +16593,6 @@ Please check the permissions.</source>
         <translation>Ne morem odpreti datoteke
 %1
 Prosim, preverite dovoljenja.</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">&amp;Lomljenka</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1113"/>
@@ -16866,22 +16616,6 @@ Prosim,preverite dovoljenja.
 Samodejno shranjevanje zaustalvjeno.</translation>
     </message>
     <message>
-        <source>Import</source>
-        <translation type="vanished">Uvoz</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">&amp;Orodjarne</translation>
-    </message>
-    <message>
-        <source>Compiled on: %1</source>
-        <translation type="vanished">Prevedeno na: %1</translation>
-    </message>
-    <message>
-        <source>Version: %1</source>
-        <translation type="vanished">Verzija: %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="988"/>
         <source>Warning: File already opened : </source>
         <translation>Opozorilo: datoteka je že odprta:</translation>
@@ -16897,14 +16631,6 @@ Samodejno shranjevanje zaustalvjeno.</translation>
         <translation> , prosim preverite ime datoteke in dovoljenja.</translation>
     </message>
     <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">Razporedi na&amp;vpično</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">Način z zavi&amp;hki</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="813"/>
         <source>New document from template: </source>
         <translation>Novi dokument iz predloge:</translation>
@@ -16918,42 +16644,6 @@ Samodejno shranjevanje zaustalvjeno.</translation>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1126"/>
         <source>Auto-saving failed</source>
         <translation>Samodejno shranjevanje spodletelo</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="vanished">Datoteka</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Urejanje</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="vanished">Pogled</translation>
-    </message>
-    <message>
-        <source>Snap Selection</source>
-        <translation type="vanished">Izbira pripenjanja</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="vanished">Možnosti orodij</translation>
-    </message>
-    <message>
-        <source>Export as</source>
-        <translation type="vanished">Izvozi kot</translation>
-    </message>
-    <message>
-        <source>Compiler: Clang %1.%2.%3</source>
-        <translation type="vanished">Prevajalnik: Clang %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation type="vanished">Prevajalnik: GNU GCC %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Qt Version: %1</source>
-        <translation type="vanished">Qt verzija: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="207"/>
@@ -16981,10 +16671,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
         <source>Save cancelled</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Closing Drawing</source>
-        <translation type="obsolete">Zapiram risbo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="361"/>
@@ -17086,80 +16772,6 @@ Please check its existence and permissions.</source>
 </context>
 <context>
     <name>QG_BlockWidget</name>
-    <message>
-        <source>Rename the active block</source>
-        <translation type="vanished">Preimenuj aktivni blok</translation>
-    </message>
-    <message>
-        <source>Edit the active block
-in a separate window</source>
-        <translation type="vanished">Uredi aktivni blok
-v ločenem oknu</translation>
-    </message>
-    <message>
-        <source>Insert the active block</source>
-        <translation type="vanished">Vstavi aktivni blok</translation>
-    </message>
-    <message>
-        <source>Block Menu</source>
-        <translation type="vanished">Meni bloka</translation>
-    </message>
-    <message>
-        <source>&amp;Defreeze all Blocks</source>
-        <translation type="vanished">&amp;Odmrzni vse bloke</translation>
-    </message>
-    <message>
-        <source>&amp;Freeze all Blocks</source>
-        <translation type="vanished">&amp;Zamrzni vse bloke</translation>
-    </message>
-    <message>
-        <source>&amp;Add Block</source>
-        <translation type="vanished">&amp;Dodaj blok</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Block</source>
-        <translation type="vanished">&amp;Odstrani blok</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Block</source>
-        <translation type="vanished">&amp;Uredi blok</translation>
-    </message>
-    <message>
-        <source>&amp;Toggle Visibility</source>
-        <translation type="vanished">&amp;Spremeni vidljivost</translation>
-    </message>
-    <message>
-        <source>Show all blocks</source>
-        <translation type="vanished">Prikaži vse bloke</translation>
-    </message>
-    <message>
-        <source>Hide all blocks</source>
-        <translation type="vanished">Skrij vse bloke</translation>
-    </message>
-    <message>
-        <source>&amp;Rename Block</source>
-        <translation type="vanished">P&amp;reimenuj blok</translation>
-    </message>
-    <message>
-        <source>&amp;Insert Block</source>
-        <translation type="vanished">Vstav%i blok</translation>
-    </message>
-    <message>
-        <source>&amp;Create New Block</source>
-        <translation type="vanished">I&amp;zdelaj novi blok</translation>
-    </message>
-    <message>
-        <source>Create Block</source>
-        <translation type="vanished">Izdelaj blok</translation>
-    </message>
-    <message>
-        <source>Add an empty block</source>
-        <translation type="vanished">Dodaj prazen blok</translation>
-    </message>
-    <message>
-        <source>save the active block to a file</source>
-        <translation type="vanished">shrani aktivni blok v datoteko</translation>
-    </message>
     <message>
         <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="183"/>
         <source>Filter</source>
@@ -17381,10 +16993,6 @@ v ločenem oknu</translation>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="321"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="vanished">Ukazna vrstica</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="322"/>
@@ -17717,36 +17325,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlgcircle.cpp" line="69"/>
         <source>Pen</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="obsolete">Linearne dimenzije</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Plast:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrija</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Kot:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Plast:</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">Mere</translation>
     </message>
 </context>
 <context>
@@ -22888,13 +22466,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgpoint.ui" line="26"/>
@@ -26672,18 +26243,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edit</source>
-        <translation type="obsolete">Urejanje</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Datoteka</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">Pogled</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="87"/>
         <source>All</source>
         <translation type="unfinished"></translation>
@@ -29052,10 +28611,6 @@ Do you want to replace it?</source>
         <source>Specify reference point</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionBlocksExplode</name>
@@ -29086,10 +28641,6 @@ Do you want to replace it?</source>
         <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="349"/>
         <source>Specify reference point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="352"/>
@@ -29322,22 +28873,11 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDimAligned</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDimAngular</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="216"/>
         <source>Select first line</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="219"/>
@@ -29356,22 +28896,11 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDimDiametric</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDimLeader</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="182"/>
         <source>Specify target point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="185"/>
@@ -29412,17 +28941,6 @@ This block cannot be inserted.</source>
         <source>Snap to Adjacent Dim</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDimRadial</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawArc</name>
@@ -29449,10 +28967,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="496"/>
         <source>Specify center</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="500"/>
@@ -29509,10 +29023,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="233"/>
         <source>Specify second point</source>
         <translation type="unfinished"></translation>
@@ -29529,10 +29039,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="273"/>
         <source>Specify base entity</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="277"/>
@@ -29568,10 +29074,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="129"/>
         <source>Specify point on circle</source>
         <translation type="unfinished"></translation>
@@ -29590,10 +29092,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="156"/>
         <source>Specify second point</source>
         <translation type="unfinished"></translation>
@@ -29610,10 +29108,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="172"/>
         <source>Specify first point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="175"/>
@@ -29637,10 +29131,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="174"/>
         <source>Specify circle center</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="177"/>
@@ -29671,10 +29161,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="216"/>
         <source>Specify the second line</source>
         <translation type="unfinished"></translation>
@@ -29687,10 +29173,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan1_2P</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="463"/>
         <source>Specify the first point on the tangent circle</source>
@@ -29720,10 +29202,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="280"/>
         <source>Specify the second line/arc/circle</source>
         <translation type="unfinished"></translation>
@@ -29747,10 +29225,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="341"/>
         <source>Specify the another line/arc/circle</source>
         <translation type="unfinished"></translation>
@@ -29768,10 +29242,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="509"/>
         <source>Select the center of the tangent circle</source>
@@ -29804,10 +29274,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="273"/>
         <source>Specify the first point on ellipse</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="276"/>
@@ -29845,10 +29311,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="339"/>
         <source>Specify endpoint of major axis</source>
         <translation type="unfinished"></translation>
@@ -29875,10 +29337,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="243"/>
         <source>Specify the center of ellipse</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="246"/>
@@ -29909,10 +29367,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="195"/>
         <source>Specify second focus of ellipse</source>
         <translation type="unfinished"></translation>
@@ -29939,10 +29393,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="307"/>
         <source>Specify the first line</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="310"/>
@@ -30033,10 +29483,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="270"/>
         <source>Enter angle:</source>
         <translation type="unfinished"></translation>
@@ -30062,10 +29508,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="252"/>
         <source>Specify first point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="274"/>
@@ -30112,10 +29554,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="312"/>
         <source>Enter angle:</source>
         <translation type="unfinished"></translation>
@@ -30138,10 +29576,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="265"/>
         <source>Select first line</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="136"/>
@@ -30177,10 +29611,6 @@ This block cannot be inserted.</source>
         <source>Click and drag to draw a line</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineHorVert</name>
@@ -30188,10 +29618,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="114"/>
         <source>Specify first point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="117"/>
@@ -30213,10 +29639,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="255"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished"></translation>
@@ -30228,10 +29650,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="135"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="109"/>
@@ -30261,10 +29679,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="174"/>
         <source>Select entity</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="110"/>
@@ -30315,10 +29729,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="92"/>
         <source>Specify second corner</source>
         <translation type="unfinished"></translation>
@@ -30357,10 +29767,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="144"/>
         <source>Specify second corner</source>
         <translation type="unfinished"></translation>
@@ -30390,10 +29796,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="251"/>
         <source>Specify position</source>
         <translation type="unfinished"></translation>
@@ -30413,10 +29815,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished"></translation>
@@ -30424,10 +29822,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent2</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="215"/>
         <source>Select first circle/ellipse/parabola</source>
@@ -30452,10 +29846,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="189"/>
         <source>Enter text:</source>
         <translation type="unfinished"></translation>
@@ -30463,10 +29853,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawPoint</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/rs_actiondrawpoint.cpp" line="77"/>
         <source>Specify location</source>
@@ -30479,10 +29865,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="725"/>
         <source>Specify first point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="756"/>
@@ -30560,10 +29942,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="227"/>
         <source>Specify next control point or [%1]</source>
         <translation type="unfinished"></translation>
@@ -30592,10 +29970,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="247"/>
         <source>Enter text:</source>
         <translation type="unfinished"></translation>
@@ -30604,13 +29978,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="243"/>
         <source>Specify second point</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditCopy</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
 </context>
 <context>
@@ -30670,13 +30037,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="185"/>
         <source>Paste Multiple</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
 </context>
 <context>
@@ -30800,10 +30160,6 @@ Intersection :@(%7, %8)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
         <source>Specify second line</source>
         <translation type="unfinished"></translation>
@@ -30836,10 +30192,6 @@ Intersection :@(%7, %8)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="178"/>
         <source>Specify first point of polygon</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
@@ -30900,10 +30252,6 @@ End: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="160"/>
         <source>Specify second point of distance</source>
         <translation type="unfinished"></translation>
@@ -30961,10 +30309,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="279"/>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="282"/>
         <source>Specify point</source>
@@ -30987,10 +30331,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="82"/>
         <source>Specify point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
 </context>
 <context>
@@ -31066,10 +30406,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="194"/>
         <source>Specify reference point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="197"/>
@@ -31169,10 +30505,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="369"/>
         <source>Select second entity</source>
         <translation type="unfinished"></translation>
@@ -31216,10 +30548,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="144"/>
         <source>Specify cutting point</source>
         <translation type="unfinished"></translation>
@@ -31254,10 +30582,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="148"/>
         <source>Specify first break point on a polyline</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="151"/>
@@ -31306,22 +30630,11 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionModifyDeleteQuick</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionModifyEntity</name>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyentity.cpp" line="263"/>
         <source>Click on entity to modify</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
 </context>
 <context>
@@ -31395,10 +30708,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="249"/>
         <source>Specify second point of mirror line</source>
         <translation type="unfinished"></translation>
@@ -31440,10 +30749,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="197"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
@@ -31506,10 +30811,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="342"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="325"/>
@@ -31721,10 +31022,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="179"/>
         <source>Specify relative reference point</source>
         <translation type="unfinished"></translation>
@@ -31764,10 +31061,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
         <translation type="unfinished"></translation>
@@ -31775,10 +31068,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="169"/>
         <source>Scale</source>
@@ -31863,10 +31152,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="79"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="91"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="111"/>
@@ -31921,10 +31206,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="200"/>
         <source>Select first trim entity</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="112"/>
@@ -32012,10 +31293,6 @@ Point: (%8 , %9)</source>
         <source>Choose entity for order</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionPolylineAdd</name>
@@ -32044,10 +31321,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="168"/>
         <source>Specify polyline to add nodes</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="171"/>
@@ -32083,10 +31356,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="125"/>
         <source>Can not append nodes in a closed polyline.</source>
         <translation type="unfinished"></translation>
@@ -32114,10 +31383,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="142"/>
         <source>Specify polyline to delete node</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="145"/>
@@ -32170,10 +31435,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="198"/>
         <source>Specify first node</source>
         <translation type="unfinished"></translation>
@@ -32207,10 +31468,6 @@ Point: (%8 , %9)</source>
         <source>Choose the original polyline</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionPolylineSegment</name>
@@ -32223,10 +31480,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="357"/>
         <source>Choose one of the segments on the original polyline</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="335"/>
@@ -32266,10 +31519,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="183"/>
         <source>Specify polyline to trim</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="186"/>
@@ -32356,13 +31605,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectContour</name>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="63"/>
@@ -32393,10 +31635,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="176"/>
         <source>Choose second point of intersection line</source>
         <translation type="unfinished"></translation>
@@ -32425,10 +31663,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="116"/>
         <source>De-Selecting</source>
@@ -32492,10 +31726,6 @@ Point: (%8 , %9)</source>
         <source>Set relative Zero</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionSnapIntersectionManual</name>
@@ -32531,10 +31761,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="108"/>
         <source>Zoom panning</source>
         <translation type="unfinished"></translation>
@@ -32546,10 +31772,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="140"/>
         <source>Specify first edge</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Prekliči</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="143"/>
@@ -32818,13 +32040,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/circle/qg_circletan2options.ui" line="82"/>
         <source>Pick radius from drawing</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Kot:</translation>
     </message>
 </context>
 <context>

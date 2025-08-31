@@ -67,8 +67,7 @@ public:
     RS_Document *getDocument() const;
     /** @return Pointer to graphic or NULL */
     RS_Graphic *getGraphic() const;
-    /** @return Pointer to current event handler */
-    RS_EventHandler *getEventHandler() const;
+
     void addChildWindow(QC_MDIWindow *w);
     void removeChildWindow(QC_MDIWindow *w);
     QList<QC_MDIWindow *> &getChildWindows();

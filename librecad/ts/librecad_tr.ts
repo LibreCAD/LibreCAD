@@ -39,36 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Çerçeve</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="obsolete">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="obsolete">&lt;</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Kaydet</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Çerçeve</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Kaydet</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/dialogs/entity/LC_DlgParabola.ui" line="26"/>
@@ -286,10 +256,6 @@
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="189"/>
         <source>Select arc entity</source>
         <translation>Yay varlığı seçin</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="192"/>
@@ -590,17 +556,9 @@ noktalar arasındaki mesafe=%2 çap=%3 den daha büyük</translation>
         <translation>İlk noktayı belirt</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="233"/>
         <source>Specify second point</source>
         <translation>İkinci noktayı belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="236"/>
@@ -886,25 +844,9 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawLinePolygonCenTan</name>
     <message>
-        <source>Specify center</source>
-        <translation type="vanished">Merkezi belirtin</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon3.cpp" line="51"/>
         <source>Specify a tangent</source>
         <translation>Bir teğet belirt</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Sayı gir:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Sayı geçersiz. 1..9999 deneyin</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Geçerli bir ifade değil</translation>
     </message>
 </context>
 <context>
@@ -1262,10 +1204,6 @@ or [%2]</source>
         <translation>İlk kontrol noktasını belirt</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
         <source>Specify next control point or [%1]</source>
         <translation>Sonraki kontrol noktasını belirtin veya [%1]</translation>
@@ -1588,19 +1526,6 @@ or [%2]</source>
         <translation>Çember &amp;İçine</translation>
     </message>
     <message>
-        <source>Tangential 2 Circles, Radius</source>
-        <comment>circle tangential with two circles, and given radius</comment>
-        <translation type="vanished">Teğetsel 2 Çember, Yarıçap</translation>
-    </message>
-    <message>
-        <source>Tangential 2 Circles, 1 Point</source>
-        <translation type="vanished">Teğetsel 2 Çember, 1 Nokta</translation>
-    </message>
-    <message>
-        <source>Tangential &amp;3 Circles</source>
-        <translation type="vanished">Teğetsel &amp;3 Çember</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
         <source>Tangential, 2 P&amp;oints</source>
         <translation>Teğetsel, 2 &amp;Nokta</translation>
@@ -1696,10 +1621,6 @@ or [%2]</source>
         <translation>&amp;Eş Mesafeli Çoklu Çizgi Oluştur</translation>
     </message>
     <message>
-        <source>Create Polyline from Existing &amp;Segments</source>
-        <translation type="vanished">&amp;Varolan Segmentlerden Çoklu Çizgi Oluştur</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="327"/>
         <source>&amp;MText</source>
         <translation>&amp;Çoklu Yazı</translation>
@@ -1765,10 +1686,6 @@ or [%2]</source>
         <translation>&amp;Sil</translation>
     </message>
     <message>
-        <source>Delete Freehand</source>
-        <translation type="vanished">Serbest çizim sil</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="368"/>
         <source>&amp;Move / Copy</source>
         <translation>&amp;Taşı / Kopyala</translation>
@@ -1777,10 +1694,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="369"/>
         <source>Re&amp;vert direction</source>
         <translation>&amp;Yönü Geri Al</translation>
-    </message>
-    <message>
-        <source>Ctrl+R</source>
-        <translation type="vanished">Ctrl+R</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="370"/>
@@ -1858,17 +1771,9 @@ or [%2]</source>
         <translation>Metni &amp;Harflerine Ayır</translation>
     </message>
     <message>
-        <source>Point inside contour</source>
-        <translation type="vanished">Konturun içindeki nokta</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="498"/>
         <source>&amp;Distance Point to Point</source>
         <translation>&amp;Noktadan noktaya uzaklık</translation>
-    </message>
-    <message>
-        <source>&amp;Distance Entity to Point</source>
-        <translation type="vanished">N&amp;oktadan Varlığa Uzaklık</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="501"/>
@@ -1876,17 +1781,9 @@ or [%2]</source>
         <translation>İ&amp;ki çizgi arasındaki açı</translation>
     </message>
     <message>
-        <source>&amp;Total length of selected entities</source>
-        <translation type="vanished">Seçili varlıkların &amp;toplam uzunluğu</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="503"/>
         <source>Polygonal &amp;Area</source>
         <translation>Çokgen Alanı</translation>
-    </message>
-    <message>
-        <source>&amp;Selection pointer</source>
-        <translation type="vanished">&amp;Seçim işareti</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="660"/>
@@ -1914,10 +1811,6 @@ or [%2]</source>
         <translation>&amp;Yapıştır</translation>
     </message>
     <message>
-        <source>move to bottom</source>
-        <translation type="vanished">aşağı taşı</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="190"/>
         <source>Polygo&amp;n (Tan,Tan)</source>
         <translation type="unfinished"></translation>
@@ -1941,10 +1834,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="233"/>
         <source>Paste to Points</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tangential 2 Circles, Radius</source>
-        <translation type="obsolete">Teğetsel 2 Çember, Yarıçap</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="269"/>
@@ -2618,18 +2507,6 @@ or [%2]</source>
         <translation type="unfinished">Serbest Yakala</translation>
     </message>
     <message>
-        <source>lower after entity</source>
-        <translation type="vanished">varlıktan sonra daha düşük</translation>
-    </message>
-    <message>
-        <source>raise over entity</source>
-        <translation type="vanished">varlık üzerine yükselt</translation>
-    </message>
-    <message>
-        <source>move to top</source>
-        <translation type="vanished">en üste taşı</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="499"/>
         <source>Distance &amp;Entity to Point</source>
         <translation type="unfinished"></translation>
@@ -2778,10 +2655,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="563"/>
         <source>Current &amp;Drawing Preferences</source>
         <translation>Geçerli &amp;Çizim Tercihleri</translation>
-    </message>
-    <message>
-        <source>&amp;Delete selected</source>
-        <translation type="vanished">Seçili &amp;olanı sil</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="652"/>
@@ -3031,14 +2904,6 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Menu Creator</source>
-        <translation type="vanished">Menü Yapıcı</translation>
-    </message>
-    <message>
-        <source>Toolbar Creator</source>
-        <translation type="vanished">Araç Çubuğu Yapıcı</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="639"/>
         <source>&amp;Save View</source>
         <translation type="unfinished"></translation>
@@ -3219,101 +3084,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionGroupManager</name>
-    <message>
-        <source>Block</source>
-        <translation type="obsolete">Blok</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Çember</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="obsolete">Eğri</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="obsolete">Yay</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="obsolete">Eğriçizgi</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Düzenle</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">Elips</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Dosya</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">Ölçülendirme</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Bilgi</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="obsolete">Katman</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Çizgi</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="obsolete">Nokta</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">Değiştir</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="obsolete">Seçenekler</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="obsolete">Diğer</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">Çoklu çizgi</translation>
-    </message>
-    <message>
-        <source>Restriction</source>
-        <translation type="obsolete">Kısıtlama</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="obsolete">Seç</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="obsolete">Yakala</translation>
-    </message>
-    <message>
-        <source>Snap Extras</source>
-        <translation type="obsolete">Ekstraları Yakala</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">Görünüm</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="obsolete">Bileşenler</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionInfo3PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="141"/>
@@ -3329,10 +3099,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="149"/>
         <source>Select second edge point of angle</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Bilgi</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="189"/>
@@ -3800,10 +3566,6 @@ End Edge Point: (%9 , %10)</source>
         <source>visible</source>
         <comment>Layers to export</comment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation type="vanished">&quot;%1&quot; &amp;katmanını &quot;%2&quot; olarak kaydet </translation>
     </message>
 </context>
 <context>
@@ -4952,18 +4714,6 @@ Are you sure you are going to discard changes?</source>
 <context>
     <name>LC_CreatorInvoker</name>
     <message>
-        <source>Toolbar Creator</source>
-        <translation type="obsolete">Araç Çubuğu Yapıcı</translation>
-    </message>
-    <message>
-        <source>Menu Creator</source>
-        <translation type="obsolete">Menü Yapıcı</translation>
-    </message>
-    <message>
-        <source>Menu Assigner</source>
-        <translation type="obsolete">Menü Atayıcı</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="83"/>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="115"/>
         <source>Toolbar: %1 (Custom)</source>
@@ -5406,29 +5156,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="108"/>
         <source>System</source>
         <translation type="unfinished">Sistem</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Katman:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometri</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="obsolete">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="obsolete">Y</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Kalem</translation>
     </message>
 </context>
 <context>
@@ -6773,10 +6500,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="332"/>
         <source>Edit style override</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="obsolete">...</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="346"/>
@@ -8433,10 +8156,6 @@ Are you sure you are going to discard changes?</source>
         <translation type="unfinished">Üst</translation>
     </message>
     <message>
-        <source>Menu Creator</source>
-        <translation type="obsolete">Menü Yapıcı</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="59"/>
         <source>Destroy Menu</source>
         <translation type="unfinished"></translation>
@@ -8450,10 +8169,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="62"/>
         <source>Define a custom menu by specifying the set of used actions. Menu will be shown as a popup in the drawing area as soon as menu invocation shortcut is invoked. </source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toolbar Creator</source>
-        <translation type="obsolete">Araç Çubuğu Yapıcı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="57"/>
@@ -9808,10 +9523,6 @@ Please specify a different value.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Layer Menu</source>
-        <translation type="obsolete">Katman Menüsü</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="651"/>
         <source>&amp;Add Child Layer</source>
         <translation type="unfinished"></translation>
@@ -10975,10 +10686,6 @@ Please specify a different value.</source>
         <translation type="unfinished">Sıra</translation>
     </message>
     <message>
-        <source>Dock Wid&amp;gets</source>
-        <translation type="obsolete">Sabit &amp;Bileşenler</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="475"/>
         <source>&amp;Toolbars</source>
         <translation type="unfinished">&amp;Araç çubukları</translation>
@@ -11272,18 +10979,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="32"/>
         <source>Snap point of gap to line snap point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="obsolete">Başlangıç</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="obsolete">Orta</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="obsolete">Son</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="95"/>
@@ -16211,10 +15906,6 @@ Warning: this action can NOT be undone!</source>
         <translation>Kütüphane Tarayıcı</translation>
     </message>
     <message>
-        <source>Command line</source>
-        <translation type="vanished">Komut satırı</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="260"/>
         <source>Dock</source>
         <translation>Sabit</translation>
@@ -16224,26 +15915,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="284"/>
         <source>Float</source>
         <translation>Yüzen</translation>
-    </message>
-    <message>
-        <source>Lines</source>
-        <translation type="vanished">Çizgiler</translation>
-    </message>
-    <message>
-        <source>Circles</source>
-        <translation type="vanished">Çemberler</translation>
-    </message>
-    <message>
-        <source>Freehand</source>
-        <translation type="vanished">Serbest el</translation>
-    </message>
-    <message>
-        <source>Ellipses</source>
-        <translation type="vanished">Elipsler</translation>
-    </message>
-    <message>
-        <source>PolyLines</source>
-        <translation type="vanished">Çoklu Çizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="101"/>
@@ -16264,10 +15935,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="96"/>
         <source>Circle</source>
         <translation type="unfinished">Çember</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="obsolete">Eğri</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="99"/>
@@ -16301,29 +15968,9 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished">Sıra</translation>
     </message>
     <message>
-        <source>Layer List</source>
-        <translation type="obsolete">Katman Listesi</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="212"/>
         <source>Entity Info</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="obsolete">Blok listesi</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Dosya</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Düzenle</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">Görünüm</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="164"/>
@@ -16344,170 +15991,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="98"/>
         <source>Spline</source>
         <translation type="unfinished">Eğriçizgi</translation>
-    </message>
-    <message>
-        <source>Snap Selection</source>
-        <translation type="obsolete">Yakalama Seçimi</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Kalem</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="obsolete">Araç Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="obsolete">Sabit Alanlar</translation>
-    </message>
-    <message>
-        <source>Creators</source>
-        <translation type="obsolete">Oluşturucular</translation>
-    </message>
-    <message>
-        <source>Preferences</source>
-        <translation type="obsolete">Tercihler</translation>
-    </message>
-    <message>
-        <source>Categories</source>
-        <translation type="obsolete">Kategoriler</translation>
-    </message>
-    <message>
-        <source>Dimensions</source>
-        <translation type="vanished">Boyutlar</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="obsolete">&amp;Dosya</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="obsolete">İçe aktar</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="obsolete">Dışa aktar</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="obsolete">&amp;Seçenekler</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="obsolete">Dü&amp;zenle</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="obsolete">&amp;Eklentiler</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="obsolete">Gö&amp;rüntüle</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="obsolete">&amp;Araçlar</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="obsolete">Çi&amp;zgi</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="obsolete">Çe&amp;mber</translation>
-    </message>
-    <message>
-        <source>&amp;Curve</source>
-        <translation type="obsolete">&amp;Eğri</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="obsolete">&amp;Yay</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="obsolete">&amp;Elips</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="obsolete">&amp;Çoklu çizgi</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="obsolete">&amp;Seçim</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="obsolete">&amp;Ölçülendirme</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="obsolete">Değişi&amp;klik</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="obsolete">&amp;Bilgi</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="obsolete">&amp;Sıra</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="obsolete">&amp;Çizimler</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="obsolete">&amp;Yardım</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="obsolete">&amp;Viki</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="obsolete">&amp;Kullanıcı Kılavuzu</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="obsolete">&amp;Komutlar</translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="obsolete">&amp;Stil Sayfası</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="obsolete">&amp;Bileşenler</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="obsolete">Hakkında</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="obsolete">&amp;Forum</translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="obsolete">Zulip &amp;Sohbet</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="obsolete">&amp;Bağış</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="obsolete">Bileşenler</translation>
-    </message>
-    <message>
-        <source>Dock Wid&amp;gets</source>
-        <translation type="obsolete">Sabit &amp;Bileşenler</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="obsolete">&amp;Araç çubukları</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="138"/>
@@ -16638,10 +16121,6 @@ Warning: this action can NOT be undone!</source>
         <source>Modify</source>
         <translation>Değiştir</translation>
     </message>
-    <message>
-        <source>Measure</source>
-        <translation type="vanished">Ölçüm</translation>
-    </message>
 </context>
 <context>
     <name>LC_WidgetOptionsDialog</name>
@@ -16682,10 +16161,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="503"/>
         <source>For &quot;classic&quot; statusbar only. </source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="vanished">Genel</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="113"/>
@@ -16865,14 +16340,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="654"/>
         <source>Number of columns for actions in left toolbar.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>side length in pixels</source>
-        <translation type="vanished">piksel cinsinden kenar uzunluğu</translation>
-    </message>
-    <message>
-        <source>Use themed icons</source>
-        <translation type="vanished">Temalı simgeler kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp" line="216"/>
@@ -17056,94 +16523,6 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp;Dosya</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="vanished">Dosya</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">Dü&amp;zenle</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Düzenle</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">Gö&amp;rüntüle</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="vanished">Görünüm</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&amp;Seçim</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">Çi&amp;zgi</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">Çe&amp;mber</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&amp;Elips</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">Değişi&amp;klik</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp;Bilgi</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Kalem</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="vanished">Araç Seçenekleri</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">Hakkında</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp;Yardım</translation>
-    </message>
-    <message>
-        <source>Layer List</source>
-        <translation type="vanished">Katman Listesi</translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="vanished">Blok listesi</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="vanished">Komut satırı</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">&amp;Basamakla</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">&amp;Diz</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">&amp;Yatay Döşe</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="795"/>
         <source>Creating new file...</source>
         <translation>Yeni dosya oluşturuluyor...</translation>
@@ -17198,26 +16577,6 @@ Lütfen dosya izinlerini kontrol edin.</translation>
         <translation>Kaydedilen çizim: %1</translation>
     </message>
     <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">Çizim dışa aktarılıyor...</translation>
-    </message>
-    <message>
-        <source>Exported: %1</source>
-        <translation type="vanished">Aktarıldı: %1</translation>
-    </message>
-    <message>
-        <source>Exporting...</source>
-        <translation type="vanished">Dışa aktarılıyor...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">Dışa aktarım tamamlandı</translation>
-    </message>
-    <message>
-        <source>Export failed!</source>
-        <translation type="vanished">Dışa aktarım gerçekleşmedi!</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1271"/>
         <source>Printing...</source>
         <translation>Yazdırılıyor...</translation>
@@ -17236,10 +16595,6 @@ Lütfen dosya izinlerini kontrol edin.</translation>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1369"/>
         <source>Exiting application...</source>
         <translation>Uygulamadan çıkılıyor...</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">&amp;Çoklu çizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1113"/>
@@ -17263,22 +16618,6 @@ Lütfen izinleri kontrol edin.
 Otomatik kaydetme devre dışı bırakıldı.</translation>
     </message>
     <message>
-        <source>Import</source>
-        <translation type="vanished">İçe aktar</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">&amp;Araç çubukları</translation>
-    </message>
-    <message>
-        <source>Compiled on: %1</source>
-        <translation type="vanished">Derleme tarihi: %1</translation>
-    </message>
-    <message>
-        <source>Version: %1</source>
-        <translation type="vanished">Sürüm: %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="988"/>
         <source>Warning: File already opened : </source>
         <translation>Uyarı: Dosya zaten açık: </translation>
@@ -17292,14 +16631,6 @@ Otomatik kaydetme devre dışı bırakıldı.</translation>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="249"/>
         <source> , please check the filename and permissions.</source>
         <translation> , lütfen dosya adını ve izinlerini kontrol edin.</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">&amp;Dikey Döşe</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">Ta&amp;b modu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="813"/>
@@ -17317,37 +16648,9 @@ Otomatik kaydetme devre dışı bırakıldı.</translation>
         <translation>Otomatik kaydetme başarısız oldu</translation>
     </message>
     <message>
-        <source>Snap Selection</source>
-        <translation type="vanished">Yakalama Seçimi</translation>
-    </message>
-    <message>
-        <source>Export as</source>
-        <translation type="vanished">Şu olarak dışa aktar</translation>
-    </message>
-    <message>
-        <source>Compiler: Clang %1.%2.%3</source>
-        <translation type="vanished">Derleyici: Clang %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation type="vanished">Derleyici: GNU GCC %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Qt Version: %1</source>
-        <translation type="vanished">Qt Sürüm: %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="207"/>
         <source>Draft Mode</source>
         <translation>Taslak Mod</translation>
-    </message>
-    <message>
-        <source>Export as PDF</source>
-        <translation type="vanished">PDF olarak dışa aktar</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">Dışa aktar</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1001"/>
@@ -17364,146 +16667,6 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
         <translation>&apos;%1&apos; dosyası yok. Açılış iptal edildi</translation>
     </message>
     <message>
-        <source>Categories</source>
-        <translation type="vanished">Kategoriler</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="vanished">&amp;Sıra</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">Sıra</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">Seç</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Çizgi</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Çember</translation>
-    </message>
-    <message>
-        <source>&amp;Curve</source>
-        <translation type="vanished">&amp;Eğri</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="vanished">Eğri</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Elips</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Çoklu çizgi</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">Ölçülendirme</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">Değiştir</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Bilgi</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="vanished">Sabit Alanlar</translation>
-    </message>
-    <message>
-        <source>Grid Status</source>
-        <translation type="vanished">Izgara Durumu</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="vanished">Araç Çubukları</translation>
-    </message>
-    <message>
-        <source>Dockwidgets</source>
-        <translation type="vanished">Beleşenleri sabitle</translation>
-    </message>
-    <message>
-        <source>Device Options</source>
-        <translation type="vanished">Cihaz Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Device</source>
-        <translation type="vanished">Cihaz</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">&amp;Seçenekler</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">&amp;Eklentiler</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="vanished">&amp;Ölçülendirme</translation>
-    </message>
-    <message>
-        <source>Dock Wid&amp;gets</source>
-        <translation type="vanished">Sabit &amp;Bileşenler</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">Son Dosyalar</translation>
-    </message>
-    <message>
-        <source>Compiler: Microsoft Visual C++</source>
-        <translation type="vanished">Derleyici: Microsoft Visual C++</translation>
-    </message>
-    <message>
-        <source>Boost Version: %1.%2.%3</source>
-        <translation type="vanished">Boost Sürümü: %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation type="vanished">Kopyala</translation>
-    </message>
-    <message>
-        <source>Contributors</source>
-        <translation type="vanished">Katkıda Bulunanlar</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation type="vanished">Lisans</translation>
-    </message>
-    <message>
-        <source>System</source>
-        <translation type="vanished">Sistem</translation>
-    </message>
-    <message>
-        <source>Toolbar Creator</source>
-        <translation type="vanished">Araç Çubuğu Yapıcı</translation>
-    </message>
-    <message>
-        <source>Menu Creator</source>
-        <translation type="vanished">Menü Yapıcı</translation>
-    </message>
-    <message>
-        <source>Menu Assigner</source>
-        <translation type="vanished">Menü Atayıcı</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="vanished">&amp;Araçlar</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="vanished">&amp;Çizimler</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="226"/>
         <source>Saving drawing: %1</source>
         <translation>Çizim kaydediliyor: %1</translation>
@@ -17512,16 +16675,6 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
         <source>Save cancelled</source>
         <translation>Kaydet iptal edildi</translation>
-    </message>
-    <message>
-        <source>Closing Drawing</source>
-        <translation type="vanished">Çizim kapatılıyor</translation>
-    </message>
-    <message>
-        <source>Save changes to the following item?
-%1</source>
-        <translation type="vanished">Aşağıdaki öğede yapılan değişiklikler kaydedilsin mi?
-%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="361"/>
@@ -17544,46 +16697,6 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
         <translation>%1 &amp;Farklı kaydet...</translation>
     </message>
     <message>
-        <source>&amp;Window mode</source>
-        <translation type="vanished">&amp;Pencere modu</translation>
-    </message>
-    <message>
-        <source>&amp;Layout</source>
-        <translation type="vanished">&amp;Düzen</translation>
-    </message>
-    <message>
-        <source>Rounded</source>
-        <translation type="vanished">Yuvarlatılmış</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="vanished">Üçgensel</translation>
-    </message>
-    <message>
-        <source>North</source>
-        <translation type="vanished">Kuzey</translation>
-    </message>
-    <message>
-        <source>South</source>
-        <translation type="vanished">Güney</translation>
-    </message>
-    <message>
-        <source>East</source>
-        <translation type="vanished">Doğu</translation>
-    </message>
-    <message>
-        <source>West</source>
-        <translation type="vanished">Batı</translation>
-    </message>
-    <message>
-        <source>&amp;Arrange</source>
-        <translation type="vanished">&amp;Düzene koy</translation>
-    </message>
-    <message>
-        <source>&amp;Maximized</source>
-        <translation type="vanished">&amp;Büyütülmüş</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1090"/>
         <source>Save All cancelled</source>
         <translation>Tümünü kaydet iptal edildi</translation>
@@ -17594,63 +16707,6 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1228"/>
         <source>Close All cancelled</source>
         <translation>Tümünü kapat iptal edildi</translation>
-    </message>
-    <message>
-        <source>The Code</source>
-        <translation type="vanished">Kod</translation>
-    </message>
-    <message>
-        <source>Cmd</source>
-        <translation type="vanished">Kmt</translation>
-    </message>
-    <message>
-        <source>Float</source>
-        <translation type="vanished">Yüzen</translation>
-    </message>
-    <message>
-        <source>Dock</source>
-        <comment>Dock the command widget to the main window</comment>
-        <translation type="vanished">Sabit</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="vanished">&amp;Viki</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="vanished">&amp;Kullanıcı Kılavuzu</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="vanished">&amp;Komutlar</translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="vanished">&amp;Stil Sayfası</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="vanished">&amp;Bileşenler</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="vanished">&amp;Forum</translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="vanished">Zulip &amp;Sohbet</translation>
-    </message>
-    <message>
-        <source>&amp;Release Information</source>
-        <translation type="vanished">&amp;Sürüm Bilgileri</translation>
-    </message>
-    <message>
-        <source>On&amp;line</source>
-        <translation type="vanished">&amp;Çevrimiçi</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="vanished">&amp;Bağış</translation>
     </message>
 </context>
 <context>
@@ -17685,25 +16741,9 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
         <source>Current Layer</source>
         <translation>Geçerli Katman</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Geçerli Etkin Katmanın Adı&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -17736,84 +16776,6 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>QG_BlockWidget</name>
-    <message>
-        <source>Show all blocks</source>
-        <translation type="vanished">Tüm blokları göster</translation>
-    </message>
-    <message>
-        <source>Hide all blocks</source>
-        <translation type="vanished">Tüm blokları gizle</translation>
-    </message>
-    <message>
-        <source>Rename the active block</source>
-        <translation type="vanished">Bloğun ismini değitir</translation>
-    </message>
-    <message>
-        <source>Edit the active block
-in a separate window</source>
-        <translation type="vanished">Aktif bloğu ayrı bir
-pencerede düzenle</translation>
-    </message>
-    <message>
-        <source>Insert the active block</source>
-        <translation type="vanished">Etkin bloğu yerleştir</translation>
-    </message>
-    <message>
-        <source>Block Menu</source>
-        <translation type="vanished">Blok Menüsü</translation>
-    </message>
-    <message>
-        <source>&amp;Defreeze all Blocks</source>
-        <translation type="vanished">Tüm Blokları &amp;Çöz</translation>
-    </message>
-    <message>
-        <source>&amp;Freeze all Blocks</source>
-        <translation type="vanished">Tüm Blokları &amp;Dondur</translation>
-    </message>
-    <message>
-        <source>&amp;Add Block</source>
-        <translation type="vanished">Blok &amp;Ekle</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Block</source>
-        <translation type="vanished">Bloğu &amp;Sil</translation>
-    </message>
-    <message>
-        <source>&amp;Rename Block</source>
-        <translation type="vanished">Bloğun &amp;Adını Değiştir</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Block</source>
-        <translation type="vanished">Bloğu &amp;Düzenle</translation>
-    </message>
-    <message>
-        <source>&amp;Insert Block</source>
-        <translation type="vanished">Blok &amp;Yerleştir</translation>
-    </message>
-    <message>
-        <source>&amp;Toggle Visibility</source>
-        <translation type="vanished">&amp;Göster/Gizle</translation>
-    </message>
-    <message>
-        <source>&amp;Create New Block</source>
-        <translation type="vanished">Yeni Blok &amp;Oluştur</translation>
-    </message>
-    <message>
-        <source>Create Block</source>
-        <translation type="vanished">Blok Oluştur</translation>
-    </message>
-    <message>
-        <source>Add an empty block</source>
-        <translation type="vanished">Boş bir blok ekle</translation>
-    </message>
-    <message>
-        <source>save the active block to a file</source>
-        <translation type="vanished">Aktif bloğu bir dosyaya kaydet</translation>
-    </message>
-    <message>
-        <source>Remove block</source>
-        <translation type="vanished">Bloğu sil</translation>
-    </message>
     <message>
         <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="183"/>
         <source>Filter</source>
@@ -17940,10 +16902,6 @@ pencerede düzenle</translation>
         <translation>Özel</translation>
     </message>
     <message>
-        <source>/ColorBox</source>
-        <translation type="vanished">/ColorBox</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="162"/>
         <source>Custom Picked</source>
         <translation>Özel Seçilmiş</translation>
@@ -18039,10 +16997,6 @@ pencerede düzenle</translation>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="321"/>
         <source>Float</source>
         <translation>Yüzen</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="vanished">Komut satırı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="322"/>
@@ -18379,44 +17333,6 @@ Bu, Bloğun kendisinin tüm varlıklarını yinelemeli olarak değiştirir.</tra
     </message>
 </context>
 <context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="vanished">Doğrusal Ölçülendirme</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Katman:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometri</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Açı:</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Kalem</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Katman:</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">Ölçülendirme</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Kalem</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgEllipse</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="26"/>
@@ -18494,18 +17410,6 @@ Bu, Bloğun kendisinin tüm varlıklarını yinelemeli olarak değiştirir.</tra
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="130"/>
         <source>Rotation angle for the major axis of ellipse, degrees</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="vanished">Bitiş Açısı:</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="vanished">Başlangıç Açısı:</translation>
-    </message>
-    <message>
-        <source>Rotation:</source>
-        <translation type="vanished">Dönüş:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="276"/>
@@ -18771,18 +17675,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="129"/>
         <source>Command Language:</source>
         <translation>Komut Dili:</translation>
-    </message>
-    <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
-&lt;/font&gt;
-&lt;br&gt;
-Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
-(You can changes these settings later.)</source>
-        <translation type="vanished">&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;LibreCAD&apos;e hoş geldiniz&lt;/b&gt;
-&lt;/font&gt;
-&lt;br&gt;
-Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz dili seçin.&lt;br&gt;
-(Bu ayarları daha sonra değiştirebilirsiniz.)</translation>
     </message>
 </context>
 <context>
@@ -19904,10 +18796,6 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <source>Move/Copy Options</source>
         <translation>Taşı/Kopyala Seçenekleri</translation>
     </message>
-    <message>
-        <source>Number of copies. Maximum 100</source>
-        <translation type="vanished">Kopya sayısı. En fazla 100</translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgMoveRotate</name>
@@ -19950,10 +18838,6 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="163"/>
         <source>Multiple Copies</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Çoklu Kopya</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="41"/>
@@ -20196,32 +19080,16 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>Eğri çizgi parça başına çizgi bölüntülerinin sayısı:</translation>
     </message>
     <message>
-        <source>Crosshair</source>
-        <translation type="vanished">Artı imleci</translation>
-    </message>
-    <message>
-        <source>Left crosshair with isometric grid</source>
-        <translation type="vanished">Sol izometrik ızgara artı imleci</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="170"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="230"/>
         <source>Left</source>
         <translation>Sol</translation>
     </message>
     <message>
-        <source>Top crosshair with isometric grid</source>
-        <translation type="vanished">Üst izometrik ızgara artı imleci</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="213"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="246"/>
         <source>Top</source>
         <translation>Üst</translation>
-    </message>
-    <message>
-        <source>Right crosshair with isometric grid</source>
-        <translation type="vanished">Sağ izometrik ızgara artı imleci</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="196"/>
@@ -20238,14 +19106,6 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="794"/>
         <source>Orthogonal Grid</source>
         <translation>Dik Izgara</translation>
-    </message>
-    <message>
-        <source>Use isometric grid</source>
-        <translation type="vanished">İzometrik ızgara kullan</translation>
-    </message>
-    <message>
-        <source>Isometric Grid</source>
-        <translation type="vanished">İzometrik Izgara</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1220"/>
@@ -20925,10 +19785,6 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>sabit uzatma çizgisi uzunluğu</translation>
     </message>
     <message>
-        <source>&amp;Splines</source>
-        <translation type="vanished">&amp;Eğri çizgiler</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2176"/>
         <source>&amp;Points</source>
         <translation>&amp;Nokta</translation>
@@ -21175,10 +20031,6 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>Uygulama Tercihleri</translation>
     </message>
     <message>
-        <source>&amp;Appearance</source>
-        <translation type="vanished">&amp;Görünüm</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5006"/>
         <source>Language</source>
         <translation>Dil</translation>
@@ -21194,30 +20046,10 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>&amp;Komut Dili:</translation>
     </message>
     <message>
-        <source>Backgr&amp;ound:</source>
-        <translation type="vanished">&amp;Artalan:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1173"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1495"/>
         <source>G&amp;rid Color:</source>
         <translation>I&amp;zgara Rengi:</translation>
-    </message>
-    <message>
-        <source>&amp;Meta Grid Color:</source>
-        <translation type="vanished">&amp;Meta Izgara Rengi:</translation>
-    </message>
-    <message>
-        <source>S&amp;elected Color:</source>
-        <translation type="vanished">S&amp;eçili Renk:</translation>
-    </message>
-    <message>
-        <source>&amp;Highlighted Color:</source>
-        <translation type="vanished">&amp;Vurgu Rengi:</translation>
-    </message>
-    <message>
-        <source>Graphic View</source>
-        <translation type="vanished">Grafik Görünüm</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="957"/>
@@ -21321,10 +20153,6 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>Program Varsayılanları</translation>
     </message>
     <message>
-        <source>Drawing unit.</source>
-        <translation type="vanished">Çizim birimi.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4736"/>
         <source>Time between automatic saving of the document in minutes.</source>
         <translation>Belgenin, dakika olarak otomatik kaydetme aralığı.</translation>
@@ -21333,10 +20161,6 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4759"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
         <translation>Ayarlandığında LibreCAD otomatik olarak mevcut çiziminizin bir yedeğini oluşturacaktır.</translation>
-    </message>
-    <message>
-        <source>Auto backup</source>
-        <translation type="vanished">Otomatik yedekle</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5301"/>
@@ -21357,14 +20181,6 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="723"/>
         <source>&amp;End Handle Color:</source>
         <translation>B&amp;itiş Kulp Rengi:</translation>
-    </message>
-    <message>
-        <source>Graphic Colors</source>
-        <translation type="vanished">Grafik Renkleri</translation>
-    </message>
-    <message>
-        <source>Snap indicator:</source>
-        <translation type="vanished">Yakalama göstergesi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="554"/>
@@ -21397,10 +20213,6 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5528"/>
         <source>Line length:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modify layer of selected entities, at  layer activation</source>
-        <translation type="vanished">Katman aktivasyonunda seçili varlıkların katmanını değiştir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4303"/>
@@ -21611,17 +20423,9 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>Ayarları Sıfırla</translation>
     </message>
     <message>
-        <source>restores program geometry/layout to original state</source>
-        <translation type="vanished">program geometrisini/düzenini özgün durumuna geri yükler</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5076"/>
         <source>Layout</source>
         <translation>Düzen</translation>
-    </message>
-    <message>
-        <source>restores the program to its original state</source>
-        <translation type="vanished">programı özgün durumuna geri yükler</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5092"/>
@@ -21632,14 +20436,6 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="538"/>
         <source>Scrollbars</source>
         <translation>Kaydırma çubukları</translation>
-    </message>
-    <message>
-        <source>Snap indicator lines</source>
-        <translation type="vanished">Yakalama gösterge çizgileri</translation>
-    </message>
-    <message>
-        <source>Snap indicator shape</source>
-        <translation type="vanished">Yakalama gösterge şekli</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1671"/>
@@ -21728,29 +20524,9 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation>Otomatik kaydır</translation>
     </message>
     <message>
-        <source>Hide the relative-&amp;zero marker</source>
-        <translation type="vanished">&amp;Göreceli sıfır işaretçisini gizle</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2575"/>
         <source>Alt+Z</source>
         <translation>Alt+Z</translation>
-    </message>
-    <message>
-        <source>Visualize the entity under the cursor</source>
-        <translation type="vanished">İmlecin altındaki varlığı görselleştir</translation>
-    </message>
-    <message>
-        <source>Mouse-over effects</source>
-        <translation type="vanished">Fare üzerinde efektleri</translation>
-    </message>
-    <message>
-        <source>&amp;Relative-Zero Marker Color:</source>
-        <translation type="vanished">&amp;Göreceli Sıfır İşaretçi Rengi:</translation>
-    </message>
-    <message>
-        <source>Auto save time (minutes):</source>
-        <translation type="vanished">Otomatik kaydetme süresi (dakika):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="567"/>
@@ -23498,10 +22274,6 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation type="obsolete">Diğer</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5169"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5224"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5238"/>
@@ -23550,10 +22322,6 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5284"/>
         <source>Path to folder with translation files</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</source>
-        <translation type="vanished">Komut penceresi boşken BOŞLUK ÇUBUĞUNA basıldığında serbest yakalama moduna geçiş yap</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4306"/>
@@ -23708,13 +22476,6 @@ yani pişirme için gereken varsayılan adım değeri</translation>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="38"/>
         <source>Whether to export points</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
     </message>
 </context>
 <context>
@@ -24893,14 +23654,6 @@ yani pişirme için gereken varsayılan adım değeri</translation>
         <source>again Still No Text supplied.</source>
         <translation>tekrar Hiçbir Metin sağlanmadı.</translation>
     </message>
-    <message>
-        <source>Close All</source>
-        <translation type="vanished">Tümünü Kapat</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Kapat</translation>
-    </message>
 </context>
 <context>
     <name>QG_FileDialog</name>
@@ -24985,13 +23738,6 @@ yani pişirme için gereken varsayılan adım değeri</translation>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="227"/>
         <source>Untitled</source>
         <translation>İsimsiz</translation>
-    </message>
-</context>
-<context>
-    <name>QG_GraphicView</name>
-    <message>
-        <source>Edit Properties</source>
-        <translation type="vanished">Özellikleri Düzenle</translation>
     </message>
 </context>
 <context>
@@ -25118,98 +23864,14 @@ Yapı Katmanının içeriği çıktıda görünmemelidir.</translation>
 <context>
     <name>QG_LayerWidget</name>
     <message>
-        <source>Show all layers</source>
-        <translation type="vanished">Tüm katmanları göster</translation>
-    </message>
-    <message>
-        <source>Hide all layers</source>
-        <translation type="vanished">Tüm katmanları gizle</translation>
-    </message>
-    <message>
-        <source>Add a layer</source>
-        <translation type="vanished">Bir Katman Ekle</translation>
-    </message>
-    <message>
-        <source>Modify layer attributes / rename</source>
-        <translation type="vanished">Katman öznitelikleri</translation>
-    </message>
-    <message>
-        <source>Layer Menu</source>
-        <translation type="vanished">Katman Menüsü</translation>
-    </message>
-    <message>
-        <source>&amp;Defreeze all Layers</source>
-        <translation type="vanished">Tüm Katmanları &amp;Çöz</translation>
-    </message>
-    <message>
-        <source>&amp;Freeze all Layers</source>
-        <translation type="vanished">Tüm Katmanları &amp;Dondur</translation>
-    </message>
-    <message>
-        <source>&amp;Add Layer</source>
-        <translation type="vanished">Katman &amp;Ekle</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Layer</source>
-        <translation type="vanished">Katmanı &amp;Sil</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="249"/>
         <source>Looking for matching layer names</source>
         <translation>Eşleşen katman adları aranıyor</translation>
     </message>
     <message>
-        <source>Edit Layer &amp;Attributes</source>
-        <translation type="vanished">Katman &amp;Niteliklerini Düzenle</translation>
-    </message>
-    <message>
-        <source>Toggle Layer &amp;Visibility</source>
-        <translation type="vanished">Katman &amp;Göster</translation>
-    </message>
-    <message>
-        <source>Toggle Layer &amp;Printing</source>
-        <translation type="vanished">Katman &amp;Yazdır</translation>
-    </message>
-    <message>
-        <source>Toggle &amp;Construction Layer</source>
-        <translation type="vanished">&amp;Yapı Katmanı</translation>
-    </message>
-    <message>
-        <source>Unlock all layers</source>
-        <translation type="vanished">Tüm katmanların kilidini aç</translation>
-    </message>
-    <message>
-        <source>Lock all layers</source>
-        <translation type="vanished">Tüm katmanları kilitle</translation>
-    </message>
-    <message>
-        <source>Remove layer</source>
-        <translation type="vanished">Katmanı sil</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="247"/>
         <source>Filter</source>
         <translation>Süz</translation>
-    </message>
-    <message>
-        <source>&amp;Unlock all Layers</source>
-        <translation type="vanished">&amp;Tüm Katmanların Kilidini Aç</translation>
-    </message>
-    <message>
-        <source>&amp;Lock all Layers</source>
-        <translation type="vanished">Tüm &amp;Katmanları kilitle</translation>
-    </message>
-    <message>
-        <source>Toggle Layer Loc&amp;k</source>
-        <translation type="vanished">&amp;Katman Kilitle</translation>
-    </message>
-    <message>
-        <source>&amp;Export Selected Layer(s)</source>
-        <translation type="vanished">&amp;Seçili Katmanları Dışa Aktar</translation>
-    </message>
-    <message>
-        <source>Export &amp;Visible Layer(s)</source>
-        <translation type="vanished">&amp;Görünür Katmanları Dışa Aktar</translation>
     </message>
 </context>
 <context>
@@ -25392,10 +24054,6 @@ Yapı Katmanının içeriği çıktıda görünmemelidir.</translation>
         <translation>Fare</translation>
     </message>
     <message>
-        <source>Right</source>
-        <translation type="vanished">Sağ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/status_bar/qg_mousewidget.ui" line="229"/>
         <source>Left</source>
         <translation>Sol</translation>
@@ -25440,13 +24098,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="49"/>
         <source>Line type</source>
         <translation>Çizgi tipi</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PolylineOptions</name>
-    <message>
-        <source>wrong action type</source>
-        <translation type="vanished">yanlış eylem türü</translation>
     </message>
 </context>
 <context>
@@ -25502,145 +24153,9 @@ p, li { white-space: pre-wrap; }
         <source>Total length of selected entities</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Seçilen varlıkların sayısı&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Seçilen varlıkların toplam uzunluğu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
 </context>
 <context>
     <name>QG_SnapToolBar</name>
-    <message>
-        <source>Snap</source>
-        <translation type="vanished">Yakala</translation>
-    </message>
-    <message>
-        <source>Snap to Endpoints</source>
-        <translation type="vanished">Uç noktayı yakala</translation>
-    </message>
-    <message>
-        <source>Snap to equidistant points of entity</source>
-        <translation type="vanished">Varlığın eşit uzaklıktaki noktalarına yapış</translation>
-    </message>
-    <message>
-        <source>Snap to center points</source>
-        <translation type="vanished">Merkezi yakala</translation>
-    </message>
-    <message>
-        <source>Snap to intersections automatically</source>
-        <translation type="vanished">Kesişme noktasını otomatik yakala</translation>
-    </message>
-    <message>
-        <source>Snap to closest point on entity</source>
-        <translation type="vanished">Varlıktaki en yakın noktayı yakala</translation>
-    </message>
-    <message>
-        <source>Snap to point with given distance to endpoint</source>
-        <translation type="vanished">Uç noktadan verilen mesafedeki noktaları yakala</translation>
-    </message>
-    <message>
-        <source>Snap to intersections manually</source>
-        <translation type="vanished">Kesişen noktayı el ile yakala</translation>
-    </message>
-    <message>
-        <source>Snap to grid</source>
-        <translation type="vanished">Izgarayı yakala</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontally</source>
-        <translation type="vanished">Yatayla Kısıtlı</translation>
-    </message>
-    <message>
-        <source>Restrict Vertically</source>
-        <translation type="vanished">Dikeyle Kısıtlı</translation>
-    </message>
-    <message>
-        <source>Move relative Zero</source>
-        <translation type="vanished">Göreli Sıfırı Taşı</translation>
-    </message>
-    <message>
-        <source>Lock relative Zero</source>
-        <translation type="vanished">Göreli Sıfırı Kilitle</translation>
-    </message>
-    <message>
-        <source>Free Snap</source>
-        <translation type="vanished">Serbest Yakala</translation>
-    </message>
-    <message>
-        <source>Snap on grid</source>
-        <translation type="vanished">Izgarayı yakala</translation>
-    </message>
-    <message>
-        <source>Snap on Endpoints</source>
-        <translation type="vanished">Uç noktadan yakala</translation>
-    </message>
-    <message>
-        <source>Snap on Entity</source>
-        <translation type="vanished">Varlık Yakala</translation>
-    </message>
-    <message>
-        <source>Snap Center</source>
-        <translation type="vanished">Merkez Yakala</translation>
-    </message>
-    <message>
-        <source>Snap Middle</source>
-        <translation type="vanished">Orta Nokta Yakala</translation>
-    </message>
-    <message>
-        <source>Snap Distance</source>
-        <translation type="vanished">Mesafe Yakala</translation>
-    </message>
-    <message>
-        <source>Snap Intersection</source>
-        <translation type="vanished">Kesişme Yakala</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontal</source>
-        <translation type="vanished">Yataya Kısıtlı</translation>
-    </message>
-    <message>
-        <source>Restrict Vertical</source>
-        <translation type="vanished">Dikeye Kısıtlı</translation>
-    </message>
-    <message>
-        <source>Restrict Orthogonal</source>
-        <translation type="vanished">Yatay ve Dikeye Kısıtlı</translation>
-    </message>
-    <message>
-        <source>Restrict Nothing</source>
-        <translation type="vanished">Hiçbir şeyle kısıtlı değil</translation>
-    </message>
-    <message>
-        <source>Set relative zero position</source>
-        <translation type="vanished">Göreli sıfır konumunu ayarla</translation>
-    </message>
-    <message>
-        <source>Lock relative zero position</source>
-        <translation type="vanished">Göreli sıfır konumunu kilitle</translation>
-    </message>
-    <message>
-        <source>Exclusive Snap Mode</source>
-        <translation type="vanished">Özel Yakalama Modu</translation>
-    </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="169"/>
         <source>Relative zero position is %1</source>
@@ -25714,117 +24229,9 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_WidthBox</name>
     <message>
-        <source>- Unchanged -</source>
-        <translation type="vanished">- Değişmedi -</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="250"/>
         <source>By Layer</source>
         <translation>Katmana göre</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation type="vanished">Bloğa göre</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">Varsyılan</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation type="vanished">0.00mm</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation type="vanished">0.05mm</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation type="vanished">0.09mm</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation type="vanished">0.13mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation type="vanished">0.15mm</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation type="vanished">0.18mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation type="vanished">0.20mm</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation type="vanished">0.25mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation type="vanished">0.30mm</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation type="vanished">0.35mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation type="vanished">0.40mm</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation type="vanished">0.50mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation type="vanished">0.53mm</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation type="vanished">0.60mm</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation type="vanished">0.70mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation type="vanished">0.80mm</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation type="vanished">0.90mm</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation type="vanished">1.00mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation type="vanished">1.06mm</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation type="vanished">1.20mm</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation type="vanished">1.40mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation type="vanished">1.58mm</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation type="vanished">2.00mm (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation type="vanished">2.11mm</translation>
     </message>
 </context>
 <context>
@@ -27337,10 +25744,6 @@ Do you want to replace it?</source>
         <translation>kapat</translation>
     </message>
     <message>
-        <source>chord length</source>
-        <translation type="vanished">kiriş mesafesi</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1059"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1165"/>
         <source>columns</source>
@@ -27422,11 +25825,6 @@ Do you want to replace it?</source>
         <source>ce</source>
         <comment>center</comment>
         <translation>me</translation>
-    </message>
-    <message>
-        <source>cl</source>
-        <comment>chord length</comment>
-        <translation type="vanished">ku</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1163"/>
@@ -27619,19 +26017,9 @@ Do you want to replace it?</source>
         <translation>gerial</translation>
     </message>
     <message>
-        <source>u</source>
-        <comment>undo</comment>
-        <translation type="vanished">ga</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1221"/>
         <source>redo</source>
         <translation>ilerial</translation>
-    </message>
-    <message>
-        <source>r</source>
-        <comment>redo</comment>
-        <translation type="vanished">i</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1224"/>
@@ -27653,10 +26041,6 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1231"/>
         <source>graphoffset</source>
         <translation>grafikofseti</translation>
-    </message>
-    <message>
-        <source>Command: %1 (%2)</source>
-        <translation type="vanished">Komut: %1 (%2)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="261"/>
@@ -27695,23 +26079,9 @@ Do you want to replace it?</source>
         <translation>Komut bulunamadı: %1</translation>
     </message>
     <message>
-        <source>Accepted keycode: %1</source>
-        <translation type="vanished">Kabul edilen klavye kodu: %1</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="472"/>
         <source>Available commands:</source>
         <translation>Mevcut Komutlar:</translation>
-    </message>
-    <message>
-        <source>cal</source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">hm</translation>
-    </message>
-    <message>
-        <source>calculate</source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">hesapla</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="204"/>
@@ -27763,90 +26133,6 @@ Do you want to replace it?</source>
         <translation>öz</translation>
     </message>
     <message>
-        <source>Block</source>
-        <translation type="vanished">Blok</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Çember</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="vanished">Eğri</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Düzenle</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Elips</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="vanished">Dosya</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">Ölçülendirme</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Bilgi</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">Katman</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Çizgi</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">Değiştir</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="vanished">Seçenekler</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">Diğer</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Çoklu çizgi</translation>
-    </message>
-    <message>
-        <source>Restriction</source>
-        <translation type="vanished">Kısıtlama</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">Seç</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="vanished">Yakala</translation>
-    </message>
-    <message>
-        <source>Snap Extras</source>
-        <translation type="vanished">Ekstraları Yakala</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="vanished">Görünüm</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="vanished">Bileşenler</translation>
-    </message>
-    <message>
-        <source>Creators</source>
-        <translation type="vanished">Oluşturucular</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="87"/>
         <source>All</source>
         <translation>Tümü</translation>
@@ -27855,10 +26141,6 @@ Do you want to replace it?</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="960"/>
         <source>Invalid objects removed:</source>
         <translation>Geçersiz nesneler kaldırıldı:</translation>
-    </message>
-    <message>
-        <source>Pen Wizard</source>
-        <translation type="vanished">Kalem Sihirbazı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_wizard/colorwizard.cpp" line="52"/>
@@ -30343,10 +28625,6 @@ Do you want to replace it?</source>
         <source>Specify reference point</source>
         <translation>Başlangıç noktası belirtilir</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionBlocksExplode</name>
@@ -30377,10 +28655,6 @@ Do you want to replace it?</source>
         <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="349"/>
         <source>Specify reference point</source>
         <translation>Başlangıç noktasını belirtin</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="352"/>
@@ -30609,37 +28883,6 @@ Bu blok eklenemez.</translation>
         <source>Choose second edge</source>
         <translation>İkinci kenarı seçin</translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDimAligned</name>
-    <message>
-        <source>Specify first extension line origin</source>
-        <translation type="vanished">İlk ölçüm noktasını belirtin</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
-        <source>Specify second extension line origin</source>
-        <translation type="vanished">İkinci ölçüm noktasını belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation type="vanished">Ölçü çizgisinin yerini belirtin</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Ölçü metnini girin:</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDimAngular</name>
@@ -30647,10 +28890,6 @@ Bu blok eklenemez.</translation>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="216"/>
         <source>Select first line</source>
         <translation>İlk kenarı seçin</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="219"/>
@@ -30669,42 +28908,11 @@ Bu blok eklenemez.</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionDimDiametric</name>
-    <message>
-        <source>Not a circle or arc entity</source>
-        <translation type="vanished">Bir çember ya da yay değil</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Geçerli bir ifade değil</translation>
-    </message>
-    <message>
-        <source>Select arc or circle entity</source>
-        <translation type="vanished">Bir çember ya da yay seçin</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation type="vanished">Ölçü çizgisinin yerini belirtin</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Çap uzunluğu:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDimLeader</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="182"/>
         <source>Specify target point</source>
         <translation>Hedefi belirtin</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="185"/>
@@ -30736,61 +28944,14 @@ Bu blok eklenemez.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Specify first extension line origin</source>
-        <translation type="vanished">İlk ölçüm noktasını belirtin</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="211"/>
         <source>Specify second extension line origin</source>
         <translation>İkinci ölçüm noktasını belirtin</translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="221"/>
         <source>Specify dimension line location</source>
         <translation>Ölçü çizgisinin yerini belirtin</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Ölçü metni:</translation>
-    </message>
-    <message>
-        <source>Enter dimension line angle:</source>
-        <translation type="vanished">Ölçü çzgisinin açısı:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDimRadial</name>
-    <message>
-        <source>Not a circle or arc entity</source>
-        <translation type="vanished">Bir çember ya da yay değil</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Geçerli bir ifade değil</translation>
-    </message>
-    <message>
-        <source>Select arc or circle entity</source>
-        <translation type="vanished">Bir yay veya çember seçin</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
-        <source>Specify dimension line position or enter angle:</source>
-        <translation type="vanished">Ölçüm noktasını ve ölçü çizgisinin açısını belirtin:</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Ölçü metni:</translation>
     </message>
 </context>
 <context>
@@ -30841,17 +29002,9 @@ Bu blok eklenemez.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="500"/>
         <source>Specify radius</source>
         <translation>Yarıçapı belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="507"/>
@@ -30868,14 +29021,6 @@ Bu blok eklenemez.</translation>
         <source>Specify included angle:</source>
         <translation>İç açı:</translation>
     </message>
-    <message>
-        <source>Specify chord length:</source>
-        <translation type="vanished">Kiriş uzunluğunu belirt:</translation>
-    </message>
-    <message>
-        <source>Specify end angle or [angle/chord length]</source>
-        <translation type="vanished">Bitiş açısı veya [açı/kiriş uzunluğu] belirt</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawArc3P</name>
@@ -30890,21 +29035,9 @@ Bu blok eklenemez.</translation>
         <translation type="unfinished">Üçüncü noktayı belirtin</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="233"/>
         <source>Specify second point</source>
         <translation>İkinci noktayı belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
-    </message>
-    <message>
-        <source>Specify endpoint</source>
-        <translation type="vanished">Bitiş noktasını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="230"/>
@@ -30930,17 +29063,9 @@ Bu blok eklenemez.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="277"/>
         <source>Specify end angle</source>
         <translation>Bitiş açısını belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="279"/>
@@ -30961,14 +29086,6 @@ Bu blok eklenemez.</translation>
         <translation>Merkezi belirtin</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="129"/>
         <source>Specify point on circle</source>
         <translation>Çemberde noktayı belirtin</translation>
@@ -30987,17 +29104,9 @@ Bu blok eklenemez.</translation>
         <translation>İlk noktayı belirt</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="156"/>
         <source>Specify second point</source>
         <translation>İkinci noktayı belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
 </context>
 <context>
@@ -31013,17 +29122,9 @@ Bu blok eklenemez.</translation>
         <translation>İlk noktayı belirt</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="175"/>
         <source>Specify second point</source>
         <translation>İkinci noktayı belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="178"/>
@@ -31044,17 +29145,9 @@ Bu blok eklenemez.</translation>
         <translation>Çemberin merkezini belirtin</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="177"/>
         <source>Specify circle radius</source>
         <translation>Çemberin yarıçapını belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="146"/>
@@ -31080,17 +29173,9 @@ Bu blok eklenemez.</translation>
         <translation>İlk çizgiyi belirtin</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="216"/>
         <source>Specify the second line</source>
         <translation>İkinci çizgiyi belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="219"/>
@@ -31101,17 +29186,9 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawCircleTan1_2P</name>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="463"/>
         <source>Specify the first point on the tangent circle</source>
         <translation>Teğet çember üzerindeki ilk noktayı belirt</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="466"/>
@@ -31137,38 +29214,14 @@ Bu blok eklenemez.</translation>
         <translation>İlk çizgiyi/yayı/çemberi belirtin</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="280"/>
         <source>Specify the second line/arc/circle</source>
         <translation>İkinci çizgiyi/yayı/çemberi belirtin</translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="283"/>
         <source>Select the center of the tangent circle</source>
         <translation>Teğet çemberin merkezini seçin</translation>
-    </message>
-    <message>
-        <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation type="vanished">Yarı çap için geçersiz &apos;%1&apos; ifadesi</translation>
-    </message>
-    <message>
-        <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation type="vanished">Geçersiz negatif yarı çap &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation type="vanished">Geçersiz sıfır yarı çapı &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation type="vanished">&apos;%1&apos; yarıçapı için teğet çember mümkün değil</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="246"/>
@@ -31182,18 +29235,6 @@ Bu blok eklenemez.</translation>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="338"/>
         <source>Specify a line/arc/circle</source>
         <translation>Bir çizgi/yay/çember belirtin</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
-        <source>Specify the another arc/circle</source>
-        <translation type="vanished">Başka bir yay/çember belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="341"/>
@@ -31213,14 +29254,6 @@ Bu blok eklenemez.</translation>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="509"/>
         <source>Select the center of the tangent circle</source>
@@ -31255,17 +29288,9 @@ Bu blok eklenemez.</translation>
         <translation>Elipsin ilk noktasını belirt</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="276"/>
         <source>Specify the second point on ellipse</source>
         <translation>Elips üzerindeki ikinci noktayı belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="279"/>
@@ -31298,17 +29323,9 @@ Bu blok eklenemez.</translation>
         <translation>Elipsin merkezini belirtin</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="339"/>
         <source>Specify endpoint of major axis</source>
         <translation>Büyük eksenin bitiş noktasını belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="342"/>
@@ -31334,10 +29351,6 @@ Bu blok eklenemez.</translation>
         <translation>Elips merkezini belirtin</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="246"/>
         <source>Specify the first point on ellipse</source>
         <translation>Elipsin ilk noktasını belirt</translation>
@@ -31346,10 +29359,6 @@ Bu blok eklenemez.</translation>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="249"/>
         <source>Specify the second point on ellipse</source>
         <translation>Elips üzerindeki ikinci noktayı belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="252"/>
@@ -31370,17 +29379,9 @@ Bu blok eklenemez.</translation>
         <translation>Elipsin ilk odağını belirtin</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="195"/>
         <source>Specify second focus of ellipse</source>
         <translation>Elipsin ikinci odağını belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="198"/>
@@ -31406,17 +29407,9 @@ Bu blok eklenemez.</translation>
         <translation>İlk çizgiyi belirt</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="310"/>
         <source>Specify the second line</source>
         <translation>İkinci çizgiyi belirt</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="313"/>
@@ -31502,10 +29495,6 @@ Bu blok eklenemez.</translation>
         <translation>Başlangıç noktasını belirtin</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="270"/>
         <source>Enter angle:</source>
         <translation>Açıyı girin:</translation>
@@ -31529,17 +29518,9 @@ Bu blok eklenemez.</translation>
         <translation>İlk noktayı belirt</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="274"/>
         <source>Specify next point or [%1]</source>
         <translation>Sonraki noktayı ya da [%1] belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="276"/>
@@ -31581,17 +29562,9 @@ Bu blok eklenemez.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="312"/>
         <source>Enter angle:</source>
         <translation>Açıyı girin:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="315"/>
@@ -31618,17 +29591,9 @@ Bu blok eklenemez.</translation>
         <translation>İlk kenarı seçin</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="268"/>
         <source>Select second line</source>
         <translation>İkinci çizgiyi seçin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="271"/>
@@ -31654,10 +29619,6 @@ Bu blok eklenemez.</translation>
         <source>Click and drag to draw a line</source>
         <translation>Çizgiyi çizmek için tıklayın ve fareyi sürükleyin</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineHorVert</name>
@@ -31667,17 +29628,9 @@ Bu blok eklenemez.</translation>
         <translation>İlk noktayı belirt</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="117"/>
         <source>Specify second point</source>
         <translation>İkinci noktayı belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
 </context>
 <context>
@@ -31694,17 +29647,9 @@ Bu blok eklenemez.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="255"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Çember, yay ya da elips seçin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
 </context>
 <context>
@@ -31713,10 +29658,6 @@ Bu blok eklenemez.</translation>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="135"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
         <translation>Mesafe belirtin &lt;%1&gt; ya da varlık veya [%2] seçin</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="109"/>
@@ -31748,17 +29689,9 @@ Bu blok eklenemez.</translation>
         <translation>Varlık seçin</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="177"/>
         <source>Specify through point</source>
         <translation>Geçiş noktasını belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="110"/>
@@ -31784,25 +29717,9 @@ Bu blok eklenemez.</translation>
 <context>
     <name>RS_ActionDrawLinePolygonCenCor</name>
     <message>
-        <source>Specify center</source>
-        <translation type="vanished">Merkezi belirtin</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon.cpp" line="41"/>
         <source>Specify a corner</source>
         <translation>Bir köşe belirtin</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Sayı gir:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Sayı geçersiz. 1..9999 deneyin</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Geçerli bir ifade değil</translation>
     </message>
 </context>
 <context>
@@ -31813,29 +29730,9 @@ Bu blok eklenemez.</translation>
         <translation>İlk köşeyi belirtin</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="92"/>
         <source>Specify second corner</source>
         <translation>İkinci köşeyi belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Sayı:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Sayı geçersiz. 1..9999 deneyin</translation>
-    </message>
-    <message>
-        <source>Not a valid expression.</source>
-        <translation type="vanished">Geçerli bir ifade değil.</translation>
     </message>
 </context>
 <context>
@@ -31871,17 +29768,9 @@ Bu blok eklenemez.</translation>
         <translation>İlk köşeyi belirtin</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="144"/>
         <source>Specify second corner</source>
         <translation>İkinci köşeyi belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
 </context>
 <context>
@@ -31908,17 +29797,9 @@ Bu blok eklenemez.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="251"/>
         <source>Specify position</source>
         <translation>Kesişme yerini belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
 </context>
 <context>
@@ -31935,37 +29816,13 @@ Bu blok eklenemez.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Bir çember, yay ya da elips seçin</translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent2</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
-    </message>
-    <message>
-        <source>Select first circle or ellipse</source>
-        <translation type="vanished">İlk çemberi veya elipsi seçin</translation>
-    </message>
-    <message>
-        <source>Select second circle or ellipse</source>
-        <translation type="vanished">İkinci çemberi veya elipsi seçin</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="215"/>
         <source>Select first circle/ellipse/parabola</source>
@@ -31990,17 +29847,9 @@ Bu blok eklenemez.</translation>
         <translation>Yerleşme noktasını belirtin</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="189"/>
         <source>Enter text:</source>
         <translation>Metni girin:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
 </context>
 <context>
@@ -32010,10 +29859,6 @@ Bu blok eklenemez.</translation>
         <source>Specify location</source>
         <translation>Yerini belirtin</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawPolyline</name>
@@ -32021,14 +29866,6 @@ Bu blok eklenemez.</translation>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="725"/>
         <source>Specify first point</source>
         <translation>İlk noktayı belirt</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="756"/>
@@ -32061,10 +29898,6 @@ Bu blok eklenemez.</translation>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="567"/>
         <source>Enter number of polylines</source>
         <translation>Çoklu çizgi sayısını girin</translation>
-    </message>
-    <message>
-        <source>equation</source>
-        <translation type="vanished">denklem</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="525"/>
@@ -32110,17 +29943,9 @@ Bu blok eklenemez.</translation>
         <translation>İlk kontrol noktasını belirt</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="227"/>
         <source>Specify next control point or [%1]</source>
         <translation>Sonraki kontrol noktasını belirtin veya [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="229"/>
@@ -32146,33 +29971,14 @@ Bu blok eklenemez.</translation>
         <translation>Yerleştirileceği noktayı belirtin</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="247"/>
         <source>Enter text:</source>
         <translation>Metni girin:</translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="243"/>
         <source>Specify second point</source>
         <translation>İkinci noktayı belirtin</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditCopy</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Başlangıç noktasını belirtin</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
     </message>
 </context>
 <context>
@@ -32235,17 +30041,6 @@ Bu blok eklenemez.</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Set reference point</source>
-        <translation type="vanished">Başlangıç noktasını belirtin</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditUndo</name>
     <message>
         <location filename="../src/actions/drawing/edit/rs_actioneditundo.cpp" line="55"/>
@@ -32275,10 +30070,6 @@ Bu blok eklenemez.</translation>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="250"/>
         <source>Single Line Mode</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Bilgi</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="103"/>
@@ -32370,21 +30161,9 @@ Intersection :@(%7, %8)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
         <source>Specify second line</source>
         <translation>İkinci çizgiyi belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
-    </message>
-    <message>
-        <source>Angle: %1</source>
-        <translation type="vanished">Açı: %1</translation>
     </message>
 </context>
 <context>
@@ -32411,26 +30190,14 @@ Intersection :@(%7, %8)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Point: %1/%2</source>
-        <translation type="vanished">Nokta: %1/%2</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="178"/>
         <source>Specify first point of polygon</source>
         <translation>Çokgenin ilk noktasını belirt</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
         <source>Specify next point of polygon</source>
         <translation>Çokgenin sonraki noktasını belirt</translation>
-    </message>
-    <message>
-        <source>Closing Point: %1/%2</source>
-        <translation type="vanished">Kapanış Noktası: %1/%2</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="101"/>
@@ -32486,29 +30253,13 @@ End: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="160"/>
         <source>Specify second point of distance</source>
         <translation>İkinci mesafe noktasını belirtin</translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
-    </message>
-    <message>
-        <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
-        <translation type="vanished">Mesafe: %1 Kartezyen: (%2 , %3), Polar: (%4&lt;%5)</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1</source>
-        <translation type="vanished">Mesafe: %1</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="92"/>
         <source>Distance: %1
@@ -32559,18 +30310,10 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="279"/>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="282"/>
         <source>Specify point</source>
         <translation>Noktayı belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
 </context>
 <context>
@@ -32589,10 +30332,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="82"/>
         <source>Specify point</source>
         <translation>Noktayı belirtin</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
     </message>
 </context>
 <context>
@@ -32659,10 +30398,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionLibraryInsert</name>
     <message>
-        <source>Insert Library Object</source>
-        <translation type="vanished">Nesne Yerleştir</translation>
-    </message>
-    <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="152"/>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="165"/>
         <source>Not a valid expression</source>
@@ -32672,10 +30407,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="194"/>
         <source>Specify reference point</source>
         <translation>Yerleştirme noktasını belirtin</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="197"/>
@@ -32691,13 +30422,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="65"/>
         <source>Cannot open file &apos;%1&apos;</source>
         <translation>&apos;%1&apos; dosyası açılamıyor</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLockRelativeZero</name>
-    <message>
-        <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation type="vanished">&amp;Göreli Sıfırı Kilitle/Aç</translation>
     </message>
 </context>
 <context>
@@ -32778,17 +30502,9 @@ Point: (%8 , %9)</source>
         <translation>İlk varlığı seçin</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="369"/>
         <source>Select second entity</source>
         <translation>İkinci varlığı seçin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="372"/>
@@ -32824,30 +30540,14 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cutting point is invalid.</source>
-        <translation type="vanished">Kesme noktası geçersiz.</translation>
-    </message>
-    <message>
-        <source>Cutting point is not on entity.</source>
-        <translation type="vanished">Kesme noktası varlık üzerinde değil.</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="141"/>
         <source>Specify entity to cut</source>
         <translation>Kesilecek varlığı belirtin</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="144"/>
         <source>Specify cutting point</source>
         <translation>Kesme noktasını belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="114"/>
@@ -32881,17 +30581,9 @@ Point: (%8 , %9)</source>
         <translation>Çoklu çizgide ilk kırılma noktasını belirt</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="151"/>
         <source>Specify second break point on the same polyline</source>
         <translation>Aynı çoklu çizgi üzerinde ikinci kırılma noktasını belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="89"/>
@@ -32935,26 +30627,11 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionModifyDeleteQuick</name>
-    <message>
-        <source>Pick entity to delete</source>
-        <translation type="vanished">Silinecek varlığı seçin</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionModifyEntity</name>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyentity.cpp" line="263"/>
         <source>Click on entity to modify</source>
         <translation>Değiştirmek için varlığa tıklayın</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
     </message>
 </context>
 <context>
@@ -33028,17 +30705,9 @@ Point: (%8 , %9)</source>
         <translation>Aynalama çizgisinin ilk noktasını belirt</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="249"/>
         <source>Specify second point of mirror line</source>
         <translation>Yansılama ekseninin ikinci noktasını belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
 </context>
 <context>
@@ -33079,21 +30748,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
         <source>Specify target point</source>
         <translation>Hedef noktasını belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
-    </message>
-    <message>
-        <source>Invalid number of copies, use %1 </source>
-        <translation type="vanished">Geçersiz kopya sayısı, %1 kullanın </translation>
     </message>
 </context>
 <context>
@@ -33153,17 +30810,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="325"/>
         <source>Specify target point</source>
         <translation>Hedef noktasını belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="328"/>
@@ -33209,10 +30858,6 @@ Point: (%8 , %9)</source>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionModifyRevertDirection</name>
@@ -33238,10 +30883,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="588"/>
         <source>Specify reference point</source>
         <translation>Döndürme noktasını belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="132"/>
@@ -33378,17 +31019,9 @@ Point: (%8 , %9)</source>
         <translation>Mutlak döndürme noktasını belirtin</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="179"/>
         <source>Specify relative reference point</source>
         <translation>Göreli döndürme noktasını belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
 </context>
 <context>
@@ -33398,10 +31031,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="362"/>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="229"/>
@@ -33429,10 +31058,6 @@ Point: (%8 , %9)</source>
         <translation>Yarıçapı girin:</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
         <translation>İlk varlığı belirtin veya yarıçapı girin &lt;%1&gt;</translation>
@@ -33440,14 +31065,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Başlangıç noktasını belirtin</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="169"/>
         <source>Scale</source>
@@ -33532,17 +31149,9 @@ Point: (%8 , %9)</source>
         <translation>İlk köşeyi belirtin</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="199"/>
         <source>Specify second corner</source>
         <translation>İkinci köşeyi belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="79"/>
@@ -33596,17 +31205,9 @@ Point: (%8 , %9)</source>
         <translation>İlk kırpma varlığını seçin</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="202"/>
         <source>Select limiting entity</source>
         <translation>Sınırlayıcı varlığı seçin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="112"/>
@@ -33642,14 +31243,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyTrimAmount</name>
     <message>
-        <source>No entity found. </source>
-        <translation type="vanished">Bir varlık bulunamadı. </translation>
-    </message>
-    <message>
-        <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation type="vanished">Seçilen Varlık bir bloktadır. Lütfen bloğu düzenleyin.</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="173"/>
         <source>No entity found.</source>
         <translation type="unfinished"></translation>
@@ -33668,14 +31261,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="236"/>
         <source>Select line/arc to trim OR enter length value:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select entity to trim or enter distance:</source>
-        <translation type="vanished">Kırpılacak varlığı seçin veya mesafe girin:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
 </context>
 <context>
@@ -33705,21 +31290,9 @@ Point: (%8 , %9)</source>
         <source>Choose entity for order</source>
         <translation>Dizmek için varlık seçin</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionPolylineAdd</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="102"/>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="129"/>
@@ -33755,10 +31328,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPolylineAppend</name>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="119"/>
         <source>No Entity found.</source>
         <translation>Varlık bulunamadı.</translation>
@@ -33784,18 +31353,6 @@ Point: (%8 , %9)</source>
         <translation>Çoklu çizgiyi başlangıç veya bitiş noktasına yakın bir yerde belirtin</translation>
     </message>
     <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Sonraki noktayı belirtin veya [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Sonraki noktayı belirtin</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="125"/>
         <source>Can not append nodes in a closed polyline.</source>
         <translation>Kapalı çoklu çizgiye düğümler eklenemez.</translation>
@@ -33808,14 +31365,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionPolylineDel</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="92"/>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="112"/>
@@ -33850,14 +31399,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionPolylineDelBetween</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="116"/>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="136"/>
@@ -33924,10 +31465,6 @@ Point: (%8 , %9)</source>
         <source>Choose the original polyline</source>
         <translation>Özgün çoklu çizgiyi seçin</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionPolylineSegment</name>
@@ -33940,10 +31477,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="357"/>
         <source>Choose one of the segments on the original polyline</source>
         <translation>Özgün çoklu çizgideki bölümlerden birini seçin</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="335"/>
@@ -33960,14 +31493,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPolylineTrim</name>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="111"/>
         <source>No Entity found.</source>
         <translation>Varlık bulunamadı.</translation>
@@ -33976,14 +31501,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="113"/>
         <source>Entity must be a polyline.</source>
         <translation>Varlık bir çoklu çizgi olmalıdır.</translation>
-    </message>
-    <message>
-        <source>Specifying point is invalid.</source>
-        <translation type="vanished">Belirtilen nokta geçersiz.</translation>
-    </message>
-    <message>
-        <source>No Segment found on entity.</source>
-        <translation type="vanished">Varlıkta bölüm bulunamadı.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="138"/>
@@ -34083,89 +31600,6 @@ Point: (%8 , %9)</source>
         <source>Printout in color</source>
         <translation>Renkli çıktı</translation>
     </message>
-    <message>
-        <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
-        <translation type="vanished">RS_ActionPrintPreview::calcPagesNum(): Sayfa sınırı aşıldı.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>Select to modify attributes</source>
-        <translation type="vanished">Nitelikleri değiştirmek için seçin</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
-        <source>Select to delete</source>
-        <translation type="vanished">Silmek için seçin</translation>
-    </message>
-    <message>
-        <source>Select to delete immediately</source>
-        <translation type="vanished">Hemen silmek için seçin</translation>
-    </message>
-    <message>
-        <source>Select to move</source>
-        <translation type="vanished">Taşımak için seçin</translation>
-    </message>
-    <message>
-        <source>Select to rotate</source>
-        <translation type="vanished">Döndürmek için seçin</translation>
-    </message>
-    <message>
-        <source>Select to scale</source>
-        <translation type="vanished">Ölçeklemek için seçin</translation>
-    </message>
-    <message>
-        <source>Select to mirror</source>
-        <translation type="vanished">Aynalamak için seçin</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate</source>
-        <translation type="vanished">Taşıma ve döndürmek için seçin</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation</source>
-        <translation type="vanished">İki eksenli döndürme için seçin</translation>
-    </message>
-    <message>
-        <source>Select to explode text</source>
-        <translation type="vanished">Patlatılacak metni seçin</translation>
-    </message>
-    <message>
-        <source>Select to create block</source>
-        <translation type="vanished">Blok oluşturmak için seçin</translation>
-    </message>
-    <message>
-        <source>Select to copy</source>
-        <translation type="vanished">Kopyalamak için seçin</translation>
-    </message>
-    <message>
-        <source>Select to cut</source>
-        <translation type="vanished">Kesmek için seçin</translation>
-    </message>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">Hiçbir varlık seçilmedi!</translation>
-    </message>
-    <message>
-        <source>Select to create offset</source>
-        <translation type="vanished">Öteleme oluşturmak için seçin</translation>
-    </message>
-    <message>
-        <source>Select entities to order</source>
-        <translation type="vanished">Dizilecek varlıkları seçin</translation>
-    </message>
-    <message>
-        <source>Select to explode block</source>
-        <translation type="vanished">Patlatılacak bloğu seçin</translation>
-    </message>
-    <message>
-        <source>Select to revert direction</source>
-        <translation type="vanished">Yönü ters çevirmek için seçin</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionSelectContour</name>
@@ -34198,17 +31632,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="176"/>
         <source>Choose second point of intersection line</source>
         <translation>Kesişen çizginin ikinci noktasını seçin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
 </context>
 <context>
@@ -34234,10 +31660,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="116"/>
         <source>De-Selecting</source>
@@ -34289,10 +31711,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="163"/>
         <source>Click and drag for the selection window</source>
         <translation>Seçim penceresi için tıklayıp sürükleyin</translation>
@@ -34305,29 +31723,13 @@ Point: (%8 , %9)</source>
         <source>Set relative Zero</source>
         <translation>Göreli sıfırı ayarla</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
-        <source>Set &amp;Relative Zero</source>
-        <translation type="vanished">&amp;Göreli sıfırı ayarla</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionSnapIntersectionManual</name>
     <message>
-        <source>I&amp;ntersection Manually</source>
-        <translation type="vanished">&amp;Elle Kesişim</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="142"/>
         <source>Select first entity</source>
         <translation>İlk varlığı seçin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="145"/>
@@ -34356,10 +31758,6 @@ Point: (%8 , %9)</source>
         <translation>Kaydırmak için tıkla ve sürükle</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="108"/>
         <source>Zoom panning</source>
         <translation>Yakınlaştır kaydır</translation>
@@ -34373,17 +31771,9 @@ Point: (%8 , %9)</source>
         <translation>İlk kenarı belirtin</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İptal</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="143"/>
         <source>Specify second edge</source>
         <translation>İkinci kenarı belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Geri</translation>
     </message>
 </context>
 <context>
@@ -34650,17 +32040,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Linear Dimension Options</source>
-        <translation type="vanished">Doğrusal Ölçülendirme Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Açı:</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -34829,17 +32208,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Factor:</source>
-        <translation type="vanished">Çarpan:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="106"/>
         <source>Scale Factor</source>
         <translation>Büyütme Çarpanı</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">DPI</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="120"/>
@@ -35273,21 +32644,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">Çokgen Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Sayı:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">Kenar sayısı</translation>
-    </message>
-</context>
-<context>
     <name>Ui_LinePolygonOptions</name>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="32"/>
@@ -35487,14 +32843,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="79"/>
         <source>Multiple Copies</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Mesafe:</translation>
-    </message>
-    <message>
-        <source>Offset from original entity</source>
-        <translation type="vanished">Özgün varlıktan uzaklık</translation>
     </message>
 </context>
 <context>
@@ -35752,14 +33100,6 @@ Point: (%8 , %9)</source>
         <translation>Siyah / Beyaz modu</translation>
     </message>
     <message>
-        <source>Center to page</source>
-        <translation type="vanished">Sayfaya ortala</translation>
-    </message>
-    <message>
-        <source>Fit to page</source>
-        <translation type="vanished">Sayfaya sığdır</translation>
-    </message>
-    <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="44"/>
         <source>Landscape Orientation of paper</source>
         <translation type="unfinished"></translation>
@@ -35880,10 +33220,6 @@ Point: (%8 , %9)</source>
         <source>Pick distance from drawing.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Mesafe:</translation>
-    </message>
 </context>
 <context>
     <name>Ui_SnapMiddleOptions</name>
@@ -35896,10 +33232,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="59"/>
         <source>Snap Middle Points:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Middle Points:</source>
-        <translation type="vanished">Orta Nokta Sayısı:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
@@ -36019,41 +33351,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="50"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
         <translation>Giriş uzunluğu, uzunluk artışı yerine kırpma sonrasında toplam uzunluk olarak kullanılır</translation>
-    </message>
-</context>
-<context>
-    <name>WidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Çerçeve</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">Ad</translation>
-    </message>
-    <message>
-        <source>Create</source>
-        <translation type="vanished">Oluştur</translation>
-    </message>
-    <message>
-        <source>Destroy</source>
-        <translation type="vanished">Yok et</translation>
-    </message>
-    <message>
-        <source>Assign</source>
-        <translation type="vanished">Ata</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation type="vanished">Güncelle</translation>
     </message>
 </context>
 </TS>

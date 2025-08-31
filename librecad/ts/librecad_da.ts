@@ -555,17 +555,9 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished">Angiv første punkt</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Annuller</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="233"/>
         <source>Specify second point</source>
         <translation>Udpeg det andet punkt</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="236"/>
@@ -851,21 +843,9 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawLinePolygonCenTan</name>
     <message>
-        <source>Specify center</source>
-        <translation type="obsolete">Angiv centrum</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon3.cpp" line="51"/>
         <source>Specify a tangent</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="obsolete">Angiv antal:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="obsolete">Det er ikke et gyldigt antal. prøv 1..9999</translation>
     </message>
 </context>
 <context>
@@ -1730,10 +1710,6 @@ or [%2]</source>
         <translation type="unfinished">Sl&amp;et</translation>
     </message>
     <message>
-        <source>Delete Freehand</source>
-        <translation type="obsolete">Slet i frihånd</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="368"/>
         <source>&amp;Move / Copy</source>
         <translation type="unfinished">&amp;Flyt / kopier</translation>
@@ -1804,26 +1780,14 @@ or [%2]</source>
         <translation type="unfinished">Eksplo&amp;der tekst til bogstaver</translation>
     </message>
     <message>
-        <source>Point inside contour</source>
-        <translation type="obsolete">Punkt indeni figur</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="498"/>
         <source>&amp;Distance Point to Point</source>
         <translation type="unfinished">Afstan&amp;d fra punkt til punkt</translation>
     </message>
     <message>
-        <source>&amp;Distance Entity to Point</source>
-        <translation type="obsolete">Afsta&amp;nd fra enhed til punkt</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="501"/>
         <source>An&amp;gle between two lines</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Total length of selected entities</source>
-        <translation type="obsolete">&amp;Total længde af valgte enheder</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="503"/>
@@ -2707,10 +2671,6 @@ or [%2]</source>
         <translation type="unfinished">Egenskaber for &amp;den aktive tegning</translation>
     </message>
     <message>
-        <source>&amp;Delete selected</source>
-        <translation type="obsolete">Slet &amp;valgte</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="652"/>
         <source>Select &amp;All</source>
         <translation type="unfinished">Vælg &amp;alt</translation>
@@ -3123,65 +3083,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionGroupManager</name>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Cirkel</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="obsolete">Bue</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Rediger</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">Ellipse</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Fil</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Info</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Linie</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="obsolete">Punkt</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">Ændre</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="obsolete">Valg</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">Polylinie</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="obsolete">Vælg</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="obsolete">Bind til</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">View</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionInfo3PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="141"/>
@@ -3197,10 +3098,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="149"/>
         <source>Select second edge point of angle</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Info</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="189"/>
@@ -5257,21 +5154,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="108"/>
         <source>System</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Lag:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometri</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
     </message>
 </context>
 <context>
@@ -9639,10 +9521,6 @@ Please specify a different value.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Layer Menu</source>
-        <translation type="obsolete">Menu for lag</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="651"/>
         <source>&amp;Add Child Layer</source>
         <translation type="unfinished"></translation>
@@ -11099,18 +10977,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="32"/>
         <source>Snap point of gap to line snap point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="obsolete">Start</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="obsolete">Midte</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="obsolete">Slut</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="95"/>
@@ -16043,10 +15909,6 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Command line</source>
-        <translation type="obsolete">Komandolinie</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="254"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="283"/>
         <source>Cmd</source>
@@ -16062,18 +15924,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="284"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lines</source>
-        <translation type="obsolete">Linier</translation>
-    </message>
-    <message>
-        <source>Circles</source>
-        <translation type="obsolete">Cirkler</translation>
-    </message>
-    <message>
-        <source>Ellipses</source>
-        <translation type="obsolete">Ellipser</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="101"/>
@@ -16194,29 +16044,9 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Layer List</source>
-        <translation type="obsolete">Liste over lag</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="212"/>
         <source>Entity Info</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="obsolete">Liste over blokke</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Fil</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Rediger</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">View</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="164"/>
@@ -16237,82 +16067,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="98"/>
         <source>Spline</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="obsolete">Vælg Værktøj</translation>
-    </message>
-    <message>
-        <source>Preferences</source>
-        <translation type="obsolete">Egenskaber</translation>
-    </message>
-    <message>
-        <source>Dimensions</source>
-        <translation type="obsolete">Dimensioner</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="obsolete">&amp;Fil</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="obsolete">Import</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="obsolete">&amp;Rediger</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="obsolete">&amp;View</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="obsolete">&amp;Linje</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="obsolete">&amp;Cirkel</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="obsolete">&amp;Cirkelbue</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="obsolete">&amp;Ellipse</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="obsolete">&amp;Polylinje</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="obsolete">&amp;Vælg</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="obsolete">&amp;Ændre</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="obsolete">&amp;Info</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="obsolete">&amp;Hjælp</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="obsolete">Om</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="obsolete">&amp;Værktøjslinjer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="421"/>
@@ -16767,90 +16521,6 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp;Fil</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="vanished">Fil</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">&amp;Rediger</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Rediger</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">&amp;View</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="vanished">View</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&amp;Vælg</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&amp;Linje</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&amp;Cirkel</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&amp;Ellipse</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">&amp;Ændre</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp;Info</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="vanished">Vælg Værktøj</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">Om</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp;Hjælp</translation>
-    </message>
-    <message>
-        <source>Layer List</source>
-        <translation type="vanished">Liste over lag</translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="vanished">Liste over blokke</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">&amp;Overlap</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">&amp;Arranger</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">Arranger &amp;Horisontalt</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="795"/>
         <source>Creating new file...</source>
         <translation>Laver ny fil...</translation>
@@ -16906,33 +16576,9 @@ Warning: this action can NOT be undone!</source>
         <translation>Gemt tegning: %1</translation>
     </message>
     <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">Eksportere tegning...</translation>
-    </message>
-    <message>
-        <source>Exported: %1</source>
-        <translation type="vanished">Eksporterede: %1</translation>
-    </message>
-    <message>
-        <source>Exporting...</source>
-        <translation type="vanished">Eksportere...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">Eksport fuldført</translation>
-    </message>
-    <message>
-        <source>Export failed!</source>
-        <translation type="vanished">Eksport mislykket!</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1275"/>
         <source>Printing complete</source>
         <translation>Print er fuldført</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="vanished">Komandolinie</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="741"/>
@@ -16947,10 +16593,6 @@ Please check the permissions.</source>
         <translation>Kan ikke åbne filen
 %1
 Check venligst filretighederne.</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">&amp;Polylinje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1113"/>
@@ -16969,18 +16611,6 @@ Check venligst filretighederne.</translation>
 Please check the permissions.
 Auto-save disabled.</source>
         <translation>Arkivering nægtet. Kontroller venligst rettigheder</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">Import</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">&amp;Værktøjslinjer</translation>
-    </message>
-    <message>
-        <source>Version: %1</source>
-        <translation type="obsolete">Version: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="988"/>
@@ -17013,10 +16643,6 @@ Auto-save disabled.</source>
         <translation>Sikkerhedskopiering mislykkedes</translation>
     </message>
     <message>
-        <source>Export as</source>
-        <translation type="vanished">Eksporter som</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="207"/>
         <source>Draft Mode</source>
         <translation type="unfinished"></translation>
@@ -17034,38 +16660,6 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select</source>
-        <translation type="obsolete">Vælg</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Linie</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Cirkel</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">Ellipse</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">Polylinie</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">Ændre</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Info</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation type="obsolete">Kopier</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="226"/>
         <source>Saving drawing: %1</source>
         <translation type="unfinished"></translation>
@@ -17074,10 +16668,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
         <source>Save cancelled</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Closing Drawing</source>
-        <translation type="obsolete">Lukker tegningen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="361"/>
@@ -17179,80 +16769,6 @@ Please check its existence and permissions.</source>
 </context>
 <context>
     <name>QG_BlockWidget</name>
-    <message>
-        <source>Show all blocks</source>
-        <translation type="vanished">Vis alle blokke </translation>
-    </message>
-    <message>
-        <source>Hide all blocks</source>
-        <translation type="vanished">Skjul alle blokke</translation>
-    </message>
-    <message>
-        <source>Rename the active block</source>
-        <translation type="vanished">Omdøb den aktive blok</translation>
-    </message>
-    <message>
-        <source>Edit the active block
-in a separate window</source>
-        <translation type="vanished">Rediger den aktive blok
-i et nyt vindue</translation>
-    </message>
-    <message>
-        <source>Insert the active block</source>
-        <translation type="vanished">Indsæt den aktive blok</translation>
-    </message>
-    <message>
-        <source>Block Menu</source>
-        <translation type="vanished">Menu for blok</translation>
-    </message>
-    <message>
-        <source>&amp;Defreeze all Blocks</source>
-        <translation type="vanished">F&amp;rigør alle blokke </translation>
-    </message>
-    <message>
-        <source>&amp;Freeze all Blocks</source>
-        <translation type="vanished">&amp;Fastfrys alle blokke</translation>
-    </message>
-    <message>
-        <source>&amp;Add Block</source>
-        <translation type="vanished">&amp;Tilføj blok</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Block</source>
-        <translation type="vanished">F&amp;jern blok</translation>
-    </message>
-    <message>
-        <source>&amp;Rename Block</source>
-        <translation type="vanished">&amp;Omdøb blok</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Block</source>
-        <translation type="vanished">&amp;Rediger blok</translation>
-    </message>
-    <message>
-        <source>&amp;Insert Block</source>
-        <translation type="vanished">&amp;Indsæt blok</translation>
-    </message>
-    <message>
-        <source>&amp;Toggle Visibility</source>
-        <translation type="vanished">Skif&amp;t synlighed</translation>
-    </message>
-    <message>
-        <source>&amp;Create New Block</source>
-        <translation type="vanished">&amp;Lav ny blok</translation>
-    </message>
-    <message>
-        <source>Create Block</source>
-        <translation type="vanished">Lav en blok</translation>
-    </message>
-    <message>
-        <source>Add an empty block</source>
-        <translation type="vanished">Tilføj en tom blok</translation>
-    </message>
-    <message>
-        <source>save the active block to a file</source>
-        <translation type="vanished">Gem den aktive blok i en fil</translation>
-    </message>
     <message>
         <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="183"/>
         <source>Filter</source>
@@ -17474,10 +16990,6 @@ i et nyt vindue</translation>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="321"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="obsolete">Komandolinie</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="322"/>
@@ -17813,40 +17325,6 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="vanished">Målsæt lineært</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Lag:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometri</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Lag:</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pen</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgEllipse</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="26"/>
@@ -17924,18 +17402,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="130"/>
         <source>Rotation angle for the major axis of ellipse, degrees</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="vanished">Slut vinkel:</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="vanished">Start vinkel:</translation>
-    </message>
-    <message>
-        <source>Rotation:</source>
-        <translation type="vanished">Rotation:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="276"/>
@@ -19366,10 +18832,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Flere kopier</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="41"/>
         <source>...</source>
         <translation type="unfinished"></translation>
@@ -20586,10 +20048,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>Sprog</translation>
     </message>
     <message>
-        <source>Graphic View</source>
-        <translation type="vanished">Grafisk visning</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="14"/>
         <source>Application Preferences</source>
         <translation>Egenskaber for programmet</translation>
@@ -20598,10 +20056,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4476"/>
         <source>Defaults for new drawings</source>
         <translation>Standard for nye tegninger</translation>
-    </message>
-    <message>
-        <source>&amp;Appearance</source>
-        <translation type="vanished">&amp;Egenskaber</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5019"/>
@@ -20629,31 +20083,15 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>&amp;Målenhed:</translation>
     </message>
     <message>
-        <source>Backgr&amp;ound:</source>
-        <translation type="vanished">Baggr&amp;und:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1173"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1495"/>
         <source>G&amp;rid Color:</source>
         <translation>Gitte&amp;r&apos;s farve:</translation>
     </message>
     <message>
-        <source>&amp;Meta Grid Color:</source>
-        <translation type="vanished">&amp;Meta gitter&apos;s farve:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="957"/>
         <source>A&amp;utomatically scale grid</source>
         <translation>A&amp;utomatisk skalering af gitter</translation>
-    </message>
-    <message>
-        <source>S&amp;elected Color:</source>
-        <translation type="vanished">Farv&amp;e for valgte:</translation>
-    </message>
-    <message>
-        <source>&amp;Highlighted Color:</source>
-        <translation type="vanished">Farve for frem&amp;hævede:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="940"/>
@@ -24200,10 +23638,6 @@ so default step value required for baking</source>
         <source>again Still No Text supplied.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">Luk</translation>
-    </message>
 </context>
 <context>
     <name>QG_FileDialog</name>
@@ -24413,42 +23847,6 @@ The contents of a Construction Layer should not appear in printout.</source>
 <context>
     <name>QG_LayerWidget</name>
     <message>
-        <source>Show all layers</source>
-        <translation type="vanished">Vis alle lag</translation>
-    </message>
-    <message>
-        <source>Hide all layers</source>
-        <translation type="vanished">Skjul alle lag</translation>
-    </message>
-    <message>
-        <source>Add a layer</source>
-        <translation type="vanished">Tilføj et lag</translation>
-    </message>
-    <message>
-        <source>Modify layer attributes / rename</source>
-        <translation type="vanished">Ændre egenskaber / omdøber lag</translation>
-    </message>
-    <message>
-        <source>Layer Menu</source>
-        <translation type="vanished">Menu for lag</translation>
-    </message>
-    <message>
-        <source>&amp;Defreeze all Layers</source>
-        <translation type="vanished">F&amp;rigør alle lag</translation>
-    </message>
-    <message>
-        <source>&amp;Freeze all Layers</source>
-        <translation type="vanished">&amp;Fastfrys alle lag</translation>
-    </message>
-    <message>
-        <source>&amp;Add Layer</source>
-        <translation type="vanished">Tilføj l&amp;ag</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Layer</source>
-        <translation type="vanished">Fje&amp;rn lag</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="249"/>
         <source>Looking for matching layer names</source>
         <translation type="unfinished"></translation>
@@ -24639,10 +24037,6 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>Mus</translation>
     </message>
     <message>
-        <source>Right</source>
-        <translation type="vanished">Højre</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/status_bar/qg_mousewidget.ui" line="229"/>
         <source>Left</source>
         <translation>Venstre</translation>
@@ -24742,58 +24136,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_SnapToolBar</name>
     <message>
-        <source>Snap</source>
-        <translation type="obsolete">Bind til</translation>
-    </message>
-    <message>
-        <source>Snap to Endpoints</source>
-        <translation type="obsolete">Bind til slutpunkter</translation>
-    </message>
-    <message>
-        <source>Snap to center points</source>
-        <translation type="obsolete">Bind til centrum</translation>
-    </message>
-    <message>
-        <source>Snap to intersections automatically</source>
-        <translation type="obsolete">Bind til skæringspunkt automatisk</translation>
-    </message>
-    <message>
-        <source>Snap to closest point on entity</source>
-        <translation type="obsolete">Bind til nærmeste punkt på enheden</translation>
-    </message>
-    <message>
-        <source>Snap to point with given distance to endpoint</source>
-        <translation type="obsolete">Bind til punkt med en given afstand fra slutpunkt</translation>
-    </message>
-    <message>
-        <source>Snap to intersections manually</source>
-        <translation type="obsolete">Bind til skæringspunkt manuelt</translation>
-    </message>
-    <message>
-        <source>Snap to grid</source>
-        <translation type="obsolete">Bind til gitter</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontally</source>
-        <translation type="obsolete">Horisontal begrænsning</translation>
-    </message>
-    <message>
-        <source>Restrict Vertically</source>
-        <translation type="obsolete">Vertikal begrænsning</translation>
-    </message>
-    <message>
-        <source>Move relative Zero</source>
-        <translation type="obsolete">Flyt det relative nul</translation>
-    </message>
-    <message>
-        <source>Lock relative Zero</source>
-        <translation type="obsolete">Lås det relative nul</translation>
-    </message>
-    <message>
-        <source>Restrict Nothing</source>
-        <translation type="obsolete">Ingen begrænsninger</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="169"/>
         <source>Relative zero position is %1</source>
         <translation type="unfinished"></translation>
@@ -24866,117 +24208,9 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_WidthBox</name>
     <message>
-        <source>- Unchanged -</source>
-        <translation type="vanished">- Uforandret -</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="250"/>
         <source>By Layer</source>
         <translation>Som lag</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation type="vanished">Som blok</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">Standard</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation type="vanished">0.00mm</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation type="vanished">0.05mm</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation type="vanished">0.09mm</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation type="vanished">0.13mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation type="vanished">0.15mm</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation type="vanished">0.18mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation type="vanished">0.20mm</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation type="vanished">0.25mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation type="vanished">0.30mm</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation type="vanished">0.35mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation type="vanished">0.40mm</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation type="vanished">0.50mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation type="vanished">0.53mm</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation type="vanished">0.60mm</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation type="vanished">0.70mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation type="vanished">0.80mm</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation type="vanished">0.90mm</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation type="vanished">1.00mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation type="vanished">1.06mm</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation type="vanished">1.20mm</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation type="vanished">1.40mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation type="vanished">1.58mm</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation type="vanished">2.00mm (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation type="vanished">2.11mm</translation>
     </message>
 </context>
 <context>
@@ -26350,10 +25584,6 @@ Vil du overskrive den?</translation>
         <translation type="unfinished">luk</translation>
     </message>
     <message>
-        <source>chord length</source>
-        <translation type="obsolete">korde længde</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1059"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1165"/>
         <source>columns</source>
@@ -26627,19 +25857,9 @@ Vil du overskrive den?</translation>
         <translation type="unfinished">fortryd</translation>
     </message>
     <message>
-        <source>u</source>
-        <comment>undo</comment>
-        <translation type="obsolete">u</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1221"/>
         <source>redo</source>
         <translation type="unfinished">gendan</translation>
-    </message>
-    <message>
-        <source>r</source>
-        <comment>redo</comment>
-        <translation type="obsolete">r</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1224"/>
@@ -26746,54 +25966,6 @@ Vil du overskrive den?</translation>
         <source>mp</source>
         <comment>modify properties</comment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Cirkel</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Rediger</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">Ellipse</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Fil</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Info</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Linie</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">Ændre</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="obsolete">Valg</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">Polylinie</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="obsolete">Vælg</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="obsolete">Bind til</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">View</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="87"/>
@@ -29433,10 +28605,6 @@ Vil du overskrive den?</translation>
         <source>Specify reference point</source>
         <translation>Angiv et reference punkt</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionBlocksExplode</name>
@@ -29467,10 +28635,6 @@ Vil du overskrive den?</translation>
         <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="349"/>
         <source>Specify reference point</source>
         <translation>Angiv et reference punkt</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="352"/>
@@ -29701,37 +28865,6 @@ This block cannot be inserted.</source>
         <source>Choose second edge</source>
         <translation>Vælg den anden kant</translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDimAligned</name>
-    <message>
-        <source>Specify first extension line origin</source>
-        <translation type="vanished">Angiv start på første måludførende linie</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
-        <source>Specify second extension line origin</source>
-        <translation type="vanished">Angiv start på anden måludførende linie</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation type="vanished">Angiv placering af mållinie</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Indtast tekst for dimension:</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDimAngular</name>
@@ -29739,10 +28872,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="216"/>
         <source>Select first line</source>
         <translation>Vælg første linie</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="219"/>
@@ -29761,42 +28890,11 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDimDiametric</name>
-    <message>
-        <source>Not a circle or arc entity</source>
-        <translation type="vanished">Enheden er ikke en cirkel eller bue</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Det er ikke et gydigt udtryk</translation>
-    </message>
-    <message>
-        <source>Select arc or circle entity</source>
-        <translation type="vanished">Vælg en cirkel eller bue</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation type="vanished">Angiv placering af mållinie</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Indtast tekst for dimension:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDimLeader</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="182"/>
         <source>Specify target point</source>
         <translation>Angiv målpunkt</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="185"/>
@@ -29828,61 +28926,14 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Specify first extension line origin</source>
-        <translation type="vanished">Angiv start på første måludførende linie</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="211"/>
         <source>Specify second extension line origin</source>
         <translation>Angiv start på anden måludførende linie</translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="221"/>
         <source>Specify dimension line location</source>
         <translation>Angiv placering af mållinie</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Indtast tekst for dimension:</translation>
-    </message>
-    <message>
-        <source>Enter dimension line angle:</source>
-        <translation type="vanished">Indtast vinkel for mållinie :</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDimRadial</name>
-    <message>
-        <source>Not a circle or arc entity</source>
-        <translation type="vanished">Enheden er ikke en cirkel eller bue</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Det er ikke et gydigt udtryk</translation>
-    </message>
-    <message>
-        <source>Select arc or circle entity</source>
-        <translation type="vanished">Vælg en bue eller cirkel</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
-        <source>Specify dimension line position or enter angle:</source>
-        <translation type="vanished">Angiv position for mållinie eller skriv vinkel:</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Indtast tekst for dimension:</translation>
     </message>
 </context>
 <context>
@@ -29933,17 +28984,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="500"/>
         <source>Specify radius</source>
         <translation>Angiv radius</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="507"/>
@@ -29960,10 +29003,6 @@ This block cannot be inserted.</source>
         <source>Specify included angle:</source>
         <translation>Angiv inkluderet vinkel:</translation>
     </message>
-    <message>
-        <source>Specify chord length:</source>
-        <translation type="vanished">Angiv korde længde:</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawArc3P</name>
@@ -29978,21 +29017,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished">Angiv det tredie punkt</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="233"/>
         <source>Specify second point</source>
         <translation>Angiv det andet punkt</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
-    </message>
-    <message>
-        <source>Specify endpoint</source>
-        <translation type="vanished">Angiv slutpunkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="230"/>
@@ -30018,17 +29045,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="277"/>
         <source>Specify end angle</source>
         <translation type="unfinished">Angiv slut vinkel</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="279"/>
@@ -30049,14 +29068,6 @@ This block cannot be inserted.</source>
         <translation>Angiv centrum</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="129"/>
         <source>Specify point on circle</source>
         <translation type="unfinished"></translation>
@@ -30075,17 +29086,9 @@ This block cannot be inserted.</source>
         <translation>Angiv første punkt</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="156"/>
         <source>Specify second point</source>
         <translation>Angiv det andet punkt</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
 </context>
 <context>
@@ -30101,17 +29104,9 @@ This block cannot be inserted.</source>
         <translation>Angiv første punkt</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="175"/>
         <source>Specify second point</source>
         <translation>Angiv det andet punkt</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="178"/>
@@ -30132,17 +29127,9 @@ This block cannot be inserted.</source>
         <translation>Angiv centrum for cirkel</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="177"/>
         <source>Specify circle radius</source>
         <translation>Angiv radius for cirkel</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="146"/>
@@ -30168,17 +29155,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="216"/>
         <source>Specify the second line</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="219"/>
@@ -30189,17 +29168,9 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircleTan1_2P</name>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="463"/>
         <source>Specify the first point on the tangent circle</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="466"/>
@@ -30225,17 +29196,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="280"/>
         <source>Specify the second line/arc/circle</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="283"/>
@@ -30256,14 +29219,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Tilbage</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="341"/>
         <source>Specify the another line/arc/circle</source>
         <translation type="unfinished"></translation>
@@ -30281,14 +29236,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Tilbage</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="509"/>
         <source>Select the center of the tangent circle</source>
@@ -30323,17 +29270,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="276"/>
         <source>Specify the second point on ellipse</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="279"/>
@@ -30366,17 +29305,9 @@ This block cannot be inserted.</source>
         <translation>Angiv centrum for ellipse</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="339"/>
         <source>Specify endpoint of major axis</source>
         <translation>Angiv slutpunkt for primær akse</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="342"/>
@@ -30402,10 +29333,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="246"/>
         <source>Specify the first point on ellipse</source>
         <translation type="unfinished"></translation>
@@ -30414,10 +29341,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="249"/>
         <source>Specify the second point on ellipse</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="252"/>
@@ -30438,17 +29361,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="195"/>
         <source>Specify second focus of ellipse</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="198"/>
@@ -30474,17 +29389,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="310"/>
         <source>Specify the second line</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="313"/>
@@ -30570,10 +29477,6 @@ This block cannot be inserted.</source>
         <translation>Angiv et reference punkt</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="270"/>
         <source>Enter angle:</source>
         <translation>Indtast vinkel:</translation>
@@ -30601,17 +29504,9 @@ This block cannot be inserted.</source>
         <translation>Angiv første punkt</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="274"/>
         <source>Specify next point or [%1]</source>
         <translation>Angiv næste punkt eller [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="276"/>
@@ -30653,17 +29548,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="312"/>
         <source>Enter angle:</source>
         <translation>Indtast vinkel:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="315"/>
@@ -30690,17 +29577,9 @@ This block cannot be inserted.</source>
         <translation>Vælg første linie</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="268"/>
         <source>Select second line</source>
         <translation>Vælg den anden linie</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="271"/>
@@ -30726,10 +29605,6 @@ This block cannot be inserted.</source>
         <source>Click and drag to draw a line</source>
         <translation>Klik og træk for at tegne en linie</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineHorVert</name>
@@ -30739,17 +29614,9 @@ This block cannot be inserted.</source>
         <translation>Angiv første punkt</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="117"/>
         <source>Specify second point</source>
         <translation>Angiv det andet punkt</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
 </context>
 <context>
@@ -30766,17 +29633,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="255"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished">Vælg cirkel, bue eller ellipse</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Tilbage</translation>
     </message>
 </context>
 <context>
@@ -30785,10 +29644,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="135"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
         <translation>Angiv afstand &lt;%1&gt; eller vælg enhed eller [%2]</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="109"/>
@@ -30820,17 +29675,9 @@ This block cannot be inserted.</source>
         <translation>Vælg enhed</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="177"/>
         <source>Specify through point</source>
         <translation>Angiv gennemgangspunkt</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="110"/>
@@ -30863,21 +29710,9 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLinePolygonCenCor</name>
     <message>
-        <source>Specify center</source>
-        <translation type="obsolete">Angiv centrum</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon.cpp" line="41"/>
         <source>Specify a corner</source>
         <translation type="unfinished">Angiv et hjørne</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="obsolete">Angiv antal:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="obsolete">Det er ikke et gyldigt antal. prøv 1..9999</translation>
     </message>
 </context>
 <context>
@@ -30888,29 +29723,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished">Angiv første hjørne</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="92"/>
         <source>Specify second corner</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Tilbage</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Antal:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="obsolete">Det er ikke et gyldigt antal. prøv 1..9999</translation>
-    </message>
-    <message>
-        <source>Not a valid expression.</source>
-        <translation type="obsolete">Det er ikke et gydigt udtryk.</translation>
     </message>
 </context>
 <context>
@@ -30946,17 +29761,9 @@ This block cannot be inserted.</source>
         <translation>Angiv første hjørne</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="144"/>
         <source>Specify second corner</source>
         <translation>Angiv det andet hjørne</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
 </context>
 <context>
@@ -30983,17 +29790,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="251"/>
         <source>Specify position</source>
         <translation>Angiv position</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
 </context>
 <context>
@@ -31010,29 +29809,13 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Vælg cirkel, bue eller ellipse</translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent2</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="215"/>
         <source>Select first circle/ellipse/parabola</source>
@@ -31057,17 +29840,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished">Angiv punkt for indsættelse</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="189"/>
         <source>Enter text:</source>
         <translation type="unfinished">Indtast tekst:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Tilbage</translation>
     </message>
 </context>
 <context>
@@ -31076,10 +29851,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/point/rs_actiondrawpoint.cpp" line="77"/>
         <source>Specify location</source>
         <translation>Angiv placering</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
     </message>
 </context>
 <context>
@@ -31090,17 +29861,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished">Angiv første punkt</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="756"/>
         <source>Specify next point or [%1]</source>
         <translation type="unfinished">Angiv næste punkt eller [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="758"/>
@@ -31173,17 +29936,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="227"/>
         <source>Specify next control point or [%1]</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="229"/>
@@ -31209,33 +29964,14 @@ This block cannot be inserted.</source>
         <translation>Angiv punkt for indsættelse</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="247"/>
         <source>Enter text:</source>
         <translation>Indtast tekst:</translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="243"/>
         <source>Specify second point</source>
         <translation type="unfinished">Angiv det andet punkt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditCopy</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Angiv et reference punkt</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
     </message>
 </context>
 <context>
@@ -31298,17 +30034,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Set reference point</source>
-        <translation type="vanished">Sæt et reference punkt</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditUndo</name>
     <message>
         <location filename="../src/actions/drawing/edit/rs_actioneditundo.cpp" line="55"/>
@@ -31338,10 +30063,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="250"/>
         <source>Single Line Mode</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Info</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="103"/>
@@ -31433,21 +30154,9 @@ Intersection :@(%7, %8)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
         <source>Specify second line</source>
         <translation>Angiv den anden linje</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
-    </message>
-    <message>
-        <source>Angle: %1</source>
-        <translation type="obsolete">Vinkel: %1</translation>
     </message>
 </context>
 <context>
@@ -31477,10 +30186,6 @@ Intersection :@(%7, %8)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="178"/>
         <source>Specify first point of polygon</source>
         <translation>Angiv første punkt af polygon</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
@@ -31541,25 +30246,13 @@ End: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="160"/>
         <source>Specify second point of distance</source>
         <translation>Angiv det andet punkt for afstand</translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1</source>
-        <translation type="vanished">Afstand: %1</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="92"/>
         <source>Distance: %1
@@ -31610,18 +30303,10 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="279"/>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="282"/>
         <source>Specify point</source>
         <translation>Angiv punkt</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
 </context>
 <context>
@@ -31640,10 +30325,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="82"/>
         <source>Specify point</source>
         <translation>Angiv punkt</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
     </message>
 </context>
 <context>
@@ -31710,10 +30391,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionLibraryInsert</name>
     <message>
-        <source>Insert Library Object</source>
-        <translation type="vanished">Indsæt objekt fra bibliotek</translation>
-    </message>
-    <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="152"/>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="165"/>
         <source>Not a valid expression</source>
@@ -31723,10 +30400,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="194"/>
         <source>Specify reference point</source>
         <translation>Angiv et reference punkt</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="197"/>
@@ -31746,13 +30419,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="65"/>
         <source>Cannot open file &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLockRelativeZero</name>
-    <message>
-        <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation type="vanished">&amp;Lås (til/fra) relativt nul</translation>
     </message>
 </context>
 <context>
@@ -31833,17 +30499,9 @@ Point: (%8 , %9)</source>
         <translation>Vælg første enhed</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="369"/>
         <source>Select second entity</source>
         <translation>Vælg den anden enhed</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="372"/>
@@ -31879,30 +30537,14 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cutting point is invalid.</source>
-        <translation type="vanished">Punktet for klip er ikke gyldigt.</translation>
-    </message>
-    <message>
-        <source>Cutting point is not on entity.</source>
-        <translation type="vanished">Punktet for klip er ikke en enhed.</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="141"/>
         <source>Specify entity to cut</source>
         <translation>Angiv enhed der skal beskæres</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="144"/>
         <source>Specify cutting point</source>
         <translation>Angiv skæringspunkt</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="114"/>
@@ -31936,17 +30578,9 @@ Point: (%8 , %9)</source>
         <translation>Angiv første knæk på linien</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="151"/>
         <source>Specify second break point on the same polyline</source>
         <translation>Angiv andet knæk på samme linie</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="89"/>
@@ -31987,17 +30621,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="132"/>
         <source>Second entity is nullptr</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDeleteQuick</name>
-    <message>
-        <source>Pick entity to delete</source>
-        <translation type="vanished">Vælg enhed der skal slettes</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
     </message>
 </context>
 <context>
@@ -32079,17 +30702,9 @@ Point: (%8 , %9)</source>
         <translation>Angiv første punkt for spejlingslinie</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="249"/>
         <source>Specify second point of mirror line</source>
         <translation>Angiv andet punkt for spejlingslinie</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
 </context>
 <context>
@@ -32130,17 +30745,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
         <source>Specify target point</source>
         <translation>Angiv slut punkt</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
 </context>
 <context>
@@ -32200,17 +30807,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="325"/>
         <source>Specify target point</source>
         <translation>Angiv slut punkt</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="328"/>
@@ -32256,10 +30855,6 @@ Point: (%8 , %9)</source>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Tilbage</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionModifyRevertDirection</name>
@@ -32285,10 +30880,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="588"/>
         <source>Specify reference point</source>
         <translation>Angiv reference punkt</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="132"/>
@@ -32425,17 +31016,9 @@ Point: (%8 , %9)</source>
         <translation>Angiv det absolute referencepunkt</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="179"/>
         <source>Specify relative reference point</source>
         <translation>Angiv relativt reference punkt</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
 </context>
 <context>
@@ -32445,10 +31028,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="362"/>
         <source>Not a valid expression</source>
         <translation>Det er ikke et gydigt udtryk</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="229"/>
@@ -32476,10 +31055,6 @@ Point: (%8 , %9)</source>
         <translation>Indtast radius:</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
         <translation type="unfinished"></translation>
@@ -32487,14 +31062,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Angiv reference punkt</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="169"/>
         <source>Scale</source>
@@ -32579,17 +31146,9 @@ Point: (%8 , %9)</source>
         <translation>Angiv første hjørne</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="199"/>
         <source>Specify second corner</source>
         <translation>Angiv andet hjørne</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="79"/>
@@ -32643,17 +31202,9 @@ Point: (%8 , %9)</source>
         <translation>Vælg første enhed for trimning</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="202"/>
         <source>Select limiting entity</source>
         <translation>Vælg enhed for afgrænsning</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="112"/>
@@ -32689,14 +31240,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyTrimAmount</name>
     <message>
-        <source>No entity found. </source>
-        <translation type="vanished">Ingen enhed fundet.</translation>
-    </message>
-    <message>
-        <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation type="vanished">Den valgte enhed er en del af en blok. Rediger venligst blokken.</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="173"/>
         <source>No entity found.</source>
         <translation type="unfinished"></translation>
@@ -32715,14 +31258,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="236"/>
         <source>Select line/arc to trim OR enter length value:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select entity to trim or enter distance:</source>
-        <translation type="vanished">Vælg enhed for trimning eller indtast afstand:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
 </context>
 <context>
@@ -32752,21 +31287,9 @@ Point: (%8 , %9)</source>
         <source>Choose entity for order</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionPolylineAdd</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Tilbage</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="102"/>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="129"/>
@@ -32802,10 +31325,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPolylineAppend</name>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="119"/>
         <source>No Entity found.</source>
         <translation type="unfinished">Enheden kunne ikke findes.</translation>
@@ -32831,18 +31350,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="obsolete">Angiv næste punkt eller [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Tilbage</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="obsolete">Angiv næste punkt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="125"/>
         <source>Can not append nodes in a closed polyline.</source>
         <translation type="unfinished"></translation>
@@ -32855,14 +31362,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionPolylineDel</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Tilbage</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="92"/>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="112"/>
@@ -32897,14 +31396,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionPolylineDelBetween</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Tilbage</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="116"/>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="136"/>
@@ -32971,10 +31462,6 @@ Point: (%8 , %9)</source>
         <source>Choose the original polyline</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionPolylineSegment</name>
@@ -32987,10 +31474,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="357"/>
         <source>Choose one of the segments on the original polyline</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="335"/>
@@ -33006,14 +31489,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionPolylineTrim</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Tilbage</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="111"/>
         <source>No Entity found.</source>
@@ -33124,13 +31599,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectContour</name>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="63"/>
@@ -33161,17 +31629,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="176"/>
         <source>Choose second point of intersection line</source>
         <translation>Vælg det andet punkt for skæringslinie</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
 </context>
 <context>
@@ -33197,10 +31657,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="116"/>
         <source>De-Selecting</source>
@@ -33252,10 +31708,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="163"/>
         <source>Click and drag for the selection window</source>
         <translation type="unfinished"></translation>
@@ -33268,25 +31720,13 @@ Point: (%8 , %9)</source>
         <source>Set relative Zero</source>
         <translation>Sæt et relativt nulpunkt</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionSnapIntersectionManual</name>
     <message>
-        <source>I&amp;ntersection Manually</source>
-        <translation type="vanished">Skæringspunkt ma&amp;nuelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="142"/>
         <source>Select first entity</source>
         <translation>Vælg første enhed</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="145"/>
@@ -33315,10 +31755,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="108"/>
         <source>Zoom panning</source>
         <translation type="unfinished"></translation>
@@ -33332,17 +31768,9 @@ Point: (%8 , %9)</source>
         <translation>Angiv første linie</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Afbryd</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="143"/>
         <source>Specify second edge</source>
         <translation>Angiv den anden linie</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbage</translation>
     </message>
 </context>
 <context>
@@ -33609,17 +32037,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Linear Dimension Options</source>
-        <translation type="obsolete">Valg for lineær målsætning</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Vinkel:</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -33786,10 +32203,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="113"/>
         <source>DPI:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="obsolete">Faktor:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="106"/>
@@ -34228,21 +32641,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">Valg for polygon</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Antal:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">Antal kanter</translation>
-    </message>
-</context>
-<context>
     <name>Ui_LinePolygonOptions</name>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="32"/>
@@ -34442,10 +32840,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="79"/>
         <source>Multiple Copies</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">Afstand:</translation>
     </message>
 </context>
 <context>
@@ -34703,14 +33097,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished">Skift sort / hvid tilstand</translation>
     </message>
     <message>
-        <source>Center to page</source>
-        <translation type="obsolete">Centre på siden</translation>
-    </message>
-    <message>
-        <source>Fit to page</source>
-        <translation type="obsolete">Tilpas til siden</translation>
-    </message>
-    <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="44"/>
         <source>Landscape Orientation of paper</source>
         <translation type="unfinished"></translation>
@@ -34830,10 +33216,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="67"/>
         <source>Pick distance from drawing.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">Afstand:</translation>
     </message>
 </context>
 <context>

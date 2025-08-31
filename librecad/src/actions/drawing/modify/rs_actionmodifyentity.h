@@ -45,6 +45,7 @@ public:
     ~RS_ActionModifyEntity() override;
     void init(int status) override;
     void notifyFinished();
+    bool mayBeTerminatedExternally() override {return m_allowExternalTermination;};
 protected:
     enum State {
         ShowDialog = InitialActionStatus,
@@ -68,6 +69,7 @@ private:
     RS_Entity* m_clonedEntity = nullptr;
     bool m_modifyCursor{true};
     bool m_invokedForSingleEntity{false};
+    bool m_allowExternalTermination{true};
     LC_EntityPropertiesEditor *m_propertiesEditor{nullptr};
 };
 

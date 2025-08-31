@@ -86,8 +86,6 @@ void RS_ActionEditCopyPaste::doTrigger([[maybe_unused]]bool keepSelected) {
                 m_invokedWithControl = false;
             }
             else{
-                //graphicView->redraw();
-                m_graphicView->killSelectActions();
                 finish(false);
             }
             break;

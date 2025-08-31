@@ -81,26 +81,21 @@ void LC_EntityPropertiesEditor::showEntityPropertiesDialog() {
     if ( result == QDialog::Accepted) {
         auto interactiveInputRequestType = dlg->isInteractiveInputRequested();
         if (interactiveInputRequestType == LC_ActionContext::InteractiveInputInfo::NOTNEEDED) { // normal closing of the dialog
-            QC_ApplicationWindow::getAppWindow()->updateActionsAndWidgetsForPrintPreview(false);
             m_actionContext->interactiveInputRequestCancel();
             m_lateCompletionRequestor->onLateRequestCompleted(false);
             delete dlg;
         }
         else { // interactive input requested
             m_actionContext->interactiveInputStart(interactiveInputRequestType, this, dlg->getInteractiveInputTag());
-            QC_ApplicationWindow::getAppWindow()->updateActionsAndWidgetsForPrintPreview(true);
             delete dlg;
         }
     }
     else { // notify about cancel of the dialog
         delete dlg;
         m_actionContext->interactiveInputRequestCancel();
-        QC_ApplicationWindow::getAppWindow()->updateActionsAndWidgetsForPrintPreview(false);
         m_lateCompletionRequestor->onLateRequestCompleted(true);
     }
 }
-
-// FIXME - NOTE - pick distance from the drawing 1) point2point, 2) +line/+radius, +3) line to intersection points like break/divide
 
 void LC_EntityPropertiesEditor::onLateRequestCompleted(bool shouldBeSkipped) {
     if (shouldBeSkipped) {

@@ -113,7 +113,7 @@ public:
     bool loadStyleSheet(const QString &path);
 
     bool eventFilter(QObject *obj, QEvent *event) override;
-    void onViewCurrentActionChanged(const RS_ActionInterface *action);
+    void onViewCurrentActionChanged(RS2::ActionType actionType);
     QAction* getAction(const QString& name) const override;
 
     void activateWindow(QMdiSubWindow* w){

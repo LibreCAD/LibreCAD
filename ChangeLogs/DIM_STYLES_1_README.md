@@ -6,9 +6,10 @@ This pull request contains the following major functionality:
 2) Support of the "context entity" by actions;
 3) Reworked default context popup menu for drawing area, support of entity-specific context menus; 
 4) Reworked Custom Toolbar Creator, Custom Menu Creator, wide support of invocation shortcuts for custom menus.
-5) Added support of the drawing's metadata (athor, title, subject, description etc)
+5) Added support of the drawing's metadata (athor, title, subject, description etc.)
 6) Added support of predefined and custom user data for the drawing document;
-7) Various minor fixes and improvements;
+7) Interactive input of action's parameters and entities properties
+8) Various minor fixes and improvements;
 
 ### Dimension Styles
 
@@ -79,11 +80,12 @@ However, later this concept may be used, for example, in plugins or so.
 
 ### Context menu 
 
-Default popup menu that is shown in the drawing area by Right Mouse Button click was reworked, in order to include more operations and support more efficient drawing operations. 
+Default popup menu that is shown in the drawing area by Right Mouse Button click was reworked, in order to include more operations and support more efficient drawing operations.
+Now the popup menu in graphic view is truly context-aware one. 
 
-There are to major modes: 
+There are to major modes of the menu's operation: 
 
-1) Generic menu that is invoked not for some entity (i.e - click point is outside entity);
+1) Generic menu that is invoked in point that this is outside of drawing entity;
 2) Context menu - invoked with click on entity. 
 
 For the context menu, the structure of the menu is adapted to correspond clicked entity type, and it reflects operations, that are relevant for selected entity.
@@ -124,6 +126,59 @@ In addition to support of context entity, there are small changes in action work
 4) Trim and Trim Two actions - if invoked with a context, considers provided entity as an entity that should be trimmed.
 5) Draw Arc Tangential action - if invoked with a context, starts arc creation from the nearest endpoint of the selected entity.
 6) Draw tangential lines actions - state depends on provided context entity type
+
+### Interactive Inpout 
+
+This merge request brings another new user experience. Now the user is able to measure some value on the drawing instead of direct entering that value into input field.
+Thus, it is possible to enter values that are equals to another geometry values that are present in the drawing.  
+
+The following types of values are supported: 
+* Position coordinates;
+* Linear value (length)
+* Angle value
+
+#### Interactive input in Tool Options toolbar
+
+Now Tool Options toolbar may include buttons that initiates interactive input of values.   
+
+
+There is a setting in Application Preferences dialog, that allows to enable or disable interactive input support for Tool Options. 
+
+#### Entity Properties Dialog
+
+Entity Properties dialogs now includes support of interactive input.
+
+
+#### Specifics of measuring values
+
+When interactive input is initiated, there user is prompted to measure corresponding value on the drawing.   
+
+Supported functionality depends on the type of the value, that is measured. 
+
+##### Pick Point Coordinates
+
+For point coordinates, the user should just select some location and click on it. Coordinates of that location will be set to appropriate inputs. 
+
+##### Pick Distance
+
+For measuring the distance, there are several possible modes: 
+
+1) Major flow - the user should specify positions of first and second point and resulting length is calculated as a distance between these points.
+2) **SHIFT** pressed - distance is determined based on Geometry of the object under the mouse cursor:
+   * Line - length of line is selected
+   * Circle, Arc - radius is selected. With **CTRL** pressed - the diameter is picked instead of the radius.
+3) **CTRL** pressed - for line under cursor, the length of line **segment** between points of intersections with other entities will be used.   
+
+##### Pick Distance
+
+Picking the angle value also supports several modes: 
+
+1) Major - 3 points angle. The user should specify 3 points (edge, intersection, second edge) and angle is measure as an angle between to lines directed from edge points to intersection.
+2) Angle of Line -  click on the line with pressed **CTRL** key will pick the angle of the line. If **SHIFT** is pressed during click, instead of the line's angle, a supplementary angle (one that supplements line's angle to 180 degree) will be used.  
+3) Click on Line with **SHIFT** key - lets the user select two existing lines and measure the angle between them.
+4) 2 points angle - if 3 points angle measurement started, if second point is selected with **CTRL** pressed, the angle between two points will be selected. 
+
+Based on angle selection way, it is possible to pick measured angle value, or value of supplementary angle. 
 
 ### Various minor fixes and improvements  
  

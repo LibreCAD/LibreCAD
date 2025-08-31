@@ -93,10 +93,10 @@ void LC_ActionFactory::initActionGroupManager(LC_ActionGroupManager* agm) {
         }
     }
 
-    auto toolGroups = agm->toolGroups();
+    /*auto toolGroups = agm->toolGroups();
     for (auto actionGroup : toolGroups) {
         connect(actionGroup, &LC_ActionGroup::triggered, m_appWin, &QC_ApplicationWindow::relayAction);
-    }
+    }*/
 }
 
 void LC_ActionFactory::createEntityLayerActions(QMap<QString, QAction*>& map, LC_ActionGroup* group) {

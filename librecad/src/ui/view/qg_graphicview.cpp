@@ -40,6 +40,7 @@
 #include "qg_graphicview.h"
 
 #include "lc_actioncontext.h"
+#include "lc_eventhandler.h"
 #include "lc_graphicviewport.h"
 #include "lc_graphicviewrenderer.h"
 #include "lc_overlayentitiescontainer.h"
@@ -54,13 +55,10 @@
 #include "rs_actionmodifyentity.h"
 #include "rs_actionselectsingle.h"
 #include "rs_blocklist.h"
-#include "rs_circle.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_entity.h"
 #include "rs_entitycontainer.h"
-#include "rs_eventhandler.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"
 #include "rs_settings.h"
@@ -1405,8 +1403,7 @@ void QG_GraphicView::setCursorHiding(bool state){
 }
 
 void QG_GraphicView::setCurrentQAction(QAction* q_action){
-    bool forcedActionKillAllowed = isForecedActionKillAllowed();
-    getEventHandler()->setQAction(q_action, forcedActionKillAllowed);
+    getEventHandler()->setQAction(q_action);
 
     if (m_recent_actions.contains(q_action)){
         m_recent_actions.removeOne(q_action);

@@ -3083,57 +3083,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionGroupManager</name>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">วงกลม</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="obsolete">เส้นโค้ง</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">แก้ไข</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">วงรี</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">แฟ้ม</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">เส้นบอกขนาด</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">ข้อมูล</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">เส้นตรง</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">ปรับเปลี่ยน</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">เส้นตรงหลายขยัก</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="obsolete">เลือก</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">มุมมอง</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionInfo3PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="141"/>
@@ -3149,10 +3098,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="149"/>
         <source>Select second edge point of angle</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">ข้อมูล</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="189"/>
@@ -15959,10 +15904,6 @@ Warning: this action can NOT be undone!</source>
         <translation>ท่องดูคลัง</translation>
     </message>
     <message>
-        <source>Command line</source>
-        <translation type="vanished">บรรทัดคำสั่ง</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="260"/>
         <source>Dock</source>
         <translation>เทียบท่า</translation>
@@ -15972,26 +15913,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="284"/>
         <source>Float</source>
         <translation>ลอยตัว</translation>
-    </message>
-    <message>
-        <source>Lines</source>
-        <translation type="vanished">เส้นตรง</translation>
-    </message>
-    <message>
-        <source>Circles</source>
-        <translation type="vanished">วงกลม</translation>
-    </message>
-    <message>
-        <source>Freehand</source>
-        <translation type="vanished">เส้นอิสระ</translation>
-    </message>
-    <message>
-        <source>Ellipses</source>
-        <translation type="vanished">วงรี</translation>
-    </message>
-    <message>
-        <source>PolyLines</source>
-        <translation type="vanished">เส้นตรงหลายขยัก</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="101"/>
@@ -16012,10 +15933,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="96"/>
         <source>Circle</source>
         <translation type="unfinished">วงกลม</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="obsolete">เส้นโค้ง</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="99"/>
@@ -16049,29 +15966,9 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished">ลำดับ</translation>
     </message>
     <message>
-        <source>Layer List</source>
-        <translation type="obsolete">รายชื่อชั้นงาน</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="212"/>
         <source>Entity Info</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="obsolete">รายชื่อบล็อค</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">แฟ้ม</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">แก้ไข</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">มุมมอง</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="164"/>
@@ -16092,114 +15989,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="98"/>
         <source>Spline</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap Selection</source>
-        <translation type="obsolete">เลือกวิธีดูดติด</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="obsolete">ตัวเลือกของเครื่องมือ</translation>
-    </message>
-    <message>
-        <source>Categories</source>
-        <translation type="obsolete">แยกหมวดหมู่</translation>
-    </message>
-    <message>
-        <source>Dimensions</source>
-        <translation type="vanished">เส้นบอกขนาด</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="obsolete">แ&amp;ฟ้ม</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="obsolete">นำเข้า</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="obsolete">ส่งออก</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="obsolete">แ&amp;ก้ไข</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="obsolete">มุ&amp;มมอง</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="obsolete">เ&amp;ส้นตรง</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="obsolete">วง&amp;กลม</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="obsolete">วง&amp;รี</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="obsolete">เส้นตรงหลายข&amp;ยัก</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="obsolete">เ&amp;ลือก</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="obsolete">ปรับเ&amp;ปลี่ยน</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="obsolete">&amp;ข้อมูล</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="obsolete">&amp;ลำดับ</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="obsolete">&amp;วิธีใช้</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="obsolete">&amp;วิกิ</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="obsolete">คู่&amp;มือผู้ใช้</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="obsolete">&amp;คำสั่ง</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="obsolete">วิดเ&amp;จ็ต</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="obsolete">เกี่ยวกับ</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="obsolete">&amp;ฟอรัม</translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="obsolete">แ&amp;ช็ตผ่าน Zulip</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="obsolete">&amp;สมทบทุน</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="obsolete">แถบเ&amp;ครื่องมือ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="138"/>
@@ -16329,10 +16118,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="104"/>
         <source>Modify</source>
         <translation>ปรับเปลี่ยน</translation>
-    </message>
-    <message>
-        <source>Measure</source>
-        <translation type="vanished">วัด</translation>
     </message>
 </context>
 <context>
@@ -16736,62 +16521,6 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <source>&amp;File</source>
-        <translation type="vanished">แ&amp;ฟ้ม</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">แ&amp;ก้ไข</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">มุ&amp;มมอง</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">เ&amp;ลือก</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">เ&amp;ส้นตรง</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">วง&amp;กลม</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">วง&amp;รี</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">ปรับเ&amp;ปลี่ยน</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp;ข้อมูล</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">เกี่ยวกับ</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp;วิธีใช้</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">ซ้อนห&amp;ลั่น</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">ปูแ&amp;ผ่</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">ปูแผ่หน้าต่าง&amp;นอน</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="795"/>
         <source>Creating new file...</source>
         <translation>กำลังสร้างแฟ้มใหม่...</translation>
@@ -16822,14 +16551,6 @@ Warning: this action can NOT be undone!</source>
         <translation>กำลังออกจากแอปพลิเคชัน...</translation>
     </message>
     <message>
-        <source>Layer List</source>
-        <translation type="vanished">รายชื่อชั้นงาน</translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="vanished">รายชื่อบล็อค</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="196"/>
         <source>Print preview for %1</source>
         <translation>ตัวอย่างก่อนพิมพ์ของ %1</translation>
@@ -16850,33 +16571,9 @@ Warning: this action can NOT be undone!</source>
         <translation>บันทึกงานเขียนแบบแล้ว: %1</translation>
     </message>
     <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">กำลังส่งออกงานเขียนแบบ...</translation>
-    </message>
-    <message>
-        <source>Exported: %1</source>
-        <translation type="vanished">ส่งออกแล้ว: %1</translation>
-    </message>
-    <message>
-        <source>Exporting...</source>
-        <translation type="vanished">กำลังส่งออก...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">ส่งออกเสร็จสมบูรณ์</translation>
-    </message>
-    <message>
-        <source>Export failed!</source>
-        <translation type="vanished">ส่งออกไม่สำเร็จ!</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1275"/>
         <source>Printing complete</source>
         <translation>พิมพ์เสร็จสมบูรณ์</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="vanished">บรรทัดคำสั่ง</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="741"/>
@@ -16891,10 +16588,6 @@ Please check the permissions.</source>
         <translation>ไม่สามารถเปิดแฟ้ม
 %1
 กรุณาตรวจสอบการอนุญาตสิทธิ์</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">เส้นตรงหลายข&amp;ยัก</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1113"/>
@@ -16918,22 +16611,6 @@ Auto-save disabled.</source>
 ขอปิดการบันทึกอัตโนมัติ</translation>
     </message>
     <message>
-        <source>Import</source>
-        <translation type="vanished">นำเข้า</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">แถบเ&amp;ครื่องมือ</translation>
-    </message>
-    <message>
-        <source>Compiled on: %1</source>
-        <translation type="vanished">คอมไพล์เมื่อ: %1</translation>
-    </message>
-    <message>
-        <source>Version: %1</source>
-        <translation type="vanished">รุ่น: %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="988"/>
         <source>Warning: File already opened : </source>
         <translation>คำเตือน: แฟ้มเปิดอยู่แล้ว : </translation>
@@ -16947,14 +16624,6 @@ Auto-save disabled.</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="249"/>
         <source> , please check the filename and permissions.</source>
         <translation> , กรุณาตรวจสอบชื่อแฟ้มและการอนุญาตสิทธิ์</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">ปูแผ่หน้าต่าง&amp;ตั้ง</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">โหมดแ&amp;ท็บ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="813"/>
@@ -16972,53 +16641,9 @@ Auto-save disabled.</source>
         <translation>บันทึกโดยอัตโนมัติไม่สำเร็จ</translation>
     </message>
     <message>
-        <source>File</source>
-        <translation type="vanished">แฟ้ม</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">แก้ไข</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="vanished">มุมมอง</translation>
-    </message>
-    <message>
-        <source>Snap Selection</source>
-        <translation type="vanished">เลือกวิธีดูดติด</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="vanished">ตัวเลือกของเครื่องมือ</translation>
-    </message>
-    <message>
-        <source>Export as</source>
-        <translation type="vanished">ส่งออกเป็น</translation>
-    </message>
-    <message>
-        <source>Compiler: Clang %1.%2.%3</source>
-        <translation type="vanished">คอมไพเลอร์: Clang %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation type="vanished">คอมไพเลอร์: GNU GCC %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Qt Version: %1</source>
-        <translation type="vanished">รุ่น Qt: %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="207"/>
         <source>Draft Mode</source>
         <translation>โหมดร่าง</translation>
-    </message>
-    <message>
-        <source>Export as PDF</source>
-        <translation type="vanished">ส่งออกเป็น PDF</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">ส่งออก</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1001"/>
@@ -17035,81 +16660,9 @@ Please check its existence and permissions.</source>
         <translation>ไม่มีแฟ้ม &apos;%1&apos; อยู่ จึงล้มเลิกการเปิด</translation>
     </message>
     <message>
-        <source>Categories</source>
-        <translation type="vanished">แยกหมวดหมู่</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="vanished">&amp;ลำดับ</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">ลำดับ</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">เลือก</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">เส้นตรง</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">วงกลม</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="vanished">เส้นโค้ง</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">วงรี</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">เส้นตรงหลายขยัก</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">เส้นบอกขนาด</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">ปรับเปลี่ยน</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">ข้อมูล</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1678"/>
         <source>Opening recent file...</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Compiler: Microsoft Visual C++</source>
-        <translation type="vanished">คอมไพเลอร์: Microsoft Visual C++</translation>
-    </message>
-    <message>
-        <source>Boost Version: %1.%2.%3</source>
-        <translation type="vanished">รุ่น Boost: %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation type="vanished">คัดลอก</translation>
-    </message>
-    <message>
-        <source>Contributors</source>
-        <translation type="vanished">ผู้ร่วมสมทบงาน</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation type="vanished">สัญญาอนุญาต</translation>
-    </message>
-    <message>
-        <source>System</source>
-        <translation type="vanished">ระบบ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="226"/>
@@ -17142,46 +16695,6 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Window mode</source>
-        <translation type="vanished">โหมดห&amp;น้าต่าง</translation>
-    </message>
-    <message>
-        <source>&amp;Layout</source>
-        <translation type="vanished">จัด&amp;วาง</translation>
-    </message>
-    <message>
-        <source>Rounded</source>
-        <translation type="vanished">ขอบมน</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="vanished">ขอบเหลี่ยม</translation>
-    </message>
-    <message>
-        <source>North</source>
-        <translation type="vanished">เหนือ</translation>
-    </message>
-    <message>
-        <source>South</source>
-        <translation type="vanished">ใต้</translation>
-    </message>
-    <message>
-        <source>East</source>
-        <translation type="vanished">ตะวันออก</translation>
-    </message>
-    <message>
-        <source>West</source>
-        <translation type="vanished">ตะวันตก</translation>
-    </message>
-    <message>
-        <source>&amp;Arrange</source>
-        <translation type="vanished">จัดเ&amp;รียง</translation>
-    </message>
-    <message>
-        <source>&amp;Maximized</source>
-        <translation type="vanished">&amp;ขยายแผ่</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1090"/>
         <source>Save All cancelled</source>
         <translation>ยกเลิกการบันทึกทั้งหมด</translation>
@@ -17192,59 +16705,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1228"/>
         <source>Close All cancelled</source>
         <translation>ยกเลิกการปิดทั้งหมด</translation>
-    </message>
-    <message>
-        <source>The Code</source>
-        <translation type="vanished">โค้ด</translation>
-    </message>
-    <message>
-        <source>Cmd</source>
-        <translation type="vanished">คำสั่ง</translation>
-    </message>
-    <message>
-        <source>Float</source>
-        <translation type="vanished">ลอยตัว</translation>
-    </message>
-    <message>
-        <source>Dock</source>
-        <comment>Dock the command widget to the main window</comment>
-        <translation type="vanished">เทียบท่า</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="vanished">&amp;วิกิ</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="vanished">คู่&amp;มือผู้ใช้</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="vanished">&amp;คำสั่ง</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="vanished">วิดเ&amp;จ็ต</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="vanished">&amp;ฟอรัม</translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="vanished">แ&amp;ช็ตผ่าน Zulip</translation>
-    </message>
-    <message>
-        <source>&amp;Release Information</source>
-        <translation type="vanished">ข้อมูลการออกรุ่&amp;น</translation>
-    </message>
-    <message>
-        <source>On&amp;line</source>
-        <translation type="vanished">&amp;ออนไลน์</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="vanished">&amp;สมทบทุน</translation>
     </message>
 </context>
 <context>
@@ -17535,10 +16995,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="321"/>
         <source>Float</source>
         <translation type="unfinished">ลอยตัว</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="obsolete">บรรทัดคำสั่ง</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="322"/>
@@ -17871,13 +17327,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlgcircle.cpp" line="69"/>
         <source>Pen</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">เส้นบอกขนาด</translation>
     </message>
 </context>
 <context>
@@ -26460,10 +25909,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>File</source>
-        <translation type="obsolete">แฟ้ม</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="87"/>
         <source>All</source>
         <translation type="unfinished"></translation>
@@ -26472,10 +25917,6 @@ Do you want to replace it?</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="960"/>
         <source>Invalid objects removed:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pen Wizard</source>
-        <translation type="vanished">เครื่องมือช่วยสร้างปากกา</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_wizard/colorwizard.cpp" line="52"/>
@@ -28371,10 +27812,6 @@ Do you want to replace it?</source>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="32"/>
         <source>Snap to Relative Zero</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export as PDF</source>
-        <translation type="obsolete">ส่งออกเป็น PDF</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="44"/>
@@ -30663,10 +30100,6 @@ Intersection :@(%7, %8)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="294"/>
         <source>Angle Info</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">ข้อมูล</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="273"/>

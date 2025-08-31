@@ -86,9 +86,10 @@ RS_ActionInterface::RS_ActionInterface(const char *name,
 }
 
 RS_ActionInterface::~RS_ActionInterface(){
-    if (m_optionWidget != nullptr){
+        if (m_optionWidget != nullptr){
         m_optionWidget->deleteLater();
         m_optionWidget.release();
+        m_optionWidget.reset();
     }
 }
 
@@ -388,8 +389,12 @@ void RS_ActionInterface::finish(bool /*updateTB*/){
  * Called by the event handler to give this action a chance to
  * communicate with its predecessor.
  */
-void RS_ActionInterface::setPredecessor(RS_ActionInterface* pre) {
+void RS_ActionInterface::setPredecessor(std::shared_ptr<RS_ActionInterface> pre) {
     m_predecessor = pre;
+}
+
+std::shared_ptr<RS_ActionInterface> RS_ActionInterface::getPredecessor() const {
+    return m_predecessor;
 }
 
 /**

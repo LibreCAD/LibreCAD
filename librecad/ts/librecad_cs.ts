@@ -258,10 +258,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="192"/>
         <source>Specify dimension arc location</source>
         <translation type="unfinished"></translation>
@@ -560,17 +556,9 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
         <translation>Zadejte první bod</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="233"/>
         <source>Specify second point</source>
         <translation>Zadejte druhý bod</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="236"/>
@@ -856,21 +844,9 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawLinePolygonCenTan</name>
     <message>
-        <source>Specify center</source>
-        <translation type="obsolete">Zadejte střed</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon3.cpp" line="51"/>
         <source>Specify a tangent</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="obsolete">Zadejte počet:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="obsolete">Neplatný výraz</translation>
     </message>
 </context>
 <context>
@@ -1228,10 +1204,6 @@ or [%2]</source>
         <translation>Zadejte první řídicí bod</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
         <source>Specify next control point or [%1]</source>
         <translation>Zadejte další řídicí bod nebo [%1]</translation>
@@ -1554,19 +1526,6 @@ or [%2]</source>
         <translation type="unfinished">Kružnice &amp;vepsaná</translation>
     </message>
     <message>
-        <source>Tangential 2 Circles, Radius</source>
-        <comment>circle tangential with two circles, and given radius</comment>
-        <translation type="obsolete">Tečná 2 kružnicemi a poloměrem</translation>
-    </message>
-    <message>
-        <source>Tangential 2 Circles, 1 Point</source>
-        <translation type="obsolete">Tečná 2 kružnicemi a 1 bodem</translation>
-    </message>
-    <message>
-        <source>Tangential &amp;3 Circles</source>
-        <translation type="obsolete">Tečná &amp;3 kružnicemi</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
         <source>Tangential, 2 P&amp;oints</source>
         <translation type="unfinished">&amp;Tečná 2 body</translation>
@@ -1660,10 +1619,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="317"/>
         <source>Create &amp;Equidistant Polylines</source>
         <translation type="unfinished">Vytvořit &amp;ekvidistantu křivky</translation>
-    </message>
-    <message>
-        <source>Create Polyline from Existing &amp;Segments</source>
-        <translation type="obsolete">Vytvořit křivku ze stávajících se&amp;gmentů</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="327"/>
@@ -1816,10 +1771,6 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ctrl+R</source>
-        <translation type="obsolete">Ctrl+R</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="370"/>
         <source>&amp;Rotate</source>
         <translation type="unfinished"></translation>
@@ -1905,17 +1856,9 @@ or [%2]</source>
         <translation type="unfinished">&amp;Rozložit text na písmena</translation>
     </message>
     <message>
-        <source>Point inside contour</source>
-        <translation type="obsolete">Bod uvnitř obrysu</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="498"/>
         <source>&amp;Distance Point to Point</source>
         <translation type="unfinished">Vzdálenost z &amp;bodu do bodu</translation>
-    </message>
-    <message>
-        <source>&amp;Distance Entity to Point</source>
-        <translation type="obsolete">Vzdálenost od &amp;prvku k bodu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="501"/>
@@ -1926,10 +1869,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="503"/>
         <source>Polygonal &amp;Area</source>
         <translation type="unfinished">Obsah &amp;mnohoúhelníku</translation>
-    </message>
-    <message>
-        <source>&amp;Selection pointer</source>
-        <translation type="obsolete">&amp;Ukazatel výběru</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="660"/>
@@ -1957,10 +1896,6 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>move to bottom</source>
-        <translation type="obsolete">přenést dolů</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="190"/>
         <source>Polygo&amp;n (Tan,Tan)</source>
         <translation type="unfinished"></translation>
@@ -1984,10 +1919,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="233"/>
         <source>Paste to Points</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tangential 2 Circles, Radius</source>
-        <translation type="obsolete">Tečná 2 kružnicemi a poloměrem</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="269"/>
@@ -2661,18 +2592,6 @@ or [%2]</source>
         <translation type="unfinished">Bez uchopení</translation>
     </message>
     <message>
-        <source>lower after entity</source>
-        <translation type="obsolete">oddálit za prvek</translation>
-    </message>
-    <message>
-        <source>raise over entity</source>
-        <translation type="obsolete">přiblížit před prvek</translation>
-    </message>
-    <message>
-        <source>move to top</source>
-        <translation type="obsolete">přenést nahoru</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="499"/>
         <source>Distance &amp;Entity to Point</source>
         <translation type="unfinished"></translation>
@@ -3165,77 +3084,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionGroupManager</name>
-    <message>
-        <source>Block</source>
-        <translation type="obsolete">Blok</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Kružnice</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="obsolete">Oblouk</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="obsolete">Splajna</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Úpravy</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">Elipsa</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Soubor</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">Kóta</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Informace</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Úsečka</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="obsolete">Bod</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">Modifikace</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="obsolete">Vlastnosti</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">Křivka</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="obsolete">Vybrat</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="obsolete">Uchopení</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">Zobrazit</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionInfo3PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="141"/>
@@ -3251,10 +3099,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="149"/>
         <source>Select second edge point of angle</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Informace</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="189"/>
@@ -5314,29 +5158,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Hladina:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometrie</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="obsolete">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="obsolete">Y</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pero</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgDimStyleManager</name>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="14"/>
@@ -6678,10 +6499,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="332"/>
         <source>Edit style override</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="obsolete">...</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="346"/>
@@ -9705,10 +9522,6 @@ Please specify a different value.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Layer Menu</source>
-        <translation type="obsolete">Nabídka Hladina</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="651"/>
         <source>&amp;Add Child Layer</source>
         <translation type="unfinished"></translation>
@@ -11165,14 +10978,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="32"/>
         <source>Snap point of gap to line snap point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="obsolete">Počátek</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="obsolete">Konec</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="95"/>
@@ -16105,10 +15910,6 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Command line</source>
-        <translation type="obsolete">Příkazový řádek</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="254"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="283"/>
         <source>Cmd</source>
@@ -16124,18 +15925,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="284"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lines</source>
-        <translation type="obsolete">Úsečky</translation>
-    </message>
-    <message>
-        <source>Circles</source>
-        <translation type="obsolete">Kružnice</translation>
-    </message>
-    <message>
-        <source>Ellipses</source>
-        <translation type="obsolete">Elipsy</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="101"/>
@@ -16256,29 +16045,9 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Layer List</source>
-        <translation type="obsolete">Seznam hladin</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="212"/>
         <source>Entity Info</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="obsolete">Seznam bloků</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Soubor</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Úpravy</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">Zobrazit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="164"/>
@@ -16299,86 +16068,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="98"/>
         <source>Spline</source>
         <translation type="unfinished">Splajna</translation>
-    </message>
-    <message>
-        <source>Snap Selection</source>
-        <translation type="obsolete">Výběr uchopení</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pero</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="obsolete">Vlastnosti nástroje</translation>
-    </message>
-    <message>
-        <source>Preferences</source>
-        <translation type="obsolete">Nastavení</translation>
-    </message>
-    <message>
-        <source>Dimensions</source>
-        <translation type="obsolete">Kóty</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="obsolete">&amp;Soubor</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="obsolete">Importovat</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="obsolete">Úp&amp;ravy</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="obsolete">&amp;Zobrazit</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="obsolete">&amp;Úsečka</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="obsolete">&amp;Kružnice</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="obsolete">&amp;Oblouk</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="obsolete">&amp;Elipsa</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="obsolete">Kři&amp;vka</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="obsolete">&amp;Výběr</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="obsolete">&amp;Modifikace</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="obsolete">&amp;Informace</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="obsolete">&amp;Nápověda</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="obsolete">O programu</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="obsolete">&amp;Nástrojové lišty</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="421"/>
@@ -16833,62 +16522,6 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp;Soubor</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">Úp&amp;ravy</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">&amp;Zobrazit</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&amp;Výběr</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&amp;Úsečka</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&amp;Kružnice</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&amp;Elipsa</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">&amp;Modifikace</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp;Informace</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">O programu</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp;Nápověda</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">&amp;Na sebe</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">&amp;Dlaždice</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">Dlaždice &amp;vodorovně</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="795"/>
         <source>Creating new file...</source>
         <translation>Vytváří se nový soubor...</translation>
@@ -16924,34 +16557,6 @@ Warning: this action can NOT be undone!</source>
         <translation>Ukončuji program...</translation>
     </message>
     <message>
-        <source>File</source>
-        <translation type="vanished">Soubor</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Úpravy</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="vanished">Zobrazit</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pero</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="vanished">Vlastnosti nástroje</translation>
-    </message>
-    <message>
-        <source>Layer List</source>
-        <translation type="vanished">Seznam hladin</translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="vanished">Seznam bloků</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="196"/>
         <source>Print preview for %1</source>
         <translation>Náhled před tiskem pro %1</translation>
@@ -16972,33 +16577,9 @@ Warning: this action can NOT be undone!</source>
         <translation>Uložený výkres: %1</translation>
     </message>
     <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">Exportuje se výkres...</translation>
-    </message>
-    <message>
-        <source>Exported: %1</source>
-        <translation type="vanished">Exportovaný: %1</translation>
-    </message>
-    <message>
-        <source>Exporting...</source>
-        <translation type="vanished">Exportuje se...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">Exportování dokončeno</translation>
-    </message>
-    <message>
-        <source>Export failed!</source>
-        <translation type="vanished">Export neúspěšný!</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1275"/>
         <source>Printing complete</source>
         <translation>Tisk dokončen</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="vanished">Příkazový řádek</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="741"/>
@@ -17013,10 +16594,6 @@ Please check the permissions.</source>
         <translation>Nelze otevřít soubor
 %1
 Zkontrolujte prosím přístupová práva.</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">Kři&amp;vka</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1113"/>
@@ -17040,22 +16617,6 @@ Zkontrolujte prosím přístupová práva.
 Automatické ukládání bylo vypnuto.</translation>
     </message>
     <message>
-        <source>Import</source>
-        <translation type="vanished">Importovat</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">&amp;Nástrojové lišty</translation>
-    </message>
-    <message>
-        <source>Compiled on: %1</source>
-        <translation type="vanished">Zkompilováno: %1</translation>
-    </message>
-    <message>
-        <source>Version: %1</source>
-        <translation type="vanished">Verze: %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="988"/>
         <source>Warning: File already opened : </source>
         <translation>Upozornění: Soubor je již otevřen: </translation>
@@ -17069,14 +16630,6 @@ Automatické ukládání bylo vypnuto.</translation>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="249"/>
         <source> , please check the filename and permissions.</source>
         <translation> , zkontrolujte jméno souboru a přístupová práva.</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">Dlaždice &amp;svisle</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">Režim &amp;karet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="813"/>
@@ -17094,33 +16647,9 @@ Automatické ukládání bylo vypnuto.</translation>
         <translation>Automatické ukládání neúspěšné</translation>
     </message>
     <message>
-        <source>Snap Selection</source>
-        <translation type="vanished">Výběr uchopení</translation>
-    </message>
-    <message>
-        <source>Export as</source>
-        <translation type="vanished">Exportovat jako</translation>
-    </message>
-    <message>
-        <source>Compiler: Clang %1.%2.%3</source>
-        <translation type="vanished">Kompilátor: Clang %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation type="vanished">Kompilátor: GNU GCC %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Qt Version: %1</source>
-        <translation type="vanished">Verze Qt: %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="207"/>
         <source>Draft Mode</source>
         <translation>Režim náčrtu</translation>
-    </message>
-    <message>
-        <source>Export as PDF</source>
-        <translation type="vanished">Exportovat jako PDF</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1001"/>
@@ -17135,38 +16664,6 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select</source>
-        <translation type="obsolete">Vybrat</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Úsečka</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Kružnice</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">Elipsa</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">Kóta</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">Modifikace</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Informace</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation type="obsolete">Kopírovat</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="226"/>
         <source>Saving drawing: %1</source>
         <translation type="unfinished"></translation>
@@ -17175,10 +16672,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
         <source>Save cancelled</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Closing Drawing</source>
-        <translation type="obsolete">Zavírá se výkres</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="361"/>
@@ -17245,25 +16738,9 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
         <source>Current Layer</source>
         <translation>Aktuální hladina</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Název aktuální aktivní hladiny&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -17296,80 +16773,6 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>QG_BlockWidget</name>
-    <message>
-        <source>Rename the active block</source>
-        <translation type="vanished">Přejmenovat aktivní blok</translation>
-    </message>
-    <message>
-        <source>Edit the active block
-in a separate window</source>
-        <translation type="vanished">Upravit aktivní blok
-v samostatném okně</translation>
-    </message>
-    <message>
-        <source>Insert the active block</source>
-        <translation type="vanished">Vložit aktivní blok</translation>
-    </message>
-    <message>
-        <source>Block Menu</source>
-        <translation type="vanished">Nabídka Blok</translation>
-    </message>
-    <message>
-        <source>&amp;Defreeze all Blocks</source>
-        <translation type="vanished">&amp;Rozmrazit všechny bloky</translation>
-    </message>
-    <message>
-        <source>&amp;Freeze all Blocks</source>
-        <translation type="vanished">&amp;Zmrazit všechny bloky</translation>
-    </message>
-    <message>
-        <source>&amp;Add Block</source>
-        <translation type="vanished">Při&amp;dat blok</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Block</source>
-        <translation type="vanished">&amp;Odstranit blok</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Block</source>
-        <translation type="vanished">&amp;Upravit blok</translation>
-    </message>
-    <message>
-        <source>&amp;Toggle Visibility</source>
-        <translation type="vanished">&amp;Přepnout viditelnost</translation>
-    </message>
-    <message>
-        <source>Show all blocks</source>
-        <translation type="vanished">Zobrazit všechny bloky</translation>
-    </message>
-    <message>
-        <source>Hide all blocks</source>
-        <translation type="vanished">Skrýt všechny bloky</translation>
-    </message>
-    <message>
-        <source>&amp;Rename Block</source>
-        <translation type="vanished">Pře&amp;jmenovat blok</translation>
-    </message>
-    <message>
-        <source>&amp;Insert Block</source>
-        <translation type="vanished">&amp;Vložit blok</translation>
-    </message>
-    <message>
-        <source>&amp;Create New Block</source>
-        <translation type="vanished">V&amp;ytvořit nový blok</translation>
-    </message>
-    <message>
-        <source>Create Block</source>
-        <translation type="vanished">Vytvořit blok</translation>
-    </message>
-    <message>
-        <source>Add an empty block</source>
-        <translation type="vanished">Přidat prázdný blok</translation>
-    </message>
-    <message>
-        <source>save the active block to a file</source>
-        <translation type="vanished">Uložit aktivní blok do souboru</translation>
-    </message>
     <message>
         <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="183"/>
         <source>Filter</source>
@@ -17591,10 +16994,6 @@ v samostatném okně</translation>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="321"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="obsolete">Příkazový řádek</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="322"/>
@@ -17930,44 +17329,6 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="vanished">Přímá kóta</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Hladina:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Úhel:</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pero</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Hladina:</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">Kóta</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pero</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgEllipse</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="26"/>
@@ -18045,18 +17406,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="130"/>
         <source>Rotation angle for the major axis of ellipse, degrees</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="vanished">Koncový úhel:</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="vanished">Počáteční úhel:</translation>
-    </message>
-    <message>
-        <source>Rotation:</source>
-        <translation type="vanished">Natočení:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="276"/>
@@ -19443,10 +18792,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <source>Move/Copy Options</source>
         <translation>Vlastnosti posunu/kopírování</translation>
     </message>
-    <message>
-        <source>Number of copies. Maximum 100</source>
-        <translation type="vanished">Počet kopií. Maximálně 100</translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgMoveRotate</name>
@@ -19489,10 +18834,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="163"/>
         <source>Multiple Copies</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">Ví&amp;cenásobné kopie</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="41"/>
@@ -19881,32 +19222,16 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>Počet segmentů na část splajny</translation>
     </message>
     <message>
-        <source>Crosshair</source>
-        <translation type="vanished">Nitkový kříž</translation>
-    </message>
-    <message>
-        <source>Left crosshair with isometric grid</source>
-        <translation type="vanished">Levý nitkový kříž s izometrickou mřížkou</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="170"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="230"/>
         <source>Left</source>
         <translation>Levý</translation>
     </message>
     <message>
-        <source>Top crosshair with isometric grid</source>
-        <translation type="vanished">Horní nitkový kříž s izometrickou mřížkou</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="213"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="246"/>
         <source>Top</source>
         <translation>Horní</translation>
-    </message>
-    <message>
-        <source>Right crosshair with isometric grid</source>
-        <translation type="vanished">Pravý nitkový kříž s izometrickou mřížkou</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="196"/>
@@ -19923,14 +19248,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="794"/>
         <source>Orthogonal Grid</source>
         <translation>Pravoúhlá mřížka</translation>
-    </message>
-    <message>
-        <source>Use isometric grid</source>
-        <translation type="vanished">Použít izometrickou mřížku</translation>
-    </message>
-    <message>
-        <source>Isometric Grid</source>
-        <translation type="vanished">Izometrická mřížka</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1220"/>
@@ -20735,10 +20052,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>Jazyk</translation>
     </message>
     <message>
-        <source>Graphic View</source>
-        <translation type="vanished">Grafické zobrazení</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="14"/>
         <source>Application Preferences</source>
         <translation>Nastavení programu</translation>
@@ -20747,10 +20060,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4476"/>
         <source>Defaults for new drawings</source>
         <translation>Výchozí hodnoty pro nové výkresy</translation>
-    </message>
-    <message>
-        <source>&amp;Appearance</source>
-        <translation type="vanished">&amp;Vzhled</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5019"/>
@@ -20778,26 +20087,10 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>&amp;Jednotka:</translation>
     </message>
     <message>
-        <source>Backgr&amp;ound:</source>
-        <translation type="vanished">Poza&amp;dí:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1173"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1495"/>
         <source>G&amp;rid Color:</source>
         <translation>Barva &amp;mřížky:</translation>
-    </message>
-    <message>
-        <source>&amp;Meta Grid Color:</source>
-        <translation type="vanished">&amp;Barva pomocné mřížky:</translation>
-    </message>
-    <message>
-        <source>S&amp;elected Color:</source>
-        <translation type="vanished">Ba&amp;rva výběru:</translation>
-    </message>
-    <message>
-        <source>&amp;Highlighted Color:</source>
-        <translation type="vanished">Barva &amp;zvýraznění:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="957"/>
@@ -20825,10 +20118,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>Výchozí nastavení programu</translation>
     </message>
     <message>
-        <source>Drawing unit.</source>
-        <translation type="vanished">Jednotka výkresu.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4736"/>
         <source>Time between automatic saving of the document in minutes.</source>
         <translation>Doba mezi automatickým uložením dokumentu v minutách.</translation>
@@ -20837,10 +20126,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4759"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
         <translation>Pokud je nastaveno, LibreCAD automaticky vytvoří zálohu aktuálního výkresu.</translation>
-    </message>
-    <message>
-        <source>Auto backup</source>
-        <translation type="vanished">Automaticky zálohovat</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5301"/>
@@ -23182,13 +22467,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Zrušit</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgpoint.ui" line="26"/>
@@ -24364,10 +23642,6 @@ so default step value required for baking</source>
         <source>again Still No Text supplied.</source>
         <translation>Text ještě nevložen.</translation>
     </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">Uzavřít</translation>
-    </message>
 </context>
 <context>
     <name>QG_FileDialog</name>
@@ -24578,42 +23852,6 @@ Obsah pomocné hladiny se nezobrazí ve výstupu.</translation>
 <context>
     <name>QG_LayerWidget</name>
     <message>
-        <source>Show all layers</source>
-        <translation type="vanished">Zobrazit všechny hladiny</translation>
-    </message>
-    <message>
-        <source>Hide all layers</source>
-        <translation type="vanished">Skrýt všechny hladiny</translation>
-    </message>
-    <message>
-        <source>Add a layer</source>
-        <translation type="vanished">Přidat hladinu</translation>
-    </message>
-    <message>
-        <source>Modify layer attributes / rename</source>
-        <translation type="vanished">Upravit vlastnosti hladiny / přejmenovat</translation>
-    </message>
-    <message>
-        <source>Layer Menu</source>
-        <translation type="vanished">Nabídka Hladina</translation>
-    </message>
-    <message>
-        <source>&amp;Defreeze all Layers</source>
-        <translation type="vanished">&amp;Rozmrazit všechny hladiny</translation>
-    </message>
-    <message>
-        <source>&amp;Freeze all Layers</source>
-        <translation type="vanished">&amp;Zmrazit všechny hladiny</translation>
-    </message>
-    <message>
-        <source>&amp;Add Layer</source>
-        <translation type="vanished">Při&amp;dat hladinu</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Layer</source>
-        <translation type="vanished">&amp;Odstranit hladinu</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="249"/>
         <source>Looking for matching layer names</source>
         <translation>Hledání odpovídajících názvů hladin</translation>
@@ -24622,10 +23860,6 @@ Obsah pomocné hladiny se nezobrazí ve výstupu.</translation>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="247"/>
         <source>Filter</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toggle Layer Loc&amp;k</source>
-        <translation type="obsolete">Přepnout zá&amp;mek hladiny</translation>
     </message>
 </context>
 <context>
@@ -24808,10 +24042,6 @@ Obsah pomocné hladiny se nezobrazí ve výstupu.</translation>
         <translation>Myš</translation>
     </message>
     <message>
-        <source>Right</source>
-        <translation type="vanished">Pravé</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/status_bar/qg_mousewidget.ui" line="229"/>
         <source>Left</source>
         <translation>Levé</translation>
@@ -24907,141 +24137,9 @@ p, li { white-space: pre-wrap; }
         <source>Total length of selected entities</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Počet vybraných prvků&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Celková délka vybraných prvků&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
 </context>
 <context>
     <name>QG_SnapToolBar</name>
-    <message>
-        <source>Snap</source>
-        <translation type="vanished">Uchopení</translation>
-    </message>
-    <message>
-        <source>Snap to Endpoints</source>
-        <translation type="vanished">Uchopení za koncové body</translation>
-    </message>
-    <message>
-        <source>Snap to equidistant points of entity</source>
-        <translation type="vanished">Uchopení za rovnoměrně rozmístěné body prvku</translation>
-    </message>
-    <message>
-        <source>Snap to center points</source>
-        <translation type="vanished">Uchopení za středy</translation>
-    </message>
-    <message>
-        <source>Snap to intersections automatically</source>
-        <translation type="vanished">Uchopení za průsečíky automaticky</translation>
-    </message>
-    <message>
-        <source>Snap to closest point on entity</source>
-        <translation type="vanished">Uchopení za nejbližší bod na prvku</translation>
-    </message>
-    <message>
-        <source>Snap to point with given distance to endpoint</source>
-        <translation type="vanished">Uchopení za bod s danou vzdáleností od koncového bodu</translation>
-    </message>
-    <message>
-        <source>Snap to intersections manually</source>
-        <translation type="vanished">Uchopení za průsečíky ručně</translation>
-    </message>
-    <message>
-        <source>Snap to grid</source>
-        <translation type="vanished">Uchopení do mřížky</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontally</source>
-        <translation type="vanished">Pouze vodorovně</translation>
-    </message>
-    <message>
-        <source>Restrict Vertically</source>
-        <translation type="vanished">Pouze svisle</translation>
-    </message>
-    <message>
-        <source>Move relative Zero</source>
-        <translation type="vanished">Posunout relativní počátek</translation>
-    </message>
-    <message>
-        <source>Lock relative Zero</source>
-        <translation type="vanished">Zamknout relativní počátek</translation>
-    </message>
-    <message>
-        <source>Free Snap</source>
-        <translation type="vanished">Bez uchopení</translation>
-    </message>
-    <message>
-        <source>Snap on grid</source>
-        <translation type="vanished">Uchopení do mřížky</translation>
-    </message>
-    <message>
-        <source>Snap on Endpoints</source>
-        <translation type="vanished">Uchopení za koncové body</translation>
-    </message>
-    <message>
-        <source>Snap on Entity</source>
-        <translation type="vanished">Uchopení za prvek</translation>
-    </message>
-    <message>
-        <source>Snap Center</source>
-        <translation type="vanished">Uchopení za střed</translation>
-    </message>
-    <message>
-        <source>Snap Middle</source>
-        <translation type="vanished">Uchopení za polovinu</translation>
-    </message>
-    <message>
-        <source>Snap Distance</source>
-        <translation type="vanished">Vzdálenost uchopení</translation>
-    </message>
-    <message>
-        <source>Snap Intersection</source>
-        <translation type="vanished">Uchopit za průsečík</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontal</source>
-        <translation type="vanished">Pouze vodorovně</translation>
-    </message>
-    <message>
-        <source>Restrict Vertical</source>
-        <translation type="vanished">Pouze svisle</translation>
-    </message>
-    <message>
-        <source>Restrict Orthogonal</source>
-        <translation type="vanished">Pouze kolmo</translation>
-    </message>
-    <message>
-        <source>Restrict Nothing</source>
-        <translation type="vanished">Bez omezení</translation>
-    </message>
-    <message>
-        <source>Set relative zero position</source>
-        <translation type="vanished">Nastavit pozici relativního počátku</translation>
-    </message>
-    <message>
-        <source>Lock relative zero position</source>
-        <translation type="vanished">Zamknout pozici relativního počátku</translation>
-    </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="169"/>
         <source>Relative zero position is %1</source>
@@ -25118,114 +24216,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="250"/>
         <source>By Layer</source>
         <translation>Dle hladiny</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation type="vanished">Dle bloku</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">Výchozí</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation type="vanished">0,00 mm</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation type="vanished">0,05 mm</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation type="vanished">0,09 mm</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation type="vanished">0,13 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation type="vanished">0,15 mm</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation type="vanished">0,18 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation type="vanished">0,20 mm</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation type="vanished">0,25 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation type="vanished">0,30 mm</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation type="vanished">0,35 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation type="vanished">0,40 mm</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation type="vanished">0,50 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation type="vanished">0,53 mm</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation type="vanished">0,60 mm</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation type="vanished">0,70 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation type="vanished">0,80 mm</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation type="vanished">0,90 mm</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation type="vanished">1,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation type="vanished">1,06 mm</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation type="vanished">1,20 mm</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation type="vanished">1,40 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation type="vanished">1,58 mm</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation type="vanished">2,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation type="vanished">2,11 mm</translation>
-    </message>
-    <message>
-        <source>- Unchanged -</source>
-        <translation type="vanished">- Beze změny -</translation>
     </message>
 </context>
 <context>
@@ -27060,10 +26050,6 @@ Přejete si ho přepsat?</translation>
         <translation type="unfinished">uzavřít</translation>
     </message>
     <message>
-        <source>chord length</source>
-        <translation type="obsolete">délka tětivy</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1059"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1165"/>
         <source>columns</source>
@@ -27145,11 +26131,6 @@ Přejete si ho přepsat?</translation>
         <source>ce</source>
         <comment>center</comment>
         <translation type="unfinished">str</translation>
-    </message>
-    <message>
-        <source>cl</source>
-        <comment>chord length</comment>
-        <translation type="obsolete">dt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1163"/>
@@ -27342,11 +26323,6 @@ Přejete si ho přepsat?</translation>
         <translation type="unfinished">zpět</translation>
     </message>
     <message>
-        <source>u</source>
-        <comment>undo</comment>
-        <translation type="obsolete">z</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1221"/>
         <source>redo</source>
         <translation type="unfinished">vpřed</translation>
@@ -27409,23 +26385,9 @@ Přejete si ho přepsat?</translation>
         <translation type="unfinished">Příkaz nenalezen: %1</translation>
     </message>
     <message>
-        <source>Accepted keycode: %1</source>
-        <translation type="obsolete">Přijata klávesová zkratka: %1</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="472"/>
         <source>Available commands:</source>
         <translation type="unfinished">Dostupné příkazy:</translation>
-    </message>
-    <message>
-        <source>cal</source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="obsolete">vyp</translation>
-    </message>
-    <message>
-        <source>calculate</source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="obsolete">vypocti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="216"/>
@@ -27464,54 +26426,6 @@ Přejete si ho přepsat?</translation>
         <source>mp</source>
         <comment>modify properties</comment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Block</source>
-        <translation type="obsolete">Blok</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Kružnice</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Úpravy</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">Elipsa</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Soubor</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">Kóta</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Informace</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Úsečka</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">Modifikace</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="obsolete">Vlastnosti</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="obsolete">Vybrat</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">Zobrazit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="87"/>
@@ -29449,10 +28363,6 @@ Přejete si ho přepsat?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export as PDF</source>
-        <translation type="obsolete">Exportovat jako PDF</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="44"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
@@ -29702,10 +28612,6 @@ Přejete si ho přepsat?</translation>
         <source>Specify reference point</source>
         <translation>Zadejte referenční bod</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionBlocksExplode</name>
@@ -29736,10 +28642,6 @@ Přejete si ho přepsat?</translation>
         <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="349"/>
         <source>Specify reference point</source>
         <translation>Zadejte referenční bod</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="352"/>
@@ -29970,37 +28872,6 @@ This block cannot be inserted.</source>
         <source>Choose second edge</source>
         <translation>Zvolte druhou stranu</translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDimAligned</name>
-    <message>
-        <source>Specify first extension line origin</source>
-        <translation type="vanished">Zadejte počátek první vynášecí čáry</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
-        <source>Specify second extension line origin</source>
-        <translation type="vanished">Zadejte počátek druhé vynášecí čáry</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation type="vanished">Zadejte umístění kótovací čáry</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Zadejte text kóty:</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDimAngular</name>
@@ -30008,10 +28879,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="216"/>
         <source>Select first line</source>
         <translation>Vyberte první úsečku</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="219"/>
@@ -30030,42 +28897,11 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDimDiametric</name>
-    <message>
-        <source>Not a circle or arc entity</source>
-        <translation type="vanished">Prvek není kružnice ani oblouk</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Neplatný výraz</translation>
-    </message>
-    <message>
-        <source>Select arc or circle entity</source>
-        <translation type="vanished">Vyberte oblouk nebo kružnici</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation type="vanished">Zadejte umístění kótovací čáry</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Zadejte text kóty:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDimLeader</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="182"/>
         <source>Specify target point</source>
         <translation>Zadejte cílový bod</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="185"/>
@@ -30097,61 +28933,14 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Specify first extension line origin</source>
-        <translation type="vanished">Zadejte počátek první vynášecí čáry</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="211"/>
         <source>Specify second extension line origin</source>
         <translation>Zadejte počátek druhé vynášecí čáry</translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="221"/>
         <source>Specify dimension line location</source>
         <translation>Zadejte umístění kótovací čáry</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Zadejte text kóty:</translation>
-    </message>
-    <message>
-        <source>Enter dimension line angle:</source>
-        <translation type="vanished">Zadejte úhel kótovací čáry:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDimRadial</name>
-    <message>
-        <source>Not a circle or arc entity</source>
-        <translation type="vanished">Prvek není kružnice ani oblouk</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Neplatný výraz</translation>
-    </message>
-    <message>
-        <source>Select arc or circle entity</source>
-        <translation type="vanished">Vyberte oblouk nebo kružnici</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
-        <source>Specify dimension line position or enter angle:</source>
-        <translation type="vanished">Zadejte umístění kótovací čáry nebo zadejte úhel:</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Zadejte text kóty:</translation>
     </message>
 </context>
 <context>
@@ -30202,17 +28991,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="500"/>
         <source>Specify radius</source>
         <translation>Zadejte poloměr</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="507"/>
@@ -30229,14 +29010,6 @@ This block cannot be inserted.</source>
         <source>Specify included angle:</source>
         <translation>Zadejte sevřený úhel:</translation>
     </message>
-    <message>
-        <source>Specify chord length:</source>
-        <translation type="vanished">Zadejte délku tětivy:</translation>
-    </message>
-    <message>
-        <source>Specify end angle or [angle/chord length]</source>
-        <translation type="vanished">Zadejte koncový úhel nebo [délku úhlu/tětivy]</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawArc3P</name>
@@ -30251,21 +29024,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished">Zadejte třetí bod</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="233"/>
         <source>Specify second point</source>
         <translation>Zadejte druhý bod</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
-    <message>
-        <source>Specify endpoint</source>
-        <translation type="vanished">Zadejte koncový bod</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="230"/>
@@ -30291,17 +29052,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="277"/>
         <source>Specify end angle</source>
         <translation>Zadejte koncový úhel</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="279"/>
@@ -30322,14 +29075,6 @@ This block cannot be inserted.</source>
         <translation>Zadejte střed</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="129"/>
         <source>Specify point on circle</source>
         <translation type="unfinished"></translation>
@@ -30348,17 +29093,9 @@ This block cannot be inserted.</source>
         <translation>Zadejte první bod</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="156"/>
         <source>Specify second point</source>
         <translation>Zadejte druhý bod</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
 </context>
 <context>
@@ -30374,17 +29111,9 @@ This block cannot be inserted.</source>
         <translation>Zadejte první bod</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="175"/>
         <source>Specify second point</source>
         <translation>Zadejte druhý bod</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="178"/>
@@ -30405,17 +29134,9 @@ This block cannot be inserted.</source>
         <translation>Zadejte střed kružnice</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="177"/>
         <source>Specify circle radius</source>
         <translation>Zadejte poloměr kružnice</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="146"/>
@@ -30441,17 +29162,9 @@ This block cannot be inserted.</source>
         <translation>Zadejte první úsečku</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="216"/>
         <source>Specify the second line</source>
         <translation>Zadejte druhou úsečku</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="219"/>
@@ -30462,17 +29175,9 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircleTan1_2P</name>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="463"/>
         <source>Specify the first point on the tangent circle</source>
         <translation>Zadejte první bod na tečné kružnici</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="466"/>
@@ -30498,17 +29203,9 @@ This block cannot be inserted.</source>
         <translation>Zadejte první úsečku/oblouk/kružnici</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="280"/>
         <source>Specify the second line/arc/circle</source>
         <translation>Zadejte druhou úsečku/oblouk/kružnici</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="283"/>
@@ -30529,18 +29226,6 @@ This block cannot be inserted.</source>
         <translation>Zadejte úsečku/oblouk/kružnici</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
-        <source>Specify the another arc/circle</source>
-        <translation type="vanished">Zadejte další oblouk/kružnici</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="341"/>
         <source>Specify the another line/arc/circle</source>
         <translation type="unfinished"></translation>
@@ -30558,14 +29243,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="509"/>
         <source>Select the center of the tangent circle</source>
@@ -30600,17 +29277,9 @@ This block cannot be inserted.</source>
         <translation>Zadejte první bod na elipse</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="276"/>
         <source>Specify the second point on ellipse</source>
         <translation>Zadejte druhý bod na elipse</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="279"/>
@@ -30643,17 +29312,9 @@ This block cannot be inserted.</source>
         <translation>Zadejte střed elipsy</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="339"/>
         <source>Specify endpoint of major axis</source>
         <translation>Zadejte koncový bod hlavní osy</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="342"/>
@@ -30679,10 +29340,6 @@ This block cannot be inserted.</source>
         <translation>Zadejte střed elipsy</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="246"/>
         <source>Specify the first point on ellipse</source>
         <translation>Zadejte první bod na elipse</translation>
@@ -30691,10 +29348,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="249"/>
         <source>Specify the second point on ellipse</source>
         <translation>Zadejte druhý bod na elipse</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="252"/>
@@ -30715,17 +29368,9 @@ This block cannot be inserted.</source>
         <translation>Zadejte první ohnisko elipsy</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="195"/>
         <source>Specify second focus of ellipse</source>
         <translation>Zadejte druhé ohnisko elipsy</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="198"/>
@@ -30751,17 +29396,9 @@ This block cannot be inserted.</source>
         <translation>Zadejte první úsečku</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="310"/>
         <source>Specify the second line</source>
         <translation>Zadejte druhou úsečku</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="313"/>
@@ -30847,10 +29484,6 @@ This block cannot be inserted.</source>
         <translation>Zadejte referenční bod</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="270"/>
         <source>Enter angle:</source>
         <translation>Zadejte úhel:</translation>
@@ -30878,17 +29511,9 @@ This block cannot be inserted.</source>
         <translation>Zadejte první bod</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="274"/>
         <source>Specify next point or [%1]</source>
         <translation>Zadejte další bod nebo [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="276"/>
@@ -30930,17 +29555,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="312"/>
         <source>Enter angle:</source>
         <translation>Zadejte úhel:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="315"/>
@@ -30967,17 +29584,9 @@ This block cannot be inserted.</source>
         <translation>Vyberte první úsečku</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="268"/>
         <source>Select second line</source>
         <translation>Vyberte druhou úsečku</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="271"/>
@@ -31003,10 +29612,6 @@ This block cannot be inserted.</source>
         <source>Click and drag to draw a line</source>
         <translation>Úsečku nakreslíte klepnutím a táhnutím</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineHorVert</name>
@@ -31016,17 +29621,9 @@ This block cannot be inserted.</source>
         <translation>Zadejte první bod</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="117"/>
         <source>Specify second point</source>
         <translation>Zadejte druhý bod</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
 </context>
 <context>
@@ -31043,25 +29640,13 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="255"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Vyberte kružnici, oblouk nebo elipsu</translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineParallel</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="109"/>
         <source> entities will be created</source>
@@ -31097,17 +29682,9 @@ This block cannot be inserted.</source>
         <translation>Vyberte prvek</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="177"/>
         <source>Specify through point</source>
         <translation>Zadejte bod na rovnoběžce</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="110"/>
@@ -31140,25 +29717,9 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLinePolygonCenCor</name>
     <message>
-        <source>Specify center</source>
-        <translation type="vanished">Zadejte střed</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon.cpp" line="41"/>
         <source>Specify a corner</source>
         <translation>Zadejte vrchol</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Zadejte počet:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Neplatný počet. Zkuste 1..9999</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Neplatný výraz</translation>
     </message>
 </context>
 <context>
@@ -31169,29 +29730,9 @@ This block cannot be inserted.</source>
         <translation>Zadejte první vrchol</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="92"/>
         <source>Specify second corner</source>
         <translation>Zadejte druhý vrchol</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Počet:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Neplatný počet. Zkuste 1..9999</translation>
-    </message>
-    <message>
-        <source>Not a valid expression.</source>
-        <translation type="vanished">Neplatný výraz.</translation>
     </message>
 </context>
 <context>
@@ -31227,17 +29768,9 @@ This block cannot be inserted.</source>
         <translation>Zadejte první vrchol</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="144"/>
         <source>Specify second corner</source>
         <translation>Zadejte druhý vrchol</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
 </context>
 <context>
@@ -31264,17 +29797,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="251"/>
         <source>Specify position</source>
         <translation>Zadejte pozici</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
 </context>
 <context>
@@ -31291,14 +29816,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Vyberte kružnici, oblouk nebo elipsu</translation>
@@ -31306,22 +29823,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent2</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
-    <message>
-        <source>Select first circle or ellipse</source>
-        <translation type="vanished">Vyberte první kružnici nebo elipsu</translation>
-    </message>
-    <message>
-        <source>Select second circle or ellipse</source>
-        <translation type="vanished">Vyberte druhou kružnici nebo elipsu</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="215"/>
         <source>Select first circle/ellipse/parabola</source>
@@ -31346,17 +29847,9 @@ This block cannot be inserted.</source>
         <translation>Zadejte bod pro vložení</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="189"/>
         <source>Enter text:</source>
         <translation>Zadejte text:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
 </context>
 <context>
@@ -31365,10 +29858,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/point/rs_actiondrawpoint.cpp" line="77"/>
         <source>Specify location</source>
         <translation>Zadejte umístění</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
     </message>
 </context>
 <context>
@@ -31379,17 +29868,9 @@ This block cannot be inserted.</source>
         <translation>Zadejte první bod</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="756"/>
         <source>Specify next point or [%1]</source>
         <translation>Zadejte další bod nebo [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="758"/>
@@ -31462,17 +29943,9 @@ This block cannot be inserted.</source>
         <translation>Zadejte první řídicí bod</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="227"/>
         <source>Specify next control point or [%1]</source>
         <translation>Zadejte další řídicí bod nebo [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="229"/>
@@ -31498,33 +29971,14 @@ This block cannot be inserted.</source>
         <translation>Zadejte bod pro vložení</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="247"/>
         <source>Enter text:</source>
         <translation>Zadejte text:</translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="243"/>
         <source>Specify second point</source>
         <translation>Zadejte druhý bod</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditCopy</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Zadejte referenční bod</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
     </message>
 </context>
 <context>
@@ -31587,17 +30041,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Set reference point</source>
-        <translation type="vanished">Nastavte referenční bod</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditUndo</name>
     <message>
         <location filename="../src/actions/drawing/edit/rs_actioneditundo.cpp" line="55"/>
@@ -31627,10 +30070,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="250"/>
         <source>Single Line Mode</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Informace</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="103"/>
@@ -31722,21 +30161,9 @@ Intersection :@(%7, %8)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
         <source>Specify second line</source>
         <translation>Zadejte druhou úsečku</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
-    <message>
-        <source>Angle: %1</source>
-        <translation type="vanished">Úhel: %1</translation>
     </message>
 </context>
 <context>
@@ -31763,26 +30190,14 @@ Intersection :@(%7, %8)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Point: %1/%2</source>
-        <translation type="vanished">Bod: %1/%2</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="178"/>
         <source>Specify first point of polygon</source>
         <translation>Zadejte první bod mnohoúhelníku</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
         <source>Specify next point of polygon</source>
         <translation>Zadejte další bod mnohoúhelníku</translation>
-    </message>
-    <message>
-        <source>Closing Point: %1/%2</source>
-        <translation type="vanished">Uzavírající bod: %1/%2</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="101"/>
@@ -31838,29 +30253,13 @@ End: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="160"/>
         <source>Specify second point of distance</source>
         <translation>Zadejte druhý bod vzdálenosti</translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
-    <message>
-        <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
-        <translation type="obsolete">Vzdálenost: %1 v kartézských souřadnicích: (%2 , %3), polární: (%4&lt;%5  {1 ?} {2 ?} {3)?} {4&lt;?} {5)?}</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1</source>
-        <translation type="vanished">Vzdálenost: %1</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="92"/>
         <source>Distance: %1
@@ -31911,18 +30310,10 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="279"/>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="282"/>
         <source>Specify point</source>
         <translation>Zadejte bod</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
 </context>
 <context>
@@ -31941,10 +30332,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="82"/>
         <source>Specify point</source>
         <translation>Zadejte bod</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
     </message>
 </context>
 <context>
@@ -32022,10 +30409,6 @@ Point: (%8 , %9)</source>
         <translation>Zadejte referenční bod</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="197"/>
         <source>Enter angle:</source>
         <translation>Zadejte úhel:</translation>
@@ -32036,10 +30419,6 @@ Point: (%8 , %9)</source>
         <translation>Zadejte měřítko:</translation>
     </message>
     <message>
-        <source>Insert Library Object</source>
-        <translation type="vanished">Vložit objekt z knihovny</translation>
-    </message>
-    <message>
         <source></source>
         <translation></translation>
     </message>
@@ -32047,13 +30426,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="65"/>
         <source>Cannot open file &apos;%1&apos;</source>
         <translation>Nelze otevřít soubor &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLockRelativeZero</name>
-    <message>
-        <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation type="vanished">&amp;Zamknout (odemknout) relativní počátek</translation>
     </message>
 </context>
 <context>
@@ -32134,17 +30506,9 @@ Point: (%8 , %9)</source>
         <translation>Vyberte první prvek</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="369"/>
         <source>Select second entity</source>
         <translation>Vyberte druhý prvek</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="372"/>
@@ -32185,25 +30549,9 @@ Point: (%8 , %9)</source>
         <translation>Zadejte rozdělovaný prvek</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="144"/>
         <source>Specify cutting point</source>
         <translation>Zadejte bod rozdělení</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
-    <message>
-        <source>Cutting point is invalid.</source>
-        <translation type="vanished">Bod rozdělení je neplatný.</translation>
-    </message>
-    <message>
-        <source>Cutting point is not on entity.</source>
-        <translation type="vanished">Bod rozdělení neleží na prvku.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="114"/>
@@ -32237,17 +30585,9 @@ Point: (%8 , %9)</source>
         <translation>Zadejte první bod pro přerušení na křivce</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="151"/>
         <source>Specify second break point on the same polyline</source>
         <translation>Zadejte druhý bod pro přerušení na téže křivce</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="89"/>
@@ -32291,26 +30631,11 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionModifyDeleteQuick</name>
-    <message>
-        <source>Pick entity to delete</source>
-        <translation type="vanished">Vyberte prvek pro vymazání</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionModifyEntity</name>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyentity.cpp" line="263"/>
         <source>Click on entity to modify</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Zrušit</translation>
     </message>
 </context>
 <context>
@@ -32384,17 +30709,9 @@ Point: (%8 , %9)</source>
         <translation>Zadejte první bod pro osu zrcadlení</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="249"/>
         <source>Specify second point of mirror line</source>
         <translation>Zadejte druhý bod pro osu zrcadlení</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
 </context>
 <context>
@@ -32435,21 +30752,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
         <source>Specify target point</source>
         <translation>Zadejte cílový bod</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
-    <message>
-        <source>Invalid number of copies, use %1 </source>
-        <translation type="vanished">Neplatný počet kopií, použijte %1 </translation>
     </message>
 </context>
 <context>
@@ -32509,17 +30814,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="325"/>
         <source>Specify target point</source>
         <translation>Zadejte cílový bod</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="328"/>
@@ -32565,10 +30862,6 @@ Point: (%8 , %9)</source>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionModifyRevertDirection</name>
@@ -32594,10 +30887,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="588"/>
         <source>Specify reference point</source>
         <translation>Zadejte referenční bod</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="132"/>
@@ -32734,17 +31023,9 @@ Point: (%8 , %9)</source>
         <translation>Zadejte absolutní referenční bod</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="179"/>
         <source>Specify relative reference point</source>
         <translation>Zadejte relativní referenční bod</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
 </context>
 <context>
@@ -32754,10 +31035,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="362"/>
         <source>Not a valid expression</source>
         <translation>Neplatný výraz</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="229"/>
@@ -32785,10 +31062,6 @@ Point: (%8 , %9)</source>
         <translation>Zadejte poloměr:</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
         <translation type="unfinished"></translation>
@@ -32796,14 +31069,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Zadejte referenční bod</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="169"/>
         <source>Scale</source>
@@ -32888,17 +31153,9 @@ Point: (%8 , %9)</source>
         <translation>Zadejte první vrchol</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="199"/>
         <source>Specify second corner</source>
         <translation>Zadejte druhý vrchol</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="79"/>
@@ -32952,17 +31209,9 @@ Point: (%8 , %9)</source>
         <translation>Vyberte první prvek pro zkrácení</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="202"/>
         <source>Select limiting entity</source>
         <translation>Vyberte omezující prvek</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="112"/>
@@ -32998,14 +31247,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyTrimAmount</name>
     <message>
-        <source>No entity found. </source>
-        <translation type="vanished">Nenalezen žádný prvek.</translation>
-    </message>
-    <message>
-        <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation type="vanished">Vybraný prvek je v bloku. Upravte prosím blok.</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="173"/>
         <source>No entity found.</source>
         <translation type="unfinished"></translation>
@@ -33024,14 +31265,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="236"/>
         <source>Select line/arc to trim OR enter length value:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select entity to trim or enter distance:</source>
-        <translation type="vanished">Vyberte prvek pro zkrácení nebo zadejte vzdálenost:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
 </context>
 <context>
@@ -33061,21 +31294,9 @@ Point: (%8 , %9)</source>
         <source>Choose entity for order</source>
         <translation>Zvolte prvek pro řazení</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionPolylineAdd</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="102"/>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="129"/>
@@ -33111,10 +31332,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPolylineAppend</name>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="119"/>
         <source>No Entity found.</source>
         <translation>Nenalezen žádný prvek.</translation>
@@ -33140,18 +31357,6 @@ Point: (%8 , %9)</source>
         <translation>Zadejte křivku poblíž počátečního nebo koncového bodu</translation>
     </message>
     <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Zadejte další bod nebo [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Zadejte další bod</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="125"/>
         <source>Can not append nodes in a closed polyline.</source>
         <translation>K uzavřené křivce body nelze přidat.</translation>
@@ -33164,14 +31369,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionPolylineDel</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="92"/>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="112"/>
@@ -33206,14 +31403,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionPolylineDelBetween</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="116"/>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="136"/>
@@ -33280,10 +31469,6 @@ Point: (%8 , %9)</source>
         <source>Choose the original polyline</source>
         <translation>Zvolte původní křivku</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionPolylineSegment</name>
@@ -33296,10 +31481,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="357"/>
         <source>Choose one of the segments on the original polyline</source>
         <translation>Zvolte jeden ze segmentů původní křivky</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="335"/>
@@ -33316,14 +31497,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPolylineTrim</name>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="111"/>
         <source>No Entity found.</source>
         <translation>Nenalezen žádný prvek.</translation>
@@ -33332,14 +31505,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="113"/>
         <source>Entity must be a polyline.</source>
         <translation>Prvkem musí být křivka.</translation>
-    </message>
-    <message>
-        <source>Specifying point is invalid.</source>
-        <translation type="vanished">Zadání bodu je neplatné.</translation>
-    </message>
-    <message>
-        <source>No Segment found on entity.</source>
-        <translation type="vanished">Prvek neobsahuje žádný segment.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="138"/>
@@ -33441,85 +31606,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>Select to modify attributes</source>
-        <translation type="vanished">Vyberte pro změnu vlastností</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
-        <source>Select to delete</source>
-        <translation type="vanished">Vyberte pro smazání</translation>
-    </message>
-    <message>
-        <source>Select to delete immediately</source>
-        <translation type="vanished">Vyberte pro okamžité smazání</translation>
-    </message>
-    <message>
-        <source>Select to move</source>
-        <translation type="vanished">Vyberte pro posun</translation>
-    </message>
-    <message>
-        <source>Select to rotate</source>
-        <translation type="vanished">Vyberte pro otočení</translation>
-    </message>
-    <message>
-        <source>Select to scale</source>
-        <translation type="vanished">Vyberte pro měřítko</translation>
-    </message>
-    <message>
-        <source>Select to mirror</source>
-        <translation type="vanished">Vyberte pro zrcadlení</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate</source>
-        <translation type="vanished">Vyberte pro posun a otočení</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation</source>
-        <translation type="vanished">Vyberte pro otočení okolo dvou os</translation>
-    </message>
-    <message>
-        <source>Select to explode text</source>
-        <translation type="vanished">Vyberte pro rozložení textu</translation>
-    </message>
-    <message>
-        <source>Select to create block</source>
-        <translation type="vanished">Vyberte pro vytvoření bloku</translation>
-    </message>
-    <message>
-        <source>Select to copy</source>
-        <translation type="vanished">Vyberte pro kopírování</translation>
-    </message>
-    <message>
-        <source>Select to cut</source>
-        <translation type="vanished">Vyberte pro vyjmutí</translation>
-    </message>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">Nebyl vybrán žádný prvek!</translation>
-    </message>
-    <message>
-        <source>Select to create offset</source>
-        <translation type="vanished">Vyberte pro vytvoření ekvidistanty</translation>
-    </message>
-    <message>
-        <source>Select entities to order</source>
-        <translation type="vanished">Vyberte prvky pro pořadí</translation>
-    </message>
-    <message>
-        <source>Select to explode block</source>
-        <translation type="vanished">Vyberte pro rozložení bloku</translation>
-    </message>
-    <message>
-        <source>Select to revert direction</source>
-        <translation type="vanished">Vyberte pro obrácení směru</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectContour</name>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="63"/>
@@ -33534,14 +31620,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionSelectIntersected</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="173"/>
         <source>Choose first point of intersection line</source>
@@ -33586,10 +31664,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="116"/>
         <source>De-Selecting</source>
@@ -33641,10 +31715,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="163"/>
         <source>Click and drag for the selection window</source>
         <translation>Klepnutím a táhnutím vytvoříte okno výběru</translation>
@@ -33657,14 +31727,6 @@ Point: (%8 , %9)</source>
         <source>Set relative Zero</source>
         <translation>Nastavit relativní počátek</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
-        <source>Set &amp;Relative Zero</source>
-        <translation type="vanished">Nastavit &amp;relativní počátek</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionSnapIntersectionManual</name>
@@ -33674,17 +31736,9 @@ Point: (%8 , %9)</source>
         <translation>Vyberte první prvek</translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="145"/>
         <source>Select second entity</source>
         <translation>Vyberte druhý prvek</translation>
-    </message>
-    <message>
-        <source>I&amp;ntersection Manually</source>
-        <translation type="vanished">Prů&amp;sečík ručně</translation>
     </message>
 </context>
 <context>
@@ -33708,10 +31762,6 @@ Point: (%8 , %9)</source>
         <translation>Klepnutím a táhnutím posunete pohled</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="108"/>
         <source>Zoom panning</source>
         <translation>Posun pohledu</translation>
@@ -33725,17 +31775,9 @@ Point: (%8 , %9)</source>
         <translation>Zadejte první stranu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Zrušit</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="143"/>
         <source>Specify second edge</source>
         <translation>Zadejte druhou stranu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zpět</translation>
     </message>
 </context>
 <context>
@@ -34002,17 +32044,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Linear Dimension Options</source>
-        <translation type="obsolete">Vlastnosti přímé kóty</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Úhel:</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -34181,17 +32212,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Factor:</source>
-        <translation type="obsolete">Koeficient:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="106"/>
         <source>Scale Factor</source>
         <translation type="unfinished">Měřítko</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="obsolete">DPI</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="120"/>
@@ -34625,21 +32648,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">Vlastnosti mnohoúhelníku</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Počet:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">Počet stran</translation>
-    </message>
-</context>
-<context>
     <name>Ui_LinePolygonOptions</name>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="32"/>
@@ -34839,14 +32847,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="79"/>
         <source>Multiple Copies</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">Vzdálenost:</translation>
-    </message>
-    <message>
-        <source>Offset from original entity</source>
-        <translation type="obsolete">Vzdálenost od původního prvku</translation>
     </message>
 </context>
 <context>
@@ -35104,14 +33104,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished">Přepnout černobílý režim</translation>
     </message>
     <message>
-        <source>Center to page</source>
-        <translation type="obsolete">Vystředit na stránku</translation>
-    </message>
-    <message>
-        <source>Fit to page</source>
-        <translation type="obsolete">Přizpůsobit stránce</translation>
-    </message>
-    <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="44"/>
         <source>Landscape Orientation of paper</source>
         <translation type="unfinished"></translation>
@@ -35232,10 +33224,6 @@ Point: (%8 , %9)</source>
         <source>Pick distance from drawing.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">Vzdálenost:</translation>
-    </message>
 </context>
 <context>
     <name>Ui_SnapMiddleOptions</name>
@@ -35248,10 +33236,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="59"/>
         <source>Snap Middle Points:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Middle Points:</source>
-        <translation type="obsolete">Body v polovině:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>

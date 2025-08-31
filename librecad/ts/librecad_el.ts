@@ -39,28 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Πλαίσιο</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Αποθήκευση</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Πλαίσιο</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Αποθήκευση</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/dialogs/entity/LC_DlgParabola.ui" line="26"/>
@@ -278,10 +256,6 @@
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="189"/>
         <source>Select arc entity</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="192"/>
@@ -582,17 +556,9 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>Καθορίστε το πρώτο σημείο</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="233"/>
         <source>Specify second point</source>
         <translation>Καθορίστε το δεύτερο σημείο</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Πίσω</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="236"/>
@@ -878,17 +844,9 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawLinePolygonCenTan</name>
     <message>
-        <source>Specify center</source>
-        <translation type="obsolete">Καθορίστε το κέντρο</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon3.cpp" line="51"/>
         <source>Specify a tangent</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="obsolete">Εισάγετε αριθμό:</translation>
     </message>
 </context>
 <context>
@@ -1244,10 +1202,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="214"/>
         <source>Specify first control point</source>
         <translation>Καθορίστε το πρώτο σημείο ελέγχου</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
@@ -2017,10 +1971,6 @@ or [%2]</source>
         <translation>Δημιουργία &amp;ισαπεχουσών πολυγραμμών</translation>
     </message>
     <message>
-        <source>Create Polyline from Existing &amp;Segments</source>
-        <translation type="vanished">Δημιουργία πολυγραμμής από &amp;υπάρχοντα τμήματα</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="327"/>
         <source>&amp;MText</source>
         <translation>&amp;ΠΚείμενο</translation>
@@ -2176,10 +2126,6 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ctrl+R</source>
-        <translation type="vanished">Ctrl+R</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="370"/>
         <source>&amp;Rotate</source>
         <translation>&amp;Περιστροφή</translation>
@@ -2245,17 +2191,9 @@ or [%2]</source>
         <translation>&amp;Διαχωρισμός κειμένου σε γράμματα</translation>
     </message>
     <message>
-        <source>Point inside contour</source>
-        <translation type="vanished">Σημείο εντός περιγράμματος</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="498"/>
         <source>&amp;Distance Point to Point</source>
         <translation>Απόσταση Σημείο σε Σημείο</translation>
-    </message>
-    <message>
-        <source>&amp;Distance Entity to Point</source>
-        <translation type="vanished">Απόσταση Οντότητα σε Σημείο</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="501"/>
@@ -2263,17 +2201,9 @@ or [%2]</source>
         <translation>&amp;Γωνία μεταξύ δύο γραμμών</translation>
     </message>
     <message>
-        <source>&amp;Total length of selected entities</source>
-        <translation type="vanished">Συνολικό μήκος επιλεγμένων οντοτήτων</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="503"/>
         <source>Polygonal &amp;Area</source>
         <translation>&amp;Εμβαδό πολυγώνου</translation>
-    </message>
-    <message>
-        <source>&amp;Selection pointer</source>
-        <translation type="vanished">&amp;Δείκτης επιλογής</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="660"/>
@@ -2299,10 +2229,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="693"/>
         <source>&amp;Paste</source>
         <translation>Επικόλληση</translation>
-    </message>
-    <message>
-        <source>move to bottom</source>
-        <translation type="vanished">μετακίνηση στον πυθμένα</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="190"/>
@@ -2666,18 +2592,6 @@ or [%2]</source>
         <translation type="unfinished">Χωρίς έλξη</translation>
     </message>
     <message>
-        <source>lower after entity</source>
-        <translation type="vanished">κατέβασμα μετά από οντότητα</translation>
-    </message>
-    <message>
-        <source>raise over entity</source>
-        <translation type="vanished">ανέβασμα πάνω από οντότητα</translation>
-    </message>
-    <message>
-        <source>move to top</source>
-        <translation type="vanished">μετακίνηση στην κορυφή</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="499"/>
         <source>Distance &amp;Entity to Point</source>
         <translation type="unfinished"></translation>
@@ -2826,10 +2740,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="563"/>
         <source>Current &amp;Drawing Preferences</source>
         <translation>Προτιμήσεις Τρέχοντος Σχεδίου</translation>
-    </message>
-    <message>
-        <source>&amp;Delete selected</source>
-        <translation type="vanished">Διαγραφή επιλεγμένων</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="652"/>
@@ -3174,81 +3084,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionGroupManager</name>
-    <message>
-        <source>Block</source>
-        <translation type="obsolete">Μπλοκ</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Κύκλος</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="obsolete">Καμπύλη</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="obsolete">Τόξο</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="obsolete">Καμπύλη Spline</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Επεξεργασία</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">Έλλειψη</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Αρχείο</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">Διάσταση</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Πληροφορίες</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Γραμμή</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="obsolete">Σημείο</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">Τροποποίηση</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="obsolete">Επιλογές</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">Πολυγραμμή</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="obsolete">Επιλογή</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="obsolete">Έλξη</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">Εμφάνιση</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionInfo3PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="141"/>
@@ -3264,10 +3099,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="149"/>
         <source>Select second edge point of angle</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Πληροφορίες</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="189"/>
@@ -5327,29 +5158,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Στρώση:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Γεωμετρία</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="obsolete">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="obsolete">Y</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Πένα</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgDimStyleManager</name>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="14"/>
@@ -6691,10 +6499,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="332"/>
         <source>Edit style override</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="obsolete">...</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="346"/>
@@ -9718,10 +9522,6 @@ Please specify a different value.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Layer Menu</source>
-        <translation type="obsolete">Μενού στρώσεων</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="651"/>
         <source>&amp;Add Child Layer</source>
         <translation type="unfinished"></translation>
@@ -11178,18 +10978,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="32"/>
         <source>Snap point of gap to line snap point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="obsolete">Αρχή</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="obsolete">Μέση</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="obsolete">Τέλος</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="95"/>
@@ -16117,10 +15905,6 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Command line</source>
-        <translation type="obsolete">Γραμμή εντολών</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="260"/>
         <source>Dock</source>
         <translation type="unfinished"></translation>
@@ -16130,18 +15914,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="284"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lines</source>
-        <translation type="obsolete">Γραμμές</translation>
-    </message>
-    <message>
-        <source>Circles</source>
-        <translation type="obsolete">Κύκλοι</translation>
-    </message>
-    <message>
-        <source>Ellipses</source>
-        <translation type="obsolete">Ελλείψεις</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="101"/>
@@ -16162,10 +15934,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="96"/>
         <source>Circle</source>
         <translation type="unfinished">Κύκλος</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="obsolete">Καμπύλη</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="99"/>
@@ -16199,29 +15967,9 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Layer List</source>
-        <translation type="obsolete">Λίστα στρώσεων</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="212"/>
         <source>Entity Info</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="obsolete">Λίστα μπλοκ</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Αρχείο</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Επεξεργασία</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">Εμφάνιση</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="164"/>
@@ -16242,114 +15990,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="98"/>
         <source>Spline</source>
         <translation type="unfinished">Καμπύλη Spline</translation>
-    </message>
-    <message>
-        <source>Snap Selection</source>
-        <translation type="obsolete">Επιλογή έλξης</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Πένα</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="obsolete">Επιλογές εργαλείου</translation>
-    </message>
-    <message>
-        <source>Preferences</source>
-        <translation type="obsolete">Προτιμήσεις</translation>
-    </message>
-    <message>
-        <source>Categories</source>
-        <translation type="obsolete">Κατηγορίες</translation>
-    </message>
-    <message>
-        <source>Dimensions</source>
-        <translation type="obsolete">Διαστάσεις</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="obsolete">&amp;Αρχείο</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="obsolete">Εισαγωγή</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="obsolete">Εξαγωγή</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="obsolete">&amp;Επεξεργασία</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="obsolete">Πρόσθετα</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="obsolete">Ε&amp;μφάνιση</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="obsolete">Εργαλεία</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="obsolete">&amp;Γραμμή</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="obsolete">&amp;Κύκλος</translation>
-    </message>
-    <message>
-        <source>&amp;Curve</source>
-        <translation type="obsolete">Καμπύλη</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="obsolete">Τό&amp;ξο</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="obsolete">Έ&amp;λλειψη</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="obsolete">&amp;Πολυγραμμή</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="obsolete">Ε&amp;πιλογή</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="obsolete">Διάσταση</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="obsolete">&amp;Τροποποίηση</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="obsolete">&amp;Πληροφορίες</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="obsolete">Σχεδιαγράμματα</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="obsolete">&amp;Βοήθεια</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="obsolete">Περί</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="obsolete">Γραμμές &amp;εργαλείων</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="138"/>
@@ -16520,10 +16160,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="503"/>
         <source>For &quot;classic&quot; statusbar only. </source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="vanished">Γενικά</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="113"/>
@@ -16886,62 +16522,6 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp;Αρχείο</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">&amp;Επεξεργασία</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">Ε&amp;μφάνιση</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">Ε&amp;πιλογή</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&amp;Γραμμή</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&amp;Κύκλος</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">Έ&amp;λλειψη</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">&amp;Τροποποίηση</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp;Πληροφορίες</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">Περί</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp;Βοήθεια</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">&amp;Καταρράκτης</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">&amp;Πλακίδια</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">Πλακίδια &amp;οριζόντια</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="795"/>
         <source>Creating new file...</source>
         <translation>Δημιουργία νέου αρχείου...</translation>
@@ -16977,34 +16557,6 @@ Warning: this action can NOT be undone!</source>
         <translation>Έξοδος από την εφαρμογή...</translation>
     </message>
     <message>
-        <source>File</source>
-        <translation type="vanished">Αρχείο</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Επεξεργασία</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="vanished">Εμφάνιση</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Πένα</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="vanished">Επιλογές εργαλείου</translation>
-    </message>
-    <message>
-        <source>Layer List</source>
-        <translation type="vanished">Λίστα στρώσεων</translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="vanished">Λίστα μπλοκ</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="196"/>
         <source>Print preview for %1</source>
         <translation>Προεπισκόπηση εκτύπωσης για το %1</translation>
@@ -17025,33 +16577,9 @@ Warning: this action can NOT be undone!</source>
         <translation>Το σχέδιο αποθηκεύτηκε: %1</translation>
     </message>
     <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">Εξαγωγή σχεδίου...</translation>
-    </message>
-    <message>
-        <source>Exported: %1</source>
-        <translation type="vanished">Έγινε εξαγωγή: %1</translation>
-    </message>
-    <message>
-        <source>Exporting...</source>
-        <translation type="vanished">Εξαγωγή...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">Η εξαγωγή ολοκληρώθηκε</translation>
-    </message>
-    <message>
-        <source>Export failed!</source>
-        <translation type="vanished">Η εξαγωγή απέτυχε!</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1275"/>
         <source>Printing complete</source>
         <translation>Η εκτύπωση ολοκληρώθηκε</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="vanished">Γραμμή εντολών</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="741"/>
@@ -17066,10 +16594,6 @@ Please check the permissions.</source>
         <translation>Δεν είναι δυνατό το άνοιγμα του αρχείου
 %1
 Παρακαλούμε να ελέγξετε τα δικαιώματα.</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">&amp;Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1113"/>
@@ -17093,22 +16617,6 @@ Auto-save disabled.</source>
 Η αυτόματη αποθήκευση απενεργοποιήθηκε.</translation>
     </message>
     <message>
-        <source>Import</source>
-        <translation type="vanished">Εισαγωγή</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">Γραμμές &amp;εργαλείων</translation>
-    </message>
-    <message>
-        <source>Compiled on: %1</source>
-        <translation type="vanished">Μεταγλωττίστηκε στις: %1</translation>
-    </message>
-    <message>
-        <source>Version: %1</source>
-        <translation type="vanished">Έκδοση: %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="988"/>
         <source>Warning: File already opened : </source>
         <translation>Προειδοποίηση: Το αρχείο έχει ήδη ανοιχτεί : </translation>
@@ -17122,14 +16630,6 @@ Auto-save disabled.</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="249"/>
         <source> , please check the filename and permissions.</source>
         <translation> , παρακαλούμε να ελέγξετε το όνομα αρχείου και τα δικαιώματα.</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">Πλακίδια &amp;κατακόρυφα</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">Οργάνωση &amp;καρτελών</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="813"/>
@@ -17147,37 +16647,9 @@ Auto-save disabled.</source>
         <translation>Η αυτόματη αποθήκευση απέτυχε</translation>
     </message>
     <message>
-        <source>Snap Selection</source>
-        <translation type="vanished">Επιλογή έλξης</translation>
-    </message>
-    <message>
-        <source>Export as</source>
-        <translation type="vanished">Εξαγωγή ως</translation>
-    </message>
-    <message>
-        <source>Compiler: Clang %1.%2.%3</source>
-        <translation type="vanished">Compiler: Clang %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation type="vanished">Compiler: GNU GCC %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Qt Version: %1</source>
-        <translation type="vanished">Qt Version: %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="207"/>
         <source>Draft Mode</source>
         <translation>Κατάσταση λειτουργίας προσχεδίου</translation>
-    </message>
-    <message>
-        <source>Export as PDF</source>
-        <translation type="vanished">Εξαγωγή ως PDF</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">Εξαγωγή</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1001"/>
@@ -17194,86 +16666,6 @@ Please check its existence and permissions.</source>
         <translation>Το αρχείο &apos;%1&apos; δεν υπάρχει. Το άνοιγμα ματαιώθηκε</translation>
     </message>
     <message>
-        <source>Categories</source>
-        <translation type="vanished">Κατηγορίες</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">Επιλογή</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Γραμμή</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Κύκλος</translation>
-    </message>
-    <message>
-        <source>&amp;Curve</source>
-        <translation type="vanished">Καμπύλη</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="vanished">Καμπύλη</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Έλλειψη</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Πολυγραμμή</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">Διάσταση</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">Τροποποίηση</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Πληροφορίες</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">Πρόσθετα</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="vanished">Διάσταση</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">Πρόσφατα αρχεία</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation type="vanished">Αντιγραφή</translation>
-    </message>
-    <message>
-        <source>Contributors</source>
-        <translation type="vanished">Συντελεστές</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation type="vanished">Άδεια</translation>
-    </message>
-    <message>
-        <source>System</source>
-        <translation type="vanished">Σύστημα</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="vanished">Εργαλεία</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="vanished">Σχεδιαγράμματα</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="226"/>
         <source>Saving drawing: %1</source>
         <translation type="unfinished"></translation>
@@ -17282,10 +16674,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
         <source>Save cancelled</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Closing Drawing</source>
-        <translation type="obsolete">Κλείσιμο σχεδίου</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="361"/>
@@ -17352,25 +16740,9 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
         <source>Current Layer</source>
         <translation>Τρέχουσα στρώση</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Όνομα της τρέχουσας ενεργής στρώσης&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -17403,80 +16775,6 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>QG_BlockWidget</name>
-    <message>
-        <source>Rename the active block</source>
-        <translation type="vanished">Μετονομασία του ενεργού μπλοκ</translation>
-    </message>
-    <message>
-        <source>Edit the active block
-in a separate window</source>
-        <translation type="vanished">Επεξεργασία του ενεργού μπλοκ
-σε ξεχωριστό παράθυρο</translation>
-    </message>
-    <message>
-        <source>Insert the active block</source>
-        <translation type="vanished">Εισαγωγή του ενεργού μπλοκ</translation>
-    </message>
-    <message>
-        <source>Block Menu</source>
-        <translation type="vanished">Μενού μπλοκ</translation>
-    </message>
-    <message>
-        <source>&amp;Defreeze all Blocks</source>
-        <translation type="vanished">&amp;Εμφάνιση όλων των μπλοκ</translation>
-    </message>
-    <message>
-        <source>&amp;Freeze all Blocks</source>
-        <translation type="vanished">&amp;Απόκρυψη όλων των μπλοκ</translation>
-    </message>
-    <message>
-        <source>&amp;Add Block</source>
-        <translation type="vanished">&amp;Προσθήκη μπλοκ</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Block</source>
-        <translation type="vanished">&amp;Αφαίρεση μπλοκ</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Block</source>
-        <translation type="vanished">&amp;Επεξεργασία μπλοκ</translation>
-    </message>
-    <message>
-        <source>&amp;Toggle Visibility</source>
-        <translation type="vanished">Εναλλαγή &amp;Ορατότητας</translation>
-    </message>
-    <message>
-        <source>Show all blocks</source>
-        <translation type="vanished">Εμφάνιση όλων των μπλοκ</translation>
-    </message>
-    <message>
-        <source>Hide all blocks</source>
-        <translation type="vanished">Απόκρυψη όλων των μπλοκ</translation>
-    </message>
-    <message>
-        <source>&amp;Rename Block</source>
-        <translation type="vanished">&amp;Μετονομασία μπλοκ</translation>
-    </message>
-    <message>
-        <source>&amp;Insert Block</source>
-        <translation type="vanished">&amp;Εισαγωγή μπλοκ</translation>
-    </message>
-    <message>
-        <source>&amp;Create New Block</source>
-        <translation type="vanished">&amp;Δημιουργία νέου μπλοκ</translation>
-    </message>
-    <message>
-        <source>Create Block</source>
-        <translation type="vanished">Δημιουργία μπλοκ</translation>
-    </message>
-    <message>
-        <source>Add an empty block</source>
-        <translation type="vanished">Προσθήκη ενός άδειου μπλοκ</translation>
-    </message>
-    <message>
-        <source>save the active block to a file</source>
-        <translation type="vanished">αποθήκευση του ενεργού μπλοκ σε αρχείο</translation>
-    </message>
     <message>
         <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="183"/>
         <source>Filter</source>
@@ -17699,10 +16997,6 @@ in a separate window</source>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="321"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="obsolete">Γραμμή εντολών</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="322"/>
@@ -18038,44 +17332,6 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="vanished">Γραμμική διάσταση</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Στρώση:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Γεωμετρία</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Γωνία:</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Πένα</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Στρώση:</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">Διάσταση</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Πένα</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgEllipse</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="26"/>
@@ -18153,18 +17409,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="130"/>
         <source>Rotation angle for the major axis of ellipse, degrees</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="vanished">Τελική γωνία:</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="vanished">Αρχική γωνία:</translation>
-    </message>
-    <message>
-        <source>Rotation:</source>
-        <translation type="vanished">Περιστροφή:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="276"/>
@@ -19552,10 +18796,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <source>Move/Copy Options</source>
         <translation>Επιλογές μετακίνησης/αντιγραφής</translation>
     </message>
-    <message>
-        <source>Number of copies. Maximum 100</source>
-        <translation type="vanished">Αριθμός αντιγράφων. Μέγιστο 100</translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgMoveRotate</name>
@@ -19598,10 +18838,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="163"/>
         <source>Multiple Copies</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Πολλαπλά αντίγραφα</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="41"/>
@@ -19990,32 +19226,16 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>Αριθμός τμημάτων γραμμής ανά καμπύλη spline:</translation>
     </message>
     <message>
-        <source>Crosshair</source>
-        <translation type="vanished">Σταυρόνημα</translation>
-    </message>
-    <message>
-        <source>Left crosshair with isometric grid</source>
-        <translation type="vanished">Σταυρόνημα αριστερά με ισομετρικό κάνναβο</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="170"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="230"/>
         <source>Left</source>
         <translation>Αριστερά</translation>
     </message>
     <message>
-        <source>Top crosshair with isometric grid</source>
-        <translation type="vanished">Σταυρόνημα στην κορυφή με ισομετρικό κάνναβο</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="213"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="246"/>
         <source>Top</source>
         <translation>Κορυφή</translation>
-    </message>
-    <message>
-        <source>Right crosshair with isometric grid</source>
-        <translation type="vanished">Σταυρόνημα δεξιά με ισομετρικό κάνναβο</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="196"/>
@@ -20032,14 +19252,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="794"/>
         <source>Orthogonal Grid</source>
         <translation>Ορθογώνιος κάνναβος</translation>
-    </message>
-    <message>
-        <source>Use isometric grid</source>
-        <translation type="vanished">Χρήση ισομετρικού καννάβου</translation>
-    </message>
-    <message>
-        <source>Isometric Grid</source>
-        <translation type="vanished">Ισομετρικός κάνναβος</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1220"/>
@@ -20846,10 +20058,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>Γλώσσα</translation>
     </message>
     <message>
-        <source>Graphic View</source>
-        <translation type="vanished">Γραφική απεικόνιση</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="14"/>
         <source>Application Preferences</source>
         <translation>Προτιμήσεις εφαρμογής</translation>
@@ -20858,10 +20066,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4476"/>
         <source>Defaults for new drawings</source>
         <translation>Προεπιλογές για τα νέα σχέδια</translation>
-    </message>
-    <message>
-        <source>&amp;Appearance</source>
-        <translation type="vanished">&amp;Εμφάνιση</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5019"/>
@@ -20889,31 +20093,15 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>&amp;Μονάδα:</translation>
     </message>
     <message>
-        <source>Backgr&amp;ound:</source>
-        <translation type="vanished">&amp;Φόντο:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1173"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1495"/>
         <source>G&amp;rid Color:</source>
         <translation>Χρώμα &amp;καννάβου:</translation>
     </message>
     <message>
-        <source>&amp;Meta Grid Color:</source>
-        <translation type="vanished">Χρώμα &amp;μετα-καννάβου:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="957"/>
         <source>A&amp;utomatically scale grid</source>
         <translation>Α&amp;υτόματη προσαρμογή κλίμακας καννάβου</translation>
-    </message>
-    <message>
-        <source>S&amp;elected Color:</source>
-        <translation type="vanished">Χρώμα &amp;επιλεγμένων:</translation>
-    </message>
-    <message>
-        <source>&amp;Highlighted Color:</source>
-        <translation type="vanished">Χρώμα &amp;τονισμένων:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="940"/>
@@ -20936,10 +20124,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>Προεπιλογές εφαρμογής</translation>
     </message>
     <message>
-        <source>Drawing unit.</source>
-        <translation type="vanished">Μονάδα σχεδίασης.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4736"/>
         <source>Time between automatic saving of the document in minutes.</source>
         <translation>Χρόνος μεταξύ της αυτόματης αποθήκευσης του εγγράφου σε λεπτά.</translation>
@@ -20948,10 +20132,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4759"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
         <translation>Όταν έχει τεθεί, το LibreCAD θα δημιουργεί αυτόματα εφεδρικό αρχείο του τρέχοντος σχεδίου.</translation>
-    </message>
-    <message>
-        <source>Auto backup</source>
-        <translation type="vanished">Αυτόματη λήψη εφεδρικών αρχείων</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5301"/>
@@ -23294,13 +22474,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Ακύρωση</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgpoint.ui" line="26"/>
@@ -24478,10 +23651,6 @@ so default step value required for baking</source>
         <source>again Still No Text supplied.</source>
         <translation>ξανά δεν δόθηκε κείμενο.</translation>
     </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">Κλείσιμο</translation>
-    </message>
 </context>
 <context>
     <name>QG_FileDialog</name>
@@ -24692,70 +23861,14 @@ The contents of a Construction Layer should not appear in printout.</source>
 <context>
     <name>QG_LayerWidget</name>
     <message>
-        <source>Show all layers</source>
-        <translation type="vanished">Εμφάνιση όλων των στρώσεων</translation>
-    </message>
-    <message>
-        <source>Hide all layers</source>
-        <translation type="vanished">Απόκρυψη όλων των στρώσεων</translation>
-    </message>
-    <message>
-        <source>Add a layer</source>
-        <translation type="vanished">Προσθήκη στρώσης</translation>
-    </message>
-    <message>
-        <source>Modify layer attributes / rename</source>
-        <translation type="vanished">Τροποποίηση των χαρακτηριστικών στρώσης / μετονομασία</translation>
-    </message>
-    <message>
-        <source>Layer Menu</source>
-        <translation type="vanished">Μενού στρώσεων</translation>
-    </message>
-    <message>
-        <source>&amp;Defreeze all Layers</source>
-        <translation type="vanished">&amp;Εμφάνιση όλων των στρώσεων</translation>
-    </message>
-    <message>
-        <source>&amp;Freeze all Layers</source>
-        <translation type="vanished">&amp;Απόκρυψη όλων των στρώσεων</translation>
-    </message>
-    <message>
-        <source>&amp;Add Layer</source>
-        <translation type="vanished">&amp;Προσθήκη στρώσης</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Layer</source>
-        <translation type="vanished">Αφαίρεση &amp;στρώσης</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="249"/>
         <source>Looking for matching layer names</source>
         <translation>Αναζήτηση για σύμφωνα ονόματα στρώσεων</translation>
     </message>
     <message>
-        <source>Edit Layer &amp;Attributes</source>
-        <translation type="vanished">Επεξεργασία &amp;χαρακτηριστικών στρώσης</translation>
-    </message>
-    <message>
-        <source>Toggle Layer &amp;Visibility</source>
-        <translation type="vanished">Εναλλαγή &amp;ορατότητας στρώσης</translation>
-    </message>
-    <message>
-        <source>Toggle Layer &amp;Printing</source>
-        <translation type="vanished">Εναλλαγή εκ&amp;τύπωσης στρώσης</translation>
-    </message>
-    <message>
-        <source>Toggle &amp;Construction Layer</source>
-        <translation type="vanished">Εναλλαγή στρώσης &amp;κατασκευής</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="247"/>
         <source>Filter</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toggle Layer Loc&amp;k</source>
-        <translation type="obsolete">Εναλλαγή &amp;Κλειδώματος Στρώσης</translation>
     </message>
 </context>
 <context>
@@ -24938,10 +24051,6 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>Ποντίκι</translation>
     </message>
     <message>
-        <source>Right</source>
-        <translation type="vanished">Δεξί</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/status_bar/qg_mousewidget.ui" line="229"/>
         <source>Left</source>
         <translation>Αριστερό</translation>
@@ -25041,141 +24150,9 @@ p, li { white-space: pre-wrap; }
         <source>Total length of selected entities</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Αριθμός επιλεγμένων οντοτήτων&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Ολικό μήκος των επιλεγμένων οντοτήτων&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
 </context>
 <context>
     <name>QG_SnapToolBar</name>
-    <message>
-        <source>Snap</source>
-        <translation type="vanished">Έλξη</translation>
-    </message>
-    <message>
-        <source>Snap to Endpoints</source>
-        <translation type="vanished">Έλξη σε άκρα</translation>
-    </message>
-    <message>
-        <source>Snap to equidistant points of entity</source>
-        <translation type="vanished">Έλξη σε ισαπέχοντα σημεία οντότητας</translation>
-    </message>
-    <message>
-        <source>Snap to center points</source>
-        <translation type="vanished">Έλξη σε κέντρα</translation>
-    </message>
-    <message>
-        <source>Snap to intersections automatically</source>
-        <translation type="vanished">Έλξη σε τομές αυτόματα</translation>
-    </message>
-    <message>
-        <source>Snap to closest point on entity</source>
-        <translation type="vanished">Έλξη στο κοντινότερο σημείο πάνω σε οντότητα</translation>
-    </message>
-    <message>
-        <source>Snap to point with given distance to endpoint</source>
-        <translation type="vanished">Έλξη σε σημείο με δεδομένη απόσταση από άκρο</translation>
-    </message>
-    <message>
-        <source>Snap to intersections manually</source>
-        <translation type="vanished">Έλξη σε τομές χειροκίνητα</translation>
-    </message>
-    <message>
-        <source>Snap to grid</source>
-        <translation type="vanished">Έλξη στον κάνναβο</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontally</source>
-        <translation type="vanished">Περιορισμός οριζόντια</translation>
-    </message>
-    <message>
-        <source>Restrict Vertically</source>
-        <translation type="vanished">Περιορισμός κατακόρυφα</translation>
-    </message>
-    <message>
-        <source>Move relative Zero</source>
-        <translation type="vanished">Μετακίνηση σχετικού μηδέν</translation>
-    </message>
-    <message>
-        <source>Lock relative Zero</source>
-        <translation type="vanished">Κλείδωμα σχετικού μηδέν</translation>
-    </message>
-    <message>
-        <source>Free Snap</source>
-        <translation type="vanished">Χωρίς έλξη</translation>
-    </message>
-    <message>
-        <source>Snap on grid</source>
-        <translation type="vanished">Έλξη στον κάνναβο</translation>
-    </message>
-    <message>
-        <source>Snap on Endpoints</source>
-        <translation type="vanished">Έλξη σε άκρα</translation>
-    </message>
-    <message>
-        <source>Snap on Entity</source>
-        <translation type="vanished">Έλξη σε οντότητες</translation>
-    </message>
-    <message>
-        <source>Snap Center</source>
-        <translation type="vanished">Έλξη σε κέντρα</translation>
-    </message>
-    <message>
-        <source>Snap Middle</source>
-        <translation type="vanished">Έλξη στη μέση</translation>
-    </message>
-    <message>
-        <source>Snap Distance</source>
-        <translation type="vanished">Έλξη με απόσταση</translation>
-    </message>
-    <message>
-        <source>Snap Intersection</source>
-        <translation type="vanished">Έλξη σε διασταύρωση</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontal</source>
-        <translation type="vanished">Περιορισμός Οριζόντια</translation>
-    </message>
-    <message>
-        <source>Restrict Vertical</source>
-        <translation type="vanished">Περιορισμός κατακόρυφα</translation>
-    </message>
-    <message>
-        <source>Restrict Orthogonal</source>
-        <translation type="vanished">Περιορισμός Ορθογώνια</translation>
-    </message>
-    <message>
-        <source>Restrict Nothing</source>
-        <translation type="vanished">Χωρίς περιορισμό</translation>
-    </message>
-    <message>
-        <source>Set relative zero position</source>
-        <translation type="vanished">Καθορισμός θέσης του σχετικού σημείου μηδέν</translation>
-    </message>
-    <message>
-        <source>Lock relative zero position</source>
-        <translation type="vanished">Ασφάλιση θέσης σχετικού σημείου Μηδέν</translation>
-    </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="169"/>
         <source>Relative zero position is %1</source>
@@ -25252,114 +24229,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="250"/>
         <source>By Layer</source>
         <translation>Κατά στρώση</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation type="vanished">Κατά μπλοκ</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">Προεπιλεγμένο</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation type="vanished">0.00mm</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation type="vanished">0.05mm</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation type="vanished">0.09mm</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation type="vanished">0.13mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation type="vanished">0.15mm</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation type="vanished">0.18mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation type="vanished">0.20mm</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation type="vanished">0.25mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation type="vanished">0.30mm</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation type="vanished">0.35mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation type="vanished">0.40mm</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation type="vanished">0.50mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation type="vanished">0.53mm</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation type="vanished">0.60mm</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation type="vanished">0.70mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation type="vanished">0.80mm</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation type="vanished">0.90mm</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation type="vanished">1.00mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation type="vanished">1.06mm</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation type="vanished">1.20mm</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation type="vanished">1.40mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation type="vanished">1.58mm</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation type="vanished">2.00mm (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation type="vanished">2.11mm</translation>
-    </message>
-    <message>
-        <source>- Unchanged -</source>
-        <translation type="vanished">- Αμετάβλητο -</translation>
     </message>
 </context>
 <context>
@@ -27012,10 +25881,6 @@ Do you want to replace it?</source>
         <translation type="unfinished">κλείσε</translation>
     </message>
     <message>
-        <source>chord length</source>
-        <translation type="obsolete">μήκος χορδής</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1059"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1165"/>
         <source>columns</source>
@@ -27289,11 +26154,6 @@ Do you want to replace it?</source>
         <translation type="unfinished">αναίρεση</translation>
     </message>
     <message>
-        <source>u</source>
-        <comment>undo</comment>
-        <translation type="obsolete">αν</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1221"/>
         <source>redo</source>
         <translation type="unfinished">ξανά</translation>
@@ -27356,10 +26216,6 @@ Do you want to replace it?</source>
         <translation type="unfinished">Η εντολή δεν βρέθηκε: %1</translation>
     </message>
     <message>
-        <source>Accepted keycode: %1</source>
-        <translation type="obsolete">Δεκτός κωδικός πλήκτρου: %1</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="472"/>
         <source>Available commands:</source>
         <translation type="unfinished">Διαθέσιμες εντολές:</translation>
@@ -27407,62 +26263,6 @@ Do you want to replace it?</source>
         <source>mp</source>
         <comment>modify properties</comment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Block</source>
-        <translation type="obsolete">Μπλοκ</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Κύκλος</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="obsolete">Καμπύλη</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Επεξεργασία</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">Έλλειψη</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Αρχείο</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">Διάσταση</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Πληροφορίες</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Γραμμή</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">Τροποποίηση</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="obsolete">Επιλογές</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">Πολυγραμμή</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="obsolete">Επιλογή</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">Εμφάνιση</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="87"/>
@@ -29574,10 +28374,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export as PDF</source>
-        <translation type="obsolete">Εξαγωγή ως PDF</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="44"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
@@ -29827,10 +28623,6 @@ Do you want to replace it?</source>
         <source>Specify reference point</source>
         <translation>Καθορίστε το σημείο αναφοράς</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionBlocksExplode</name>
@@ -29861,10 +28653,6 @@ Do you want to replace it?</source>
         <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="349"/>
         <source>Specify reference point</source>
         <translation>Καθορίστε το σημείο αναφοράς</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="352"/>
@@ -30095,37 +28883,6 @@ This block cannot be inserted.</source>
         <source>Choose second edge</source>
         <translation>Επιλέξτε τη δεύτερη πλευρά</translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDimAligned</name>
-    <message>
-        <source>Specify first extension line origin</source>
-        <translation type="vanished">Καθορίστε την αρχή της πρώτης βοηθητικής γραμμής</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
-        <source>Specify second extension line origin</source>
-        <translation type="vanished">Καθορίστε την αρχή της δεύτερης βοηθητικής γραμμής</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation type="vanished">Καθορίστε τη θέση της γραμμής διάστασης</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Εισάγετε το κείμενο διάστασης:</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDimAngular</name>
@@ -30133,10 +28890,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="216"/>
         <source>Select first line</source>
         <translation>Επιλέξτε την πρώτη γραμμή</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="219"/>
@@ -30155,42 +28908,11 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDimDiametric</name>
-    <message>
-        <source>Not a circle or arc entity</source>
-        <translation type="vanished">Μη οντότητα κύκλου ή τόξου</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Μη έγκυρη έκφραση</translation>
-    </message>
-    <message>
-        <source>Select arc or circle entity</source>
-        <translation type="vanished">Επιλέξτε οντότητα τόξου ή κύκλου</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation type="vanished">Καθορίστε τη θέση της γραμμής διάστασης</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Εισάγετε το κείμενο διάστασης:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDimLeader</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="182"/>
         <source>Specify target point</source>
         <translation>Καθορίστε το σημείο προορισμού</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="185"/>
@@ -30222,61 +28944,14 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Specify first extension line origin</source>
-        <translation type="vanished">Καθορίστε την αρχή της πρώτης βοηθητικής γραμμής</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="211"/>
         <source>Specify second extension line origin</source>
         <translation>Καθορίστε την αρχή της δεύτερης βοηθητικής γραμμής</translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="221"/>
         <source>Specify dimension line location</source>
         <translation>Καθορίστε τη θέση της γραμμής διάστασης</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Εισάγετε το κείμενο διάστασης:</translation>
-    </message>
-    <message>
-        <source>Enter dimension line angle:</source>
-        <translation type="vanished">Εισάγετε τη γωνία της γραμμής διάστασης:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDimRadial</name>
-    <message>
-        <source>Not a circle or arc entity</source>
-        <translation type="vanished">Μη οντότητα κύκλου ή τόξου</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Μη έγκυρη έκφραση</translation>
-    </message>
-    <message>
-        <source>Select arc or circle entity</source>
-        <translation type="vanished">Επιλέξτε οντότητα τόξου ή κύκλου</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
-        <source>Specify dimension line position or enter angle:</source>
-        <translation type="vanished">Καθορίστε τη θέση της γραμμής διάστασης ή εισάγετε γωνία:</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Εισάγετε το κείμενο διάστασης:</translation>
     </message>
 </context>
 <context>
@@ -30327,17 +29002,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="500"/>
         <source>Specify radius</source>
         <translation>Καθορίστε την ακτίνα</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="507"/>
@@ -30354,14 +29021,6 @@ This block cannot be inserted.</source>
         <source>Specify included angle:</source>
         <translation>Καθορίστε την περιεχόμενη γωνία:</translation>
     </message>
-    <message>
-        <source>Specify chord length:</source>
-        <translation type="vanished">Καθορίστε το μήκος χορδής:</translation>
-    </message>
-    <message>
-        <source>Specify end angle or [angle/chord length]</source>
-        <translation type="vanished">Καθορίστε την τελική γωνία ή [γωνία/μήκος χορδής]</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawArc3P</name>
@@ -30376,21 +29035,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished">Καθορίστε το τρίτο σημείο</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="233"/>
         <source>Specify second point</source>
         <translation>Καθορίστε το δεύτερο σημείο</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
-    </message>
-    <message>
-        <source>Specify endpoint</source>
-        <translation type="vanished">Καθορίστε το άκρο</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="230"/>
@@ -30416,17 +29063,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="277"/>
         <source>Specify end angle</source>
         <translation>Καθορίστε την τελική γωνία</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="279"/>
@@ -30447,14 +29086,6 @@ This block cannot be inserted.</source>
         <translation>Καθορίστε το κέντρο</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="129"/>
         <source>Specify point on circle</source>
         <translation type="unfinished"></translation>
@@ -30473,17 +29104,9 @@ This block cannot be inserted.</source>
         <translation>Καθορίστε το πρώτο σημείο</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="156"/>
         <source>Specify second point</source>
         <translation>Καθορίστε το δεύτερο σημείο</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
 </context>
 <context>
@@ -30499,17 +29122,9 @@ This block cannot be inserted.</source>
         <translation>Καθορίστε το πρώτο σημείο</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="175"/>
         <source>Specify second point</source>
         <translation>Καθορίστε το δεύτερο σημείο</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="178"/>
@@ -30530,17 +29145,9 @@ This block cannot be inserted.</source>
         <translation>Καθορίστε το κέντρο του κύκλου</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="177"/>
         <source>Specify circle radius</source>
         <translation>Καθορίστε την ακτίνα του κύκλου</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="146"/>
@@ -30566,17 +29173,9 @@ This block cannot be inserted.</source>
         <translation>Καθορίστε την πρώτη γραμμή</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="216"/>
         <source>Specify the second line</source>
         <translation>Καθορίστε τη δεύτερη γραμμή</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="219"/>
@@ -30587,17 +29186,9 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircleTan1_2P</name>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="463"/>
         <source>Specify the first point on the tangent circle</source>
         <translation>Καθορίστε το πρώτο σημείο πάνω στον εφαπτόμενο κύκλο</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="466"/>
@@ -30623,17 +29214,9 @@ This block cannot be inserted.</source>
         <translation>Καθορίστε την πρώτη γραμμή/τόξο/κύκλο</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="280"/>
         <source>Specify the second line/arc/circle</source>
         <translation>Καθορίστε τη δεύτερη γραμμή/τόξο/κύκλο</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="283"/>
@@ -30654,18 +29237,6 @@ This block cannot be inserted.</source>
         <translation>Καθορίστε μία γραμμή/τόξο/κύκλο</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
-        <source>Specify the another arc/circle</source>
-        <translation type="vanished">Καθορίστε ακόμα ένα τόξο/κύκλο</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="341"/>
         <source>Specify the another line/arc/circle</source>
         <translation type="unfinished"></translation>
@@ -30683,14 +29254,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="509"/>
         <source>Select the center of the tangent circle</source>
@@ -30725,17 +29288,9 @@ This block cannot be inserted.</source>
         <translation>Καθορίστε το πρώτο σημείο πάνω στην έλλειψη</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="276"/>
         <source>Specify the second point on ellipse</source>
         <translation>Καθορίστε το δεύτερο σημείο πάνω στην έλλειψη</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="279"/>
@@ -30768,17 +29323,9 @@ This block cannot be inserted.</source>
         <translation>Καθορίστε το κέντρο της έλλειψης</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="339"/>
         <source>Specify endpoint of major axis</source>
         <translation>Καθορίστε το άκρο του κύριου άξονα</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="342"/>
@@ -30804,10 +29351,6 @@ This block cannot be inserted.</source>
         <translation>Καθορίστε το κέντρο της έλλειψης</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="246"/>
         <source>Specify the first point on ellipse</source>
         <translation>Καθορίστε το πρώτο σημείο πάνω στην έλλειψη</translation>
@@ -30816,10 +29359,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="249"/>
         <source>Specify the second point on ellipse</source>
         <translation>Καθορίστε το δεύτερο σημείο πάνω στην έλλειψη</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="252"/>
@@ -30840,17 +29379,9 @@ This block cannot be inserted.</source>
         <translation>Καθορίστε την πρώτη εστία της έλλειψης</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="195"/>
         <source>Specify second focus of ellipse</source>
         <translation>Καθορίστε τη δεύτερη εστία της έλλειψης</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="198"/>
@@ -30876,17 +29407,9 @@ This block cannot be inserted.</source>
         <translation>Καθορίστε την πρώτη γραμμή</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="310"/>
         <source>Specify the second line</source>
         <translation>Καθορίστε τη δεύτερη γραμμή</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="313"/>
@@ -30972,10 +29495,6 @@ This block cannot be inserted.</source>
         <translation>Καθορίστε το σημείο αναφοράς</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="270"/>
         <source>Enter angle:</source>
         <translation>Εισάγετε γωνία:</translation>
@@ -31003,17 +29522,9 @@ This block cannot be inserted.</source>
         <translation>Καθορίστε το πρώτο σημείο</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="274"/>
         <source>Specify next point or [%1]</source>
         <translation>Καθορίστε το επόμενο σημείο ή [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="276"/>
@@ -31055,17 +29566,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="312"/>
         <source>Enter angle:</source>
         <translation>Εισάγετε γωνία:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="315"/>
@@ -31092,17 +29595,9 @@ This block cannot be inserted.</source>
         <translation>Επιλέξτε την πρώτη γραμμή</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="268"/>
         <source>Select second line</source>
         <translation>Επιλέξτε τη δεύτερη γραμμή</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="271"/>
@@ -31128,10 +29623,6 @@ This block cannot be inserted.</source>
         <source>Click and drag to draw a line</source>
         <translation>Κάντε κλικ και σύρετε για σχεδίαση γραμμής</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineHorVert</name>
@@ -31141,17 +29632,9 @@ This block cannot be inserted.</source>
         <translation>Καθορίστε το πρώτο σημείο</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="117"/>
         <source>Specify second point</source>
         <translation>Καθορίστε το δεύτερο σημείο</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
 </context>
 <context>
@@ -31168,25 +29651,13 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="255"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Επιλέξτε κύκλο, τόξο ή έλλειψη</translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineParallel</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="138"/>
         <source>Enter number:</source>
@@ -31222,17 +29693,9 @@ This block cannot be inserted.</source>
         <translation>Επιλέξτε οντότητα</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="177"/>
         <source>Specify through point</source>
         <translation>Καθορίστε το σημείο διέλευσης</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="110"/>
@@ -31265,25 +29728,9 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLinePolygonCenCor</name>
     <message>
-        <source>Specify center</source>
-        <translation type="vanished">Καθορίστε το κέντρο</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon.cpp" line="41"/>
         <source>Specify a corner</source>
         <translation>Καθορίστε μία γωνία</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Εισάγετε αριθμό:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Μη έγκυρος αριθμός. Δοκιμάστε 1...9999</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Μη έγκυρη έκφραση</translation>
     </message>
 </context>
 <context>
@@ -31294,29 +29741,9 @@ This block cannot be inserted.</source>
         <translation>Καθορίστε την πρώτη γωνία</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="92"/>
         <source>Specify second corner</source>
         <translation>Καθορίστε τη δεύτερη γωνία</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Αριθμός:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Μη έγκυρος αριθμός. Δοκιμάστε 1..9999</translation>
-    </message>
-    <message>
-        <source>Not a valid expression.</source>
-        <translation type="vanished">Μη έγκυρη έκφραση.</translation>
     </message>
 </context>
 <context>
@@ -31352,17 +29779,9 @@ This block cannot be inserted.</source>
         <translation>Καθορίστε την πρώτη γωνία</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="144"/>
         <source>Specify second corner</source>
         <translation>Καθορίστε τη δεύτερη γωνία</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
 </context>
 <context>
@@ -31389,17 +29808,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="251"/>
         <source>Specify position</source>
         <translation>Καθορίστε τη θέση</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
 </context>
 <context>
@@ -31416,37 +29827,13 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Επιλέξτε κύκλο, τόξο ή έλλειψη</translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent2</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
-    </message>
-    <message>
-        <source>Select first circle or ellipse</source>
-        <translation type="vanished">Επιλέξτε τον πρώτο κύκλο ή έλλειψη</translation>
-    </message>
-    <message>
-        <source>Select second circle or ellipse</source>
-        <translation type="vanished">Επιλέξτε το δεύτερο κύκλο ή έλλειψη</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="215"/>
         <source>Select first circle/ellipse/parabola</source>
@@ -31471,17 +29858,9 @@ This block cannot be inserted.</source>
         <translation>Καθορίστε το σημείο εισαγωγής</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="189"/>
         <source>Enter text:</source>
         <translation>Εισάγετε κείμενο:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
 </context>
 <context>
@@ -31490,10 +29869,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/point/rs_actiondrawpoint.cpp" line="77"/>
         <source>Specify location</source>
         <translation>Καθορίστε τη θέση</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
     </message>
 </context>
 <context>
@@ -31504,17 +29879,9 @@ This block cannot be inserted.</source>
         <translation>Καθορίστε το πρώτο σημείο</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="756"/>
         <source>Specify next point or [%1]</source>
         <translation>Καθορίστε το επόμενο σημείο ή [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="758"/>
@@ -31587,17 +29954,9 @@ This block cannot be inserted.</source>
         <translation>Καθορίστε το πρώτο σημείο ελέγχου</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="227"/>
         <source>Specify next control point or [%1]</source>
         <translation>Καθορίστε το επόμενο σημείο ελέγχου ή [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="229"/>
@@ -31623,33 +29982,14 @@ This block cannot be inserted.</source>
         <translation>Καθορίστε το σημείο εισαγωγής</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="247"/>
         <source>Enter text:</source>
         <translation>Εισάγετε κείμενο:</translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="243"/>
         <source>Specify second point</source>
         <translation>Καθορίστε το δεύτερο σημείο</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditCopy</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Καθορίστε το σημείο αναφοράς</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
     </message>
 </context>
 <context>
@@ -31712,17 +30052,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Set reference point</source>
-        <translation type="vanished">Καθορίστε το σημείο αναφοράς</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditUndo</name>
     <message>
         <location filename="../src/actions/drawing/edit/rs_actioneditundo.cpp" line="55"/>
@@ -31752,10 +30081,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="250"/>
         <source>Single Line Mode</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Πληροφορίες</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="103"/>
@@ -31847,21 +30172,9 @@ Intersection :@(%7, %8)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
         <source>Specify second line</source>
         <translation>Καθορίστε τη δεύτερη γραμμή</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
-    </message>
-    <message>
-        <source>Angle: %1</source>
-        <translation type="vanished">Γωνία: %1</translation>
     </message>
 </context>
 <context>
@@ -31888,26 +30201,14 @@ Intersection :@(%7, %8)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Point: %1/%2</source>
-        <translation type="vanished">Σημείο: %1/%2</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="178"/>
         <source>Specify first point of polygon</source>
         <translation>Καθορίστε το πρώτο σημείο του πολυγώνου</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
         <source>Specify next point of polygon</source>
         <translation>Καθορίστε το επόμενο σημείο του πολυγώνου</translation>
-    </message>
-    <message>
-        <source>Closing Point: %1/%2</source>
-        <translation type="vanished">Σημείο κλεισίματος: %1/%2</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="101"/>
@@ -31963,29 +30264,13 @@ End: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="160"/>
         <source>Specify second point of distance</source>
         <translation>Καθορίστε το δεύτερο σημείο απόστασης</translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
-    </message>
-    <message>
-        <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
-        <translation type="obsolete">Απόσταση: %1 Καρτεσιανή: (%2 , %3), Πολική: (%4&lt;%5  {1 ?} {2 ?} {3)?} {4&lt;?} {5)?}</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1</source>
-        <translation type="vanished">Απόσταση: %1</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="92"/>
         <source>Distance: %1
@@ -32036,18 +30321,10 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="279"/>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="282"/>
         <source>Specify point</source>
         <translation>Καθορίστε το σημείο</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
 </context>
 <context>
@@ -32066,10 +30343,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="82"/>
         <source>Specify point</source>
         <translation>Καθορίστε το σημείο</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
     </message>
 </context>
 <context>
@@ -32136,10 +30409,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionLibraryInsert</name>
     <message>
-        <source>Insert Library Object</source>
-        <translation type="vanished">Εισαγωγή αντικειμένου βιβλιοθήκης</translation>
-    </message>
-    <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="152"/>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="165"/>
         <source>Not a valid expression</source>
@@ -32149,10 +30418,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="194"/>
         <source>Specify reference point</source>
         <translation>Καθορίστε το σημείο αναφοράς</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="197"/>
@@ -32172,13 +30437,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="65"/>
         <source>Cannot open file &apos;%1&apos;</source>
         <translation>Δεν είναι δυνατό το άνοιγμα του αρχείου &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLockRelativeZero</name>
-    <message>
-        <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation type="vanished">(Ξε-)Κ&amp;λείδωμα σχετικού μηδέν</translation>
     </message>
 </context>
 <context>
@@ -32259,17 +30517,9 @@ Point: (%8 , %9)</source>
         <translation>Επιλέξτε την πρώτη οντότητα</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="369"/>
         <source>Select second entity</source>
         <translation>Επιλέξτε τη δεύτερη οντότητα</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="372"/>
@@ -32305,30 +30555,14 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cutting point is invalid.</source>
-        <translation type="vanished">Το σημείο κοπής δεν είναι έγκυρο.</translation>
-    </message>
-    <message>
-        <source>Cutting point is not on entity.</source>
-        <translation type="vanished">Το σημείο κοπής δεν βρίσκεται πάνω στην οντότητα.</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="141"/>
         <source>Specify entity to cut</source>
         <translation>Καθορίστε την οντότητα προς κοπή</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="144"/>
         <source>Specify cutting point</source>
         <translation>Καθορίστε το σημείο κοπής</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="114"/>
@@ -32362,17 +30596,9 @@ Point: (%8 , %9)</source>
         <translation>Καθορίστε το πρώτο σημείο σπασίματος πάνω σε μία πολυγραμμή</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="151"/>
         <source>Specify second break point on the same polyline</source>
         <translation>Καθορίστε το δεύτερο σημείο σπασίματος πάνω στην ίδια πολυγραμμή</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="89"/>
@@ -32416,26 +30642,11 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionModifyDeleteQuick</name>
-    <message>
-        <source>Pick entity to delete</source>
-        <translation type="vanished">Επιλέξτε οντότητα προς διαγραφή</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionModifyEntity</name>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyentity.cpp" line="263"/>
         <source>Click on entity to modify</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Ακύρωση</translation>
     </message>
 </context>
 <context>
@@ -32509,17 +30720,9 @@ Point: (%8 , %9)</source>
         <translation>Καθορίστε το πρώτο σημείο του άξονα συμμετρίας</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="249"/>
         <source>Specify second point of mirror line</source>
         <translation>Καθορίστε το δεύτερο σημείο του άξονα συμμετρίας</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
 </context>
 <context>
@@ -32560,21 +30763,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
         <source>Specify target point</source>
         <translation>Καθορίστε το σημείο προορισμού</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
-    </message>
-    <message>
-        <source>Invalid number of copies, use %1 </source>
-        <translation type="vanished">Μη έγκυρος αριθμός αντιγράφων, χρήση %1 </translation>
     </message>
 </context>
 <context>
@@ -32634,17 +30825,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="325"/>
         <source>Specify target point</source>
         <translation>Καθορίστε το σημείο προορισμού</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="328"/>
@@ -32690,10 +30873,6 @@ Point: (%8 , %9)</source>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionModifyRevertDirection</name>
@@ -32719,10 +30898,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="588"/>
         <source>Specify reference point</source>
         <translation>Καθορίστε το σημείο αναφοράς</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="132"/>
@@ -32859,17 +31034,9 @@ Point: (%8 , %9)</source>
         <translation>Καθορίστε το απόλυτο σημείο αναφοράς</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="179"/>
         <source>Specify relative reference point</source>
         <translation>Καθορίστε το σχετικό σημείο αναφοράς</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
 </context>
 <context>
@@ -32879,10 +31046,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="362"/>
         <source>Not a valid expression</source>
         <translation>Μη έγκυρη έκφραση</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="229"/>
@@ -32910,10 +31073,6 @@ Point: (%8 , %9)</source>
         <translation>Εισάγετε ακτίνα:</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
         <translation type="unfinished"></translation>
@@ -32921,14 +31080,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Καθορίστε το σημείο αναφοράς</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="169"/>
         <source>Scale</source>
@@ -33013,17 +31164,9 @@ Point: (%8 , %9)</source>
         <translation>Καθορίστε την πρώτη γωνία</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="199"/>
         <source>Specify second corner</source>
         <translation>Καθορίστε τη δεύτερη γωνία</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="79"/>
@@ -33077,17 +31220,9 @@ Point: (%8 , %9)</source>
         <translation>Επιλέξτε την πρώτη οντότητα προς διευθέτηση</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="202"/>
         <source>Select limiting entity</source>
         <translation>Επιλέξτε την οντότητα που θα αποτελέσει το όριο διευθέτησης</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="112"/>
@@ -33123,14 +31258,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyTrimAmount</name>
     <message>
-        <source>No entity found. </source>
-        <translation type="vanished">Δεν βρέθηκε οντότητα. </translation>
-    </message>
-    <message>
-        <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation type="vanished">Η επιλεγμένη οντότητα ανήκει σε μπλοκ. Παρακαλούμε να επεξεργαστείτε το μπλοκ.</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="173"/>
         <source>No entity found.</source>
         <translation type="unfinished"></translation>
@@ -33149,14 +31276,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="236"/>
         <source>Select line/arc to trim OR enter length value:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select entity to trim or enter distance:</source>
-        <translation type="vanished">Επιλέξτε οντότητα προς διευθέτηση ή εισάγετε απόσταση:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
 </context>
 <context>
@@ -33186,21 +31305,9 @@ Point: (%8 , %9)</source>
         <source>Choose entity for order</source>
         <translation>Επιλέξτε οντότητα προς διάταξη</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionPolylineAdd</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="102"/>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="129"/>
@@ -33236,10 +31343,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPolylineAppend</name>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="119"/>
         <source>No Entity found.</source>
         <translation>Δεν βρέθηκε οντότητα.</translation>
@@ -33265,18 +31368,6 @@ Point: (%8 , %9)</source>
         <translation>Καθορίστε την πολυγραμμή κάπου κοντά στο αρχικό ή το τελικό σημείο</translation>
     </message>
     <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Καθορίστε το επόμενο σημείο ή [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Καθορίστε το επόμενο σημείο</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="125"/>
         <source>Can not append nodes in a closed polyline.</source>
         <translation>Δεν είναι δυνατή η προσάρτηση κόμβων σε κλειστή πολυγραμμή.</translation>
@@ -33289,14 +31380,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionPolylineDel</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="92"/>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="112"/>
@@ -33331,14 +31414,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionPolylineDelBetween</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="116"/>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="136"/>
@@ -33405,10 +31480,6 @@ Point: (%8 , %9)</source>
         <source>Choose the original polyline</source>
         <translation>Επιλέξτε την αρχική πολυγραμμή</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionPolylineSegment</name>
@@ -33421,10 +31492,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="357"/>
         <source>Choose one of the segments on the original polyline</source>
         <translation>Επιλέξτε ένα από τα τμήματα πάνω στην αρχική πολυγραμμή</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="335"/>
@@ -33441,14 +31508,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPolylineTrim</name>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="111"/>
         <source>No Entity found.</source>
         <translation>Δεν βρέθηκε οντότητα.</translation>
@@ -33457,14 +31516,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="113"/>
         <source>Entity must be a polyline.</source>
         <translation>Η οντότητα πρέπει να είναι πολυγραμμή.</translation>
-    </message>
-    <message>
-        <source>Specifying point is invalid.</source>
-        <translation type="vanished">Το καθορισμένο σημείο δεν είναι έγκυρο.</translation>
-    </message>
-    <message>
-        <source>No Segment found on entity.</source>
-        <translation type="vanished">Δεν βρέθηκε τμήμα πάνω στην οντότητα.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="138"/>
@@ -33566,85 +31617,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>Select to modify attributes</source>
-        <translation type="vanished">Επιλέξτε για τροποποίηση χαρακτηριστικών</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
-        <source>Select to delete</source>
-        <translation type="vanished">Επιλέξτε για διαγραφή</translation>
-    </message>
-    <message>
-        <source>Select to delete immediately</source>
-        <translation type="vanished">Επιλέξτε για άμεση διαγραφή</translation>
-    </message>
-    <message>
-        <source>Select to move</source>
-        <translation type="vanished">Επιλέξτε για μετακίνηση</translation>
-    </message>
-    <message>
-        <source>Select to rotate</source>
-        <translation type="vanished">Επιλέξτε για περιστροφή</translation>
-    </message>
-    <message>
-        <source>Select to scale</source>
-        <translation type="vanished">Επιλέξτε για προσαρμογή κλίμακας</translation>
-    </message>
-    <message>
-        <source>Select to mirror</source>
-        <translation type="vanished">Επιλέξτε για συμμετρία</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate</source>
-        <translation type="vanished">Επιλέξτε για μετακίνηση και περιστροφή</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation</source>
-        <translation type="vanished">Επιλέξτε για περιστροφή δύο αξόνων</translation>
-    </message>
-    <message>
-        <source>Select to explode text</source>
-        <translation type="vanished">Επιλέξτε για διαχωρισμό κειμένου</translation>
-    </message>
-    <message>
-        <source>Select to create block</source>
-        <translation type="vanished">Επιλέξτε για δημιουργία μπλοκ</translation>
-    </message>
-    <message>
-        <source>Select to copy</source>
-        <translation type="vanished">Επιλέξτε για αντιγραφή</translation>
-    </message>
-    <message>
-        <source>Select to cut</source>
-        <translation type="vanished">Επιλέξτε για αποκοπή</translation>
-    </message>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">Δεν έχει επιλεχθεί κάποια οντότητα!</translation>
-    </message>
-    <message>
-        <source>Select to create offset</source>
-        <translation type="vanished">Επιλέξτε για δημιουργία αναπαραγωγής</translation>
-    </message>
-    <message>
-        <source>Select entities to order</source>
-        <translation type="vanished">Επιλέξτε οντότητες για διάταξη</translation>
-    </message>
-    <message>
-        <source>Select to explode block</source>
-        <translation type="vanished">Επιλέξτε για διαχωρισμό μπλοκ</translation>
-    </message>
-    <message>
-        <source>Select to revert direction</source>
-        <translation type="vanished">Επιλέξτε για αντιστροφή φοράς</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectContour</name>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="63"/>
@@ -33675,17 +31647,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="176"/>
         <source>Choose second point of intersection line</source>
         <translation>Επιλέξτε το δεύτερο σημείο της γραμμής τομής</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
 </context>
 <context>
@@ -33711,10 +31675,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="116"/>
         <source>De-Selecting</source>
@@ -33766,10 +31726,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="163"/>
         <source>Click and drag for the selection window</source>
         <translation>Κάντε κλικ και σύρετε για το παράθυρο επιλογής</translation>
@@ -33782,29 +31738,13 @@ Point: (%8 , %9)</source>
         <source>Set relative Zero</source>
         <translation>Καθορισμός σχετικού μηδέν</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
-        <source>Set &amp;Relative Zero</source>
-        <translation type="vanished">Καθορισμός &amp;σχετικού μηδέν</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionSnapIntersectionManual</name>
     <message>
-        <source>I&amp;ntersection Manually</source>
-        <translation type="vanished">&amp;Τομή χειροκίνητα</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="142"/>
         <source>Select first entity</source>
         <translation>Επιλέξτε την πρώτη οντότητα</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="145"/>
@@ -33833,10 +31773,6 @@ Point: (%8 , %9)</source>
         <translation>Κάντε κλικ και σύρετε για μετακίνηση εστίασης</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="108"/>
         <source>Zoom panning</source>
         <translation>Μετακίνηση εστίασης</translation>
@@ -33850,17 +31786,9 @@ Point: (%8 , %9)</source>
         <translation>Καθορίστε το πρώτο άκρο</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="143"/>
         <source>Specify second edge</source>
         <translation>Καθορίστε το δεύτερο άκρο</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Επιστροφή</translation>
     </message>
 </context>
 <context>
@@ -34127,17 +32055,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Linear Dimension Options</source>
-        <translation type="obsolete">Επιλογές γραμμικής διάστασης</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Γωνία:</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -34306,17 +32223,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Factor:</source>
-        <translation type="obsolete">Συντελεστής:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="106"/>
         <source>Scale Factor</source>
         <translation type="unfinished">Συντελεστής κλίμακας</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="obsolete">DPI</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="120"/>
@@ -34750,21 +32659,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">Επιλογές πολυγώνου</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Αριθμός:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">Αριθμός πλευρών</translation>
-    </message>
-</context>
-<context>
     <name>Ui_LinePolygonOptions</name>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="32"/>
@@ -34964,14 +32858,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="79"/>
         <source>Multiple Copies</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">Απόσταση:</translation>
-    </message>
-    <message>
-        <source>Offset from original entity</source>
-        <translation type="obsolete">Αναπαραγωγή από αρχική οντότητα</translation>
     </message>
 </context>
 <context>
@@ -35229,14 +33115,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished">Εναλλαγή λειτουργίας Μαύρο / Άσπρο</translation>
     </message>
     <message>
-        <source>Center to page</source>
-        <translation type="obsolete">Κεντράρισμα στη σελίδα</translation>
-    </message>
-    <message>
-        <source>Fit to page</source>
-        <translation type="obsolete">Ταίριασμα στη σελίδα</translation>
-    </message>
-    <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="44"/>
         <source>Landscape Orientation of paper</source>
         <translation type="unfinished"></translation>
@@ -35357,10 +33235,6 @@ Point: (%8 , %9)</source>
         <source>Pick distance from drawing.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">Απόσταση:</translation>
-    </message>
 </context>
 <context>
     <name>Ui_SnapMiddleOptions</name>
@@ -35373,10 +33247,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="59"/>
         <source>Snap Middle Points:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Middle Points:</source>
-        <translation type="obsolete">Μεσαία σημεία:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
@@ -35496,13 +33366,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="50"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
         <translation type="unfinished">Το μήκος εισόδου χρησιμοποιείται ως ολικό μήκος μετά τη διευθέτηση, αντί για αύξηση του μήκους</translation>
-    </message>
-</context>
-<context>
-    <name>WidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Πλαίσιο</translation>
     </message>
 </context>
 </TS>

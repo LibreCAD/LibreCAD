@@ -62,8 +62,7 @@ void RS_ActionModifyEntity::init(int status) {
 }
 
 void  RS_ActionModifyEntity::notifyFinished() {
-    m_graphicView->setForcedActionKillAllowed(true);
-    m_graphicView->getEventHandler()->notifyLastActionFinished();
+    m_graphicView->notifyLastActionFinished();
 }
 
 void RS_ActionModifyEntity::onLateRequestCompleted(bool shouldBeSkipped) {
@@ -72,7 +71,6 @@ void RS_ActionModifyEntity::onLateRequestCompleted(bool shouldBeSkipped) {
             m_entity = nullptr;
             delete m_clonedEntity;
             finish(false);
-            notifyFinished();
         }
         else {
             setStatus(ShowDialog);
@@ -83,12 +81,13 @@ void RS_ActionModifyEntity::onLateRequestCompleted(bool shouldBeSkipped) {
         completeEditing();
         if (m_invokedForSingleEntity) {
             finish(false);
-            notifyFinished();
         }
         else {
             setStatus(ShowDialog);
         }
     }
+    m_graphicView->redraw(RS2::RedrawDrawing);
+    m_allowExternalTermination = true;
 }
 
 void RS_ActionModifyEntity::completeEditing() {
@@ -115,7 +114,6 @@ void RS_ActionModifyEntity::completeEditing() {
     if (entityInfoWidget != nullptr){
         entityInfoWidget->onEntityPropertiesEdited(originalEntityId, cloneEntityId);
     }
-    m_graphicView->redraw(RS2::RedrawDrawing);
 }
 
 void RS_ActionModifyEntity::doTrigger() {
@@ -131,12 +129,7 @@ void RS_ActionModifyEntity::doTrigger() {
             // Always show the entity being edited as "Selected"
             setDisplaySelected(true);
 
-            // m_graphicView->setForcedActionKillAllowed(false);
-
-            m_propertiesEditor = new LC_EntityPropertiesEditor(m_actionContext, this);
             setStatus(InEditing);
-
-            m_graphicView->setForcedActionKillAllowed(false);
 
             LC_EntityPropertiesDlg* editDialog {nullptr};
             QWidget* parent = QC_ApplicationWindow::getAppWindow().get();
@@ -155,6 +148,8 @@ void RS_ActionModifyEntity::doTrigger() {
                 case RS2::EntityPolyline:
                 case RS2::EntityImage: {
                     // editing via delayed invocation in editor to support interactive input
+                    m_propertiesEditor = new LC_EntityPropertiesEditor(m_actionContext, this);
+                    m_allowExternalTermination = false;
                     m_propertiesEditor->editEntity(parent, m_clonedEntity, m_viewport);
                     hasDialog = false;
                     break;
@@ -187,7 +182,7 @@ void RS_ActionModifyEntity::doTrigger() {
             }
 
             if (hasDialog) {
-                m_graphicView->setForcedActionKillAllowed(false);
+                m_allowExternalTermination = false;
                 if (editDialog->exec()) {
                     editDialog->updateEntity();
                     m_container->addEntity(m_clonedEntity);
@@ -205,7 +200,7 @@ void RS_ActionModifyEntity::doTrigger() {
                     }
                     delete m_clonedEntity;
                 }
-                m_graphicView->setForcedActionKillAllowed(true);
+                m_allowExternalTermination = true;
                 m_graphicView->redraw(RS2::RedrawDrawing);
                 setStatus(ShowDialog);
                 delete editDialog;
@@ -216,7 +211,6 @@ void RS_ActionModifyEntity::doTrigger() {
         }
     }
     else if (status == InEditing) {
-        // m_graphicView->setForcedActionKillAllowed(true);
         completeEditing();
         setStatus(EditComplete);
     }

@@ -39,36 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Рамка</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="obsolete">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="obsolete">&lt;</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Зберегти</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Рамка</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Зберегти</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/dialogs/entity/LC_DlgParabola.ui" line="26"/>
@@ -286,10 +256,6 @@
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="189"/>
         <source>Select arc entity</source>
         <translation>Виберіть об&apos;єкт дуги</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="192"/>
@@ -590,17 +556,9 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>Вкажіть першу точку</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Скасувати</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="233"/>
         <source>Specify second point</source>
         <translation>Вкажіть другу точку</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="236"/>
@@ -886,25 +844,9 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawLinePolygonCenTan</name>
     <message>
-        <source>Specify center</source>
-        <translation type="vanished">Вкажіть центр</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon3.cpp" line="51"/>
         <source>Specify a tangent</source>
         <translation>Укажіть дотичну</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Введіть число:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Не коректне число. Спробуйте 1.. 9999</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Недопустимий вираз</translation>
     </message>
 </context>
 <context>
@@ -1262,10 +1204,6 @@ or [%2]</source>
         <translation>Вкажіть першу контрольну точку</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Скасувати</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
         <source>Specify next control point or [%1]</source>
         <translation>Вкажіть наступну контрольну точку або [%1]</translation>
@@ -1588,19 +1526,6 @@ or [%2]</source>
         <translation>Коло &amp;вписане</translation>
     </message>
     <message>
-        <source>Tangential 2 Circles, Radius</source>
-        <comment>circle tangential with two circles, and given radius</comment>
-        <translation type="vanished">Дотична до 2 кіл і радіус</translation>
-    </message>
-    <message>
-        <source>Tangential 2 Circles, 1 Point</source>
-        <translation type="vanished">Дотична до 2 кіл, 1 точка</translation>
-    </message>
-    <message>
-        <source>Tangential &amp;3 Circles</source>
-        <translation type="vanished">Дотична до &amp;3 кіл</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
         <source>Tangential, 2 P&amp;oints</source>
         <translation>Дотична, 2 Т&amp;очки</translation>
@@ -1696,10 +1621,6 @@ or [%2]</source>
         <translation>Створити &amp;рівновіддалені полілінії</translation>
     </message>
     <message>
-        <source>Create Polyline from Existing &amp;Segments</source>
-        <translation type="vanished">Створити полілінію з &amp;існуючих відрізків</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="327"/>
         <source>&amp;MText</source>
         <translation>&amp;Багаторядковий текст</translation>
@@ -1765,10 +1686,6 @@ or [%2]</source>
         <translation>Ви&amp;далити</translation>
     </message>
     <message>
-        <source>Delete Freehand</source>
-        <translation type="vanished">Видалити довільну криву</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="368"/>
         <source>&amp;Move / Copy</source>
         <translation>&amp;Перемістити / Скопіювати</translation>
@@ -1777,10 +1694,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="369"/>
         <source>Re&amp;vert direction</source>
         <translation>Змінити напрямок</translation>
-    </message>
-    <message>
-        <source>Ctrl+R</source>
-        <translation type="vanished">Ctrl+R</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="370"/>
@@ -1858,17 +1771,9 @@ or [%2]</source>
         <translation type="unfinished">&amp;Розбити текст на літери</translation>
     </message>
     <message>
-        <source>Point inside contour</source>
-        <translation type="vanished">Точка всередині контуру</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="498"/>
         <source>&amp;Distance Point to Point</source>
         <translation>&amp;Відстань від точки до точки</translation>
-    </message>
-    <message>
-        <source>&amp;Distance Entity to Point</source>
-        <translation type="obsolete">Від&amp;стань від об’єкта до точки</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="501"/>
@@ -1876,17 +1781,9 @@ or [%2]</source>
         <translation type="unfinished">&amp;Кут між двома лініями</translation>
     </message>
     <message>
-        <source>&amp;Total length of selected entities</source>
-        <translation type="vanished">&amp;Загальна довжина обраних об’єктів</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="503"/>
         <source>Polygonal &amp;Area</source>
         <translation>&amp;Багатокутний полігон</translation>
-    </message>
-    <message>
-        <source>&amp;Selection pointer</source>
-        <translation type="vanished">Вказівник &amp;обраного</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="660"/>
@@ -1914,10 +1811,6 @@ or [%2]</source>
         <translation type="unfinished">&amp;Вставити</translation>
     </message>
     <message>
-        <source>move to bottom</source>
-        <translation type="vanished">перенисти на тло</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="190"/>
         <source>Polygo&amp;n (Tan,Tan)</source>
         <translation type="unfinished"></translation>
@@ -1941,10 +1834,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="233"/>
         <source>Paste to Points</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tangential 2 Circles, Radius</source>
-        <translation type="obsolete">Дотична до 2 кіл і радіус</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="269"/>
@@ -2618,18 +2507,6 @@ or [%2]</source>
         <translation type="unfinished">Без прив’язки</translation>
     </message>
     <message>
-        <source>lower after entity</source>
-        <translation type="vanished">перенести під об&apos;єкт</translation>
-    </message>
-    <message>
-        <source>raise over entity</source>
-        <translation type="vanished">підняти над об&apos;єктом</translation>
-    </message>
-    <message>
-        <source>move to top</source>
-        <translation type="vanished">преренести догори</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="499"/>
         <source>Distance &amp;Entity to Point</source>
         <translation type="unfinished"></translation>
@@ -2778,10 +2655,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="563"/>
         <source>Current &amp;Drawing Preferences</source>
         <translation>Налаштування поточного &amp;креслення</translation>
-    </message>
-    <message>
-        <source>&amp;Delete selected</source>
-        <translation type="vanished">Ви&amp;далити вибране</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="652"/>
@@ -3031,14 +2904,6 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Menu Creator</source>
-        <translation type="vanished">Створювач меню</translation>
-    </message>
-    <message>
-        <source>Toolbar Creator</source>
-        <translation type="vanished">Створювач панелей</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="639"/>
         <source>&amp;Save View</source>
         <translation type="unfinished"></translation>
@@ -3219,97 +3084,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionGroupManager</name>
-    <message>
-        <source>Block</source>
-        <translation type="obsolete">Блок</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Коло</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="obsolete">Крива</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="obsolete">Дуга</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="obsolete">Сплайн</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Редагувати</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">Еліпс</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Файл</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">Розмір</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Інформація</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="obsolete">Шар</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Лінія</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="obsolete">Точка</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">Змінити</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="obsolete">Параметри</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="obsolete">Інше</translation>
-    </message>
-    <message>
-        <source>Restriction</source>
-        <translation type="obsolete">Обмеження</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="obsolete">Вибрати</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="obsolete">Прив’язка</translation>
-    </message>
-    <message>
-        <source>Snap Extras</source>
-        <translation type="obsolete">Прив&apos;язка (додатково)</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">Вигляд</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="obsolete">Віджети</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionInfo3PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="141"/>
@@ -3325,10 +3099,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="149"/>
         <source>Select second edge point of angle</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Інформація</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="189"/>
@@ -3796,10 +3566,6 @@ End Edge Point: (%9 , %10)</source>
         <source>visible</source>
         <comment>Layers to export</comment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation type="vanished">Зберегти шар &apos;%1&apos; як &apos;%2&apos; </translation>
     </message>
 </context>
 <context>
@@ -4948,18 +4714,6 @@ Are you sure you are going to discard changes?</source>
 <context>
     <name>LC_CreatorInvoker</name>
     <message>
-        <source>Toolbar Creator</source>
-        <translation type="obsolete">Створювач панелей</translation>
-    </message>
-    <message>
-        <source>Menu Creator</source>
-        <translation type="obsolete">Створювач меню</translation>
-    </message>
-    <message>
-        <source>Menu Assigner</source>
-        <translation type="obsolete">Налаштування меню</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="83"/>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="115"/>
         <source>Toolbar: %1 (Custom)</source>
@@ -5402,21 +5156,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="108"/>
         <source>System</source>
         <translation type="unfinished">Система</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Геометрія</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="obsolete">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="obsolete">Y</translation>
     </message>
 </context>
 <context>
@@ -8417,10 +8156,6 @@ Are you sure you are going to discard changes?</source>
         <translation type="unfinished">Верхня</translation>
     </message>
     <message>
-        <source>Menu Creator</source>
-        <translation type="obsolete">Створювач меню</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="59"/>
         <source>Destroy Menu</source>
         <translation type="unfinished"></translation>
@@ -8434,10 +8169,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="62"/>
         <source>Define a custom menu by specifying the set of used actions. Menu will be shown as a popup in the drawing area as soon as menu invocation shortcut is invoked. </source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toolbar Creator</source>
-        <translation type="obsolete">Створювач панелей</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="57"/>
@@ -9792,10 +9523,6 @@ Please specify a different value.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Layer Menu</source>
-        <translation type="obsolete">Меню шару</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="651"/>
         <source>&amp;Add Child Layer</source>
         <translation type="unfinished"></translation>
@@ -10959,10 +10686,6 @@ Please specify a different value.</source>
         <translation type="unfinished">Порядок</translation>
     </message>
     <message>
-        <source>Dock Wid&amp;gets</source>
-        <translation type="obsolete">&amp;Док-віджети</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="475"/>
         <source>&amp;Toolbars</source>
         <translation type="unfinished">Панелі &amp;інструментів</translation>
@@ -11256,18 +10979,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="32"/>
         <source>Snap point of gap to line snap point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="obsolete">Початок</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="obsolete">Середина</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="obsolete">Кінець</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="95"/>
@@ -16195,10 +15906,6 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished">Бібліотеки</translation>
     </message>
     <message>
-        <source>Command line</source>
-        <translation type="obsolete">Командний рядок</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="260"/>
         <source>Dock</source>
         <translation type="unfinished">Док-панель</translation>
@@ -16208,26 +15915,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="284"/>
         <source>Float</source>
         <translation>Окремо</translation>
-    </message>
-    <message>
-        <source>Lines</source>
-        <translation type="vanished">Лінії</translation>
-    </message>
-    <message>
-        <source>Circles</source>
-        <translation type="vanished">Кола</translation>
-    </message>
-    <message>
-        <source>Freehand</source>
-        <translation type="obsolete">Довільна крива</translation>
-    </message>
-    <message>
-        <source>Ellipses</source>
-        <translation type="vanished">Еліпси</translation>
-    </message>
-    <message>
-        <source>PolyLines</source>
-        <translation type="vanished">Полілінії</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="101"/>
@@ -16248,10 +15935,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="96"/>
         <source>Circle</source>
         <translation type="unfinished">Коло</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="obsolete">Крива</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="99"/>
@@ -16285,29 +15968,9 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished">Порядок</translation>
     </message>
     <message>
-        <source>Layer List</source>
-        <translation type="obsolete">Список шарів</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="212"/>
         <source>Entity Info</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="obsolete">Список блоків</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Файл</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Редагувати</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">Вигляд</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="164"/>
@@ -16328,162 +15991,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="98"/>
         <source>Spline</source>
         <translation type="unfinished">Сплайн</translation>
-    </message>
-    <message>
-        <source>Snap Selection</source>
-        <translation type="obsolete">Вибір прив’язки</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="obsolete">Параметри інструменту</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="obsolete">Док-панелі</translation>
-    </message>
-    <message>
-        <source>Creators</source>
-        <translation type="obsolete">Створювачі</translation>
-    </message>
-    <message>
-        <source>Preferences</source>
-        <translation type="obsolete">Установки</translation>
-    </message>
-    <message>
-        <source>Categories</source>
-        <translation type="obsolete">Категорії</translation>
-    </message>
-    <message>
-        <source>Dimensions</source>
-        <translation type="vanished">Розміри</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="obsolete">&amp;Файл</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="obsolete">Імпорт</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="obsolete">Експорт</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="obsolete">&amp;Параметри</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="obsolete">Редагувати</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="obsolete">Пл&amp;агіни</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="obsolete">&amp;Вигляд</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="obsolete">&amp;Інструменти</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="obsolete">&amp;Лінія</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="obsolete">&amp;Коло</translation>
-    </message>
-    <message>
-        <source>&amp;Curve</source>
-        <translation type="obsolete">&amp;Крива</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="obsolete">&amp;Дуга</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="obsolete">&amp;Еліпс</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="obsolete">&amp;Вибір</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="obsolete">&amp;Розмір</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="obsolete">&amp;Зміна</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="obsolete">&amp;Інформація</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="obsolete">&amp;Порядок</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="obsolete">&amp;Креслення</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="obsolete">&amp;Довідка</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="obsolete">&amp;Вікі</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="obsolete">Посібник &amp;користувача</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="obsolete">&amp;Команди</translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="obsolete">&amp;Стилі</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="obsolete">&amp;Віджети</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="obsolete">&amp;Про програму</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="obsolete">&amp;Форум</translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="obsolete">Zulip &amp;Chat</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="obsolete">&amp;Донат</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="obsolete">Віджети</translation>
-    </message>
-    <message>
-        <source>Dock Wid&amp;gets</source>
-        <translation type="obsolete">&amp;Док-віджети</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="obsolete">Панелі &amp;інструментів</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="138"/>
@@ -16614,10 +16121,6 @@ Warning: this action can NOT be undone!</source>
         <source>Modify</source>
         <translation>Змінити</translation>
     </message>
-    <message>
-        <source>Measure</source>
-        <translation type="obsolete">Вимірювання</translation>
-    </message>
 </context>
 <context>
     <name>LC_WidgetOptionsDialog</name>
@@ -16658,10 +16161,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="503"/>
         <source>For &quot;classic&quot; statusbar only. </source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="obsolete">Загальні</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="113"/>
@@ -16841,14 +16340,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="654"/>
         <source>Number of columns for actions in left toolbar.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>side length in pixels</source>
-        <translation type="vanished">довжина сторони у пікселях</translation>
-    </message>
-    <message>
-        <source>Use themed icons</source>
-        <translation type="vanished">Використовувати тематичні іконки</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp" line="216"/>
@@ -17032,78 +16523,6 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp;Файл</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">Редагувати</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">&amp;Вигляд</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&amp;Вибір</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&amp;Лінія</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&amp;Коло</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&amp;Еліпс</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">&amp;Ламана</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">&amp;Зміна</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp;Інформація</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">&amp;Про програму</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp;Довідка</translation>
-    </message>
-    <message>
-        <source>Layer List</source>
-        <translation type="vanished">Список шарів</translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="vanished">Список блоків</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="vanished">Командний рядок</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">&amp;Каскадом</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">&amp;Кахлями</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">Плиткою &amp;горизонтально</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="795"/>
         <source>Creating new file...</source>
         <translation>Створення нового файлу …</translation>
@@ -17179,26 +16598,6 @@ Auto-save disabled.</source>
 Авто-збереження відключене.</translation>
     </message>
     <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">Експортування креслення…</translation>
-    </message>
-    <message>
-        <source>Exported: %1</source>
-        <translation type="vanished">Експортування: %1</translation>
-    </message>
-    <message>
-        <source>Exporting...</source>
-        <translation type="vanished">Експортування…</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">Експорт завершено</translation>
-    </message>
-    <message>
-        <source>Export failed!</source>
-        <translation type="vanished">Помилка експорту!</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1271"/>
         <source>Printing...</source>
         <translation>Друк…</translation>
@@ -17219,22 +16618,6 @@ Auto-save disabled.</source>
         <translation>Закриття програми…</translation>
     </message>
     <message>
-        <source>Import</source>
-        <translation type="vanished">Імпорт</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">Панелі &amp;інструментів</translation>
-    </message>
-    <message>
-        <source>Compiled on: %1</source>
-        <translation type="vanished">Скомпільовано: %1</translation>
-    </message>
-    <message>
-        <source>Version: %1</source>
-        <translation type="vanished">Версія: %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="988"/>
         <source>Warning: File already opened : </source>
         <translation>Попередження: файл вже відкритий: </translation>
@@ -17248,14 +16631,6 @@ Auto-save disabled.</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="249"/>
         <source> , please check the filename and permissions.</source>
         <translation>. Перевірте правильність назви файлу та права доступу.</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">Кахлями по &amp;вертикалі</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">Режим вкладки</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="813"/>
@@ -17273,53 +16648,9 @@ Auto-save disabled.</source>
         <translation>Помилка при автозбереженні</translation>
     </message>
     <message>
-        <source>File</source>
-        <translation type="vanished">Файл</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Редагувати</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="vanished">Вигляд</translation>
-    </message>
-    <message>
-        <source>Snap Selection</source>
-        <translation type="vanished">Вибір прив’язки</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="vanished">Параметри інструменту</translation>
-    </message>
-    <message>
-        <source>Export as</source>
-        <translation type="vanished">Експортувати як</translation>
-    </message>
-    <message>
-        <source>Compiler: Clang %1.%2.%3</source>
-        <translation type="vanished">Компілятор: Clang %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation type="vanished">Компілятор: GNU GCC %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Qt Version: %1</source>
-        <translation type="vanished">Версія Qt: %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="207"/>
         <source>Draft Mode</source>
         <translation type="unfinished">Режим чернетки</translation>
-    </message>
-    <message>
-        <source>Export as PDF</source>
-        <translation type="vanished">Експорт у PDF</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="obsolete">Експорт</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1001"/>
@@ -17336,150 +16667,6 @@ Please check its existence and permissions.</source>
         <translation>Файл &apos;%1&apos; не існує. Операцію перервано.</translation>
     </message>
     <message>
-        <source>Categories</source>
-        <translation type="obsolete">Категорії</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="obsolete">&amp;Порядок</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="obsolete">Порядок</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">Вибрати</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Лінія</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Коло</translation>
-    </message>
-    <message>
-        <source>&amp;Curve</source>
-        <translation type="obsolete">&amp;Крива</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="obsolete">Крива</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Еліпс</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Полілінія</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">Розмір</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">Змінити</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Інформація</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Олівець</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="obsolete">Док-панелі</translation>
-    </message>
-    <message>
-        <source>Grid Status</source>
-        <translation type="obsolete">Статус сітки</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="obsolete">Панелі інструментів</translation>
-    </message>
-    <message>
-        <source>Dockwidgets</source>
-        <translation type="vanished">Док-віджети</translation>
-    </message>
-    <message>
-        <source>Device Options</source>
-        <translation type="obsolete">Параметри пристрою</translation>
-    </message>
-    <message>
-        <source>Device</source>
-        <translation type="obsolete">Пристрій</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="obsolete">&amp;Параметри</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">Пл&amp;агіни</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="obsolete">&amp;Розмір</translation>
-    </message>
-    <message>
-        <source>Dock Wid&amp;gets</source>
-        <translation type="vanished">&amp;Док-віджети</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">Нещодавні файли</translation>
-    </message>
-    <message>
-        <source>Compiler: Microsoft Visual C++</source>
-        <translation type="obsolete">Компілятор: Microsoft Visual C++</translation>
-    </message>
-    <message>
-        <source>Boost Version: %1.%2.%3</source>
-        <translation type="obsolete">Версія Boost: %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation type="vanished">Копіювати</translation>
-    </message>
-    <message>
-        <source>Contributors</source>
-        <translation type="obsolete">Співавтори</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation type="obsolete">Ліцензія</translation>
-    </message>
-    <message>
-        <source>System</source>
-        <translation type="obsolete">Система</translation>
-    </message>
-    <message>
-        <source>Toolbar Creator</source>
-        <translation type="vanished">Створювач панелей</translation>
-    </message>
-    <message>
-        <source>Menu Creator</source>
-        <translation type="vanished">Створювач меню</translation>
-    </message>
-    <message>
-        <source>Menu Assigner</source>
-        <translation type="obsolete">Налаштування меню</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="obsolete">&amp;Інструменти</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="obsolete">&amp;Креслення</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="226"/>
         <source>Saving drawing: %1</source>
         <translation type="unfinished">Збереження креслення: %1</translation>
@@ -17488,16 +16675,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
         <source>Save cancelled</source>
         <translation type="unfinished">Збереження скасовано</translation>
-    </message>
-    <message>
-        <source>Closing Drawing</source>
-        <translation type="vanished">Закриття креслення</translation>
-    </message>
-    <message>
-        <source>Save changes to the following item?
-%1</source>
-        <translation type="vanished">Зберегти зміни до вказаного елемента?
-%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="361"/>
@@ -17520,46 +16697,6 @@ Please check its existence and permissions.</source>
         <translation>Зберегти %1 &amp;як…</translation>
     </message>
     <message>
-        <source>&amp;Window mode</source>
-        <translation type="obsolete">&amp;Режим вікна</translation>
-    </message>
-    <message>
-        <source>&amp;Layout</source>
-        <translation type="obsolete">&amp;Макет інтерфейсу</translation>
-    </message>
-    <message>
-        <source>Rounded</source>
-        <translation type="obsolete">Заокруглений</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="obsolete">Трикутний</translation>
-    </message>
-    <message>
-        <source>North</source>
-        <translation type="obsolete">Північ</translation>
-    </message>
-    <message>
-        <source>South</source>
-        <translation type="obsolete">Південь</translation>
-    </message>
-    <message>
-        <source>East</source>
-        <translation type="obsolete">Схід</translation>
-    </message>
-    <message>
-        <source>West</source>
-        <translation type="obsolete">Захід</translation>
-    </message>
-    <message>
-        <source>&amp;Arrange</source>
-        <translation type="obsolete">&amp;Упорядкувати</translation>
-    </message>
-    <message>
-        <source>&amp;Maximized</source>
-        <translation type="vanished">&amp;Розгорнути</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1090"/>
         <source>Save All cancelled</source>
         <translation type="unfinished">&quot;Зберегти все&quot; скасовано</translation>
@@ -17570,63 +16707,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1228"/>
         <source>Close All cancelled</source>
         <translation>&quot;Закрити все&quot; скасовано</translation>
-    </message>
-    <message>
-        <source>The Code</source>
-        <translation type="obsolete">Код</translation>
-    </message>
-    <message>
-        <source>Cmd</source>
-        <translation type="obsolete">Cmd</translation>
-    </message>
-    <message>
-        <source>Float</source>
-        <translation type="vanished">Окремо</translation>
-    </message>
-    <message>
-        <source>Dock</source>
-        <comment>Dock the command widget to the main window</comment>
-        <translation type="obsolete">Док-панель</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="vanished">&amp;Вікі</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="obsolete">Посібник &amp;користувача</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="obsolete">&amp;Команди</translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="vanished">&amp;Стилі</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="obsolete">&amp;Віджети</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="obsolete">&amp;Форум</translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="obsolete">Zulip &amp;Chat</translation>
-    </message>
-    <message>
-        <source>&amp;Release Information</source>
-        <translation type="obsolete">&amp;Інформація про випуск</translation>
-    </message>
-    <message>
-        <source>On&amp;line</source>
-        <translation type="vanished">Он&amp;лайн</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="obsolete">&amp;Донат</translation>
     </message>
 </context>
 <context>
@@ -17661,25 +16741,9 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
         <source>Current Layer</source>
         <translation type="unfinished">Поточний шар</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Назва поточного шару&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -17712,84 +16776,6 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>QG_BlockWidget</name>
-    <message>
-        <source>Rename the active block</source>
-        <translation type="vanished">Перейменуавти активний блок</translation>
-    </message>
-    <message>
-        <source>Edit the active block
-in a separate window</source>
-        <translation type="vanished">Редагувати активний блок
-в окремому вікні</translation>
-    </message>
-    <message>
-        <source>Insert the active block</source>
-        <translation type="vanished">Вставити активний блок</translation>
-    </message>
-    <message>
-        <source>Block Menu</source>
-        <translation type="vanished">Меню блоку</translation>
-    </message>
-    <message>
-        <source>&amp;Defreeze all Blocks</source>
-        <translation type="vanished">&amp;Розморозити усі блоки</translation>
-    </message>
-    <message>
-        <source>&amp;Freeze all Blocks</source>
-        <translation type="vanished">&amp;Заморозити усі блоки</translation>
-    </message>
-    <message>
-        <source>&amp;Add Block</source>
-        <translation type="vanished">До&amp;дати блок</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Block</source>
-        <translation type="vanished">Ви&amp;лучити блок</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Block</source>
-        <translation type="vanished">&amp;Редагувати блок</translation>
-    </message>
-    <message>
-        <source>&amp;Toggle Visibility</source>
-        <translation type="vanished">&amp;Переключити видимість</translation>
-    </message>
-    <message>
-        <source>Show all blocks</source>
-        <translation type="vanished">Показати усі блоки</translation>
-    </message>
-    <message>
-        <source>Hide all blocks</source>
-        <translation type="vanished">Сховати усі блоки</translation>
-    </message>
-    <message>
-        <source>&amp;Rename Block</source>
-        <translation type="vanished">П&amp;ерейменувати усі блоки</translation>
-    </message>
-    <message>
-        <source>&amp;Insert Block</source>
-        <translation type="vanished">&amp;Вставити блок</translation>
-    </message>
-    <message>
-        <source>&amp;Create New Block</source>
-        <translation type="vanished">&amp;Створити новий блок</translation>
-    </message>
-    <message>
-        <source>Create Block</source>
-        <translation type="vanished">Створити блок</translation>
-    </message>
-    <message>
-        <source>Add an empty block</source>
-        <translation type="vanished">Додати порожній блок</translation>
-    </message>
-    <message>
-        <source>save the active block to a file</source>
-        <translation type="vanished">Зберегти активний блок у файл</translation>
-    </message>
-    <message>
-        <source>Remove block</source>
-        <translation type="vanished">Видалити блок</translation>
-    </message>
     <message>
         <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="183"/>
         <source>Filter</source>
@@ -17916,10 +16902,6 @@ in a separate window</source>
         <translation type="unfinished">Власний</translation>
     </message>
     <message>
-        <source>/ColorBox</source>
-        <translation type="vanished">/Панель кольорів</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="162"/>
         <source>Custom Picked</source>
         <translation>Обрані</translation>
@@ -18015,10 +16997,6 @@ in a separate window</source>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="321"/>
         <source>Float</source>
         <translation>Окремо</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="obsolete">Командний рядок</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="322"/>
@@ -18355,37 +17333,6 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="vanished">Лінійний розмір</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Шар:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Геометрія</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Кут:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Шар:</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translatorcomment>хоча може конфліктувати зі Size</translatorcomment>
-        <translation type="vanished">Розмір</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgEllipse</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="26"/>
@@ -18463,18 +17410,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="130"/>
         <source>Rotation angle for the major axis of ellipse, degrees</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="vanished">Кінцевий кут:</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="vanished">Початковий кут:</translation>
-    </message>
-    <message>
-        <source>Rotation:</source>
-        <translation type="vanished">Обертання:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="276"/>
@@ -18740,19 +17675,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="129"/>
         <source>Command Language:</source>
         <translation>Мова команд:</translation>
-    </message>
-    <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
-&lt;/font&gt;
-&lt;br&gt;
-Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
-(You can changes these settings later.)</source>
-        <translation type="vanished">&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Ласкаво просимо у LibreCAD&lt;/b&gt;
-&lt;/font&gt;
-&lt;br&gt;
-Будь-ласка, оберіть систему одиниць, яку Ви хочете використовувати&lt;br&gt;
-для нових креслень, і бажану мову інтерфейсу та командного рядка.&lt;br&gt;
-(Ви можете змінити це у будь-який час у налаштуваннях програми.)</translation>
     </message>
 </context>
 <context>
@@ -19874,10 +18796,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Move/Copy Options</source>
         <translation>Параметри переміщення/копіювання</translation>
     </message>
-    <message>
-        <source>Number of copies. Maximum 100</source>
-        <translation type="vanished">Кількість копій. Максимум 100</translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgMoveRotate</name>
@@ -19920,10 +18838,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="163"/>
         <source>Multiple Copies</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Кілька копій</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="41"/>
@@ -20313,32 +19227,16 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>То&amp;чність: </translation>
     </message>
     <message>
-        <source>Crosshair</source>
-        <translation type="vanished">Хрестоподібний покажчик</translation>
-    </message>
-    <message>
-        <source>Left crosshair with isometric grid</source>
-        <translation type="vanished">Ліве перехрестя на ізометричній сітці</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="170"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="230"/>
         <source>Left</source>
         <translation>Ліве</translation>
     </message>
     <message>
-        <source>Top crosshair with isometric grid</source>
-        <translation type="vanished">Верхнє перехрестя на ізометричній сітці</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="213"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="246"/>
         <source>Top</source>
         <translation>Верхня</translation>
-    </message>
-    <message>
-        <source>Right crosshair with isometric grid</source>
-        <translation type="vanished">Праве перехрестя на ізометричній сітці</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="196"/>
@@ -20355,14 +19253,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="794"/>
         <source>Orthogonal Grid</source>
         <translation>Ортогональна система координат</translation>
-    </message>
-    <message>
-        <source>Use isometric grid</source>
-        <translation type="vanished">Використати ізометричну систему координат</translation>
-    </message>
-    <message>
-        <source>Isometric Grid</source>
-        <translation type="vanished">Ізометрична система координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1220"/>
@@ -21042,10 +19932,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished">фіксована довжина виносних ліній</translation>
     </message>
     <message>
-        <source>&amp;Splines</source>
-        <translation type="vanished">&amp;Сплайни</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2176"/>
         <source>&amp;Points</source>
         <translation>&amp;Точки</translation>
@@ -21171,10 +20057,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Мова</translation>
     </message>
     <message>
-        <source>Graphic View</source>
-        <translation type="vanished">Графічний вид</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="14"/>
         <source>Application Preferences</source>
         <translation>Налаштування програми</translation>
@@ -21183,10 +20065,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4476"/>
         <source>Defaults for new drawings</source>
         <translation>Значення за умовчанням для нових креслень</translation>
-    </message>
-    <message>
-        <source>&amp;Appearance</source>
-        <translation type="vanished">&amp;Зовнішній вигляд</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5019"/>
@@ -21214,31 +20092,15 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>&amp;Одиниця виміру:</translation>
     </message>
     <message>
-        <source>Backgr&amp;ound:</source>
-        <translation type="vanished">Фо&amp;н:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1173"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1495"/>
         <source>G&amp;rid Color:</source>
         <translation>Ко&amp;лір сітки:</translation>
     </message>
     <message>
-        <source>&amp;Meta Grid Color:</source>
-        <translation type="vanished">&amp;Колір додаткової сітки:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="957"/>
         <source>A&amp;utomatically scale grid</source>
         <translation>Масштабувати сітку а&amp;втоматично</translation>
-    </message>
-    <message>
-        <source>S&amp;elected Color:</source>
-        <translation type="vanished">В&amp;ибраний колір: </translation>
-    </message>
-    <message>
-        <source>&amp;Highlighted Color:</source>
-        <translation type="vanished">&amp;Підсвічений колір:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="940"/>
@@ -21261,10 +20123,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Налаштування за умовчанням</translation>
     </message>
     <message>
-        <source>Drawing unit.</source>
-        <translation type="vanished">Модуль креслення.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4736"/>
         <source>Time between automatic saving of the document in minutes.</source>
         <translation>Час між автоматичними збереженнями документа в хвилинах.</translation>
@@ -21273,10 +20131,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4759"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
         <translation>Якщо встановлено, LibreCAD буде автоматично генерувати резервну копію поточного креслення.</translation>
-    </message>
-    <message>
-        <source>Auto backup</source>
-        <translation type="vanished">Автоматична резервна копія</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5301"/>
@@ -21297,14 +20151,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="723"/>
         <source>&amp;End Handle Color:</source>
         <translation>&amp;Колір кінця вибраного: </translation>
-    </message>
-    <message>
-        <source>Graphic Colors</source>
-        <translation type="obsolete">Графічні кольори</translation>
-    </message>
-    <message>
-        <source>Snap indicator:</source>
-        <translation type="obsolete">Покажчик прив&apos;язки:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="554"/>
@@ -21337,10 +20183,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5528"/>
         <source>Line length:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modify layer of selected entities, at  layer activation</source>
-        <translation type="vanished">Змінити шар обраних об&apos;єктів  під час активації шару</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4303"/>
@@ -21551,17 +20393,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Скинути налаштування</translation>
     </message>
     <message>
-        <source>restores program geometry/layout to original state</source>
-        <translation type="obsolete">відновити геометрію/макет програми до початкового стану</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5076"/>
         <source>Layout</source>
         <translation>Макет</translation>
-    </message>
-    <message>
-        <source>restores the program to its original state</source>
-        <translation type="obsolete">відновлює початковий стан програми</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5092"/>
@@ -21572,14 +20406,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="538"/>
         <source>Scrollbars</source>
         <translation type="unfinished">Смуги прокрутки</translation>
-    </message>
-    <message>
-        <source>Snap indicator lines</source>
-        <translation type="obsolete">Лінії-індикатори прив&apos;язки</translation>
-    </message>
-    <message>
-        <source>Snap indicator shape</source>
-        <translation type="obsolete">Форма покажчика прив&apos;язки</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1671"/>
@@ -21699,29 +20525,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Авто-панорамування</translation>
     </message>
     <message>
-        <source>Hide the relative-&amp;zero marker</source>
-        <translation type="obsolete">Приховати відносний-&amp;нульовий маркер</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2575"/>
         <source>Alt+Z</source>
         <translation type="unfinished">Alt+Z</translation>
-    </message>
-    <message>
-        <source>Visualize the entity under the cursor</source>
-        <translation type="vanished">Візуалізувати елементи під курсором</translation>
-    </message>
-    <message>
-        <source>Mouse-over effects</source>
-        <translation type="obsolete">Ефекти при наведенні курсора</translation>
-    </message>
-    <message>
-        <source>&amp;Relative-Zero Marker Color:</source>
-        <translation type="vanished">&amp;Колір маркера відносного нуля:</translation>
-    </message>
-    <message>
-        <source>Auto save time (minutes):</source>
-        <translation type="vanished">Інтервал між авто-збереженнями (хвилин):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="567"/>
@@ -23469,10 +22275,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation type="obsolete">Інше</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5169"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5224"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5238"/>
@@ -23521,10 +22323,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5284"/>
         <source>Path to folder with translation files</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</source>
-        <translation type="vanished">Перемикати режим довільної прив&apos;язки, якщо натиснуто клавішу ПРОБІЛ і вікно команд порожнє</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4306"/>
@@ -24857,14 +23655,6 @@ so default step value required for baking</source>
         <source>again Still No Text supplied.</source>
         <translation>знову ж таки, не був наданий текст</translation>
     </message>
-    <message>
-        <source>Close All</source>
-        <translation type="vanished">Закрити всі</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">Закрити</translation>
-    </message>
 </context>
 <context>
     <name>QG_FileDialog</name>
@@ -24949,13 +23739,6 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="227"/>
         <source>Untitled</source>
         <translation>Без_назви</translation>
-    </message>
-</context>
-<context>
-    <name>QG_GraphicView</name>
-    <message>
-        <source>Edit Properties</source>
-        <translation type="vanished">Редагувати властивості</translation>
     </message>
 </context>
 <context>
@@ -25082,98 +23865,14 @@ The contents of a Construction Layer should not appear in printout.</source>
 <context>
     <name>QG_LayerWidget</name>
     <message>
-        <source>Show all layers</source>
-        <translation type="vanished">Показати усі шари</translation>
-    </message>
-    <message>
-        <source>Hide all layers</source>
-        <translation type="vanished">Сховати усі шари</translation>
-    </message>
-    <message>
-        <source>Add a layer</source>
-        <translation type="vanished">Додати шар</translation>
-    </message>
-    <message>
-        <source>Modify layer attributes / rename</source>
-        <translation type="vanished">Змінити/перейменувати атрибути шару</translation>
-    </message>
-    <message>
-        <source>Layer Menu</source>
-        <translation type="vanished">Меню шару</translation>
-    </message>
-    <message>
-        <source>&amp;Defreeze all Layers</source>
-        <translation type="vanished">&amp;Розморозити усі шари</translation>
-    </message>
-    <message>
-        <source>&amp;Freeze all Layers</source>
-        <translation type="vanished">З&amp;аморозити усі шари</translation>
-    </message>
-    <message>
-        <source>&amp;Add Layer</source>
-        <translation type="vanished">&amp;Додати шар</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Layer</source>
-        <translation type="vanished">&amp;Вилучити шар</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="249"/>
         <source>Looking for matching layer names</source>
         <translation>Пошук відповідних назв шарів</translation>
     </message>
     <message>
-        <source>Edit Layer &amp;Attributes</source>
-        <translation type="vanished">Редагувати &amp;атрибути шару</translation>
-    </message>
-    <message>
-        <source>Toggle Layer &amp;Visibility</source>
-        <translation type="vanished">Перемкнути &amp;видимість шару</translation>
-    </message>
-    <message>
-        <source>Toggle Layer &amp;Printing</source>
-        <translation type="vanished">Перемкнути &amp;друк шару</translation>
-    </message>
-    <message>
-        <source>Toggle &amp;Construction Layer</source>
-        <translation type="vanished">Перемкнути &amp;контрукційність шару</translation>
-    </message>
-    <message>
-        <source>Unlock all layers</source>
-        <translation type="vanished">Розблокувати усі шари</translation>
-    </message>
-    <message>
-        <source>Lock all layers</source>
-        <translation type="vanished">Заблокувати усі шари</translation>
-    </message>
-    <message>
-        <source>Remove layer</source>
-        <translation type="vanished">Видалити шар</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="247"/>
         <source>Filter</source>
         <translation>Фільтр</translation>
-    </message>
-    <message>
-        <source>&amp;Unlock all Layers</source>
-        <translation type="vanished">&amp;Розблокувати усі шари</translation>
-    </message>
-    <message>
-        <source>&amp;Lock all Layers</source>
-        <translation type="vanished">&amp;Заблокувати усі шари</translation>
-    </message>
-    <message>
-        <source>Toggle Layer Loc&amp;k</source>
-        <translation type="obsolete">Перемкнути &amp;захист шару</translation>
-    </message>
-    <message>
-        <source>&amp;Export Selected Layer(s)</source>
-        <translation type="vanished">&amp;Експортувати обрані шари</translation>
-    </message>
-    <message>
-        <source>Export &amp;Visible Layer(s)</source>
-        <translation type="vanished">Експортувати &amp;видимі шари</translation>
     </message>
 </context>
 <context>
@@ -25356,10 +24055,6 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>Миша</translation>
     </message>
     <message>
-        <source>Right</source>
-        <translation type="vanished">Права</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/status_bar/qg_mousewidget.ui" line="229"/>
         <source>Left</source>
         <translation>Ліва</translation>
@@ -25404,13 +24099,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="49"/>
         <source>Line type</source>
         <translation type="unfinished">Тип лінії</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PolylineOptions</name>
-    <message>
-        <source>wrong action type</source>
-        <translation type="obsolete">некоректний тип дії</translation>
     </message>
 </context>
 <context>
@@ -25466,145 +24154,9 @@ p, li { white-space: pre-wrap; }
         <source>Total length of selected entities</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Число обраних об’єктів&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Сумарна довжина вибраних об’єктів&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
 </context>
 <context>
     <name>QG_SnapToolBar</name>
-    <message>
-        <source>Snap</source>
-        <translation type="vanished">Прив’язка</translation>
-    </message>
-    <message>
-        <source>Snap to Endpoints</source>
-        <translation type="vanished">Прив’язка до вершин кривих</translation>
-    </message>
-    <message>
-        <source>Snap to equidistant points of entity</source>
-        <translation type="vanished">До рівновіддалених точок об’єкта</translation>
-    </message>
-    <message>
-        <source>Snap to center points</source>
-        <translation type="vanished">Прив’язка до точок центру</translation>
-    </message>
-    <message>
-        <source>Snap to intersections automatically</source>
-        <translation type="vanished">Прив’язка до точок перетину автоматично</translation>
-    </message>
-    <message>
-        <source>Snap to closest point on entity</source>
-        <translation type="vanished">Прив’язка до найближчої точки на об’єкті</translation>
-    </message>
-    <message>
-        <source>Snap to point with given distance to endpoint</source>
-        <translation type="vanished">Прив’язка на заданій відстані від вершини</translation>
-    </message>
-    <message>
-        <source>Snap to intersections manually</source>
-        <translation type="vanished">Прив’язка до точок перетину вручну</translation>
-    </message>
-    <message>
-        <source>Snap to grid</source>
-        <translation type="vanished">Прив’язка до сітки</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontally</source>
-        <translation type="vanished">Обмежити горизонтально</translation>
-    </message>
-    <message>
-        <source>Restrict Vertically</source>
-        <translation type="vanished">Обмежити вертикально</translation>
-    </message>
-    <message>
-        <source>Move relative Zero</source>
-        <translation type="vanished">Перемістити відносний нуль</translation>
-    </message>
-    <message>
-        <source>Lock relative Zero</source>
-        <translation type="vanished">Зафіксувати відносний нуль</translation>
-    </message>
-    <message>
-        <source>Free Snap</source>
-        <translation type="vanished">Без прив’язки</translation>
-    </message>
-    <message>
-        <source>Snap on grid</source>
-        <translation type="vanished">Прив’язка до сітки</translation>
-    </message>
-    <message>
-        <source>Snap on Endpoints</source>
-        <translation type="vanished">Прив’язка до кінцевих точок</translation>
-    </message>
-    <message>
-        <source>Snap on Entity</source>
-        <translation type="vanished">Прив’язка до об’єкта</translation>
-    </message>
-    <message>
-        <source>Snap Center</source>
-        <translation type="vanished">Прив’язка до центру</translation>
-    </message>
-    <message>
-        <source>Snap Middle</source>
-        <translation type="vanished">Прив’язка до середени</translation>
-    </message>
-    <message>
-        <source>Snap Distance</source>
-        <translation type="vanished">На заданій відстані</translation>
-    </message>
-    <message>
-        <source>Snap Intersection</source>
-        <translation type="vanished">Прив’язка до точок перетину</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontal</source>
-        <translation type="vanished">Обмежити горизонтально</translation>
-    </message>
-    <message>
-        <source>Restrict Vertical</source>
-        <translation type="vanished">Обмежити вертикально</translation>
-    </message>
-    <message>
-        <source>Restrict Orthogonal</source>
-        <translation type="vanished">Обмежити ортагонально</translation>
-    </message>
-    <message>
-        <source>Restrict Nothing</source>
-        <translation type="vanished">Без обмежень</translation>
-    </message>
-    <message>
-        <source>Set relative zero position</source>
-        <translation type="vanished">Задати положення відносного нуля</translation>
-    </message>
-    <message>
-        <source>Lock relative zero position</source>
-        <translation type="vanished">Заблокувати положення відносного нуля</translation>
-    </message>
-    <message>
-        <source>Exclusive Snap Mode</source>
-        <translation type="vanished">Режим екслюзивної прив&apos;язки</translation>
-    </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="169"/>
         <source>Relative zero position is %1</source>
@@ -25681,114 +24233,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="250"/>
         <source>By Layer</source>
         <translation>За шаром</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation type="vanished">За блоком</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">За умовчанням</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation type="vanished">0.00 мм</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation type="vanished">0.05 мм</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation type="vanished">0.09 мм</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation type="vanished">0.13 мм (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation type="vanished">0.15 мм</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation type="vanished">0.18 мм (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation type="vanished">0.20 мм</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation type="vanished">0.25 мм (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation type="vanished">0.30 мм</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation type="vanished">0.35 мм (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation type="vanished">0.40 мм</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation type="vanished">0.50 мм (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation type="vanished">0.53 мм</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation type="vanished">0.60 мм</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation type="vanished">0.70 мм (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation type="vanished">0.80 мм</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation type="vanished">0.90 мм</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation type="vanished">1.00 мм (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation type="vanished">1.06 мм</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation type="vanished">1.20 мм</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation type="vanished">1.40 мм (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation type="vanished">1.58 мм</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation type="vanished">2.00 мм (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation type="vanished">2.11 мм</translation>
-    </message>
-    <message>
-        <source>- Unchanged -</source>
-        <translation type="vanished">- Без змін -</translation>
     </message>
 </context>
 <context>
@@ -27412,10 +25856,6 @@ Do you want to replace it?</source>
         <translation type="unfinished">закрито</translation>
     </message>
     <message>
-        <source>chord length</source>
-        <translation type="obsolete">довжина хорди</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1059"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1165"/>
         <source>columns</source>
@@ -27689,19 +26129,9 @@ Do you want to replace it?</source>
         <translation type="unfinished">скасувати</translation>
     </message>
     <message>
-        <source>u</source>
-        <comment>undo</comment>
-        <translation type="obsolete">с</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1221"/>
         <source>redo</source>
         <translation type="unfinished">повторити</translation>
-    </message>
-    <message>
-        <source>r</source>
-        <comment>redo</comment>
-        <translation type="obsolete">по</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1224"/>
@@ -27761,10 +26191,6 @@ Do you want to replace it?</source>
         <translation type="unfinished">Команду не знайдено: %1</translation>
     </message>
     <message>
-        <source>Accepted keycode: %1</source>
-        <translation type="obsolete">Прийнята клавіатурна послідовність: %1</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="472"/>
         <source>Available commands:</source>
         <translation type="unfinished">Доступні команди:</translation>
@@ -27814,90 +26240,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Block</source>
-        <translation type="obsolete">Блок</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Коло</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="vanished">Крива</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Редагувати</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">Еліпс</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Файл</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">Розмір</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Інформація</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">Шар</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Лінія</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">Змінити</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="obsolete">Параметри</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">Інше</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">Ламана</translation>
-    </message>
-    <message>
-        <source>Restriction</source>
-        <translation type="vanished">Обмеження</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="obsolete">Вибрати</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="obsolete">Прив’язка</translation>
-    </message>
-    <message>
-        <source>Snap Extras</source>
-        <translation type="vanished">Прив&apos;язка (додатково)</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">Вигляд</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="vanished">Віджети</translation>
-    </message>
-    <message>
-        <source>Creators</source>
-        <translation type="vanished">Створювачі</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="87"/>
         <source>All</source>
         <translation>Усе</translation>
@@ -27906,10 +26248,6 @@ Do you want to replace it?</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="960"/>
         <source>Invalid objects removed:</source>
         <translation>Не коректні об&apos;єкти видалено:</translation>
-    </message>
-    <message>
-        <source>Pen Wizard</source>
-        <translation type="obsolete">Олівцева палітра</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_wizard/colorwizard.cpp" line="52"/>
@@ -30043,10 +28381,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export as PDF</source>
-        <translation type="obsolete">Експорт у PDF</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="44"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
@@ -30296,10 +28630,6 @@ Do you want to replace it?</source>
         <source>Specify reference point</source>
         <translation>Вкажіть точку відліку</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionBlocksExplode</name>
@@ -30330,10 +28660,6 @@ Do you want to replace it?</source>
         <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="349"/>
         <source>Specify reference point</source>
         <translation>Вкажіть точку відліку</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="352"/>
@@ -30562,37 +28888,6 @@ This block cannot be inserted.</source>
         <source>Choose second edge</source>
         <translation>Виберіть другий край</translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDimAligned</name>
-    <message>
-        <source>Specify first extension line origin</source>
-        <translation type="vanished">Вкажіть точку прив’язки першої розмірної лінії</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
-        <source>Specify second extension line origin</source>
-        <translation type="vanished">Вкажіть точку прив’язки другої розмірної лінії</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation type="vanished">Вкажіть розташування розмірної лінії</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Введіть текст розмірного напису:</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDimAngular</name>
@@ -30600,10 +28895,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="216"/>
         <source>Select first line</source>
         <translation>Виділіть першу лінію</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="219"/>
@@ -30622,42 +28913,11 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDimDiametric</name>
-    <message>
-        <source>Not a circle or arc entity</source>
-        <translation type="vanished">Не є колом чи дугою</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Некоректний вираз</translation>
-    </message>
-    <message>
-        <source>Select arc or circle entity</source>
-        <translation type="vanished">Виділіть дугу чи коло</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation type="vanished">Вкажіть положення розмірної лінії</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Введіть текст розмірного напису:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDimLeader</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="182"/>
         <source>Specify target point</source>
         <translation>Вкажіть цільову точку</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="185"/>
@@ -30689,61 +28949,14 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Specify first extension line origin</source>
-        <translation type="vanished">Вкажіть точку прив’язки першої розмірної лінії</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="211"/>
         <source>Specify second extension line origin</source>
         <translation>Вкажіть точку прив’язки другої розмірної лінії</translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="221"/>
         <source>Specify dimension line location</source>
         <translation>Вкажіть розташування розмірної лінії</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Введіть текст розмірного напису:</translation>
-    </message>
-    <message>
-        <source>Enter dimension line angle:</source>
-        <translation type="vanished">Введіть кут розмірного напису: </translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDimRadial</name>
-    <message>
-        <source>Not a circle or arc entity</source>
-        <translation type="vanished">Не є колом чи дугою</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Некоректний вираз</translation>
-    </message>
-    <message>
-        <source>Select arc or circle entity</source>
-        <translation type="vanished">Виділіть дугу чи коло</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
-        <source>Specify dimension line position or enter angle:</source>
-        <translation type="vanished">Вкажіть розташування розмірної лінії чи введіть кут:</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Введіть текст розмірного напису: </translation>
     </message>
 </context>
 <context>
@@ -30794,17 +29007,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="500"/>
         <source>Specify radius</source>
         <translation>Вкажіть радіус</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="507"/>
@@ -30821,14 +29026,6 @@ This block cannot be inserted.</source>
         <source>Specify included angle:</source>
         <translation>Зазначте внутрішній кут: </translation>
     </message>
-    <message>
-        <source>Specify chord length:</source>
-        <translation type="vanished">Вкажіть довжину хорди:</translation>
-    </message>
-    <message>
-        <source>Specify end angle or [angle/chord length]</source>
-        <translation type="vanished">Вкажіть кінцевий кут або [кут/довжину хорди]</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawArc3P</name>
@@ -30843,21 +29040,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished">Вкажіть третю точку</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="233"/>
         <source>Specify second point</source>
         <translation>Вкажіть другу точку</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
-    </message>
-    <message>
-        <source>Specify endpoint</source>
-        <translation type="vanished">Вкажіть кінцеву точку</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="230"/>
@@ -30883,17 +29068,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="277"/>
         <source>Specify end angle</source>
         <translation>Вкажіть кінцевий кут</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="279"/>
@@ -30914,14 +29091,6 @@ This block cannot be inserted.</source>
         <translation>Вкажіть центр</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="129"/>
         <source>Specify point on circle</source>
         <translation>Визначте точку на колі</translation>
@@ -30940,17 +29109,9 @@ This block cannot be inserted.</source>
         <translation>Вкажіть першу точку</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="156"/>
         <source>Specify second point</source>
         <translation>Вкажіть другу точку</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
 </context>
 <context>
@@ -30966,17 +29127,9 @@ This block cannot be inserted.</source>
         <translation>Вкажіть першу точку</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="175"/>
         <source>Specify second point</source>
         <translation>Вкажіть другу точку</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="178"/>
@@ -30997,17 +29150,9 @@ This block cannot be inserted.</source>
         <translation>Вкажіть центр кола</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="177"/>
         <source>Specify circle radius</source>
         <translation>Вкажіть радіус кола</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="146"/>
@@ -31033,17 +29178,9 @@ This block cannot be inserted.</source>
         <translation>Вкажіть першу лінію</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="216"/>
         <source>Specify the second line</source>
         <translation>Вкажіть другу лінію</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="219"/>
@@ -31054,17 +29191,9 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircleTan1_2P</name>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="463"/>
         <source>Specify the first point on the tangent circle</source>
         <translation>Вкажіть першу точку на дотичній кола</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="466"/>
@@ -31090,38 +29219,14 @@ This block cannot be inserted.</source>
         <translation>Вкажіть першу пряму, дугу або коло</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="280"/>
         <source>Specify the second line/arc/circle</source>
         <translation>Вкажіть другу пряму, дугу або коло</translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="283"/>
         <source>Select the center of the tangent circle</source>
         <translation>Вкажіть центр дотичного кола</translation>
-    </message>
-    <message>
-        <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation type="vanished">Некоректна формула &apos;%1&apos; для радіуса</translation>
-    </message>
-    <message>
-        <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation type="vanished">Некоректний відємний радіус &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation type="vanished">Не коректний нульовий радіус &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation type="vanished">Не можливе тангентальне коло для радіусу &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="246"/>
@@ -31135,18 +29240,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="338"/>
         <source>Specify a line/arc/circle</source>
         <translation>Вкажіть пряму, дугу або коло</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
-        <source>Specify the another arc/circle</source>
-        <translation type="vanished">Вкажіть іншу дугу або коло</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="341"/>
@@ -31166,14 +29259,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="509"/>
         <source>Select the center of the tangent circle</source>
@@ -31208,17 +29293,9 @@ This block cannot be inserted.</source>
         <translation>Вкажіть першу точку на еліпсі</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="276"/>
         <source>Specify the second point on ellipse</source>
         <translation>Вкажіть другу точку на еліпсі</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="279"/>
@@ -31251,17 +29328,9 @@ This block cannot be inserted.</source>
         <translation>Вкажіть центр еліпса</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="339"/>
         <source>Specify endpoint of major axis</source>
         <translation>Вкажіть кінцеву точку великої осі</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="342"/>
@@ -31287,10 +29356,6 @@ This block cannot be inserted.</source>
         <translation>Вкажіть центр еліпса</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="246"/>
         <source>Specify the first point on ellipse</source>
         <translation>Вкажіть першу точку на еліпсі</translation>
@@ -31299,10 +29364,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="249"/>
         <source>Specify the second point on ellipse</source>
         <translation>Вкажіть другу точку на еліпсі</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="252"/>
@@ -31323,17 +29384,9 @@ This block cannot be inserted.</source>
         <translation>Вкажіть перший фокус еліпса</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="195"/>
         <source>Specify second focus of ellipse</source>
         <translation>Вкажіть другий фокус еліпса</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="198"/>
@@ -31359,17 +29412,9 @@ This block cannot be inserted.</source>
         <translation>Вкажіть першу лінію</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="310"/>
         <source>Specify the second line</source>
         <translation>Вкажіть другу лінію</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="313"/>
@@ -31455,10 +29500,6 @@ This block cannot be inserted.</source>
         <translation>Вкажіть точку відліку</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="270"/>
         <source>Enter angle:</source>
         <translation>Введіть кут:</translation>
@@ -31482,17 +29523,9 @@ This block cannot be inserted.</source>
         <translation>Вкажіть першу точку</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="274"/>
         <source>Specify next point or [%1]</source>
         <translation>Вкажіть наступну точку чи [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="276"/>
@@ -31534,17 +29567,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="312"/>
         <source>Enter angle:</source>
         <translation>Введіть кут:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="315"/>
@@ -31571,17 +29596,9 @@ This block cannot be inserted.</source>
         <translation>Виділіть першу лінію</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="268"/>
         <source>Select second line</source>
         <translation>Виділіть другу лінію</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="271"/>
@@ -31607,10 +29624,6 @@ This block cannot be inserted.</source>
         <source>Click and drag to draw a line</source>
         <translation>Клацніть мишкою та потягніть, щоб намалювати лінію</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineHorVert</name>
@@ -31620,17 +29633,9 @@ This block cannot be inserted.</source>
         <translation>Вкажіть першу точку</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="117"/>
         <source>Specify second point</source>
         <translation>Вкажіть другу точку</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
 </context>
 <context>
@@ -31647,17 +29652,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="255"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Виберіть коло, дугу чи еліпс</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
 </context>
 <context>
@@ -31666,10 +29663,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="135"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
         <translation>Вкажіть відстань &lt;%1&gt; чи виберіть об’єкт або ж [%2]</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="109"/>
@@ -31701,17 +29694,9 @@ This block cannot be inserted.</source>
         <translation>Виберіть об’єкт</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="177"/>
         <source>Specify through point</source>
         <translation>Вкажіть точку „через“</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="110"/>
@@ -31737,25 +29722,9 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLinePolygonCenCor</name>
     <message>
-        <source>Specify center</source>
-        <translation type="vanished">Вкажіть центр</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon.cpp" line="41"/>
         <source>Specify a corner</source>
         <translation>Вкажіть кут</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Введіть число:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Неприпустиме число. Спробуйте 1..9999</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Не коректний вираз</translation>
     </message>
 </context>
 <context>
@@ -31766,29 +29735,9 @@ This block cannot be inserted.</source>
         <translation>Вкажіть перший кут</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="92"/>
         <source>Specify second corner</source>
         <translation>Вкажіть другий кут</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Число:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Неприпустиме число. Спробуйте 1..9999</translation>
-    </message>
-    <message>
-        <source>Not a valid expression.</source>
-        <translation type="vanished">Неприпустимий вираз.</translation>
     </message>
 </context>
 <context>
@@ -31824,17 +29773,9 @@ This block cannot be inserted.</source>
         <translation>Вкажіть перший кут</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="144"/>
         <source>Specify second corner</source>
         <translation>Вкажіть другий кут</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
 </context>
 <context>
@@ -31861,17 +29802,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="251"/>
         <source>Specify position</source>
         <translation>Вкажіть положення</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
 </context>
 <context>
@@ -31888,37 +29821,13 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Виділіть коло, дугу чи еліпс</translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent2</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
-    </message>
-    <message>
-        <source>Select first circle or ellipse</source>
-        <translation type="vanished">Вкажіть перше коло чи еліпс</translation>
-    </message>
-    <message>
-        <source>Select second circle or ellipse</source>
-        <translation type="vanished">Вкажіть друге коло чи еліпс</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="215"/>
         <source>Select first circle/ellipse/parabola</source>
@@ -31943,17 +29852,9 @@ This block cannot be inserted.</source>
         <translation>Вкажіть точку вставки</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="189"/>
         <source>Enter text:</source>
         <translation>Введіть текст: </translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
 </context>
 <context>
@@ -31962,10 +29863,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/point/rs_actiondrawpoint.cpp" line="77"/>
         <source>Specify location</source>
         <translation>Вкажіть розташування</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
     </message>
 </context>
 <context>
@@ -31976,17 +29873,9 @@ This block cannot be inserted.</source>
         <translation>Вкажіть першу точку</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="756"/>
         <source>Specify next point or [%1]</source>
         <translation>Вкажіть наступну точку чи [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="758"/>
@@ -32014,10 +29903,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="567"/>
         <source>Enter number of polylines</source>
         <translation>Визначте кількість поліліній</translation>
-    </message>
-    <message>
-        <source>equation</source>
-        <translation type="vanished">формула</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="525"/>
@@ -32063,17 +29948,9 @@ This block cannot be inserted.</source>
         <translation>Вкажіть першу контрольну точку</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="227"/>
         <source>Specify next control point or [%1]</source>
         <translation>Вкажіть наступну контрольну точку чи [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="229"/>
@@ -32099,33 +29976,14 @@ This block cannot be inserted.</source>
         <translation>Вкажіть точку вставки</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="247"/>
         <source>Enter text:</source>
         <translation>Введіть текст: </translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="243"/>
         <source>Specify second point</source>
         <translation>Вкажіть другу точку</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditCopy</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Вкажіть точку відліку</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
     </message>
 </context>
 <context>
@@ -32188,17 +30046,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Set reference point</source>
-        <translation type="vanished">Встановити точку відліку</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditUndo</name>
     <message>
         <location filename="../src/actions/drawing/edit/rs_actioneditundo.cpp" line="55"/>
@@ -32228,10 +30075,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="250"/>
         <source>Single Line Mode</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Інформація</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="103"/>
@@ -32323,21 +30166,9 @@ Intersection :@(%7, %8)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
         <source>Specify second line</source>
         <translation>Вкажіть другу лінію</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
-    </message>
-    <message>
-        <source>Angle: %1</source>
-        <translation type="vanished">Кут: %1</translation>
     </message>
 </context>
 <context>
@@ -32364,26 +30195,14 @@ Intersection :@(%7, %8)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Point: %1/%2</source>
-        <translation type="vanished">Точка: %1/%2</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="178"/>
         <source>Specify first point of polygon</source>
         <translation>Вкажіть першу точку багатокутника</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
         <source>Specify next point of polygon</source>
         <translation>Вкажіть наступну точку багатокутника</translation>
-    </message>
-    <message>
-        <source>Closing Point: %1/%2</source>
-        <translation type="vanished">Завершальна точка: %1; %2</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="101"/>
@@ -32439,29 +30258,13 @@ End: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="160"/>
         <source>Specify second point of distance</source>
         <translation>Зазначте другу точку вимірюваної відстані</translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
-    </message>
-    <message>
-        <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
-        <translation type="vanished">Відстань: %1 Прямокутна: (%2, %3), Полярна: (%4&lt;%5)</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1</source>
-        <translation type="vanished">Відстань: %1</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="92"/>
         <source>Distance: %1
@@ -32512,18 +30315,10 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="279"/>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="282"/>
         <source>Specify point</source>
         <translation>Вкажіть точку</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
 </context>
 <context>
@@ -32542,10 +30337,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="82"/>
         <source>Specify point</source>
         <translation>Вкажіть точку</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
     </message>
 </context>
 <context>
@@ -32612,10 +30403,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionLibraryInsert</name>
     <message>
-        <source>Insert Library Object</source>
-        <translation type="vanished">Вставити об’єкт з бібліотеки</translation>
-    </message>
-    <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="65"/>
         <source>Cannot open file &apos;%1&apos;</source>
         <translation>Не вдається відкрити файл „%1“</translation>
@@ -32632,10 +30419,6 @@ Point: (%8 , %9)</source>
         <translation>Вкажіть точку відліку</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="197"/>
         <source>Enter angle:</source>
         <translation>Введіть кут:</translation>
@@ -32644,13 +30427,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="200"/>
         <source>Enter factor:</source>
         <translation>Введіть коефіцієнт:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLockRelativeZero</name>
-    <message>
-        <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation type="vanished">Увімкн./в&amp;имкн. відносний нуль</translation>
     </message>
 </context>
 <context>
@@ -32731,17 +30507,9 @@ Point: (%8 , %9)</source>
         <translation>Виберіть перший об’єкт</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="369"/>
         <source>Select second entity</source>
         <translation>Виберіть другий об’єкт</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="372"/>
@@ -32777,30 +30545,14 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cutting point is invalid.</source>
-        <translation type="vanished">Неприпустима точка розбиття.</translation>
-    </message>
-    <message>
-        <source>Cutting point is not on entity.</source>
-        <translation type="vanished">Точка розбиття не належить об’єкту.</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="141"/>
         <source>Specify entity to cut</source>
         <translation>Вкажіть об’єкт для розбиття</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="144"/>
         <source>Specify cutting point</source>
         <translation>Вкажіть точку розбиття</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="114"/>
@@ -32849,17 +30601,9 @@ Point: (%8 , %9)</source>
         <translation>Вкажіть першу точку розриву ламаної</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="151"/>
         <source>Specify second break point on the same polyline</source>
         <translation>Вкажіть другу точку розриву на тій же ламаній</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="95"/>
@@ -32888,26 +30632,11 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionModifyDeleteQuick</name>
-    <message>
-        <source>Pick entity to delete</source>
-        <translation type="vanished">Виберіть об’єкт для вилучення</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionModifyEntity</name>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyentity.cpp" line="263"/>
         <source>Click on entity to modify</source>
         <translation>Клікніть на елементі щоб модифікувати</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Скасувати</translation>
     </message>
 </context>
 <context>
@@ -32981,17 +30710,9 @@ Point: (%8 , %9)</source>
         <translation>Вкажіть першу точку на лінії відображення</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="249"/>
         <source>Specify second point of mirror line</source>
         <translation>Вкажіть другу точку на лінії відображення</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
 </context>
 <context>
@@ -33032,21 +30753,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
         <source>Specify target point</source>
         <translation>Вкажіть цільову точку</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
-    </message>
-    <message>
-        <source>Invalid number of copies, use %1 </source>
-        <translation type="vanished">Невірна кількість копій, використовуйте %1 </translation>
     </message>
 </context>
 <context>
@@ -33106,17 +30815,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="325"/>
         <source>Specify target point</source>
         <translation>Вкажіть цільову точку</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="328"/>
@@ -33162,10 +30863,6 @@ Point: (%8 , %9)</source>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionModifyRevertDirection</name>
@@ -33191,10 +30888,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="588"/>
         <source>Specify reference point</source>
         <translation>Вкажіть точку відліку</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="132"/>
@@ -33331,17 +31024,9 @@ Point: (%8 , %9)</source>
         <translation>Вкажіть абсолютну точку відліку</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="179"/>
         <source>Specify relative reference point</source>
         <translation>Вкажіть відносну точку відліку</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
 </context>
 <context>
@@ -33351,10 +31036,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="362"/>
         <source>Not a valid expression</source>
         <translation>Некоректний вираз</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="229"/>
@@ -33382,10 +31063,6 @@ Point: (%8 , %9)</source>
         <translation>Введіть радіус:</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
         <translation>Визначте перший елемент або радіус &lt;%1&gt;</translation>
@@ -33393,14 +31070,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Вкажіть точку відліку</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="169"/>
         <source>Scale</source>
@@ -33485,17 +31154,9 @@ Point: (%8 , %9)</source>
         <translation>Вкажіть перший кут</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="199"/>
         <source>Specify second corner</source>
         <translation>Вкажіть другий кут</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="79"/>
@@ -33549,17 +31210,9 @@ Point: (%8 , %9)</source>
         <translation>Виберіть перший об’єкт для усікання</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="202"/>
         <source>Select limiting entity</source>
         <translation>Виберіть обмежуючий об’єкт</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="112"/>
@@ -33595,14 +31248,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyTrimAmount</name>
     <message>
-        <source>No entity found. </source>
-        <translation type="vanished">Об’єкт не знайдено. </translation>
-    </message>
-    <message>
-        <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation type="vanished">Обраний об’єкт знаходиться всередині блоку. Відредагуйте, будь ласка, блок.</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="173"/>
         <source>No entity found.</source>
         <translation type="unfinished"></translation>
@@ -33621,14 +31266,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="236"/>
         <source>Select line/arc to trim OR enter length value:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select entity to trim or enter distance:</source>
-        <translation type="vanished">Виберіть об’єкт для усікання або ж введіть відстань:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
 </context>
 <context>
@@ -33657,10 +31294,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="130"/>
         <source>Choose entity for order</source>
         <translation>Оберіть елемент для упорядкування</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
     </message>
 </context>
 <context>
@@ -33692,17 +31325,9 @@ Point: (%8 , %9)</source>
         <translation>Вкажіть ламану лінію, щоб додати вузли</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="171"/>
         <source>Specify adding node&apos;s point</source>
         <translation>Вкажіть нову точку вузла</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
 </context>
 <context>
@@ -33731,22 +31356,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="299"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
         <translation>Вкажіть ламану за допомогою точки десь спочатку чи в кінці</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Вкажіть наступну точку чи [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Вкажіть наступну точку</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="125"/>
@@ -33778,17 +31387,9 @@ Point: (%8 , %9)</source>
         <translation>Вкажіть ламану, щоб вилучити вузол</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="145"/>
         <source>Specify deleting node&apos;s point</source>
         <translation>Вкажіть точки вузла для вилучення</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="128"/>
@@ -33836,17 +31437,9 @@ Point: (%8 , %9)</source>
         <translation>Вкажіть ламану для вилучення між двома вузлами</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="198"/>
         <source>Specify first node</source>
         <translation>Вкажіть перший вузол</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="201"/>
@@ -33877,10 +31470,6 @@ Point: (%8 , %9)</source>
         <source>Choose the original polyline</source>
         <translation>Виберіть початкову ламану</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionPolylineSegment</name>
@@ -33893,10 +31482,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="357"/>
         <source>Choose one of the segments on the original polyline</source>
         <translation>Виберіть один із відрізків на початковій ламаній</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="335"/>
@@ -33933,31 +31518,15 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Specifying point is invalid.</source>
-        <translation type="vanished">Обрана точка є недійсною.</translation>
-    </message>
-    <message>
-        <source>No Segment found on entity.</source>
-        <translation type="vanished">Не знайдено відрізку на об’єкті.</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="183"/>
         <source>Specify polyline to trim</source>
         <translatorcomment>усікання, вирівнювання</translatorcomment>
         <translation>Вкажіть ламану для усікання</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="186"/>
         <source>Specify first segment</source>
         <translation>Вкажіть перший сегмент</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="189"/>
@@ -34037,89 +31606,6 @@ Point: (%8 , %9)</source>
         <source>Printout in color</source>
         <translation>Друк у кольорі</translation>
     </message>
-    <message>
-        <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
-        <translation type="obsolete">RS_ActionPrintPreview::calcPagesNum(): Досягнуто ліміту сторінок.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>Select to modify attributes</source>
-        <translation type="vanished">Виберіть для зміни атрибутів</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
-        <source>Select to delete</source>
-        <translation type="vanished">Виберіть для вилучення</translation>
-    </message>
-    <message>
-        <source>Select to delete immediately</source>
-        <translation type="vanished">Виберіть для вилучення відразу</translation>
-    </message>
-    <message>
-        <source>Select to move</source>
-        <translation type="vanished">Виберіть для переміщення</translation>
-    </message>
-    <message>
-        <source>Select to rotate</source>
-        <translation type="vanished">Виберіть, щоб повернути</translation>
-    </message>
-    <message>
-        <source>Select to scale</source>
-        <translation type="vanished">Виберіть для масштабування</translation>
-    </message>
-    <message>
-        <source>Select to mirror</source>
-        <translation type="vanished">Виберіть для віддзеркалення</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate</source>
-        <translation type="vanished">Виберіть, щоб переміщати і повертати</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation</source>
-        <translation type="obsolete">Оберіть для обертання навколо двох осей</translation>
-    </message>
-    <message>
-        <source>Select to explode text</source>
-        <translation type="vanished">Оберіть для розкладання тексту</translation>
-    </message>
-    <message>
-        <source>Select to create block</source>
-        <translation type="vanished">Виберіть, щоб створити блок</translation>
-    </message>
-    <message>
-        <source>Select to copy</source>
-        <translation type="vanished">Виберіть об&apos;єкти для копіювання</translation>
-    </message>
-    <message>
-        <source>Select to cut</source>
-        <translation type="vanished">Виберіть об&apos;єкти для вирізання</translation>
-    </message>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">Немає вибраних об&apos;єктів!</translation>
-    </message>
-    <message>
-        <source>Select to create offset</source>
-        <translation type="obsolete">Оберіть для створення відступу</translation>
-    </message>
-    <message>
-        <source>Select entities to order</source>
-        <translation type="vanished">Оберіт елементи для упорядкування</translation>
-    </message>
-    <message>
-        <source>Select to explode block</source>
-        <translation type="vanished">Оберіть для розкладання блоку</translation>
-    </message>
-    <message>
-        <source>Select to revert direction</source>
-        <translation type="vanished">Виберіть об’єкти для обернення напрямку</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionSelectContour</name>
@@ -34152,17 +31638,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="176"/>
         <source>Choose second point of intersection line</source>
         <translation>Вкажіть другу точку лінії перетину</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
 </context>
 <context>
@@ -34188,10 +31666,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="116"/>
         <source>De-Selecting</source>
@@ -34243,10 +31717,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="163"/>
         <source>Click and drag for the selection window</source>
         <translation>Натисніть та перетягніть, щоб вибрати вікном</translation>
@@ -34259,29 +31729,13 @@ Point: (%8 , %9)</source>
         <source>Set relative Zero</source>
         <translation>Встановити відносний нуль</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
-        <source>Set &amp;Relative Zero</source>
-        <translation type="vanished">Встановити &amp;відносний нуль</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionSnapIntersectionManual</name>
     <message>
-        <source>I&amp;ntersection Manually</source>
-        <translation type="vanished">&amp;Перетини вручну</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="142"/>
         <source>Select first entity</source>
         <translation>Виберіть перший об’єкт</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="145"/>
@@ -34310,10 +31764,6 @@ Point: (%8 , %9)</source>
         <translation>Клацніть й тягніть для зміни відображуваної дялянки</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Відміна</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="108"/>
         <source>Zoom panning</source>
         <translation>Вибирання відображуваної ділянки</translation>
@@ -34327,17 +31777,9 @@ Point: (%8 , %9)</source>
         <translation>Зазначте першу межу</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Скасувати</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="143"/>
         <source>Specify second edge</source>
         <translation>Зазначте другу межу</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Назад</translation>
     </message>
 </context>
 <context>
@@ -34604,17 +32046,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Linear Dimension Options</source>
-        <translation type="obsolete">Параметри лінійного розміру</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Кут:</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -34783,17 +32214,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Factor:</source>
-        <translation type="obsolete">Коефіцієнт:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="106"/>
         <source>Scale Factor</source>
         <translation type="unfinished">Коефіцієнт масштабування</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="obsolete">DPI</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="120"/>
@@ -35227,21 +32650,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">Параметри багатокутника</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Кількість:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">Кількість сторін</translation>
-    </message>
-</context>
-<context>
     <name>Ui_LinePolygonOptions</name>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="32"/>
@@ -35441,14 +32849,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="79"/>
         <source>Multiple Copies</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">Відстань:</translation>
-    </message>
-    <message>
-        <source>Offset from original entity</source>
-        <translation type="obsolete">Зсув від вихідного об’єкту</translation>
     </message>
 </context>
 <context>
@@ -35706,14 +33106,6 @@ Point: (%8 , %9)</source>
         <translation>Переключити чорний/білий режим</translation>
     </message>
     <message>
-        <source>Center to page</source>
-        <translation type="obsolete">По центру сторінки</translation>
-    </message>
-    <message>
-        <source>Fit to page</source>
-        <translation type="obsolete">Вписати в сторінку</translation>
-    </message>
-    <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="44"/>
         <source>Landscape Orientation of paper</source>
         <translation type="unfinished"></translation>
@@ -35834,10 +33226,6 @@ Point: (%8 , %9)</source>
         <source>Pick distance from drawing.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">Відстань:</translation>
-    </message>
 </context>
 <context>
     <name>Ui_SnapMiddleOptions</name>
@@ -35850,10 +33238,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="59"/>
         <source>Snap Middle Points:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Middle Points:</source>
-        <translation type="vanished">Середніх точок:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
@@ -35973,41 +33357,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="50"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
         <translation>Використовувати введену довжину як остаточну довжину відрізка після обрізки, замість розміру збільшення</translation>
-    </message>
-</context>
-<context>
-    <name>WidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Рамка</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">Назва</translation>
-    </message>
-    <message>
-        <source>Create</source>
-        <translation type="vanished">Створити</translation>
-    </message>
-    <message>
-        <source>Destroy</source>
-        <translation type="vanished">Зруйнувати</translation>
-    </message>
-    <message>
-        <source>Assign</source>
-        <translation type="vanished">Призначити</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation type="vanished">Оновити</translation>
     </message>
 </context>
 </TS>

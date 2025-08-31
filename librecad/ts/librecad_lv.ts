@@ -39,28 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Kadrs</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Saglabāt</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Kadrs</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Saglabāt</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/dialogs/entity/LC_DlgParabola.ui" line="26"/>
@@ -278,10 +256,6 @@
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="189"/>
         <source>Select arc entity</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Atcelt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="192"/>
@@ -582,17 +556,9 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
         <translation>Norādiet pirmo punktu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="233"/>
         <source>Specify second point</source>
         <translation>Norādiet otro punktu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="236"/>
@@ -878,25 +844,9 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawLinePolygonCenTan</name>
     <message>
-        <source>Specify center</source>
-        <translation type="obsolete">Norādiet centru</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon3.cpp" line="51"/>
         <source>Specify a tangent</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="obsolete">Ievadiet skaitu:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="obsolete">Nav derīgs skaits. Mēģiniet 1..9999</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="obsolete">Nav derīga izteiksme</translation>
     </message>
 </context>
 <context>
@@ -1254,10 +1204,6 @@ or [%2]</source>
         <translation>Norādiet pirmo vadības punktu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
         <source>Specify next control point or [%1]</source>
         <translation>Norādiet nākamo vadības punktu vai [%1]</translation>
@@ -1580,19 +1526,6 @@ or [%2]</source>
         <translation>&amp;Ievilkts riņķis</translation>
     </message>
     <message>
-        <source>Tangential 2 Circles, Radius</source>
-        <comment>circle tangential with two circles, and given radius</comment>
-        <translation type="vanished">Pieskaras 2 apļiem, rādiuss</translation>
-    </message>
-    <message>
-        <source>Tangential 2 Circles, 1 Point</source>
-        <translation type="vanished">Pieskaras 2 apļiem, 1 punkts</translation>
-    </message>
-    <message>
-        <source>Tangential &amp;3 Circles</source>
-        <translation type="vanished">Pieskaras &amp;3 apļiem</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
         <source>Tangential, 2 P&amp;oints</source>
         <translation>Pieskare, 2 p&amp;unkti</translation>
@@ -1688,10 +1621,6 @@ or [%2]</source>
         <translation>Izv&amp;eidot vienāda garuma lauztas līnijas</translation>
     </message>
     <message>
-        <source>Create Polyline from Existing &amp;Segments</source>
-        <translation type="vanished">Izveidot lauztu līniju no esošiem &amp;segmentiem</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="327"/>
         <source>&amp;MText</source>
         <translation>&amp;Daudzrindu teksts</translation>
@@ -1757,10 +1686,6 @@ or [%2]</source>
         <translation>&amp;Dzēst</translation>
     </message>
     <message>
-        <source>Delete Freehand</source>
-        <translation type="vanished">Dzēst ar brīvu roku zīmēto</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="368"/>
         <source>&amp;Move / Copy</source>
         <translation>&amp;Pārvietot / kopēt</translation>
@@ -1769,10 +1694,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="369"/>
         <source>Re&amp;vert direction</source>
         <translation>Apgriezt &amp;virzienu</translation>
-    </message>
-    <message>
-        <source>Ctrl+R</source>
-        <translation type="vanished">Ctrl+R</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="370"/>
@@ -1850,17 +1771,9 @@ or [%2]</source>
         <translation>&amp;Eksplodēt tekstu burtos</translation>
     </message>
     <message>
-        <source>Point inside contour</source>
-        <translation type="vanished">Punkts kontūrā</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="498"/>
         <source>&amp;Distance Point to Point</source>
         <translation>&amp;Attālums no punkta uz punktu</translation>
-    </message>
-    <message>
-        <source>&amp;Distance Entity to Point</source>
-        <translation type="vanished">&amp;Attālums no objekta līdz punktam</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="501"/>
@@ -1868,17 +1781,9 @@ or [%2]</source>
         <translation>&amp;Leņķis starp divām līnijām</translation>
     </message>
     <message>
-        <source>&amp;Total length of selected entities</source>
-        <translation type="vanished">Izvēlē&amp;to objektu kopīgais garums</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="503"/>
         <source>Polygonal &amp;Area</source>
         <translation>Daudzstūra l&amp;aukums</translation>
-    </message>
-    <message>
-        <source>&amp;Selection pointer</source>
-        <translation type="vanished">Izvēlēšanā&amp;s rādītājs</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="660"/>
@@ -1906,10 +1811,6 @@ or [%2]</source>
         <translation>&amp;Ielīmēt</translation>
     </message>
     <message>
-        <source>move to bottom</source>
-        <translation type="vanished">pārvietot uz apakšu</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="190"/>
         <source>Polygo&amp;n (Tan,Tan)</source>
         <translation type="unfinished"></translation>
@@ -1933,10 +1834,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="233"/>
         <source>Paste to Points</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tangential 2 Circles, Radius</source>
-        <translation type="obsolete">Pieskaras 2 apļiem, rādiuss</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="269"/>
@@ -2610,18 +2507,6 @@ or [%2]</source>
         <translation type="unfinished">Brīva pievilkšana</translation>
     </message>
     <message>
-        <source>lower after entity</source>
-        <translation type="vanished">pazemināt pēc objekta</translation>
-    </message>
-    <message>
-        <source>raise over entity</source>
-        <translation type="vanished">pacelt virs objekta</translation>
-    </message>
-    <message>
-        <source>move to top</source>
-        <translation type="vanished">pārvietot uz virspusi</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="499"/>
         <source>Distance &amp;Entity to Point</source>
         <translation type="unfinished"></translation>
@@ -2770,10 +2655,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="563"/>
         <source>Current &amp;Drawing Preferences</source>
         <translation>Pašreizējā &amp;zīmējuma iestatījumi</translation>
-    </message>
-    <message>
-        <source>&amp;Delete selected</source>
-        <translation type="vanished">&amp;Dzēst izvēlēto</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="652"/>
@@ -3203,81 +3084,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionGroupManager</name>
-    <message>
-        <source>Block</source>
-        <translation type="obsolete">Bloks</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Riņķis</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="obsolete">Līkne</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="obsolete">Loks</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="obsolete">Splains</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Rediģēt</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">Elipse</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Datne</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">Dimensija</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Informācija</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Līnija</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="obsolete">Punkts</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">Modificēt</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="obsolete">Opcijas</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">Lauzta līnija</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="obsolete">Izvēlēties</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="obsolete">Pievilkt</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">Skats</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionInfo3PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="141"/>
@@ -3293,10 +3099,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="149"/>
         <source>Select second edge point of angle</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Informācija</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="189"/>
@@ -5356,29 +5158,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Slānis:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Ģeometrija</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="obsolete">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="obsolete">Y</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Zīmulis</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgDimStyleManager</name>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="14"/>
@@ -6720,10 +6499,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="332"/>
         <source>Edit style override</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="obsolete">...</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="346"/>
@@ -9747,10 +9522,6 @@ Please specify a different value.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Layer Menu</source>
-        <translation type="obsolete">Slāņa izvēlne</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="651"/>
         <source>&amp;Add Child Layer</source>
         <translation type="unfinished"></translation>
@@ -10914,10 +10685,6 @@ Please specify a different value.</source>
         <translation type="unfinished">Secība</translation>
     </message>
     <message>
-        <source>Dock Wid&amp;gets</source>
-        <translation type="obsolete">Do&amp;ka sīkrīki</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="475"/>
         <source>&amp;Toolbars</source>
         <translation type="unfinished">&amp;Rīkjoslas</translation>
@@ -11211,14 +10978,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="32"/>
         <source>Snap point of gap to line snap point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="obsolete">Sākums</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="obsolete">Beigas</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="95"/>
@@ -16146,10 +15905,6 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished">Bibliotēka pārlūks</translation>
     </message>
     <message>
-        <source>Command line</source>
-        <translation type="obsolete">Komandrinda</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="260"/>
         <source>Dock</source>
         <translation type="unfinished"></translation>
@@ -16159,18 +15914,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="284"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lines</source>
-        <translation type="obsolete">Līnijas</translation>
-    </message>
-    <message>
-        <source>Circles</source>
-        <translation type="obsolete">Riņķi</translation>
-    </message>
-    <message>
-        <source>Ellipses</source>
-        <translation type="obsolete">Elipses</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="101"/>
@@ -16191,10 +15934,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="96"/>
         <source>Circle</source>
         <translation type="unfinished">Riņķis</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="obsolete">Līkne</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="99"/>
@@ -16228,29 +15967,9 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished">Secība</translation>
     </message>
     <message>
-        <source>Layer List</source>
-        <translation type="obsolete">Slāņu saraksts</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="212"/>
         <source>Entity Info</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="obsolete">Bloku saraksts</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Datne</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Rediģēt</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">Skats</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="164"/>
@@ -16271,122 +15990,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="98"/>
         <source>Spline</source>
         <translation type="unfinished">Splains</translation>
-    </message>
-    <message>
-        <source>Snap Selection</source>
-        <translation type="obsolete">Pievilkšanas izvēle</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Zīmulis</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="obsolete">Rīku opcijas</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="obsolete">Doka laukumi</translation>
-    </message>
-    <message>
-        <source>Preferences</source>
-        <translation type="obsolete">Iestatījumi</translation>
-    </message>
-    <message>
-        <source>Categories</source>
-        <translation type="obsolete">Kategorijas</translation>
-    </message>
-    <message>
-        <source>Dimensions</source>
-        <translation type="obsolete">Dimensijas</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="obsolete">&amp;Datne</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="obsolete">Importēt</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="obsolete">Eksportēt</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="obsolete">&amp;Opcijas</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="obsolete">R&amp;ediģēt</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="obsolete">Spra&amp;udņi</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="obsolete">&amp;Skats</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="obsolete">&amp;Līnija</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="obsolete">&amp;Riņķis</translation>
-    </message>
-    <message>
-        <source>&amp;Curve</source>
-        <translation type="obsolete">&amp;Līkne</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="obsolete">L&amp;oks</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="obsolete">&amp;Elipse</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="obsolete">&amp;Lauzta līnija</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="obsolete">Iz&amp;vēle</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="obsolete">Dime&amp;nsijas</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="obsolete">&amp;Modificēt</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="obsolete">&amp;Info</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="obsolete">&amp;Secība</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="obsolete">&amp;Palīdzība</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="obsolete">Par</translation>
-    </message>
-    <message>
-        <source>Dock Wid&amp;gets</source>
-        <translation type="obsolete">Do&amp;ka sīkrīki</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="obsolete">&amp;Rīkjoslas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="138"/>
@@ -16557,10 +16160,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="503"/>
         <source>For &quot;classic&quot; statusbar only. </source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="vanished">Vispārīgi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="113"/>
@@ -16923,62 +16522,6 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp;Datne</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">R&amp;ediģēt</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">&amp;Skats</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">Iz&amp;vēle</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&amp;Līnija</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&amp;Riņķis</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&amp;Elipse</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">&amp;Modificēt</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp;Info</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">Par</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp;Palīdzība</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">&amp;Kaskāde</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">&amp;Flīzēt</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">Flīzēt &amp;horizontāli</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="795"/>
         <source>Creating new file...</source>
         <translation>Izveido jaunu datni...</translation>
@@ -17014,14 +16557,6 @@ Warning: this action can NOT be undone!</source>
         <translation>Iziet no lietotnes...</translation>
     </message>
     <message>
-        <source>Layer List</source>
-        <translation type="vanished">Slāņu saraksts</translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="vanished">Bloku saraksts</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="196"/>
         <source>Print preview for %1</source>
         <translation>Drukāt %1 priekšskatījumu</translation>
@@ -17042,33 +16577,9 @@ Warning: this action can NOT be undone!</source>
         <translation>Saglabātais zīmējums: %1</translation>
     </message>
     <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">Eksportē zīmējumu...</translation>
-    </message>
-    <message>
-        <source>Exported: %1</source>
-        <translation type="vanished">Eksportēts: %1</translation>
-    </message>
-    <message>
-        <source>Exporting...</source>
-        <translation type="vanished">Eksportē...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">Eksportēšana pabeigta</translation>
-    </message>
-    <message>
-        <source>Export failed!</source>
-        <translation type="vanished">Eksportēšana neizdevās!</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1275"/>
         <source>Printing complete</source>
         <translation>Drukāšana pabeigta</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="vanished">Komandrinda</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="741"/>
@@ -17083,10 +16594,6 @@ Please check the permissions.</source>
         <translation>Nevar atvērt datni
 %1
 Pārbaudiet tiesības.</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">&amp;Lauzta līnija</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1113"/>
@@ -17110,22 +16617,6 @@ Pārbaudiet tiesības.
 Automātiskā saglabāšana ir deaktivēta.</translation>
     </message>
     <message>
-        <source>Import</source>
-        <translation type="vanished">Importēt</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">&amp;Rīkjoslas</translation>
-    </message>
-    <message>
-        <source>Compiled on: %1</source>
-        <translation type="vanished">Kompilēts: %1</translation>
-    </message>
-    <message>
-        <source>Version: %1</source>
-        <translation type="vanished">Versija: %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="988"/>
         <source>Warning: File already opened : </source>
         <translation>Brīdinājums — datne jau ir atvērta : </translation>
@@ -17139,14 +16630,6 @@ Automātiskā saglabāšana ir deaktivēta.</translation>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="249"/>
         <source> , please check the filename and permissions.</source>
         <translation> , lūdzu, pārbaudiet datnes nosaukumu un atļaujas.</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">Flīzēt &amp;vertikāli</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">&amp;Ciļņu režīms</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="813"/>
@@ -17164,53 +16647,9 @@ Automātiskā saglabāšana ir deaktivēta.</translation>
         <translation>Automātiskā saglabāšana neizdevās</translation>
     </message>
     <message>
-        <source>File</source>
-        <translation type="vanished">Datne</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Rediģēt</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="vanished">Skats</translation>
-    </message>
-    <message>
-        <source>Snap Selection</source>
-        <translation type="vanished">Pievilkšanas izvēle</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="vanished">Rīku opcijas</translation>
-    </message>
-    <message>
-        <source>Export as</source>
-        <translation type="vanished">Eksportēt kā</translation>
-    </message>
-    <message>
-        <source>Compiler: Clang %1.%2.%3</source>
-        <translation type="vanished">Kompilators: Clang %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation type="vanished">Kompilators: GNU GCC %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Qt Version: %1</source>
-        <translation type="vanished">Qt versija: %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="207"/>
         <source>Draft Mode</source>
         <translation>Melnraksta režīms</translation>
-    </message>
-    <message>
-        <source>Export as PDF</source>
-        <translation type="vanished">Eksportēt kā PDF</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">Eksportēt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1001"/>
@@ -17227,106 +16666,6 @@ Lūdzu, pārbaudiet, vai tā eksistē un vai ir pareizas atļaujas.</translation
         <translation>Datne “%1” neeksistē. Atvēršana ir pārtraukta</translation>
     </message>
     <message>
-        <source>Categories</source>
-        <translation type="vanished">Kategorijas</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="vanished">&amp;Secība</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">Secība</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">Izvēlēties</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Līnija</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Riņķis</translation>
-    </message>
-    <message>
-        <source>&amp;Curve</source>
-        <translation type="vanished">&amp;Līkne</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="vanished">Līkne</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Elipse</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Lauzta līnija</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">Dimensija</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">Modificēt</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Informācija</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Zīmulis</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="vanished">Doka laukumi</translation>
-    </message>
-    <message>
-        <source>Grid Status</source>
-        <translation type="vanished">Režģa satuss</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="vanished">Rīkjoslas</translation>
-    </message>
-    <message>
-        <source>Dockwidgets</source>
-        <translation type="vanished">Doka sīkrīki</translation>
-    </message>
-    <message>
-        <source>Device Options</source>
-        <translation type="vanished">Ierīces opcijas</translation>
-    </message>
-    <message>
-        <source>Device</source>
-        <translation type="vanished">Ierīce</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">&amp;Opcijas</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">Spra&amp;udņi</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="vanished">Dime&amp;nsijas</translation>
-    </message>
-    <message>
-        <source>Dock Wid&amp;gets</source>
-        <translation type="vanished">Do&amp;ka sīkrīki</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation type="obsolete">Kopēt</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="226"/>
         <source>Saving drawing: %1</source>
         <translation type="unfinished"></translation>
@@ -17335,10 +16674,6 @@ Lūdzu, pārbaudiet, vai tā eksistē un vai ir pareizas atļaujas.</translation
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
         <source>Save cancelled</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Closing Drawing</source>
-        <translation type="obsolete">Aizver zīmējumu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="361"/>
@@ -17405,25 +16740,9 @@ Lūdzu, pārbaudiet, vai tā eksistē un vai ir pareizas atļaujas.</translation
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
         <source>Current Layer</source>
         <translation>Pašreizējais slānis</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pašlaik aktīvā slāņa nosaukums&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -17456,80 +16775,6 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>QG_BlockWidget</name>
-    <message>
-        <source>Rename the active block</source>
-        <translation type="vanished">Pārsaukt aktīvo bloku</translation>
-    </message>
-    <message>
-        <source>Edit the active block
-in a separate window</source>
-        <translation type="vanished">Aktīvo bloku rediģēt
-atsevišķā logā</translation>
-    </message>
-    <message>
-        <source>Insert the active block</source>
-        <translation type="vanished">Ievietot aktīvo bloku</translation>
-    </message>
-    <message>
-        <source>Block Menu</source>
-        <translation type="vanished">Bloku izvēlne</translation>
-    </message>
-    <message>
-        <source>&amp;Defreeze all Blocks</source>
-        <translation type="vanished">&amp;Atsaldēt visus blokus</translation>
-    </message>
-    <message>
-        <source>&amp;Freeze all Blocks</source>
-        <translation type="vanished">&amp;Sasaldēt visus blokus</translation>
-    </message>
-    <message>
-        <source>&amp;Add Block</source>
-        <translation type="vanished">&amp;Pievienot bloku</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Block</source>
-        <translation type="vanished">&amp;Izņemt bloku</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Block</source>
-        <translation type="vanished">R&amp;ediģēt bloku</translation>
-    </message>
-    <message>
-        <source>&amp;Toggle Visibility</source>
-        <translation type="vanished">Pārslēg&amp;t redzamību</translation>
-    </message>
-    <message>
-        <source>Show all blocks</source>
-        <translation type="vanished">Rādīt visus blokus</translation>
-    </message>
-    <message>
-        <source>Hide all blocks</source>
-        <translation type="vanished">Slēpt visus blokus</translation>
-    </message>
-    <message>
-        <source>&amp;Rename Block</source>
-        <translation type="vanished">Pā&amp;rsaukt bloku</translation>
-    </message>
-    <message>
-        <source>&amp;Insert Block</source>
-        <translation type="vanished">&amp;Ievietot bloku</translation>
-    </message>
-    <message>
-        <source>&amp;Create New Block</source>
-        <translation type="vanished">&amp;Izveidot jaunu bloku</translation>
-    </message>
-    <message>
-        <source>Create Block</source>
-        <translation type="vanished">Izveidot bloku</translation>
-    </message>
-    <message>
-        <source>Add an empty block</source>
-        <translation type="vanished">Pievienot tukšu bloku</translation>
-    </message>
-    <message>
-        <source>save the active block to a file</source>
-        <translation type="vanished">saglabāt aktīvo bloku datnē</translation>
-    </message>
     <message>
         <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="183"/>
         <source>Filter</source>
@@ -17751,10 +16996,6 @@ atsevišķā logā</translation>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="321"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="obsolete">Komandrinda</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="322"/>
@@ -18090,44 +17331,6 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="vanished">Lineārā dimensija</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Slānis:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Ģeometrija</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Leņķis:</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Zīmulis</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Slānis:</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">Dimensija</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Zīmulis</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgEllipse</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="26"/>
@@ -18205,18 +17408,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="130"/>
         <source>Rotation angle for the major axis of ellipse, degrees</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="vanished">Beigu leņķis:</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="vanished">Sākuma leņķis:</translation>
-    </message>
-    <message>
-        <source>Rotation:</source>
-        <translation type="vanished">Pagrieziens:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="276"/>
@@ -18482,18 +17673,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="129"/>
         <source>Command Language:</source>
         <translation>Komandu valoda:</translation>
-    </message>
-    <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
-&lt;/font&gt;
-&lt;br&gt;
-Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
-(You can changes these settings later.)</source>
-        <translation type="vanished">&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Laipni lūdzam LibreCAD&lt;/b&gt;
-&lt;/font&gt;
-&lt;br&gt;
-Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumiem un vēlamo valodu.&lt;br&gt;
-(Šos iestatījumus varēsiet vēlāk mainīt.)</translation>
     </message>
 </context>
 <context>
@@ -19615,10 +18794,6 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
         <source>Move/Copy Options</source>
         <translation>Pārvietošanas/kopēšanas opcijas</translation>
     </message>
-    <message>
-        <source>Number of copies. Maximum 100</source>
-        <translation type="vanished">Kopiju skaits. Maksimums ir 100</translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgMoveRotate</name>
@@ -19661,10 +18836,6 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="163"/>
         <source>Multiple Copies</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Vairākas kopijas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="41"/>
@@ -20053,32 +19224,16 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
         <translation>Līniju segmentu skaits uz splaina gabala:</translation>
     </message>
     <message>
-        <source>Crosshair</source>
-        <translation type="vanished">Krustiņš</translation>
-    </message>
-    <message>
-        <source>Left crosshair with isometric grid</source>
-        <translation type="vanished">Kreisais krustiņš ar izometrisko režģi</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="170"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="230"/>
         <source>Left</source>
         <translation>Kreisais</translation>
     </message>
     <message>
-        <source>Top crosshair with isometric grid</source>
-        <translation type="vanished">Augšējais krustiņš ar izometrisko režģi</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="213"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="246"/>
         <source>Top</source>
         <translation>Augšējais</translation>
-    </message>
-    <message>
-        <source>Right crosshair with isometric grid</source>
-        <translation type="vanished">Labais krustiņš ar izometrisko režģi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="196"/>
@@ -20095,14 +19250,6 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="794"/>
         <source>Orthogonal Grid</source>
         <translation>Perpendikulārs režģis</translation>
-    </message>
-    <message>
-        <source>Use isometric grid</source>
-        <translation type="vanished">Izmantot izometrisku režģi</translation>
-    </message>
-    <message>
-        <source>Isometric Grid</source>
-        <translation type="vanished">Izometriskais režģis</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1220"/>
@@ -20907,10 +20054,6 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
         <translation>Valoda</translation>
     </message>
     <message>
-        <source>Graphic View</source>
-        <translation type="vanished">Grafikas skats</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="14"/>
         <source>Application Preferences</source>
         <translation>Lietotnes iestatījumi</translation>
@@ -20919,10 +20062,6 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4476"/>
         <source>Defaults for new drawings</source>
         <translation>Noklusējumi jauniem zīmējumiem</translation>
-    </message>
-    <message>
-        <source>&amp;Appearance</source>
-        <translation type="vanished">&amp;Izskats</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5019"/>
@@ -20950,31 +20089,15 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
         <translation>&amp;Mērvienība:</translation>
     </message>
     <message>
-        <source>Backgr&amp;ound:</source>
-        <translation type="vanished">F&amp;ons:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1173"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1495"/>
         <source>G&amp;rid Color:</source>
         <translation>&amp;Režģa krāsa:</translation>
     </message>
     <message>
-        <source>&amp;Meta Grid Color:</source>
-        <translation type="vanished">&amp;Meta režģa krāsa:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="957"/>
         <source>A&amp;utomatically scale grid</source>
         <translation>A&amp;utomātiski mērogot režģi</translation>
-    </message>
-    <message>
-        <source>S&amp;elected Color:</source>
-        <translation type="vanished">I&amp;zvēlētā krāsa:</translation>
-    </message>
-    <message>
-        <source>&amp;Highlighted Color:</source>
-        <translation type="vanished">&amp;Izceltā krāsa:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="940"/>
@@ -20997,10 +20120,6 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
         <translation>Programmas noklusējumi</translation>
     </message>
     <message>
-        <source>Drawing unit.</source>
-        <translation type="vanished">Zīmējuma mērvienība.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4736"/>
         <source>Time between automatic saving of the document in minutes.</source>
         <translation>Laika periods minūtēs starp dokumentu automātisku saglabāšanu.</translation>
@@ -21009,10 +20128,6 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4759"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
         <translation>Kad iestatīts, LibreCAD automātiski veidos pašreizējā zīmējuma rezerves kopijas.</translation>
-    </message>
-    <message>
-        <source>Auto backup</source>
-        <translation type="vanished">Automātiski dublēt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5301"/>
@@ -21033,14 +20148,6 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="723"/>
         <source>&amp;End Handle Color:</source>
         <translation>B&amp;eigu tura krāsa:</translation>
-    </message>
-    <message>
-        <source>Graphic Colors</source>
-        <translation type="vanished">Grafikas krāsas</translation>
-    </message>
-    <message>
-        <source>Snap indicator:</source>
-        <translation type="vanished">Piesaistes indikators:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="554"/>
@@ -21073,10 +20180,6 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5528"/>
         <source>Line length:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modify layer of selected entities, at  layer activation</source>
-        <translation type="vanished">Mainīt slāni izvēlētajam objektam, pie slāņa aktivēšanas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4303"/>
@@ -21287,17 +20390,9 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
         <translation>Attīrīt iestatījumus</translation>
     </message>
     <message>
-        <source>restores program geometry/layout to original state</source>
-        <translation type="vanished">atjauno programmas ģeometriju/izklājumu uz sākotnējo izkārtojumu</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5076"/>
         <source>Layout</source>
         <translation>Izkārtojums</translation>
-    </message>
-    <message>
-        <source>restores the program to its original state</source>
-        <translation type="vanished">atjaunot programmu uz tās sākotnējo stāvokli</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5092"/>
@@ -21308,14 +20403,6 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="538"/>
         <source>Scrollbars</source>
         <translation>Ritjoslas</translation>
-    </message>
-    <message>
-        <source>Snap indicator lines</source>
-        <translation type="vanished">Piesaistīt indikatora līnijas</translation>
-    </message>
-    <message>
-        <source>Snap indicator shape</source>
-        <translation type="vanished">Piesaistīt indikatora formu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1671"/>
@@ -23382,13 +22469,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Atcelt</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgpoint.ui" line="26"/>
@@ -24564,10 +23644,6 @@ so default step value required for baking</source>
         <source>again Still No Text supplied.</source>
         <translation>atkal nav piegādāts teksts.</translation>
     </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">Noslēgt</translation>
-    </message>
 </context>
 <context>
     <name>QG_FileDialog</name>
@@ -24778,70 +23854,14 @@ Konstruēšanas slāņa saturam nevajadzētu parādīties izdrukā.</translation
 <context>
     <name>QG_LayerWidget</name>
     <message>
-        <source>Show all layers</source>
-        <translation type="vanished">Rādīt visus slāņus</translation>
-    </message>
-    <message>
-        <source>Hide all layers</source>
-        <translation type="vanished">Slēpt visus slāņus</translation>
-    </message>
-    <message>
-        <source>Add a layer</source>
-        <translation type="vanished">Pievienot slāni</translation>
-    </message>
-    <message>
-        <source>Modify layer attributes / rename</source>
-        <translation type="vanished">Modificēt slāņa atribūtus / pārsaukt</translation>
-    </message>
-    <message>
-        <source>Layer Menu</source>
-        <translation type="vanished">Slāņa izvēlne</translation>
-    </message>
-    <message>
-        <source>&amp;Defreeze all Layers</source>
-        <translation type="vanished">&amp;Atsaldēt visus slāņus</translation>
-    </message>
-    <message>
-        <source>&amp;Freeze all Layers</source>
-        <translation type="vanished">&amp;Sasaldēt visus slāņus</translation>
-    </message>
-    <message>
-        <source>&amp;Add Layer</source>
-        <translation type="vanished">&amp;Pievienot slāni</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Layer</source>
-        <translation type="vanished">&amp;Izņemt slāni</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="249"/>
         <source>Looking for matching layer names</source>
         <translation>Meklē atbilstošus slāņu nosaukumus</translation>
     </message>
     <message>
-        <source>Edit Layer &amp;Attributes</source>
-        <translation type="vanished">Rediģēt slāņa &amp;atribūtus</translation>
-    </message>
-    <message>
-        <source>Toggle Layer &amp;Visibility</source>
-        <translation type="vanished">Pārslēgt slāņa &amp;redzamību</translation>
-    </message>
-    <message>
-        <source>Toggle Layer &amp;Printing</source>
-        <translation type="vanished">Pārslēgt slāņa &amp;drukāšanu</translation>
-    </message>
-    <message>
-        <source>Toggle &amp;Construction Layer</source>
-        <translation type="vanished">Pārslēgt &amp;konstruēšanas slāni</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="247"/>
         <source>Filter</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toggle Layer Loc&amp;k</source>
-        <translation type="obsolete">Pārslēgt slāņa fi&amp;ksēšanu</translation>
     </message>
 </context>
 <context>
@@ -25024,10 +24044,6 @@ Konstruēšanas slāņa saturam nevajadzētu parādīties izdrukā.</translation
         <translation>Pele</translation>
     </message>
     <message>
-        <source>Right</source>
-        <translation type="vanished">Labā</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/status_bar/qg_mousewidget.ui" line="229"/>
         <source>Left</source>
         <translation>Kreisā</translation>
@@ -25072,13 +24088,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="49"/>
         <source>Line type</source>
         <translation type="unfinished">Līnijas tips</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PolylineOptions</name>
-    <message>
-        <source>wrong action type</source>
-        <translation type="vanished">nepareizs darbības tips</translation>
     </message>
 </context>
 <context>
@@ -25134,141 +24143,9 @@ p, li { white-space: pre-wrap; }
         <source>Total length of selected entities</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Izvēlēto objektu skaits&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Izvēlēto objektu kopējais garums&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
 </context>
 <context>
     <name>QG_SnapToolBar</name>
-    <message>
-        <source>Snap</source>
-        <translation type="vanished">Pievilkt</translation>
-    </message>
-    <message>
-        <source>Snap to Endpoints</source>
-        <translation type="vanished">Pievilkt pie galapunktiem</translation>
-    </message>
-    <message>
-        <source>Snap to equidistant points of entity</source>
-        <translation type="vanished">Pievilkt pie objekta vienāda attāluma punktiem</translation>
-    </message>
-    <message>
-        <source>Snap to center points</source>
-        <translation type="vanished">Pievilkt pie centru punktiem</translation>
-    </message>
-    <message>
-        <source>Snap to intersections automatically</source>
-        <translation type="vanished">Automātiski pievilkt pie krustpunktiem</translation>
-    </message>
-    <message>
-        <source>Snap to closest point on entity</source>
-        <translation type="vanished">Pievilkt pie tuvākā punkta vai objekta</translation>
-    </message>
-    <message>
-        <source>Snap to point with given distance to endpoint</source>
-        <translation type="vanished">Pievilkt pie punkta ar dotu attālumu līdz beigu punktam</translation>
-    </message>
-    <message>
-        <source>Snap to intersections manually</source>
-        <translation type="vanished">Pievilkt pie krustpunkta manuāli</translation>
-    </message>
-    <message>
-        <source>Snap to grid</source>
-        <translation type="vanished">Pievilkt pie režģa</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontally</source>
-        <translation type="vanished">Ierobežot horizontāli</translation>
-    </message>
-    <message>
-        <source>Restrict Vertically</source>
-        <translation type="vanished">Ierobežot vertikāli</translation>
-    </message>
-    <message>
-        <source>Move relative Zero</source>
-        <translation type="vanished">Pārvietot relatīvo nulli</translation>
-    </message>
-    <message>
-        <source>Lock relative Zero</source>
-        <translation type="vanished">Fiksēt relatīvo nulli</translation>
-    </message>
-    <message>
-        <source>Free Snap</source>
-        <translation type="vanished">Brīva pievilkšana</translation>
-    </message>
-    <message>
-        <source>Snap on grid</source>
-        <translation type="vanished">Pievilkt pie režģa</translation>
-    </message>
-    <message>
-        <source>Snap on Endpoints</source>
-        <translation type="vanished">Pievilkt pie galapunktiem</translation>
-    </message>
-    <message>
-        <source>Snap on Entity</source>
-        <translation type="vanished">Pievilkt pie objekta</translation>
-    </message>
-    <message>
-        <source>Snap Center</source>
-        <translation type="vanished">Pievilkt pie centra</translation>
-    </message>
-    <message>
-        <source>Snap Middle</source>
-        <translation type="vanished">Pievilkt pie vidus</translation>
-    </message>
-    <message>
-        <source>Snap Distance</source>
-        <translation type="vanished">Pievilkšanas attālums</translation>
-    </message>
-    <message>
-        <source>Snap Intersection</source>
-        <translation type="vanished">Pievilkt krustpunktos</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontal</source>
-        <translation type="vanished">Ierobežot horizontāli</translation>
-    </message>
-    <message>
-        <source>Restrict Vertical</source>
-        <translation type="vanished">Ierobežot vertikāli</translation>
-    </message>
-    <message>
-        <source>Restrict Orthogonal</source>
-        <translation type="vanished">Ierobežot perpendikulāri</translation>
-    </message>
-    <message>
-        <source>Restrict Nothing</source>
-        <translation type="vanished">Neierobežot</translation>
-    </message>
-    <message>
-        <source>Set relative zero position</source>
-        <translation type="vanished">Iestatīt relatīvās nulles pozīciju</translation>
-    </message>
-    <message>
-        <source>Lock relative zero position</source>
-        <translation type="vanished">Fiksēt relatīvās nulles pozīciju</translation>
-    </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="169"/>
         <source>Relative zero position is %1</source>
@@ -25345,114 +24222,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="250"/>
         <source>By Layer</source>
         <translation>Pēc slāņa</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation type="vanished">Pēc bloka</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">Noklusējuma</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation type="vanished">0,00mm</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation type="vanished">0,05mm</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation type="vanished">0,09mm</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation type="vanished">0,13mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation type="vanished">0,15mm</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation type="vanished">0,18mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation type="vanished">0,20mm</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation type="vanished">0,25mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation type="vanished">0,30mm</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation type="vanished">0,35mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation type="vanished">0,40mm</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation type="vanished">0,50mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation type="vanished">0,53mm</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation type="vanished">0,60mm</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation type="vanished">0,70mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation type="vanished">0,80mm</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation type="vanished">0,90mm</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation type="vanished">1,00mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation type="vanished">1,06mm</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation type="vanished">1,20mm</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation type="vanished">1,40mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation type="vanished">1,58mm</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation type="vanished">2,00mm (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation type="vanished">2,11mm</translation>
-    </message>
-    <message>
-        <source>- Unchanged -</source>
-        <translation type="vanished">- Nemainīta -</translation>
     </message>
 </context>
 <context>
@@ -27311,10 +26080,6 @@ Vai vēlaties to aizvietot?</translation>
         <translation type="unfinished">aizvērt</translation>
     </message>
     <message>
-        <source>chord length</source>
-        <translation type="obsolete">hordas garums</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1059"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1165"/>
         <source>columns</source>
@@ -27588,11 +26353,6 @@ Vai vēlaties to aizvietot?</translation>
         <translation type="unfinished">atsaukt</translation>
     </message>
     <message>
-        <source>u</source>
-        <comment>undo</comment>
-        <translation type="obsolete">a</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1221"/>
         <source>redo</source>
         <translation type="unfinished">atatsaukt</translation>
@@ -27655,10 +26415,6 @@ Vai vēlaties to aizvietot?</translation>
         <translation type="unfinished">Komanda nav atrasta: %1</translation>
     </message>
     <message>
-        <source>Accepted keycode: %1</source>
-        <translation type="obsolete">Pieņemtais taustiņu kods: %1</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="472"/>
         <source>Available commands:</source>
         <translation type="unfinished">Pieejamās komandas:</translation>
@@ -27700,66 +26456,6 @@ Vai vēlaties to aizvietot?</translation>
         <source>mp</source>
         <comment>modify properties</comment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Block</source>
-        <translation type="obsolete">Bloks</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Riņķis</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="obsolete">Līkne</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Rediģēt</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">Elipse</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Datne</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">Dimensija</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Informācija</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Līnija</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">Modificēt</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="obsolete">Opcijas</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">Lauzta līnija</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="obsolete">Izvēlēties</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="obsolete">Pievilkt</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">Skats</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="87"/>
@@ -29673,10 +28369,6 @@ Vai vēlaties to aizvietot?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export as PDF</source>
-        <translation type="obsolete">Eksportēt kā PDF</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="44"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
@@ -29926,10 +28618,6 @@ Vai vēlaties to aizvietot?</translation>
         <source>Specify reference point</source>
         <translation>Norādiet atskaites punktu</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionBlocksExplode</name>
@@ -29960,10 +28648,6 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="349"/>
         <source>Specify reference point</source>
         <translation>Norādiet atskaites punktu</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="352"/>
@@ -30190,37 +28874,6 @@ This block cannot be inserted.</source>
         <source>Choose second edge</source>
         <translation>Izvēlieties otru malu</translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDimAligned</name>
-    <message>
-        <source>Specify first extension line origin</source>
-        <translation type="vanished">Norādiet pirmo paplašinājuma līnijas sākumu</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
-        <source>Specify second extension line origin</source>
-        <translation type="vanished">Norādiet otro paplašinājuma līnijas sākumu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation type="vanished">Norādiet dimensiju līnijas atrašanās vietu</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Ievadiet dimensijas tekstu:</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDimAngular</name>
@@ -30228,10 +28881,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="216"/>
         <source>Select first line</source>
         <translation>Izvēlieties pirmo līniju</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="219"/>
@@ -30250,42 +28899,11 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDimDiametric</name>
-    <message>
-        <source>Not a circle or arc entity</source>
-        <translation type="vanished">Nav apļa vai loka objekts</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nav derīga izteiksme</translation>
-    </message>
-    <message>
-        <source>Select arc or circle entity</source>
-        <translation type="vanished">Izvēlieties loka vai apļa objektu</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation type="vanished">Norādiet dimensiju līnijas atrašanās vietu</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Ievadiet dimensijas tekstu:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDimLeader</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="182"/>
         <source>Specify target point</source>
         <translation>Norādiet mērķa punktu</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="185"/>
@@ -30317,61 +28935,14 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Specify first extension line origin</source>
-        <translation type="vanished">Norādiet pirmo paplašinājuma līnijas sākumu</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="211"/>
         <source>Specify second extension line origin</source>
         <translation>Norādiet otro paplašinājuma līnijas sākumu</translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="221"/>
         <source>Specify dimension line location</source>
         <translation>Norādiet dimensiju līnijas atrašanās vietu</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Ievadiet dimensijas tekstu:</translation>
-    </message>
-    <message>
-        <source>Enter dimension line angle:</source>
-        <translation type="vanished">Ievadiet dimensijas līnijas leņķi:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDimRadial</name>
-    <message>
-        <source>Not a circle or arc entity</source>
-        <translation type="vanished">Nav apļa vai loka objekts</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nav derīga izteiksme</translation>
-    </message>
-    <message>
-        <source>Select arc or circle entity</source>
-        <translation type="vanished">Izvēlieties loka vai apļa objektu</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
-        <source>Specify dimension line position or enter angle:</source>
-        <translation type="vanished">Norādiet dimensiju līnijas novietojumu vai ievadiet leņķi:</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Ievadiet dimensijas tekstu:</translation>
     </message>
 </context>
 <context>
@@ -30422,17 +28993,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="500"/>
         <source>Specify radius</source>
         <translation>Norādiet rādiusu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="507"/>
@@ -30449,14 +29012,6 @@ This block cannot be inserted.</source>
         <source>Specify included angle:</source>
         <translation>Norādiet iekļauto leņķi:</translation>
     </message>
-    <message>
-        <source>Specify chord length:</source>
-        <translation type="vanished">Norādiet hordas garumu:</translation>
-    </message>
-    <message>
-        <source>Specify end angle or [angle/chord length]</source>
-        <translation type="vanished">Norādiet beigu leņķi vai [leņķi/hordas garumu]</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawArc3P</name>
@@ -30471,21 +29026,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished">Norādiet trešo punktu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="233"/>
         <source>Specify second point</source>
         <translation>Norādiet otro punktu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
-    </message>
-    <message>
-        <source>Specify endpoint</source>
-        <translation type="vanished">Norādiet galapunktu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="230"/>
@@ -30511,17 +29054,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="277"/>
         <source>Specify end angle</source>
         <translation>Norādiet beigu leņķi</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="279"/>
@@ -30542,14 +29077,6 @@ This block cannot be inserted.</source>
         <translation>Norādiet centru</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="129"/>
         <source>Specify point on circle</source>
         <translation type="unfinished"></translation>
@@ -30568,17 +29095,9 @@ This block cannot be inserted.</source>
         <translation>Norādiet pirmo punktu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="156"/>
         <source>Specify second point</source>
         <translation>Norādiet otro punktu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
 </context>
 <context>
@@ -30594,17 +29113,9 @@ This block cannot be inserted.</source>
         <translation>Norādiet pirmo punktu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="175"/>
         <source>Specify second point</source>
         <translation>Norādiet otro punktu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="178"/>
@@ -30625,17 +29136,9 @@ This block cannot be inserted.</source>
         <translation>Norādiet riņķa centru</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="177"/>
         <source>Specify circle radius</source>
         <translation>Norādiet riņķa rādiusu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="146"/>
@@ -30661,17 +29164,9 @@ This block cannot be inserted.</source>
         <translation>Norādiet pirmo līniju</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="216"/>
         <source>Specify the second line</source>
         <translation>Norādiet otro līniju</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="219"/>
@@ -30682,17 +29177,9 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircleTan1_2P</name>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="463"/>
         <source>Specify the first point on the tangent circle</source>
         <translation>Norādiet pirmo punktu pieskares riņķim</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="466"/>
@@ -30718,17 +29205,9 @@ This block cannot be inserted.</source>
         <translation>Norādiet pirmo līniju/loku/riņķi</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="280"/>
         <source>Specify the second line/arc/circle</source>
         <translation>Norādiet otro līniju/loku/riņķi</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="283"/>
@@ -30749,18 +29228,6 @@ This block cannot be inserted.</source>
         <translation>Norādiet līniju/loku/riņķi</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
-        <source>Specify the another arc/circle</source>
-        <translation type="vanished">Norādiet otru loku/riņķi</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="341"/>
         <source>Specify the another line/arc/circle</source>
         <translation type="unfinished"></translation>
@@ -30778,14 +29245,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="509"/>
         <source>Select the center of the tangent circle</source>
@@ -30820,17 +29279,9 @@ This block cannot be inserted.</source>
         <translation>Norādiet pirmo punktu uz elipses</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="276"/>
         <source>Specify the second point on ellipse</source>
         <translation>Norādiet otro punktu uz elipses</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="279"/>
@@ -30863,17 +29314,9 @@ This block cannot be inserted.</source>
         <translation>Norādiet elipses centru</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="339"/>
         <source>Specify endpoint of major axis</source>
         <translation>Norādiet galapunktu primārajai asij</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="342"/>
@@ -30899,10 +29342,6 @@ This block cannot be inserted.</source>
         <translation>Norādiet elipses centru</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="246"/>
         <source>Specify the first point on ellipse</source>
         <translation>Norādiet pirmo punktu uz elipses</translation>
@@ -30911,10 +29350,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="249"/>
         <source>Specify the second point on ellipse</source>
         <translation>Norādiet otro punktu uz elipses</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="252"/>
@@ -30935,17 +29370,9 @@ This block cannot be inserted.</source>
         <translation>Norādiet pirmo elipses fokusu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="195"/>
         <source>Specify second focus of ellipse</source>
         <translation>Norādiet otro elipses fokusu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="198"/>
@@ -30971,17 +29398,9 @@ This block cannot be inserted.</source>
         <translation>Norādiet pirmo līniju</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="310"/>
         <source>Specify the second line</source>
         <translation>Norādiet otro līniju</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="313"/>
@@ -31067,10 +29486,6 @@ This block cannot be inserted.</source>
         <translation>Norādiet atskaites punktu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="270"/>
         <source>Enter angle:</source>
         <translation>Ievadiet leņķi:</translation>
@@ -31094,17 +29509,9 @@ This block cannot be inserted.</source>
         <translation>Norādiet pirmo punktu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="274"/>
         <source>Specify next point or [%1]</source>
         <translation>Norādiet nākamo punktu vai [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="276"/>
@@ -31146,17 +29553,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="312"/>
         <source>Enter angle:</source>
         <translation>Ievadiet leņķi:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="315"/>
@@ -31183,17 +29582,9 @@ This block cannot be inserted.</source>
         <translation>Izvēlieties pirmo līniju</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="268"/>
         <source>Select second line</source>
         <translation>Izvēlēties otro līniju</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="271"/>
@@ -31219,10 +29610,6 @@ This block cannot be inserted.</source>
         <source>Click and drag to draw a line</source>
         <translation>Klikšķiniet un velciet, lai zīmētu līniju</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineHorVert</name>
@@ -31232,17 +29619,9 @@ This block cannot be inserted.</source>
         <translation>Norādiet pirmo punktu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="117"/>
         <source>Specify second point</source>
         <translation>Norādiet otro punktu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
 </context>
 <context>
@@ -31259,17 +29638,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="255"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Izvēlēties riņķi, loku vai elipsi</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
 </context>
 <context>
@@ -31278,10 +29649,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="135"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
         <translation>Norādiet attālumu &lt;%1&gt; vai izvēlieties objektu, vai [%2]</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="109"/>
@@ -31313,17 +29680,9 @@ This block cannot be inserted.</source>
         <translation>Izvēlieties objektu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="177"/>
         <source>Specify through point</source>
         <translation>Norādiet punktu caur</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="110"/>
@@ -31349,25 +29708,9 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLinePolygonCenCor</name>
     <message>
-        <source>Specify center</source>
-        <translation type="vanished">Norādiet centru</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon.cpp" line="41"/>
         <source>Specify a corner</source>
         <translation>Norādiet stūri</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Ievadiet skaitu:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Nav derīgs skaits. Mēģiniet 1..9999</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Nav derīga izteiksme</translation>
     </message>
 </context>
 <context>
@@ -31378,29 +29721,9 @@ This block cannot be inserted.</source>
         <translation>Norādiet pirmo stūri</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="92"/>
         <source>Specify second corner</source>
         <translation>Norādiet otro stūri</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Skaits:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Nav derīgs skaits. Mēģiniet 1..9999</translation>
-    </message>
-    <message>
-        <source>Not a valid expression.</source>
-        <translation type="vanished">Nav derīga izteiksme.</translation>
     </message>
 </context>
 <context>
@@ -31436,17 +29759,9 @@ This block cannot be inserted.</source>
         <translation>Norādiet pirmo stūri</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="144"/>
         <source>Specify second corner</source>
         <translation>Norādiet otro stūri</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
 </context>
 <context>
@@ -31473,17 +29788,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="251"/>
         <source>Specify position</source>
         <translation>Norādiet pozīciju</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
 </context>
 <context>
@@ -31500,37 +29807,13 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Izvēlēties riņķi, loku vai elipsi</translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent2</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
-    </message>
-    <message>
-        <source>Select first circle or ellipse</source>
-        <translation type="vanished">Izvēlēties pirmo riņķi vai elipsi</translation>
-    </message>
-    <message>
-        <source>Select second circle or ellipse</source>
-        <translation type="vanished">Izvēlēties otro riņķi vai elipsi</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="215"/>
         <source>Select first circle/ellipse/parabola</source>
@@ -31555,17 +29838,9 @@ This block cannot be inserted.</source>
         <translation>Norādiet ievietošanas punktu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="189"/>
         <source>Enter text:</source>
         <translation>Ievadiet tekstu:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
 </context>
 <context>
@@ -31574,10 +29849,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/point/rs_actiondrawpoint.cpp" line="77"/>
         <source>Specify location</source>
         <translation>Norādiet vietu</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
     </message>
 </context>
 <context>
@@ -31588,17 +29859,9 @@ This block cannot be inserted.</source>
         <translation>Norādiet pirmo punktu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="756"/>
         <source>Specify next point or [%1]</source>
         <translation>Norādiet nākamo punktu vai [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="758"/>
@@ -31671,17 +29934,9 @@ This block cannot be inserted.</source>
         <translation>Norādiet pirmo vadības punktu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="227"/>
         <source>Specify next control point or [%1]</source>
         <translation>Norādiet nākamo vadības punktu vai [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="229"/>
@@ -31707,33 +29962,14 @@ This block cannot be inserted.</source>
         <translation>Norādiet ievietošanas punktu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="247"/>
         <source>Enter text:</source>
         <translation>Ievadiet tekstu:</translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="243"/>
         <source>Specify second point</source>
         <translation>Norādiet otro punktu</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditCopy</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Norādiet atskaites punktu</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
     </message>
 </context>
 <context>
@@ -31796,17 +30032,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Set reference point</source>
-        <translation type="vanished">Iestatīt atskaites punktu</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditUndo</name>
     <message>
         <location filename="../src/actions/drawing/edit/rs_actioneditundo.cpp" line="55"/>
@@ -31836,10 +30061,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="250"/>
         <source>Single Line Mode</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Informācija</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="103"/>
@@ -31931,21 +30152,9 @@ Intersection :@(%7, %8)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
         <source>Specify second line</source>
         <translation>Norādiet otro līniju</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
-    </message>
-    <message>
-        <source>Angle: %1</source>
-        <translation type="vanished">Leņķis: %1</translation>
     </message>
 </context>
 <context>
@@ -31972,26 +30181,14 @@ Intersection :@(%7, %8)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Point: %1/%2</source>
-        <translation type="vanished">Punkts: %1/%2</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="178"/>
         <source>Specify first point of polygon</source>
         <translation>Norādiet pirmo daudzstūra punktu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
         <source>Specify next point of polygon</source>
         <translation>Norādiet nākamo daudzstūra punktu</translation>
-    </message>
-    <message>
-        <source>Closing Point: %1/%2</source>
-        <translation type="vanished">Aizverošais punkts: %1/%2</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="101"/>
@@ -32047,29 +30244,13 @@ End: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="160"/>
         <source>Specify second point of distance</source>
         <translation>Norādiet otro attāluma punktu</translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
-    </message>
-    <message>
-        <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
-        <translation type="obsolete">Attālums: %1 Dekarta: (%2 , %3), Polārās: (%4&lt;%5  {1 ?} {2 ?} {3)?} {4&lt;?} {5)?}</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1</source>
-        <translation type="vanished">Attālums: %1</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="92"/>
         <source>Distance: %1
@@ -32120,18 +30301,10 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="279"/>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="282"/>
         <source>Specify point</source>
         <translation>Norādiet punktu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
 </context>
 <context>
@@ -32150,10 +30323,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="82"/>
         <source>Specify point</source>
         <translation>Norādiet punktu</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
     </message>
 </context>
 <context>
@@ -32220,10 +30389,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionLibraryInsert</name>
     <message>
-        <source>Insert Library Object</source>
-        <translation type="vanished">Ievietot bibliotēkas objektu</translation>
-    </message>
-    <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="152"/>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="165"/>
         <source>Not a valid expression</source>
@@ -32233,10 +30398,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="194"/>
         <source>Specify reference point</source>
         <translation>Norādiet atskaites punktu</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="197"/>
@@ -32252,13 +30413,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="65"/>
         <source>Cannot open file &apos;%1&apos;</source>
         <translation>Nevar atvērt datni “%1”</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLockRelativeZero</name>
-    <message>
-        <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation type="vanished">[At-]fiksēt re&amp;latīvo nulli</translation>
     </message>
 </context>
 <context>
@@ -32339,17 +30493,9 @@ Point: (%8 , %9)</source>
         <translation>Izvēlieties pirmo objektu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="369"/>
         <source>Select second entity</source>
         <translation>Izvēlieties otro objektu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="372"/>
@@ -32385,30 +30531,14 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cutting point is invalid.</source>
-        <translation type="vanished">Griešanas punkts nav derīgs.</translation>
-    </message>
-    <message>
-        <source>Cutting point is not on entity.</source>
-        <translation type="vanished">Griešanas punkts nav objekts.</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="141"/>
         <source>Specify entity to cut</source>
         <translation>Norādiet objektu ko griezt</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="144"/>
         <source>Specify cutting point</source>
         <translation>Norādiet griešanas punktu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="114"/>
@@ -32442,17 +30572,9 @@ Point: (%8 , %9)</source>
         <translation>Norādiet lauztās līnijas pirmo lūzuma punktu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="151"/>
         <source>Specify second break point on the same polyline</source>
         <translation>Norādiet tās pašas lauztās līnijas otro lūzuma punktu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="89"/>
@@ -32496,26 +30618,11 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionModifyDeleteQuick</name>
-    <message>
-        <source>Pick entity to delete</source>
-        <translation type="vanished">Izvēlieties objektu, ko dzēst</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionModifyEntity</name>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyentity.cpp" line="263"/>
         <source>Click on entity to modify</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Atcelt</translation>
     </message>
 </context>
 <context>
@@ -32589,17 +30696,9 @@ Point: (%8 , %9)</source>
         <translation>Norādiet spoguļa līnijas pirmo punktu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="249"/>
         <source>Specify second point of mirror line</source>
         <translation>Norādiet spoguļa līnijas otro punktu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
 </context>
 <context>
@@ -32640,21 +30739,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
         <source>Specify target point</source>
         <translation>Norādiet mērķa punktu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
-    </message>
-    <message>
-        <source>Invalid number of copies, use %1 </source>
-        <translation type="vanished">Nederīgs kopiju skaits, izmanto %1</translation>
     </message>
 </context>
 <context>
@@ -32714,17 +30801,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="325"/>
         <source>Specify target point</source>
         <translation>Norādiet mērķa punktu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="328"/>
@@ -32770,10 +30849,6 @@ Point: (%8 , %9)</source>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionModifyRevertDirection</name>
@@ -32799,10 +30874,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="588"/>
         <source>Specify reference point</source>
         <translation>Norādiet atskaites punktu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="132"/>
@@ -32939,17 +31010,9 @@ Point: (%8 , %9)</source>
         <translation>Norādiet absolūto atskaites punktu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="179"/>
         <source>Specify relative reference point</source>
         <translation>Norādiet relatīvo atskaites punktu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
 </context>
 <context>
@@ -32959,10 +31022,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="362"/>
         <source>Not a valid expression</source>
         <translation>Nav derīga izteiksme</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="229"/>
@@ -32990,10 +31049,6 @@ Point: (%8 , %9)</source>
         <translation>Ievadiet rādiusu:</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
         <translation type="unfinished"></translation>
@@ -33001,14 +31056,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Norādiet atskaites punktu</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="169"/>
         <source>Scale</source>
@@ -33093,17 +31140,9 @@ Point: (%8 , %9)</source>
         <translation>Norādiet pirmo stūri</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="199"/>
         <source>Specify second corner</source>
         <translation>Norādiet otro stūri</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="79"/>
@@ -33157,17 +31196,9 @@ Point: (%8 , %9)</source>
         <translation>Izvēlieties pirmo īsināšanas objektu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="202"/>
         <source>Select limiting entity</source>
         <translation>Izvēlieties ierobežojošo objektu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="112"/>
@@ -33203,14 +31234,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyTrimAmount</name>
     <message>
-        <source>No entity found. </source>
-        <translation type="vanished">Nav atrastu objektu. </translation>
-    </message>
-    <message>
-        <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation type="vanished">Izvēlētais objekts ir blokā. Rediģējiet bloku.</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="173"/>
         <source>No entity found.</source>
         <translation type="unfinished"></translation>
@@ -33229,14 +31252,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="236"/>
         <source>Select line/arc to trim OR enter length value:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select entity to trim or enter distance:</source>
-        <translation type="vanished">Izvēlieties objektu, ko īsināt, vai ievadiet attālumu:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
 </context>
 <context>
@@ -33265,10 +31280,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="130"/>
         <source>Choose entity for order</source>
         <translation>Izvēlieties objektu kārtošanai</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
     </message>
 </context>
 <context>
@@ -33300,17 +31311,9 @@ Point: (%8 , %9)</source>
         <translation>Norādiet lauzto līniju, kurai pievienot mezglus</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="171"/>
         <source>Specify adding node&apos;s point</source>
         <translation>Norādiet pievienojamā mezgla punktu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
 </context>
 <context>
@@ -33339,22 +31342,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="299"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
         <translation>Norādiet lauztu līniju kaut kur tuvu sākumam vai beigām.</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Norādiet nākamo punktu vai [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Norādiet nākamo punktu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="125"/>
@@ -33386,17 +31373,9 @@ Point: (%8 , %9)</source>
         <translation>Norādiet lauzto līniju, kurai dzēst mezglu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="145"/>
         <source>Specify deleting node&apos;s point</source>
         <translation>Norādiet dzēšamā mezgla punktu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="128"/>
@@ -33444,17 +31423,9 @@ Point: (%8 , %9)</source>
         <translation>Norādiet lauzto līniju, kurai dzēst starp diviem mezgliem</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="198"/>
         <source>Specify first node</source>
         <translation>Norādiet pirmo mezglu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="201"/>
@@ -33485,10 +31456,6 @@ Point: (%8 , %9)</source>
         <source>Choose the original polyline</source>
         <translation>Izvelieties sākotnējo lauzto līniju</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionPolylineSegment</name>
@@ -33501,10 +31468,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="357"/>
         <source>Choose one of the segments on the original polyline</source>
         <translation>Izvelieties kādu no segmentiem no sākotnējās lauztās līnijas</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="335"/>
@@ -33541,30 +31504,14 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Specifying point is invalid.</source>
-        <translation type="vanished">Specificēšanas punkts nav derīgs.</translation>
-    </message>
-    <message>
-        <source>No Segment found on entity.</source>
-        <translation type="vanished">Objektā nav atrasts segments.</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="183"/>
         <source>Specify polyline to trim</source>
         <translation>Norādiet lauzto līniju, ko īsināt</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="186"/>
         <source>Specify first segment</source>
         <translation>Norādiet pirmo segmentu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="189"/>
@@ -33646,85 +31593,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>Select to modify attributes</source>
-        <translation type="vanished">Izvēlieties, lai mainītu atribūtus</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
-        <source>Select to delete</source>
-        <translation type="vanished">Izvēlieties, ko dzēst</translation>
-    </message>
-    <message>
-        <source>Select to delete immediately</source>
-        <translation type="vanished">Izvēlieties, ko nekavējoties dzēst</translation>
-    </message>
-    <message>
-        <source>Select to move</source>
-        <translation type="vanished">Izvēlieties, lai pārvietotu</translation>
-    </message>
-    <message>
-        <source>Select to rotate</source>
-        <translation type="vanished">Izvēlieties, ko pagriezt</translation>
-    </message>
-    <message>
-        <source>Select to scale</source>
-        <translation type="vanished">Izvēlieties, kam mainīt izmēru</translation>
-    </message>
-    <message>
-        <source>Select to mirror</source>
-        <translation type="vanished">Izvēlieties, ko spoguļot</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate</source>
-        <translation type="vanished">Izvēlieties, ko pārvietot un pagriezt</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation</source>
-        <translation type="vanished">Pagriešanai izvēlieties divas asis</translation>
-    </message>
-    <message>
-        <source>Select to explode text</source>
-        <translation type="vanished">Izvēlieties, kam eksplodēt tekstu</translation>
-    </message>
-    <message>
-        <source>Select to create block</source>
-        <translation type="vanished">Izvēlieties, lai izveidotu bloku</translation>
-    </message>
-    <message>
-        <source>Select to copy</source>
-        <translation type="vanished">Izvēlieties, ko kopēt</translation>
-    </message>
-    <message>
-        <source>Select to cut</source>
-        <translation type="vanished">Izvēlieties, ko izgriezt</translation>
-    </message>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">Nav izvēlētu objektu!</translation>
-    </message>
-    <message>
-        <source>Select to create offset</source>
-        <translation type="vanished">Izvēlieties, lai veidotu nobīdi</translation>
-    </message>
-    <message>
-        <source>Select entities to order</source>
-        <translation type="vanished">Izvēlieties objektus, kurus kārtot</translation>
-    </message>
-    <message>
-        <source>Select to explode block</source>
-        <translation type="vanished">Izvēlieties, kam eksplodēt bloku</translation>
-    </message>
-    <message>
-        <source>Select to revert direction</source>
-        <translation type="vanished">Izvēlieties, lai apgrieztu virzienu</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectContour</name>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="63"/>
@@ -33755,17 +31623,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="176"/>
         <source>Choose second point of intersection line</source>
         <translation>Izvēlieties otro punktu uz līnijas, kas krustojas</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
 </context>
 <context>
@@ -33791,10 +31651,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="116"/>
         <source>De-Selecting</source>
@@ -33846,10 +31702,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="163"/>
         <source>Click and drag for the selection window</source>
         <translation>Spiediet un velciet izvēles logam</translation>
@@ -33862,29 +31714,13 @@ Point: (%8 , %9)</source>
         <source>Set relative Zero</source>
         <translation>Iestatīt relatīvo nulli</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
-        <source>Set &amp;Relative Zero</source>
-        <translation type="vanished">Iestatīt &amp;relatīvo nulli</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionSnapIntersectionManual</name>
     <message>
-        <source>I&amp;ntersection Manually</source>
-        <translation type="vanished">Krustpu&amp;nkts manuāli</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="142"/>
         <source>Select first entity</source>
         <translation>Izvēlieties pirmo objektu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="145"/>
@@ -33913,10 +31749,6 @@ Point: (%8 , %9)</source>
         <translation>Klikšķiniet un velciet, lai panomramētu mērogu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="108"/>
         <source>Zoom panning</source>
         <translation>Mēroga panoramēšana</translation>
@@ -33930,17 +31762,9 @@ Point: (%8 , %9)</source>
         <translation>Norādiet pirmo malu</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="143"/>
         <source>Specify second edge</source>
         <translation>Norādiet otro malu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Atpakaļ</translation>
     </message>
 </context>
 <context>
@@ -34207,17 +32031,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Linear Dimension Options</source>
-        <translation type="obsolete">Lineārās dimensijas opcijas</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Leņķis:</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -34386,17 +32199,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Factor:</source>
-        <translation type="obsolete">Koeficients:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="106"/>
         <source>Scale Factor</source>
         <translation type="unfinished">Mēroga koeficients</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="obsolete">DPI</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="120"/>
@@ -34830,21 +32635,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">Daudzstūra opcijas</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Skaits:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">Malu skaits</translation>
-    </message>
-</context>
-<context>
     <name>Ui_LinePolygonOptions</name>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="32"/>
@@ -35044,14 +32834,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="79"/>
         <source>Multiple Copies</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">Attālums:</translation>
-    </message>
-    <message>
-        <source>Offset from original entity</source>
-        <translation type="obsolete">Nobīde no sākotnējā objekta</translation>
     </message>
 </context>
 <context>
@@ -35309,14 +33091,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished">Pārslēgt režīmu “melns / balts”</translation>
     </message>
     <message>
-        <source>Center to page</source>
-        <translation type="obsolete">Centrēt lappusē</translation>
-    </message>
-    <message>
-        <source>Fit to page</source>
-        <translation type="obsolete">Ietilpināt lappusē</translation>
-    </message>
-    <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="44"/>
         <source>Landscape Orientation of paper</source>
         <translation type="unfinished"></translation>
@@ -35437,10 +33211,6 @@ Point: (%8 , %9)</source>
         <source>Pick distance from drawing.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">Attālums:</translation>
-    </message>
 </context>
 <context>
     <name>Ui_SnapMiddleOptions</name>
@@ -35453,10 +33223,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="59"/>
         <source>Snap Middle Points:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Middle Points:</source>
-        <translation type="obsolete">Viduspunkti:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
@@ -35576,13 +33342,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="50"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
         <translation type="unfinished">Ievades garums tiek izmantots kā kopējais garums pēc īsināšanas, nevis garuma pieaugums</translation>
-    </message>
-</context>
-<context>
-    <name>WidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Kadrs</translation>
     </message>
 </context>
 </TS>

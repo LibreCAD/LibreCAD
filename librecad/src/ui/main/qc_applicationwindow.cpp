@@ -1581,7 +1581,6 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent *e) {
             }
             if (doDefaultProcessing){
                 slotKillAllActions();
-                onEnterKey();
                 e->accept();
             }
             break;
@@ -1589,7 +1588,7 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent *e) {
 
         case Qt::Key_Return:
         case Qt::Key_Enter:
-            slotKillAllActions();
+            // slotKillAllActions();
             onEnterKey();
             e->accept();
             break;
@@ -1641,10 +1640,7 @@ void QC_ApplicationWindow::relayAction(QAction *q_action) {
     if (property.isValid()) {
         setAsCurrentActionInView = property.toBool();
     }
-    // if (getAction("LockRelativeZero") == q_action) {
-    //     // other actions may be added later
-    //     setAsCurrentActionInView = false;
-    // }
+
     if (setAsCurrentActionInView) {
         auto* graphicView = dynamic_cast<QG_GraphicView*>(view);
         graphicView->setCurrentQAction(q_action);
@@ -1708,9 +1704,8 @@ bool QC_ApplicationWindow::eventFilter(QObject *obj, QEvent *event) {
     return QObject::eventFilter(obj, event);
 }
 
-void QC_ApplicationWindow::onViewCurrentActionChanged(const RS_ActionInterface* action){
-   if (action != nullptr) {
-        RS2::ActionType actionType = action->rtti();
+void QC_ApplicationWindow::onViewCurrentActionChanged(RS2::ActionType actionType){
+   if (actionType  != RS2::ActionNone) {
         auto qAction = m_actionGroupManager->getActionByType(actionType);
         relayAction(qAction);
     }

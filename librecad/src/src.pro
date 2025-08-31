@@ -329,6 +329,7 @@ HEADERS += \
     actions/drawing/modify/lc_actionmodifyalign.h \
     actions/drawing/modify/lc_actionmodifyalignref.h \
     actions/drawing/modify/lc_actionmodifyalignsingle.h \
+    actions/drawing/modify/lc_actionmodifymoveadjust.h \
     actions/drawing/pick/lc_actioninteractivepickangle.h \
     actions/drawing/pick/lc_actioninteractivepickbase.h \
     actions/drawing/pick/lc_actioninteractivepickdistance.h \
@@ -463,6 +464,7 @@ HEADERS += \
     lib/generators/layers/lc_layersexporter.h \
     lib/generators/image/lc_imageexporter.h \
     lib/gui/lc_coordinates_parser.h \
+    lib/gui/lc_eventhandler.h \
     lib/gui/lc_graphicviewport.h \
     lib/gui/lc_graphicviewportlistener.h \
     lib/gui/lc_latecompletionrequestor.h \
@@ -638,6 +640,7 @@ SOURCES += \
     actions/drawing/modify/lc_actionmodifyalign.cpp \
     actions/drawing/modify/lc_actionmodifyalignref.cpp \
     actions/drawing/modify/lc_actionmodifyalignsingle.cpp \
+    actions/drawing/modify/lc_actionmodifymoveadjust.cpp \
     actions/drawing/pick/lc_actioninteractivepickangle.cpp \
     actions/drawing/pick/lc_actioninteractivepickbase.cpp \
     actions/drawing/pick/lc_actioninteractivepickdistance.cpp \
@@ -685,6 +688,7 @@ SOURCES += \
     lib/generators/layers/lc_layersexporter.cpp \
     lib/generators/image/lc_imageexporter.cpp \
     lib/gui/lc_coordinates_parser.cpp \
+    lib/gui/lc_eventhandler.cpp \
     lib/gui/lc_graphicviewport.cpp \
     lib/gui/lc_graphicviewportlistener.cpp \
     lib/gui/lc_latecompletionrequestor.cpp \

@@ -33,6 +33,7 @@ public:
     void doTrigger() override;
     ~LC_ActionInteractivePickBase() override = default;
     void keyPressEvent(QKeyEvent* e) override;
+    bool isSupportsPredecessorAction() override {return true;}
 protected:
     void skipInteractiveInput();
     void storeInteractiveInput();

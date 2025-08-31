@@ -40,6 +40,7 @@ public:
     RS_ActionZoomRedraw(LC_ActionContext *actionContext);
 	void init(int status) override;
 	void trigger() override;
+    bool isSupportsPredecessorAction() override {return true;}
 };
 
 #endif

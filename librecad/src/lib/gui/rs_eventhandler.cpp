@@ -71,10 +71,10 @@ void RS_EventHandler::uncheckQAction(){
     }
     if (hasAction()){
         auto lastAction = m_currentActions.last();
-        m_graphicView->notifyActiveAction(lastAction.get()); // ugly fix to properly restore previous action icon etc.
+        // m_graphicView->notifyActiveAction(lastAction.get()); // ugly fix to properly restore previous action icon etc.
     }
     else {
-        m_graphicView->notifyNoActiveAction();
+        // m_graphicView->notifyNoActiveAction();
     }
 }
 
@@ -365,7 +365,7 @@ bool RS_EventHandler::setCurrentAction(std::shared_ptr<RS_ActionInterface> actio
         RS_DEBUG->print("RS_EventHandler::setCurrentAction: show options");
         action->showOptions();
         RS_DEBUG->print("RS_EventHandler::setCurrentAction: set predecessor");
-        action->setPredecessor(predecessor.get());
+        action->setPredecessor(predecessor);
         passedActionIsNotFinished = true;
     }
 
@@ -381,7 +381,7 @@ bool RS_EventHandler::setCurrentAction(std::shared_ptr<RS_ActionInterface> actio
         bool hasActionToCheck = hasAction();
         m_QAction->setChecked(hasActionToCheck);
         if (!hasActionToCheck) {
-            m_graphicView->notifyNoActiveAction();
+            // m_graphicView->notifyNoActiveAction();
         }
     }
     return passedActionIsNotFinished;
@@ -419,7 +419,7 @@ void RS_EventHandler::killAllActions()
     if (m_QAction)    {
         m_QAction->setChecked(false);
         m_QAction = nullptr;
-        m_graphicView->notifyNoActiveAction();
+        // m_graphicView->notifyNoActiveAction();
     }
 
     for(auto& p: m_currentActions){

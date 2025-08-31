@@ -39,36 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">フレーム</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="obsolete">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="obsolete">&lt;</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">保存</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">フレーム</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">保存</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/dialogs/entity/LC_DlgParabola.ui" line="26"/>
@@ -286,10 +256,6 @@
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="189"/>
         <source>Select arc entity</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">中止</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="192"/>
@@ -590,17 +556,9 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>最初の点を指定</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="233"/>
         <source>Specify second point</source>
         <translation>次の点を指定</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="236"/>
@@ -886,21 +844,9 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawLinePolygonCenTan</name>
     <message>
-        <source>Specify center</source>
-        <translation type="obsolete">中心指定</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon3.cpp" line="51"/>
         <source>Specify a tangent</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="obsolete">数値入力:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="obsolete">有効な数値ではありません。1..9999まで</translation>
     </message>
 </context>
 <context>
@@ -1258,10 +1204,6 @@ or [%2]</source>
         <translation>１つ目の制御点指示</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
         <source>Specify next control point or [%1]</source>
         <translation>次の制御点指示か[%1]</translation>
@@ -1584,19 +1526,6 @@ or [%2]</source>
         <translation>内接円(&amp;I)</translation>
     </message>
     <message>
-        <source>Tangential 2 Circles, Radius</source>
-        <comment>circle tangential with two circles, and given radius</comment>
-        <translation type="vanished">接する２つ円と半径</translation>
-    </message>
-    <message>
-        <source>Tangential 2 Circles, 1 Point</source>
-        <translation type="vanished">接する２つ円と円周上の点</translation>
-    </message>
-    <message>
-        <source>Tangential &amp;3 Circles</source>
-        <translation type="vanished">接する３つの円(&amp;3)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
         <source>Tangential, 2 P&amp;oints</source>
         <translation>接する円と円周上の２点(&amp;P)</translation>
@@ -1692,10 +1621,6 @@ or [%2]</source>
         <translation>等間隔でポリラインを作成(&amp;E)</translation>
     </message>
     <message>
-        <source>Create Polyline from Existing &amp;Segments</source>
-        <translation type="vanished">既存セグメントからポリライン作成(&amp;S)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="327"/>
         <source>&amp;MText</source>
         <translation>マルチテキスト(&amp;M)</translation>
@@ -1761,10 +1686,6 @@ or [%2]</source>
         <translation>削除(&amp;D)</translation>
     </message>
     <message>
-        <source>Delete Freehand</source>
-        <translation type="vanished">フリーハンドを削除</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="368"/>
         <source>&amp;Move / Copy</source>
         <translation>移動/複写(&amp;M)</translation>
@@ -1773,11 +1694,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="369"/>
         <source>Re&amp;vert direction</source>
         <translation>基準点を入れ替える(&amp;v)</translation>
-    </message>
-    <message>
-        <source>Ctrl+R</source>
-        <translatorcomment>キー操作は翻訳しない</translatorcomment>
-        <translation type="vanished">Ctrl+R</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="370"/>
@@ -1855,17 +1771,9 @@ or [%2]</source>
         <translation>テキストを文字に分解(&amp;E)</translation>
     </message>
     <message>
-        <source>Point inside contour</source>
-        <translation type="vanished">輪郭線の内部の点</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="498"/>
         <source>&amp;Distance Point to Point</source>
         <translation>２点間の距離(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Distance Entity to Point</source>
-        <translation type="vanished">垂線の長さ(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="501"/>
@@ -1873,17 +1781,9 @@ or [%2]</source>
         <translation>２線の間の角度(&amp;g)</translation>
     </message>
     <message>
-        <source>&amp;Total length of selected entities</source>
-        <translation type="vanished">選択要素の全長(&amp;T)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="503"/>
         <source>Polygonal &amp;Area</source>
         <translation>多角形の面積(&amp;A)</translation>
-    </message>
-    <message>
-        <source>&amp;Selection pointer</source>
-        <translation type="vanished">ポインターを選択(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="660"/>
@@ -1911,10 +1811,6 @@ or [%2]</source>
         <translation>貼り付け(&amp;P)</translation>
     </message>
     <message>
-        <source>move to bottom</source>
-        <translation type="vanished">最背面に移動</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="190"/>
         <source>Polygo&amp;n (Tan,Tan)</source>
         <translation type="unfinished"></translation>
@@ -1938,10 +1834,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="233"/>
         <source>Paste to Points</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tangential 2 Circles, Radius</source>
-        <translation type="obsolete">接する２つ円と半径</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="269"/>
@@ -2615,18 +2507,6 @@ or [%2]</source>
         <translation type="unfinished">任意の場所</translation>
     </message>
     <message>
-        <source>lower after entity</source>
-        <translation type="vanished">ひとつ背面に移動</translation>
-    </message>
-    <message>
-        <source>raise over entity</source>
-        <translation type="vanished">ひとつ前面に移動</translation>
-    </message>
-    <message>
-        <source>move to top</source>
-        <translation type="vanished">最前面に移動</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="499"/>
         <source>Distance &amp;Entity to Point</source>
         <translation type="unfinished"></translation>
@@ -2783,10 +2663,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="563"/>
         <source>Current &amp;Drawing Preferences</source>
         <translation>図面の設定(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Delete selected</source>
-        <translation type="vanished">選択を削除(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="652"/>
@@ -3040,14 +2916,6 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Menu Creator</source>
-        <translation type="vanished">メニュー新規作成</translation>
-    </message>
-    <message>
-        <source>Toolbar Creator</source>
-        <translation type="vanished">ツールバー新規作成</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="639"/>
         <source>&amp;Save View</source>
         <translation type="unfinished"></translation>
@@ -3228,89 +3096,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionGroupManager</name>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">円</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="obsolete">曲線</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="obsolete">円弧</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="obsolete">スプライン</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">編集</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">楕円</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">ファイル</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">図形情報</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="obsolete">レイヤー</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="obsolete">点</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">変更・修正</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="obsolete">オプション</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="obsolete">その他</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">ポリライン</translation>
-    </message>
-    <message>
-        <source>Restriction</source>
-        <translation type="obsolete">解像度</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="obsolete">選択</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="obsolete">スナップ</translation>
-    </message>
-    <message>
-        <source>Snap Extras</source>
-        <translation type="obsolete">独立スナップ</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">表示</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="obsolete">ウィジット</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionInfo3PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="141"/>
@@ -3326,10 +3111,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="149"/>
         <source>Select second edge point of angle</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">図形情報</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="189"/>
@@ -4944,10 +4725,6 @@ Are you sure you are going to discard changes?</source>
 <context>
     <name>LC_CreatorInvoker</name>
     <message>
-        <source>Menu Assigner</source>
-        <translation type="obsolete">メニュー配置</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="83"/>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="115"/>
         <source>Toolbar: %1 (Custom)</source>
@@ -5390,29 +5167,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="108"/>
         <source>System</source>
         <translation type="unfinished">システム</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">レイヤー:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">図形</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="obsolete">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="obsolete">Y</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">ペン</translation>
     </message>
 </context>
 <context>
@@ -6757,10 +6511,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="332"/>
         <source>Edit style override</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="obsolete">...</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="346"/>
@@ -9784,10 +9534,6 @@ Please specify a different value.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Layer Menu</source>
-        <translation type="obsolete">レイヤーメニュー</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="651"/>
         <source>&amp;Add Child Layer</source>
         <translation type="unfinished"></translation>
@@ -10951,10 +10697,6 @@ Please specify a different value.</source>
         <translation type="unfinished">整列</translation>
     </message>
     <message>
-        <source>Dock Wid&amp;gets</source>
-        <translation type="obsolete">ドックウィジェット(&amp;g)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="475"/>
         <source>&amp;Toolbars</source>
         <translation type="unfinished">ツールバー(&amp;T)</translation>
@@ -11248,18 +10990,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="32"/>
         <source>Snap point of gap to line snap point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="obsolete">始点</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="obsolete">中点</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="obsolete">終点</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="95"/>
@@ -16197,10 +15927,6 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished">円</translation>
     </message>
     <message>
-        <source>Curve</source>
-        <translation type="obsolete">曲線</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="99"/>
         <source>Ellipse</source>
         <translation type="unfinished">楕円</translation>
@@ -16242,26 +15968,14 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished">整列</translation>
     </message>
     <message>
-        <source>Layer List</source>
-        <translation type="obsolete">レイヤーの一覧</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="212"/>
         <source>Entity Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Block List</source>
-        <translation type="obsolete">ブロックの一覧</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="238"/>
         <source>Library Browser</source>
         <translation type="unfinished">ライブラリの一覧</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="obsolete">コマンドライン</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="260"/>
@@ -16273,18 +15987,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="284"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">ファイル</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">編集</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">表示</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="164"/>
@@ -16302,133 +16004,9 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished">スプライン</translation>
     </message>
     <message>
-        <source>Snap Selection</source>
-        <translation type="obsolete">スナップ選択</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">ペン</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="obsolete">ツールオプション</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="obsolete">ドックエリア</translation>
-    </message>
-    <message>
-        <source>Creators</source>
-        <translation type="obsolete">新規作成</translation>
-    </message>
-    <message>
-        <source>Preferences</source>
-        <translation type="obsolete">参照</translation>
-    </message>
-    <message>
-        <source>Categories</source>
-        <translation type="obsolete">CADツール選択</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="obsolete">ファイル(&amp;F)</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="obsolete">インポート</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="obsolete">エクスポート</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="obsolete">オプション設定（&amp;O）</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="obsolete">編集(&amp;E)</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="obsolete">プラグイン（&amp;u）</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="obsolete">表示(&amp;V)</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="obsolete">ツール(&amp;T)</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="obsolete">直線(&amp;L)</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="obsolete">円(&amp;C)</translation>
-    </message>
-    <message>
-        <source>&amp;Curve</source>
-        <translation type="obsolete">曲線(&amp;C)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="94"/>
         <source>Point</source>
         <translation type="unfinished">点</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="obsolete">楕円(&amp;E)</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="obsolete">ポリライン(&amp;P)</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="obsolete">選択(&amp;S)</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="obsolete">寸法記入（&amp;n）</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="obsolete">変更・修正(&amp;M)</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="obsolete">図形情報(&amp;I)</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="obsolete">整列(&amp;O)</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="obsolete">製図(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="obsolete">ヘルプ(&amp;H)</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="obsolete">Librecadの情報</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="obsolete">ウィジット</translation>
-    </message>
-    <message>
-        <source>Dock Wid&amp;gets</source>
-        <translation type="obsolete">ドックウィジェット(&amp;g)</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="obsolete">ツールバー(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="138"/>
@@ -16594,10 +16172,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="503"/>
         <source>For &quot;classic&quot; statusbar only. </source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="vanished">縮尺</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="113"/>
@@ -16777,14 +16351,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="654"/>
         <source>Number of columns for actions in left toolbar.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>side length in pixels</source>
-        <translation type="vanished">ピクセル単位での辺の長さ</translation>
-    </message>
-    <message>
-        <source>Use themed icons</source>
-        <translation type="vanished">テーマアイコンを使用</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp" line="216"/>
@@ -16968,83 +16534,6 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <source>&amp;File</source>
-        <translation type="vanished">ファイル(&amp;F)</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">インポート</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">編集(&amp;E)</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">表示(&amp;V)</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">選択(&amp;S)</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">直線(&amp;L)</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">円(&amp;C)</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">楕円(&amp;E)</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">ポリライン(&amp;P)</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">変更・修正(&amp;M)</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">図形情報(&amp;I)</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">Librecadの情報</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">ヘルプ(&amp;H)</translation>
-    </message>
-    <message>
-        <source>Layer List</source>
-        <translation type="vanished">レイヤーの一覧</translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="vanished">ブロックの一覧</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="vanished">コマンドライン</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">カスケード表示(&amp;C)</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">タイル表示・自動配置(&amp;T)</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">タイル表示：水平(&amp;H)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="795"/>
         <source>Creating new file...</source>
         <translation>新しいファイルを作成...</translation>
@@ -17111,26 +16600,6 @@ Auto-save disabled.</source>
         <translation>ファイル %1 が自動保存できません、権限をチェックしてください.</translation>
     </message>
     <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">図面をエクスポート...</translation>
-    </message>
-    <message>
-        <source>Exported: %1</source>
-        <translation type="vanished">エクスポート: %1</translation>
-    </message>
-    <message>
-        <source>Exporting...</source>
-        <translation type="vanished">エクスポート...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">エクスポートは完了しました</translation>
-    </message>
-    <message>
-        <source>Export failed!</source>
-        <translation type="vanished">エクスポートは失敗しました！</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1271"/>
         <source>Printing...</source>
         <translation>印刷...</translation>
@@ -17151,18 +16620,6 @@ Auto-save disabled.</source>
         <translation>アプリケーションを実行...</translation>
     </message>
     <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">ツールバー(&amp;T)</translation>
-    </message>
-    <message>
-        <source>Compiled on: %1</source>
-        <translation type="vanished">コンパイル・オン: %1</translation>
-    </message>
-    <message>
-        <source>Version: %1</source>
-        <translation type="vanished">バージョン: %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="988"/>
         <source>Warning: File already opened : </source>
         <translation>警告: ファイルは開かれています: </translation>
@@ -17176,14 +16633,6 @@ Auto-save disabled.</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="249"/>
         <source> , please check the filename and permissions.</source>
         <translation>  , ファイル名、権限をチェックしてください.</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">タイル表示：縦(&amp;V)</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">タブモード(&amp;b)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="813"/>
@@ -17201,53 +16650,9 @@ Auto-save disabled.</source>
         <translation>自動保存に失敗しました</translation>
     </message>
     <message>
-        <source>File</source>
-        <translation type="vanished">ファイル</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">編集</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="vanished">表示</translation>
-    </message>
-    <message>
-        <source>Snap Selection</source>
-        <translation type="vanished">スナップ選択</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="vanished">ツールオプション</translation>
-    </message>
-    <message>
-        <source>Export as</source>
-        <translation type="vanished">エクスポート</translation>
-    </message>
-    <message>
-        <source>Compiler: Clang %1.%2.%3</source>
-        <translation type="vanished">コンパイラ: Clang %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation type="vanished">コンパイラ: GNU GCC %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Qt Version: %1</source>
-        <translation type="vanished">QTのバージョン: %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="207"/>
         <source>Draft Mode</source>
         <translation>作図モード</translation>
-    </message>
-    <message>
-        <source>Export as PDF</source>
-        <translation type="vanished">PDFでエクスポート</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">エクスポート</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1001"/>
@@ -17263,153 +16668,9 @@ Please check its existence and permissions.</source>
         <translation>ファイル &apos;%1&apos; は存在しません。ファイルを開くことを中止</translation>
     </message>
     <message>
-        <source>Categories</source>
-        <translation type="vanished">CADツール選択</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="vanished">整列(&amp;O)</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">整列</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">選択</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">直線</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">円</translation>
-    </message>
-    <message>
-        <source>&amp;Curve</source>
-        <translation type="vanished">曲線(&amp;C)</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="vanished">曲線</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">楕円</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">ポリライン</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">寸法記入</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">変更・修正</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">図形情報</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">ペン</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1678"/>
         <source>Opening recent file...</source>
         <translation>最近開いたファイル...</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="vanished">ドックエリア</translation>
-    </message>
-    <message>
-        <source>Grid Status</source>
-        <translation type="vanished">グリッドステータス</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="vanished">ツールバー</translation>
-    </message>
-    <message>
-        <source>Dockwidgets</source>
-        <translation type="vanished">ドック ウィジット</translation>
-    </message>
-    <message>
-        <source>Device Options</source>
-        <translation type="vanished">デバイスの選択</translation>
-    </message>
-    <message>
-        <source>Device</source>
-        <translation type="vanished">デバイス</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">オプション設定（&amp;O）</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">プラグイン（&amp;u）</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="vanished">寸法記入（&amp;n）</translation>
-    </message>
-    <message>
-        <source>Dock Wid&amp;gets</source>
-        <translation type="vanished">ドックウィジェット(&amp;g)</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">最近使用したファイル</translation>
-    </message>
-    <message>
-        <source>Compiler: Microsoft Visual C++</source>
-        <translation type="vanished">コンパイラ: Microsoft Visual C++</translation>
-    </message>
-    <message>
-        <source>Boost Version: %1.%2.%3</source>
-        <translation type="vanished">起動中のバージョン: %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation type="vanished">コピー</translation>
-    </message>
-    <message>
-        <source>Contributors</source>
-        <translation type="vanished">協力者</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation type="vanished">ライセンス</translation>
-    </message>
-    <message>
-        <source>System</source>
-        <translation type="vanished">システム</translation>
-    </message>
-    <message>
-        <source>Toolbar Creator</source>
-        <translation type="vanished">ツールバー作成</translation>
-    </message>
-    <message>
-        <source>Menu Creator</source>
-        <translation type="vanished">メニュー作成</translation>
-    </message>
-    <message>
-        <source>Menu Assigner</source>
-        <translation type="vanished">メニュー配置</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="vanished">ツール(&amp;T)</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="vanished">製図(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="226"/>
@@ -17420,10 +16681,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
         <source>Save cancelled</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Closing Drawing</source>
-        <translation type="obsolete">図面を閉じる</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="361"/>
@@ -17490,25 +16747,9 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
         <source>Current Layer</source>
         <translation>現在のレイヤー</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;現在、編集しているレイヤー名&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -17545,98 +16786,6 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>QG_BlockWidget</name>
-    <message>
-        <source>Rename the active block</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="vanished">選択ブロック名変更</translation>
-    </message>
-    <message>
-        <source>Edit the active block
-in a separate window</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="vanished">切り離されたウインドウの
-アクティブ・ブロックを編集</translation>
-    </message>
-    <message>
-        <source>Insert the active block</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="vanished">選択ブロック挿入</translation>
-    </message>
-    <message>
-        <source>Block Menu</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="vanished">ブロック メニュー</translation>
-    </message>
-    <message>
-        <source>&amp;Defreeze all Blocks</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="vanished">全ブロック固定解除(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Freeze all Blocks</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="vanished">全ブロック固定(&amp;F)</translation>
-    </message>
-    <message>
-        <source>&amp;Add Block</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="vanished">ブロック追加(&amp;A)</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Block</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="vanished">ブロック削除(&amp;R)</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Block</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="vanished">ブロック編集(&amp;E)</translation>
-    </message>
-    <message>
-        <source>&amp;Toggle Visibility</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="vanished">ブロック表示/非表示(&amp;T)</translation>
-    </message>
-    <message>
-        <source>Show all blocks</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="vanished">全ブロック表示</translation>
-    </message>
-    <message>
-        <source>Hide all blocks</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="vanished">全ブロック非表示</translation>
-    </message>
-    <message>
-        <source>&amp;Rename Block</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="vanished">ブロック名変更(&amp;R)</translation>
-    </message>
-    <message>
-        <source>&amp;Insert Block</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="vanished">ブロック挿入(&amp;I)</translation>
-    </message>
-    <message>
-        <source>&amp;Create New Block</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="vanished">新規ブロック作成(&amp;C)</translation>
-    </message>
-    <message>
-        <source>Create Block</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="vanished">ブロック作成</translation>
-    </message>
-    <message>
-        <source>Add an empty block</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="vanished">空のブロックを追加</translation>
-    </message>
-    <message>
-        <source>save the active block to a file</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="vanished">アクティブなブロックをファイルに保存</translation>
-    </message>
     <message>
         <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="183"/>
         <source>Filter</source>
@@ -17859,10 +17008,6 @@ in a separate window</source>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="321"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="obsolete">コマンドライン</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="322"/>
@@ -18198,44 +17343,6 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="vanished">線分寸法</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">レイヤー:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">図形</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度:</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">ペン</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">レイヤー:</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">寸法</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">ペン</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgEllipse</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="26"/>
@@ -18313,18 +17420,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="130"/>
         <source>Rotation angle for the major axis of ellipse, degrees</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="vanished">終了角度:</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="vanished">開始角度:</translation>
-    </message>
-    <message>
-        <source>Rotation:</source>
-        <translation type="vanished">回転:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="276"/>
@@ -18590,18 +17685,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="129"/>
         <source>Command Language:</source>
         <translation>コマンド 言語:</translation>
-    </message>
-    <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
-&lt;/font&gt;
-&lt;br&gt;
-Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
-(You can changes these settings later.)</source>
-        <translation type="vanished">&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;LibreCAD にようこそ&lt;/b&gt;
-&lt;/font&gt;
-&lt;br&gt;
-あなたが作図で使用したいユニットと言語を設定してください&lt;br&gt;
-(ここでの設定は後で変更できます。)</translation>
     </message>
 </context>
 <context>
@@ -19723,10 +18806,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Move/Copy Options</source>
         <translation>移動/コピー オプション</translation>
     </message>
-    <message>
-        <source>Number of copies. Maximum 100</source>
-        <translation type="vanished">コピー数（最大100）</translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgMoveRotate</name>
@@ -19769,10 +18848,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="163"/>
         <source>Multiple Copies</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">複数複写(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="41"/>
@@ -20161,32 +19236,16 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>スプライン一区間当たりの微線分数:</translation>
     </message>
     <message>
-        <source>Crosshair</source>
-        <translation type="vanished">十字線</translation>
-    </message>
-    <message>
-        <source>Left crosshair with isometric grid</source>
-        <translation type="vanished">十字線は左、アイソメトリック時</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="170"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="230"/>
         <source>Left</source>
         <translation>左</translation>
     </message>
     <message>
-        <source>Top crosshair with isometric grid</source>
-        <translation type="vanished">十字線は上、アイソメトリック時</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="213"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="246"/>
         <source>Top</source>
         <translation>上</translation>
-    </message>
-    <message>
-        <source>Right crosshair with isometric grid</source>
-        <translation type="vanished">十字線は右、アイソメトリック時</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="196"/>
@@ -20203,14 +19262,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="794"/>
         <source>Orthogonal Grid</source>
         <translation>直交グリッド</translation>
-    </message>
-    <message>
-        <source>Use isometric grid</source>
-        <translation type="vanished">アイソメトリック・グリッドを使用</translation>
-    </message>
-    <message>
-        <source>Isometric Grid</source>
-        <translation type="vanished">アイソメトリック・グリッド</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1220"/>
@@ -21015,10 +20066,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>言語</translation>
     </message>
     <message>
-        <source>Graphic View</source>
-        <translation type="vanished">画面の表示</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="14"/>
         <source>Application Preferences</source>
         <translation>アプリケーションの設定</translation>
@@ -21027,10 +20074,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4476"/>
         <source>Defaults for new drawings</source>
         <translation>新規図面の既定値</translation>
-    </message>
-    <message>
-        <source>&amp;Appearance</source>
-        <translation type="vanished">外観(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5019"/>
@@ -21058,31 +20101,15 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>単位(&amp;U):</translation>
     </message>
     <message>
-        <source>Backgr&amp;ound:</source>
-        <translation type="vanished">背景色(&amp;o):</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1173"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1495"/>
         <source>G&amp;rid Color:</source>
         <translation>グリッド(&amp;r):</translation>
     </message>
     <message>
-        <source>&amp;Meta Grid Color:</source>
-        <translation type="vanished">メタグリッド(&amp;M):</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="957"/>
         <source>A&amp;utomatically scale grid</source>
         <translation>グリッドの間隔を自動調整(&amp;u)</translation>
-    </message>
-    <message>
-        <source>S&amp;elected Color:</source>
-        <translation type="vanished">選択した要素(&amp;e):</translation>
-    </message>
-    <message>
-        <source>&amp;Highlighted Color:</source>
-        <translation type="vanished">操作する要素(&amp;H):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="940"/>
@@ -21105,10 +20132,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>初期値</translation>
     </message>
     <message>
-        <source>Drawing unit.</source>
-        <translation type="vanished">作図ユニット.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4736"/>
         <source>Time between automatic saving of the document in minutes.</source>
         <translation>自動保存する時間（単位は分）.</translation>
@@ -21117,10 +20140,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4759"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
         <translation>設定時、LibreCADは現在の図面を自動的にバックアップする。</translation>
-    </message>
-    <message>
-        <source>Auto backup</source>
-        <translation type="vanished">自動バックアップ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5301"/>
@@ -21141,18 +20160,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="723"/>
         <source>&amp;End Handle Color:</source>
         <translation>ハンドルの終了(&amp;E):</translation>
-    </message>
-    <message>
-        <source>Graphic Colors</source>
-        <translation type="vanished">画面の色</translation>
-    </message>
-    <message>
-        <source>Modify layer of selected entities, at  layer activation</source>
-        <translation type="vanished">レイヤーをアクティブにするときに、選択された要素のレイヤーを修正する</translation>
-    </message>
-    <message>
-        <source>Snap indicator:</source>
-        <translation type="vanished">スナップ位置を明示する線：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="554"/>
@@ -21192,17 +20199,9 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>設定を元に戻す</translation>
     </message>
     <message>
-        <source>restores program geometry/layout to original state</source>
-        <translation type="vanished">図面/外観の設定を初期設定に戻す</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5076"/>
         <source>Layout</source>
         <translation>外観</translation>
-    </message>
-    <message>
-        <source>restores the program to its original state</source>
-        <translation type="vanished">変更をすべて初期設定に戻す</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5092"/>
@@ -21218,10 +20217,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="538"/>
         <source>Scrollbars</source>
         <translation>スクロールバー</translation>
-    </message>
-    <message>
-        <source>Snap indicator lines</source>
-        <translation type="vanished">スナップ位置を線で示す</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="46"/>
@@ -21326,10 +20321,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1778"/>
         <source>If checked, a shap for snap will be drawn</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap indicator shape</source>
-        <translation type="vanished">スナップ位置をshapeで示す</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1721"/>
@@ -23167,10 +22158,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation type="obsolete">その他</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5169"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5224"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5238"/>
@@ -23493,13 +22480,6 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="38"/>
         <source>Whether to export points</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">中止</translation>
     </message>
 </context>
 <context>
@@ -24678,10 +23658,6 @@ so default step value required for baking</source>
         <source>again Still No Text supplied.</source>
         <translation>また、テキストの記述がない.</translation>
     </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">閉じる</translation>
-    </message>
 </context>
 <context>
     <name>QG_FileDialog</name>
@@ -24892,70 +23868,14 @@ The contents of a Construction Layer should not appear in printout.</source>
 <context>
     <name>QG_LayerWidget</name>
     <message>
-        <source>Show all layers</source>
-        <translation type="vanished">全レイヤーを表示</translation>
-    </message>
-    <message>
-        <source>Hide all layers</source>
-        <translation type="vanished">全レイヤーを非表示</translation>
-    </message>
-    <message>
-        <source>Add a layer</source>
-        <translation type="vanished">レイヤー追加</translation>
-    </message>
-    <message>
-        <source>Modify layer attributes / rename</source>
-        <translation type="vanished">レイヤー設定（名称・線の属性を変更）</translation>
-    </message>
-    <message>
-        <source>Layer Menu</source>
-        <translation type="vanished">レイヤーメニュー</translation>
-    </message>
-    <message>
-        <source>&amp;Defreeze all Layers</source>
-        <translation type="vanished">すべてのレイヤー固定解除(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Freeze all Layers</source>
-        <translation type="vanished">すべてのレイヤー固定(&amp;F)</translation>
-    </message>
-    <message>
-        <source>&amp;Add Layer</source>
-        <translation type="vanished">レイヤー追加(&amp;A)</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Layer</source>
-        <translation type="vanished">レイヤー削除(&amp;R)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="249"/>
         <source>Looking for matching layer names</source>
         <translation>レイヤー名で検索</translation>
     </message>
     <message>
-        <source>Edit Layer &amp;Attributes</source>
-        <translation type="vanished">レイヤーの属性を編集(&amp;A)</translation>
-    </message>
-    <message>
-        <source>Toggle Layer &amp;Visibility</source>
-        <translation type="vanished">表示/非表示の切り替え(&amp;V)</translation>
-    </message>
-    <message>
-        <source>Toggle Layer &amp;Printing</source>
-        <translation type="vanished">印刷の有無を切り替え(&amp;P)</translation>
-    </message>
-    <message>
-        <source>Toggle &amp;Construction Layer</source>
-        <translation type="vanished">作図補助レイヤーの切り替え(&amp;C)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="247"/>
         <source>Filter</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toggle Layer Loc&amp;k</source>
-        <translation type="obsolete">レイヤー固定の切り替え(&amp;k)</translation>
     </message>
 </context>
 <context>
@@ -25139,10 +24059,6 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>マウス</translation>
     </message>
     <message>
-        <source>Right</source>
-        <translation type="vanished">右</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/status_bar/qg_mousewidget.ui" line="229"/>
         <source>Left</source>
         <translation>左</translation>
@@ -25187,13 +24103,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="49"/>
         <source>Line type</source>
         <translation type="unfinished">線種</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PolylineOptions</name>
-    <message>
-        <source>wrong action type</source>
-        <translation type="vanished">間違ったアクションタイプ</translation>
     </message>
 </context>
 <context>
@@ -25249,145 +24158,9 @@ p, li { white-space: pre-wrap; }
         <source>Total length of selected entities</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;選択された要素の値&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;選択された要素の長さの合計&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
 </context>
 <context>
     <name>QG_SnapToolBar</name>
-    <message>
-        <source>Snap</source>
-        <translation type="vanished">スナップ</translation>
-    </message>
-    <message>
-        <source>Snap to Endpoints</source>
-        <translation type="vanished">終点へスナップ</translation>
-    </message>
-    <message>
-        <source>Snap to equidistant points of entity</source>
-        <translation type="vanished">2点間中点</translation>
-    </message>
-    <message>
-        <source>Snap to center points</source>
-        <translation type="vanished">中心点へスナップ</translation>
-    </message>
-    <message>
-        <source>Snap to intersections automatically</source>
-        <translation type="vanished">自動的に交点へスナップ</translation>
-    </message>
-    <message>
-        <source>Snap to closest point on entity</source>
-        <translation type="vanished">図形上の近傍点へスナップ</translation>
-    </message>
-    <message>
-        <source>Snap to point with given distance to endpoint</source>
-        <translation type="vanished">終点までの指定距離指示で点へスナップ</translation>
-    </message>
-    <message>
-        <source>Snap to intersections manually</source>
-        <translation type="vanished">指定して交点へスナップ</translation>
-    </message>
-    <message>
-        <source>Snap to grid</source>
-        <translation type="vanished">グリッドへスナップ</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontally</source>
-        <translation type="vanished">（移動方向）水平制限</translation>
-    </message>
-    <message>
-        <source>Restrict Vertically</source>
-        <translation type="vanished">（移動方向）垂直制限</translation>
-    </message>
-    <message>
-        <source>Move relative Zero</source>
-        <translation type="vanished">相対原点へ移動</translation>
-    </message>
-    <message>
-        <source>Lock relative Zero</source>
-        <translation type="vanished">相対原点を固定</translation>
-    </message>
-    <message>
-        <source>Free Snap</source>
-        <translation type="vanished">任意の場所</translation>
-    </message>
-    <message>
-        <source>Snap on grid</source>
-        <translation type="vanished">グリッド</translation>
-    </message>
-    <message>
-        <source>Snap on Endpoints</source>
-        <translation type="vanished">終点</translation>
-    </message>
-    <message>
-        <source>Snap on Entity</source>
-        <translation type="vanished">要素の上</translation>
-    </message>
-    <message>
-        <source>Snap Center</source>
-        <translation type="vanished">中心点</translation>
-    </message>
-    <message>
-        <source>Snap Middle</source>
-        <translation type="vanished">要素の中間点</translation>
-    </message>
-    <message>
-        <source>Snap Distance</source>
-        <translation type="vanished">距離指定</translation>
-    </message>
-    <message>
-        <source>Snap Intersection</source>
-        <translation type="vanished">交点</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontal</source>
-        <translation type="vanished">（移動方向）水平制限</translation>
-    </message>
-    <message>
-        <source>Restrict Vertical</source>
-        <translation type="vanished">（移動方向）垂直制限</translation>
-    </message>
-    <message>
-        <source>Restrict Orthogonal</source>
-        <translation type="vanished">（移動方向）直交位置に制限</translation>
-    </message>
-    <message>
-        <source>Restrict Nothing</source>
-        <translation type="vanished">（移動方向）制限なし</translation>
-    </message>
-    <message>
-        <source>Set relative zero position</source>
-        <translation type="vanished">相対原点設定</translation>
-    </message>
-    <message>
-        <source>Lock relative zero position</source>
-        <translation type="vanished">相対原点を固定</translation>
-    </message>
-    <message>
-        <source>Exclusive Snap Mode</source>
-        <translation type="vanished">独立スナップモード</translation>
-    </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="169"/>
         <source>Relative zero position is %1</source>
@@ -25464,115 +24237,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="250"/>
         <source>By Layer</source>
         <translation>レイヤー設定で</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="vanished">ブロック設定で</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">既定値</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation type="vanished">0.00mm</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation type="vanished">0.05mm</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation type="vanished">0.09mm</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation type="vanished">0.13mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation type="vanished">0.15mm</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation type="vanished">0.18mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation type="vanished">0.20mm</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation type="vanished">0.25mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation type="vanished">0.30mm</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation type="vanished">0.35mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation type="vanished">0.40mm</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation type="vanished">0.50mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation type="vanished">0.53mm</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation type="vanished">0.60mm</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation type="vanished">0.70mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation type="vanished">0.80mm</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation type="vanished">0.90mm</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation type="vanished">1.00mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation type="vanished">1.06mm</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation type="vanished">1.20mm</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation type="vanished">1.40mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation type="vanished">1.58mm</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation type="vanished">2.00mm (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation type="vanished">2.11mm</translation>
-    </message>
-    <message>
-        <source>- Unchanged -</source>
-        <translation type="vanished">- 未変更 -</translation>
     </message>
 </context>
 <context>
@@ -27439,10 +26103,6 @@ Do you want to replace it?</source>
         <translation>close</translation>
     </message>
     <message>
-        <source>chord length</source>
-        <translation type="vanished">chord length</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1059"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1165"/>
         <source>columns</source>
@@ -27524,11 +26184,6 @@ Do you want to replace it?</source>
         <source>ce</source>
         <comment>center</comment>
         <translation>ce</translation>
-    </message>
-    <message>
-        <source>cl</source>
-        <comment>chord length</comment>
-        <translation type="vanished">cl</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1163"/>
@@ -27721,19 +26376,9 @@ Do you want to replace it?</source>
         <translation>undo</translation>
     </message>
     <message>
-        <source>u</source>
-        <comment>undo</comment>
-        <translation type="vanished">u</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1221"/>
         <source>redo</source>
         <translation>redo</translation>
-    </message>
-    <message>
-        <source>r</source>
-        <comment>redo</comment>
-        <translation type="vanished">r</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1224"/>
@@ -27755,10 +26400,6 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1231"/>
         <source>graphoffset</source>
         <translation>graphoffset</translation>
-    </message>
-    <message>
-        <source>Command: %1 (%2)</source>
-        <translation type="vanished">コマンド： %1 (%2)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="261"/>
@@ -27797,23 +26438,9 @@ Do you want to replace it?</source>
         <translation>コマンドが見つからない： %1</translation>
     </message>
     <message>
-        <source>Accepted keycode: %1</source>
-        <translation type="vanished">受け入れられたキーコード: %1</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="472"/>
         <source>Available commands:</source>
         <translation>可能なコマンド:</translation>
-    </message>
-    <message>
-        <source>cal</source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">cal</translation>
-    </message>
-    <message>
-        <source>calculate</source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">calculate</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="204"/>
@@ -27868,90 +26495,6 @@ Do you want to replace it?</source>
         <translation>mp</translation>
     </message>
     <message>
-        <source>Block</source>
-        <translation type="vanished">ブロック</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">円</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="vanished">曲線</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">編集</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">楕円</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="vanished">ファイル</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">寸法記入</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">図形情報</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">レイヤー</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">直線</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">変更・修正</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="vanished">オプション</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">その他</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">ポリライン</translation>
-    </message>
-    <message>
-        <source>Restriction</source>
-        <translation type="vanished">解像度</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">選択</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="vanished">スナップ</translation>
-    </message>
-    <message>
-        <source>Snap Extras</source>
-        <translation type="vanished">独立スナップ</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="vanished">表示</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="vanished">ウィジット</translation>
-    </message>
-    <message>
-        <source>Creators</source>
-        <translation type="vanished">新規作成</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="87"/>
         <source>All</source>
         <translation>すべて</translation>
@@ -27960,10 +26503,6 @@ Do you want to replace it?</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="960"/>
         <source>Invalid objects removed:</source>
         <translation>オブジェクトの削除を無効:</translation>
-    </message>
-    <message>
-        <source>Pen Wizard</source>
-        <translation type="vanished">ペンウィザード</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_wizard/colorwizard.cpp" line="52"/>
@@ -29867,10 +28406,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export as PDF</source>
-        <translation type="obsolete">PDFでエクスポート</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="44"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
@@ -30120,10 +28655,6 @@ Do you want to replace it?</source>
         <source>Specify reference point</source>
         <translation>参照点定義</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionBlocksExplode</name>
@@ -30154,10 +28685,6 @@ Do you want to replace it?</source>
         <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="349"/>
         <source>Specify reference point</source>
         <translation>参照点定義</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="352"/>
@@ -30389,37 +28916,6 @@ This block cannot be inserted.</source>
         <source>Choose second edge</source>
         <translation>他端選択</translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDimAligned</name>
-    <message>
-        <source>Specify first extension line origin</source>
-        <translation type="vanished">起点設定</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
-        <source>Specify second extension line origin</source>
-        <translation type="vanished">次の点を設定</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation type="vanished">寸法線位置を設定</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">寸法値入力:</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDimAngular</name>
@@ -30427,10 +28923,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="216"/>
         <source>Select first line</source>
         <translation>１番目の線分を選択</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="219"/>
@@ -30449,42 +28941,11 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDimDiametric</name>
-    <message>
-        <source>Not a circle or arc entity</source>
-        <translation type="vanished">円、円弧要素ではありません</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">表記誤り</translation>
-    </message>
-    <message>
-        <source>Select arc or circle entity</source>
-        <translation type="vanished">円、円弧要素を選択</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation type="vanished">寸法線位置設定</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">寸法値入力:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDimLeader</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="182"/>
         <source>Specify target point</source>
         <translation>起点指定</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="185"/>
@@ -30516,61 +28977,14 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Specify first extension line origin</source>
-        <translation type="vanished">引出し線起点指定</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="211"/>
         <source>Specify second extension line origin</source>
         <translation>２番目の引出し線の起点を指定</translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="221"/>
         <source>Specify dimension line location</source>
         <translation>寸法線位置指定</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">寸法値入力:</translation>
-    </message>
-    <message>
-        <source>Enter dimension line angle:</source>
-        <translation type="vanished">角度入力:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDimRadial</name>
-    <message>
-        <source>Not a circle or arc entity</source>
-        <translation type="vanished">円、円弧ではありません</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">表記に誤り</translation>
-    </message>
-    <message>
-        <source>Select arc or circle entity</source>
-        <translation type="vanished">円か円弧を選択</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
-        <source>Specify dimension line position or enter angle:</source>
-        <translation type="vanished">寸法線位置、角度を指定:</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">寸法値入力:</translation>
     </message>
 </context>
 <context>
@@ -30621,17 +29035,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="500"/>
         <source>Specify radius</source>
         <translation>半径指定</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="507"/>
@@ -30648,14 +29054,6 @@ This block cannot be inserted.</source>
         <source>Specify included angle:</source>
         <translation>内角指定:</translation>
     </message>
-    <message>
-        <source>Specify chord length:</source>
-        <translation type="vanished">弦の長さ指定:</translation>
-    </message>
-    <message>
-        <source>Specify end angle or [angle/chord length]</source>
-        <translation type="vanished">端軸の終点[または短軸長さ]を指示</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawArc3P</name>
@@ -30670,21 +29068,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished">３点目指示</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="233"/>
         <source>Specify second point</source>
         <translation>二点目指示</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
-    </message>
-    <message>
-        <source>Specify endpoint</source>
-        <translation type="vanished">終点指示</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="230"/>
@@ -30710,17 +29096,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="277"/>
         <source>Specify end angle</source>
         <translation>終了角度指示</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="279"/>
@@ -30741,14 +29119,6 @@ This block cannot be inserted.</source>
         <translation>中心指定</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="129"/>
         <source>Specify point on circle</source>
         <translation type="unfinished"></translation>
@@ -30767,17 +29137,9 @@ This block cannot be inserted.</source>
         <translation>１点目指示</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="156"/>
         <source>Specify second point</source>
         <translation>２点目指示</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
 </context>
 <context>
@@ -30793,17 +29155,9 @@ This block cannot be inserted.</source>
         <translation>１点目指示</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="175"/>
         <source>Specify second point</source>
         <translation>２点目指示</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="178"/>
@@ -30824,17 +29178,9 @@ This block cannot be inserted.</source>
         <translation>中心指示</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="177"/>
         <source>Specify circle radius</source>
         <translation>半径指示</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="146"/>
@@ -30860,17 +29206,9 @@ This block cannot be inserted.</source>
         <translation>最初の線を指定</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="216"/>
         <source>Specify the second line</source>
         <translation>2本目の線を指定</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="219"/>
@@ -30881,17 +29219,9 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircleTan1_2P</name>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="463"/>
         <source>Specify the first point on the tangent circle</source>
         <translation>最初の接する円を指定</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="466"/>
@@ -30917,17 +29247,9 @@ This block cannot be inserted.</source>
         <translation>最初の線/弧/円を指定</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="280"/>
         <source>Specify the second line/arc/circle</source>
         <translation>２つ目の線/弧/円を指定</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="283"/>
@@ -30948,18 +29270,6 @@ This block cannot be inserted.</source>
         <translation>線/弧/円を指定</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
-        <source>Specify the another arc/circle</source>
-        <translation type="vanished">別の弧/円を指定</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="341"/>
         <source>Specify the another line/arc/circle</source>
         <translation type="unfinished"></translation>
@@ -30977,14 +29287,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="509"/>
         <source>Select the center of the tangent circle</source>
@@ -31019,17 +29321,9 @@ This block cannot be inserted.</source>
         <translation>楕円上の最初の点を指定</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="276"/>
         <source>Specify the second point on ellipse</source>
         <translation>楕円上の２つ目の点を指定</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="279"/>
@@ -31062,17 +29356,9 @@ This block cannot be inserted.</source>
         <translation>楕円中心指示</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="339"/>
         <source>Specify endpoint of major axis</source>
         <translation>長軸の終点指示</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="342"/>
@@ -31098,10 +29384,6 @@ This block cannot be inserted.</source>
         <translation>楕円の中心を指定</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="246"/>
         <source>Specify the first point on ellipse</source>
         <translation>楕円上の最初の点を指定</translation>
@@ -31110,10 +29392,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="249"/>
         <source>Specify the second point on ellipse</source>
         <translation>楕円上の２つ目の点を指定</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="252"/>
@@ -31134,17 +29412,9 @@ This block cannot be inserted.</source>
         <translation>最初の楕円の焦点を指定</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="195"/>
         <source>Specify second focus of ellipse</source>
         <translation>２つ目の楕円の焦点を指定</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="198"/>
@@ -31170,17 +29440,9 @@ This block cannot be inserted.</source>
         <translation>最初の線を指定</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="310"/>
         <source>Specify the second line</source>
         <translation>2本目の線を指定</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="313"/>
@@ -31266,10 +29528,6 @@ This block cannot be inserted.</source>
         <translation>参照点指示</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="270"/>
         <source>Enter angle:</source>
         <translation>角度入力:</translation>
@@ -31297,17 +29555,9 @@ This block cannot be inserted.</source>
         <translation>１点目指示</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="274"/>
         <source>Specify next point or [%1]</source>
         <translation>次点又は[%1]指示</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="276"/>
@@ -31349,17 +29599,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="312"/>
         <source>Enter angle:</source>
         <translation>角度入力:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="315"/>
@@ -31386,17 +29628,9 @@ This block cannot be inserted.</source>
         <translation>１つ目の線分</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="268"/>
         <source>Select second line</source>
         <translation>２つ目の線分</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="271"/>
@@ -31422,10 +29656,6 @@ This block cannot be inserted.</source>
         <source>Click and drag to draw a line</source>
         <translation>クリックして作図線を引く</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineHorVert</name>
@@ -31435,17 +29665,9 @@ This block cannot be inserted.</source>
         <translation>１点目指示</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="117"/>
         <source>Specify second point</source>
         <translation>２点目指示</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
 </context>
 <context>
@@ -31462,17 +29684,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="255"/>
         <source>Select circle, arc or ellipse</source>
         <translation>円、楕円選択</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
 </context>
 <context>
@@ -31481,10 +29695,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="135"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
         <translation>距離&lt;%1&gt;、図形選択、[%2]指示</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="109"/>
@@ -31516,17 +29726,9 @@ This block cannot be inserted.</source>
         <translation>図形選択</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="177"/>
         <source>Specify through point</source>
         <translation>通過点指示</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="110"/>
@@ -31559,25 +29761,9 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLinePolygonCenCor</name>
     <message>
-        <source>Specify center</source>
-        <translation type="vanished">中心指定</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon.cpp" line="41"/>
         <source>Specify a corner</source>
         <translation>コーナー指示</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">数値入力:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">有効な数値ではありません。1..9999まで</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">表記に誤り</translation>
     </message>
 </context>
 <context>
@@ -31588,29 +29774,9 @@ This block cannot be inserted.</source>
         <translation>１つ目のコーナー指示</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="92"/>
         <source>Specify second corner</source>
         <translation>２つ目のコーナー指示</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">数:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">有効な数値ではありません。1..9999まで</translation>
-    </message>
-    <message>
-        <source>Not a valid expression.</source>
-        <translation type="vanished">表記に誤り。</translation>
     </message>
 </context>
 <context>
@@ -31646,17 +29812,9 @@ This block cannot be inserted.</source>
         <translation>１つ目のコーナー指示</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="144"/>
         <source>Specify second corner</source>
         <translation>２つ目のコーナー指示</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
 </context>
 <context>
@@ -31683,17 +29841,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="251"/>
         <source>Specify position</source>
         <translation>位置指示</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
 </context>
 <context>
@@ -31710,37 +29860,13 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
         <source>Select circle, arc or ellipse</source>
         <translation>円、楕円選択</translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent2</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
-    </message>
-    <message>
-        <source>Select first circle or ellipse</source>
-        <translation type="vanished">最初の円/楕円を選択</translation>
-    </message>
-    <message>
-        <source>Select second circle or ellipse</source>
-        <translation type="vanished">２つ目の円/楕円を選択</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="215"/>
         <source>Select first circle/ellipse/parabola</source>
@@ -31765,17 +29891,9 @@ This block cannot be inserted.</source>
         <translation>挿入点指示</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="189"/>
         <source>Enter text:</source>
         <translation>文字列入力:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
 </context>
 <context>
@@ -31784,10 +29902,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/point/rs_actiondrawpoint.cpp" line="77"/>
         <source>Specify location</source>
         <translation>位置指示</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
     </message>
 </context>
 <context>
@@ -31811,14 +29925,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="756"/>
         <source>Specify next point or [%1]</source>
         <translation>次のポイント または [%1] を指示</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="779"/>
@@ -31881,17 +29987,9 @@ This block cannot be inserted.</source>
         <translation>１つ目の制御点指示</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="227"/>
         <source>Specify next control point or [%1]</source>
         <translation>次の制御点指示か[%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="229"/>
@@ -31917,33 +30015,14 @@ This block cannot be inserted.</source>
         <translation>挿入点指示</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="247"/>
         <source>Enter text:</source>
         <translation>文字列入力:</translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="243"/>
         <source>Specify second point</source>
         <translation>２点目を指示</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditCopy</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">参照点を指示</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
     </message>
 </context>
 <context>
@@ -32006,17 +30085,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Set reference point</source>
-        <translation type="vanished">参照点設定</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditUndo</name>
     <message>
         <location filename="../src/actions/drawing/edit/rs_actioneditundo.cpp" line="55"/>
@@ -32046,10 +30114,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="250"/>
         <source>Single Line Mode</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">図形情報</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="103"/>
@@ -32141,21 +30205,9 @@ Intersection :@(%7, %8)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
         <source>Specify second line</source>
         <translation>２つ目の線分</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
-    </message>
-    <message>
-        <source>Angle: %1</source>
-        <translation type="vanished">角度: %1</translation>
     </message>
 </context>
 <context>
@@ -32182,26 +30234,14 @@ Intersection :@(%7, %8)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Point: %1/%2</source>
-        <translation type="vanished">点: %1/%2</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="178"/>
         <source>Specify first point of polygon</source>
         <translation>多角形の１点目を指示</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
         <source>Specify next point of polygon</source>
         <translation>多角形の次の点を指示</translation>
-    </message>
-    <message>
-        <source>Closing Point: %1/%2</source>
-        <translation type="vanished">閉じた点: %1/%2</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="101"/>
@@ -32257,29 +30297,13 @@ End: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="160"/>
         <source>Specify second point of distance</source>
         <translation>二点目を指示</translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
-    </message>
-    <message>
-        <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
-        <translation type="vanished">距離: %1 XY座標: (%2 , %3), 極座標: (%4&lt;%5)</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1</source>
-        <translation type="vanished">距離: %1</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="92"/>
         <source>Distance: %1
@@ -32330,18 +30354,10 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="279"/>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="282"/>
         <source>Specify point</source>
         <translation>点を指示</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
 </context>
 <context>
@@ -32360,10 +30376,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="82"/>
         <source>Specify point</source>
         <translation>点指示</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
     </message>
 </context>
 <context>
@@ -32430,10 +30442,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionLibraryInsert</name>
     <message>
-        <source>Insert Library Object</source>
-        <translation type="vanished">ライブラリ図形を挿入</translation>
-    </message>
-    <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="152"/>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="165"/>
         <source>Not a valid expression</source>
@@ -32443,10 +30451,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="194"/>
         <source>Specify reference point</source>
         <translation>参照点指示</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="197"/>
@@ -32466,13 +30470,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="65"/>
         <source>Cannot open file &apos;%1&apos;</source>
         <translation>ファイル&apos;%1&apos; を開けません</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLockRelativeZero</name>
-    <message>
-        <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation type="vanished">(非)ロック 相対原点(&amp;L)</translation>
     </message>
 </context>
 <context>
@@ -32553,17 +30550,9 @@ Point: (%8 , %9)</source>
         <translation>１つ目の図形選択</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="369"/>
         <source>Select second entity</source>
         <translation>２つ目の図形選択</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="372"/>
@@ -32599,30 +30588,14 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cutting point is invalid.</source>
-        <translation type="vanished">切断点が有効でありません。</translation>
-    </message>
-    <message>
-        <source>Cutting point is not on entity.</source>
-        <translation type="vanished">切断点が要素上にありません。</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="141"/>
         <source>Specify entity to cut</source>
         <translation>切断する要素を選択</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="144"/>
         <source>Specify cutting point</source>
         <translation>切断点を指示</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="114"/>
@@ -32656,17 +30629,9 @@ Point: (%8 , %9)</source>
         <translation>ポリライン上の１点目を指示</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="151"/>
         <source>Specify second break point on the same polyline</source>
         <translation>ポリライン上の２点目を指示</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="89"/>
@@ -32710,26 +30675,11 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionModifyDeleteQuick</name>
-    <message>
-        <source>Pick entity to delete</source>
-        <translation type="vanished">削除する図形を選択</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionModifyEntity</name>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyentity.cpp" line="263"/>
         <source>Click on entity to modify</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">中止</translation>
     </message>
 </context>
 <context>
@@ -32803,17 +30753,9 @@ Point: (%8 , %9)</source>
         <translation>対称軸の一点目指示</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="249"/>
         <source>Specify second point of mirror line</source>
         <translation>対称軸の二点目指示</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
 </context>
 <context>
@@ -32854,21 +30796,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
         <source>Specify target point</source>
         <translation>目的点を指示</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
-    </message>
-    <message>
-        <source>Invalid number of copies, use %1 </source>
-        <translation type="vanished">コピー数は無効, %1 を使用</translation>
     </message>
 </context>
 <context>
@@ -32928,17 +30858,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="325"/>
         <source>Specify target point</source>
         <translation>目的点を指示</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="328"/>
@@ -32984,10 +30906,6 @@ Point: (%8 , %9)</source>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionModifyRevertDirection</name>
@@ -33013,10 +30931,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="588"/>
         <source>Specify reference point</source>
         <translation>参照点を指示</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="132"/>
@@ -33153,17 +31067,9 @@ Point: (%8 , %9)</source>
         <translation>絶対参照点指示</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="179"/>
         <source>Specify relative reference point</source>
         <translation>相対参照点指示</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
 </context>
 <context>
@@ -33173,10 +31079,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="362"/>
         <source>Not a valid expression</source>
         <translation>表記に誤り</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="229"/>
@@ -33204,10 +31106,6 @@ Point: (%8 , %9)</source>
         <translation>半径入力:</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
         <translation type="unfinished"></translation>
@@ -33215,14 +31113,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">参照点を指示</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="169"/>
         <source>Scale</source>
@@ -33307,17 +31197,9 @@ Point: (%8 , %9)</source>
         <translation>１つ目のコーナー指示</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="199"/>
         <source>Specify second corner</source>
         <translation>２つ目のコーナー指示</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="79"/>
@@ -33371,17 +31253,9 @@ Point: (%8 , %9)</source>
         <translation>最初のトリムする要素を選択</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="202"/>
         <source>Select limiting entity</source>
         <translation>範囲図形選択</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="112"/>
@@ -33417,15 +31291,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyTrimAmount</name>
     <message>
-        <source>No entity found. </source>
-        <translation type="vanished">図形が見つかりません。</translation>
-    </message>
-    <message>
-        <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="vanished">選択された要素はブロックの中にあります。ブロックを編集してください。</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="173"/>
         <source>No entity found.</source>
         <translation type="unfinished"></translation>
@@ -33444,14 +31309,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="236"/>
         <source>Select line/arc to trim OR enter length value:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select entity to trim or enter distance:</source>
-        <translation type="vanished">部分削除する図形を選択するか距離を入力:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
 </context>
 <context>
@@ -33480,10 +31337,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="130"/>
         <source>Choose entity for order</source>
         <translation>配置する図形を選択</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
     </message>
 </context>
 <context>
@@ -33515,14 +31368,6 @@ Point: (%8 , %9)</source>
         <translation>指示位置が無効です。</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="136"/>
         <source>Adding point is not on entity.</source>
         <translation>追加点が図形上にありません。</translation>
@@ -33536,14 +31381,6 @@ Point: (%8 , %9)</source>
         <translation>ポリライン図形の開始または終了点の近傍を指示.</translation>
     </message>
     <message>
-        <source>Specify next point</source>
-        <translation type="vanished">次のポイントを指示</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">次のポイント または [%1] を指示</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="119"/>
         <source>No Entity found.</source>
         <translation>図形が見つかりません。</translation>
@@ -33552,14 +31389,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="122"/>
         <source>Entity must be a polyline.</source>
         <translation>図形はポリラインではありません。</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="299"/>
@@ -33606,14 +31435,6 @@ Point: (%8 , %9)</source>
         <translation>図形はポリラインではありません。</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="128"/>
         <source>Deleting point is invalid.</source>
         <translation>削除位置が無効.</translation>
@@ -33640,14 +31461,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="201"/>
         <source>Specify second node</source>
         <translation>二番目のノードを指示</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="116"/>
@@ -33700,10 +31513,6 @@ Point: (%8 , %9)</source>
         <source>Entity must be a polyline.</source>
         <translation>図形はポリラインではありません。</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionPolylineSegment</name>
@@ -33716,10 +31525,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="333"/>
         <source>No Entity found.</source>
         <translation>図形が見つかりません。</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="335"/>
@@ -33769,22 +31574,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="113"/>
         <source>Entity must be a polyline.</source>
         <translation>図形はポリラインではありません。</translation>
-    </message>
-    <message>
-        <source>No Segment found on entity.</source>
-        <translation type="vanished">図形上に指示セグメントが見つかりません。</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
-    </message>
-    <message>
-        <source>Specifying point is invalid.</source>
-        <translation type="vanished">指示位置が無効です.</translation>
     </message>
 </context>
 <context>
@@ -33861,87 +31650,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>Select to modify attributes</source>
-        <translation type="vanished">属性を変更する図形を選択</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
-        <source>Select to delete</source>
-        <translation type="vanished">削除するときに選択</translation>
-    </message>
-    <message>
-        <source>Select to delete immediately</source>
-        <translation type="vanished">選択をただちに削除する</translation>
-    </message>
-    <message>
-        <source>Select to move</source>
-        <translation type="vanished">移動するときに選択</translation>
-    </message>
-    <message>
-        <source>Select to rotate</source>
-        <translation type="vanished">回転するときに選択</translation>
-    </message>
-    <message>
-        <source>Select to scale</source>
-        <translation type="vanished">測定するときに選択</translation>
-    </message>
-    <message>
-        <source>Select to mirror</source>
-        <translation type="vanished">鏡像複写するときに選択</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate</source>
-        <translation type="vanished">移動と回転をするときに選択</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation</source>
-        <translation type="vanished">2つの回転軸を選択</translation>
-    </message>
-    <message>
-        <source>Select to explode text</source>
-        <translation type="vanished">分解するテキストを選択</translation>
-    </message>
-    <message>
-        <source>Select to create block</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="vanished">ブロックを新規作成するときに選択</translation>
-    </message>
-    <message>
-        <source>Select to copy</source>
-        <translation type="vanished">コピーするときに選択</translation>
-    </message>
-    <message>
-        <source>Select to cut</source>
-        <translation type="vanished">切り取りするときに選択</translation>
-    </message>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">選択されていません！</translation>
-    </message>
-    <message>
-        <source>Select to create offset</source>
-        <translation type="vanished">オフセットを新規作成するときに選択</translation>
-    </message>
-    <message>
-        <source>Select entities to order</source>
-        <translation type="vanished">整列する要素を選択</translation>
-    </message>
-    <message>
-        <source>Select to explode block</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="vanished">分解するブロックを選択</translation>
-    </message>
-    <message>
-        <source>Select to revert direction</source>
-        <translation type="vanished">基準点を入れ替えるため選択</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectContour</name>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="63"/>
@@ -33972,17 +31680,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="176"/>
         <source>Choose second point of intersection line</source>
         <translation>交差線分の二点目指示</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
 </context>
 <context>
@@ -34008,10 +31708,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="116"/>
         <source>De-Selecting</source>
@@ -34063,10 +31759,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="163"/>
         <source>Click and drag for the selection window</source>
         <translation>ドラッグして範囲を選択</translation>
@@ -34079,29 +31771,13 @@ Point: (%8 , %9)</source>
         <source>Set relative Zero</source>
         <translation>相対原点を設定</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
-        <source>Set &amp;Relative Zero</source>
-        <translation type="vanished">相対原点を設定(&amp;R)</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionSnapIntersectionManual</name>
     <message>
-        <source>I&amp;ntersection Manually</source>
-        <translation type="vanished">手動で交点(&amp;n)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="142"/>
         <source>Select first entity</source>
         <translation>１番目の図形指示</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="145"/>
@@ -34130,10 +31806,6 @@ Point: (%8 , %9)</source>
         <translation>ドラッグして移動</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="108"/>
         <source>Zoom panning</source>
         <translation>拡大図形の移動</translation>
@@ -34147,17 +31819,9 @@ Point: (%8 , %9)</source>
         <translation>初めの端点指示</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">中止</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="143"/>
         <source>Specify second edge</source>
         <translation>２つ目の端点指示</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">戻る</translation>
     </message>
 </context>
 <context>
@@ -34424,17 +32088,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Linear Dimension Options</source>
-        <translation type="vanished">線分寸法オプション</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">角度:</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -34603,17 +32256,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Factor:</source>
-        <translation type="vanished">倍率:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="106"/>
         <source>Scale Factor</source>
         <translation>倍率</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">DPI</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="120"/>
@@ -35047,21 +32692,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">多角形オプション</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">数値:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">辺の数</translation>
-    </message>
-</context>
-<context>
     <name>Ui_LinePolygonOptions</name>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="32"/>
@@ -35261,14 +32891,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="79"/>
         <source>Multiple Copies</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">距離:</translation>
-    </message>
-    <message>
-        <source>Offset from original entity</source>
-        <translation type="vanished">元の要素からオフセットする</translation>
     </message>
 </context>
 <context>
@@ -35526,14 +33148,6 @@ Point: (%8 , %9)</source>
         <translation>白黒反転切り替え</translation>
     </message>
     <message>
-        <source>Center to page</source>
-        <translation type="vanished">ページの中心へ</translation>
-    </message>
-    <message>
-        <source>Fit to page</source>
-        <translation type="vanished">ページの大きさに合わせる</translation>
-    </message>
-    <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="44"/>
         <source>Landscape Orientation of paper</source>
         <translation type="unfinished"></translation>
@@ -35654,10 +33268,6 @@ Point: (%8 , %9)</source>
         <source>Pick distance from drawing.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">距離:</translation>
-    </message>
 </context>
 <context>
     <name>Ui_SnapMiddleOptions</name>
@@ -35670,10 +33280,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="59"/>
         <source>Snap Middle Points:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Middle Points:</source>
-        <translation type="vanished">中間点:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
@@ -35793,41 +33399,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="50"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
         <translation>入力された値を全体の長さとする、増加はしない</translation>
-    </message>
-</context>
-<context>
-    <name>WidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">フレーム</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">名称</translation>
-    </message>
-    <message>
-        <source>Create</source>
-        <translation type="vanished">新規作成</translation>
-    </message>
-    <message>
-        <source>Destroy</source>
-        <translation type="vanished">取り去る</translation>
-    </message>
-    <message>
-        <source>Assign</source>
-        <translation type="vanished">割り当てる</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation type="vanished">更新する</translation>
     </message>
 </context>
 </TS>

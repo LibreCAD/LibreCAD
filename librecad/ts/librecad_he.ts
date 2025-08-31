@@ -39,28 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">מסגרת</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">שמור</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">מסגרת</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">שמור</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/dialogs/entity/LC_DlgParabola.ui" line="26"/>
@@ -278,10 +256,6 @@
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="189"/>
         <source>Select arc entity</source>
         <translation>בחירת אובייקט קשת</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">ביטול</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="192"/>
@@ -582,17 +556,9 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>ציין נקודה ראשונה</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">ביטול</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="233"/>
         <source>Specify second point</source>
         <translation>ציין נקודה שנייה</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">חזור</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="236"/>
@@ -878,25 +844,9 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawLinePolygonCenTan</name>
     <message>
-        <source>Specify center</source>
-        <translation type="vanished">ציין מרכז</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon3.cpp" line="51"/>
         <source>Specify a tangent</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">הזן מספר:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">לא מספר חוקי. נסה 1..9999</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">ביטוי לא חוקי</translation>
     </message>
 </context>
 <context>
@@ -1252,10 +1202,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="214"/>
         <source>Specify first control point</source>
         <translation>ציין נקודת בקרה ראשונה</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">ביטול</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
@@ -2240,10 +2186,6 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ctrl+R</source>
-        <translation type="vanished">Ctrl+R</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="370"/>
         <source>&amp;Rotate</source>
         <translation>&amp;סובב</translation>
@@ -2309,26 +2251,14 @@ or [%2]</source>
         <translation>&amp;מרחק בין נקודה לנקדוה</translation>
     </message>
     <message>
-        <source>&amp;Distance Entity to Point</source>
-        <translation type="vanished">&amp;מרחק אובייקט לנקודה</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="501"/>
         <source>An&amp;gle between two lines</source>
         <translation>&amp;זווית בין שני קווים</translation>
     </message>
     <message>
-        <source>&amp;Total length of selected entities</source>
-        <translation type="vanished">אורך &amp;כולל של האובייקטים הנבחרים</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="503"/>
         <source>Polygonal &amp;Area</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Selection pointer</source>
-        <translation type="vanished">מצביע &amp;בחירה</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="660"/>
@@ -2369,10 +2299,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="693"/>
         <source>&amp;Paste</source>
         <translation>ה&amp;דבק</translation>
-    </message>
-    <message>
-        <source>move to bottom</source>
-        <translation type="vanished">העבר לתחתית</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="190"/>
@@ -2681,18 +2607,6 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>lower after entity</source>
-        <translation type="vanished">הנמך אחרי האובייקט</translation>
-    </message>
-    <message>
-        <source>raise over entity</source>
-        <translation type="vanished">הגבה מעל האובייקט</translation>
-    </message>
-    <message>
-        <source>move to top</source>
-        <translation type="vanished">הזז למעלה</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="499"/>
         <source>Distance &amp;Entity to Point</source>
         <translation type="unfinished"></translation>
@@ -2841,10 +2755,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="563"/>
         <source>Current &amp;Drawing Preferences</source>
         <translation>העדפות קובץ &amp;נוכחי</translation>
-    </message>
-    <message>
-        <source>&amp;Delete selected</source>
-        <translation type="vanished">&amp;מחק בחירה</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="652"/>
@@ -3049,14 +2959,6 @@ or [%2]</source>
         <translation>הס&amp;ט</translation>
     </message>
     <message>
-        <source>Menu Creator</source>
-        <translation type="vanished">יוצר התפריטים</translation>
-    </message>
-    <message>
-        <source>Toolbar Creator</source>
-        <translation type="vanished">יוצר סרגלי הכלים</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="668"/>
         <source>Regenerate Dimensions</source>
         <translation type="unfinished"></translation>
@@ -3179,21 +3081,6 @@ or [%2]</source>
         <location filename="../src/actions/file/lc_actionfileexportmakercam.cpp" line="106"/>
         <source>Export as</source>
         <translation>יצא כ-</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionGroupManager</name>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">שנה</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="obsolete">אפשרויות</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="obsolete">בחרו</translation>
     </message>
 </context>
 <context>
@@ -3679,10 +3566,6 @@ End Edge Point: (%9 , %10)</source>
         <source>visible</source>
         <comment>Layers to export</comment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation type="vanished">שמור שכבת &quot;%1&quot; כ&quot;%2&quot; </translation>
     </message>
 </context>
 <context>
@@ -4830,14 +4713,6 @@ Are you sure you are going to discard changes?</source>
 <context>
     <name>LC_CreatorInvoker</name>
     <message>
-        <source>Toolbar Creator</source>
-        <translation type="obsolete">יוצר סרגלי הכלים</translation>
-    </message>
-    <message>
-        <source>Menu Creator</source>
-        <translation type="obsolete">יוצר התפריטים</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="83"/>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="115"/>
         <source>Toolbar: %1 (Custom)</source>
@@ -5280,17 +5155,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="108"/>
         <source>System</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">שכבה:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">גאומטריה</translation>
     </message>
 </context>
 <context>
@@ -8291,10 +8155,6 @@ Are you sure you are going to discard changes?</source>
         <translation type="unfinished">למעלה</translation>
     </message>
     <message>
-        <source>Menu Creator</source>
-        <translation type="obsolete">יוצר התפריטים</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="59"/>
         <source>Destroy Menu</source>
         <translation type="unfinished"></translation>
@@ -8308,10 +8168,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="62"/>
         <source>Define a custom menu by specifying the set of used actions. Menu will be shown as a popup in the drawing area as soon as menu invocation shortcut is invoked. </source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toolbar Creator</source>
-        <translation type="obsolete">יוצר סרגלי הכלים</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="57"/>
@@ -16054,10 +15910,6 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Command line</source>
-        <translation type="vanished">שורת פקודה</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="254"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="283"/>
         <source>Cmd</source>
@@ -16073,22 +15925,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="284"/>
         <source>Float</source>
         <translation>צף</translation>
-    </message>
-    <message>
-        <source>Lines</source>
-        <translation type="vanished">קווים</translation>
-    </message>
-    <message>
-        <source>Circles</source>
-        <translation type="vanished">עיגולים</translation>
-    </message>
-    <message>
-        <source>Freehand</source>
-        <translation type="vanished">יד חופשית</translation>
-    </message>
-    <message>
-        <source>Ellipses</source>
-        <translation type="vanished">אליפסות</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="101"/>
@@ -16209,17 +16045,9 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Layer List</source>
-        <translation type="obsolete">רשימת שכבות</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="212"/>
         <source>Entity Info</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="obsolete">רשימת בלוקים</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="164"/>
@@ -16240,66 +16068,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="98"/>
         <source>Spline</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dimensions</source>
-        <translation type="vanished">ממדים</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="obsolete">&amp;קובץ</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="obsolete">יבוא</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="obsolete">&amp;עריכה</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="obsolete">ת&amp;צוגה</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="obsolete">&amp;קו</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="obsolete">&amp;עיגול</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="obsolete">&amp;קשת</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="obsolete">&amp;אליפסה</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="obsolete">&amp;בחר</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="obsolete">&amp;שינוי</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="obsolete">&amp;מידע</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="obsolete">&amp;עזרה</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="obsolete">אודות</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="obsolete">&amp;סרגלי כלים</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="421"/>
@@ -16352,10 +16120,6 @@ Warning: this action can NOT be undone!</source>
         <source>Modify</source>
         <translation>שנה</translation>
     </message>
-    <message>
-        <source>Measure</source>
-        <translation type="vanished">מדידה</translation>
-    </message>
 </context>
 <context>
     <name>LC_WidgetOptionsDialog</name>
@@ -16396,10 +16160,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="503"/>
         <source>For &quot;classic&quot; statusbar only. </source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="vanished">כללי</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="113"/>
@@ -16579,10 +16339,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="654"/>
         <source>Number of columns for actions in left toolbar.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>side length in pixels</source>
-        <translation type="vanished">אורך הצד בפיקסלים</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp" line="216"/>
@@ -16766,50 +16522,6 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp;קובץ</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">&amp;עריכה</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">ת&amp;צוגה</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&amp;בחר</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&amp;קו</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&amp;עיגול</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&amp;אליפסה</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">&amp;שינוי</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp;מידע</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">אודות</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp;עזרה</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="795"/>
         <source>Creating new file...</source>
         <translation>יצירת קובץ חדש...</translation>
@@ -16840,14 +16552,6 @@ Warning: this action can NOT be undone!</source>
         <translation>יוצא מהישום...</translation>
     </message>
     <message>
-        <source>Layer List</source>
-        <translation type="vanished">רשימת שכבות</translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="vanished">רשימת בלוקים</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="196"/>
         <source>Print preview for %1</source>
         <translation>תצוגה מקדימה עבור %1</translation>
@@ -16868,33 +16572,9 @@ Warning: this action can NOT be undone!</source>
         <translation>סרטוט שמור: %1</translation>
     </message>
     <message>
-        <source>Exporting drawing...</source>
-        <translation type="vanished">מיצא סרטוט...</translation>
-    </message>
-    <message>
-        <source>Exported: %1</source>
-        <translation type="vanished">יוצא: %1</translation>
-    </message>
-    <message>
-        <source>Exporting...</source>
-        <translation type="vanished">מיצא...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">יצוא הושלם</translation>
-    </message>
-    <message>
-        <source>Export failed!</source>
-        <translation type="vanished">יצוא נכשל!</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1275"/>
         <source>Printing complete</source>
         <translation>הדפסה הושלמה</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="vanished">שורת פקודה</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="741"/>
@@ -16929,22 +16609,6 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Import</source>
-        <translation type="vanished">יבוא</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">&amp;סרגלי כלים</translation>
-    </message>
-    <message>
-        <source>Compiled on: %1</source>
-        <translation type="vanished">הודר ב: %1</translation>
-    </message>
-    <message>
-        <source>Version: %1</source>
-        <translation type="vanished">גירסה: %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="988"/>
         <source>Warning: File already opened : </source>
         <translation type="unfinished"></translation>
@@ -16975,10 +16639,6 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export as</source>
-        <translation type="obsolete">יצא כ-</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="207"/>
         <source>Draft Mode</source>
         <translation type="unfinished"></translation>
@@ -16999,22 +16659,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1678"/>
         <source>Opening recent file...</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Device Options</source>
-        <translation type="obsolete">אפשרויות חומרה</translation>
-    </message>
-    <message>
-        <source>Device</source>
-        <translation type="obsolete">חומרה</translation>
-    </message>
-    <message>
-        <source>Toolbar Creator</source>
-        <translation type="obsolete">יוצר סרגלי הכלים</translation>
-    </message>
-    <message>
-        <source>Menu Creator</source>
-        <translation type="obsolete">יוצר התפריטים</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="226"/>
@@ -17057,15 +16701,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1228"/>
         <source>Close All cancelled</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Float</source>
-        <translation type="obsolete">צף</translation>
-    </message>
-    <message>
-        <source>Dock</source>
-        <comment>Dock the command widget to the main window</comment>
-        <translation type="obsolete">מעוגן</translation>
     </message>
 </context>
 <context>
@@ -17135,26 +16770,6 @@ Please check its existence and permissions.</source>
 </context>
 <context>
     <name>QG_BlockWidget</name>
-    <message>
-        <source>&amp;Add Block</source>
-        <translation type="obsolete">הוסף &amp;בלוק</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Block</source>
-        <translation type="obsolete">ה&amp;סר בלוק</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Block</source>
-        <translation type="obsolete">ע&amp;רוך בלוק</translation>
-    </message>
-    <message>
-        <source>&amp;Rename Block</source>
-        <translation type="obsolete">שינוי &amp;שם לבלוק</translation>
-    </message>
-    <message>
-        <source>&amp;Insert Block</source>
-        <translation type="obsolete">ה&amp;כנס בלוק</translation>
-    </message>
     <message>
         <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="183"/>
         <source>Filter</source>
@@ -17376,10 +16991,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="321"/>
         <source>Float</source>
         <translation type="unfinished">צף</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="obsolete">שורת פקודה</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="322"/>
@@ -17712,24 +17323,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlgcircle.cpp" line="69"/>
         <source>Pen</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">שכבה:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">גאומטריה</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">שכבה:</translation>
     </message>
 </context>
 <context>
@@ -22871,13 +22464,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">ביטול</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgpoint.ui" line="26"/>
@@ -24262,14 +23848,6 @@ The contents of a Construction Layer should not appear in printout.</source>
 <context>
     <name>QG_LayerWidget</name>
     <message>
-        <source>&amp;Add Layer</source>
-        <translation type="obsolete">&amp;הוסף שכבה</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Layer</source>
-        <translation type="obsolete">ה&amp;סר שכבה</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="249"/>
         <source>Looking for matching layer names</source>
         <translation type="unfinished"></translation>
@@ -24278,18 +23856,6 @@ The contents of a Construction Layer should not appear in printout.</source>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="247"/>
         <source>Filter</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toggle Layer Loc&amp;k</source>
-        <translation type="obsolete">שנה &amp;נעילת שכבה</translation>
-    </message>
-    <message>
-        <source>&amp;Export Selected Layer(s)</source>
-        <translation type="obsolete">&amp;יצא שכבות נבחרות</translation>
-    </message>
-    <message>
-        <source>Export &amp;Visible Layer(s)</source>
-        <translation type="obsolete">יצא שכבות &amp;מוצגות</translation>
     </message>
 </context>
 <context>
@@ -26341,10 +25907,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Options</source>
-        <translation type="obsolete">אפשרויות</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="87"/>
         <source>All</source>
         <translation type="unfinished"></translation>
@@ -28250,10 +27812,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export as PDF</source>
-        <translation type="obsolete">שמור כ-PDF</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="44"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
@@ -30152,17 +29710,9 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLinePolygonCenCor</name>
     <message>
-        <source>Specify center</source>
-        <translation type="obsolete">ציין מרכז</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon.cpp" line="41"/>
         <source>Specify a corner</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="obsolete">הזן מספר:</translation>
     </message>
 </context>
 <context>
@@ -30758,10 +30308,6 @@ Point: (%8 , %9)</source>
         <source>To:</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">חזור</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionInfoInside</name>
@@ -30779,10 +30325,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="82"/>
         <source>Specify point</source>
         <translation>ציין נקודה</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">ביטול</translation>
     </message>
 </context>
 <context>
@@ -30849,10 +30391,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionLibraryInsert</name>
     <message>
-        <source>Insert Library Object</source>
-        <translation type="vanished">הוסף אובייקט מספרייה</translation>
-    </message>
-    <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="152"/>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="165"/>
         <source>Not a valid expression</source>
@@ -30862,10 +30400,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="194"/>
         <source>Specify reference point</source>
         <translation>ציין נקודת יחוס</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">ביטול</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="197"/>
@@ -30965,17 +30499,9 @@ Point: (%8 , %9)</source>
         <translation>בחר גוף ראשון</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">ביטול</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="369"/>
         <source>Select second entity</source>
         <translation>בחר גוף שני</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">חזור</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="372"/>
@@ -31011,30 +30537,14 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cutting point is invalid.</source>
-        <translation type="vanished">נקודת חיתוך לא חוקית.</translation>
-    </message>
-    <message>
-        <source>Cutting point is not on entity.</source>
-        <translation type="vanished">נקודת החיתוך לא נמצאת על גוף.</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="141"/>
         <source>Specify entity to cut</source>
         <translation>ציין גוף לחיתוך</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">ביטול</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="144"/>
         <source>Specify cutting point</source>
         <translation>ציין נקודת חיתוך</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">חזור</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="114"/>
@@ -31066,10 +30576,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="148"/>
         <source>Specify first break point on a polyline</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">ביטול</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="151"/>
@@ -33842,13 +33348,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="50"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>WidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">מסגרת</translation>
     </message>
 </context>
 </TS>

@@ -307,7 +307,6 @@ namespace InnerFactory{
                 break;
             }
             case RS2::ActionSelectContour: {
-                view->killSelectActions();
                 return new RS_ActionSelectContour(ctx);
             }
             case RS2::ActionSelectAll: {
@@ -317,30 +316,24 @@ namespace InnerFactory{
                 return new RS_ActionSelectAll(ctx, false);
             }
             case RS2::ActionSelectWindow: {
-                view->killSelectActions();
                 return new RS_ActionSelectWindow(view->getTypeToSelect(), ctx, true);
             }
             case RS2::ActionSelectPoints: {
-                view->killSelectActions();
                 return new LC_ActionSelectPoints(ctx);
             }
             case RS2::ActionDeselectWindow: {
-                view->killSelectActions();
                 return new RS_ActionSelectWindow(ctx, false);
             }
             case RS2::ActionSelectInvert: {
                 return new RS_ActionSelectInvert(ctx);
             }
             case RS2::ActionSelectIntersected: {
-                view->killSelectActions();
                 return new RS_ActionSelectIntersected(ctx, true);
             }
             case RS2::ActionDeselectIntersected: {
-                view->killSelectActions();
                 return new RS_ActionSelectIntersected(ctx, false);
             }
             case RS2::ActionSelectLayer: {
-                view->killSelectActions();
                 return new RS_ActionSelectLayer(ctx);
             }
             case RS2::ActionDimRegenerate: {

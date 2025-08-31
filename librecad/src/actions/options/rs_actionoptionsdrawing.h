@@ -41,8 +41,10 @@ public:
     RS_ActionOptionsDrawing(LC_ActionContext *actionContext, int tabIndex = -1);
     void init(int status) override;
     void trigger() override;
+    bool mayBeTerminatedExternally() override {return !m_dialogVisible;}
 protected:
     int m_tabToShow = -1;
+    bool m_dialogVisible{false};
 };
 
 #endif

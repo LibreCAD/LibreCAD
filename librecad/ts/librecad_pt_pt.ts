@@ -843,21 +843,9 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawLinePolygonCenTan</name>
     <message>
-        <source>Specify center</source>
-        <translation type="obsolete">Indique o centro</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon3.cpp" line="51"/>
         <source>Specify a tangent</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="obsolete">Entre o número:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="obsolete">Não é uma expressão válida</translation>
     </message>
 </context>
 <context>
@@ -1722,10 +1710,6 @@ or [%2]</source>
         <translation type="unfinished">&amp;Apague</translation>
     </message>
     <message>
-        <source>Delete Freehand</source>
-        <translation type="obsolete">Apague à Mão Livre</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="368"/>
         <source>&amp;Move / Copy</source>
         <translation type="unfinished">&amp;Mova / Copie</translation>
@@ -1801,26 +1785,14 @@ or [%2]</source>
         <translation type="unfinished">Distância de &amp;Ponto a Ponto</translation>
     </message>
     <message>
-        <source>&amp;Distance Entity to Point</source>
-        <translation type="obsolete">Distância de &amp;Entidade a Ponto</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="501"/>
         <source>An&amp;gle between two lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Total length of selected entities</source>
-        <translation type="obsolete">&amp;Comprimento Total das Entidades Selecionadas</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="503"/>
         <source>Polygonal &amp;Area</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Selection pointer</source>
-        <translation type="obsolete">&amp;Ponteiro de Seleção</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="660"/>
@@ -2694,10 +2666,6 @@ or [%2]</source>
         <translation type="unfinished">Preferências do &amp;Aplicativo</translation>
     </message>
     <message>
-        <source>&amp;Delete selected</source>
-        <translation type="obsolete">&amp;Apague selecionado</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="652"/>
         <source>Select &amp;All</source>
         <translation type="unfinished">Selecione &amp;Tudo</translation>
@@ -3112,61 +3080,6 @@ or [%2]</source>
         <location filename="../src/actions/file/lc_actionfileexportmakercam.cpp" line="106"/>
         <source>Export as</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionGroupManager</name>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Circulo</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="obsolete">Arco</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="obsolete">Chaveta</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Editar</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">Elipse</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Ficheiro</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">Dimensão</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="obsolete">Camada</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Linha</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="obsolete">Ponto</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="obsolete">Opções</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">Multilinha</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">Exibir</translation>
     </message>
 </context>
 <context>
@@ -5244,21 +5157,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Camada:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometria</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pena</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgDimStyleManager</name>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="14"/>
@@ -6600,10 +6498,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="332"/>
         <source>Edit style override</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="obsolete">...</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="346"/>
@@ -11083,18 +10977,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="32"/>
         <source>Snap point of gap to line snap point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="obsolete">Início</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="obsolete">Meio</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="obsolete">Fim</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="95"/>
@@ -16027,10 +15909,6 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Command line</source>
-        <translation type="obsolete">Linha de comandos</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="254"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="283"/>
         <source>Cmd</source>
@@ -16166,29 +16044,9 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Layer List</source>
-        <translation type="obsolete">Lista de Camadas</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="212"/>
         <source>Entity Info</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="obsolete">Lista de Blocos</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Ficheiro</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Editar</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">Exibir</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="164"/>
@@ -16209,78 +16067,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="98"/>
         <source>Spline</source>
         <translation type="unfinished">Chaveta</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pena</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="obsolete">Opções de Ferramentas</translation>
-    </message>
-    <message>
-        <source>Preferences</source>
-        <translation type="obsolete">Preferências</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="obsolete">&amp;Ficheiro</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="obsolete">Importar</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="obsolete">&amp;Editar</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="obsolete">&amp;Exibir</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="obsolete">&amp;Linha</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="obsolete">&amp;Círculo</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="obsolete">&amp;Arco</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="obsolete">&amp;Elipse</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="obsolete">&amp;Multilinha</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="obsolete">&amp;Selecione</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="obsolete">&amp;Modificar</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="obsolete">&amp;Informação</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="obsolete">&amp;Ajuda</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="obsolete">Acerca do Librecad</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="obsolete">&amp;Barras de ferramentas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="421"/>
@@ -16735,94 +16521,6 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <source>Edit</source>
-        <translation type="vanished">Editar</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="vanished">Ficheiro</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="vanished">Exibir</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">&amp;Editar</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp;Ficheiro</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp;Ajuda</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp;Informação</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&amp;Linha</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">&amp;Exibir</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">&amp;Multilinha</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">&amp;Barras de ferramentas</translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="vanished">Lista de Blocos</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&amp;Círculo</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">&amp;Modificar</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&amp;Selecione</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&amp;Elipse</translation>
-    </message>
-    <message>
-        <source>Layer List</source>
-        <translation type="vanished">Lista de Camadas</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">Acerca do Librecad</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="vanished">Linha de comandos</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="obsolete">&amp;Cascata</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="obsolete">&amp;Ladrilho</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">Dispôr &amp;Horizontalmente</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="795"/>
         <source>Creating new file...</source>
         <translation>A criar um ficheiro novo...</translation>
@@ -16898,26 +16596,6 @@ Por favor verificar as permissões.
 Gravação automática desligada.</translation>
     </message>
     <message>
-        <source>Exporting drawing...</source>
-        <translation type="obsolete">Exportando o desenho...</translation>
-    </message>
-    <message>
-        <source>Exported: %1</source>
-        <translation type="obsolete">Exportado: %1</translation>
-    </message>
-    <message>
-        <source>Exporting...</source>
-        <translation type="vanished">A exportar...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="vanished">Exportação concluída</translation>
-    </message>
-    <message>
-        <source>Export failed!</source>
-        <translation type="obsolete">Exportação falhou!</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1271"/>
         <source>Printing...</source>
         <translation>A imprimir...</translation>
@@ -16936,14 +16614,6 @@ Gravação automática desligada.</translation>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1369"/>
         <source>Exiting application...</source>
         <translation>Saindo da aplicação...</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">Importar</translation>
-    </message>
-    <message>
-        <source>Compiled on: %1</source>
-        <translation type="vanished">Compilado em: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="988"/>
@@ -16976,10 +16646,6 @@ Gravação automática desligada.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Tool Options</source>
-        <translation type="obsolete">Opções de Ferramentas</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="207"/>
         <source>Draft Mode</source>
         <translation type="unfinished"></translation>
@@ -16997,34 +16663,6 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Line</source>
-        <translation type="obsolete">Linha</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Circulo</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">Elipse</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">Multilinha</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">Dimensão</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pena</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation type="obsolete">Copie</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="226"/>
         <source>Saving drawing: %1</source>
         <translation type="unfinished"></translation>
@@ -17033,10 +16671,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
         <source>Save cancelled</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Closing Drawing</source>
-        <translation type="obsolete">Fechando o Desenho</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="361"/>
@@ -17138,34 +16772,6 @@ Please check its existence and permissions.</source>
 </context>
 <context>
     <name>QG_BlockWidget</name>
-    <message>
-        <source>&amp;Add Block</source>
-        <translation type="obsolete">&amp;Adicione Carimbo</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Block</source>
-        <translation type="obsolete">&amp;Remova Carimbo</translation>
-    </message>
-    <message>
-        <source>&amp;Rename Block</source>
-        <translation type="obsolete">R&amp;enomeie Carimbo</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Block</source>
-        <translation type="obsolete">&amp;Edite Carimbo</translation>
-    </message>
-    <message>
-        <source>&amp;Insert Block</source>
-        <translation type="obsolete">&amp;Insira Carimbo</translation>
-    </message>
-    <message>
-        <source>&amp;Toggle Visibility</source>
-        <translation type="obsolete">Comute &amp;Visibilidade</translation>
-    </message>
-    <message>
-        <source>Create Block</source>
-        <translation type="obsolete">Crie um Carimbo</translation>
-    </message>
     <message>
         <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="183"/>
         <source>Filter</source>
@@ -17387,10 +16993,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="321"/>
         <source>Float</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="obsolete">Linha de comandos</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="322"/>
@@ -17726,44 +17328,6 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Ângulo:</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Camada:</translation>
-    </message>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="vanished">Dimensão Linear</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometria</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pena</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">Dimensão</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Camada:</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Pena</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgEllipse</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="41"/>
@@ -17779,10 +17343,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="343"/>
         <source>Minor:</source>
         <translation>Menor:</translation>
-    </message>
-    <message>
-        <source>Rotation:</source>
-        <translation type="vanished">Rotação:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="159"/>
@@ -19433,10 +18993,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>Pre&amp;cisão:</translation>
     </message>
     <message>
-        <source>&amp;Splines</source>
-        <translation type="obsolete">&amp;Chaveta</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1910"/>
         <source>Fractional</source>
         <translation>Fracionais</translation>
@@ -20488,10 +20044,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="957"/>
         <source>A&amp;utomatically scale grid</source>
         <translation>Grade escalonada &amp;automaticamente</translation>
-    </message>
-    <message>
-        <source>&amp;Appearance</source>
-        <translation type="vanished">&amp;Aparência</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4225"/>
@@ -24089,10 +23641,6 @@ so default step value required for baking</source>
         <source>again Still No Text supplied.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">Fecha</translation>
-    </message>
 </context>
 <context>
     <name>QG_FileDialog</name>
@@ -24302,14 +23850,6 @@ The contents of a Construction Layer should not appear in printout.</source>
 <context>
     <name>QG_LayerWidget</name>
     <message>
-        <source>&amp;Add Layer</source>
-        <translation type="obsolete">&amp;Adicione Camada</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Layer</source>
-        <translation type="obsolete">&amp;Remova Camada</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="249"/>
         <source>Looking for matching layer names</source>
         <translation type="unfinished"></translation>
@@ -24500,10 +24040,6 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Right</source>
-        <translation type="obsolete">Direita</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/status_bar/qg_mousewidget.ui" line="229"/>
         <source>Left</source>
         <translation type="unfinished">Esquerda</translation>
@@ -24674,18 +24210,6 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>QG_WidthBox</name>
-    <message>
-        <source>- Unchanged -</source>
-        <translation type="vanished">- Não modificado -</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">Padrão</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation type="vanished">Pelo Carimbo</translation>
-    </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="250"/>
         <source>By Layer</source>
@@ -25080,10 +24604,6 @@ Please specify a different value.</source>
         <translation>Polegada</translation>
     </message>
     <message>
-        <source>Line</source>
-        <translation type="vanished">Linha</translation>
-    </message>
-    <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="210"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="266"/>
         <source>Mile</source>
@@ -25306,10 +24826,6 @@ Please specify a different value.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Layer</source>
-        <translation type="vanished">Camada</translation>
-    </message>
-    <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="216"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="272"/>
         <source>Meter</source>
@@ -25328,17 +24844,9 @@ Please specify a different value.</source>
         <translation>Quilômetro</translation>
     </message>
     <message>
-        <source>Dimension</source>
-        <translation type="vanished">Dimensão</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="472"/>
         <source>Available commands:</source>
         <translation type="unfinished">Comandos disponíveis:</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Circulo</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="226"/>
@@ -25363,10 +24871,6 @@ Please specify a different value.</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="300"/>
         <source>Parsec</source>
         <translation>Parsec</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Multilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="444"/>
@@ -25402,10 +24906,6 @@ Please specify a different value.</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="292"/>
         <source>Hectometer</source>
         <translation>Hectômetro</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Elipse</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="451"/>
@@ -26792,18 +26292,6 @@ Do you want to replace it?</source>
         <source>mp</source>
         <comment>modify properties</comment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">Editar</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Ficheiro</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="obsolete">Opções</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="87"/>
@@ -29119,10 +28607,6 @@ Do you want to replace it?</source>
         <source>Specify reference point</source>
         <translation>Indique o ponto de referência</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionBlocksExplode</name>
@@ -29175,10 +28659,6 @@ Do you want to replace it?</source>
         <translation>Indique o ponto de referência</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
-    <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="367"/>
         <source>Enter row spacing:</source>
         <translation>Entre o espaçamento de linhas:</translation>
@@ -29216,10 +28696,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDefault</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="564"/>
         <source>Selecting</source>
@@ -29389,38 +28865,7 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDimAligned</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
-        <source>Specify second extension line origin</source>
-        <translation type="vanished">Indique a segunda extensão da linha de origem</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation type="vanished">Indique a dimensão da linha de localização</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Insira o texto de dimensão:</translation>
-    </message>
-    <message>
-        <source>Specify first extension line origin</source>
-        <translation type="vanished">Indique a primeira extensão da linha de origem</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDimAngular</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="219"/>
         <source>Select second line</source>
@@ -29443,38 +28888,7 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDimDiametric</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Não é uma expressão válida</translation>
-    </message>
-    <message>
-        <source>Select arc or circle entity</source>
-        <translation type="vanished">Selecione a entidade de arco ou círculo</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation type="vanished">Indique a localização da linha de dimensão</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
-    <message>
-        <source>Not a circle or arc entity</source>
-        <translation type="vanished">Não é uma entidade de círculo ou arco</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Insira o texto de dimensão:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDimLeader</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="185"/>
         <source>Finish</source>
@@ -29493,10 +28907,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDimLinear</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="120"/>
         <source>Not a valid expression</source>
@@ -29523,64 +28933,13 @@ This block cannot be inserted.</source>
         <source>Snap to Adjacent Dim</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Insira o texto de dimensão:</translation>
-    </message>
-    <message>
-        <source>Specify first extension line origin</source>
-        <translation type="vanished">Indique a primeira extensão da linha de origem</translation>
-    </message>
-    <message>
-        <source>Enter dimension line angle:</source>
-        <translation type="vanished">Insira o ângulo da linha de dimensão:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDimRadial</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Não é uma expressão válida</translation>
-    </message>
-    <message>
-        <source>Select arc or circle entity</source>
-        <translation type="vanished">Selecione a entidade de círculo ou arco</translation>
-    </message>
-    <message>
-        <source>Specify dimension line position or enter angle:</source>
-        <translation type="vanished">Indique a dimensão da linha de posicionamento ou insira o ângulo:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
-    <message>
-        <source>Not a circle or arc entity</source>
-        <translation type="vanished">Não é uma entidade de círculo ou arco</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation type="vanished">Insira o texto de dimensão:</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawArc</name>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="496"/>
         <source>Specify center</source>
         <translation>Indique o centro</translation>
-    </message>
-    <message>
-        <source>Specify chord length:</source>
-        <translation type="vanished">Indique o comprimento da corda:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="500"/>
@@ -29638,10 +28997,6 @@ This block cannot be inserted.</source>
         <translation>Não é um comprimento de corda válido</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="507"/>
         <source>Specify start angle:</source>
         <translation>Indique o ângulo de início:</translation>
@@ -29649,14 +29004,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawArc3P</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="233"/>
         <source>Specify second point</source>
@@ -29673,10 +29020,6 @@ This block cannot be inserted.</source>
         <translation>Dados de arco inválidos.</translation>
     </message>
     <message>
-        <source>Specify endpoint</source>
-        <translation type="vanished">Indique o ponto de término</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="230"/>
         <source>Specify startpoint or [center]</source>
         <translation type="unfinished"></translation>
@@ -29684,14 +29027,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawArcTangential</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="273"/>
         <source>Specify base entity</source>
@@ -29721,10 +29056,6 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircle</name>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="126"/>
         <source>Specify center</source>
         <translation>Indique o centro</translation>
@@ -29735,10 +29066,6 @@ This block cannot be inserted.</source>
         <translation>Não é uma expressão válida</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="129"/>
         <source>Specify point on circle</source>
         <translation type="unfinished"></translation>
@@ -29746,14 +29073,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawCircle2P</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="75"/>
         <source>Invalid Circle data.</source>
@@ -29773,17 +29092,9 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircle3P</name>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="74"/>
         <source>Invalid circle data.</source>
         <translation>Dados de círculo inválidos.</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="175"/>
@@ -29804,10 +29115,6 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircleCR</name>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="131"/>
         <source>Not a valid expression</source>
         <translation>Não é uma expressão válida</translation>
@@ -29816,10 +29123,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="177"/>
         <source>Specify circle radius</source>
         <translation>Indique o raio do círculo</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="174"/>
@@ -29988,19 +29291,11 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawEllipseAxis</name>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="302"/>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="313"/>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="324"/>
         <source>Not a valid expression</source>
         <translation>Não é uma expressão válida</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="345"/>
@@ -30190,10 +29485,6 @@ This block cannot be inserted.</source>
         <translation>Indique o ponto de referência</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="276"/>
         <source>Enter dpi:</source>
         <translation type="unfinished"></translation>
@@ -30201,14 +29492,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawLine</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="252"/>
         <source>Specify first point</source>
@@ -30243,10 +29526,6 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineAngle</name>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="232"/>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="245"/>
         <source>Not a valid expression</source>
@@ -30263,10 +29542,6 @@ This block cannot be inserted.</source>
         <translation>Entre o ângulo:</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="315"/>
         <source>Enter length:</source>
         <translation>Entre o Comprimento:</translation>
@@ -30279,10 +29554,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawLineBisector</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Retorna</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="265"/>
         <source>Select first line</source>
@@ -30303,10 +29574,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="274"/>
         <source>Enter number of bisectors:</source>
         <translation>Entre o número de bissectores:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancela</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="271"/>
@@ -30332,21 +29599,9 @@ This block cannot be inserted.</source>
         <source>Click and drag to draw a line</source>
         <translation>Clique e arraste para desenhar uma linha</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancela</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineHorVert</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="117"/>
         <source>Specify second point</source>
@@ -30396,10 +29651,6 @@ This block cannot be inserted.</source>
         <translation>Não é um número válido. Tente 1..99</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="135"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
         <translation>Indique a Distância &lt;%1&gt; ou selecione entidade ou [%2]</translation>
@@ -30413,10 +29664,6 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineParallelThrough</name>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="213"/>
         <source>Not a valid expression</source>
         <translation>Não é uma expressão válida</translation>
@@ -30425,10 +29672,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="210"/>
         <source>Not a valid number. Try 1..99</source>
         <translation>Não é um número válido. Tente 1..99</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="180"/>
@@ -30454,21 +29697,9 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLinePolygonCenCor</name>
     <message>
-        <source>Specify center</source>
-        <translation type="obsolete">Indique o centro</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon.cpp" line="41"/>
         <source>Specify a corner</source>
         <translation type="unfinished">Indique o vértice</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="obsolete">Entre o número:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="obsolete">Não é uma expressão válida</translation>
     </message>
 </context>
 <context>
@@ -30483,25 +29714,9 @@ This block cannot be inserted.</source>
         <source>Specify second corner</source>
         <translation type="unfinished">Indique o segundo vértice</translation>
     </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Número:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression.</source>
-        <translation type="obsolete">Não é uma expressão válida.</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineRectangle</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="96"/>
         <source>To be created:</source>
@@ -30541,18 +29756,10 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineRelAngle</name>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="203"/>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="216"/>
         <source>Not a valid expression</source>
         <translation>Não é uma expressão válida</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="248"/>
@@ -30578,10 +29785,6 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="192"/>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="195"/>
         <source>Specify point</source>
@@ -30593,10 +29796,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Selecione o círculo, arco ou elipse</translation>
@@ -30604,14 +29803,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent2</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="215"/>
         <source>Select first circle/ellipse/parabola</source>
@@ -30644,10 +29835,6 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawPoint</name>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/point/rs_actiondrawpoint.cpp" line="77"/>
         <source>Specify location</source>
         <translation>Especifique localização</translation>
@@ -30656,17 +29843,9 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawPolyline</name>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="779"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
         <translation>Não é possível fechar a seqüência de linhas: Ainda não há suficientes entidades definidas.</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="725"/>
@@ -30739,17 +29918,9 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawSpline</name>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="227"/>
         <source>Specify next control point or [%1]</source>
         <translation>Especifique o próximo ponto de controle ou [%1]</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="229"/>
@@ -30770,17 +29941,9 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawText</name>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="247"/>
         <source>Enter text:</source>
         <translation>Entre o texto:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="156"/>
@@ -30796,17 +29959,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="243"/>
         <source>Specify second point</source>
         <translation type="unfinished">Indique o segundo ponto</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditCopy</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Especifique o ponto de referência</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
     </message>
 </context>
 <context>
@@ -30869,17 +30021,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Set reference point</source>
-        <translation type="vanished">Especifique o ponto de referência</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditUndo</name>
     <message>
         <location filename="../src/actions/drawing/edit/rs_actioneditundo.cpp" line="55"/>
@@ -30894,10 +30035,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionInfoAngle</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="250"/>
         <source>Specify first line</source>
@@ -30998,10 +30135,6 @@ Intersection :@(%7, %8)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
         <source>Specify second line</source>
         <translation>Especifique a segunda linha</translation>
@@ -31011,10 +30144,6 @@ Intersection :@(%7, %8)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="201"/>
         <source>Lines are parallel</source>
         <translation>As linhas são paralelas</translation>
-    </message>
-    <message>
-        <source>Angle: %1</source>
-        <translation type="obsolete">Ângulo: %1</translation>
     </message>
 </context>
 <context>
@@ -31040,10 +30169,6 @@ Intersection :@(%7, %8)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
         <source>Specify next point of polygon</source>
         <translation>Especifique o próximo ponto do polígono</translation>
@@ -31055,10 +30180,6 @@ Intersection :@(%7, %8)</source>
         <translation>Circunferência: %1</translation>
     </message>
     <message>
-        <source>Point: %1/%2</source>
-        <translation type="vanished">Ponto: %1/%2</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="101"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="108"/>
         <source>Area: %1 %2^2</source>
@@ -31067,10 +30188,6 @@ Intersection :@(%7, %8)</source>
 </context>
 <context>
     <name>RS_ActionInfoDist</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="62"/>
         <source>Distance: %1
@@ -31120,17 +30237,9 @@ End: (%8 , %9)</source>
         <source>Don&apos;t move relative zero</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="92"/>
         <source>Distance: %1
@@ -31181,18 +30290,10 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Distance: %1</source>
-        <translation type="vanished">Distância: %1</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="279"/>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="282"/>
         <source>Specify point</source>
         <translation>Especifique o ponto</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
     </message>
 </context>
 <context>
@@ -31201,10 +30302,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="82"/>
         <source>Specify point</source>
         <translation>Especifique o ponto</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="56"/>
@@ -31306,17 +30403,6 @@ Point: (%8 , %9)</source>
         <source>Specify reference point</source>
         <translation>Especifique o ponto de referência</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLockRelativeZero</name>
-    <message>
-        <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation type="vanished">&amp;(Des)Trave Zero Relativo</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionModifyAttributes</name>
@@ -31338,10 +30424,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionModifyBevel</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="81"/>
         <source>Selected lines are parallel</source>
@@ -31398,10 +30480,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="369"/>
         <source>Select second entity</source>
         <translation>Selecione a segunda entidade</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="366"/>
@@ -31478,14 +30556,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyDeleteFree</name>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="151"/>
         <source>Specify second break point on the same polyline</source>
         <translation>Indique o segundo ponto de quebra na mesma multilinha</translation>
@@ -31537,22 +30607,7 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionModifyDeleteQuick</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
-    <message>
-        <source>Pick entity to delete</source>
-        <translation type="vanished">Selecione as entidades a serem apagadas</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionModifyEntity</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Cancele</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyentity.cpp" line="263"/>
         <source>Click on entity to modify</source>
@@ -31574,14 +30629,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionModifyMirror</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="119"/>
         <source>Mirror</source>
@@ -31646,10 +30693,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyMove</name>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="106"/>
         <source>Moving Offset</source>
         <translation type="unfinished"></translation>
@@ -31685,10 +30728,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
         <source>Specify target point</source>
         <translation>Indique o ponto de destino</translation>
@@ -31696,10 +30735,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionModifyMoveRotate</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="79"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="111"/>
@@ -31753,10 +30788,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="342"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="328"/>
@@ -31828,10 +30859,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionModifyRotate</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="132"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="145"/>
@@ -31927,14 +30954,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyRotate2</name>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="93"/>
         <source>Rotating Twice</source>
         <translation type="unfinished"></translation>
@@ -31988,10 +31007,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyRound</name>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="229"/>
         <source>Round</source>
         <translation type="unfinished"></translation>
@@ -32018,10 +31033,6 @@ Point: (%8 , %9)</source>
         <translation>Entre o raio:</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="424"/>
         <source>Specify second entity</source>
         <translation>Indique a segunda entidade</translation>
@@ -32034,14 +31045,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Indique o ponto de referência</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="169"/>
         <source>Scale</source>
@@ -32121,17 +31124,9 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyStretch</name>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="202"/>
         <source>Specify reference point</source>
         <translation>Indique o ponto de referência</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="199"/>
@@ -32185,17 +31180,9 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyTrim</name>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="200"/>
         <source>Select first trim entity</source>
         <translation>Selecione a primeira entidade de aparamento</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="209"/>
@@ -32236,10 +31223,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionModifyTrimAmount</name>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="173"/>
         <source>No entity found.</source>
         <translation type="unfinished"></translation>
@@ -32255,21 +31238,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation type="vanished">A Entidade escolhida está num carimbo. Por favor edite o carimbo.</translation>
-    </message>
-    <message>
-        <source>Select entity to trim or enter distance:</source>
-        <translation type="vanished">Selecione a entidade a ser aparada ou entre a distância:</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="180"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
         <translation>A Entidade escolhida não é um átomo ou não pode ser aparada.</translation>
-    </message>
-    <message>
-        <source>No entity found. </source>
-        <translation type="vanished">Nenhuma entidade encontrada.</translation>
     </message>
 </context>
 <context>
@@ -32302,14 +31273,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionPolylineAdd</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="102"/>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="129"/>
@@ -32345,10 +31308,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPolylineAppend</name>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="119"/>
         <source>No Entity found.</source>
         <translation type="unfinished">Nenhuma Entidade encontrada.</translation>
@@ -32374,14 +31333,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="obsolete">Indique o próximo ponto ou [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="obsolete">Indique o próximo ponto</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="125"/>
         <source>Can not append nodes in a closed polyline.</source>
         <translation type="unfinished"></translation>
@@ -32394,14 +31345,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionPolylineDel</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="92"/>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="112"/>
@@ -32436,14 +31379,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionPolylineDelBetween</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="116"/>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="136"/>
@@ -32496,10 +31431,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPolylineEquidistant</name>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="321"/>
         <source>No Entity found.</source>
         <translation type="unfinished">Nenhuma Entidade encontrada.</translation>
@@ -32542,17 +31473,9 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionPolylineTrim</name>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="186"/>
         <source>Specify first segment</source>
         <translation>Indique o primeiro segmento</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="189"/>
@@ -32674,10 +31597,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionSelectIntersected</name>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="173"/>
         <source>Select intersecting entity</source>
         <translation type="unfinished"></translation>
@@ -32691,10 +31610,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="176"/>
         <source>Choose second point of intersection line</source>
         <translation>Selecione o segundo ponto da linha de intersecção</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="173"/>
@@ -32725,14 +31640,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="116"/>
         <source>De-Selecting</source>
@@ -32792,10 +31699,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionSetRelativeZero</name>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancela</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/rel_zero/rs_actionsetrelativezero.cpp" line="72"/>
         <source>Set relative Zero</source>
         <translation type="unfinished"></translation>
@@ -32804,17 +31707,9 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionSnapIntersectionManual</name>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="145"/>
         <source>Select second entity</source>
         <translation>Selecione a segunda entidade</translation>
-    </message>
-    <message>
-        <source>I&amp;ntersection Manually</source>
-        <translation type="vanished">Interseccione &amp;Manualmente</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="142"/>
@@ -32838,10 +31733,6 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionZoomPan</name>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="105"/>
         <source>Click and drag to pan zoom</source>
         <translation type="unfinished"></translation>
@@ -32855,17 +31746,9 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionZoomWindow</name>
     <message>
-        <source>Back</source>
-        <translation type="vanished">Retorne</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="140"/>
         <source>Specify first edge</source>
         <translation>Indique a primeira extremidade</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancele</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="143"/>
@@ -33137,13 +32020,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Ângulo:</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -33310,10 +32186,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="113"/>
         <source>DPI:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="obsolete">Fator:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="106"/>
@@ -33752,13 +32624,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Número:</translation>
-    </message>
-</context>
-<context>
     <name>Ui_LinePolygonOptions</name>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="32"/>
@@ -33958,10 +32823,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="79"/>
         <source>Multiple Copies</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">Distância:</translation>
     </message>
 </context>
 <context>
@@ -34219,14 +33080,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished">Comute modos Branco / Preto</translation>
     </message>
     <message>
-        <source>Center to page</source>
-        <translation type="obsolete">Centralize à página</translation>
-    </message>
-    <message>
-        <source>Fit to page</source>
-        <translation type="obsolete">Ajuste à página</translation>
-    </message>
-    <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="44"/>
         <source>Landscape Orientation of paper</source>
         <translation type="unfinished"></translation>
@@ -34346,10 +33199,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="67"/>
         <source>Pick distance from drawing.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">Distância:</translation>
     </message>
 </context>
 <context>

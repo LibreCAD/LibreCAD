@@ -41,6 +41,7 @@ public:
     RS_ActionLockRelativeZero(LC_ActionContext *actionContext,bool on);
     void init(int status) override;
     void trigger() override;
+    bool isSupportsPredecessorAction() override {return true;}
 private:
     bool m_modeOn = false;
 };

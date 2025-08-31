@@ -39,36 +39,6 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">კადრი</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="obsolete">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="obsolete">&lt;</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">შენახვა</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">კადრი</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">შენახვა</translation>
-    </message>
-</context>
-<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/dialogs/entity/LC_DlgParabola.ui" line="26"/>
@@ -286,10 +256,6 @@
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="189"/>
         <source>Select arc entity</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="192"/>
@@ -589,17 +555,9 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>მიუთითეთ პირველი წერტილი</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="233"/>
         <source>Specify second point</source>
         <translation>მიუთითეთ მეორე წერტილი</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="236"/>
@@ -885,25 +843,9 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawLinePolygonCenTan</name>
     <message>
-        <source>Specify center</source>
-        <translation type="vanished">მიუთითეთ ცენტრი</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon3.cpp" line="51"/>
         <source>Specify a tangent</source>
         <translation>მიუთითეთ მხები</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">შეიყვანეთ რიცხვი:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">რიცხვი არასწორია. სცადეთ 1..9999</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">გამოსახულება არასწორია</translation>
     </message>
 </context>
 <context>
@@ -1259,10 +1201,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="214"/>
         <source>Specify first control point</source>
         <translation>მიუთითეთ პირველი საკონტროლო წერტილი</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
@@ -1772,10 +1710,6 @@ or [%2]</source>
         <translation>&amp;წაშლა</translation>
     </message>
     <message>
-        <source>Delete Freehand</source>
-        <translation type="vanished">ხელით წაშლა</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="368"/>
         <source>&amp;Move / Copy</source>
         <translation>&amp;გადატანა / კოპირება</translation>
@@ -1784,10 +1718,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="369"/>
         <source>Re&amp;vert direction</source>
         <translation>&amp;მიმართულების შებრუნება</translation>
-    </message>
-    <message>
-        <source>Ctrl+R</source>
-        <translation type="vanished">Ctrl+R</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="370"/>
@@ -2691,10 +2621,6 @@ or [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>move to top</source>
-        <translation type="vanished">თავში ატანა</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="499"/>
         <source>Distance &amp;Entity to Point</source>
         <translation type="unfinished"></translation>
@@ -2838,10 +2764,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="567"/>
         <source>&amp;Application Preferences</source>
         <translation>&amp;აპლიკაციის მორგება</translation>
-    </message>
-    <message>
-        <source>&amp;Delete selected</source>
-        <translation type="vanished">მონიშნულის &amp;წაშლა</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="652"/>
@@ -3046,14 +2968,6 @@ or [%2]</source>
         <translation>&amp;წანაცვლება</translation>
     </message>
     <message>
-        <source>Menu Creator</source>
-        <translation type="vanished">მენიუს შექმნა</translation>
-    </message>
-    <message>
-        <source>Toolbar Creator</source>
-        <translation type="vanished">ხელსაწყოთა ზოლის შექმნა</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="690"/>
         <source>Cut Quic&amp;k</source>
         <translation type="unfinished"></translation>
@@ -3169,93 +3083,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionGroupManager</name>
-    <message>
-        <source>Block</source>
-        <translation type="obsolete">დაბლოკვა</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">წრე</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="obsolete">მრუდი</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="obsolete">რკალი</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="obsolete">სპლაინი</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">ჩასწორება</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">ოვალი</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">ფაილი</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="obsolete">განზომილება</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">ინფორმაცია</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="obsolete">ფენა</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">ხაზი</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="obsolete">წერტილი</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">ჩასწორება</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="obsolete">მორგება</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="obsolete">სხვა</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">პოლიხაზი</translation>
-    </message>
-    <message>
-        <source>Restriction</source>
-        <translation type="obsolete">შეზღუდვა</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="obsolete">აირჩიეთ</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="obsolete">მიმაგრება</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="obsolete">ვიჯეტები</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionInfo3PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="141"/>
@@ -3271,10 +3098,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="149"/>
         <source>Select second edge point of angle</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">ინფორმაცია</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="189"/>
@@ -4889,14 +4712,6 @@ Are you sure you are going to discard changes?</source>
 <context>
     <name>LC_CreatorInvoker</name>
     <message>
-        <source>Toolbar Creator</source>
-        <translation type="obsolete">ხელსაწყოთა ზოლის შექმნა</translation>
-    </message>
-    <message>
-        <source>Menu Creator</source>
-        <translation type="obsolete">მენიუს შექმნა</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="83"/>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="115"/>
         <source>Toolbar: %1 (Custom)</source>
@@ -5339,29 +5154,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="108"/>
         <source>System</source>
         <translation type="unfinished">სისტემა</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">ფენა:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">გეომეტრია</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="obsolete">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="obsolete">Y</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">ფანქარი</translation>
     </message>
 </context>
 <context>
@@ -6706,10 +6498,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="332"/>
         <source>Edit style override</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="obsolete">...</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="346"/>
@@ -8366,10 +8154,6 @@ Are you sure you are going to discard changes?</source>
         <translation type="unfinished">თავში</translation>
     </message>
     <message>
-        <source>Menu Creator</source>
-        <translation type="obsolete">მენიუს შექმნა</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="59"/>
         <source>Destroy Menu</source>
         <translation type="unfinished"></translation>
@@ -8383,10 +8167,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="62"/>
         <source>Define a custom menu by specifying the set of used actions. Menu will be shown as a popup in the drawing area as soon as menu invocation shortcut is invoked. </source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toolbar Creator</source>
-        <translation type="obsolete">ხელსაწყოთა ზოლის შექმნა</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="57"/>
@@ -9739,10 +9519,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="282"/>
         <source>Flat List Mode)</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Layer Menu</source>
-        <translation type="obsolete">ფენის მენიუ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="651"/>
@@ -11201,18 +10977,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="32"/>
         <source>Snap point of gap to line snap point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="obsolete">დასაწყისი</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="obsolete">შუა</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="obsolete">დასასრული</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="95"/>
@@ -16140,10 +15904,6 @@ Warning: this action can NOT be undone!</source>
         <translation>ბიბლიოთეკის ბრაუზერი</translation>
     </message>
     <message>
-        <source>Command line</source>
-        <translation type="vanished">ბრძანებათა სტრიქონი</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="260"/>
         <source>Dock</source>
         <translation>მიმაგრება</translation>
@@ -16153,26 +15913,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="284"/>
         <source>Float</source>
         <translation>მცურავი</translation>
-    </message>
-    <message>
-        <source>Lines</source>
-        <translation type="vanished">ხაზები</translation>
-    </message>
-    <message>
-        <source>Circles</source>
-        <translation type="vanished">წრეები</translation>
-    </message>
-    <message>
-        <source>Freehand</source>
-        <translation type="vanished">ხელით დახატული</translation>
-    </message>
-    <message>
-        <source>Ellipses</source>
-        <translation type="vanished">ოვალები</translation>
-    </message>
-    <message>
-        <source>PolyLines</source>
-        <translation type="vanished">პოლიხაზები</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="101"/>
@@ -16193,10 +15933,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="96"/>
         <source>Circle</source>
         <translation type="unfinished">წრე</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="obsolete">მრუდი</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="99"/>
@@ -16230,25 +15966,9 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished">დალაგება</translation>
     </message>
     <message>
-        <source>Layer List</source>
-        <translation type="obsolete">ფენების სია</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="212"/>
         <source>Entity Info</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="obsolete">ბლოკების სია</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">ფაილი</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">ჩასწორება</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="164"/>
@@ -16269,158 +15989,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="98"/>
         <source>Spline</source>
         <translation type="unfinished">სპლაინი</translation>
-    </message>
-    <message>
-        <source>Snap Selection</source>
-        <translation type="obsolete">მონიშნულის მიმაგრება</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">ფანქარი</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="obsolete">ხელსაწყოების გამართვა</translation>
-    </message>
-    <message>
-        <source>Creators</source>
-        <translation type="obsolete">შემქმნელები</translation>
-    </message>
-    <message>
-        <source>Preferences</source>
-        <translation type="obsolete">პარამეტრები</translation>
-    </message>
-    <message>
-        <source>Categories</source>
-        <translation type="obsolete">კატეგორიები</translation>
-    </message>
-    <message>
-        <source>Dimensions</source>
-        <translation type="vanished">ზომები</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="obsolete">&amp;ფაილი</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="obsolete">შემოტანა</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="obsolete">გატანა</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="obsolete">&amp;მორგება</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="obsolete">&amp;ჩასწორება</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="obsolete">&amp;დამატებები</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="obsolete">&amp;ხედი</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="obsolete">&amp;ხელსაწყოები</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="obsolete">&amp;ხაზი</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="obsolete">&amp;წრე</translation>
-    </message>
-    <message>
-        <source>&amp;Curve</source>
-        <translation type="obsolete">&amp;მრუდი</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="obsolete">&amp;რკალი</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="obsolete">&amp;ოვალი</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="obsolete">&amp;პოლიხაზი</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="obsolete">&amp;მონიშვნა</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="obsolete">&amp;განზომილება</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="obsolete">&amp;შეცვლა</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="obsolete">&amp;ინფო</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="obsolete">&amp;მიმდევრობა</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="obsolete">&amp;ნახაზები</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="obsolete">&amp;დახმარება</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="obsolete">&amp;ვიკი</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="obsolete">მომხმარებლის &amp;სახელმძღვანელო</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="obsolete">&amp;ბრძანებები</translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="obsolete">&amp;სტილის ცხრილები</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="obsolete">&amp;ვიჯეტები</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="obsolete">პროგრამის შესახებ</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="obsolete">&amp;ფორუმი</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="obsolete">&amp;შეწირვა</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="obsolete">ვიჯეტები</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="obsolete">&amp;ხელსაწყოთა ზოლები</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="138"/>
@@ -16551,10 +16119,6 @@ Warning: this action can NOT be undone!</source>
         <source>Modify</source>
         <translation>ჩასწორება</translation>
     </message>
-    <message>
-        <source>Measure</source>
-        <translation type="vanished">გაზომვა</translation>
-    </message>
 </context>
 <context>
     <name>LC_WidgetOptionsDialog</name>
@@ -16595,10 +16159,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="503"/>
         <source>For &quot;classic&quot; statusbar only. </source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="vanished">ზოგადი</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="113"/>
@@ -16961,62 +16521,6 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp;ფაილი</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">&amp;ჩასწორება</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">&amp;ხედი</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&amp;მონიშვნა</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&amp;ხაზი</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&amp;წრე</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&amp;ოვალი</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">&amp;შეცვლა</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp;ინფო</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">პროგრამის შესახებ</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp;დახმარება</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">&amp;კასკადი</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">&amp;ფილა</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">ფილები &amp;ჰორიზონტალურად</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="795"/>
         <source>Creating new file...</source>
         <translation>ახალი ფაილის შექმნა...</translation>
@@ -17047,14 +16551,6 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Layer List</source>
-        <translation type="vanished">ფენების სია</translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="vanished">ბლოკების სია</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="196"/>
         <source>Print preview for %1</source>
         <translation type="unfinished"></translation>
@@ -17075,21 +16571,9 @@ Warning: this action can NOT be undone!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Exporting...</source>
-        <translation type="vanished">გატანა…</translation>
-    </message>
-    <message>
-        <source>Export failed!</source>
-        <translation type="vanished">გატანის შეცდომა!</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1275"/>
         <source>Printing complete</source>
         <translation>დაბეჭდვა დასრულდა</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="vanished">ბრძანებათა სტრიქონი</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="741"/>
@@ -17102,10 +16586,6 @@ Warning: this action can NOT be undone!</source>
 %1
 Please check the permissions.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">&amp;პოლიხაზი</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1113"/>
@@ -17126,18 +16606,6 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Import</source>
-        <translation type="vanished">შემოტანა</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">&amp;ხელსაწყოთა ზოლები</translation>
-    </message>
-    <message>
-        <source>Version: %1</source>
-        <translation type="vanished">ვერსია: %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="988"/>
         <source>Warning: File already opened : </source>
         <translation type="unfinished"></translation>
@@ -17151,10 +16619,6 @@ Auto-save disabled.</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="249"/>
         <source> , please check the filename and permissions.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">ფილები &amp;ვერტიკალურად</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="813"/>
@@ -17172,41 +16636,9 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>File</source>
-        <translation type="vanished">ფაილი</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">ჩასწორება</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="vanished">ნახვა</translation>
-    </message>
-    <message>
-        <source>Snap Selection</source>
-        <translation type="vanished">მონიშნულის მიმაგრება</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="vanished">ხელსაწყოების გამართვა</translation>
-    </message>
-    <message>
-        <source>Export as</source>
-        <translation type="vanished">გატანა, როგორც</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="207"/>
         <source>Draft Mode</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export as PDF</source>
-        <translation type="vanished">PDF-ად გატანა</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">გატანა</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1001"/>
@@ -17221,129 +16653,9 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Categories</source>
-        <translation type="vanished">კატეგორიები</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="vanished">&amp;მიმდევრობა</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">დალაგება</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">აირჩიეთ</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">ხაზი</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">წრე</translation>
-    </message>
-    <message>
-        <source>&amp;Curve</source>
-        <translation type="vanished">&amp;მრუდი</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="vanished">მრუდი</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">ოვალი</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">პოლიხაზი</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">განზომილება</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">ჩასწორება</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">ინფორმაცია</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">ფანქარი</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1678"/>
         <source>Opening recent file...</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Grid Status</source>
-        <translation type="vanished">ბადის სტატუსი</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="vanished">ხელსაწყოთა ზოლები</translation>
-    </message>
-    <message>
-        <source>Device Options</source>
-        <translation type="vanished">მოწყობილობის მორგება</translation>
-    </message>
-    <message>
-        <source>Device</source>
-        <translation type="vanished">მოწყობილობა</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">&amp;მორგება</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">&amp;დამატებები</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="vanished">&amp;განზომილება</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">უახლესი ფაილები</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation type="vanished">კოპირება</translation>
-    </message>
-    <message>
-        <source>Contributors</source>
-        <translation type="vanished">მოხალისეები</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation type="vanished">ლიცენზია</translation>
-    </message>
-    <message>
-        <source>System</source>
-        <translation type="vanished">სისტემა</translation>
-    </message>
-    <message>
-        <source>Toolbar Creator</source>
-        <translation type="vanished">ხელსაწყოთა ზოლის შექმნა</translation>
-    </message>
-    <message>
-        <source>Menu Creator</source>
-        <translation type="vanished">მენიუს შექმნა</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="vanished">&amp;ხელსაწყოები</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="vanished">&amp;ნახაზები</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="226"/>
@@ -17354,10 +16666,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
         <source>Save cancelled</source>
         <translation>შენახვა გაუქმდა</translation>
-    </message>
-    <message>
-        <source>Closing Drawing</source>
-        <translation type="vanished">ნახაზის დახურვა</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="361"/>
@@ -17380,46 +16688,6 @@ Please check its existence and permissions.</source>
         <translation>&apos;%1&apos;-ის &amp;შენახვა, როგორც...</translation>
     </message>
     <message>
-        <source>&amp;Window mode</source>
-        <translation type="vanished">&amp;ფანჯრის რეჟიმი</translation>
-    </message>
-    <message>
-        <source>&amp;Layout</source>
-        <translation type="vanished">&amp;განლაგება</translation>
-    </message>
-    <message>
-        <source>Rounded</source>
-        <translation type="vanished">მომრგვალებული</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="vanished">სამკუთხედი</translation>
-    </message>
-    <message>
-        <source>North</source>
-        <translation type="vanished">ჩრდილოეთი</translation>
-    </message>
-    <message>
-        <source>South</source>
-        <translation type="vanished">სამხრეთი</translation>
-    </message>
-    <message>
-        <source>East</source>
-        <translation type="vanished">აღმოსავლეთი</translation>
-    </message>
-    <message>
-        <source>West</source>
-        <translation type="vanished">დასავლეთი</translation>
-    </message>
-    <message>
-        <source>&amp;Arrange</source>
-        <translation type="vanished">&amp;დალაგება</translation>
-    </message>
-    <message>
-        <source>&amp;Maximized</source>
-        <translation type="vanished">&amp;გაშლილი</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1090"/>
         <source>Save All cancelled</source>
         <translation>ყველაფრის შენახვა გაუქმდა</translation>
@@ -17430,51 +16698,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1228"/>
         <source>Close All cancelled</source>
         <translation>ყველაფრის დახურვა გაუქმდა</translation>
-    </message>
-    <message>
-        <source>The Code</source>
-        <translation type="vanished">კოდი</translation>
-    </message>
-    <message>
-        <source>Cmd</source>
-        <translation type="vanished">Cmd</translation>
-    </message>
-    <message>
-        <source>Float</source>
-        <translation type="vanished">მცურავი</translation>
-    </message>
-    <message>
-        <source>Dock</source>
-        <comment>Dock the command widget to the main window</comment>
-        <translation type="vanished">მიმაგრება</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="vanished">&amp;ვიკი</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="vanished">მომხმარებლის &amp;სახელმძღვანელო</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="vanished">&amp;ბრძანებები</translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="vanished">&amp;სტილის ცხრილები</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="vanished">&amp;ვიჯეტები</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="vanished">&amp;ფორუმი</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="vanished">&amp;შეწირვა</translation>
     </message>
 </context>
 <context>
@@ -17507,10 +16730,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="105"/>
         <source>Name of Current Active Layer</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
@@ -17548,62 +16767,6 @@ Please check its existence and permissions.</source>
 </context>
 <context>
     <name>QG_BlockWidget</name>
-    <message>
-        <source>Block Menu</source>
-        <translation type="vanished">ბლოკის მენიუ</translation>
-    </message>
-    <message>
-        <source>&amp;Freeze all Blocks</source>
-        <translation type="vanished">&amp;ყველა ბლოკის გაყინვა</translation>
-    </message>
-    <message>
-        <source>&amp;Add Block</source>
-        <translation type="vanished">&amp;ბლოკის დამატება</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Block</source>
-        <translation type="vanished">&amp;ბლოკის წაშლა</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Block</source>
-        <translation type="vanished">ბლოკის &amp;ჩასწორება</translation>
-    </message>
-    <message>
-        <source>&amp;Toggle Visibility</source>
-        <translation type="vanished">ხილულობის &amp;გადართვა</translation>
-    </message>
-    <message>
-        <source>Show all blocks</source>
-        <translation type="vanished">&amp;ყველა ბლოკის ჩვენება</translation>
-    </message>
-    <message>
-        <source>Hide all blocks</source>
-        <translation type="vanished">ყველა ბლოკის დამალვა</translation>
-    </message>
-    <message>
-        <source>&amp;Rename Block</source>
-        <translation type="vanished">ბლოკის &amp;სახელის გადარქმევა</translation>
-    </message>
-    <message>
-        <source>&amp;Insert Block</source>
-        <translation type="vanished">&amp;ბლოკს ჩასმა</translation>
-    </message>
-    <message>
-        <source>&amp;Create New Block</source>
-        <translation type="vanished">ახალი &amp;ბლოკის შექმნა</translation>
-    </message>
-    <message>
-        <source>Create Block</source>
-        <translation type="vanished">ბლოკის შექმნა</translation>
-    </message>
-    <message>
-        <source>Add an empty block</source>
-        <translation type="vanished">ცარიელი ბლოკის დამატება</translation>
-    </message>
-    <message>
-        <source>Remove block</source>
-        <translation type="vanished">ბლოკის წაშლა</translation>
-    </message>
     <message>
         <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="183"/>
         <source>Filter</source>
@@ -17825,10 +16988,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="321"/>
         <source>Float</source>
         <translation>მცურავი</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="vanished">ბრძანებათა სტრიქონი</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="322"/>
@@ -18164,44 +17323,6 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="vanished">ხაზოვანი განზომილება</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">ფენა:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">გეომეტრია</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">კუთხე:</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">ფანქარი</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">ფენა:</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">განზომილება</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">ფანქარი</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgEllipse</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="26"/>
@@ -18279,18 +17400,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="130"/>
         <source>Rotation angle for the major axis of ellipse, degrees</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="vanished">საბოლოო კუთხე:</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="vanished">საწყისი კუთხე:</translation>
-    </message>
-    <message>
-        <source>Rotation:</source>
-        <translation type="vanished">შემობრუნება:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="276"/>
@@ -20812,10 +19921,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Splines</source>
-        <translation type="vanished">&amp;სპლაინები</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2176"/>
         <source>&amp;Points</source>
         <translation>&amp;წერტილები</translation>
@@ -20951,10 +20056,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Appearance</source>
-        <translation type="vanished">&amp;გარეგნობა</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5019"/>
         <source>&amp;GUI Language:</source>
         <translation type="unfinished"></translation>
@@ -20980,10 +20081,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>&amp;ერთეული:</translation>
     </message>
     <message>
-        <source>Backgr&amp;ound:</source>
-        <translation type="vanished">&amp;ფონი:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1173"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1495"/>
         <source>G&amp;rid Color:</source>
@@ -20993,14 +20090,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="957"/>
         <source>A&amp;utomatically scale grid</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>S&amp;elected Color:</source>
-        <translation type="vanished">არჩეული &amp;ფერი:</translation>
-    </message>
-    <message>
-        <source>&amp;Highlighted Color:</source>
-        <translation type="vanished">&amp;გამოკვეთის ფერი:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="940"/>
@@ -21033,10 +20122,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Auto backup</source>
-        <translation type="vanished">ავტომატური მარქაფი</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5301"/>
         <source>Template:</source>
         <translation>შაბლონი:</translation>
@@ -21055,10 +20140,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="723"/>
         <source>&amp;End Handle Color:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Graphic Colors</source>
-        <translation type="vanished">გრაფიკის ფერები</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="554"/>
@@ -23183,10 +22264,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation type="obsolete">სხვა</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5169"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5224"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5238"/>
@@ -23381,13 +22458,6 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="38"/>
         <source>Whether to export points</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">გაუქმება</translation>
     </message>
 </context>
 <context>
@@ -24566,14 +23636,6 @@ so default step value required for baking</source>
         <source>again Still No Text supplied.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Close All</source>
-        <translation type="vanished">ყველას დახურვა</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">დახურვა</translation>
-    </message>
 </context>
 <context>
     <name>QG_FileDialog</name>
@@ -24658,13 +23720,6 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="227"/>
         <source>Untitled</source>
         <translation>უსახელო</translation>
-    </message>
-</context>
-<context>
-    <name>QG_GraphicView</name>
-    <message>
-        <source>Edit Properties</source>
-        <translation type="vanished">თვისებების ჩასწორება</translation>
     </message>
 </context>
 <context>
@@ -24790,58 +23845,14 @@ The contents of a Construction Layer should not appear in printout.</source>
 <context>
     <name>QG_LayerWidget</name>
     <message>
-        <source>Show all layers</source>
-        <translation type="vanished">ყველა ფენის შექმნა</translation>
-    </message>
-    <message>
-        <source>Hide all layers</source>
-        <translation type="vanished">ყველა ფენის დამალვა</translation>
-    </message>
-    <message>
-        <source>Add a layer</source>
-        <translation type="vanished">ფენის დამატება</translation>
-    </message>
-    <message>
-        <source>Layer Menu</source>
-        <translation type="vanished">ფენის მენიუ</translation>
-    </message>
-    <message>
-        <source>&amp;Add Layer</source>
-        <translation type="vanished">&amp;ფენის დამატება</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Layer</source>
-        <translation type="vanished">&amp;ფენის წაშლა</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="249"/>
         <source>Looking for matching layer names</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unlock all layers</source>
-        <translation type="vanished">ყველა ფენის განბლოკვა</translation>
-    </message>
-    <message>
-        <source>Lock all layers</source>
-        <translation type="vanished">ყველა ფენის დაბლოკვა</translation>
-    </message>
-    <message>
-        <source>Remove layer</source>
-        <translation type="vanished">ფენის წაშლა</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="247"/>
         <source>Filter</source>
         <translation>ფილტრი</translation>
-    </message>
-    <message>
-        <source>&amp;Export Selected Layer(s)</source>
-        <translation type="vanished">&amp;მონიშნული ფენების გატანა</translation>
-    </message>
-    <message>
-        <source>Export &amp;Visible Layer(s)</source>
-        <translation type="vanished">&amp;ხილული ფენების გატანა</translation>
     </message>
 </context>
 <context>
@@ -25024,10 +24035,6 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>თაგუნა</translation>
     </message>
     <message>
-        <source>Right</source>
-        <translation type="vanished">მარჯვენა</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/status_bar/qg_mousewidget.ui" line="229"/>
         <source>Left</source>
         <translation>მარცხენა</translation>
@@ -25127,18 +24134,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_SnapToolBar</name>
     <message>
-        <source>Snap</source>
-        <translation type="vanished">მიმაგრება</translation>
-    </message>
-    <message>
-        <source>Snap to grid</source>
-        <translation type="vanished">ბადეზე მიბმა</translation>
-    </message>
-    <message>
-        <source>Snap Intersection</source>
-        <translation type="vanished">კვეთის მიბმა</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="169"/>
         <source>Relative zero position is %1</source>
         <translation type="unfinished"></translation>
@@ -25214,110 +24209,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="250"/>
         <source>By Layer</source>
         <translation>ფენით</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation type="vanished">ბლოკით</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">ნაგულისხმევი</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation type="vanished">0.00მმ</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation type="vanished">0.05მმ</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation type="vanished">0.09მმ</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation type="vanished">0.13მმ (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation type="vanished">0.15მმ</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation type="vanished">0.18მმ (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation type="vanished">0.20მმ</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation type="vanished">0.25მმ (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation type="vanished">0.30მმ</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation type="vanished">0.35მმ (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation type="vanished">0.40მმ</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation type="vanished">0.50მმ (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation type="vanished">0.53მმ</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation type="vanished">0.60მმ</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation type="vanished">0.70მმ (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation type="vanished">0.80მმ</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation type="vanished">0.90მმ</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation type="vanished">1.00მმ (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation type="vanished">1.06მმ</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation type="vanished">1.20მმ</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation type="vanished">1.40მმ (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation type="vanished">1.58მმ</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation type="vanished">2.00მმ (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation type="vanished">2.11მმ</translation>
     </message>
 </context>
 <context>
@@ -26850,11 +25741,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>cl</source>
-        <comment>chord length</comment>
-        <translation type="vanished">ცლ</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1163"/>
         <source>c</source>
         <comment>close</comment>
@@ -27045,11 +25931,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>u</source>
-        <comment>undo</comment>
-        <translation type="vanished">u</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1221"/>
         <source>redo</source>
         <translation type="unfinished"></translation>
@@ -27117,16 +25998,6 @@ Do you want to replace it?</source>
         <translation>ხელმისაწვდომი ბრძანებები:</translation>
     </message>
     <message>
-        <source>cal</source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">კალ</translation>
-    </message>
-    <message>
-        <source>calculate</source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="vanished">გამოთვლა</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="216"/>
         <source>Calculator error for input: </source>
         <translation type="unfinished"></translation>
@@ -27163,86 +26034,6 @@ Do you want to replace it?</source>
         <source>mp</source>
         <comment>modify properties</comment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Block</source>
-        <translation type="vanished">დაბლოკვა</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">წრე</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="vanished">მრუდი</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">ჩასწორება</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">ოვალი</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="vanished">ფაილი</translation>
-    </message>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">განზომილება</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">ინფორმაცია</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">ფენა</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">ხაზი</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">ჩასწორება</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="vanished">მორგება</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">სხვა</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">პოლიხაზი</translation>
-    </message>
-    <message>
-        <source>Restriction</source>
-        <translation type="vanished">შეზღუდვა</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">აირჩიეთ</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="vanished">მიმაგრება</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="vanished">ხედი</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="vanished">ვიჯეტები</translation>
-    </message>
-    <message>
-        <source>Creators</source>
-        <translation type="vanished">შემქმნელები</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="87"/>
@@ -29404,10 +28195,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export as PDF</source>
-        <translation type="obsolete">PDF-ად გატანა</translation>
-    </message>
-    <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="44"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="206"/>
         <source>By Layer</source>
@@ -29816,10 +28603,6 @@ Do you want to replace it?</source>
         <source>Specify reference point</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionBlocksExplode</name>
@@ -29850,10 +28633,6 @@ Do you want to replace it?</source>
         <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="349"/>
         <source>Specify reference point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblocksinsert.cpp" line="352"/>
@@ -30084,21 +28863,6 @@ This block cannot be inserted.</source>
         <source>Choose second edge</source>
         <translation>აირჩიეთ მეორე წიბო</translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDimAligned</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDimAngular</name>
@@ -30106,10 +28870,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="216"/>
         <source>Select first line</source>
         <translation>აირჩიეთ პირველი ხაზი</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="219"/>
@@ -30128,26 +28888,11 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDimDiametric</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">გამოსახულება არასწორია</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDimLeader</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="182"/>
         <source>Specify target point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="185"/>
@@ -30187,25 +28932,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="221"/>
         <source>Snap to Adjacent Dim</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDimRadial</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">გამოსახულება არასწორია</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
     </message>
 </context>
 <context>
@@ -30256,17 +28982,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="500"/>
         <source>Specify radius</source>
         <translation>მიუთითეთ რადიუსი</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="507"/>
@@ -30297,17 +29015,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="233"/>
         <source>Specify second point</source>
         <translation>მიუთითეთ მეორე წერტილი</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="230"/>
@@ -30333,17 +29043,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="277"/>
         <source>Specify end angle</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="279"/>
@@ -30364,14 +29066,6 @@ This block cannot be inserted.</source>
         <translation>მიუთითეთ ცენტრი</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle.cpp" line="129"/>
         <source>Specify point on circle</source>
         <translation type="unfinished"></translation>
@@ -30390,17 +29084,9 @@ This block cannot be inserted.</source>
         <translation>მიუთითეთ პირველი წერტილი</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="156"/>
         <source>Specify second point</source>
         <translation>მიუთითეთ მეორე წერტილი</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
 </context>
 <context>
@@ -30416,17 +29102,9 @@ This block cannot be inserted.</source>
         <translation>მიუთითეთ პირველი წერტილი</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="175"/>
         <source>Specify second point</source>
         <translation>მიუთითეთ მეორე წერტილი</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="178"/>
@@ -30447,17 +29125,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="177"/>
         <source>Specify circle radius</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="146"/>
@@ -30483,17 +29153,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="216"/>
         <source>Specify the second line</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircleinscribe.cpp" line="219"/>
@@ -30504,17 +29166,9 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircleTan1_2P</name>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="463"/>
         <source>Specify the first point on the tangent circle</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan1_2p.cpp" line="466"/>
@@ -30540,17 +29194,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="280"/>
         <source>Specify the second line/arc/circle</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="283"/>
@@ -30571,14 +29217,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="341"/>
         <source>Specify the another line/arc/circle</source>
         <translation type="unfinished"></translation>
@@ -30596,14 +29234,6 @@ This block cannot be inserted.</source>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="509"/>
         <source>Select the center of the tangent circle</source>
@@ -30638,17 +29268,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="276"/>
         <source>Specify the second point on ellipse</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="279"/>
@@ -30681,17 +29303,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="339"/>
         <source>Specify endpoint of major axis</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="342"/>
@@ -30717,10 +29331,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="246"/>
         <source>Specify the first point on ellipse</source>
         <translation type="unfinished"></translation>
@@ -30729,10 +29339,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="249"/>
         <source>Specify the second point on ellipse</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="252"/>
@@ -30753,17 +29359,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="195"/>
         <source>Specify second focus of ellipse</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="198"/>
@@ -30789,17 +29387,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="310"/>
         <source>Specify the second line</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="313"/>
@@ -30885,10 +29475,6 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/image/rs_actiondrawimage.cpp" line="270"/>
         <source>Enter angle:</source>
         <translation>შეიყვანეთ კუთხე:</translation>
@@ -30916,17 +29502,9 @@ This block cannot be inserted.</source>
         <translation>მიუთითეთ პირველი წერტილი</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="274"/>
         <source>Specify next point or [%1]</source>
         <translation>მიუთითეთ შემდეგი წერტილი ან [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="276"/>
@@ -30968,17 +29546,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="312"/>
         <source>Enter angle:</source>
         <translation>შეიყვანეთ კუთხე:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="315"/>
@@ -31005,17 +29575,9 @@ This block cannot be inserted.</source>
         <translation>აირჩიეთ პირველი ხაზი</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="268"/>
         <source>Select second line</source>
         <translation>აირჩიეთ მეორე ხაზი</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="271"/>
@@ -31041,10 +29603,6 @@ This block cannot be inserted.</source>
         <source>Click and drag to draw a line</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineHorVert</name>
@@ -31054,17 +29612,9 @@ This block cannot be inserted.</source>
         <translation>მიუთითეთ პირველი წერტილი</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="117"/>
         <source>Specify second point</source>
         <translation>მიუთითეთ მეორე წერტილი</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
 </context>
 <context>
@@ -31081,17 +29631,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="255"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
 </context>
 <context>
@@ -31100,10 +29642,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="135"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="109"/>
@@ -31135,17 +29673,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="177"/>
         <source>Specify through point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="110"/>
@@ -31178,25 +29708,9 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawLinePolygonCenCor</name>
     <message>
-        <source>Specify center</source>
-        <translation type="vanished">მიუთითეთ ცენტრი</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon.cpp" line="41"/>
         <source>Specify a corner</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">შეიყვანეთ რიცხვი:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">რიცხვი არასწორია. სცადეთ 1..9999</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">გამოსახულება არასწორია</translation>
     </message>
 </context>
 <context>
@@ -31207,25 +29721,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polygon/rs_actiondrawlinepolygon2.cpp" line="92"/>
         <source>Specify second corner</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">რიცხვი:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">რიცხვი არასწორია. სცადეთ 1..9999</translation>
     </message>
 </context>
 <context>
@@ -31261,17 +29759,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="144"/>
         <source>Specify second corner</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
 </context>
 <context>
@@ -31298,17 +29788,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="251"/>
         <source>Specify position</source>
         <translation>მიუთითეთ მდებარეობა</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
 </context>
 <context>
@@ -31325,29 +29807,13 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent2</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="215"/>
         <source>Select first circle/ellipse/parabola</source>
@@ -31372,17 +29838,9 @@ This block cannot be inserted.</source>
         <translation>მიუთითეთ ჩასმის წერტილი</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawmtext.cpp" line="189"/>
         <source>Enter text:</source>
         <translation>შეიყვანეთ ტექსტი:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
 </context>
 <context>
@@ -31391,10 +29849,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/point/rs_actiondrawpoint.cpp" line="77"/>
         <source>Specify location</source>
         <translation>მიუთითეთ მდებარეობა</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
     </message>
 </context>
 <context>
@@ -31405,17 +29859,9 @@ This block cannot be inserted.</source>
         <translation>მიუთითეთ პირველი წერტილი</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="756"/>
         <source>Specify next point or [%1]</source>
         <translation>მიუთითეთ შემდეგი წერტილი ან [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="758"/>
@@ -31443,10 +29889,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="567"/>
         <source>Enter number of polylines</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>equation</source>
-        <translation type="vanished">ტოლობა</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="525"/>
@@ -31492,17 +29934,9 @@ This block cannot be inserted.</source>
         <translation>მიუთითეთ პირველი საკონტროლო წერტილი</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="227"/>
         <source>Specify next control point or [%1]</source>
         <translation>მიუთითეთ შემდეგი საკონტროლო წერტილი ან [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="229"/>
@@ -31528,29 +29962,14 @@ This block cannot be inserted.</source>
         <translation>მიუთითეთ ჩასმის წერტილი</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="247"/>
         <source>Enter text:</source>
         <translation>შეიყვანეთ ტექსტი:</translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="243"/>
         <source>Specify second point</source>
         <translation>მიუთითეთ მეორე წერტილი</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditCopy</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
     </message>
 </context>
 <context>
@@ -31613,13 +30032,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditUndo</name>
     <message>
         <location filename="../src/actions/drawing/edit/rs_actioneditundo.cpp" line="55"/>
@@ -31649,10 +30061,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="250"/>
         <source>Single Line Mode</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">ინფორმაცია</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="103"/>
@@ -31744,21 +30152,9 @@ Intersection :@(%7, %8)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
         <source>Specify second line</source>
         <translation>მიუთითეთ მეორე ხაზი</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
-    </message>
-    <message>
-        <source>Angle: %1</source>
-        <translation type="vanished">კუთხე: %1</translation>
     </message>
 </context>
 <context>
@@ -31788,10 +30184,6 @@ Intersection :@(%7, %8)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="178"/>
         <source>Specify first point of polygon</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
@@ -31852,25 +30244,13 @@ End: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="160"/>
         <source>Specify second point of distance</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1</source>
-        <translation type="vanished">მანძილი: %1</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="92"/>
         <source>Distance: %1
@@ -31921,18 +30301,10 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="279"/>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="282"/>
         <source>Specify point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
 </context>
 <context>
@@ -31951,10 +30323,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="82"/>
         <source>Specify point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
     </message>
 </context>
 <context>
@@ -32030,10 +30398,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="194"/>
         <source>Specify reference point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="197"/>
@@ -32133,17 +30497,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="369"/>
         <source>Select second entity</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="372"/>
@@ -32184,17 +30540,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="144"/>
         <source>Specify cutting point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="114"/>
@@ -32228,17 +30576,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="151"/>
         <source>Specify second break point on the same polyline</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="89"/>
@@ -32282,22 +30622,11 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionModifyDeleteQuick</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionModifyEntity</name>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyentity.cpp" line="263"/>
         <source>Click on entity to modify</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
     </message>
 </context>
 <context>
@@ -32371,17 +30700,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="249"/>
         <source>Specify second point of mirror line</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
 </context>
 <context>
@@ -32422,17 +30743,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
         <source>Specify target point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
 </context>
 <context>
@@ -32492,17 +30805,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="325"/>
         <source>Specify target point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="328"/>
@@ -32548,10 +30853,6 @@ Point: (%8 , %9)</source>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionModifyRevertDirection</name>
@@ -32577,10 +30878,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="588"/>
         <source>Specify reference point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="132"/>
@@ -32717,17 +31014,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="179"/>
         <source>Specify relative reference point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
 </context>
 <context>
@@ -32737,10 +31026,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="362"/>
         <source>Not a valid expression</source>
         <translation>გამოსახულება არასწორია</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="229"/>
@@ -32768,10 +31053,6 @@ Point: (%8 , %9)</source>
         <translation>შეიყვანეთ რდიუსი:</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
         <translation type="unfinished"></translation>
@@ -32779,10 +31060,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="169"/>
         <source>Scale</source>
@@ -32867,17 +31144,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="199"/>
         <source>Specify second corner</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="79"/>
@@ -32931,17 +31200,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="202"/>
         <source>Select limiting entity</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="112"/>
@@ -32996,10 +31257,6 @@ Point: (%8 , %9)</source>
         <source>Select line/arc to trim OR enter length value:</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionOrder</name>
@@ -33027,10 +31284,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="130"/>
         <source>Choose entity for order</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
     </message>
 </context>
 <context>
@@ -33062,17 +31315,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="171"/>
         <source>Specify adding node&apos;s point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
 </context>
 <context>
@@ -33101,22 +31346,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="299"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">მიუთითეთ შემდეგი წერტილი ან [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">მიუთითეთ შემდეგი წერტილი</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="125"/>
@@ -33148,17 +31377,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="145"/>
         <source>Specify deleting node&apos;s point</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="128"/>
@@ -33206,17 +31427,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="198"/>
         <source>Specify first node</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="201"/>
@@ -33247,10 +31460,6 @@ Point: (%8 , %9)</source>
         <source>Choose the original polyline</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionPolylineSegment</name>
@@ -33263,10 +31472,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="357"/>
         <source>Choose one of the segments on the original polyline</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="335"/>
@@ -33308,17 +31513,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="186"/>
         <source>Specify first segment</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="189"/>
@@ -33400,41 +31597,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
-        <source>Select to delete</source>
-        <translation type="vanished">წასაშლელად მონიშნეთ</translation>
-    </message>
-    <message>
-        <source>Select to delete immediately</source>
-        <translation type="vanished">დაუყოვნებლივ წასაშლელად მონიშნეთ</translation>
-    </message>
-    <message>
-        <source>Select to move</source>
-        <translation type="vanished">გადასატანად მონიშნეთ</translation>
-    </message>
-    <message>
-        <source>Select to rotate</source>
-        <translation type="vanished">შესაბრუნებლად მონშნეთ</translation>
-    </message>
-    <message>
-        <source>Select to scale</source>
-        <translation type="vanished">მასშტაბირებისთვის მონიშნეთ</translation>
-    </message>
-    <message>
-        <source>Select to copy</source>
-        <translation type="vanished">დასაკოპირებლად მონიშნეთ</translation>
-    </message>
-    <message>
-        <source>Select to cut</source>
-        <translation type="vanished">მოსაჭრელად მონიშნეთ</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectContour</name>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="63"/>
@@ -33465,17 +31627,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="176"/>
         <source>Choose second point of intersection line</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
 </context>
 <context>
@@ -33501,10 +31655,6 @@ Point: (%8 , %9)</source>
 </context>
 <context>
     <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="116"/>
         <source>De-Selecting</source>
@@ -33556,10 +31706,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="163"/>
         <source>Click and drag for the selection window</source>
         <translation type="unfinished"></translation>
@@ -33572,10 +31718,6 @@ Point: (%8 , %9)</source>
         <source>Set relative Zero</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionSnapIntersectionManual</name>
@@ -33583,10 +31725,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="142"/>
         <source>Select first entity</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="145"/>
@@ -33615,10 +31753,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="108"/>
         <source>Zoom panning</source>
         <translation type="unfinished"></translation>
@@ -33632,17 +31766,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">გაუქმება</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="143"/>
         <source>Specify second edge</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">უკან</translation>
     </message>
 </context>
 <context>
@@ -33909,13 +32035,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">კუთხე:</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -34084,17 +32203,9 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Factor:</source>
-        <translation type="vanished">ფაქტორი:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="106"/>
         <source>Scale Factor</source>
         <translation>გადიდების ფაქტორი</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">DPI</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="120"/>
@@ -34528,21 +32639,6 @@ Point: (%8 , %9)</source>
     </message>
 </context>
 <context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">მრავალკუთხედის მორგება</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">რიცხვი:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">წიბოების რაოდენობა</translation>
-    </message>
-</context>
-<context>
     <name>Ui_LinePolygonOptions</name>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="32"/>
@@ -34742,10 +32838,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="79"/>
         <source>Multiple Copies</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">მანძილი:</translation>
     </message>
 </context>
 <context>
@@ -35003,10 +33095,6 @@ Point: (%8 , %9)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Fit to page</source>
-        <translation type="vanished">გვერდში ჩატევა</translation>
-    </message>
-    <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="44"/>
         <source>Landscape Orientation of paper</source>
         <translation type="unfinished"></translation>
@@ -35127,10 +33215,6 @@ Point: (%8 , %9)</source>
         <source>Pick distance from drawing.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">მანძილი:</translation>
-    </message>
 </context>
 <context>
     <name>Ui_SnapMiddleOptions</name>
@@ -35143,10 +33227,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="59"/>
         <source>Snap Middle Points:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Middle Points:</source>
-        <translation type="vanished">შუა წერტილები:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
@@ -35266,41 +33346,6 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="50"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>WidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">კადრი</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">სახელი</translation>
-    </message>
-    <message>
-        <source>Create</source>
-        <translation type="vanished">შექმნა</translation>
-    </message>
-    <message>
-        <source>Destroy</source>
-        <translation type="vanished">განადგურება</translation>
-    </message>
-    <message>
-        <source>Assign</source>
-        <translation type="vanished">მინიჭება</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation type="vanished">განახლება</translation>
     </message>
 </context>
 </TS>
