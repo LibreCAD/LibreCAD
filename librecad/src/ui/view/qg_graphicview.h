@@ -186,6 +186,7 @@ private:
     bool m_invertZoomDirection{false};
     bool m_invertHorizontalScroll {false};
     bool m_invertVerticalScroll {false};
+    bool m_allowScrollAndMoveAdjustByKeys{false};
 
     struct AutoPanData;
     std::unique_ptr<AutoPanData> m_panData;

@@ -586,6 +586,8 @@ set(SOURCES
         librecad/src/actions/drawing/modify/rs_actionmodifytrim.h
         librecad/src/actions/drawing/modify/rs_actionmodifytrimamount.cpp
         librecad/src/actions/drawing/modify/rs_actionmodifytrimamount.h
+        librecad/src/actions/drawing/modify/lc_actionmodifymoveadjust.h
+        librecad/src/actions/drawing/modify/lc_actionmodifymoveadjust.cpp
         librecad/src/actions/options/rs_actionoptionsdrawing.cpp
         librecad/src/actions/options/rs_actionoptionsdrawing.h
         librecad/src/actions/drawing/modify/rs_actionorder.cpp
@@ -861,6 +863,8 @@ set(SOURCES
         librecad/src/lib/gui/rs_dialogfactoryinterface.h
         librecad/src/lib/gui/rs_eventhandler.cpp
         librecad/src/lib/gui/rs_eventhandler.h
+        librecad/src/lib/gui/lc_eventhandler.cpp
+        librecad/src/lib/gui/lc_eventhandler.h
         librecad/src/lib/gui/rs_graphicview.cpp
         librecad/src/lib/gui/rs_graphicview.h
         librecad/src/lib/gui/grid/rs_grid.cpp

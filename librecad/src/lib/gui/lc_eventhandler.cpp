@@ -265,7 +265,7 @@ bool LC_EventHandler::setCurrentAction(std::shared_ptr<RS_ActionInterface> actio
     RS2::ActionType actionType = action->rtti();
     m_graphicView->notifyCurrentActionChanged(actionType);
 
-    action->init(0);
+    action->init(RS_ActionInterface::InitialActionStatus);
 
     if (action->isFinished()) {
         // For some actions: action->init() may call finish() within init()

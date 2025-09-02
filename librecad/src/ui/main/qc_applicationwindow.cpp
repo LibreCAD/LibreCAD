@@ -1566,7 +1566,8 @@ bool QC_ApplicationWindow::tryCloseAllBeforeExist() {
  * which means it's impossible to enter a command.
  */
 void QC_ApplicationWindow::keyPressEvent(QKeyEvent *e) {
-    switch (e->key()) {
+    int key = e->key();
+    switch (key) {
         case Qt::Key_Escape: {
             bool doDefaultProcessing = true;
             RS_GraphicView *graphicView = getCurrentGraphicView();
@@ -1603,16 +1604,28 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent *e) {
             m_actionHandler->setCurrentAction(RS2::ActionZoomOut);
             e->accept();
             break;
-
+        case Qt::Key_Shift:
+        case Qt::Key_Control:
+        case Qt::Key_Left:
+        case Qt::Key_Right:
+        case Qt::Key_Up:
+        case Qt::Key_Down: {
+            RS_GraphicView* graphicView = getCurrentGraphicView();
+            if (graphicView) {
+                QWidget* focusWidget = QApplication::focusWidget();
+                bool focuseNotInLineEdit = dynamic_cast<QLineEdit*>(focusWidget) == nullptr;
+                if (focuseNotInLineEdit || true) {
+                    graphicView->keyPressEvent(e);
+                    if (!e->isAccepted()) {
+                        if (key == Qt::Key_Shift || key == Qt::Key_Control) {
+                            e->accept();
+                        }
+                    }
+                }
+            }
+        }
         default:
             e->ignore();
-// fixme - sand  - temporary test code, check regressions and move to method
-// fixme me - add proper support for keyboard in view (scroll, zoom) and actions (default action - move by keyboards)
-// fixme - as well as focusing options widget if there is action
-//            RS_GraphicView* graphicView = getGraphicView();
-//            if (graphicView) {
-//                graphicView->keyPressEvent(e);
-//            }
             // fixme - tmp-end
             RS_DEBUG->print("QC_ApplicationWindow::KeyPressEvent: IGNORED");
             break;
@@ -1635,25 +1648,27 @@ void QC_ApplicationWindow::relayAction(QAction *q_action) {
         qWarning("relayAction: graphicView is nullptr");
         return;
     }
-    bool setAsCurrentActionInView = true;
-    auto property = q_action->property("_SetAsCurrentActionInView");
-    if (property.isValid()) {
-        setAsCurrentActionInView = property.toBool();
-    }
 
-    if (setAsCurrentActionInView) {
-        auto* graphicView = dynamic_cast<QG_GraphicView*>(view);
-        graphicView->setCurrentQAction(q_action);
-    }
-
-    fireCurrentActionIconChanged(q_action);
     if (q_action != nullptr) {
+        bool setAsCurrentActionInView = true;
+        auto property = q_action->property("_SetAsCurrentActionInView");
+        if (property.isValid()) {
+            setAsCurrentActionInView = property.toBool();
+        }
+
+        if (setAsCurrentActionInView) {
+            auto* graphicView = dynamic_cast<QG_GraphicView*>(view);
+            graphicView->setCurrentQAction(q_action);
+        }
+
         const QString commands(q_action->data().toString());
         if (!commands.isEmpty()) {
             const QString title(q_action->text().remove("&"));
             m_commandWidget->appendHistory(title + " : " + commands);
         }
     }
+
+    fireCurrentActionIconChanged(q_action);
 }
 
 /**

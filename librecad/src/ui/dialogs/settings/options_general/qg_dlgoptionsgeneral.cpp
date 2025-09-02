@@ -644,6 +644,7 @@ void QG_DlgOptionsGeneral::init(){
     LC_GROUP("Keyboard"); {
         cbEvaluateOnSpace->setChecked(LC_GET_BOOL("EvaluateCommandOnSpace"));
         cbToggleFreeSnapOnSpace->setChecked(LC_GET_BOOL("ToggleFreeSnapOnSpace"));
+        cbEnableKeyboardZoomAdjust->setChecked(LC_GET_BOOL("AllowScrollMoveAdjustByKeys", true));
     }
 
     cbCheckNewVersionIgnorePreRelease->setEnabled(!XSTR(LC_PRERELEASE));
@@ -929,6 +930,7 @@ void QG_DlgOptionsGeneral::ok(){
         LC_GROUP("Keyboard"); {
             LC_SET("EvaluateCommandOnSpace", cbEvaluateOnSpace->isChecked());
             LC_SET("ToggleFreeSnapOnSpace", cbToggleFreeSnapOnSpace->isChecked());
+            LC_SET("AllowScrollMoveAdjustByKeys", cbEnableKeyboardZoomAdjust->isChecked());
         }
         LC_GROUP_END();
         saveReferencePoints();

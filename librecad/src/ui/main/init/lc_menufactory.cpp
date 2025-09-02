@@ -929,8 +929,8 @@ QMenu* LC_MenuFactory::createGraphicViewDefaultPopupMenu(QG_GraphicView* graphic
     }
     else {
         if (hasSelection) {
-            [[maybe_unused]]auto m_sel = subMenu(ctxMenu, tr("Modify Selected"), "modify", ":/icons/move_copy.lci", {
-                                     "ModifyDelete",
+            [[maybe_unused]]auto m_sel = subMenu(ctxMenu, tr("Modify"), "modify", ":/icons/move_copy.lci", {
+                                     "ModifyAttributes",
                                      "ModifyAlign",
                                      "ModifyAlignRef",
                                      "ModifyMirror",
@@ -943,10 +943,10 @@ QMenu* LC_MenuFactory::createGraphicViewDefaultPopupMenu(QG_GraphicView* graphic
                                      "ModifyScale",
                                      "ModifyStretch",
                                      "BlocksExplode",
-                                     "ModifyAttributes"
+                                     "ModifyDelete"
                                  }, false);
 
-            [[maybe_unused]]auto m_other = subMenu(ctxMenu, tr("Modify"), "modify_o", ":/icons/fillet.lci", {
+            [[maybe_unused]]auto m_other = subMenu(ctxMenu, tr("Modify More"), "modify_o", ":/icons/fillet.lci", {
                                        "ModifyRevertDirection",
                                        "ModifyEntity",
                                        "ModifyTrim",

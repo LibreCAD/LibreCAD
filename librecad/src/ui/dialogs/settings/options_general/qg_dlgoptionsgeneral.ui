@@ -4307,6 +4307,16 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QCheckBox" name="cbEnableKeyboardZoomAdjust">
+            <property name="toolTip">
+             <string>If enabled, it is possible to do with keys - zooming via +/-, scrolling via arrow keys, moving selected entities position via arrow keys and SHIFT/CTRL modifiers.</string>
+            </property>
+            <property name="text">
+             <string>Enable scroll and position adjustment via keyboard</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -5730,8 +5740,8 @@
  </tabstops>
  <resources>
   <include location="../../../../../res/controls/controls.qrc"/>
-  <include location="../../../../../res/controls/controls.qrc"/>
   <include location="../../../../../res/icons/icons.qrc"/>
+  <include location="../../../../../res/controls/controls.qrc"/>
  </resources>
  <connections>
   <connection>

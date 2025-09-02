@@ -75,6 +75,7 @@
 #include "lc_actionmodifyduplicate.h"
 #include "lc_actionmodifylinegap.h"
 #include "lc_actionmodifylinejoin.h"
+#include "lc_actionmodifymoveadjust.h"
 #include "lc_actionpastetopoints.h"
 #include "lc_actionpenapply.h"
 #include "lc_actionpenpick.h"
@@ -977,6 +978,12 @@ namespace InnerFactory{
             }
             case RS2::ActionInteractivePickAngle: {
                 return new LC_ActionInteractivePickAngle(ctx);
+            }
+            case RS2::ActionModifyMoveAdjust: {
+                if (data != nullptr) {
+                    LC_ActionModifyMoveAdjust::MovementInfo* movementInfo = static_cast<LC_ActionModifyMoveAdjust::MovementInfo*>(data);
+                    return new LC_ActionModifyMoveAdjust(ctx, *movementInfo);
+                }
             }
             default:
                 RS_DEBUG->print(RS_Debug::D_WARNING,

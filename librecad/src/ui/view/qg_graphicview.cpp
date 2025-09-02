@@ -40,6 +40,7 @@
 #include "qg_graphicview.h"
 
 #include "lc_actioncontext.h"
+#include "lc_actionmodifymoveadjust.h"
 #include "lc_eventhandler.h"
 #include "lc_graphicviewport.h"
 #include "lc_graphicviewrenderer.h"
@@ -1065,40 +1066,63 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 }
 
 // fixme - sand -  move by keyboard support!!!
-void QG_GraphicView::keyPressEvent(QKeyEvent * e){
+void QG_GraphicView::keyPressEvent(QKeyEvent * e) {
     if (getContainer() == nullptr) {
         return;
     }
+    if (m_allowScrollAndMoveAdjustByKeys) {
+        RS2::Direction direction = RS2::Up;
+        bool scroll = e->modifiers() == Qt::NoModifier;
+        bool shift = e->modifiers() & Qt::ShiftModifier;
+        bool control = e->modifiers() & Qt::ControlModifier;
 
-    bool scroll = false;
-    RS2::Direction direction = RS2::Up;
+        bool move = shift || control;
 
-    switch (e->key()) {
-        case Qt::Key_Left:
-            scroll = true;
-            direction = RS2::Right;
-            break;
-        case Qt::Key_Right:
-            scroll = true;
-            direction = RS2::Left;
-            break;
-        case Qt::Key_Up:
-            scroll = true;
-            direction = RS2::Up;
-            break;
-        case Qt::Key_Down:
-            scroll = true;
-            direction = RS2::Down;
-            break;
-        default:
-            scroll = false;
-            break;
+        switch (e->key()) {
+            case Qt::Key_Left:
+                direction = RS2::Right;
+                break;
+            case Qt::Key_Right:
+                direction = RS2::Left;
+                break;
+            case Qt::Key_Up:
+                direction = RS2::Up;
+                break;
+            case Qt::Key_Down:
+                direction = RS2::Down;
+                break;
+            default:
+                scroll = false;
+                move = false;
+                break;
+        }
+
+        if (scroll) {
+            getViewPort()->zoomScroll(direction);
+            e->accept();
+        }
+        else if (move) {
+            LC_ActionModifyMoveAdjust::MovementInfo::Step step = LC_ActionModifyMoveAdjust::MovementInfo::GRID;
+            if (control) {
+                if (shift) {
+                    step = LC_ActionModifyMoveAdjust::MovementInfo::META_GRID;
+                }
+                else {
+                    step = LC_ActionModifyMoveAdjust::MovementInfo::SUB_GRID;
+                }
+            }
+            else if (shift) {
+                step = LC_ActionModifyMoveAdjust::MovementInfo::GRID;
+            }
+
+            LC_ActionModifyMoveAdjust::MovementInfo info(direction, step);
+            switchToAction(RS2::ActionModifyMoveAdjust, &info);
+            e->accept();
+        }
     }
-
-    if (scroll) {
-        getViewPort()->zoomScroll(direction);
+    if (!e->isAccepted()){
+        getEventHandler()->keyPressEvent(e);
     }
-    getEventHandler()->keyPressEvent(e);
 }
 
 void QG_GraphicView::keyReleaseEvent(QKeyEvent * e){
@@ -1318,6 +1342,8 @@ void QG_GraphicView::loadSettings() {
         m_invertHorizontalScroll = LC_GET_BOOL("WheelScrollInvertH");
         m_invertVerticalScroll = LC_GET_BOOL("WheelScrollInvertV");
     }
+
+    m_allowScrollAndMoveAdjustByKeys = LC_GET_ONE_BOOL("Keyboard", "AllowScrollMoveAdjustByKeys", true);
 
     LC_GROUP("Appearance");
     {
