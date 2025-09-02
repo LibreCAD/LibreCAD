@@ -735,4 +735,47 @@ void LoopOptimizer::AddContainer(const RS_EntityContainer& contour)
     }
 }
 
+// Helper method to check if an RS_EntityContainer forms a closed loop.
+// Assumes the container has only edge entity children (e.g., lines, arcs, etc.).
+// Returns true if all consecutive edges are connected within g_contourGapTolerance,
+// and the last edge's endpoint connects back to the first edge's startpoint.
+bool isLoopClosed(const RS_EntityContainer& loop) {
+    if (loop.isEmpty()) {
+        return false;
+    }
+
+    // Get the first edge's startpoint as the global start
+    RS_Entity* first = loop.firstEntity();
+    if (first == nullptr || !first->isEdge()) {
+        return false;  // Though input assumes edges only, check for safety
+    }
+    RS_Vector globalStart = static_cast<RS_AtomicEntity*>(first)->getStartpoint();
+    RS_Vector prevEnd = static_cast<RS_AtomicEntity*>(first)->getEndpoint();
+
+    // Iterate through subsequent edges, checking consecutive connections
+    for (RS_Entity* entity = loop.nextEntity(); entity != nullptr; entity = loop.nextEntity()) {
+        if (!entity->isEdge()) {
+            return false;
+        }
+        RS_AtomicEntity* edge = static_cast<RS_AtomicEntity*>(entity);
+        RS_Vector currentStart = edge->getStartpoint();
+
+        // Check gap between previous end and current start
+        if (prevEnd.distanceTo(currentStart) > g_contourGapTolerance) {
+            LC_ERR << "Gap detected in loop between edges: " << prevEnd.distanceTo(currentStart);
+            return false;
+        }
+
+        prevEnd = edge->getEndpoint();
+    }
+
+    // Finally, check if the last endpoint connects back to the global start
+    if (prevEnd.distanceTo(globalStart) > g_contourGapTolerance) {
+        LC_ERR << "Loop not closed: gap between last endpoint and first startpoint: " << prevEnd.distanceTo(globalStart);
+        return false;
+    }
+
+    return true;
+}
+
 } // namespace LC_LoopUtils
