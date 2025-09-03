@@ -23,14 +23,10 @@
 
 #include "lc_actioninteractivepickangle.h"
 
-#include <boost/geometry/algorithms/closest_points.hpp>
-
 #include "lc_actioninfomessagebuilder.h"
 #include "lc_cursoroverlayinfo.h"
 #include "lc_graphicviewport.h"
 #include "lc_linemath.h"
-#include "rs_debug.h"
-#include "rs_grid.h"
 #include "rs_information.h"
 #include "rs_line.h"
 
@@ -75,74 +71,16 @@ void LC_ActionInteractivePickAngle::onMouseMoveEvent(int status, LC_MouseEvent* 
             if (ent != nullptr) {
                 if (e->isControl) {
                     highlightHover(ent);
-
                     auto point = ent->getNearestPointOnEntity(mouse, true);
-
-                    auto metagridWidgth = m_viewport->getGrid()->getMetaGridWidth()*2;
-
-                    double wcsAngle = toWorldAngleFromUCSBasis(0);
-                    auto parallelLineEndpoint = point.relative(metagridWidgth.x, wcsAngle);
-                    RS_Line lineParallelToAnglesBase = RS_Line(point, parallelLineEndpoint);
-                    auto startPoint = ent->getStartpoint();
-                    auto endPoint = ent->getEndpoint();
-
-                    RS_Vector endpointToUse;
-                    if (startPoint.x > endPoint.x) {
-                        endpointToUse = startPoint;
-                    }
-                    else {
-                        endpointToUse = endPoint;
-                    }
-
                     if (m_showRefEntitiesOnPreview) {
-                        // RS_Vector p2 = lineParallelToAnglesBase.getNearestPointOnEntity(mouse);
-                        RS_Vector p2 = parallelLineEndpoint;
-                        previewRefSelectablePoint(p2);
-                        RS_Vector intersection = point;
-                        // updateInfoCursor2(p2, intersection);
-                        double lineAngle = intersection.angleTo(endpointToUse);
-                        RS_Vector arcEndpoint = parallelLineEndpoint;
-                        arcEndpoint.rotate(intersection, lineAngle);
-                        previewRefArc(intersection, arcEndpoint, p2, true);
-                        previewRefPoint(intersection);
-                        previewRefLine(intersection, arcEndpoint/*endpointToUse*/);
-                        previewRefLine(intersection, p2);
-                    }
-
-                    // ----
-                  /*
-                    if (m_showRefEntitiesOnPreview) {
-
-
-                        double distToStartPoint = point.distanceTo(startPoint);
-                        double distToEndPoint = point.distanceTo(endPoint);
-
-                        RS_Vector endpointToUse;
-                        if (distToStartPoint < distToEndPoint) {
-                            endpointToUse = startPoint;
-                        }
-                        else {
-                            endpointToUse = endPoint;
-                        }
-
-                        auto parallelLineEndpoint = point.relative(toGraphDX(150), toWorldAngle(0));
-                        RS_Line lineParallelToAnglesBase = RS_Line(point, parallelLineEndpoint);
-
-                        auto endpointProjectionToAxis = lineParallelToAnglesBase.getNearestPointOnEntity(endpointToUse, false);
-
-                        previewRefLine(point, endpointProjectionToAxis);
-
+                        RS_Vector endpointToUse = ent->getEndpoint();
                         previewSnapAngleMark(point, endpointToUse);
-                        // previewRefArc(m_point2, endpointToUse, endpointProjectionToAxis, true);
-                        */
+                    }
                 }
                 else if (e->isShift) {
                     highlightHover(ent);
                 }
             }
-            /*else {
-                trySnapToRelZeroCoordinateEvent(e);
-            }*/
             break;
         }
         case SetPoint2:{
@@ -241,7 +179,8 @@ void LC_ActionInteractivePickAngle::onMouseLeftButtonRelease(int status, LC_Mous
                     auto line = dynamic_cast<RS_Line*>(ent);
                     double wcsLineAngle = line->getAngle1();
                     double ucsAngle = toUCSBasisAngle(wcsLineAngle);
-                    m_angle = RS_Math::correctAngle0ToPi(ucsAngle);
+                    // m_angle = RS_Math::correctAngle0ToPi(ucsAngle);
+                    m_angle = ucsAngle;
 
                     if (e->isShift) {
                         double angleComplementary, angleSupplementary, angleAlt;

@@ -47,8 +47,6 @@ struct RS_ActionInfoAngle::ActionData {
 
 };
 
-// fixme - sand - adding information about angle to entity info view
-
 RS_ActionInfoAngle::RS_ActionInfoAngle(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Info Angle", actionContext, RS2::ActionInfoAngle)
     ,m_actionData(std::make_unique<ActionData>()){
@@ -90,9 +88,6 @@ void RS_ActionInfoAngle::doTrigger() {
 
                 double uscsAngle = toUCSBasisAngle(wcsLineAngle);
                 RS_Math::calculateAngles(uscsAngle, angleComplementary, angleSupplementary,  alt);
-
-               /*angleComplimentary = toUCSBasisAngle(angleComplimentary);
-                angleSupplimentary = toUCSBasisAngle(angleSupplimentary);*/
 
                 QString strAngle = formatAngleRaw(uscsAngle);
                 QString complimenatryStr = formatAngleRaw(angleComplementary);
@@ -171,6 +166,11 @@ void RS_ActionInfoAngle::onMouseMoveEvent(int status, LC_MouseEvent *event) {
                 if (event->isControl) {
                     auto line = static_cast<RS_Line*>(en);
                     updateInfoCursor1(line);
+
+                    if (m_showRefEntitiesOnPreview) {
+                        RS_Vector endpointToUse = line->getEndpoint();
+                        previewSnapAngleMark(p, endpointToUse);
+                    }
                 }
             }
             break;
@@ -181,7 +181,7 @@ void RS_ActionInfoAngle::onMouseMoveEvent(int status, LC_MouseEvent *event) {
             if (m_showRefEntitiesOnPreview) {
                 previewRefPoint(m_actionData->point1);
             }
-            if (isLine(en)){ // fixme - support of polyline
+            if (isLine(en)){
                 RS_VectorSolutions const &sol = RS_Information::getIntersection(m_actionData->m_entity1, en, false);
                 if (sol.hasValid()){
                     highlightHover(en);
@@ -214,7 +214,7 @@ void RS_ActionInfoAngle::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) 
     switch (status) {
         case SetEntity1:
            m_actionData->m_entity1 = catchEntityByEvent(e, RS2::ResolveAll);
-            if (isLine(m_actionData->m_entity1)){ // fixme - support of polyline
+            if (isLine(m_actionData->m_entity1)){
                 m_actionData->point1 = m_actionData->m_entity1->getNearestPointOnEntity(mouse);
                 if (e->isControl){
                     trigger();
@@ -226,7 +226,7 @@ void RS_ActionInfoAngle::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) 
             break;
 
         case SetEntity2:
-            m_actionData->m_entity2 = catchEntityByEvent(e, RS2::ResolveAll); // fixme - support of polyline
+            m_actionData->m_entity2 = catchEntityByEvent(e, RS2::ResolveAll);
             if (isLine(m_actionData->m_entity2)){
                 m_actionData->point2 = m_actionData->m_entity2->getNearestPointOnEntity(mouse);
                 trigger();

@@ -48,7 +48,7 @@ protected:
     RS_Vector m_intersection;
     RS_Entity* m_entity1 = nullptr;
 
-    double m_angle;
+    double m_angle {0.0};
     bool m_mayTrigger {false};
     bool m_pickAlternative {false};
 
