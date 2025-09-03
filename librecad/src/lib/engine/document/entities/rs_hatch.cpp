@@ -122,16 +122,16 @@ bool RS_Hatch::validate() {
     bool ret = true;
 
     // loops:
-        for(RS_Entity* l: *this){
+    for(RS_Entity* l: *this){
 
-            auto* loop = dynamic_cast<RS_EntityContainer*>(l);
-            if (loop != nullptr) {
-                // skip zero length edges
-                avoidZeroLength(*loop);
+        auto* loop = dynamic_cast<RS_EntityContainer*>(l);
+        if (loop != nullptr) {
+            // skip zero length edges
+            avoidZeroLength(*loop);
 
-                ret = loop->optimizeContours() && ret;
-            }
+            ret = loop->optimizeContours() && ret;
         }
+    }
 
     if(ret)
         getTotalArea();
@@ -730,4 +730,59 @@ void RS_Hatch::stretch(const RS_Vector& firstCorner,
 std::ostream& operator << (std::ostream& os, const RS_Hatch& p) {
     os << " Hatch: " << p.getData() << "\n";
     return os;
+}
+
+bool RS_Hatch::optimizeContours() {
+    RS_DEBUG->print("RS_Hatch::optimizeContours: begin");
+
+    using namespace LC_LoopUtils;
+
+    // Use LoopOptimizer to process the contours
+    LoopOptimizer optimizer(*this);
+
+    // Get the optimized loops
+    auto results = optimizer.GetResults();
+
+    // Check if valid loops were found
+    if (!results || results->isEmpty()) {
+        RS_DEBUG->print("RS_Hatch::optimizeContours: no valid loops found");
+        updateError = HATCH_INVALID_CONTOUR;
+        return false;  // Failure: no contours optimized
+    }
+
+    // Clear existing entities to replace with optimized ones
+    clear();
+
+    // Transfer ownership: prevent results from deleting children on destruction
+    results->setOwner(false);
+
+    // Add each optimized loop to the hatch and reparent
+    for (unsigned i = 0; i < results->count(); ++i) {
+        RS_Entity* entity = results->entityAt(i);
+        if (entity) {  // Null check for safety
+            addEntity(entity);
+            entity->reparent(this);
+        }
+    }
+
+    // Update borders after adding new entities
+    calculateBorders();
+
+    // Store the optimized loops for future use (e.g., area calculation)
+    m_orderedLoops = results;
+
+    // Validate the optimized loops
+    if (!validate()) {
+        RS_DEBUG->print("RS_Hatch::optimizeContours: post-optimization validation failed");
+        updateError = HATCH_INVALID_CONTOUR;
+        // Optionally revert or handle failure (e.g., restore original entities if backed up)
+        needOptimization = true;  // Allow retry
+        return false;
+    }
+
+    // Compute and cache the total area using the optimized structure
+            getTotalArea();
+
+    RS_DEBUG->print("RS_Hatch::optimizeContours: OK - %u loops optimized, area: %f", results->count(), m_area);
+    return true;  // Success
 }
