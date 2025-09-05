@@ -35,7 +35,7 @@ void LC_ActionModifyMoveAdjust::onSelectionCompleted(bool singleEntity, bool fro
     LC_ActionPreSelectionAwareBase::onSelectionCompleted(singleEntity, fromInit);
 }
 
-RS2::CursorType LC_ActionModifyMoveAdjust::doGetMouseCursorSelected(int status) {
+RS2::CursorType LC_ActionModifyMoveAdjust::doGetMouseCursorSelected([[maybe_unused]]int status) {
     return RS2::CadCursor;
 }
 

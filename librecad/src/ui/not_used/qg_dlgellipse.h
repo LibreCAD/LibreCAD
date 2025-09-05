@@ -23,26 +23,25 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-#ifndef QG_DLGARC_H
-#define QG_DLGARC_H
+#ifndef QG_DLGELLIPSE_H
+#define QG_DLGELLIPSE_H
 
-#include "ui_qg_dlgarc.h"
-#include "lc_entitypropertiesdlg.h"
+class RS_Ellipse;
 
-class RS_Arc;
+#include "ui_qg_dlgellipse.h"
+#include "../dialogs/entity/lc_entitypropertiesdlg.h"
 
-class QG_DlgArc : public LC_EntityPropertiesDlg, public Ui::QG_DlgArc{
+class QG_DlgEllipse : public LC_EntityPropertiesDlg, public Ui::QG_DlgEllipse{
     Q_OBJECT
 public:
-    QG_DlgArc(QWidget *parent, LC_GraphicViewport *pViewport, RS_Arc* arc);
-    ~QG_DlgArc() override = default;
+    QG_DlgEllipse(QWidget *parent, LC_GraphicViewport *pViewport, RS_Ellipse* ellipse);
 public slots:
     void updateEntity() override;
 protected slots:
-   virtual void languageChange();
+    void languageChange();
 protected:
-    RS_Arc* m_entity = nullptr;
-    void setEntity(RS_Arc* a);
+    RS_Ellipse* m_entity = nullptr;
+    void setEntity(RS_Ellipse *e);
 };
 
-#endif // QG_DLGARC_H
+#endif // QG_DLGELLIPSE_H

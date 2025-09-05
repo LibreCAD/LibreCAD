@@ -23,25 +23,26 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-#ifndef QG_DLGELLIPSE_H
-#define QG_DLGELLIPSE_H
+#ifndef QG_DLGINSERT_H
+#define QG_DLGINSERT_H
 
-class RS_Ellipse;
+class RS_Insert;
 
-#include "ui_qg_dlgellipse.h"
-#include "lc_entitypropertiesdlg.h"
+#include "ui_qg_dlginsert.h"
+#include "../dialogs/entity/lc_entitypropertiesdlg.h"
 
-class QG_DlgEllipse : public LC_EntityPropertiesDlg, public Ui::QG_DlgEllipse{
+class QG_DlgInsert : public LC_EntityPropertiesDlg, public Ui::QG_DlgInsert{
     Q_OBJECT
 public:
-    QG_DlgEllipse(QWidget *parent, LC_GraphicViewport *pViewport, RS_Ellipse* ellipse);
+    QG_DlgInsert(QWidget *parent, LC_GraphicViewport *pViewport, RS_Insert* insert);
+    ~QG_DlgInsert() override;
 public slots:
     void updateEntity() override;
 protected slots:
     void languageChange();
 protected:
-    RS_Ellipse* m_entity = nullptr;
-    void setEntity(RS_Ellipse *e);
+    RS_Insert* m_entity;
+    void setEntity(RS_Insert *i);
 };
 
-#endif // QG_DLGELLIPSE_H
+#endif // QG_DLGINSERT_H

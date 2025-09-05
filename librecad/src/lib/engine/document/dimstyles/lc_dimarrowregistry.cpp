@@ -408,6 +408,11 @@ void LC_DimArrowRegistry::collectUsedArrowTypes(const QList<LC_DimStyle*>& list,
             uniqueArrowBlockNames << leaderName;
         }
     }
+
+    // no need for default arrow
+    if (uniqueArrowBlockNames.contains("_CLOSEDFILLED")) {
+        uniqueArrowBlockNames.remove("_CLOSEDFILLED");
+    }
 }
 
 void LC_DimArrowRegistry::insertStandardArrowBlock(RS_EntityContainer* container,

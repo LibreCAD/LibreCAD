@@ -29,7 +29,7 @@
 class RS_Line;
 
 #include "ui_qg_dlgline.h"
-#include "lc_entitypropertiesdlg.h"
+#include "../dialogs/entity/lc_entitypropertiesdlg.h"
 
 class QG_DlgLine : public LC_EntityPropertiesDlg, public Ui::QG_DlgLine{
     Q_OBJECT

@@ -29,7 +29,7 @@
 class RS_Circle;
 
 #include "ui_qg_dlgcircle.h"
-#include "lc_entitypropertiesdlg.h"
+#include "../dialogs/entity/lc_entitypropertiesdlg.h"
 
 class QG_DlgCircle : public LC_EntityPropertiesDlg, public Ui::QG_DlgCircle{
     Q_OBJECT

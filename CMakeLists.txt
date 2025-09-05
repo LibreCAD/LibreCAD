@@ -608,8 +608,6 @@ set(SOURCES
         librecad/src/actions/drawing/draw/polyline/rs_actionpolylinetrim.h
         librecad/src/actions/print_preview/rs_actionprintpreview.cpp
         librecad/src/actions/print_preview/rs_actionprintpreview.h
-        #        librecad/src/actions/not_used/rs_actionselect.cpp
-        #        librecad/src/actions/not_used/rs_actionselect.h
         librecad/src/actions/drawing/selection/rs_actionselectall.cpp
         librecad/src/actions/drawing/selection/rs_actionselectall.h
         librecad/src/actions/drawing/selection/lc_actionsingleentityselectbase.h
@@ -778,12 +776,8 @@ set(SOURCES
         librecad/src/lib/engine/document/dimstyles/lc_dimstyleslist.cpp
         librecad/src/lib/engine/document/dimstyles/lc_dimarrowregistry.h
         librecad/src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp
-        #        librecad/src/lib/engine/document/dimstyles/builder/lc_dimlinebuilder.h
-        #        librecad/src/lib/engine/document/dimstyles/builder/lc_dimlinebuilder.cpp
         librecad/src/lib/engine/document/dimstyles/lc_dimstyletovariablesmapper.h
         librecad/src/lib/engine/document/dimstyles/lc_dimstyletovariablesmapper.cpp
-        #        librecad/src/lib/engine/document/dimstyles/builder/lc_dimensionsbuilder.h
-        #        librecad/src/lib/engine/document/dimstyles/builder/lc_dimensionsbuilder.cpp
         librecad/src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.h
         librecad/src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp
         librecad/src/ui/dialogs/settings/options_drawing/lc_dlgnewcustomvariable.h
@@ -931,10 +925,6 @@ set(SOURCES
         librecad/src/plugins/intern/qc_actiongetselect.h
         librecad/src/plugins/document_interface.h
         librecad/src/plugins/qc_plugininterface.h
-        librecad/src/ui/dialogs/entity/lc_dlgsplinepoints.h
-        librecad/src/ui/dialogs/entity/lc_dlgsplinepoints.cpp
-        #        librecad/src/ui/not_used/lc_dlgdimordinate.h
-        #        librecad/src/ui/not_used/lc_dlgdimordinate.cpp
         librecad/src/ui/dialogs/entity/lc_dlgtolerance.h
         librecad/src/ui/dialogs/entity/lc_dlgtolerance.cpp
         librecad/src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp
@@ -963,32 +953,16 @@ set(SOURCES
         librecad/src/ui/dialogs/entity/qg_dimensionlabeleditor.h
         librecad/src/ui/action_options/dimensions/qg_dimoptions.cpp
         librecad/src/ui/action_options/dimensions/qg_dimoptions.h
-        librecad/src/ui/dialogs/entity/qg_dlgarc.cpp
-        librecad/src/ui/dialogs/entity/qg_dlgarc.h
         librecad/src/ui/dialogs/entity/qg_dlgattributes.cpp
         librecad/src/ui/dialogs/entity/qg_dlgattributes.h
-        librecad/src/ui/dialogs/entity/qg_dlgcircle.cpp
-        librecad/src/ui/dialogs/entity/qg_dlgcircle.h
-        #        librecad/src/ui/not_used/qg_dlgdimension.cpp
-        #        librecad/src/ui/not_used/qg_dlgdimension.h
-        #        librecad/src/ui/not_used/qg_dlgdimlinear.cpp
-        #        librecad/src/ui/not_used/qg_dlgdimlinear.h
-        librecad/src/ui/dialogs/entity/qg_dlgellipse.cpp
-        librecad/src/ui/dialogs/entity/qg_dlgellipse.h
         librecad/src/ui/dialogs/entity/qg_dlghatch.cpp
         librecad/src/ui/dialogs/entity/qg_dlghatch.h
-        librecad/src/ui/dialogs/entity/qg_dlgimage.cpp
-        librecad/src/ui/dialogs/entity/qg_dlgimage.h
         librecad/src/ui/dialogs/file/export/image/qg_dlgimageoptions.cpp
         librecad/src/ui/dialogs/file/export/image/qg_dlgimageoptions.h
         librecad/src/ui/dialogs/file/export/image/lc_exporttoimageservice.h
         librecad/src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp
         librecad/src/ui/dialogs/main/qg_dlginitial.cpp
         librecad/src/ui/dialogs/main/qg_dlginitial.h
-        librecad/src/ui/dialogs/entity/qg_dlginsert.cpp
-        librecad/src/ui/dialogs/entity/qg_dlginsert.h
-        librecad/src/ui/dialogs/entity/qg_dlgline.cpp
-        librecad/src/ui/dialogs/entity/qg_dlgline.h
         librecad/src/ui/dialogs/actions/modify/qg_dlgmirror.cpp
         librecad/src/ui/dialogs/actions/modify/qg_dlgmirror.h
         librecad/src/ui/dialogs/actions/modify/qg_dlgmove.cpp
@@ -1013,18 +987,12 @@ set(SOURCES
         librecad/src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.h
         librecad/src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp
         librecad/src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.h
-        librecad/src/ui/dialogs/entity/qg_dlgpoint.cpp
-        librecad/src/ui/dialogs/entity/qg_dlgpoint.h
-        librecad/src/ui/dialogs/entity/qg_dlgpolyline.cpp
-        librecad/src/ui/dialogs/entity/qg_dlgpolyline.h
         librecad/src/ui/dialogs/actions/modify/qg_dlgrotate.cpp
         librecad/src/ui/dialogs/actions/modify/qg_dlgrotate.h
         librecad/src/ui/dialogs/actions/modify/qg_dlgrotate2.cpp
         librecad/src/ui/dialogs/actions/modify/qg_dlgrotate2.h
         librecad/src/ui/dialogs/actions/modify/qg_dlgscale.cpp
         librecad/src/ui/dialogs/actions/modify/qg_dlgscale.h
-        librecad/src/ui/dialogs/entity/qg_dlgspline.cpp
-        librecad/src/ui/dialogs/entity/qg_dlgspline.h
         librecad/src/ui/dialogs/entity/qg_dlgtext.cpp
         librecad/src/ui/dialogs/entity/qg_dlgtext.h
         librecad/src/ui/dialogs/main/qg_exitdialog.cpp
@@ -1111,8 +1079,6 @@ set(SOURCES
         librecad/src/ui/dock_widgets/pen_wizard/colorwizard.h
         librecad/src/ui/components/comboboxes/comboboxoption.cpp
         librecad/src/ui/components/comboboxes/comboboxoption.h
-        librecad/src/ui/dialogs/entity/LC_DlgParabola.h
-        librecad/src/ui/dialogs/entity/LC_DlgParabola.cpp
         librecad/src/ui/components/textfileviewer.cpp
         librecad/src/ui/components/textfileviewer.h
         librecad/src/ui/main/init/lc_actionfactory.cpp
@@ -1210,7 +1176,7 @@ set(SOURCES
         librecad/src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp
         librecad/src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp
         librecad/src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp
-        librecad/src/ui/dialogs/entity/LC_DlgParabola.cpp
+        librecad/src/ui/not_used/LC_DlgParabola.cpp
         librecad/src/lib/engine/document/entities/lc_parabola.cpp
         librecad/src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp
         librecad/src/actions/drawing/pen/lc_actionpenapply.cpp
@@ -1642,6 +1608,36 @@ set(SOURCES
         librecad/src/ui/dialogs/entity/lc_dlgdimension.cpp
         librecad/src/lib/engine/document/lc_graphicvariables.h
         librecad/src/lib/engine/document/lc_graphicvariables.cpp
+
+        #        librecad/src/ui/not_used/LC_DlgParabola.h
+        #        librecad/src/ui/not_used/LC_DlgParabola.cpp
+        #        librecad/src/ui/not_used/lc_dlgsplinepoints.h
+        #        librecad/src/ui/not_used/lc_dlgsplinepoints.cpp
+        #        librecad/src/ui/not_used/lc_dlgdimordinate.h
+        #        librecad/src/ui/not_used/lc_dlgdimordinate.cpp
+        #        librecad/src/ui/not_used/qg_dlgarc.cpp
+        #        librecad/src/ui/not_used/qg_dlgarc.h
+        #        librecad/src/ui/not_used/qg_dlgcircle.cpp
+        #        librecad/src/ui/not_used/qg_dlgcircle.h
+        #        librecad/src/ui/not_used/qg_dlgdimension.cpp
+        #        librecad/src/ui/not_used/qg_dlgdimension.h
+        #        librecad/src/ui/not_used/qg_dlgdimlinear.cpp
+        #        librecad/src/ui/not_used/qg_dlgdimlinear.h
+        #        librecad/src/ui/not_used/qg_dlgellipse.cpp
+        #        librecad/src/ui/not_used/qg_dlgellipse.h
+        #        librecad/src/ui/not_used/qg_dlgimage.cpp
+        #        librecad/src/ui/not_used/qg_dlgimage.h
+        #        librecad/src/ui/not_used/qg_dlginsert.cpp
+        #        librecad/src/ui/not_used/qg_dlginsert.h
+        #        librecad/src/ui/not_used/qg_dlgline.cpp
+        #        librecad/src/ui/not_used/qg_dlgline.h
+        #        librecad/src/ui/not_used/qg_dlgpoint.cpp
+        #        librecad/src/ui/not_used/qg_dlgpoint.h
+        #        librecad/src/ui/not_used/qg_dlgpolyline.cpp
+        #        librecad/src/ui/not_used/qg_dlgpolyline.h
+        #        librecad/src/ui/not_used/qg_dlgspline.cpp
+        #        librecad/src/ui/not_used/qg_dlgspline.h
+
 )
 
 #qt_standard_project_setup()

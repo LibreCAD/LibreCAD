@@ -30214,8 +30214,9 @@ Supplementary: %3
 Alternative: %4
 </source>
         <translation>Угол: %1
-Точка пересечения: (%2 , %3)
-Точка пересечения:@(%4, %5)
+Дополнительный: %2
+Смежный: %3
+Сопряженный: %4
 </translation>
     </message>
     <message>

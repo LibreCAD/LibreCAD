@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_DlgParabola_H
 #define LC_DlgParabola_H
 
-#include "lc_entitypropertiesdlg.h"
+#include "../dialogs/entity/lc_entitypropertiesdlg.h"
 
 class LC_Parabola;
 

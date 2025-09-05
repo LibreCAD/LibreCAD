@@ -1,7 +1,7 @@
 #ifndef LC_DLGSPLINEPOINTS_H
 #define LC_DLGSPLINEPOINTS_H
 
-#include "lc_entitypropertiesdlg.h"
+#include "../dialogs/entity/lc_entitypropertiesdlg.h"
 
 class LC_SplinePoints;
 

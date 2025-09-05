@@ -761,7 +761,7 @@ void RS_Painter::drawEllipseArcWCS(const RS_Vector& wcsCenter, double wcsMajorRa
 }
 
 void RS_Painter::drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& uiRadii, double uiMajorAngleDegrees,
-                                   double angle1Degrees, double angle2Degrees, double angularLength, bool reversed) {
+                                   double angle1Degrees,[[maybe_unused]] double angle2Degrees, double angularLength,[[maybe_unused]] bool reversed) {
     // TODO - it also should be refactored to be consistent with drawEllipseUI()
     if (std::max(uiRadii.x, uiRadii.y) < minEllipseMajorRadius){
         QPainter::drawPoint(QPointF(uiCenter.x, uiCenter.y));

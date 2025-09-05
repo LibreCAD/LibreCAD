@@ -1352,24 +1352,24 @@ HEADERS += ui/action_options/lc_actionoptionsmanager.h \
     ui/dialogs/actions/modify/qg_dlgrotate2.h \
     ui/dialogs/actions/modify/qg_dlgscale.h \
     ui/dialogs/actions/qg_layerdialog.h \
-    ui/dialogs/entity/LC_DlgParabola.h \
-    ui/dialogs/entity/lc_dlgsplinepoints.h \
+    #ui/dialogs/entity/LC_DlgParabola.h \
+    #ui/dialogs/entity/lc_dlgsplinepoints.h \
     ui/dialogs/entity/qg_blockdialog.h \
     ui/dialogs/entity/qg_dimensionlabeleditor.h \
-    ui/dialogs/entity/qg_dlgarc.h \
+    # ui/dialogs/entity/qg_dlgarc.h \
     ui/dialogs/entity/qg_dlgattributes.h \
-    ui/dialogs/entity/qg_dlgcircle.h \
+    # ui/dialogs/entity/qg_dlgcircle.h \
     ui/dialogs/entity/lc_dlgtolerance.h \
-    ui/dialogs/entity/qg_dlgellipse.h \
+    # ui/dialogs/entity/qg_dlgellipse.h \
     ui/dialogs/entity/qg_dlghatch.h \
-    ui/dialogs/entity/qg_dlgimage.h \
+    # ui/dialogs/entity/qg_dlgimage.h \
     ui/dialogs/file/export/image/qg_dlgimageoptions.h \
-    ui/dialogs/entity/qg_dlginsert.h \
-    ui/dialogs/entity/qg_dlgline.h \
+    # ui/dialogs/entity/qg_dlginsert.h \
+    # ui/dialogs/entity/qg_dlgline.h \
     ui/dialogs/entity/qg_dlgmtext.h \
-    ui/dialogs/entity/qg_dlgpoint.h \
-    ui/dialogs/entity/qg_dlgpolyline.h \
-    ui/dialogs/entity/qg_dlgspline.h \
+    # ui/dialogs/entity/qg_dlgpoint.h \
+    # ui/dialogs/entity/qg_dlgpolyline.h \
+    # ui/dialogs/entity/qg_dlgspline.h \
     ui/dialogs/entity/qg_dlgtext.h \
     ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.h \
     ui/dialogs/file/export/layers/lc_filedialogservice.h \
@@ -1542,23 +1542,23 @@ SOURCES +=ui/action_options/lc_actionoptionsmanager.cpp \
     ui/dialogs/actions/modify/qg_dlgrotate2.cpp \
     ui/dialogs/actions/modify/qg_dlgscale.cpp \
     ui/dialogs/actions/qg_layerdialog.cpp \
-    ui/dialogs/entity/LC_DlgParabola.cpp \
-    ui/dialogs/entity/lc_dlgsplinepoints.cpp \
+    # ui/dialogs/entity/LC_DlgParabola.cpp \
+    #ui/dialogs/entity/lc_dlgsplinepoints.cpp \
     ui/dialogs/entity/qg_blockdialog.cpp \
     ui/dialogs/entity/qg_dimensionlabeleditor.cpp \
-    ui/dialogs/entity/qg_dlgarc.cpp \
+    # ui/dialogs/entity/qg_dlgarc.cpp \
     ui/dialogs/entity/qg_dlgattributes.cpp \
-    ui/dialogs/entity/qg_dlgcircle.cpp \
-    ui/dialogs/entity/qg_dlgellipse.cpp \
+    # ui/dialogs/entity/qg_dlgcircle.cpp \
+    # ui/dialogs/entity/qg_dlgellipse.cpp \
     ui/dialogs/entity/qg_dlghatch.cpp \
-    ui/dialogs/entity/qg_dlgimage.cpp \
+    # ui/dialogs/entity/qg_dlgimage.cpp \
     ui/dialogs/file/export/image/qg_dlgimageoptions.cpp \
-    ui/dialogs/entity/qg_dlginsert.cpp \
-    ui/dialogs/entity/qg_dlgline.cpp \
+    # ui/dialogs/entity/qg_dlginsert.cpp \
+    # ui/dialogs/entity/qg_dlgline.cpp \
     ui/dialogs/entity/qg_dlgmtext.cpp \
-    ui/dialogs/entity/qg_dlgpoint.cpp \
-    ui/dialogs/entity/qg_dlgpolyline.cpp \
-    ui/dialogs/entity/qg_dlgspline.cpp \
+    # ui/dialogs/entity/qg_dlgpoint.cpp \
+    # ui/dialogs/entity/qg_dlgpolyline.cpp \
+    # ui/dialogs/entity/qg_dlgspline.cpp \
     ui/dialogs/entity/qg_dlgtext.cpp \
     ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp \
     ui/dialogs/file/export/layers/lc_filedialogservice.cpp \
@@ -1728,13 +1728,13 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dialogs/actions/modify/qg_dlgscale.ui \
        ui/dialogs/actions/qg_layerdialog.ui \
        ui/dialogs/creators/lc_dlgnewwidget.ui \
-       ui/dialogs/entity/LC_DlgParabola.ui \
+       #ui/dialogs/entity/LC_DlgParabola.ui \
        ui/dialogs/entity/lc_arcpropertieseditingwidget.ui \
        ui/dialogs/entity/lc_circlepropertieseditingwidget.ui \
        ui/dialogs/entity/lc_dlgdimension.ui \
        ui/dialogs/entity/lc_dlgentityproperties.ui \
        ui/dialogs/entity/lc_dlgtolerance.ui \
-       ui/dialogs/entity/lc_dlgsplinepoints.ui \
+       #ui/dialogs/entity/lc_dlgsplinepoints.ui \
        ui/dialogs/entity/lc_ellipsepropertieseditingwidget.ui \
        ui/dialogs/entity/lc_imagepropertieseditingwidget.ui \
        ui/dialogs/entity/lc_insertpropertieseditingwidget.ui \
@@ -1747,19 +1747,19 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dialogs/entity/lc_splinepropertieseditingwidget.ui \
        ui/dialogs/entity/qg_blockdialog.ui \
        ui/dialogs/entity/qg_dimensionlabeleditor.ui \
-       ui/dialogs/entity/qg_dlgarc.ui \
+       # ui/dialogs/entity/qg_dlgarc.ui \
        ui/dialogs/entity/qg_dlgattributes.ui \
-       ui/dialogs/entity/qg_dlgcircle.ui \
-       ui/dialogs/entity/qg_dlgellipse.ui \
+       # ui/dialogs/entity/qg_dlgcircle.ui \
+       # ui/dialogs/entity/qg_dlgellipse.ui \
        ui/dialogs/entity/qg_dlghatch.ui \
-       ui/dialogs/entity/qg_dlgimage.ui \
+       # ui/dialogs/entity/qg_dlgimage.ui \
        ui/dialogs/file/export/image/qg_dlgimageoptions.ui \
-       ui/dialogs/entity/qg_dlginsert.ui \
-       ui/dialogs/entity/qg_dlgline.ui \
+       # ui/dialogs/entity/qg_dlginsert.ui \
+       # ui/dialogs/entity/qg_dlgline.ui \
        ui/dialogs/entity/qg_dlgmtext.ui \
-       ui/dialogs/entity/qg_dlgpoint.ui \
-       ui/dialogs/entity/qg_dlgpolyline.ui \
-       ui/dialogs/entity/qg_dlgspline.ui \
+       # ui/dialogs/entity/qg_dlgpoint.ui \
+       # ui/dialogs/entity/qg_dlgpolyline.ui \
+       # ui/dialogs/entity/qg_dlgspline.ui \
        ui/dialogs/entity/qg_dlgtext.ui \
        ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui \
        ui/dialogs/lc_inputtextdialog.ui \

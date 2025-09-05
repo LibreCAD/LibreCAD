@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-#include "qg_dlgspline.h"
+#include "../dialogs/entity/qg_dlgspline.h"
 
 #include "rs_graphic.h"
 #include "rs_math.h"

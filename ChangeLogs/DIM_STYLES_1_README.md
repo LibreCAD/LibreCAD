@@ -6,10 +6,11 @@ This pull request contains the following major functionality:
 2) Support of the "context entity" by actions;
 3) Reworked default context popup menu for drawing area, support of entity-specific context menus; 
 4) Reworked Custom Toolbar Creator, Custom Menu Creator, wide support of invocation shortcuts for custom menus.
-5) Added support of the drawing's metadata (athor, title, subject, description etc.)
+5) Added support of the drawing's metadata (author, title, subject, description etc.)
 6) Added support of predefined and custom user data for the drawing document;
 7) Interactive input of action's parameters and entities properties
-8) Various minor fixes and improvements;
+8) Keyboard support improvements, moving selected entities by keys
+9) Various minor fixes and improvements;
 
 ### Dimension Styles
 
@@ -21,7 +22,9 @@ The logic of dimensions creation should be reworked deeper, and full support of 
 
 #### Dimensions styles management
 
-Dimension styles, included into the drawing, are managed using Drawing Preferences dialog, in tab Dimensions. 
+Dimension styles, included into the drawing, are managed using Drawing Preferences dialog, in tab Dimensions.
+
+XXX_IMAGE
 
 Here the list of dimension styles is present, as well as the set of corresponding related commands, such as:
 * New Style;
@@ -31,23 +34,34 @@ Here the list of dimension styles is present, as well as the set of correspondin
 * Mark as Active (so it will be used as default for newly created dimensions)
 * Export/Import
 
-Live preview of dimensions with applied dimension style is also available. 
+Live preview of dimensions with applied dimension style is also available.
+
+Demo Video:
 
 #### Editing Dimension Style
 
-Editing of the dimension style attributes is performed via new dialog, that contains UI for entering attributes and preview area that reflects dimension style rendering. 
+Editing of the dimension style attributes is performed via new dialog, that contains UI for entering attributes and preview area that reflects dimension style rendering.
+
+XXX_IMAGE
+
+Demo Video:
  
 #### Dimension Entity Properties, Style Override
 
 The dialog for dimension entity properties now includes functionality for selecting dimension style. 
 
-Also, using that dialog it is possible to specify dimension style override. Style override is the set of dimension style attributes, that is specific for particular dimension only. 
+Also, using that dialog it is possible to specify dimension style override. Style override is the set of dimension style attributes, that is specific for particular dimension only.
+XXX_IMAGE
+
+Demo Video:
 
 Using style override, it is possible to fine tune individual dimension entities. 
 
 #### Specifying Dimension Style during Dimension entity creation
 
-Dimension options toolbar now includes style selection combobox
+Dimension options toolbar now includes style selection combobox. 
+
+XXX_IMAGE
 
 ### Dimension Actions
 
@@ -60,12 +74,18 @@ Several new actions, related to dimensions were added:
 2) **Regenerate Dimensions Action** - forcefully re-creates dimension
 3) **Dimension Styles Action** - invokes Dimensions Styles manager
 
+XXX_IMAGE
+
+Demo Video:
+
 #### Changes in Dimension Related actions
 
 1) For linear dimensions, it's possible to select line entity (that might be standalone or a part of polyline) using context menu or pressed CTRL key.
 Linear, Aligned, Horizontal or Vertical dimension will be created with base points that corresponds to the line start and end points.
-
+   
 2) In action used for creation of Horizontal or Vertical dimension, now it is possible to change direction using CTRL key modifier. 
+
+Demo Video:
 
 ### Support of "Context Entity" in Actions
 
@@ -74,11 +94,13 @@ Now all actions support a notion of "Context" entity - the entity that is passed
 If context entity is available, the action will be executed for that entity only (regardless whether selection is present in drawing). 
 Also, where possible, the initial entity selection state of the action is skipped, and so the user is not prompted to select entity for the action's execution.
 
-At the moment, the context entity is set to the action via context popup menu (if the user invoked menu in the point that is near to the entity). 
+At the moment, the context entity is set to the action via context popup menu (if the user invoked menu in the point that is near to the entity).
+
+XXX_IMAGE
 
 However, later this concept may be used, for example, in plugins or so.
 
-### Context menu 
+#### Context menu 
 
 Default popup menu that is shown in the drawing area by Right Mouse Button click was reworked, in order to include more operations and support more efficient drawing operations.
 Now the popup menu in graphic view is truly context-aware one. 
@@ -90,31 +112,44 @@ There are to major modes of the menu's operation:
 
 For the context menu, the structure of the menu is adapted to correspond clicked entity type, and it reflects operations, that are relevant for selected entity.
 
+XXX_IMAGE
+
 The entity for context menu is pre-selected and is passed to the invoked action as a "context" entity. 
 
 Due to this, the user is not required to select the entity again during the action's invocation, and thus the drawing operation is performed in more convenient and faster way.
 
+Demo Video:
+
 ### Custom Toolbar And Custom Menu Creator
 
-The Custom Toolbar Creator tool was reworked initially, yet from UI point of view it's rather a small facelifting without significant changes of the functionality.
+The Custom Toolbar Creator tool was reworked internally, yet from UI point of view it's rather a small face-lifting without significant changes of the functionality.
 
-The Custom Menu Creator tool as also reworked initially. 
+XXX_IMAGE
 
-The most important changes: 
+The Custom Menu Creator tool as also reworked internally, yet there are a couple of important improvements:
+
+XXX_IMAGE
 
 1) Added wider support of invocation's shortcuts. Now the user may specify various key modifiers and mouse buttons, that are used for the menu invocation. 
 2) Assigned invocation shortcuts are visible in the list of menus. 
+  XXX_IMAGE
 3) Automatic invocation of actions in menus, that contains only one action. This mechanism allows to invoke specified action using assigned mouse/keys shortcut.
 
 Custom menus are also context-aware, and if menu is clicked on entity - that entity will be passed to the action.
+
+Demo Video:
 
 ### Support of metadata for drawing
 
 Now it's possible to manage DXF metadata fields in Drawing Preferences dialog.
 
+XXX_IMAGE
+
 ### Support of user data
 
 User data of the drawing document are manageable in Drawing Preferences dialog.
+
+XXX_IMAGE
 
 ### Other changes in actions
 
@@ -126,6 +161,8 @@ In addition to support of context entity, there are small changes in action work
 4) Trim and Trim Two actions - if invoked with a context, considers provided entity as an entity that should be trimmed.
 5) Draw Arc Tangential action - if invoked with a context, starts arc creation from the nearest endpoint of the selected entity.
 6) Draw tangential lines actions - state depends on provided context entity type
+   
+Demo Video:
 
 ### Interactive Inpout 
 
@@ -136,18 +173,22 @@ The following types of values are supported:
 * Position coordinates;
 * Linear value (length)
 * Angle value
+  
+Demo Video:
 
 #### Interactive input in Tool Options toolbar
 
 Now Tool Options toolbar may include buttons that initiates interactive input of values.   
 
+There is a setting in Application Preferences dialog, that allows to enable or disable interactive input support for Tool Options.
 
-There is a setting in Application Preferences dialog, that allows to enable or disable interactive input support for Tool Options. 
+XXX_IMAGE
 
 #### Entity Properties Dialog
 
 Entity Properties dialogs now includes support of interactive input.
 
+XXX_IMAGE
 
 #### Specifics of measuring values
 
@@ -167,9 +208,11 @@ For measuring the distance, there are several possible modes:
 2) **SHIFT** pressed - distance is determined based on Geometry of the object under the mouse cursor:
    * Line - length of line is selected
    * Circle, Arc - radius is selected. With **CTRL** pressed - the diameter is picked instead of the radius.
-3) **CTRL** pressed - for line under cursor, the length of line **segment** between points of intersections with other entities will be used.   
+3) **CTRL** pressed - for line under cursor, the length of line **segment** between points of intersections with other entities will be used.
 
-##### Pick Distance
+Demo Video:
+
+##### Pick Angle
 
 Picking the angle value also supports several modes: 
 
@@ -178,7 +221,36 @@ Picking the angle value also supports several modes:
 3) Click on Line with **SHIFT** key - lets the user select two existing lines and measure the angle between them.
 4) 2 points angle - if 3 points angle measurement started, if second point is selected with **CTRL** pressed, the angle between two points will be selected. 
 
-Based on angle selection way, it is possible to pick measured angle value, or value of supplementary angle. 
+Based on angle selection way, it is possible to pick measured angle value, or value of supplementary angle.
+
+Demo Video:
+
+#### Keyboard support improvement
+
+Support of keyboard was slightly improved (yet focus management still requires polishing). Changes are:  
+1) better visual support of setting Free Snap via **SPACE** key (if enabled by settings)
+2) Scrolling drawing area by pressing **LEFT**, **RIGHT**, **UP** or **DOWN** keys; 
+3) Zoom in\out by **+** and **-** keys;
+4) Moving current selected entities by keyboard. 
+
+Keyboard support for scroll and moving selected objects may be enabled/disabled via appropriate setting in General Preferences dialog.  
+
+XXX_IMAGE
+
+##### Moving selected objects by keyboard
+
+If there are selected entities within drawing, their position may be adjusted via keyboard. Depending on the used modifiers, the offset for entities move is calculated differently. 
+The offset depends on the current grid size as well as meta grid step (controlled by setting *Generic Preferences Dialog  -> Grid -> Draw meta grid every*), and is calculated as follows: 
+
+1) **SHIFT + DIRECTION_KEY** - default mode. The offset for move calculated as width of current grid cell in specified direction (so non-square grids are fine).  
+
+2) **CTRL + DIRECTION_KEY** - precise mode. The offset is calculated as current grid cell size in specified direction, DIVIDED on meta-grid step value. This mode may be used for fine-tuning the position.
+ 
+2) **CTRL + SHIFT + DIRECTION_KEY** - fast mode. The offset is calculated as current grid cell size in specified direction, MULTIPLIED on meta-grid step value. This mode may be used for faster rough positioning.
+
+Where **DIRECTION_KEY** is one of **LEFT / RIGHT / UP / DOWN** keys; 
+
+Demo Video:
 
 ### Various minor fixes and improvements  
  

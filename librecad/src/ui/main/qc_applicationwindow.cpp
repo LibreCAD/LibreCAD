@@ -1623,6 +1623,7 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent *e) {
                     }
                 }
             }
+            [[fallthrough]];
         }
         default:
             e->ignore();

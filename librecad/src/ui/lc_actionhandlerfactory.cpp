@@ -984,6 +984,7 @@ namespace InnerFactory{
                     LC_ActionModifyMoveAdjust::MovementInfo* movementInfo = static_cast<LC_ActionModifyMoveAdjust::MovementInfo*>(data);
                     return new LC_ActionModifyMoveAdjust(ctx, *movementInfo);
                 }
+                break;
             }
             default:
                 RS_DEBUG->print(RS_Debug::D_WARNING,

@@ -23,32 +23,25 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-#ifndef QG_DLGPOINT_H
-#define QG_DLGPOINT_H
+#ifndef QG_DLGSPLINE_H
+#define QG_DLGSPLINE_H
 
-class RS_Point;
+#include "ui_qg_dlgspline.h"
+#include "../dialogs/entity/lc_entitypropertiesdlg.h"
 
-#include "ui_qg_dlgpoint.h"
-#include "lc_entitypropertiesdlg.h"
+class RS_Spline;
 
-class QG_DlgPoint : public LC_EntityPropertiesDlg, public Ui::QG_DlgPoint{
+class QG_DlgSpline : public LC_EntityPropertiesDlg, public Ui::QG_DlgSpline{
     Q_OBJECT
 public:
-    QG_DlgPoint(QWidget *parent, LC_GraphicViewport *pViewport, RS_Point* point);
-    ~QG_DlgPoint() override;
+    QG_DlgSpline(QWidget *parent, LC_GraphicViewport *pViewport, RS_Spline * spline);
 public slots:
     void updateEntity() override;
 protected slots:
     void languageChange();
 protected:
-    RS_Pen m_pen;
-    RS_Point* m_entity;
-    void setEntity(RS_Point *p);
-    void initAttributes(RS_Layer *layer, RS_LayerList &layerList);
-    void setProperties();
-    void setAttributes(RS_Entity* e);
-    void updateProperties();
-    void updateAttributes();
+    RS_Spline* m_spline = nullptr;
+    void setEntity(RS_Spline *e);
 };
 
-#endif // QG_DLGPOINT_H
+#endif // QG_DLGSPLINE_H

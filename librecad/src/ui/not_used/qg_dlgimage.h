@@ -26,7 +26,7 @@
 #define QG_DLGIMAGE_H
 
 #include "ui_qg_dlgimage.h"
-#include "lc_entitypropertiesdlg.h"
+#include "../dialogs/entity/lc_entitypropertiesdlg.h"
 
 class RS_Image;
 
