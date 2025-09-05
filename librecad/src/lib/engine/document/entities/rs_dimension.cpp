@@ -959,7 +959,13 @@ double RS_Dimension::getDimensionLineGap() {
 }
 
 double RS_Dimension::getVerticalDistanceToDimLine() {
-    return m_dimStyleTransient->text()->verticalDistanceToDimLine();
+    auto text = m_dimStyleTransient->text();
+    if (text->verticalPositioning() != LC_DimStyle::Text::CENTER_BETWEEN_EXT_LINES) {
+        return text->verticalDistanceToDimLine();
+    }
+    else {
+        return m_dimStyleTransient->dimensionLine()->lineGap();
+    }
     // return getGraphicVariable("$DIMGAP", 0.625, 40);
 }
 

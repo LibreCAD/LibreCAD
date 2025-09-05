@@ -837,6 +837,20 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert& data) {
     currentContainer->addEntity(entity);
 }
 
+void RS_FilterDXFRW::prepareTextStyleName(QString& sty) const {
+    // use default style for the drawing:
+    if (sty.isEmpty()) {
+        // japanese, cyrillic:
+        if (codePage=="ANSI_932" || codePage=="ANSI_1251") {
+            sty = "Unicode";
+        } else {
+            sty = textStyle;
+        }
+    } else {
+        sty = fontList.value(sty, sty);
+    }
+}
+
 /**
  * Implementation of the method which handles
  * multi texts (MTEXT).
@@ -848,7 +862,7 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
     RS_MTextData::HAlign halign;
     RS_MTextData::MTextDrawingDirection dir;
     RS_MTextData::MTextLineSpacingStyle lss;
-    QString sty = QString::fromUtf8(data.style.c_str());
+
 
     if (data.textgen<=3) {
         valign=RS_MTextData::VATop;
@@ -879,19 +893,9 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
     } else {
         lss = RS_MTextData::Exact;
     }
-
     QString mtext = toNativeString(QString::fromUtf8(data.text.c_str()));
-    // use default style for the drawing:
-    if (sty.isEmpty()) {
-        // japanese, cyrillic:
-        if (codePage=="ANSI_932" || codePage=="ANSI_1251") {
-            sty = "Unicode";
-        } else {
-            sty = textStyle;
-        }
-    } else {
-        sty = fontList.value(sty, sty);
-    }
+    QString sty = QString::fromUtf8(data.style.c_str());
+    prepareTextStyleName(sty);
 
     RS_DEBUG->print("Text as unicode:");
     RS_DEBUG->printUnicode(mtext);
@@ -979,25 +983,16 @@ void RS_FilterDXFRW::addText(const DRW_Text& data) {
         dir = RS_TextData::None;
     }
 
-    QString mtext = toNativeString(QString::fromUtf8(data.text.c_str()));
-    // use default style for the drawing:
-    if (sty.isEmpty()) {
-        // japanese, cyrillic:
-        if (codePage=="ANSI_932" || codePage=="ANSI_1251") {
-            sty = "Unicode";
-        } else {
-            sty = textStyle;
-        }
-    } else {
-        sty = fontList.value(sty, sty);
-    }
+    QString text = toNativeString(QString::fromUtf8(data.text.c_str()));
+
+    prepareTextStyleName(sty);
 
     RS_DEBUG->print("Text as unicode:");
-    RS_DEBUG->printUnicode(mtext);
+    RS_DEBUG->printUnicode(text);
 
     RS_TextData d(refPoint, secPoint, data.height, data.widthscale,
                   valign, halign, dir,
-                  mtext, sty, angle*M_PI/180,
+                  text, sty, angle*M_PI/180,
                   RS2::NoUpdate);
     auto* entity = new RS_Text(currentContainer, d);
 
@@ -1815,8 +1810,13 @@ LC_DimStyle* RS_FilterDXFRW::parseDimStyleOverride(LC_ExtEntityData* extEntityDa
                         text->setReadingDirectionRaw(var->getInt());
                         break;
                     case 340: // "$DIMTXSTY"
-                        text->setStyle(var->getString()); // fixme - ref to style?
+                    {
+                        auto dimtxsty = var->getString();
+                        prepareTextStyleName(dimtxsty);
+                        text->setStyle(dimtxsty); // fixme - ref to style?
+                        // fixme - ref to style?
                         break;
+                    }
                     case 341: {
                         // "_$DIMLDRBLK"
                         QString refHandleStr = var->getString();
@@ -2873,18 +2873,31 @@ void RS_FilterDXFRW::writeTextstyles(){
     QHash<QString, QString> styles;
     QString sty;
     //Find fonts used by text entities in drawing
-    for(RS_Entity* e: lc::LC_ContainerTraverser{*graphic, RS2::ResolveNone}.entities()) {
-        if ( !(e->getFlag(RS2::FlagUndone)) ) {
-            switch (e->rtti()) {
-            case RS2::EntityMText:
-                sty = static_cast<RS_MText*>(e)->getStyle();
-                break;
-            case RS2::EntityText:
-                sty = static_cast<RS_Text*>(e)->getStyle();
-                break;
-            default:
-                sty.clear();
-                break;
+    for (RS_Entity* e : lc::LC_ContainerTraverser{*graphic, RS2::ResolveNone}.entities()) {
+        if (!e->isUndone()) {
+            auto rtti = e->rtti();
+            switch (rtti) {
+                case RS2::EntityMText:
+                    sty = static_cast<RS_MText*>(e)->getStyle();
+                    break;
+                case RS2::EntityText:
+                    sty = static_cast<RS_Text*>(e)->getStyle();
+                    break;
+                default:
+                    if (RS2::isDimensionalEntity(rtti)) {
+                        auto dim = dynamic_cast<RS_Dimension*>(e);
+                        if (dim != nullptr) {
+                            auto styleOverride = dim->getDimStyleOverride();
+                            if (styleOverride != nullptr) {
+                                auto dimTextStyle = styleOverride->text()->style();
+                                sty = dimTextStyle;
+                            }
+                        }
+                    }
+                    else {
+                        sty.clear();
+                    }
+                    break;
             }
             if (!sty.isEmpty() && !styles.contains(sty)) {
                 styles.insert(sty, sty);
@@ -2896,17 +2909,31 @@ void RS_FilterDXFRW::writeTextstyles(){
     for (unsigned i = 0; i < graphic->countBlocks(); i++) {
         blk = graphic->blockAt(i);
         for(RS_Entity* e: lc::LC_ContainerTraverser{*blk, RS2::ResolveNone}.entities()) {
-            if (!(e->getFlag(RS2::FlagUndone)) ) {
-                switch (e->rtti()) {
-                case RS2::EntityMText:
-                    sty = static_cast<RS_MText*>(e)->getStyle();
-                    break;
-                case RS2::EntityText:
-                    sty = static_cast<RS_Text*>(e)->getStyle();
-                    break;
-                default:
-                    sty.clear();
-                    break;
+            if (!e->isUndone()) {
+                RS2::EntityType rtti = e->rtti();
+                switch (rtti) {
+                    case RS2::EntityMText:
+                        sty = static_cast<RS_MText*>(e)->getStyle();
+                        break;
+                    case RS2::EntityText:
+                        sty = static_cast<RS_Text*>(e)->getStyle();
+                        break;
+                    default:
+                        if (RS2::isDimensionalEntity(rtti)) {
+                            auto dim = dynamic_cast<RS_Dimension*>(e);
+                            if (dim != nullptr) {
+                                auto styleOverride = dim->getDimStyleOverride();
+                                if (styleOverride != nullptr) {
+                                    auto dimTextStyle = styleOverride->text()->style();
+                                    sty = dimTextStyle;
+                                }
+                            }
+                        }
+                        else {
+                            sty.clear();
+                        }
+
+                        break;
                 }
                 if (!sty.isEmpty() && !styles.contains(sty)) {
                     styles.insert(sty, sty);
@@ -2914,6 +2941,16 @@ void RS_FilterDXFRW::writeTextstyles(){
             }
         }
     }
+
+    auto dimStyleList = graphic->getDimStyleList();
+
+    for (const auto ds: *dimStyleList->getStylesList()) {
+       sty = ds->text()->style();
+        if (!sty.isEmpty() && !styles.contains(sty)) {
+            styles.insert(sty, sty);
+        }
+    }
+
     DRW_Textstyle ts;
     QHash<QString, QString>::const_iterator it = styles.constBegin();
      while (it != styles.constEnd()) {
@@ -3316,7 +3353,7 @@ void RS_FilterDXFRW::prepareDRWDimStyleLeader(DRW_Dimstyle& d, LC_DimStyle* ds) 
             auto blkName = blockName.toStdString();
             int blkHandle = dxfW->getBlockRecordHandleToWrite(blkName);
             if(blkHandle > 0) {
-                d.add("$_DIMLDRBLK", 341, toHexStr(blkHandle).toStdString());
+                d.add("_$DIMLDRBLK", 341, toHexStr(blkHandle).toStdString());
             }
         }
     }
@@ -5394,7 +5431,9 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
     }
     var = s.get("$DIMTXSTY");
     if (var != nullptr) {
-        textStyle->setStyle(strVal(var)); // fixme - resolve via table?
+        auto dimtxsty = strVal(var);
+        prepareTextStyleName(dimtxsty);
+        textStyle->setStyle(dimtxsty); // fixme - resolve via table?
     }
     var = s.get("$DIMTOH");
     if (var != nullptr) {

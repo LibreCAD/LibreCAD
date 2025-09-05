@@ -1517,7 +1517,7 @@ void QG_DlgOptionsDrawing::validateUserTab() {
         QString value = twCustomVars->item(i, 1)->text();
         newCustomVars.insert(name, value);
     }
-    m_graphic->replaceCustomWars(newCustomVars);
+    m_graphic->replaceCustomVars(newCustomVars);
 }
 
 void QG_DlgOptionsDrawing::validateUnitsTab() {

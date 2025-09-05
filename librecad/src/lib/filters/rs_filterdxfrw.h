@@ -165,6 +165,8 @@ public:
     void prepareDRWDimStyleLeader(DRW_Dimstyle& d, LC_DimStyle* ds);
     void prepareDRWDimStyleExtData(DRW_Dimstyle& d, LC_DimStyle* ds);
     void prepareDRWDimStyle(DRW_Dimstyle &d, LC_DimStyle* ds);
+
+    void prepareTextStyleName(QString& sty) const;
     void writeObjects() override;
     void writeAppId() override;
 

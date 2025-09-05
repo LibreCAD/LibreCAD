@@ -580,8 +580,10 @@ bool DRW_Dimstyle::parseCode(int code, dxfReader* reader) {
             add("$DIMTXTDIRECTION", code, dimtxtdirection);
             break;
         case 340:
-            dimtxsty = reader->getUtf8String();
-            add("$DIMTXSTY", code, dimtxsty);
+            /*dimtxsty = reader->getUtf8String();
+            add("$DIMTXSTY", code, dimtxsty);*/
+            refHandle = reader->getHandleId();
+            add("_$DIMTXSTY", code, refHandle);
             break;
         case 341:
             // fixme - DIMLDRBLK reading!
@@ -665,6 +667,20 @@ void DRW_Dimstyle::resolveBlockRecordNameByHandle(DRW_ParsingContext& ctx,
     }
 }
 
+void DRW_Dimstyle::resolveTextStyleNameByHandle(DRW_ParsingContext& ctx,
+                                            const std::string& unresolvedKey, const std::string& resolvedKey,
+                                            int code) {
+    auto var = get(unresolvedKey);
+    if (var != nullptr) {
+        duint32 blockHandle = var->i_val();
+        auto name = ctx.resolveTextStyleName(blockHandle);
+        if (!name.empty()) {
+            add(resolvedKey, code, name);
+        }
+    }
+}
+
+
 void DRW_Dimstyle::resolveLineTypeNameByHandle(DRW_ParsingContext& ctx,
                                             const std::string& unresolvedKey, const std::string& resolvedKey,
                                             int code) {
@@ -679,6 +695,8 @@ void DRW_Dimstyle::resolveLineTypeNameByHandle(DRW_ParsingContext& ctx,
 }
 
 bool DRW_Dimstyle::resolveRefs(DRW_ParsingContext& ctx) {
+    resolveTextStyleNameByHandle(ctx, "_$DIMTXSTY", "$DIMTXSTY", 340);
+
     resolveBlockRecordNameByHandle(ctx, "_$DIMLDRBLK", "$DIMLDRBLK", 341);
     resolveBlockRecordNameByHandle(ctx, "_$DIMBLK", "$DIMBLK", 342);
     resolveBlockRecordNameByHandle(ctx, "_$DIMBLK1", "$DIMBLK1", 343);
@@ -2133,6 +2151,16 @@ std::string DRW_ParsingContext::resolveLineTypeName(int handle) {
     if (it != lineTypeMap.end()) {
         DRW_LType* lineType = it->second;
         std::string name = lineType->name;
+        return name;
+    }
+    return {};
+}
+
+std::string DRW_ParsingContext::resolveTextStyleName(int handle) {
+    auto it = textStyles.find(handle);
+    if (it != textStyles.end()) {
+        DRW_Textstyle* textStyle = it->second;
+        std::string name = textStyle->name;
         return name;
     }
     return {};

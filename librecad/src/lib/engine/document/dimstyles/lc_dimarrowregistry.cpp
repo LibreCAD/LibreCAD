@@ -304,7 +304,8 @@ void LC_DimArrowRegistry::fillArrowBlockByEntities(RS_Block* block, ArrowType ar
             break;
         }
         case box_filled: {
-            block->addByBlockEntity(new RS_Solid({{-0.5, -0.5}, {-0.5, 0.5}, {0.5, 0.5}, {0.5, -0.5}}));
+            // last 2 vertexes are switched by solid!
+            block->addByBlockEntity(new RS_Solid({{-0.5, -0.5}, {-0.5, 0.5},  {0.5, -0.5}, {0.5, 0.5}}));
             block->addByBlockLine({-0.5, 0.0}, {-1.0, 0.0});
             break;
         }

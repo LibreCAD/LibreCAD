@@ -283,6 +283,8 @@ public:
 protected:
     void resolveBlockRecordNameByHandle(DRW_ParsingContext& ctx,const std::string& unresolvedKey,
                           const std::string &resolvedKey, int code);
+    void resolveTextStyleNameByHandle(DRW_ParsingContext& ctx, const std::string& unresolvedKey,
+                                      const std::string& resolvedKey, int code);
     void resolveLineTypeNameByHandle(DRW_ParsingContext& ctx, const std::string& unresolvedKey,
                                      const std::string& resolvedKey, int code);
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
@@ -718,6 +720,7 @@ public:
 
     std::string resolveBlockRecordName(int handle);
     std::string resolveLineTypeName(int handle);
+    std::string resolveTextStyleName(int handle);
 
     std::unordered_map<duint32, DRW_LType*> lineTypeMap;
     std::unordered_map<duint32, DRW_Block_Record*> blockRecordMap;

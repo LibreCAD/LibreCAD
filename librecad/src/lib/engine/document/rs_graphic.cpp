@@ -29,6 +29,7 @@
 #include "rs_graphic.h"
 
 #include "dxf_format.h"
+#include "lc_containertraverser.h"
 #include "lc_dimstyletovariablesmapper.h"
 #include "lc_defaults.h"
 #include "lc_dimarrowregistry.h"
@@ -481,7 +482,7 @@ RS2::LinearFormat RS_Graphic::getLinearFormat() const{
     return convertLinearFormatDXF2LC(lunits);
 }
 
-void RS_Graphic::replaceCustomWars(const QHash<QString, QString>& vars) {
+void RS_Graphic::replaceCustomVars(const QHash<QString, QString>& vars) {
     m_customVariablesDict.clear();
     QHashIterator<QString,QString> customVar(vars);
     while (customVar.hasNext()) {
@@ -907,6 +908,7 @@ void RS_Graphic::fireUndoStateChanged(bool undoAvailable, bool redoAvailable) co
     }
 }
 
+
 LC_DimStyle* RS_Graphic::getDimStyleByName(const QString& name, RS2::EntityType dimType) const {
     return dimstyleList.resolveByName(name, dimType);
 }
@@ -976,4 +978,28 @@ void RS_Graphic::replaceDimStylesList(const QString& defaultStyleName, const QLi
     setDefaultDimStyleName(defaultStyleName);
     dimstyleList.replaceStyles(styles);
     LC_DimArrowRegistry::insertStandardArrowBlocks(this, styles);
+}
+
+void RS_Graphic::prepareForSave() {
+    // fixme - sand - check what if dimension
+    auto entities = lc::LC_ContainerTraverser{*this, RS2::ResolveNone}.entities();
+    for (const auto e: entities) {
+        if (e->isUndone()) {
+            continue;
+        }
+        QList<LC_DimStyle*> dimStyleOverrides;
+        RS2::EntityType rtti = e->rtti();
+        if (RS2::isDimensionalEntity(rtti)) {
+             auto dim = dynamic_cast<RS_Dimension*>(e);
+             if (dim != nullptr) {
+                 LC_DimStyle* override = dim->getDimStyleOverride();
+                 if (override != nullptr) {
+                     dimStyleOverrides.append(override);
+                 }
+             }
+        }
+        if (!dimStyleOverrides.isEmpty()) {
+            LC_DimArrowRegistry::insertStandardArrowBlocks(this, dimStyleOverrides);
+        }
+    }
 }

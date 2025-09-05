@@ -156,7 +156,8 @@ public:
     }
 
     RS2::LinearFormat getLinearFormat() const;
-    void replaceCustomWars(const QHash<QString, QString>& hash);
+    void replaceCustomVars(const QHash<QString, QString>& hash);
+    virtual void prepareForSave();
 
     static RS2::LinearFormat convertLinearFormatDXF2LC(int f);
     int getLinearPrecision() const;

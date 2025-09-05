@@ -201,6 +201,7 @@ bool LC_DocumentsStorage::doSave(RS_Graphic* graphic, bool sameFile) {
 
     /*	Save drawing file if able to created associated object. */
     if (!actualName.isEmpty()) {
+        graphic->prepareForSave(); 
         result = RS_FileIO::instance()->fileExport(*graphic, actualName, actualType);
         QFileInfo actualFileInfo(actualName);
         graphic->markSaved(actualFileInfo.lastModified());

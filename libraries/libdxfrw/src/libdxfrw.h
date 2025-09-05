@@ -57,7 +57,7 @@ public:
     static std::string toHexStr(int n);//RLZ removeme
 
     int getBlockRecordHandleToWrite(const std::string& blockName) const;
-    int getTextStyleHandle(const std::string& blockName) const;
+    int getTextStyleHandle(const std::string& styleName) const;
 
     DRW_ParsingContext* getReadingContext() {return &m_readingContext;}
     DRW_WritingContext* getWritingContext() {return &m_writingContext;}

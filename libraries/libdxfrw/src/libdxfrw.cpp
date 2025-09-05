@@ -3184,11 +3184,15 @@ int dxfRW::getBlockRecordHandleToWrite(const std::string &blockName) const {
     return -1;
 }
 
-int dxfRW::getTextStyleHandle(const std::string &blockName) const {
-    if(m_writingContext.textStyleMap.count(blockName) > 0) {
-        auto pair = m_writingContext.textStyleMap.find(blockName);
-        int blkHandle = pair->second;
-        return blkHandle;
+int dxfRW::getTextStyleHandle(const std::string &styleName) const {
+    if (!styleName.empty()) {
+        auto name = styleName;
+        std::transform(name.begin(), name.end(), name.begin(), toupper);
+        if(m_writingContext.textStyleMap.count(name) > 0) {
+            auto pair = m_writingContext.textStyleMap.find(name);
+            int blkHandle = pair->second;
+            return blkHandle;
+        }
     }
     return -1;
 }
