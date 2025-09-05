@@ -50,7 +50,7 @@
 
 namespace {
 
-constexpr double g_contourGapTolerance = 1E-7;
+constexpr double g_contourGapTolerance = 1E-6; // Increased slightly for better handling of imported file gaps
 
 // a random angle between 0 and 2 pi
 double getRandomAngle();
@@ -67,8 +67,8 @@ std::unordered_map<const RS_EntityContainer*, double> findAreas(const std::vecto
 struct ComparePoints {
     ComparePoints() = default;
     ComparePoints(const RS_Vector& ref) : m_ref{ref}{}
-  bool operator()(const RS_Vector &p0, const RS_Vector &p1) const;
-  RS_Vector m_ref{false};
+    bool operator()(const RS_Vector &p0, const RS_Vector &p1) const;
+    RS_Vector m_ref{false};
 };
 
 // the closest distance from a point to the end points of an entity
@@ -105,7 +105,7 @@ bool isConnected( const RS_Entity& entity1, const RS_Entity& entity2)
     {
         LC_ERR<<"loop gap of "<<distance<<" between "<<entity1.getId()<<", "<<entity2.getId();
         LC_ERR<<"("<<entity1.getStartpoint().x<<", "<<entity1.getEndpoint().y<<") - "
-        "("<<entity2.getStartpoint().x<<", "<<entity2.getEndpoint().y<<")";
+                                                                                         "("<<entity2.getStartpoint().x<<", "<<entity2.getEndpoint().y<<")";
         return false;
     }
     return true;
@@ -115,7 +115,7 @@ RS_Vector getInternalPoint(const RS_EntityContainer& loop)
 {
     RS_Vector p0 = loop.firstEntity()->getNearestPointOnEntity(loop.getMin(), true);
     double size = loop.getSize().magnitude();
-    for(short i=0; i<16; i++)
+    for(short i=0; i<32; i++) // Increased retries for robustness
     {
         RS_Vector offset =  RS_Vector(getRandomAngle())*size;
         auto line = std::make_unique<RS_Line>(p0 - offset, p0 + offset);
@@ -139,11 +139,31 @@ std::unique_ptr<RS_Line> getRandomRay(RS_EntityContainer* loop)
     return std::make_unique<RS_Line>(nullptr, p0, p0 + RS_Vector{getRandomAngle()}*size);
 }
 
-std::unordered_map<const RS_EntityContainer*, double> findAreas(const std::vector<std::unique_ptr<RS_EntityContainer>>& loops )
-{
+std::unordered_map<const RS_EntityContainer*, double> findAreas(const std::vector<std::unique_ptr<RS_EntityContainer>>& loops ) {
     std::unordered_map<const RS_EntityContainer*, double> ret;
-    for(const std::unique_ptr<RS_EntityContainer>& loop: loops)
-        ret.emplace(loop.get(), std::abs(loop->areaLineIntegral()));
+    for(const std::unique_ptr<RS_EntityContainer>& loop: loops) {
+        double area = loop->areaLineIntegral();
+        if (area < 0) { // Ensure positive area by reversing if clockwise (fixes issues like #1572)
+            // Manually reverse the container: collect entities, clear, add in reverse order while reversing each entity
+            std::vector<RS_Entity*> entities;
+            for (RS_Entity* e = loop->firstEntity(); e; e = loop->nextEntity()) {
+                entities.push_back(e);
+            }
+            // Clear the container
+            while (loop->firstEntity()) {
+                loop->removeEntity(loop->firstEntity());
+            }
+            // Add back in reverse order, reversing each entity
+            for (auto it = entities.rbegin(); it != entities.rend(); ++it) {
+                if ((*it)->isEdge()) {
+                    static_cast<RS_AtomicEntity*>(*it)->reverse();
+                }
+                loop->addEntity(*it);
+            }
+            area = -area;
+        }
+        ret.emplace(loop.get(), std::abs(area));
+    }
     return ret;
 }
 
@@ -196,7 +216,7 @@ bool isEnclosed(RS_EntityContainer& loop, RS_AtomicEntity& entity)
 
 struct LoopExtractor::LoopData {
     LoopData(RS_EntityContainer &edges):
-    edges{edges}
+        edges{edges}
     {
         edges.forcedCalculateBorders();
         size = edges.getSize().magnitude();
@@ -222,12 +242,12 @@ std::vector<RS_Entity*> LoopExtractor::getConnected() const
     std::vector<RS_Entity *> connected;
     std::copy_if(m_data->edges.begin(), m_data->edges.end(), std::back_inserter(connected),
                  [vertex = m_data->vertex, current = m_data->current](const RS_Entity *e) {
-        if (e == current)
-            return false;
-        double dist = RS_MAXDOUBLE;
-        e->getNearestEndpoint(vertex, &dist);
-        return dist < g_contourGapTolerance;
-    });
+                     if (e == current)
+                         return false;
+                     double dist = RS_MAXDOUBLE;
+                     e->getNearestEndpoint(vertex, &dist);
+                     return dist < g_contourGapTolerance;
+                 });
     return connected;
 }
 
@@ -296,40 +316,54 @@ RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const
 {
     assert(edges.size() >= 2);
     double edgeLength = RS_MAXDOUBLE;
+    // Include current entity's length in the min calculation to avoid no-intersection assertion (fixes #2137)
+    if (m_data->current->getLength() > RS_TOLERANCE)
+        edgeLength = std::min(edgeLength, m_data->current->getLength());
     for(RS_Entity* edge: edges)
         if (edge->getLength() > RS_TOLERANCE)
             edgeLength = std::min({edgeLength, std::max(edge->getLength(), edge->getStartpoint().distanceTo(edge->getEndpoint()))});
 
-    if (edgeLength >= RS_MAXDOUBLE)
-        assert(!"Contour size too large");
+    if (edgeLength >= RS_MAXDOUBLE) {
+        LC_ERR << "Contour size too large"; // Replaced assert with log for better crash handling
+        return nullptr; // Graceful return instead of assert
+    }
 
     // draw a small circle around the current end point
     RS_Circle circle{nullptr, {m_data->vertex, edgeLength * 0.01}};
     auto getCut = [&circle, p0 = m_data->vertex](RS_Entity* edge) {
         RS_VectorSolutions sol = RS_Information::getIntersection(&circle, edge, true);
-        return sol.empty() ? std::make_tuple(edge, 0., false) : std::make_tuple(edge, p0.angleTo(sol.at(0)), true);
+        if (sol.empty()) {
+            return std::make_tuple(edge, 0., false);
+        }
+        // Sort intersections by distance to p0 for robustness with curves/multiple intersections
+        std::sort(sol.begin(), sol.end(), CompareDistance{p0});
+        return std::make_tuple(edge, p0.angleTo(sol.at(0)), true);
     };
     using CutPair = std::tuple<RS_Entity*, double, bool>;
     // find the angle for the current edge
     CutPair current = getCut(m_data->current);
     // The current edge must intersect with the small circle
-    if (!std::get<bool>(current))
-        throw "no intersection";
+    if (!std::get<bool>(current)) {
+        LC_ERR << "No intersection with current edge in findOutermost"; // Log instead of throw for better diagnostics
+        return nullptr; // Graceful handling
+    }
     std::vector<CutPair> cuts;
     for (RS_Entity* edge: edges) {
         CutPair cut = getCut(edge);
         if (std::get<bool>(cut))
             cuts.push_back(cut);
     }
-    if (cuts.empty())
-        throw "no cut found";
+    if (cuts.empty()) {
+        LC_ERR << "No cuts found in findOutermost";
+        return nullptr;
+    }
 
     // find the minimum left turning angle to get the next outermost edge
     std::sort(cuts.begin(), cuts.end(),
               [a0=std::get<double>(current)](const CutPair& cut0, const CutPair& cut1){
-                using namespace RS_Math;
-                return getAngleDifference(a0, std::get<double>(cut0)) < getAngleDifference(a0, std::get<double>(cut1));
-    });
+                  using namespace RS_Math;
+                  return getAngleDifference(a0, std::get<double>(cut0)) < getAngleDifference(a0, std::get<double>(cut1));
+              });
     return std::get<RS_Entity*>(cuts.front());
 }
 
@@ -348,6 +382,7 @@ bool LoopExtractor::findNext() const
     default:
     {
         m_data->current = findOutermost(connected);
+        if (m_data->current == nullptr) return false; // Handle failure gracefully
     }
     }
     m_data->vertex = (m_data->vertex.squaredTo(m_data->current->getStartpoint()) > RS_TOLERANCE) ? m_data->current->getStartpoint() : m_data->current->getEndpoint();
@@ -369,7 +404,7 @@ std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract() {
         findFirst();
         while(success && m_data->vertex.squaredTo(m_data->vertexTarget) > RS_TOLERANCE) {
             LC_LOG<<m_data->vertex.x<<", "<< m_data->vertex.y<<" : "<<" : ds2 = "
-                 <<m_data->vertex.squaredTo(m_data->vertexTarget);
+                   <<m_data->vertex.squaredTo(m_data->vertexTarget);
             LC_LOG<<"id = "<<m_data->current->getId();
             success = findNext();
         }
@@ -411,9 +446,9 @@ struct LoopSorter::AreaPredicate {
 struct LoopSorter::Data {
     Data(LoopSorter* sorter, std::vector<std::unique_ptr<RS_EntityContainer>> loops):
         loops{std::move(loops)}
-      , area{findAreas(this->loops)}
-      , areaComparison{*sorter}
-      , toProcess{areaComparison}
+        , area{findAreas(this->loops)}
+        , areaComparison{*sorter}
+        , toProcess{areaComparison}
     {}
 
     // hold input loops
@@ -476,7 +511,7 @@ void LoopSorter::findAncestors(RS_EntityContainer* loop)
     // of touching points
     std::map<double, RS_EntityContainer*> ancestors;
     for(RS_EntityContainer* candidate: m_data->toProcess) {
-        if (candidate == loop)
+        if (candidate == loop || candidate == nullptr) // Added NULL check for robustness (related to #1468)
             continue;
         RS_VectorSolutions intersections = getIntersection(*ray, *candidate);
         if (intersections.size()%2 == 0)

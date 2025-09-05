@@ -270,6 +270,8 @@ private:
      * @author Dongxu Li
      */
     void mergeBoundingBox(LC_Rect& boundingBox, const RS_Vector& direction);
+    void drawVisible(RS_Painter* painter) const;
+    bool isVisibleInWindow(const RS_Painter& painter) const;
 };
 
 #endif

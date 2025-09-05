@@ -763,7 +763,7 @@ void RS_Painter::drawEllipseArcWCS(const RS_Vector& wcsCenter, double wcsMajorRa
 void RS_Painter::drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& uiRadii, double uiMajorAngleDegrees,
                                    double angle1Degrees, double angle2Degrees, double angularLength, bool reversed) {
     // TODO - it also should be refactored to be consistent with drawEllipseUI()
-    if (uiRadii.x < minEllipseMajorRadius){
+    if (std::max(uiRadii.x, uiRadii.y) < minEllipseMajorRadius){
         QPainter::drawPoint(QPointF(uiCenter.x, uiCenter.y));
         return;
     }
@@ -778,16 +778,104 @@ void RS_Painter::drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& ui
         QPainter::drawLine(QPointF(- uiRadii.x, 0.), QPointF(uiRadii.x, 0.));
     }
     else {
-        RS_Vector minPosition = - uiRadii;
-        RS_Vector uiSize = uiRadii + uiRadii;
-        if (reversed){
-            angle1Degrees = angle2Degrees - 360.;
-            angularLength = -angularLength;
-        }
+
+        const bool useSpline = std::max(uiRadii.x, uiRadii.y) > getMaximumArcNonErrorRadius();
+
         QPainterPath path;
-        path.arcMoveTo(minPosition.x, minPosition.y, uiSize.x, uiSize.y, angle1Degrees);
-        path.arcTo(minPosition.x, minPosition.y, uiSize.x, uiSize.y, angle1Degrees, angularLength);
+        addEllipseArcToPath(path, uiRadii, angle1Degrees, angularLength, useSpline);
         QPainter::drawPath(path);
+    }
+}
+
+void RS_Painter::addEllipseArcToPath(QPainterPath& localPath, const RS_Vector& uiRadii, double startAngleDeg, double angularLengthDeg, bool useSpline) {
+    if (useSpline) {
+        double startRad = RS_Math::deg2rad(toUCSAngleDegrees(startAngleDeg));
+        double lenRad = RS_Math::deg2rad(toUCSAngleDegrees(angularLengthDeg));
+        drawEllipseSegmentBySplinePointsUI(uiRadii, startRad, lenRad, localPath, false);
+    } else {
+        QRectF rect(-uiRadii.x, -uiRadii.y, 2 * uiRadii.x, 2 * uiRadii.y);
+        localPath.arcMoveTo(rect, startAngleDeg);
+        localPath.arcTo(rect, startAngleDeg, angularLengthDeg);
+    }
+}
+
+void RS_Painter::drawEllipseSegmentBySplinePointsUI(const RS_Vector& uiRadii, double startRad, double lenRad, QPainterPath &path, bool closed)
+{
+    double r = std::max(uiRadii.x, uiRadii.y);
+    // maximum angular step size: using this angular step size keeps the maximum
+    // deviation of an arc from its parabola fitting
+    const double dParam = std::pow(1./32. / r, 1. / 4.);
+    int numSegments = std::max(1, int(std::ceil(std::abs(lenRad) / dParam)));
+    // Don't duplicate first point for closed
+    int numPoints = closed ? numSegments : numSegments + 1;
+    if (closed) {
+        numPoints = numSegments;
+    }
+    double delta = lenRad / numSegments;
+
+    LC_SplinePointsData data;
+    data.closed = closed;
+
+    double param = startRad;
+
+    const RS_Vector scaleXY{uiRadii.x, - uiRadii.y};
+    for (int i = 0; i < numPoints; ++i) {
+        data.splinePoints.push_back(RS_Vector{param}.scale(scaleXY));
+        param += delta;
+    }
+
+    LC_SplinePoints spline(nullptr, data);
+    addSplinePointsToPath(spline.getData().controlPoints, closed, path);
+}
+
+void RS_Painter::addSplinePointsToPath(const std::vector<RS_Vector> &uiControlPoints, bool closed, QPainterPath &path) const
+{
+    size_t n = uiControlPoints.size();
+    if (n < 2)
+        return;
+
+    RS_Vector vStart = uiControlPoints.front();
+    RS_Vector vEnd(false);
+
+    if (closed) {
+        if (n < 3)
+            return;
+        const RS_Vector &cp0 = uiControlPoints[0];
+        const RS_Vector &cpNMinus1 = uiControlPoints[n - 1];
+        vStart = (cpNMinus1 + cp0) / 2.0;
+        path.moveTo(QPointF(vStart.x, vStart.y));
+
+        vEnd = (cp0 + uiControlPoints[1]) / 2.0;
+        path.quadTo(QPointF(cp0.x, cp0.y), QPointF(vEnd.x, vEnd.y));
+
+        for (size_t i = 1; i < n - 1; i++) {
+            const RS_Vector &cpi = uiControlPoints[i];
+            vEnd = (cpi + uiControlPoints[i + 1]) / 2.0;
+            path.quadTo(QPointF(cpi.x, cpi.y), QPointF(vEnd.x, vEnd.y));
+        }
+        path.quadTo(QPointF(cpNMinus1.x, cpNMinus1.y), QPointF(vStart.x, vStart.y));
+    } else {
+        path.moveTo(QPointF(vStart.x, vStart.y));
+        const RS_Vector &cp1 = uiControlPoints[1];
+        if (n < 3) {
+            path.lineTo(QPointF(cp1.x, cp1.y));
+        } else {
+            const RS_Vector &cp2 = uiControlPoints[2];
+            if (n < 4) {
+                path.quadTo(QPointF(cp1.x, cp1.y), QPointF(cp2.x, cp2.y));
+            } else {
+                vEnd = (cp1 + cp2) / 2.0;
+                path.quadTo(QPointF(cp1.x, cp1.y), QPointF(vEnd.x, vEnd.y));
+
+                for (size_t i = 2; i < n - 2; i++) {
+                    const RS_Vector &cpi = uiControlPoints[i];
+                    vEnd = (cpi + uiControlPoints[i + 1]) / 2.0;
+                    path.quadTo(QPointF(cpi.x, cpi.y), QPointF(vEnd.x, vEnd.y));
+                }
+
+                path.quadTo(QPointF(uiControlPoints[n - 2].x, uiControlPoints[n - 2].y), QPointF(uiControlPoints[n - 1].x, uiControlPoints[n - 1].y));
+            }
+        }
     }
 }
 
