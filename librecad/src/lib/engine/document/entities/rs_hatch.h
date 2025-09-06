@@ -54,9 +54,9 @@ struct RS_HatchData {
                  QString pattern);
 
 
-    bool solid = false;
     double scale = 1.;
     double angle = 0.;
+    bool solid = false;
     QString pattern;
 };
 
@@ -162,13 +162,10 @@ public:
                  const RS_Vector& secondCorner,
                  const RS_Vector& offset) override;
 
-    bool optimizeContours() override;
-
     friend std::ostream& operator << (std::ostream& os, const RS_Hatch& p);
 
 private:
-    double getTotalAreaImpl() const;
-    RS_EntityContainer trimPattern(const RS_EntityContainer& patternEntities) const;
+    void trimPattern(const RS_EntityContainer& patternEntities);
 
     void drawSolidFill(RS_Painter *painter);
 
@@ -177,13 +174,12 @@ private:
     QPainterPath createSolidFillPath( RS_Painter *painter) const;
 
     RS_HatchData data;
-    RS_EntityContainer* hatch = nullptr;
+    RS_EntityContainer hatch;
     mutable double m_area = RS_MAXDOUBLE;
     RS_HatchError updateError = HATCH_UNDEFINED;
     bool updateRunning = false;
     bool needOptimization = true;
     bool m_updated=false;
-    std::shared_ptr<RS_EntityContainer> m_orderedLoops;
 };
 
 #endif

@@ -28,17 +28,26 @@
 #include <memory>
 #include <vector>
 
+class LC_Loops;
+class QPainterPath;
 class RS_AtomicEntity;
 class RS_Entity;
 class RS_EntityContainer;
-class RS_Line;
+class RS_Pattern;
 class RS_Vector;
 class RS_VectorSolutions;
 
+namespace lc {
+namespace geo {
+class Area;
+}
+}
+using LC_Rect = lc::geo::Area;
+
 /**
- * @brief the name space contains utils to analyze contour topology.
+ * @brief The namespace contains utilities to analyze contour topology.
  * The initial motivation is to allow proper calculation of hatched areas. For example, the hatched areas
- * contain holes(say, denoted as lakes), and the lakes may further contain islands of their own. The hatched
+ * contain holes (say, denoted as lakes), and the lakes may further contain islands of their own. The hatched
  * area calculation should find the total area of all land including any islands in lakes.
  */
 namespace LC_LoopUtils {
@@ -47,8 +56,8 @@ namespace LC_LoopUtils {
  * @brief isEnclosed - whether the entity is enclosed in the loop. It's assumed the entity shouldn't intersect
  * with the loop.
  * @param loop - a simple closed contour
- * @param RS_AtomicEntity& entity - an entity
- * @return bool - true, an entity
+ * @param entity - an atomic entity
+ * @return bool - true if the entity is enclosed
  */
 bool isEnclosed(RS_EntityContainer& loop, RS_AtomicEntity& entity);
 
@@ -79,15 +88,15 @@ bool isEnclosed(RS_EntityContainer& loop, RS_AtomicEntity& entity);
 class LoopExtractor {
 public:
     /**
-     * @brief LoopExtractor: - LoopExtractor constructor
+     * @brief LoopExtractor constructor
      * @param edges - edges to process
      */
     LoopExtractor(RS_EntityContainer& edges);
     ~LoopExtractor();
 
     /**
-     * @brief       extract - extract loops from connected edges
-     * @return      std::vector<std::unique_ptr<RS_EntityContainer>> - loops. each element is simply closed
+     * @brief extract - extract loops from connected edges
+     * @return std::vector<std::unique_ptr<RS_EntityContainer>> - loops, each element is simply closed
      */
     std::vector<std::unique_ptr<RS_EntityContainer>> extract();
 private:
@@ -95,31 +104,30 @@ private:
     bool validate() const;
 
     /**
-     * @brief:      Find the first edge on an outermost contour of all unprocessed edges; use the edge as the current
-     * @returns:    <RS_Entity*> - an edge on an outermost contour
+     * @brief Find the first edge on an outermost contour of all unprocessed edges; use the edge as the current
+     * @returns RS_Entity* - an edge on an outermost contour
      */
     RS_Entity* findFirst() const;
 
-
     /**
-     * @brief:      Find another edge connected to be used as the current edge
-     * @returns:     bool - true if the edge found closes the contour with the edge from findFirst().
+     * @brief Find another edge connected to be used as the current edge
+     * @returns bool - true if the edge found closes the contour with the edge from findFirst()
      */
     bool findNext() const;
 
     /**
-     * @brief:      Find all other edges connected to the current end point
-     * @returns:    std::vector<RS_Entity*> - all other edges connected to the current end point of the current edge
+     * @brief Find all other edges connected to the current end point
+     * @returns std::vector<RS_Entity*> - all other edges connected to the current end point of the current edge
      */
     std::vector<RS_Entity*> getConnected() const;
 
     /**
-     * @brief findOutermost: From the input edges, find the edge on an outermost contour of all
-     *  unprocessed edges.
-     * @param edges:         std::vector<RS_Entity*> edges - edges connected to the current end point
+     * @brief findOutermost: From the input edges, find the edge on an outermost contour of all unprocessed edges
+     * @param edges: std::vector<RS_Entity*> edges - edges connected to the current end point
      * @returns RS_Entity* - the outermost edge of input edges
      */
     RS_Entity* findOutermost(std::vector<RS_Entity*> edges) const;
+
     // the edges found for the current loop to form
     mutable std::unique_ptr<RS_EntityContainer> m_loop;
 
@@ -127,7 +135,6 @@ private:
     struct LoopData;
     std::unique_ptr<LoopData> m_data;
 };
-
 
 /**
  * @brief The LoopSorter class - find topologic relations of loops
@@ -140,7 +147,7 @@ public:
      * Each input loop is assumed to be a simple closed loop, and contains only edges.
      * The input loops should not contain sub-loops
      * Ownership of the input loops is transferred to this LoopSorter
-     * @param std::vector<std::unique_ptr<RS_EntityContainer>> - loops input loops
+     * @param loops - input loops
      */
     LoopSorter(std::vector<std::unique_ptr<RS_EntityContainer>> loops);
     ~LoopSorter();
@@ -150,12 +157,11 @@ public:
     /**
      * @brief getResults - the sorting results
      * @return std::vector<RS_EntityContainer*> - the top level loops, i.e. outermost loops, after sorting
-     * each inner loop is added as a child of its immediate parent loop.
+     * each inner loop is added as a child of its immediate parent loop
      */
     std::vector<RS_EntityContainer*> getResults() const;
 
 private:
-
     void init();
 
     // find all ancestor loops of a given loop
@@ -167,28 +173,56 @@ private:
 
 /**
  * @brief The LoopOptimizer class - separate a collection of contours into loops
- *                                  The results are a two level entityContainer, with each child container
- *                                  as a loop;
- *                                  each closed edge (circles/ellipses) in its own child entityContainer;
- *                                  each other child container contains edge entities ordered following the contour,
- *                                  i.e. the end point of the current edge coincident with the start point of
- *                                  its next edge, and the end point of the last entity is coincident with the
- *                                  start point of the first edge in the loop.
- *                                  All containers have ownership of its contents;
- *                                  All edges are clones.
+ * The results are a two-level entityContainer, with each child container as a loop;
+ * each closed edge (circles/ellipses) in its own child entityContainer;
+ * each other child container contains edge entities ordered following the contour,
+ * i.e. the end point of the current edge coincident with the start point of
+ * its next edge, and the end point of the last entity is coincident with the
+ * start point of the first edge in the loop.
+ * All containers have ownership of its contents; all edges are clones.
  */
 class LoopOptimizer {
 public:
     LoopOptimizer(const RS_EntityContainer& contour);
     ~LoopOptimizer();
 
-    std::shared_ptr<RS_EntityContainer> GetResults() const;
+    std::shared_ptr<LC_Loops> GetResults() const;
 
 private:
     void AddContainer(const RS_EntityContainer& contour);
     struct Data;
     std::shared_ptr<Data> m_data;
+};
 
+/**
+ * @brief The LC_Loops class - recursive representation of contour loops with holes.
+ * This class represents a loop (or a top-level container if m_loop is nullptr) and its child loops (holes/islands recursively).
+ */
+class LC_Loops {
+public:
+    explicit LC_Loops(bool ownsEntities = true);
+    LC_Loops(std::shared_ptr<RS_EntityContainer> loop, bool ownsEntities = true);
+    ~LC_Loops();
+
+    void addChild(LC_Loops child);
+    const RS_EntityContainer* loop() const;
+    const std::vector<LC_Loops>& children() const;
+    bool ownsEntities() const;
+    bool isInside(const RS_Vector& point) const;
+    int getContainingDepth(const RS_Vector& point) const;
+    QPainterPath getPainterPath() const;
+    std::vector<RS_Vector> createTiles(const RS_Pattern& pattern) const;
+    std::unique_ptr<RS_EntityContainer> trimPatternEntities(const RS_Pattern& pattern) const;
+
+private:
+    std::shared_ptr<RS_EntityContainer> m_loop;
+    std::vector<LC_Loops> m_children;
+    bool m_ownsEntities;
+    QPainterPath getPainterPath(bool isHole) const;
+    QPainterPath buildPathFromLoop(const RS_EntityContainer& cont) const;
+    void getAllLoops(std::vector<const RS_EntityContainer*>& loops) const;
+    LC_Rect getBoundingBox() const;
+    bool isPointInside(const RS_Vector& p) const;
 };
 
 }
