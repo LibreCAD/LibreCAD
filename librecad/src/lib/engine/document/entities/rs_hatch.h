@@ -1,12 +1,10 @@
-/*********************************************************************************
+/****************************************************************************
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
-** Copyright (C) 2023-2025 LibreCAD.org
-** Copyright (C) 2023-2025 dxli (github.com/dxli)
 **
 ** This file may be distributed and/or modified under the terms of the
 ** GNU General Public License version 2 as published by the Free Software
@@ -24,7 +22,7 @@
 **
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
-*********************************************************************************/
+**********************************************************************/
 
 
 #ifndef RS_HATCH_H
@@ -41,23 +39,23 @@ struct RS_HatchData {
     /**
      * Default constructor. Leaves the data object uninitialized.
      */
-    RS_HatchData() = default;
+	RS_HatchData() = default;
 
-    /**
+        /**
          * @param solid true: solid fill, false: pattern.
          * @param scale Pattern scale or spacing.
          * @param pattern Pattern name.
          */
-    RS_HatchData(bool solid,
-                 double scale,
-                 double angle,
+	RS_HatchData(bool solid,
+				 double scale,
+				 double angle,
                  QString pattern);
 
 
+    bool solid = false;
     double scale = 1.;
     double angle = 0.;
-    bool solid = false;
-    QString pattern;
+	QString pattern;
 };
 
 std::ostream& operator << (std::ostream& os, const RS_HatchData& td);
@@ -78,15 +76,15 @@ public:
                          HATCH_TOO_SMALL,
                          HATCH_AREA_TOO_BIG };
 
-    RS_Hatch() = default;
+	RS_Hatch() = default;
 
     RS_Hatch(RS_EntityContainer* parent,
-             const RS_HatchData& d);
+            const RS_HatchData& d);
 
-    RS_Entity* clone() const override;
+	RS_Entity* clone() const override;
 
     /**	@return RS2::EntityHatch */
-    RS2::EntityType rtti() const override{
+	RS2::EntityType rtti() const override{
         return RS2::EntityHatch;
     }
 
@@ -94,7 +92,7 @@ public:
      * @return true: if this is a hatch with lines (hatch pattern),
      *         false: if this is filled with a solid color.
      */
-    bool isContainer() const override;
+	bool isContainer() const override;
 
     /** @return Copy of data that defines the hatch. */
     RS_HatchData getData() const {
@@ -107,50 +105,50 @@ public:
 
     /** @return true if this is a solid fill. false if it is a pattern hatch. */
     bool isSolid() const {
-        return data.solid;
+            return data.solid;
     }
     void setSolid(bool solid) {
-        data.solid = solid;
+            data.solid = solid;
     }
 
     QString getPattern() const
     {
-        return data.pattern;
+            return data.pattern;
     }
     void setPattern(const QString& pattern) {
-        data.pattern = pattern;
+            data.pattern = pattern;
     }
 
     double getScale() const
     {
-        return data.scale;
+            return data.scale;
     }
     void setScale(double scale) {
-        data.scale = scale;
+            data.scale = scale;
     }
 
     double getAngle() const
     {
-        return data.angle;
+            return data.angle;
     }
     void setAngle(double angle) {
-        data.angle = angle;
+            data.angle = angle;
     }
     double getTotalArea() const;
 
     void calculateBorders() override;
     void update() override;
     int getUpdateError() {
-        return updateError;
+            return updateError;
     }
     void activateContour(bool on);
 
     void draw(RS_Painter* painter) override;
 
     double getDistanceToPoint(const RS_Vector& coord,
-                              RS_Entity** entity = NULL,
-                              RS2::ResolveLevel level = RS2::ResolveNone,
-                              double solidDist = RS_MAXDOUBLE) const override;
+                                      RS_Entity** entity = NULL,
+                                      RS2::ResolveLevel level = RS2::ResolveNone,
+                                      double solidDist = RS_MAXDOUBLE) const override;
 
 
     void move(const RS_Vector& offset) override;
@@ -159,13 +157,14 @@ public:
     void scale(const RS_Vector& center, const RS_Vector& factor) override;
     void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
     void stretch(const RS_Vector& firstCorner,
-                 const RS_Vector& secondCorner,
-                 const RS_Vector& offset) override;
+                         const RS_Vector& secondCorner,
+                         const RS_Vector& offset) override;
 
     friend std::ostream& operator << (std::ostream& os, const RS_Hatch& p);
 
 private:
-    void trimPattern(const RS_EntityContainer& patternEntities);
+    double getTotalAreaImpl() const;
+    RS_EntityContainer trimPattern(const RS_EntityContainer& patternEntities) const;
 
     void drawSolidFill(RS_Painter *painter);
 
@@ -174,12 +173,13 @@ private:
     QPainterPath createSolidFillPath( RS_Painter *painter) const;
 
     RS_HatchData data;
-    RS_EntityContainer hatch;
+    RS_EntityContainer* hatch = nullptr;
     mutable double m_area = RS_MAXDOUBLE;
     RS_HatchError updateError = HATCH_UNDEFINED;
     bool updateRunning = false;
     bool needOptimization = true;
     bool m_updated=false;
+    std::shared_ptr<RS_EntityContainer> m_orderedLoops;
 };
 
 #endif
