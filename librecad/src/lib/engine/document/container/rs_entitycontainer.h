@@ -283,7 +283,6 @@ public:
     void drawAsChild(RS_Painter *painter) override;
 
     RS_Entity *cloneProxy() const override;
-    bool isClosed() const;
 
 protected:
     /**

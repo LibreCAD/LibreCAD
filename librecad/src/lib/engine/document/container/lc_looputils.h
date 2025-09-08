@@ -28,7 +28,6 @@
 #include <memory>
 #include <vector>
 
-class LC_Loops;
 class QPainterPath;
 class RS_AtomicEntity;
 class RS_Entity;
@@ -51,6 +50,7 @@ using LC_Rect = lc::geo::Area;
  * area calculation should find the total area of all land including any islands in lakes.
  */
 namespace LC_LoopUtils {
+class LC_Loops;
 
 /**
  * @brief isEnclosed - whether the entity is enclosed in the loop. It's assumed the entity shouldn't intersect
@@ -86,6 +86,7 @@ bool isEnclosed(RS_EntityContainer& loop, RS_AtomicEntity& entity);
  * 6. Closed contours may share edge endpoints, but no edge is shared by more than one contours.
  */
 class LoopExtractor {
+
 public:
     /**
      * @brief LoopExtractor constructor
@@ -145,8 +146,8 @@ class LoopSorter {
 public:
     /**
      * Each input loop is assumed to be a simple closed loop, and contains only edges.
-     * The input loops should not contain sub-loops
-     * Ownership of the input loops is transferred to this LoopSorter
+ * The input loops should not contain sub-loops
+ * Ownership of the input loops is transferred to this LoopSorter
      * @param loops - input loops
      */
     LoopSorter(std::vector<std::unique_ptr<RS_EntityContainer>> loops);
@@ -157,9 +158,11 @@ public:
     /**
      * @brief getResults - the sorting results
      * @return std::vector<RS_EntityContainer*> - the top level loops, i.e. outermost loops, after sorting
-     * each inner loop is added as a child of its immediate parent loop
+     * each inner loop has its parent set to its immediate parent loop
      */
-    std::vector<RS_EntityContainer*> getResults() const;
+    std::vector<RS_EntityContainer*> getResults();
+
+    const std::vector<std::unique_ptr<RS_EntityContainer>>& getAllLoops() const;
 
 private:
     void init();
@@ -190,6 +193,7 @@ public:
 
 private:
     void AddContainer(const RS_EntityContainer& contour);
+    LC_Loops buildLC_Loops(const RS_EntityContainer* cont, const std::vector<std::unique_ptr<RS_EntityContainer>>& allLoops) const;
     struct Data;
     std::shared_ptr<Data> m_data;
 };
@@ -213,16 +217,24 @@ public:
     QPainterPath getPainterPath() const;
     std::vector<RS_Vector> createTiles(const RS_Pattern& pattern) const;
     std::unique_ptr<RS_EntityContainer> trimPatternEntities(const RS_Pattern& pattern) const;
+    double getTotalArea() const;
+    bool overlap(const LC_Rect& other) const;
 
 private:
     std::shared_ptr<RS_EntityContainer> m_loop;
     std::vector<LC_Loops> m_children;
     bool m_ownsEntities;
-    QPainterPath getPainterPath(bool isHole) const;
     QPainterPath buildPathFromLoop(const RS_EntityContainer& cont) const;
     void getAllLoops(std::vector<const RS_EntityContainer*>& loops) const;
     LC_Rect getBoundingBox() const;
     bool isPointInside(const RS_Vector& p) const;
+    RS_Vector e_point(const RS_Vector& center, double major, double minor, double rot, double t) const;
+    RS_Vector e_prime(double major, double minor, double rot, double t) const;
+    void addEllipticArc(QPainterPath& path, const RS_Vector& center, double major, double minor, double rot, double a1, double a2) const;
+    std::vector<RS_Entity*> getAllBoundaries() const;
+    std::vector<RS_Vector> sortPointsAlongEntity(RS_Entity* e, std::vector<RS_Vector> inters) const;
+    RS_Entity* createSubEntity(RS_Entity* e, const RS_Vector& p1, const RS_Vector& p2) const;
+    bool is_entity_closed(const RS_Entity* e) const;
 };
 
 }

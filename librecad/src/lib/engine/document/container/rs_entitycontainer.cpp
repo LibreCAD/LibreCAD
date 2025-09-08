@@ -1733,52 +1733,131 @@ RS_Entity *RS_EntityContainer::getNearestEntity(
  * to do: find closed contour by flood-fill
  */
 bool RS_EntityContainer::optimizeContours() {
-    RS_DEBUG->print("RS_Hatch::optimizeContours: begin");
+    //    std::cout<<"RS_EntityContainer::optimizeContours: begin"<<std::endl;
 
-    using namespace LC_LoopUtils;
+    //    DEBUG_HEADER
+    //    std::cout<<"loop with count()="<<count()<<std::endl;
+    RS_DEBUG->print("RS_EntityContainer::optimizeContours");
 
-    // Use LoopOptimizer to process the contours
-    LoopOptimizer optimizer(*this);
+    RS_EntityContainer tmp;
+    tmp.setAutoUpdateBorders(false);
+    bool closed = true;
 
-    // Get the optimized loops
-    auto results = optimizer.GetResults();
+    /** accept all full circles **/
+    QList<RS_Entity *> enList;
+        for(RS_Entity* e1: *this) {
+            if (!e1->isEdge() || e1->isContainer()) {
+                enList << e1;
+                continue;
+            }
 
-    // Check if valid loops were found
-    if (!results || results->isEmpty()) {
-        RS_DEBUG->print("RS_Hatch::optimizeContours: no valid loops found");
-        //updateError = HATCH_INVALID_CONTOUR;
-        return false;  // Failure: no contours optimized
+            //detect circles and whole ellipses
+            switch (e1->rtti()) {
+                case RS2::EntityEllipse:
+                    if (dynamic_cast<RS_Ellipse *>(e1)->isEllipticArc())
+                        continue;
+                    // fall-through
+                case RS2::EntityCircle:
+                    //directly detect circles, bug#3443277
+                    tmp.addEntity(e1->clone());
+                    enList << e1;
+                    // fall-through
+                default:
+                    continue;
+            }
+
+        }
+    //    std::cout<<"RS_EntityContainer::optimizeContours: 1"<<std::endl;
+
+    /** remove unsupported entities */
+    for (RS_Entity *it: enList)
+        removeEntity(it);
+
+    /** check and form a closed contour **/
+    //    std::cout<<"RS_EntityContainer::optimizeContours: 2"<<std::endl;
+    /** the first entity **/
+    RS_Entity *current(nullptr);
+    if (count() > 0) {
+        current = entityAt(0)->clone();
+        tmp.addEntity(current);
+        removeEntity(entityAt(0));
+    } else {
+        if (tmp.count() == 0) return false;
     }
+    //    std::cout<<"RS_EntityContainer::optimizeContours: 3"<<std::endl;
+    RS_Vector vpStart;
+    RS_Vector vpEnd;
+    if (current) {
+        vpStart = current->getStartpoint();
+        vpEnd = current->getEndpoint();
+    }
+    RS_Entity *next = nullptr;
+    //    std::cout<<"RS_EntityContainer::optimizeContours: 4"<<std::endl;
+    /** connect entities **/
+    const auto errMsg = QObject::tr("Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)");
 
-    // Clear existing entities to replace with optimized ones
-    clear();
-
-    // Transfer ownership: prevent results from deleting children on destruction
-    results->setOwner(false);
-
-    // Add each optimized loop to the hatch and reparent
-    for (unsigned i = 0; i < results->count(); ++i) {
-        RS_Entity* entity = results->entityAt(i);
-        if (entity) {  // Null check for safety
-            addEntity(entity);
-            entity->reparent(this);
+    while (count() > 0) {
+        double dist = 0.;
+        RS_Vector vpTmp = getNearestEndpoint(vpEnd, &dist, &next);
+        if (dist > contourTolerance) {
+            if (vpEnd.squaredTo(vpStart) < contourTolerance) {
+                RS_Entity *e2 = entityAt(0);
+                tmp.addEntity(e2->clone());
+                vpStart = e2->getStartpoint();
+                vpEnd = e2->getEndpoint();
+                removeEntity(e2);
+                continue;
+            } else {
+                QG_DIALOGFACTORY->commandMessage(
+                    errMsg.arg(dist).arg(vpTmp.x).arg(vpTmp.y).arg(vpEnd.x).arg(vpEnd.y)
+                );
+                RS_DEBUG->print(RS_Debug::D_ERROR, "RS_EntityContainer::optimizeContours: hatch failed due to a gap");
+                closed = false;
+                break;
+            }
+        }
+        if (!next) {      //workaround if next is nullptr
+            //      	    std::cout<<"RS_EntityContainer::optimizeContours: next is nullptr" <<std::endl;
+            RS_DEBUG->print("RS_EntityContainer::optimizeContours: next is nullptr");
+            //			closed=false;	//workaround if next is nullptr
+            break;   //workaround if next is nullptr
+        }      //workaround if next is nullptr
+        if (closed) {
+            next->setProcessed(true);
+            RS_Entity *eTmp = next->clone();
+            if (vpEnd.squaredTo(eTmp->getStartpoint()) > vpEnd.squaredTo(eTmp->getEndpoint()))
+                eTmp->revertDirection();
+            vpEnd = eTmp->getEndpoint();
+            tmp.addEntity(eTmp);
+            removeEntity(next);
         }
     }
+    //    DEBUG_HEADER
+    //    if(vpEnd.valid && vpEnd.squaredTo(vpStart) > 1e-8) {
+    //		QG_DIALOGFACTORY->commandMessage(errMsg.arg(vpEnd.distanceTo(vpStart))
+    //											 .arg(vpStart.x).arg(vpStart.y).arg(vpEnd.x).arg(vpEnd.y));
+    //        RS_DEBUG->print("RS_EntityContainer::optimizeContours: hatch failed due to a gap");
+    //        closed=false;
+    //    }
+    //    std::cout<<"RS_EntityContainer::optimizeContours: 5"<<std::endl;
 
-    // Update borders after adding new entities
-    calculateBorders();
 
-    // Store the optimized loops for future use (e.g., area calculation)
-    //m_orderedLoops = results;
+    // add new sorted entities:
+    for (RS_Entity* en: tmp) {
+        en->setProcessed(false);
+        addEntity(en->clone());
+        en->reparent(this);
+    }
+    //    std::cout<<"RS_EntityContainer::optimizeContours: 6"<<std::endl;
 
-    // Validate the optimized loops
-
-
-    // Compute and cache the total area using the optimized structure
-    //getTotalArea();
-
-    RS_DEBUG->print("RS_Hatch::optimizeContours: OK - %u loops optimized", results->count());
-    return true;  // Success
+    if (closed) {
+        RS_DEBUG->print("RS_EntityContainer::optimizeContours: OK");
+    } else {
+        RS_DEBUG->print("RS_EntityContainer::optimizeContours: bad");
+    }
+    //    std::cout<<"RS_EntityContainer::optimizeContours: end: count()="<<count()<<std::endl;
+    //    std::cout<<"RS_EntityContainer::optimizeContours: closed="<<closed<<std::endl;
+    return closed;
 }
 
 bool RS_EntityContainer::hasEndpointsWithinWindow(const RS_Vector &v1, const RS_Vector &v2) const
@@ -2017,26 +2096,6 @@ bool RS_EntityContainer::ignoredSnap() const
         return true;
     return ignoredOnModification();
 }
-bool RS_EntityContainer::isClosed() const {
-    if (isEmpty()) return false;
-
-    if (count() == 1) {
-        RS_Entity* e = firstEntity();
-        if (e->rtti() == RS2::EntityCircle) {
-            return true;
-        } else if (e->rtti() == RS2::EntityEllipse) {
-            return !static_cast<RS_Ellipse*>(e)->isEllipticArc();
-        } else {
-            return false; // Single open entities like lines or arcs are not closed
-        }
-    } else {
-        // For multiple entities, check if first start and last end are close
-        RS_Entity* f = firstEntity();
-        RS_Entity* l = lastEntity();
-        if (!f || !l) return false;
-        return f->getStartpoint().distanceTo(l->getEndpoint()) <= RS_TOLERANCE;
-    }
-}
 
 QList<RS_Entity *>::const_iterator RS_EntityContainer::begin() const{
     return m_entities.begin();
@@ -2180,4 +2239,3 @@ std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() 
     }
     return loops;
 }
-
