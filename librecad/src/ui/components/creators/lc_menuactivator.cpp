@@ -30,8 +30,8 @@ LC_MenuActivator::LC_MenuActivator()
     update();
 }
 
-LC_MenuActivator::LC_MenuActivator(const QString& shortcutString, bool ctrl, bool alt, bool shift, Button button, Type type, bool entityRequired)
-    :m_keyModifiers{NONE}, m_eventType{type}, m_requiresEntity{entityRequired}, m_button{button}, m_shortcutString{shortcutString}{
+LC_MenuActivator::LC_MenuActivator(const QString& shortcutString, bool ctrl, bool alt, bool shift, Button button, Type type, bool entityRequired, RS2::EntityType entityType)
+    :m_keyModifiers{NONE}, m_eventType{type}, m_requiresEntity{entityRequired}, m_button{button}, m_shortcutString{shortcutString}, m_entityType{entityType}{
     setKeys(ctrl, alt, shift);
 }
 
@@ -148,10 +148,83 @@ bool LC_MenuActivator::isSameAs(LC_MenuActivator* other) {
     return false;
 }
 
+void LC_MenuActivator::parseEntityType(QString entityTypeStr, bool& requiresEntity, RS2::EntityType& entityType) {
+    requiresEntity = true;
+    if ("NE" == entityTypeStr) {
+        requiresEntity = false;
+    }
+    else if ("EE" == entityTypeStr) {
+        entityType = RS2::EntityGraphic;
+    }
+    else if ("AE" == entityTypeStr) {
+        entityType = RS2::EntityUnknown;
+    }
+    else if ("LI" == entityTypeStr) {
+        entityType = RS2::EntityLine;
+    }
+    else if ("CI" == entityTypeStr) {
+        entityType = RS2::EntityCircle;
+    }
+    else if ("AR" == entityTypeStr) {
+        entityType = RS2::EntityArc;
+    }
+    else if ("PL" == entityTypeStr) {
+        entityType = RS2::EntityPolyline;
+    }
+    else if ("SL" == entityTypeStr) {
+        entityType = RS2::EntitySpline;
+    }
+    else if ("SP" == entityTypeStr) {
+        entityType = RS2::EntitySplinePoints;
+    }
+    else if ("EL" == entityTypeStr) {
+        entityType = RS2::EntityEllipse;
+    }
+    else if ("PO" == entityTypeStr) {
+        entityType = RS2::EntityPoint;
+    }
+    else if ("PA" == entityTypeStr) {
+        entityType = RS2::EntityParabola;
+    }
+    else if ("IM" == entityTypeStr) {
+        entityType = RS2::EntityImage;
+    }
+    else if ("HA" == entityTypeStr) {
+        entityType = RS2::EntityHatch;
+    }
+    else if ("IN" == entityTypeStr) {
+        entityType = RS2::EntityInsert;
+    }
+    else if ("DL" == entityTypeStr) {
+        entityType = RS2::EntityDimLinear;
+    }
+    else if ("DA" == entityTypeStr) {
+        entityType = RS2::EntityDimAligned;
+    }
+    else if ("DD" == entityTypeStr) {
+        entityType = RS2::EntityDimDiametric;
+    }
+    else if ("DR" == entityTypeStr) {
+        entityType = RS2::EntityDimRadial;
+    }
+    else if ("DC" == entityTypeStr) {
+        entityType = RS2::EntityDimArc;
+    }
+    else if ("DO" == entityTypeStr) {
+        entityType = RS2::EntityDimOrdinate;
+    }
+    else if ("LD" == entityTypeStr) {
+        entityType = RS2::EntityDimLeader;
+    }
+    else {
+        requiresEntity = false;
+    }
+}
+
 LC_MenuActivator* LC_MenuActivator::fromShortcut(QString& shortcut){
     auto str = shortcut.trimmed().toUpper();
     int size = str.length();
-    if (size != 6) {
+    if (size != 7) {
         return nullptr;
     }
     bool shift = str[0] == 'S';
@@ -193,13 +266,89 @@ LC_MenuActivator* LC_MenuActivator::fromShortcut(QString& shortcut){
         return nullptr;
     }
 
-    bool requiresEntity = false;
-    if (str[5] == 'Y') {
-        requiresEntity = true;
-    }
+    bool requiresEntity = true;
+    RS2::EntityType entityType;
+    QString entityTypeStr;
+    entityTypeStr.append(str[5]).append(str[6]);
+    parseEntityType(entityTypeStr, requiresEntity, entityType);
 
-    auto* result = new LC_MenuActivator(str, ctrl, alt, shift, button, type, requiresEntity);
+    auto* result = new LC_MenuActivator(str, ctrl, alt, shift, button, type, requiresEntity, entityType);
     return result;
+}
+
+QString LC_MenuActivator::getEntityTypeStr() const {
+    if (m_requiresEntity) {
+        switch (m_entityType) {
+            case RS2::EntityUnknown: {
+                return "AE";
+            }
+            case RS2::EntityGraphic: {
+                return "EE";
+            }
+            case RS2::EntityLine: {
+                return "LI";
+            }
+            case RS2::EntityCircle: {
+                return "CI";
+            }
+            case RS2::EntityArc: {
+                return "AR";
+            }
+            case RS2::EntityPolyline: {
+                return "PL";
+            }
+            case RS2::EntitySpline: {
+                return "SL";
+            }
+            case RS2::EntitySplinePoints: {
+                return "SP";
+            }
+            case RS2::EntityEllipse: {
+                return "EL";
+            }
+            case RS2::EntityPoint: {
+                return "PO";
+            }
+            case RS2::EntityParabola: {
+                return "PA";
+            }
+            case RS2::EntityImage: {
+                return "IM";
+            }
+            case RS2::EntityHatch: {
+                return "HA";
+            }
+            case RS2::EntityInsert: {
+                return "IN";
+            }
+            case RS2::EntityDimLinear: {
+                return "DL";
+            }
+            case RS2::EntityDimAligned: {
+                return "DA";
+            }
+            case RS2::EntityDimDiametric: {
+                return "DD";
+            }
+            case RS2::EntityDimRadial: {
+                return "DR";
+            }
+            case RS2::EntityDimArc: {
+                return "DC";
+            }
+            case RS2::EntityDimOrdinate: {
+                return "DO";
+            }
+            case RS2::EntityDimLeader: {
+                return "LD";
+            }
+            default:
+                return "AE";
+        }
+    }
+    else {
+        return "NE";
+    }
 }
 
 void LC_MenuActivator::update() {
@@ -249,12 +398,8 @@ void LC_MenuActivator::update() {
         m_shortcutString.append("D");
     }
 
-    if (m_requiresEntity) {
-        m_shortcutString.append("Y");
-    }
-    else {
-        m_shortcutString.append("N");
-    }
+    QString entityTypeStr = getEntityTypeStr();
+    m_shortcutString.append(entityTypeStr);
 }
 
 void LC_MenuActivator::setKeys(bool ctrl, bool alt, bool shift) {
@@ -274,7 +419,7 @@ QString LC_MenuActivator::getShortcut() const {
     return m_shortcutString;
 }
 
-QString LC_MenuActivator::getShortcutView() {
+QString LC_MenuActivator::getEventView() {
     QString result = "";
     if (m_keyModifiers & CTRL) {
         result.append("CTRL+");
@@ -311,8 +456,104 @@ QString LC_MenuActivator::getShortcutView() {
     else {
         result.append(QObject::tr("Double-Click"));
     }
+    return result;
+}
+
+QString LC_MenuActivator::getShortcutView() {
+    QString result = getEventView();
+    result.append(" | ");
     if (m_requiresEntity) {
-        result.append("+" + QObject::tr("Entity"));
+        switch (m_entityType) {
+            case RS2::EntityUnknown: {
+                result.append(QObject::tr("Any"));
+                break;
+            }
+            case RS2::EntityGraphic: {
+                result.append(QObject::tr("Either"));
+                break;
+            }
+            case RS2::EntityLine: {
+                result.append(QObject::tr("Line"));
+                break;
+            }
+            case RS2::EntityCircle: {
+                result.append(QObject::tr("Circle"));
+                break;
+            }
+            case RS2::EntityArc: {
+                result.append(QObject::tr("Arc"));
+                break;
+            }
+            case RS2::EntityPolyline: {
+                result.append(QObject::tr("Polyline"));
+                break;
+            }
+            case RS2::EntitySpline: {
+                result.append(QObject::tr("Spline"));
+                break;
+            }
+            case RS2::EntitySplinePoints: {
+                result.append(QObject::tr("Spline by Points"));
+                break;
+            }
+            case RS2::EntityEllipse: {
+                result.append(QObject::tr("Ellipse"));
+                break;
+            }
+            case RS2::EntityPoint: {
+                result.append(QObject::tr("Point"));
+                break;
+            }
+            case RS2::EntityParabola: {
+                result.append(QObject::tr("Parabola"));
+                break;
+            }
+            case RS2::EntityImage: {
+                result.append(QObject::tr("Image"));
+                break;
+            }
+            case RS2::EntityHatch: {
+                result.append(QObject::tr("Hatch"));
+                break;
+            }
+            case RS2::EntityInsert: {
+                result.append(QObject::tr("Insert"));
+                break;
+            }
+            case RS2::EntityDimLinear: {
+                result.append(QObject::tr("Dim. Linear"));
+                break;
+            }
+            case RS2::EntityDimAligned: {
+                result.append(QObject::tr("Dim. Aligned"));
+                break;
+            }
+            case RS2::EntityDimDiametric: {
+                result.append(QObject::tr("Dim. Diametric"));
+                break;
+            }
+            case RS2::EntityDimRadial: {
+                result.append(QObject::tr("Dim. Radial"));
+                break;
+            }
+            case RS2::EntityDimArc: {
+                result.append(QObject::tr("Dim. Arc"));
+                break;
+            }
+            case RS2::EntityDimOrdinate: {
+                result.append(QObject::tr("Dim. Ordinate"));
+                break;
+            }
+            case RS2::EntityDimLeader: {
+                result.append(QObject::tr("Leader"));
+                break;
+            }
+            default:
+                result.append(QObject::tr("Any"));
+        }
+    }
+    else {
+       result.append(QObject::tr("None"));
     }
     return result;
 }
@@ -357,4 +598,12 @@ bool LC_MenuActivator::isEntityRequired() const {
 
 void LC_MenuActivator::setEntityRequired(bool value) {
     m_requiresEntity = value;
+}
+
+RS2::EntityType LC_MenuActivator::getEntityType() const {
+    return m_entityType;
+}
+
+void LC_MenuActivator::setEntityType(RS2::EntityType entityType) {
+    m_entityType = entityType;
 }

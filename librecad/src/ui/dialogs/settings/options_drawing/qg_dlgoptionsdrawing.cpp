@@ -959,8 +959,16 @@ void QG_DlgOptionsDrawing::setupPaperTab() {
     rbLandscape->blockSignals(false);
     if (format == RS2::Custom) {
         RS_Vector s = m_graphic->getPaperSize();
-        lePaperWidth->setText(QString("%1").setNum(s.x, 'g', 5));
-        lePaperHeight->setText(QString("%1").setNum(s.y, 'g', 5));
+        auto widthStr = QString("%1").setNum(s.x, 'g', 5);
+        auto heightStr = QString("%1").setNum(s.y, 'g', 5);
+
+        lePaperWidth->blockSignals(true);
+        lePaperHeight->blockSignals(true);
+        lePaperWidth->setText(widthStr);
+        lePaperHeight->setText(heightStr);
+        lePaperWidth->blockSignals(false);
+        lePaperHeight->blockSignals(false);
+
         lePaperWidth->setEnabled(true);
         lePaperHeight->setEnabled(true);
     } else {
@@ -1803,8 +1811,12 @@ void QG_DlgOptionsDrawing::updateUnitLabels() {
  * Updates paper preview with specified size and margins.
  */
 void QG_DlgOptionsDrawing::updatePaperPreview() {
-    double paperW = RS_Math::eval(lePaperWidth->text());
-    double paperH = RS_Math::eval(lePaperHeight->text());
+    auto paperWidthText = lePaperWidth->text();
+    auto paperHeightText = lePaperHeight->text();
+
+    double paperW = RS_Math::eval(paperWidthText);
+    double paperH = RS_Math::eval(paperHeightText);
+
     rbLandscape->blockSignals(true);
     if (paperW > paperH) {
         rbLandscape->setChecked(true);

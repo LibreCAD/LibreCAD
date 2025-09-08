@@ -36,11 +36,12 @@ namespace Ui {
 class LC_DlgMenuAssigner : public LC_Dialog {
     Q_OBJECT
 public:
+    void initEntityContextCombobox();
     explicit LC_DlgMenuAssigner(QWidget *parent, LC_MenuActivator* activator, QList<LC_MenuActivator*>* activators);
     ~LC_DlgMenuAssigner() override;
 public slots:
     void onKeyModifierToggled(bool checked);
-    void onContextEntityToggled(bool checked);
+    void onContextEntityCurrentIndexChanged(int currentIndex);
     void onEventTypeToggled(bool checked);
     void onBtnTypeToggled(bool checked);
 private:

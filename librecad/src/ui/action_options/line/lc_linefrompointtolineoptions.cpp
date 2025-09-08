@@ -139,9 +139,9 @@ void LC_LineFromPointToLineOptions::setSizeModelIndexToActionAndView(int index){
     ui->cbSizeMode->setCurrentIndex(index);
     bool intersectionMode = index == 0;
     ui->frmLength->setVisible(!intersectionMode);
-    ui->tbPickLength->setVisible(!intersectionMode);
+    ui->tbPickLength->setVisible(!intersectionMode && m_interactiveInputControlsVisible);
     ui->frmOffset->setVisible(intersectionMode);
-    ui->tbPickOffset->setVisible(intersectionMode);
+    ui->tbPickOffset->setVisible(intersectionMode && m_interactiveInputControlsVisible);
 }
 
 void LC_LineFromPointToLineOptions::setAngleToActionAndView(const QString& value){

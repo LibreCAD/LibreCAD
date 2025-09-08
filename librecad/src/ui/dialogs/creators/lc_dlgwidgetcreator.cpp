@@ -26,6 +26,7 @@
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QSettings>
+#include <locale>
 
 #include "lc_actiongroup.h"
 #include "lc_actiongroupmanager.h"
@@ -487,9 +488,56 @@ void LC_DlgWidgetCreator::loadCustomWidgets() {
 
         LC_GROUP(getSettingsGroupName());
         auto widgets = LC_CHILD_KEYS();
+
+        std::vector<std::pair<QString, LC_MenuActivator*>> activatorsList;
         for (auto key : widgets) {
-            QString message = createMenuItemDisplayName(key);
+            auto activator = findMenuActivator(key);
+            std::pair<QString, LC_MenuActivator*> pair(key, activator);
+            activatorsList.push_back(pair);
+        }
+
+        // sort by event, so activators for different entities yet for the same event will be located
+        // together in the list
+        std::sort(activatorsList.begin(), activatorsList.end(),
+              [](std::pair<QString, LC_MenuActivator*>& a, std::pair<QString, LC_MenuActivator*>& b) {
+                  LC_MenuActivator* a1 = a.second;
+                  LC_MenuActivator* a2 = b.second;
+                  if (a1 == nullptr) {
+                      if (a2 != nullptr) {
+                          return true;
+                      }
+                      else {
+                          return false;
+                      }
+                  }
+                  else if (a2 == nullptr) {
+                      return false;
+                  }
+                  else {
+                      auto event1 = a1->getEventView();
+                      auto event2 = a2->getEventView();
+                      if (event1 == event2) {
+                          bool ent1 = a1->isEntityRequired();
+                          bool ent2 = a2->isEntityRequired();
+                          if (ent1 != ent2) {
+                              return ent1;
+                          }
+                          else {
+                              return a1->getEntityType() < a2->getEntityType();
+                          }
+                      }
+                      else {
+                          return event1 < event2;
+                      }
+                  }
+              });
+
+        for (const auto p: activatorsList) {
+            auto key = p.first;
+            auto activator = p.second;
+            QString message = createMenuItemDisplayName(key, activator);
             ui->cbWidgetName->addItem(message, key);
+
         }
         LC_GROUP_END();
     }

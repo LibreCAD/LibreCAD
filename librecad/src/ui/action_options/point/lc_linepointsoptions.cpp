@@ -111,7 +111,7 @@ void LC_LinePointsOptions::doSetAction(RS_ActionInterface *a, bool update){
 
     ui->cbAngle->setVisible(showAllControls);
     ui->leAngle->setVisible(showAllControls);
-    ui->tbPickAngle->setVisible(showAllControls);
+    ui->tbPickAngle->setVisible(showAllControls && m_interactiveInputControlsVisible);
 
     ui->line_2->setVisible(showAllControls);
     ui->cbFixedDistance->setVisible(showAllControls);

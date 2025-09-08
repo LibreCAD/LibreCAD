@@ -963,7 +963,7 @@ void LC_ActionFactory::fillActionLists(QMap<QString, QAction *> &map){
                         "DimOrdinateReBase",
         // fixme - sand - restore as GDT will be supported
                         // "GTDFeatureFrame",
-                        "DimModify",
+                        // "DimModify",
                         "DimPickApply",
                         "DimRegenerate",
                         "DimStyles"

@@ -326,7 +326,7 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, RS_Document* doc, LC_ActionConte
         setContainer(doc);
         doc->setGraphicView(this);
         actionContext->setDocumentAndView(doc, this);
-            setDefaultAction(new RS_ActionDefault(actionContext));
+        setDefaultAction(new RS_ActionDefault(actionContext));
     }
 
     m_actionContext = actionContext;

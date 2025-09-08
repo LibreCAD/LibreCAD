@@ -89,7 +89,7 @@ void QG_LineRelAngleOptions::doSetAction(RS_ActionInterface* a, bool update) {
 
     ui->lAngle->setVisible(!fixedAngle);
     ui->leAngle->setVisible(!fixedAngle);
-    ui->tbPickAngle->setVisible(!fixedAngle);
+    ui->tbPickAngle->setVisible(!fixedAngle && m_interactiveInputControlsVisible);
 
     QString angle;
     QString length;

@@ -90,7 +90,7 @@ void LC_LineAngleRelOptions::doSetAction(RS_ActionInterface *a, bool update){
     }
     ui->leAngle->setVisible(!m_fixedAngle);
     ui->lblAngle->setVisible(!m_fixedAngle);
-    ui->tbPickAngle->setVisible(!m_fixedAngle);
+    ui->tbPickAngle->setVisible(!m_fixedAngle && m_interactiveInputControlsVisible);
     ui->cbRelativeAngle->setVisible(!m_fixedAngle);
     ui->lnAngleRight->setVisible(!m_fixedAngle);
 
@@ -187,7 +187,7 @@ void LC_LineAngleRelOptions::setLineSnapModeToActionAndView(int mode){
     bool notFreeSnap = mode != 0;
     ui->lblDistance->setVisible(notFreeSnap);
     ui->leDistance->setVisible(notFreeSnap);
-    ui->tbPickSnapDistance->setVisible(notFreeSnap);
+    ui->tbPickSnapDistance->setVisible(notFreeSnap && m_interactiveInputControlsVisible);
 }
 
 void LC_LineAngleRelOptions::onLengthEditingFinished(){

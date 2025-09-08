@@ -73,7 +73,11 @@ LC_DlgMenuAssigner::LC_DlgMenuAssigner(QWidget *parent, LC_MenuActivator* activa
         ui->rbEvtClickRelease->setChecked(true);
     }
 
-    ui->cbContextEntity->setChecked(m_activator->isEntityRequired());
+    initEntityContextCombobox();
+
+    QString entityTypeSuffix = m_activator->getEntityTypeStr();
+    int currentIndex = ui->cbEntityContext->findData(entityTypeSuffix);
+    ui->cbEntityContext->setCurrentIndex(currentIndex);
 
     connect(ui->cbKeyALt, &QCheckBox::toggled, this, &LC_DlgMenuAssigner::onKeyModifierToggled);
     connect(ui->cbKeyShift, &QCheckBox::toggled, this, &LC_DlgMenuAssigner::onKeyModifierToggled);
@@ -88,7 +92,7 @@ LC_DlgMenuAssigner::LC_DlgMenuAssigner(QWidget *parent, LC_MenuActivator* activa
     connect(ui->rbBtnBack, &QRadioButton::toggled, this, &LC_DlgMenuAssigner::onBtnTypeToggled);
     connect(ui->rbBtnForward, &QRadioButton::toggled, this, &LC_DlgMenuAssigner::onBtnTypeToggled);
     connect(ui->rbBtnTask, &QRadioButton::toggled, this, &LC_DlgMenuAssigner::onBtnTypeToggled);
-    connect(ui->cbContextEntity, &QCheckBox::toggled, this, &LC_DlgMenuAssigner::onContextEntityToggled);
+    connect(ui->cbEntityContext, &QComboBox::currentIndexChanged, this, &LC_DlgMenuAssigner::onContextEntityCurrentIndexChanged);
 
     ui->lblResult->installEventFilter(this);
     ui->gbInvocationShortcut->installEventFilter(this);
@@ -96,6 +100,31 @@ LC_DlgMenuAssigner::LC_DlgMenuAssigner(QWidget *parent, LC_MenuActivator* activa
     updateShortcutView();
 
     setWindowTitle(tr("Menu Assignment - \"%1\" Menu").arg(m_activator->getMenuName()));
+}
+
+void LC_DlgMenuAssigner::initEntityContextCombobox() {
+    ui->cbEntityContext->addItem(tr("Either Absent or Any Entity"), "EE");
+    ui->cbEntityContext->addItem(tr("Absent Entity"), "NE");
+    ui->cbEntityContext->addItem(tr("Any Entity"), "AE");
+    ui->cbEntityContext->addItem(tr("Line"), "LI");
+    ui->cbEntityContext->addItem(tr("Circle"), "CI");
+    ui->cbEntityContext->addItem(tr("Arc"), "AR");
+    ui->cbEntityContext->addItem(tr("Polyline"), "PL");
+    ui->cbEntityContext->addItem(tr("Spline"), "SL");
+    ui->cbEntityContext->addItem(tr("Spline By Points"), "SP");
+    ui->cbEntityContext->addItem(tr("Ellipse"), "EL");
+    ui->cbEntityContext->addItem(tr("Point"), "PO");
+    ui->cbEntityContext->addItem(tr("Parabola"), "PA");
+    ui->cbEntityContext->addItem(tr("Image"), "IM");
+    ui->cbEntityContext->addItem(tr("Hatch"), "HA");
+    ui->cbEntityContext->addItem(tr("Insert"), "IN");
+    ui->cbEntityContext->addItem(tr("Dimension Linear"), "DL");
+    ui->cbEntityContext->addItem(tr("Dimension Aligned"), "DA");
+    ui->cbEntityContext->addItem(tr("Dimension Diametric"), "DD");
+    ui->cbEntityContext->addItem(tr("Dimension Radial"), "DR");
+    ui->cbEntityContext->addItem(tr("Dimension Ordinate"), "DO");
+    ui->cbEntityContext->addItem(tr("Dimension Arc"), "DC");
+    ui->cbEntityContext->addItem(tr("Leader"), "LD");
 }
 
 LC_DlgMenuAssigner::~LC_DlgMenuAssigner(){
@@ -239,8 +268,16 @@ void LC_DlgMenuAssigner::onKeyModifierToggled([[maybe_unused]]bool checked) {
     updateShortcutView();
 }
 
-void LC_DlgMenuAssigner::onContextEntityToggled([[maybe_unused]]bool checked) {
-    m_activator->setEntityRequired(ui->cbContextEntity->isChecked());
+void LC_DlgMenuAssigner::onContextEntityCurrentIndexChanged([[maybe_unused]]int currentIndex) {
+    auto data = ui->cbEntityContext->itemData(currentIndex);
+    if (!data.isNull()) {
+        QString entityTypeStr = data.toString();
+        RS2::EntityType entityType {RS2::EntityUnknown};
+        bool requiresEntity = false;
+        m_activator->parseEntityType(entityTypeStr, requiresEntity, entityType);
+        m_activator->setEntityRequired(requiresEntity);
+        m_activator->setEntityType(entityType);
+    }
     updateShortcutView();
 }
 

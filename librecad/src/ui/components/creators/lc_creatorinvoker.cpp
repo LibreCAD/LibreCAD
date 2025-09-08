@@ -53,7 +53,7 @@ void createCustomMenuForFirstRunIfNeeded() {
         auto key = QString("CustomMenus/%1").arg(menuName);
         settings.setValue(key, list);
 
-        LC_MenuActivator zoomActivator("",false, false, false, LC_MenuActivator::MIDDLE, LC_MenuActivator::DOUBLE_CLICK, false);
+        LC_MenuActivator zoomActivator("",false, false, false, LC_MenuActivator::MIDDLE, LC_MenuActivator::DOUBLE_CLICK, false, RS2::EntityUnknown);
         zoomActivator.update();
         auto shortcut = zoomActivator.getShortcut();
         auto activatorKey = QString("Activators/%1").arg(shortcut);
@@ -152,39 +152,69 @@ void LC_CreatorInvoker::invokeMenuCreator() {
 }
 
 bool LC_CreatorInvoker::getMenuActionsForMouseEvent(QMouseEvent* event, RS_Entity* entity, QStringList& actions) {
-    LC_MenuActivator* activatorForEntity {nullptr};
-    LC_MenuActivator* activatorAny{nullptr};
+    LC_MenuActivator* activatorForEntityType {nullptr};
+    LC_MenuActivator* activatorForAnyEntity{nullptr};
+    LC_MenuActivator* activatorForEitherEntity{nullptr};
+    LC_MenuActivator* activatorForNoEntity{nullptr};
+    bool hasEntity = entity != nullptr;
+
+    RS2::EntityType entityType = RS2::EntityUnknown;
+    if (hasEntity) {
+        entityType = entity->rtti();
+    }
 
     for (auto a: m_menuActivators) {
         if (a->isEventApplicable(event)) {
+            RS2::EntityType activatorEntityType = a->getEntityType();
             if (a->isEntityRequired()) {
-                activatorForEntity = a;
-            }
-            else {
-                activatorAny = a;
-            }
-            if (entity == nullptr) {
-                if (activatorAny != nullptr) {
-                    break;
+                if (hasEntity) {
+                    if (activatorEntityType == RS2::EntityUnknown) {
+                        activatorForAnyEntity = a;
+                    }
+                    else if (activatorEntityType == entityType) {
+                        activatorForEntityType = a;
+                    }
+                    else if (activatorEntityType == RS2::EntityGraphic) {
+                        activatorForEitherEntity = a;
+                    }
+                }
+                else {
+                    if (activatorEntityType == RS2::EntityGraphic) {
+                        activatorForEitherEntity = a;
+                    }
                 }
             }
             else {
-                if (activatorAny != nullptr && activatorForEntity != nullptr) {
-                    break;
+                if (hasEntity) {
+                    continue;
+                }
+                else {
+                    activatorForNoEntity = a;
                 }
             }
         }
     }
 
-    LC_MenuActivator*  activatorToUse;
-    if (entity != nullptr) {
-        activatorToUse = activatorForEntity;
-        if (activatorToUse == nullptr) {
-            activatorToUse = activatorAny;
+    LC_MenuActivator*  activatorToUse {nullptr};
+
+    if (hasEntity) {
+        if (activatorForEntityType != nullptr) {
+            activatorToUse = activatorForEntityType;
+        }
+        else if (activatorForAnyEntity != nullptr) {
+            activatorToUse = activatorForAnyEntity;
+        }
+        else if (activatorForEitherEntity != nullptr) {
+            activatorToUse = activatorForEitherEntity;
         }
     }
     else {
-        activatorToUse = activatorAny;
+        if (activatorForNoEntity != nullptr) {
+            activatorToUse = activatorForNoEntity;
+        }
+        else if (activatorForEitherEntity != nullptr) {
+            activatorToUse = activatorForEitherEntity;
+        }
     }
 
     bool mayInvokeDefaultMenu = false;

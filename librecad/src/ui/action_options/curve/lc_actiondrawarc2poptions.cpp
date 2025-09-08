@@ -39,6 +39,7 @@ LC_ActionDrawArc2POptions::LC_ActionDrawArc2POptions(int actionType)
     ui->lHeight->setVisible(false);
     ui->lAngle->setVisible(false);
     ui->tbPickAngle->setVisible(false);
+    ui->tbPickDist->setVisible(m_interactiveInputControlsVisible);
 
     switch (actionType){
         case RS2::ActionDrawArc2PRadius: {
@@ -67,7 +68,7 @@ LC_ActionDrawArc2POptions::LC_ActionDrawArc2POptions(int actionType)
             m_optionNamePrefix = "Arc2PAngle";
             ui->tbPickDist->setToolTip(tr("Pick angle from drawing"));
             ui->tbPickDist->setVisible(false);
-            ui->tbPickAngle->setVisible(true);
+            ui->tbPickAngle->setVisible(true && m_interactiveInputControlsVisible);
             pickAngleSetup("angle", ui->tbPickAngle, ui->leValue);
             break;
         }

@@ -233,7 +233,9 @@ void LC_EventHandler::switchToDefaultAction() {
         m_QAction = nullptr;
     }
     m_graphicView->notifyCurrentActionChanged(RS2::ActionNone);
-    resumeAction(m_defaultAction);
+    if (m_defaultAction != nullptr) {
+        resumeAction(m_defaultAction);
+    }
 }
 
 /**

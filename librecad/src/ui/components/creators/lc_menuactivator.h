@@ -25,6 +25,7 @@
 #define LC_MENUACTIVATOR_H
 #include <QString>
 
+#include "lc_dlgdimension.h"
 
 class QMouseEvent;
 
@@ -51,7 +52,8 @@ public:
         SHIFT = 1 << 2
     };
 
-    LC_MenuActivator(const QString& shortcutString, bool ctrl, bool alt, bool shift, Button button, Type type, bool entityRequired);
+    LC_MenuActivator(const QString& shortcutString, bool ctrl, bool alt, bool shift, Button button, Type type,
+                     bool entityRequired, RS2::EntityType entityType);
     LC_MenuActivator(LC_MenuActivator& other);
     LC_MenuActivator();
     LC_MenuActivator* getCopy();
@@ -59,7 +61,9 @@ public:
     void setKeys(bool ctrl, bool alt, bool shift);
     bool isEventApplicable(QMouseEvent* event);
     bool isSameAs(LC_MenuActivator* other);
+    static void parseEntityType(QString entityTypeStr, bool& requiresEntity, RS2::EntityType& entityType);
     QString getShortcut() const;
+    QString getEventView();
     QString getShortcutView();
     void setButtonType(Button type);
     void setEventType(Type event);
@@ -68,15 +72,19 @@ public:
     Button getButtonType() const;
     bool hasKeys();
     static LC_MenuActivator* fromShortcut(QString& shortcut);
+    QString getEntityTypeStr() const;
     void update();
     void setMenuName(const QString& menuName);
     QString getMenuName() const;
     bool isEntityRequired() const;
     void setEntityRequired(bool value);
+    RS2::EntityType getEntityType()const;
+    void setEntityType(RS2::EntityType entityType);
 private:
     unsigned m_keyModifiers {NONE};
     Type m_eventType {CLICK_RELEASE};
     bool m_requiresEntity{false};
+    RS2::EntityType m_entityType{RS2::EntityUnknown};
     Button m_button;
     QString m_shortcutString;
     QString m_menuName;

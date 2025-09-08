@@ -93,7 +93,7 @@ void QG_LineAngleOptions::doSetAction(RS_ActionInterface *a, bool update){
     }
 
     ui->leAngle->setVisible(!angleIsFixed);
-    ui->tbPickAngle->setVisible(!angleIsFixed);
+    ui->tbPickAngle->setVisible(!angleIsFixed && m_interactiveInputControlsVisible);
     ui->lAngle->setVisible(!angleIsFixed);
 
     bool hasCustomAnglesBasis = m_action->hasNonDefaultAnglesBasis();
