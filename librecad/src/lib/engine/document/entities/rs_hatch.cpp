@@ -181,6 +181,7 @@ void RS_Hatch::update() {
 
     // Delete old hatch
     if (hatch) {
+        hatch->clear();  // Remove all children without deleting them (no ownership transfer yet)
         removeEntity(hatch);
         hatch = nullptr;
     }
@@ -203,7 +204,7 @@ void RS_Hatch::update() {
         try {
             LC_LoopUtils::LoopOptimizer optimizer{*this};
             m_orderedLoops = optimizer.GetResults();
-            if (!m_orderedLoops || m_orderedLoops->empty()) {
+            if (!m_orderedLoops || (m_orderedLoops->loop() == nullptr && m_orderedLoops->children().empty())) {
                 throw std::runtime_error("Optimization failed: empty loops");
             }
         } catch (const std::exception& e) {
@@ -258,8 +259,8 @@ void RS_Hatch::update() {
 
         // Scale and rotate pattern
         RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: scaling pattern");
-        pat->scale(RS_Vector(0.0, 0.0), RS_Vector(data.scale, data.scale));
-        pat->rotate(RS_Vector(0.0, 0.0), data.angle);
+        pat->scale(getCenter(), RS_Vector(data.scale, data.scale));
+        pat->rotate(getCenter(), data.angle);
         pat->calculateBorders();
         forcedCalculateBorders();
         RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: scaling pattern: OK");
@@ -281,16 +282,15 @@ void RS_Hatch::update() {
         }
 
         // Use LC_Loops to trim pattern entities and add to hatch
-        auto trimmedEntities = m_orderedLoops->trimPatternEntities(*pat);
-        for (auto* e : *trimmedEntities) {
+        auto trimmed = m_orderedLoops->trimPatternEntities(*pat);
+        for (auto* e : *trimmed) {
             e->setPen(hatch_pen);
             e->setLayer(hatch_layer);
             e->reparent(hatch);
             e->setFlag(RS2::FlagHatchChild);
-            hatch->addEntity(e);  // hatch owns e now
+            hatch->addEntity(e);  // hatch takes ownership
         }
-        // Release trimmedEntities to avoid double ownership; assuming it's a unique_ptr or container that owns
-        trimmedEntities.reset();  // If unique_ptr<RS_entityContainer>
+        trimmed->clear();  // Empty without deleting (since transferred)
     }
 
     addEntity(hatch);  // RS_Hatch owns hatch
@@ -323,7 +323,7 @@ void RS_Hatch::draw(RS_Painter* painter) {
     if (data.solid) {
         if (m_solidPath) {
             // Use cached shared path for filling
-            const QBrush brush(painter->getBrush());
+            const QBrush brush(painter->brush());
             const RS_Pen pen = painter->getPen();
             QBrush fillBrush = brush;
             fillBrush.setColor(pen.getColor());
@@ -371,7 +371,7 @@ void RS_Hatch::drawSolidFill(RS_Painter* painter) {
     painter->setPen(pen);
 }
 
-QPainterPath RS_Hatch::createSolidFillPath(RS_Painter* /*painter*/) const {
+QPainterPath RS_Hatch::createSolidFillPath() const {
     return m_orderedLoops ? m_orderedLoops->getPainterPath() : QPainterPath();
 }
 
@@ -385,36 +385,19 @@ void RS_Hatch::debugOutPath(const QPainterPath& tmpPath) const {
 }
 
 double RS_Hatch::getTotalArea() const {
-    if (m_area + RS_Math::ulp(m_area) < RS_MAXDOUBLE)
-        return m_area;
-    try {
-        getTotalAreaImpl();
-    } catch (...) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::getTotalAreaImpl() failure in finding hatch area");
-    }
-    return m_area;
-}
-
-double RS_Hatch::getTotalAreaImpl() const {
+    if (m_area + RS_Math::ulp(m_area) < RS_MAXDOUBLE) return m_area;
     if (needOptimization) {
-        LC_LoopUtils::LoopOptimizer optimizer{*const_cast<RS_Hatch*>(this)};
-        m_orderedLoops = optimizer.GetResults();
-        const_cast<RS_Hatch*>(this)->needOptimization = false;
+        const_cast<RS_Hatch*>(this)->update();  // Force update in non-const context if needed
     }
-
-    m_area = 0.;
-    if (m_orderedLoops) {
-        std::vector<const RS_EntityContainer*> loops;
-        m_orderedLoops->getAllLoops(loops);
-        for (const auto* loop : loops) {
-            m_area += loop->areaLineIntegral();
-        }
-    }
+    m_area = m_orderedLoops ? m_orderedLoops->getTotalArea() : 0.0;
     return m_area;
 }
 
-double RS_Hatch::getDistanceToPoint(const RS_Vector& coord, RS_Entity** entity,
-                                    RS2::ResolveLevel level, double solidDist) const {
+double RS_Hatch::getDistanceToPoint(
+    const RS_Vector& coord,
+    RS_Entity** entity,
+    RS2::ResolveLevel level,
+    double solidDist) const {
     if (data.solid == true) {
         if (entity) {
             *entity = const_cast<RS_Hatch*>(this);
@@ -473,7 +456,7 @@ void RS_Hatch::stretch(const RS_Vector& firstCorner, const RS_Vector& secondCorn
     update();
 }
 
-std::ostream& operator<<(std::ostream& os, const RS_Hatch& p) {
+std::ostream& operator << (std::ostream& os, const RS_Hatch& p) {
     os << " Hatch: " << p.getData() << "\n";
     return os;
 }

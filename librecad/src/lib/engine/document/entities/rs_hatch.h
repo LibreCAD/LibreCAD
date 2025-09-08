@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_HATCH_H
 #define RS_HATCH_H
 
@@ -116,9 +115,11 @@ public:
         data.solid = solid;
     }
 
-    QString getPatternName() const {
+    QString getPattern() const {
         return data.pattern;
     }
+
+    void setPattern(const QString& patternName);
 
     void setPatternName(const QString& patternName) {
         data.pattern = patternName;
@@ -180,7 +181,7 @@ private:
     void drawSolidFill(RS_Painter* painter);
     void debugOutPath(const QPainterPath& tmpPath) const;
     QPainterPath createSolidFillPath() const;
-    std::shared_ptr<QPainterPath> m_solidPath;  // Cached shared path for solid fills
+    std::shared_ptr<QPainterPath> m_solidPath; // Cached shared path for solid fills
 };
 
 #endif
