@@ -270,7 +270,7 @@ void LC_DimArrowRegistry::fillArrowBlockByEntities(RS_Block* block, ArrowType ar
         case open: {
             block->addByBlockLine({-1.0, 0.1667}, {0.0, 0.0});
             block->addByBlockLine({-1.0, 0.0}, {0.0, 0.0});
-            block->addByBlockLine({-1.0, 0.1667}, {0.0, 0.0});
+            block->addByBlockLine({-1.0, -0.1667}, {0.0, 0.0});
             break;
         }
         case right_angle: {
@@ -282,14 +282,14 @@ void LC_DimArrowRegistry::fillArrowBlockByEntities(RS_Block* block, ArrowType ar
         case open_30: {
             block->addByBlockLine({-1.0, 0.2679}, {0.0, 0.0});
             block->addByBlockLine({-1.0, 0.0}, {0.0, 0.0});
-            block->addByBlockLine({-1.0, 0.2679}, {0.0, 0.0});
+            block->addByBlockLine({-1.0, -0.2679}, {0.0, 0.0});
             break;
         }
         case closed: {
             block->addByBlockLine({0.0, 0.0}, {-1.0, 0.0});
             block->addByBlockLine({0.0, 0.0}, {-1.0, 0.1667});
             block->addByBlockLine({-1.0, 0.1667}, {-1.0, -0.1667});
-            block->addByBlockLine({-1.0, 0.1667}, {0.0, 0.0});
+            block->addByBlockLine({-1.0, -0.1667}, {0.0, 0.0});
             break;
         }
         case dot_small_blank: {
@@ -311,7 +311,8 @@ void LC_DimArrowRegistry::fillArrowBlockByEntities(RS_Block* block, ArrowType ar
         }
         case box: {
             block->addByBlockLine({0.5, -0.5}, {0.5, 0.5});
-            block->addByBlockLine({0.5, 0.5}, {0.5, -0.5});
+            block->addByBlockLine({0.5, 0.5}, {-0.5, 0.5});
+            block->addByBlockLine({-0.5, 0.5}, {-0.5, -0.5});
             block->addByBlockLine({-0.5, -0.5}, {0.5, -0.5});
             block->addByBlockLine({-0.5, 0.0}, {-1.0, 0.0});
             break;
@@ -319,7 +320,7 @@ void LC_DimArrowRegistry::fillArrowBlockByEntities(RS_Block* block, ArrowType ar
         case closed_blank: {
             block->addByBlockLine({0.0, 0.0}, {-1.0, 0.1667});
             block->addByBlockLine({-1.0, 0.1667}, {-1.0, -0.1667});
-            block->addByBlockLine({-1.0, 0.1667}, {0.0, 0.0});
+            block->addByBlockLine({-1.0, -0.1667}, {0.0, 0.0});
             break;
         }
         case datum_triangle_filled: {

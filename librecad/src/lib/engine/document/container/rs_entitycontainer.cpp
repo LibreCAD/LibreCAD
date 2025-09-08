@@ -1441,7 +1441,12 @@ RS_Vector RS_EntityContainer::getNearestIntersection(const RS_Vector &coord, dou
     if (closestEntity) {
         // fixme - sand - why not via traverser?
         for (RS_Entity *en = firstEntity(RS2::ResolveAllButTextImage);en;en = nextEntity(RS2::ResolveAllButTextImage)) {
-            if (!en->isVisible()|| en->getParent()->ignoredSnap()) {
+            auto parent = en->getParent();
+            bool ignoredSnap = false;
+            if (parent != nullptr) { // may be null in block editing?
+                ignoredSnap = parent->ignoredSnap();
+            }
+            if (!en->isVisible() || ignoredSnap) {
                 continue;
             }
 
