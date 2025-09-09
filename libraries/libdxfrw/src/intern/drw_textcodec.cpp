@@ -60,7 +60,8 @@ void DRW_TextCodec::setVersion(DRW::Version v, bool dxfFormat){
         case DRW::AC1027:
         case DRW::AC1032:
         {
-            version = DRW::AC1021;
+            // version = DRW::AC1021;
+            // fixme - check why version was limited there...
             if (dxfFormat)
                 cp = "UTF-8";//RLZ: can be UCS2 or UTF-16 16bits per char
             else

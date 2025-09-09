@@ -109,6 +109,9 @@ private:
     bool m_originalAllowsMenusTearOff;
     bool m_originalExpandedToolsMenu;
     bool m_originalExpandedToolsMenuTillEntity;
+    bool m_originalShowToolbarTooltips;
+
+    int m_initialLanguageGUIIdx{0};
 
     void init();
     void initComboBox(QComboBox* cb, const QString& text);

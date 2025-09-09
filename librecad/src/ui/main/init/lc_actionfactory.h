@@ -89,6 +89,8 @@ private:
     void createViewActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
     void createSelectActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void createEditActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) const;
+    void createDrawDimensionsUncheckable(QMap<QString, QAction*>& map, QActionGroup* group) const;
+    void createInteractivePickActions(QMap<QString, QAction*>& map, QActionGroup* group) const;
     void createWorkspacesActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
     void createNamedViewActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
 

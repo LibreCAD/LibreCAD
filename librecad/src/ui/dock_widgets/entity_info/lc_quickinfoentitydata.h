@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <QString>
 #include "lc_quickinfobasedata.h"
+#include "rs_dimension.h"
 #include "rs_mtext.h" // fixme - sand - files - extract enums to rs.h
 #include "rs_text.h"
 
@@ -135,29 +136,30 @@ protected:
     LC_PenInfoRegistry* m_penRegistry;
 
     void addProperty(const QString& name, const QString &valueStr, PropertyType type);
-    void collectLineProperties(const RS_Line* line);
-    void collectCircleProperties(const RS_Circle *circle);
+    void collectLineProperties(RS_Line* line);
+    void collectCircleProperties(RS_Circle *circle);
     void collectGenericProperties(RS_Entity *line);
-    void collectArcProperties(const RS_Arc *arc);
-    void collectEllipseProperties(const RS_Ellipse *ellipse);
-    void collectPointProperties(const RS_Point *point);
-    void collectPolylineProperties(const RS_Polyline *polyline);
-    void collectInsertProperties(const RS_Insert *insert);
+    void collectArcProperties(RS_Arc *arc);
+    void collectEllipseProperties( RS_Ellipse *ellipse);
+    void collectPointProperties(RS_Point *point);
+    void collectPolylineProperties(RS_Polyline *polyline);
+    void collectInsertProperties(RS_Insert *insert);
     void collectMTextProperties(RS_MText *pText);
-    void collectTextProperties(const RS_Text *text);
+    void collectTextProperties(RS_Text *text);
     void collectImageProperties(RS_Image *image);
-    void collectSplineProperties(const RS_Spline *spline);
+    void collectSplineProperties(RS_Spline *spline);
     void collectSplinePointsProperties(LC_SplinePoints *spline);
     void collectParabolaProperties(LC_Parabola *parabola);
     void collectHatchProperties(RS_Hatch *hatch);
-    void collectDimLeaderProperties(const RS_Leader *leader);
-    void collectDimArcProperties(const LC_DimArc *dim);
+    void collectDimLeaderProperties(RS_Leader *leader);
+    void collectDimArcProperties(LC_DimArc *dim);
     void collectDimAngularProperties(RS_DimAngular *dim);
     void collectDimDiametricProperties(RS_DimDiametric *dim);
     void collectDimRadialProperties(RS_DimRadial *dim);
-    void collectDimLinearProperties(const RS_DimLinear *dim);
+    QString getDimensionStyleString(RS_Dimension* dim);
+    void collectDimLinearProperties(RS_DimLinear *dim);
     void collectDimOrdinateProperties(LC_DimOrdinate* dim);
-    void collectDimAlignedProperties(const RS_DimAligned *dim);
+    void collectDimAlignedProperties(RS_DimAligned *dim);
     static QString getHAlignStr(RS_TextData::HAlign align);
     static QString getVAlignStr(RS_TextData::VAlign align);
     static QString getTextGenerationStr(RS_TextData::TextGeneration generation);
@@ -177,29 +179,29 @@ protected:
     void addVectorProperty(const QString& name, size_t count, const RS_Vector &value, PropertyType type=VECTOR);
     void addVectorProperty(QString name, int count, const QString &valueStr, const RS_Vector &coord, PropertyType type=VECTOR);
 
-    QString prepareGenericEntityDescription(const RS_Entity* en, const QString &entityName, RS2::EntityDescriptionLevel level);
-    QString prepareLineDescription(const RS_Line *line, RS2::EntityDescriptionLevel level);
-    QString prepareCircleDescription(const RS_Circle *line, RS2::EntityDescriptionLevel level);
-    QString prepareArcDescription(const RS_Arc *line, RS2::EntityDescriptionLevel level);
-    QString prepareEllipseDescription(const RS_Ellipse *line, RS2::EntityDescriptionLevel level);
-    QString preparePointDescription(const RS_Point *point, RS2::EntityDescriptionLevel level);
-    QString preparePolylineDescription(const RS_Polyline *polyline, RS2::EntityDescriptionLevel level);
-    QString prepareInsertDescription(const RS_Insert *insert, RS2::EntityDescriptionLevel level);
+    QString prepareGenericEntityDescription(RS_Entity* en, const QString &entityName, RS2::EntityDescriptionLevel level);
+    QString prepareLineDescription(RS_Line *line, RS2::EntityDescriptionLevel level);
+    QString prepareCircleDescription(RS_Circle *line, RS2::EntityDescriptionLevel level);
+    QString prepareArcDescription(RS_Arc *line, RS2::EntityDescriptionLevel level);
+    QString prepareEllipseDescription(RS_Ellipse *line, RS2::EntityDescriptionLevel level);
+    QString preparePointDescription(RS_Point *point, RS2::EntityDescriptionLevel level);
+    QString preparePolylineDescription(RS_Polyline *polyline, RS2::EntityDescriptionLevel level);
+    QString prepareInsertDescription(RS_Insert *insert, RS2::EntityDescriptionLevel level);
     QString prepareMTextDescription(RS_MText *pText, RS2::EntityDescriptionLevel level);
-    QString prepareTextDescription(const RS_Text *text, RS2::EntityDescriptionLevel level);
+    QString prepareTextDescription(RS_Text *text, RS2::EntityDescriptionLevel level);
     QString prepareImageDescription(RS_Image *image, RS2::EntityDescriptionLevel level);
-    QString prepareSplineDescription(const RS_Spline *spline, RS2::EntityDescriptionLevel level);
+    QString prepareSplineDescription(RS_Spline *spline, RS2::EntityDescriptionLevel level);
     QString prepareSplinePointsDescription(LC_SplinePoints *spline, RS2::EntityDescriptionLevel level);
     QString prepareParabolaDescription(LC_Parabola *parabola, RS2::EntityDescriptionLevel level);
     QString prepareHatchDescription(RS_Hatch *hatch, RS2::EntityDescriptionLevel level);
-    QString prepareDimLeaderDescription(const RS_Leader *leader, RS2::EntityDescriptionLevel level);
-    QString prepareDimArcDescription(const LC_DimArc *dim, RS2::EntityDescriptionLevel level);
-    QString prepareDimAngularDescription(const RS_DimAngular *dim, RS2::EntityDescriptionLevel level);
+    QString prepareDimLeaderDescription(RS_Leader *leader, RS2::EntityDescriptionLevel level);
+    QString prepareDimArcDescription(LC_DimArc *dim, RS2::EntityDescriptionLevel level);
+    QString prepareDimAngularDescription(RS_DimAngular *dim, RS2::EntityDescriptionLevel level);
     QString prepareDimDiametricDescription(RS_DimDiametric *dim, RS2::EntityDescriptionLevel level);
     QString prepareDimRadialDescription(RS_DimRadial *dim, RS2::EntityDescriptionLevel level);
-    QString prepareDimLinearDescription(const RS_DimLinear *dim, RS2::EntityDescriptionLevel level);
-    QString prepareDimOrdinateDescription(const LC_DimOrdinate *dim, RS2::EntityDescriptionLevel level);
-    QString prepareDimAlignedDescription(const RS_DimAligned *dim, RS2::EntityDescriptionLevel level);
+    QString prepareDimLinearDescription(RS_DimLinear *dim, RS2::EntityDescriptionLevel level);
+    QString prepareDimOrdinateDescription(LC_DimOrdinate *dim, RS2::EntityDescriptionLevel level);
+    QString prepareDimAlignedDescription(RS_DimAligned *dim, RS2::EntityDescriptionLevel level);
 };
 
 #endif // LC_QUICKINFOENTITYDATA_H

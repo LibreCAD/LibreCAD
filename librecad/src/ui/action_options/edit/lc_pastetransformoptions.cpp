@@ -37,6 +37,11 @@ LC_PasteTransformOptions::LC_PasteTransformOptions()
     connect(ui->sbArrayX, &QSpinBox::valueChanged, this, &LC_PasteTransformOptions::onArrayXCountChanged);
     connect(ui->sbArrayY, &QSpinBox::valueChanged, this, &LC_PasteTransformOptions::onArrayYCountChanged);
     connect(ui->cbSameAngles, &QCheckBox::clicked, this, &LC_PasteTransformOptions::cbSameAnglesClicked);
+
+    pickDistanceSetup("spacingX", ui->tbPickArraySpacingX, ui->leArraySpacingX);
+    pickDistanceSetup("spacingY", ui->tbPickArraySpacingY, ui->leArraySpacingY);
+    pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);
+    pickAngleSetup("arrayAngle", ui->tbPickArrayAngle, ui->leArrayAngle);
 }
 
 LC_PasteTransformOptions::~LC_PasteTransformOptions(){delete ui;}
@@ -124,11 +129,19 @@ void LC_PasteTransformOptions::setIsArrayToActionAndView(bool val) {
     ui->leArraySpacingY->setEnabled(val);
     ui->leArrayAngle->setEnabled(val);
     ui->cbSameAngles->setEnabled(val);
+
+    ui->tbPickArraySpacingX->setEnabled(val);
+    ui->tbPickArraySpacingY->setEnabled(val);
+    ui->tbPickArrayAngle->setEnabled(val);
+
     if (val){
-        ui->leAngle->setEnabled(!ui->cbSameAngles->isChecked());
+        bool differentAngles = !ui->cbSameAngles->isChecked();
+        ui->leAngle->setEnabled(differentAngles);
+        ui->tbPickAngle->setEnabled(differentAngles);
     }
     else{
         ui->leAngle->setEnabled(true);
+        ui->tbPickAngle->setEnabled(true);
     }
 }
 

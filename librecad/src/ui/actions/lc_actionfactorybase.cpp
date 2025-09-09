@@ -33,10 +33,12 @@ LC_ActionFactoryBase::LC_ActionFactoryBase(QC_ApplicationWindow* parent, QG_Acti
     QObject(parent), LC_AppWindowAware(parent),m_actionHandler(a_handler){
 }
 
-QAction *LC_ActionFactoryBase::createAction_MW(const char *name, void (QC_ApplicationWindow::*slotPtr)(), void (QC_ApplicationWindow::*slotBoolPtr)(bool),const QString& text,
-                                           const char *iconName, const char *themeIconName,
-                                           QActionGroup *parent, QMap<QString, QAction *> &a_map, bool useToggled) const {
-    QAction *action = justCreateAction(a_map, name, text, iconName, themeIconName, parent);
+QAction* LC_ActionFactoryBase::createAction_MW(const char* name, void (QC_ApplicationWindow::*slotPtr)(),
+                                               void (QC_ApplicationWindow::*slotBoolPtr)(bool), const QString& text,
+                                               const char* iconName, const char* themeIconName,
+                                               QActionGroup* parent, QMap<QString, QAction*>& a_map,
+                                               bool useToggled) const {
+    QAction* action = justCreateAction(a_map, name, text, iconName, themeIconName, parent);
     if (slotPtr != nullptr) {
         if (useToggled) {
             connect(action, &QAction::toggled, m_appWin, slotPtr);
@@ -81,6 +83,7 @@ QAction *LC_ActionFactoryBase::justCreateAction(QMap<QString, QAction *> &a_map,
     }
     action->setObjectName(name);
     action->setIconVisibleInMenu(true);
+    action->setActionGroup(parent);
     a_map.insert(name, action);
     return action;
 }
@@ -125,7 +128,7 @@ void LC_ActionFactoryBase::addActionsToMainWindow(const QMap<QString, QAction *>
 
 void LC_ActionFactoryBase::createActionGroups(const std::vector<ActionGroupInfo>& actionGroups,LC_ActionGroupManager* actionGroupManager) const {
     for (const ActionGroupInfo& groupInfo : actionGroups) {
-        auto group = new LC_ActionGroup(actionGroupManager, groupInfo.name, groupInfo.description, groupInfo.iconName);
+        auto group = new LC_ActionGroup(actionGroupManager, groupInfo.name, groupInfo.title, groupInfo.description, groupInfo.iconName);
         actionGroupManager->addActionGroup(groupInfo.name, group, groupInfo.isToolGroup);
     }
 }

@@ -27,6 +27,7 @@
 #ifndef RS_ACTIONDIMENSION_H
 #define RS_ACTIONDIMENSION_H
 
+#include "rs.h"
 #include "rs_previewactioninterface.h"
 
 struct RS_DimensionData;
@@ -39,7 +40,7 @@ struct RS_DimensionData;
 class RS_ActionDimension:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionDimension(const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType = RS2::ActionNone);
+    RS_ActionDimension(const char *name, LC_ActionContext *actionContext, RS2::EntityType dimType, RS2::ActionType actionType = RS2::ActionNone);
     ~RS_ActionDimension() override;
     void init(int status) override;
 
@@ -55,11 +56,14 @@ public:
     void setDiameter(bool d);
     static bool isDimensionAction(RS2::ActionType type);
     void resume() override; // fixme - sand - check?
+    void setDimStyleName(const QString& styleName);
+    QString getDimStyleName();
 protected:
     /**
      * Generic dimension data.
      */
     std::unique_ptr<RS_DimensionData> m_dimensionData;
+    RS2::EntityType m_dimTypeToCreate;
     QString m_label;
     QString m_tol1;
     QString m_tol2;

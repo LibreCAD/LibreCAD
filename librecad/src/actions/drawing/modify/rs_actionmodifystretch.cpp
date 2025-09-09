@@ -40,7 +40,8 @@ struct RS_ActionModifyStretch::StretchActionData {
 };
 
 RS_ActionModifyStretch::RS_ActionModifyStretch(LC_ActionContext *actionContext)
-    :RS_PreviewActionInterface("Stretch Entities", actionContext, RS2::ActionModifyStretch), m_actionData(std::make_unique<StretchActionData>()){
+    :RS_PreviewActionInterface("Stretch Entities", actionContext, RS2::ActionModifyStretch),
+    m_actionData(std::make_unique<StretchActionData>()){
 }
 
 void RS_ActionModifyStretch::init(int status) {

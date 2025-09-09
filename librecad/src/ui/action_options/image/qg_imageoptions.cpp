@@ -39,6 +39,8 @@ QG_ImageOptions::QG_ImageOptions()
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &QG_ImageOptions::onAngleEditingFinished);
     connect(ui->leFactor, &QLineEdit::editingFinished, this, &QG_ImageOptions::onFactorEditingFinished);
     connect(ui->leDPI, &QLineEdit::editingFinished, this, &QG_ImageOptions::onDpiEditingFinished);
+
+    pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);
 }
 
 /*

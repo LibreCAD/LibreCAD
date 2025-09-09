@@ -40,11 +40,34 @@ QG_WidgetPen::QG_WidgetPen(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
 {
     setupUi(this);
+    connect(cbColor, &QG_ColorBox::colorChanged, this, &QG_WidgetPen::onColorChanged);
+    connect(cbWidth, &QG_WidthBox::widthChanged, this, &QG_WidgetPen::onWidthChanged);
+    connect(cbLineType, &QG_LineTypeBox::lineTypeChanged, this, &QG_WidgetPen::onLineTypeChanged);
 //    cbColor->setFocusPolicy(Qt::StrongFocus);
 //    cbWidth->setFocusPolicy(Qt::StrongFocus);
 //    cbLineType->setFocusPolicy(Qt::StrongFocus);
 //    setTabOrder(cbColor, cbWidth); // cbColor to cbWidth
 //    setTabOrder(cbWidth, cbLineType); // cbColor to cbWidth to cbLineType
+}
+
+void QG_WidgetPen::disableVerticalSpacer() {
+    vsSpacerVertical->changeSize(0,0);
+}
+
+void QG_WidgetPen::onColorChanged([[maybe_unused]]const RS_Color& color) {
+    notifyPenChanged();
+}
+
+void QG_WidgetPen::onWidthChanged(RS2::LineWidth) {
+    notifyPenChanged();
+}
+
+void QG_WidgetPen::onLineTypeChanged(RS2::LineType) {
+    notifyPenChanged();
+}
+
+void QG_WidgetPen::notifyPenChanged() {
+    emit penChanged();
 }
 
 void QG_WidgetPen::setPen(RS_Pen pen, bool showByLayer, 
@@ -80,7 +103,6 @@ void QG_WidgetPen::setPen(RS_Entity* entity, RS_Layer* layer, const QString &tit
 
     setPen(entityResolvedPen, layer, title);
 }
-
 
 void QG_WidgetPen::setPen(RS_Pen pen, RS_Layer* layer, bool showUnchanged, const QString &title){
     setPen(pen, true, showUnchanged, title);

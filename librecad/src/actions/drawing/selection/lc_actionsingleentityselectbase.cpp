@@ -23,6 +23,7 @@
 
 #include "lc_actionsingleentityselectbase.h"
 
+#include "lc_actioncontext.h"
 #include "lc_dimordinate.h"
 #include "rs_document.h"
 
@@ -34,15 +35,14 @@ LC_ActionSingleEntitySelectBase::LC_ActionSingleEntitySelectBase(const char* nam
 
 LC_ActionSingleEntitySelectBase::~LC_ActionSingleEntitySelectBase() = default;
 
-
-
 void LC_ActionSingleEntitySelectBase::updateMouseButtonHints() {
      updateMouseWidgetTRCancel(doGetMouseButtonHint());
 }
 
-void LC_ActionSingleEntitySelectBase::init(int status) {
-    RS_PreviewActionInterface::init(status);
-    if (status == SetEntity) {
+
+void LC_ActionSingleEntitySelectBase::doInitialInit() {
+    auto contextEntity = m_actionContext->getContextMenuActionContextEntity();
+    if (contextEntity == nullptr) { // proceed selection if we have no context menu entity
         std::vector<RS_Entity*> selectedEntities;
         m_document->collectSelected(selectedEntities, false, {RS2::EntityDimOrdinate});
         if (selectedEntities.size() == 1) {
@@ -52,6 +52,13 @@ void LC_ActionSingleEntitySelectBase::init(int status) {
                 trigger();
             }
         }
+    }
+}
+
+void LC_ActionSingleEntitySelectBase::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
+    if (doCheckMaySelectEntity(contextEntity)) {
+        m_entity = contextEntity;
+        trigger();
     }
 }
 

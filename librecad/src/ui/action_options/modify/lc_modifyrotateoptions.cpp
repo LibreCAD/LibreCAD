@@ -42,6 +42,9 @@ LC_ModifyRotateOptions::LC_ModifyRotateOptions()
 
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_ModifyRotateOptions::onAngleEditingFinished);
     connect(ui->leAngle2, &QLineEdit::editingFinished, this,&LC_ModifyRotateOptions::onRefPointAngleEditingFinished);
+
+    pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);
+    pickAngleSetup("angle2", ui->tbPickAngle2, ui->leAngle2);
 }
 
 LC_ModifyRotateOptions::~LC_ModifyRotateOptions(){
@@ -98,10 +101,13 @@ void LC_ModifyRotateOptions::updateUI(int mode) {
 }
 
 void LC_ModifyRotateOptions::allowSecondRotationUI(bool enable) {
-    ui->leAngle2->setEnabled(enable && !ui->cbFreeRefAngle->isChecked());
+    bool enableSecondAngle = enable && !ui->cbFreeRefAngle->isChecked();
+    ui->leAngle2->setEnabled(enableSecondAngle);
+    ui->tbPickAngle2->setEnabled(enableSecondAngle);
     ui->cbTwoRotations->setEnabled(enable);
     ui->cbFreeRefAngle->setEnabled(enable);
     ui->cbAbsoluteRefAngle->setEnabled(enable);
+
 }
 
 void LC_ModifyRotateOptions::doSetAction(RS_ActionInterface *a, bool update) {
@@ -204,9 +210,11 @@ void LC_ModifyRotateOptions::setFreeAngleToActionAndView(bool val) {
     m_action->setFreeAngle(val);
     if (val){
         ui->leAngle->setEnabled(false);
+        ui->tbPickAngle->setEnabled(false);
     }
     else{
         ui->leAngle->setEnabled(true);
+        ui->tbPickAngle->setEnabled(true);
     }
 }
 
@@ -219,6 +227,7 @@ void LC_ModifyRotateOptions::setFreeRefAngleToActionAndView(bool checked) {
     ui->cbFreeRefAngle->setChecked(checked);
     if (ui->cbTwoRotations->isChecked()) {
         ui->leAngle2->setEnabled(!checked);
+        ui->tbPickAngle2->setEnabled(!checked);
     }
     m_action->setFreeRefPointAngle(checked);
 }

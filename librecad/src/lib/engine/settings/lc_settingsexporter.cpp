@@ -29,47 +29,25 @@
 #include <QMessageBox>
 #include <QSettings>
 
+#include "lc_filenameselectionservice.h"
 #include "rs_settings.h"
 #include "rs_system.h"
 
+
+namespace{
+    const QString G_SETTINGS_FILE_TYPE = "LibreCAD settings file";
+    const QString G_KEY_FILE_TYPE = "_lc_file_type";
+}
+
 bool LC_SettingsExporter::obtainFileName(QWidget *parent, QString &fileName, bool forRead){
-    LC_GROUP("Export");
-    QString defDir = LC_GET_STR("ExportSettingsDir", RS_SYSTEM->getHomeDir());
-    LC_GROUP_END();
-
-    bool useQtFileDialog = LC_GET_ONE_BOOL("Defaults","UseQtFileOpenDialog");
-
-    const QString defaultExtension{"lcs"};
-    const auto defaultFilter = tr("LibreCAD settings file (*.%1)").arg(defaultExtension);
-
-    QFileDialog fileDlg(parent, forRead ? tr("Import settings")  : tr("Export Settings"));
-    fileDlg.setDefaultSuffix(defaultExtension);
-    fileDlg.setNameFilter(defaultFilter);
-    fileDlg.setFileMode(forRead ? QFileDialog::ExistingFile : QFileDialog::AnyFile);
-    fileDlg.selectNameFilter(defaultFilter);
-    fileDlg.setAcceptMode(forRead ? QFileDialog::AcceptOpen : QFileDialog::AcceptSave);
-    fileDlg.setOption(QFileDialog::DontUseNativeDialog, useQtFileDialog);
-    fileDlg.setDirectory(defDir);
-    fileDlg.selectFile("LCSettings");
-
-    bool proceed = false;
-    if (fileDlg.exec() == QDialog::Accepted) {
-        QStringList files = fileDlg.selectedFiles();
-        if (!files.isEmpty()) {
-            fileName = files.front();
-            if (!fileName.endsWith(".lcs")) {
-                fileName = fileName + ".lcs";
-            }
-            proceed = true;
-        }
-    }
-    return proceed;
+    return LC_FileNameSelectionService::doObtainFileName(parent, fileName, forRead, "lcs",
+            "LCSettings", tr("Import settings"),  tr("Export Settings"),
+            tr("LibreCAD settings file (*.%1)"));
 }
 
 bool LC_SettingsExporter::exportSettings(QWidget* parent){
     QString fileName;
-    if (!obtainFileName(parent, fileName, false)) {
-        QMessageBox::critical(parent, tr("Settings Export"), tr("Can't open provided file for writing - check that provided location is writable. Preferences were not exported."));
+    if (!obtainFileName(parent, fileName, false)) { // file dialog cancelled
         return false;
     }
 
@@ -87,7 +65,7 @@ bool LC_SettingsExporter::exportSettings(QWidget* parent){
     }
 
     QJsonObject objSettings;
-    objSettings.insert("type", QJsonValue::fromVariant("LibreCAD settings file"));
+    objSettings.insert(G_KEY_FILE_TYPE, QJsonValue::fromVariant(G_SETTINGS_FILE_TYPE));
     objSettings.insert("groups", objGroups);
     QJsonDocument doc(objSettings);
     QFile jsonFile{fileName};
@@ -119,7 +97,7 @@ bool LC_SettingsExporter::importSettings(QWidget *parent) {
         QMessageBox::critical(parent, tr("Settings Import Error"), tr("Unexpected error during preferences parsing. Message:") + parseError.errorString());
         return false;
     }
-    if (!doc.isObject() || doc.object().value("type").toString() != "LibreCAD settings file") {
+    if (!doc.isObject() || doc.object().value(G_KEY_FILE_TYPE).toString() != G_SETTINGS_FILE_TYPE) {
         QMessageBox::critical(parent, tr("Settings Import Error"), tr("Unexpected format of file, it does not contains LibreCAD preferences."));
         return false;
     }

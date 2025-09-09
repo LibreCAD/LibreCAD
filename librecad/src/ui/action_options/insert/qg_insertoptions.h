@@ -41,7 +41,6 @@ class QG_InsertOptions : public LC_ActionOptionsWidgetBase{
 public:
     QG_InsertOptions();
     ~QG_InsertOptions() override;
-
 protected slots:
     void languageChange() override;
     void onAngleEditingFinished();
@@ -55,7 +54,7 @@ protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
 private:
-	    std::unique_ptr<Ui::Ui_InsertOptions> ui;
+    std::unique_ptr<Ui::Ui_InsertOptions> ui;
     void setAngleToActionAndView(QString val);
     void setFactorToActionAndView(QString val);
     void setColumnSpacingActionAndView(QString val);

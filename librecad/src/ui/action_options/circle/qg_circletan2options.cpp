@@ -28,9 +28,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 QG_CircleTan2Options::QG_CircleTan2Options()
     : LC_ActionOptionsWidgetBase(RS2::ActionDrawCircleTan2,"Draw", "CircleTan2")
-	 , ui(new Ui::Ui_CircleTan2Options{}){
+     , m_action{nullptr}, ui(new Ui::Ui_CircleTan2Options{}){
     ui->setupUi(this);
     connect(ui->leRadius, &QLineEdit::editingFinished, this, &QG_CircleTan2Options::onRadiusEditingFinished);
+    pickDistanceSetup("radius", ui->tbPickRadius, ui->leRadius);
 }
 
 /*
@@ -51,7 +52,6 @@ void QG_CircleTan2Options::doSaveSettings(){
 }
 
 void QG_CircleTan2Options::doSetAction(RS_ActionInterface *a, bool update){
-
     m_action = dynamic_cast<RS_ActionDrawCircleTan2 *>(a);
     QString radius;
     if (update){
@@ -61,7 +61,6 @@ void QG_CircleTan2Options::doSetAction(RS_ActionInterface *a, bool update){
     }
     setRadiusToActionAndView(radius);
 }
-
 
 void QG_CircleTan2Options::setRadiusToActionAndView(QString val){
     double radius;

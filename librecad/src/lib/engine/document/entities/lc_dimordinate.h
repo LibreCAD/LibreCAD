@@ -33,6 +33,10 @@ struct LC_DimOrdinateData {
           ordinateForX{ordinateX} {
     }
 
+    LC_DimOrdinateData(const LC_DimOrdinateData& other)
+      :featurePoint{other.featurePoint}, leaderEndPoint{other.leaderEndPoint}, ordinateForX{other.ordinateForX}{
+    }
+
     ~LC_DimOrdinateData();
 
     RS_Vector featurePoint{false};
@@ -48,6 +52,7 @@ public:
     LC_DimOrdinate(RS_EntityContainer* parent,
                    const RS_DimensionData& d,
                    const LC_DimOrdinateData& ed);
+    LC_DimOrdinate(const LC_DimOrdinate& other);
 
     ~LC_DimOrdinate() override = default;
 

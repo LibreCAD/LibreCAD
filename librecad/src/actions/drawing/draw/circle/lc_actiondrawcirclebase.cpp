@@ -39,9 +39,9 @@ void LC_ActionDrawCircleBase::onMouseRightButtonRelease(int status, [[maybe_unus
 }
 
 void LC_ActionDrawCircleBase::init(int status) {
-    RS_PreviewActionInterface::init(status);
     reset(); // fixme - review implmentation in inherited actions
     m_moveRelPointAtCenterAfterTrigger = true; // todo - read from options?
+    RS_PreviewActionInterface::init(status);
 }
 
 // fixme - resume method - re-read from options

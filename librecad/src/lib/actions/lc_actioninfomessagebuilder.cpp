@@ -39,6 +39,11 @@ LC_ActionInfoMessageBuilder& LC_ActionInfoMessageBuilder::relative(const QString
     return *this;
 }
 
+LC_ActionInfoMessageBuilder& LC_ActionInfoMessageBuilder::polar(const QString& name, const RS_Vector& value) {
+    add(name, m_action->formatPolar(value));
+    return *this;
+}
+
 LC_ActionInfoMessageBuilder& LC_ActionInfoMessageBuilder::relativePolar(const QString& name, const RS_Vector& value) {
     add(name, m_action->formatRelativePolar(value));
     return *this;
@@ -72,5 +77,6 @@ LC_ActionInfoMessageBuilder& LC_ActionInfoMessageBuilder::linear(const QString& 
 void LC_ActionInfoMessageBuilder::toInfoCursorZone2(bool replace) {
     QString message = toString();
     m_action->appendInfoCursorZoneMessage(message, 2, replace);
-    clear();
+    cleanup();
+    message = toString();
 }

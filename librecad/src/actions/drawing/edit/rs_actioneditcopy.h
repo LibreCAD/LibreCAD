@@ -47,7 +47,7 @@ protected:
   * Action States.
   */
     enum Status {
-        SetReferencePoint    /**< Setting the reference point. */
+        SetReferencePoint = InitialActionStatus    /**< Setting the reference point. */
     };
 
     bool m_invokedWithControl = false;

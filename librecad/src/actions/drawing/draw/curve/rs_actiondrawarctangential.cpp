@@ -25,6 +25,7 @@
 **********************************************************************/
 #include "rs_actiondrawarctangential.h"
 
+#include "lc_actioncontext.h"
 #include "qg_arctangentialoptions.h"
 #include "rs_arc.h"
 #include "rs_debug.h"
@@ -45,9 +46,8 @@ void RS_ActionDrawArcTangential::reset() {
     m_alternateArc = false;
 }
 
-void RS_ActionDrawArcTangential::init(int status) {
-    RS_PreviewActionInterface::init(status);
-    //reset();
+void RS_ActionDrawArcTangential::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPosition) {
+    setBaseEntity(contextEntity, m_actionContext->getContextMenuActionClickPosition());
 }
 
 void RS_ActionDrawArcTangential::doTrigger() {
@@ -68,7 +68,28 @@ void RS_ActionDrawArcTangential::doTrigger() {
     undoCycleAdd(arc);
 
     setStatus(SetBaseEntity);
+    double oldRadius = m_arcData->radius;
+
     reset();
+    if (m_byRadius) {
+        m_arcData->radius = oldRadius;
+    }
+}
+
+bool RS_ActionDrawArcTangential::doUpdateAngleByInteractiveInput(const QString& tag, double angle) {
+    if (tag == "angle") {
+        setAngle(angle);
+        return true;
+    }
+    return false;
+}
+
+bool RS_ActionDrawArcTangential::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "radius") {
+        setRadius(distance);
+        return true;
+    }
+    return false;
 }
 
 void RS_ActionDrawArcTangential::preparePreview() {
@@ -92,7 +113,7 @@ void RS_ActionDrawArcTangential::preparePreview() {
         }
         if (suc) {
             m_arcData.reset(new RS_ArcData(arc.getData()));
-            if (m_byRadius){
+            if (!m_byRadius){
                 updateOptionsRadius(arc.getRadius());
             }
             else {
@@ -108,10 +129,8 @@ void RS_ActionDrawArcTangential::onMouseMoveEvent(int status, LC_MouseEvent *e) 
         case SetBaseEntity: {
             deleteSnapper();
             auto entity = catchAndDescribe(e, RS2::ResolveAll);
-            if (entity != nullptr){
-                if (entity->isAtomic()){
-                    highlightHover(entity);
-                }
+            if (isAtomic(entity)){
+                highlightHover(entity);
             }
             break;
         }
@@ -183,29 +202,31 @@ RS_Vector RS_ActionDrawArcTangential::forecastArcCenter() const{
     return center;
 }
 
+void RS_ActionDrawArcTangential::setBaseEntity(RS_Entity* entity, RS_Vector coord) {
+    if (isAtomic(entity)) {
+        m_baseEntity = dynamic_cast<RS_AtomicEntity*>(entity);
+        const RS_Vector& startPoint = m_baseEntity->getStartpoint();
+        const RS_Vector& endPoint = m_baseEntity->getEndpoint();
+        if (startPoint.distanceTo(coord) < endPoint.distanceTo(coord)) {
+            m_isStartPoint = true;
+            m_arcStartPoint = startPoint;
+        }
+        else {
+            m_isStartPoint = false;
+            m_arcStartPoint = endPoint;
+        }
+        setStatus(SetEndAngle);
+        updateMouseButtonHints();
+    }
+}
+
 void RS_ActionDrawArcTangential::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         // set base entity:
         case SetBaseEntity: {
             RS_Vector coord = e->graphPoint;
             RS_Entity *entity = RS_Snapper::catchEntity(coord, RS2::ResolveAll);
-            if (entity){
-                if (entity->isAtomic()){
-                    m_baseEntity = dynamic_cast<RS_AtomicEntity *>(entity);
-                    const RS_Vector &startPoint = m_baseEntity->getStartpoint();
-                    const RS_Vector &endPoint = m_baseEntity->getEndpoint();
-                    if (startPoint.distanceTo(coord) < endPoint.distanceTo(coord)){
-                        m_isStartPoint = true;
-                        m_arcStartPoint = startPoint;
-
-                    } else {
-                        m_isStartPoint = false;
-                        m_arcStartPoint = endPoint;
-                    }
-                    setStatus(SetEndAngle);
-                    updateMouseButtonHints();
-                }
-            }
+            setBaseEntity(entity, coord);
             invalidateSnapSpot();
             break;
         }

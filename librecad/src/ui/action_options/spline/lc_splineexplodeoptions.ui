@@ -73,7 +73,7 @@
       <string>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</string>
      </property>
      <property name="text">
-      <string>User Current Layer</string>
+      <string>Use Current Layer</string>
      </property>
     </widget>
    </item>

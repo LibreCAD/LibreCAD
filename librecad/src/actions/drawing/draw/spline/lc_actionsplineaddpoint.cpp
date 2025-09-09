@@ -87,15 +87,23 @@ void LC_ActionSplineAddPoint::onMouseMove(RS_Vector mouse, int status, LC_MouseE
     }
 }
 
+void LC_ActionSplineAddPoint::setEntityToModify(RS_Entity* entity) {
+    m_entityToModify = entity;
+    m_entityToModify->setSelected(true);
+    redrawDrawing();
+    setStatus(SetBeforeControlPoint);
+}
+
+bool LC_ActionSplineAddPoint::mayModifySplineEntity(RS_Entity* e) {
+    return e != nullptr && g_enTypeList.contains(e->rtti());
+}
+
 void LC_ActionSplineAddPoint::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status){
         case SetEntity:{
             auto entity = catchEntityByEvent(e, g_enTypeList);
             if (entity != nullptr && mayModifySplineEntity(entity)){
-                m_entityToModify = entity;
-                m_entityToModify->setSelected(true);
-                redrawDrawing();
-                setStatus(SetBeforeControlPoint);
+                setEntityToModify(entity);
             }
             break;
         }

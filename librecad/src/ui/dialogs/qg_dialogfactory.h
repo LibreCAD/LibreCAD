@@ -114,8 +114,6 @@ public:
                                     const QString& filter = QString(),
                                     QString* selectedFilter = 0) override;
 
-
-    void updateSelectionWidget(int num, double length) override;//updated for total number of selected, and total length of selected
     void commandMessage(const QString& message) override;
     void command(const QString& message) override;
     void commandPrompt(const QString& message) override;

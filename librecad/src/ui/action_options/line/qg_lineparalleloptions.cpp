@@ -24,7 +24,10 @@
 **
 **********************************************************************/
 #include "qg_lineparalleloptions.h"
+
+#include "lc_actioncontext.h"
 #include "rs_actiondrawlineparallel.h"
+#include "rs_graphicview.h"
 #include "ui_qg_lineparalleloptions.h"
 
 /*
@@ -37,7 +40,10 @@ QG_LineParallelOptions::QG_LineParallelOptions(RS2::ActionType actionType)
     ui->setupUi(this);
     connect(ui->leDist, &QLineEdit::editingFinished, this, &QG_LineParallelOptions::onDistEditingFinished);
     connect(ui->sbNumber, &QSpinBox::valueChanged, this, &QG_LineParallelOptions::onNumberValueChanged);
+
+    pickDistanceSetup("distance", ui->tbPickDistance, ui->leDist);
 }
+
 
 /*
  *  Destroys the object and frees any allocated resources

@@ -43,7 +43,7 @@ public:
     ~RS_ActionModifyRotate() override;
     void init(int status) override;
     double getAngle() const;
-    void setAngle(double angle);
+    void setAngle(double angleRad);
     void setFreeAngle(bool enable);
     bool isFreeAngle() const {return m_freeAngle;};
     double getRefPointAngle();
@@ -87,8 +87,8 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget *createOptionsWidget() override;
     void doTrigger(bool keepSelected) override;
-
     void onMouseMoveEventSelected(int status, LC_MouseEvent *e) override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) override;
 };
 
 #endif

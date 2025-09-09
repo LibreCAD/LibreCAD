@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/dxf">
+        <file>dim_sample.dxf</file>
+    </qresource>
+</RCC>

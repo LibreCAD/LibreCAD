@@ -50,7 +50,7 @@ public:
     void setSymmetric(bool value){m_symmetric = value;};
 protected:
     enum Status {
-        SetEntity,    /**< Choose original entity. */
+        SetEntity = InitialActionStatus,    /**< Choose original entity. */
         SetPos,       /**< Setting point for this parallel to go through. */
         SetNumber     /**< Setting number in the command line. */
     };
@@ -66,6 +66,8 @@ protected:
     RS_Entity *m_entity = nullptr;
     /** Last status before entering length or number. */
     Status m_lastStatus = SetEntity;
+
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

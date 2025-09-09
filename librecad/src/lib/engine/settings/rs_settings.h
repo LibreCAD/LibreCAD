@@ -37,6 +37,9 @@ class QSettings;
 // ---------------------------------------------------------------------------
 
 #define RS_SETTINGS RS_Settings::instance()
+#define LC_ALL_KEYS RS_Settings::instance()->getAllKeys
+#define LC_REMOVE RS_Settings::instance()->remove
+#define LC_CHILD_KEYS RS_Settings::instance()->getChildKeys
 #define LC_SET RS_Settings::instance()->write
 #define LC_SET_COLOR RS_Settings::instance()->writeColor
 #define LC_SET_ONE RS_Settings::instance()->writeSingle
@@ -163,6 +166,11 @@ public:
     QSettings* getSettings() const {
         return settings;
     }
+
+    QStringList getAllKeys() const;
+    QStringList getChildKeys() const;
+
+    void remove(const QString &key) const;
 
 signals:
     void optionChanged(const QString& groupName, const QString &propertyName, QVariant oldValue, QVariant newValue);

@@ -51,6 +51,7 @@ protected:
     RS_Entity *m_entityToSelect = nullptr;
     RS_ActionInterface *m_actionSelect = nullptr;
     enum RS2::EntityType m_typeToSelect = RS2::EntityType::EntityUnknown;
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

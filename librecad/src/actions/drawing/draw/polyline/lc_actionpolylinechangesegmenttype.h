@@ -27,14 +27,14 @@
 
 class RS_Polyline;
 
-class LC_ActionPolylineChangeSegmentType:public RS_PreviewActionInterface {
- Q_OBJECT
+class LC_ActionPolylineChangeSegmentType : public RS_PreviewActionInterface {
+    Q_OBJECT
 public:
-    LC_ActionPolylineChangeSegmentType(LC_ActionContext *actionContext);
+    explicit LC_ActionPolylineChangeSegmentType(LC_ActionContext* actionContext);
     ~LC_ActionPolylineChangeSegmentType() override;
 protected:
-    enum State{
-        SetEntity,
+    enum State {
+        SetEntity = InitialActionStatus,
         SetSegment,
         SetArcPoint
     };
@@ -42,14 +42,16 @@ protected:
     RS_Polyline* m_polyline;
     RS_Entity* m_polylineSegment;
     RS_Vector m_arcPoint;
-
+    void doInitialInit() override;
+    void doInitWithContextEntity(RS_Entity* rs_entity, const RS_Vector& rs_vector) override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
-    RS_Polyline* createModifiedPolyline();
-    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent* e) override;
+    void onMouseMoveEvent(int status, LC_MouseEvent* event) override;
+    RS_Polyline* createModifiedPolyline() const;
+    void setPolylineToModify(RS_Entity* entity);
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector& pos) override;
     void doTrigger() override;
 };
 

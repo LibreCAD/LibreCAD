@@ -26,56 +26,7 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item row="0" column="2">
-    <widget class="QLabel" name="lHeight">
-     <property name="toolTip">
-      <string>Height of the arc (the distanсe between chord and top arc point)</string>
-     </property>
-     <property name="text">
-      <string>Height:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="5">
-    <widget class="QRadioButton" name="rbPos">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Counterclockwise</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../../../res/icons/icons.qrc">
-       <normaloff>:/icons/dirpos.lci</normaloff>:/icons/dirpos.lci</iconset>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="lRadius">
-     <property name="toolTip">
-      <string>Radius of arc</string>
-     </property>
-     <property name="text">
-      <string>Radius:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="6">
+   <item row="0" column="8">
     <widget class="QRadioButton" name="rbNeg">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
@@ -104,18 +55,15 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QLabel" name="lAngle">
+   <item row="0" column="2">
+    <widget class="QLabel" name="lHeight">
      <property name="toolTip">
-      <string>Central angle of the arc</string>
+      <string>Height of the arc (the distanсe between chord and top arc point)</string>
      </property>
      <property name="text">
-      <string>Angle:</string>
+      <string>Height:</string>
      </property>
     </widget>
-   </item>
-   <item row="0" column="4">
-    <widget class="QLineEdit" name="leValue"/>
    </item>
    <item row="0" column="3">
     <widget class="QLabel" name="lLength">
@@ -127,10 +75,86 @@
      </property>
     </widget>
    </item>
+   <item row="0" column="5">
+    <widget class="QToolButton" name="tbPickDist">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_distance.lci</normaloff>:/icons/interactive_pick_distance.lci</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="lRadius">
+     <property name="toolTip">
+      <string>Radius of arc</string>
+     </property>
+     <property name="text">
+      <string>Radius:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="QLineEdit" name="leValue"/>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLabel" name="lAngle">
+     <property name="toolTip">
+      <string>Central angle of the arc</string>
+     </property>
+     <property name="text">
+      <string>Angle:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="7">
+    <widget class="QRadioButton" name="rbPos">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Counterclockwise</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/dirpos.lci</normaloff>:/icons/dirpos.lci</iconset>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="6">
+    <widget class="QToolButton" name="tbPickAngle">
+     <property name="toolTip">
+      <string>Pick angle from the drawing</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_angle.lci</normaloff>:/icons/interactive_pick_angle.lci</iconset>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources>
-  <include location="../../../../res/icons/icons.qrc"/>
   <include location="../../../../res/icons/icons.qrc"/>
  </resources>
  <connections/>

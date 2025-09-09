@@ -41,6 +41,7 @@ LC_ToolbarFactory::LC_ToolbarFactory(QC_ApplicationWindow *main_win)
 }
 
 void LC_ToolbarFactory::initToolBars(){
+    m_showToolbarTooltips = LC_GET_ONE_BOOL("Startup", "ShowToolbarsTooltip", true);
     initCADToolbars();
     createCategoriesToolbar();
     createStandardToolbars();
@@ -48,11 +49,13 @@ void LC_ToolbarFactory::initToolBars(){
 }
 
 QToolBar* LC_ToolbarFactory::createPenToolbar(const QSizePolicy &tbPolicy) const{
-    auto result = new QG_PenToolBar(tr("Pen"), m_appWin);
+    auto title = tr("Pen");
+    auto result = new QG_PenToolBar(title, m_appWin);
     result->setSizePolicy(tbPolicy);
     result->setObjectName("pen_toolbar");
     result->addActions(m_actionFactory->pen_actions);
     result->setProperty("_group", 1);
+    setToolbarTooltip(result, title);
 
     m_appWin->m_penToolBar = result;
 
@@ -60,14 +63,19 @@ QToolBar* LC_ToolbarFactory::createPenToolbar(const QSizePolicy &tbPolicy) const
     return result;
 }
 
+void LC_ToolbarFactory::setToolbarTooltip(QToolBar* toolbar, const QString& text) const {
+    toolbar->setToolTip(tr("Toolbar: %1").arg(text));
+}
+
 QToolBar * LC_ToolbarFactory::createSnapToolbar(const QSizePolicy &tbPolicy) const {
     auto ag_manager = m_appWin->m_actionGroupManager.get();
     auto result = new QG_SnapToolBar(m_appWin, m_appWin->m_actionHandler.get(), ag_manager,ag_manager->getActionsMap());
-    result->setWindowTitle(tr("Snap Selection"));
+    auto title = tr("Snap Selection");
+    result->setWindowTitle(title);
     result->setSizePolicy(tbPolicy);
     result->setObjectName("snap_toolbar" );
     result->setProperty("_group", 3);
-
+    setToolbarTooltip(result, title);
     m_appWin->m_snapToolBar = result;
     return result;
 }
@@ -155,12 +163,14 @@ QToolBar * LC_ToolbarFactory::createEntityLayersToolbar(const QSizePolicy  &tbPo
                 "EntityLayerActivate",
             }, 1);
 
-    QToolButton *btn = new QToolButton;
+    auto *btn = new QToolButton;
     btn->setDefaultAction(m_agm->getActionByName("EntityLayerView"));
     btn->setPopupMode(QToolButton::ToolButtonPopupMode::MenuButtonPopup);
+    btn->addAction(m_agm->getActionByName("EntityLayerHideOthers"));
     btn->addAction(m_agm->getActionByName("EntityLayerLock"));
     btn->addAction(m_agm->getActionByName("EntityLayerConstruction"));
     btn->addAction(m_agm->getActionByName("EntityLayerPrint"));
+    btn->addAction(m_agm->getActionByName("LayersDefreezeAll"));
 
     result->addWidget(btn);
 
@@ -290,7 +300,7 @@ QToolBar *LC_ToolbarFactory::createCategoriesToolbar() {
 
     toolButton(toolbar, tr("Lines"), ":/icons/line.lci", m_actionFactory->line_actions);
     toolButton(toolbar, tr("Points"), ":/icons/points.lci", m_actionFactory->point_actions);
-    toolButton(toolbar, tr("Polygons"), ":/icons/circle.lci", m_actionFactory->circle_actions);
+    toolButton(toolbar, tr("Circles"), ":/icons/circle.lci", m_actionFactory->circle_actions);
     toolButton(toolbar, tr("Arcs"), ":/icons/arc_center_point_angle.lci", m_actionFactory->curve_actions);
     toolButton(toolbar, tr("Splines"), ":/icons/spline_points.lci", m_actionFactory->spline_actions);
     toolButton(toolbar, tr("Polygons"), ":/icons/rectangle_2_points.lci", m_actionFactory->shape_actions);
@@ -386,6 +396,7 @@ QToolBar *LC_ToolbarFactory::doCreateToolBar(const QString &title, const QString
     const QString &objectName = nameCleared.toLower() + "_toolbar";
     result->setObjectName(objectName);
     result->setProperty("_group", group);
+    setToolbarTooltip(result, title);
     return result;
 }
 
@@ -417,9 +428,9 @@ void LC_ToolbarFactory::addToLeft(QToolBar *toolbar) const { m_appWin->addToolBa
 
 void LC_ToolbarFactory::createCustomToolbars(){
     m_appWin->m_creatorInvoker = std::make_unique<LC_CreatorInvoker>(m_appWin, m_agm);
-    m_appWin->m_creatorInvoker->createCustomToolbars();
+    m_appWin->m_creatorInvoker->createCustomToolbars(m_showToolbarTooltips);
 
-    bool firstLoad = LC_GET_ONE_BOOL("Startup", "FirstLoad", true);
+    /*bool firstLoad = LC_GET_ONE_BOOL("Startup", "FirstLoad", true);
     if (firstLoad){
         QStringList list;
         list << "DrawMText"
@@ -439,5 +450,5 @@ void LC_ToolbarFactory::createCustomToolbars(){
 
         QSettings settings;
         settings.setValue("CustomToolbars/DefaultCustom", list);
-    }
+    }*/
 }

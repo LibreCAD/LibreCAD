@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_linemath.h"
 #include "rs_line.h"
 #include "rs_pen.h"
+#include "rs_polyline.h"
 
 namespace {
     //list of entity types supported by current action - only lines so far
@@ -50,6 +51,17 @@ LC_ActionDrawLineAngleRel:: LC_ActionDrawLineAngleRel(LC_ActionContext *actionCo
 
 LC_ActionDrawLineAngleRel::~LC_ActionDrawLineAngleRel() = default;
 
+void LC_ActionDrawLineAngleRel::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    auto entity = contextEntity;
+    if (isPolyline(contextEntity)) {
+        auto polyline = static_cast<RS_Polyline*>(contextEntity);
+        entity = polyline->getNearestEntity(clickPos);
+    }
+    if (isLine(entity)) {
+        showOptions();
+        setLine(entity, clickPos);
+    }
+}
 
 bool LC_ActionDrawLineAngleRel::doCheckMayTrigger(){
     return m_tickData != nullptr;
@@ -147,6 +159,26 @@ void LC_ActionDrawLineAngleRel::doFinish([[maybe_unused]]bool updateTB){
     }
 }
 
+void LC_ActionDrawLineAngleRel::setLine(RS_Entity* en, const RS_Vector& snapPoint) {
+    auto* line = dynamic_cast<RS_Line *>(en);
+    // determine where tick line should be snapped on original line
+    RS_Vector nearestPoint = LC_LineMath::getNearestPointOnLine(line, snapPoint, true);
+    RS_Vector tickSnapPosition = obtainLineSnapPointForMode(line, nearestPoint);
+
+    // prepare line data for the snap point
+    auto tickEnd = RS_Vector(false);
+    m_tickData = prepareLineData(line, tickSnapPosition, tickEnd, m_alternativeActionMode);
+
+    // if length is not fixed, we need additional input from the user for the length
+    if (m_lengthIsFree){
+        setStatus(SetTickLength);
+    }
+    else{
+        // length of tick is fixed, triggering action
+        trigger();
+    }
+}
+
 /**
  * Processing of left mouse click
  * @param e
@@ -158,23 +190,7 @@ void LC_ActionDrawLineAngleRel::doOnLeftMouseButtonRelease(LC_MouseEvent *e, int
         case SetLine:{ // line selection state
             RS_Entity* en = catchModifiableEntity(e, g_enTypeList);
             if (en != nullptr) {
-                auto* line = dynamic_cast<RS_Line *>(en);
-                // determine where tick line should be snapped on original line
-                RS_Vector nearestPoint = LC_LineMath::getNearestPointOnLine(line, snapPoint, true);
-                RS_Vector tickSnapPosition = obtainLineSnapPointForMode(line, nearestPoint);
-
-                // prepare line data for the snap point
-                auto tickEnd = RS_Vector(false);
-                m_tickData = prepareLineData(line, tickSnapPosition, tickEnd, m_alternativeActionMode);
-
-                // if length is not fixed, we need additional input from the user for the length
-                if (m_lengthIsFree){
-                    setStatus(SetTickLength);
-                }
-                else{
-                    // length of tick is fixed, triggering action
-                    trigger();
-                }
+                setLine(en, snapPoint);
             }
             invalidateSnapSpot();
             break;
@@ -441,6 +457,30 @@ void LC_ActionDrawLineAngleRel::updateMouseButtonHints() {
             updateMouseWidget();
             break;
     }
+}
+
+bool LC_ActionDrawLineAngleRel::doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) {
+    if (tag == "angle") {
+        setTickAngleDegrees(RS_Math::rad2deg(angleRad));
+        return true;
+    }
+    return false;
+}
+
+bool LC_ActionDrawLineAngleRel::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "length") {
+        setTickLength(distance);
+        return true;
+    }
+    if (tag == "offset") {
+        setTickOffset(distance);
+        return true;
+    }
+    if (tag == "snapDistance") {
+        setSnapDistance(distance);
+        return true;
+    }
+    return false;
 }
 
 LC_ActionOptionsWidget* LC_ActionDrawLineAngleRel::createOptionsWidget(){

@@ -58,72 +58,66 @@ public:
     void setOptions(std::unique_ptr<LC_GridOptions> options);
     void invalidate();
     RS_Vector const &getCellVector() const {
-        return cellVector;
+        return m_cellVector;
     }
-
     virtual RS_Vector snapGrid(const RS_Vector &coord) const = 0;
     void createGrid(LC_GraphicViewport* view, const RS_Vector &viewZero, const RS_Vector &viewSize, const RS_Vector &metaGridWidth, const RS_Vector &gridWidth);
     void draw(RS_Painter *painter, LC_GraphicViewport* view);
-
     void clearGrid();
-
     void setGridInfiniteState(bool hasIndefiniteAxis, bool undefinedX);
     bool isGridDisabledByPanning(LC_GraphicViewport *view);
     bool isValid() const;
-
     void calculateSnapInfo(RS_Vector& viewZero,RS_Vector& viewSize,RS_Vector& metaGridWidthToUse,RS_Vector& gridWidthToUse);
 
 protected:
-    bool valid = false;
-    RS_Vector cellVector = {0., 0.};
-    std::unique_ptr<LC_GridOptions> gridOptions;
-    std::unique_ptr<LC_Lattice> gridLattice;
-    std::unique_ptr<LC_Lattice> metaGridLattice;
+    bool m_valid = false;
+    RS_Vector m_cellVector = {0., 0.};
+    std::unique_ptr<LC_GridOptions> m_gridOptions;
+    std::unique_ptr<LC_Lattice> m_gridLattice;
+    std::unique_ptr<LC_Lattice> m_metaGridLattice;
 
     /**
     * Grid metrics
     */
 
-    RS_Vector gridCellSize;
-    RS_Vector gridBasePoint;
+    RS_Vector m_gridCellSize;
+    RS_Vector m_gridBasePoint;
 
     /**
      * amount of visible metaGrid lines by X
     */
-    int numMetaX = 0;
+    int m_numMetaX = 0;
     /**
      * amount of visible metaGrid lines by Y
      */
 
-    int numMetaY = 0;
+    int m_numMetaY = 0;
 
     /**
      * metaGrid cell size by X and Y axis
      */
-
-    RS_Vector metaGridCellSize;
-
+    RS_Vector m_metaGridCellSize;
 
     /**
      * offset from left top corner of view to start position of grid. That position may be outside of view
      * (for very large zoom and small size of view for cartesian grid) or for isometric view
      */
-    RS_Vector metaGridViewOffset;
+    RS_Vector m_metaGridViewOffset;
 
     /**
     * left,bottom coordinate for the first visible metaGrid point
     */
-    RS_Vector metaGridMin;
+    RS_Vector m_metaGridMin;
     /**
      * right, top coordinate for last visible metaGrid point
      */
-    RS_Vector metaGridMax;
+    RS_Vector m_metaGridMax;
 
-    int numPointsInMetagridX = 0;
-    int numPointsInMetagridY = 0;
+    int m_numPointsInMetagridX = 0;
+    int m_numPointsInMetagridY = 0;
 
-    bool hasAxisIndefinite = false;
-    bool indefiniteX  = false;
+    bool m_hasAxisIndefinite = false;
+    bool m_indefiniteX  = false;
 
     void doCreateGrid(LC_GraphicViewport* view, const RS_Vector &viewZero, const RS_Vector &viewSize, const RS_Vector &metaGridWidth, const RS_Vector &gridWidth);
     virtual void createMetaGridLines(const RS_Vector& min, const RS_Vector &max)  = 0;
@@ -143,9 +137,7 @@ protected:
     double truncToStep(double value, double step);
     void doDrawLines(RS_Painter *painter, LC_GraphicViewport *view, LC_Lattice *lattice);
     bool isNumberOfPointsValid(int numberOfPoints);
-
     virtual void setCellSize(const RS_Vector &gridWidth, const RS_Vector &metaGridWidth);
-
     void doCalculateSnapInfo(RS_Vector& viewZero,RS_Vector& viewSize,RS_Vector& metaGridWidthToUse,RS_Vector& gridWidthToUse);
 };
 

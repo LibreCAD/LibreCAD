@@ -44,7 +44,7 @@ protected:
  * Action States.
  */
     enum Status {
-        SetPoint1 = 0,   //  Setting the First Point.  */
+        SetPoint1 = InitialActionStatus,   //  Setting the First Point.  */
         SetPoint2,   //  Setting the Second Point.  */
         SetPoint3,   //  Setting the Third Point.  */
         SetPoint4,   //  Setting the Last Point.  */

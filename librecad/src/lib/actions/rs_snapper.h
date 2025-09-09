@@ -207,6 +207,7 @@ public:
     void drawInfoCursor();
     bool hasNonDefaultAnglesBasis();
     LC_GraphicViewport* getViewPort() {return m_viewport;}
+    LC_ActionContext* getActionContext() {return m_actionContext;}
 protected:
     void deleteSnapper();
     void deleteInfoCursor();

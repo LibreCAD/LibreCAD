@@ -104,8 +104,6 @@ public:
     void addScrollbars();
     bool hasScrollbars();
     void setCurrentQAction(QAction* q_action);
-    void destroyMenu(const QString& activator);
-    void setMenu(const QString& activator, QMenu* menu);
     QString obtainEntityDescription(RS_Entity *entity, RS2::EntityDescriptionLevel shortDescription) override;
     virtual void initView();
     const QString& getDeviceName() const {
@@ -114,15 +112,20 @@ public:
     void setDeviceName(QString deviceName) {
         m_device = std::move(deviceName);
     }
-
+    const QList<QAction*>& getRecentActions() const {return m_recent_actions;}
+    LC_ActionContext* getActionContext() const {return m_actionContext;}
+    void launchEditProperty(RS_Entity *entity);
 protected slots:
     void slotHScrolled(int value);
     void slotVScrolled(int value);
 protected:
     void mousePressEvent(QMouseEvent* e) override;
+    bool invokeContextMenuForMouseEvent(QMouseEvent* e);
     void mouseDoubleClickEvent(QMouseEvent* e) override;
+    bool isMouseReleaseEventForDefaultAction(QMouseEvent* event);
     void mouseReleaseEvent(QMouseEvent* e) override;
     void mouseMoveEvent(QMouseEvent* e) override;
+    virtual bool proceedEvent(QEvent* event);
     void tabletEvent(QTabletEvent* e) override;
     void leaveEvent(QEvent*) override;
     void enterEvent(QEnterEvent*) override;
@@ -136,15 +139,16 @@ protected:
     void paintEvent(QPaintEvent *)override;
     void resizeEvent(QResizeEvent* e) override;
     void switchToAction(RS2::ActionType actionType, void* data = nullptr) const;
+    RS_Entity* catchContextEntity(QMouseEvent* event, RS_Vector& clickPos);
     void autoPanStep();
     void highlightUCSLocation(LC_UCS *ucs) override;
     void ucsHighlightStep();
 
     virtual void createViewRenderer();
-    void addEditEntityEntry(QMouseEvent* event, QMenu& menu);
     // For auto panning by the cursor close to the view border
     void startAutoPanTimer(QMouseEvent *e);
     bool isAutoPan(QMouseEvent* e) const;
+    void deleteActionContext();
 signals:
     void xbutton1_released();
     void gridStatusChanged(QString);
@@ -176,14 +180,13 @@ private:
 
     std::unique_ptr<LC_UCSMarkOptions> m_ucsMarkOptions;
 
-    QMap<QString, QMenu*> m_menus;
-
     bool m_scrollbars{false};
     bool m_cursor_hiding{false};
     bool m_selectCursor_hiding{false};
     bool m_invertZoomDirection{false};
     bool m_invertHorizontalScroll {false};
     bool m_invertVerticalScroll {false};
+    bool m_allowScrollAndMoveAdjustByKeys{false};
 
     struct AutoPanData;
     std::unique_ptr<AutoPanData> m_panData;
@@ -193,7 +196,6 @@ private:
     LC_ActionContext* m_actionContext {nullptr};
 
     void showEntityPropertiesDialog(RS_Entity *entity);
-    void launchEditProperty(RS_Entity *entity);
     void editAction(RS_Entity &entity);
     // for scroll bar adjustment
     std::mutex m_scrollbarMutex;

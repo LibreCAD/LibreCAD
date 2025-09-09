@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/arrows">
+        <file alias="arrow_archtick.lci">arrow_archtick.svg</file>
+        <file alias="arrow_closed.lci">arrow_closed.svg</file>
+        <file alias="arrow_closedblank.lci">arrow_closedblank.svg</file>
+        <file alias="arrow_closedfilled.lci">arrow_closedfilled.svg</file>
+        <file alias="arrow_dot.lci">arrow_dot.svg</file>
+        <file alias="arrow_oblique.lci">arrow_oblique.svg</file>
+        <file alias="arrow_open.lci">arrow_open.svg</file>
+        <file alias="arrow_origin.lci">arrow_origin.svg</file>
+        <file alias="arrow_origin2.lci">arrow_origin2.svg</file>
+        <file alias="arrow_open30.lci">arrow_open30.svg</file>
+        <file alias="arrow_open90.lci">arrow_open90.svg</file>
+        <file alias="arrow_integral.lci">arrow_integral.svg</file>
+        <file alias="arrow_datumfilled.lci">arrow_datumfilled.svg</file>
+        <file alias="arrow_datumblank.lci">arrow_datumblank.svg</file>
+        <file alias="arrow_boxfilled.lci">arrow_boxfilled.svg</file>
+        <file alias="arrow_boxblank.lci">arrow_boxblank.svg</file>
+        <file alias="arrow_small.lci">arrow_small.svg</file>
+        <file alias="arrow_dotblank.lci">arrow_dotblank.svg</file>
+        <file alias="arrow_dotsmall.lci">arrow_dotsmall.svg</file>
+        <file alias="arrow_none.lci">arrow_none.svg</file>
+    </qresource>
+</RCC>

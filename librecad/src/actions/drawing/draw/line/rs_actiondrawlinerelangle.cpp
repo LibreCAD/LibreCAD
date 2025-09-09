@@ -29,6 +29,7 @@
 #include "qg_linerelangleoptions.h"
 #include "rs_creation.h"
 #include "rs_line.h"
+#include "rs_polyline.h"
 
 namespace {
 
@@ -46,6 +47,18 @@ RS_ActionDrawLineRelAngle::RS_ActionDrawLineRelAngle(LC_ActionContext *actionCon
 
 RS_ActionDrawLineRelAngle::~RS_ActionDrawLineRelAngle() = default;
 
+void RS_ActionDrawLineRelAngle::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    auto entity = contextEntity;
+    if (isPolyline(entity)) {
+        auto polyline = static_cast<RS_Polyline*> (contextEntity);
+        entity = polyline->getNearestEntity(clickPos);
+    }
+    RS2::EntityType rtti = entity->rtti();
+    if (g_enTypeList.contains(rtti)) {
+        setEntity(entity);
+    }
+}
+
 void RS_ActionDrawLineRelAngle::setAngle(double angleDeg) {
     m_relativeAngleRad = adjustRelativeAngleSignByBasis(RS_Math::deg2rad(angleDeg));
 }
@@ -54,11 +67,29 @@ double RS_ActionDrawLineRelAngle::getAngle() const {
     return adjustRelativeAngleSignByBasis(RS_Math::rad2deg(m_relativeAngleRad));
 }
 
+bool RS_ActionDrawLineRelAngle::doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) {
+    if (tag == "angle") {
+        m_relativeAngleRad = adjustRelativeAngleSignByBasis(angleRad);
+        return true;
+    }
+    return false;
+}
+
+bool RS_ActionDrawLineRelAngle::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "distance") {
+        setLength(distance);
+        return true;
+    }
+    return false;
+}
+
 RS2::ActionType RS_ActionDrawLineRelAngle::rtti() const{
-    if( m_fixedAngle && RS_Math::getAngleDifference(m_relativeAngleRad, M_PI_2) < RS_TOLERANCE_ANGLE)
+    if( m_fixedAngle && RS_Math::getAngleDifference(m_relativeAngleRad, M_PI_2) < RS_TOLERANCE_ANGLE) {
         return RS2::ActionDrawLineOrthogonal;
-    else
+    }
+    else {
         return RS2::ActionDrawLineRelAngle;
+    }
 }
 
 void RS_ActionDrawLineRelAngle::finish(bool updateTB) {
@@ -103,13 +134,17 @@ void RS_ActionDrawLineRelAngle::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     }
 }
 
+void RS_ActionDrawLineRelAngle::setEntity(RS_Entity* en) {
+    m_entity = en;
+    setStatus(SetPos);
+}
+
 void RS_ActionDrawLineRelAngle::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity: {
             RS_Entity *en = catchEntityByEvent(e, g_enTypeList, RS2::ResolveAll);
             if (en != nullptr){
-                m_entity = en;
-                setStatus(SetPos);
+                setEntity(en);
             }
             break;
         }

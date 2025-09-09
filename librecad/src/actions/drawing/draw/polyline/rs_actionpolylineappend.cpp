@@ -26,6 +26,7 @@
 
 #include "rs_actionpolylineappend.h"
 
+#include "lc_actioncontext.h"
 #include "lc_graphicviewport.h"
 #include "rs_debug.h"
 #include "rs_polyline.h"
@@ -33,6 +34,16 @@
 RS_ActionPolylineAppend::RS_ActionPolylineAppend(LC_ActionContext *actionContext)
     :RS_ActionDrawPolyline(actionContext){
     m_actionType = RS2::ActionPolylineAppend;
+}
+
+void RS_ActionPolylineAppend::doInitialInit() {
+    m_originalPolyline = nullptr;
+}
+
+void RS_ActionPolylineAppend::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& pos) {
+    if (setPolylineToModify(contextEntity, pos)) {
+        fireCoordinateEvent(pos);
+    }
 }
 
 void RS_ActionPolylineAppend::doTrigger() {
@@ -102,58 +113,66 @@ void RS_ActionPolylineAppend::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     }
 }
 
-void RS_ActionPolylineAppend::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
-    if (status == SetStartpoint) {
-        m_originalPolyline = dynamic_cast<RS_Polyline *>(catchEntityByEvent(e));
-        if (!m_originalPolyline) {
-            commandMessage(tr("No Entity found."));
-            return;
-        } else if (!isPolyline(m_originalPolyline)) {
-            commandMessage(tr("Entity must be a polyline."));
-            return;
-        } else if (m_originalPolyline->isClosed()) {
-            commandMessage(tr("Can not append nodes in a closed polyline."));
-            return;
+bool RS_ActionPolylineAppend::setPolylineToModify(RS_Entity* entity, const RS_Vector& mouse) {
+    m_originalPolyline = dynamic_cast<RS_Polyline *>(entity);
+    if (!m_originalPolyline) {
+        commandMessage(tr("No Entity found."));
+        return false;
+    } else if (!isPolyline(m_originalPolyline)) {
+        commandMessage(tr("Entity must be a polyline."));
+        return false;
+    } else if (m_originalPolyline->isClosed()) {
+        commandMessage(tr("Can not append nodes in a closed polyline."));
+        return false;
+    } else {
+        auto *op = m_originalPolyline;
+        auto entFirst = op->firstEntity();
+        auto entLast = op->lastEntity();
+
+        double dist = toGraphDX(m_catchEntityGuiRange) * 0.9;
+
+        if (entFirst == entLast) { // single segment of polyline
+            double distToStart = m_originalPolyline->getStartpoint().distanceTo(mouse);
+            double distToEnd = m_originalPolyline->getEndpoint().distanceTo(mouse);
+
+            if (distToStart < distToEnd){
+                m_actionData->point = m_originalPolyline->getStartpoint();
+            }
+            else{
+                m_actionData->point = m_originalPolyline->getEndpoint();
+            }
+
+            auto *clone = dynamic_cast<RS_Polyline *>(m_originalPolyline->clone());
+            m_actionData->polyline = clone;
+            m_actionData->data = clone->getData();
+            m_container->addEntity(clone);
         } else {
-            auto *op = static_cast<RS_Polyline *>(m_originalPolyline);
-            auto entFirst = op->firstEntity();
-            auto entLast = op->lastEntity();
-
-            double dist = toGraphDX(m_catchEntityGuiRange) * 0.9;
-            const RS_Vector &mouse = e->graphPoint;
-            if (entFirst == entLast) { // single segment of polyline
-                double distToStart = m_originalPolyline->getStartpoint().distanceTo(mouse);
-                double distToEnd = m_originalPolyline->getEndpoint().distanceTo(mouse);
-
-                if (distToStart < distToEnd){
-                    m_actionData->point = m_originalPolyline->getStartpoint();
-                }
-                else{
-                    m_actionData->point = m_originalPolyline->getEndpoint();
-                }
-
-                auto *clone = dynamic_cast<RS_Polyline *>(m_originalPolyline->clone());
-                m_actionData->polyline = clone;
-                m_actionData->data = clone->getData();
-                m_container->addEntity(clone);
+            auto nearestSegment = m_originalPolyline->getNearestEntity(mouse, &dist, RS2::ResolveNone);
+            auto *clone = dynamic_cast<RS_Polyline *>(m_originalPolyline->clone());
+            m_actionData->polyline = clone;
+            m_actionData->data = clone->getData();
+            m_container->addEntity(clone);
+            m_prepend = false;
+            if (nearestSegment == entFirst) {
+                m_prepend = true;
+                m_actionData->point = m_originalPolyline->getStartpoint();
+            } else if (nearestSegment == entLast) {
+                m_actionData->point = m_originalPolyline->getEndpoint();
             } else {
-                auto nearestSegment = m_originalPolyline->getNearestEntity(mouse, &dist, RS2::ResolveNone);
-                auto *clone = dynamic_cast<RS_Polyline *>(m_originalPolyline->clone());
-                m_actionData->polyline = clone;
-                m_actionData->data = clone->getData();
-                m_container->addEntity(clone);
-                m_prepend = false;
-                if (nearestSegment == entFirst) {
-                    m_prepend = true;
-                    m_actionData->point = m_originalPolyline->getStartpoint();
-                } else if (nearestSegment == entLast) {
-                    m_actionData->point = m_originalPolyline->getEndpoint();
-                } else {
-                    commandMessage(tr("Click somewhere near the beginning or end of existing polyline."));
-                }
+                commandMessage(tr("Click somewhere near the beginning or end of existing polyline."));
             }
         }
-        fireCoordinateEventForSnap(e);
+    }
+    return true;
+}
+
+void RS_ActionPolylineAppend::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+    if (status == SetStartpoint) {
+        auto entity = catchEntityByEvent(e);
+        const RS_Vector &mouse = e->graphPoint;
+        if (setPolylineToModify(entity, mouse)) {
+            fireCoordinateEventForSnap(e);
+        }
     }
     else{
         RS_ActionDrawPolyline::onMouseLeftButtonRelease(status, e);

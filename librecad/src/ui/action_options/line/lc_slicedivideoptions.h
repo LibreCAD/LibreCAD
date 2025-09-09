@@ -51,7 +51,7 @@ protected slots:
     void onRelAngleClicked(bool checked);
     void onDivideClicked(bool checked);
     void onModeClicked(bool checked);
-private:
+protected:
     Ui::LC_SliceDivideOptions *ui;
     LC_ActionDrawSliceDivide* m_action = nullptr;
     bool m_forCircle {false};

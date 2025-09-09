@@ -65,7 +65,7 @@ protected:
     * Action States.
     */
     enum Status {
-        Neutral,        /**< we don't know what we do yet.  */
+        Neutral = InitialActionStatus,        /**< we don't know what we do yet.  */
         Dragging,       /**< dragging (either an entity or the
                                              first part of a selection window) */
         SetCorner2,     /**< Setting the 2nd corner of a selection window. */

@@ -28,10 +28,11 @@
 class LC_ActionRemoveSplinePoints:public LC_ActionSplineModifyBase{
     Q_OBJECT
 public:
-    LC_ActionRemoveSplinePoints(LC_ActionContext *actionContext);
+    explicit LC_ActionRemoveSplinePoints(LC_ActionContext *actionContext);
     ~LC_ActionRemoveSplinePoints() override = default;
     void setStatus(int status) override;
 protected:
+    void setEntityToModify(RS_Entity* entity) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMove(RS_Vector mouse, int status, LC_MouseEvent *e) override;
     void updateMouseButtonHints() override;

@@ -42,6 +42,13 @@ RS_DimLinearData::RS_DimLinearData():
     oblique(0.0)
 {}
 
+RS_DimLinearData::RS_DimLinearData(const RS_DimLinearData& other):
+    extensionPoint1{other.extensionPoint1},
+    extensionPoint2{other.extensionPoint2},
+    angle{other.angle},
+    oblique{other.oblique} {
+}
+
 RS_DimLinearData::RS_DimLinearData(const RS_Vector& _extensionPoint1,
                                    const RS_Vector& _extensionPoint2,
                                    double _angle, double _oblique):
@@ -71,17 +78,16 @@ std::ostream& operator << (std::ostream& os,
  * @para d Common dimension geometrical data.
  * @para ed Extended geometrical data for linear dimension.
  */
-RS_DimLinear::RS_DimLinear(RS_EntityContainer* parent,
-                           const RS_DimensionData& d,
-                           const RS_DimLinearData& ed)
+RS_DimLinear::RS_DimLinear(RS_EntityContainer* parent, const RS_DimensionData& d, const RS_DimLinearData& ed)
         : RS_Dimension(parent, d), m_dimLinearData(ed) {
-    calculateBorders();
+}
+
+RS_DimLinear::RS_DimLinear(const RS_DimLinear& entity)
+    : RS_Dimension(entity), m_dimLinearData(entity.m_dimLinearData) {
 }
 
 RS_Entity* RS_DimLinear::clone() const {
-    auto* d = new RS_DimLinear(getParent(), getData(), getEData());
-    d->setOwner(isOwner());
-    d->detach();
+    auto* d = new RS_DimLinear(*this);
     return d;
 }
 
@@ -92,36 +98,6 @@ RS_VectorSolutions RS_DimLinear::getRefPoints() const{
 
 void RS_DimLinear::setAngle(double a) {
 	m_dimLinearData.angle = RS_Math::correctAngle(a);
-}
-
-
-/**
- * @return Automatically created label for the default
- * measurement of this dimension.
- */
-QString RS_DimLinear::getMeasuredLabel() {
-    // direction of dimension line
-    RS_Vector dirDim = RS_Vector::polar(100.0, m_dimLinearData.angle);
-
-    // construction line for dimension line
-    RS_ConstructionLine dimLine(nullptr,
-                                RS_ConstructionLineData(m_dimGenericData.definitionPoint,
-                                                        m_dimGenericData.definitionPoint + dirDim));
-
-    RS_Vector dimP1 = dimLine.getNearestPointOnEntity(m_dimLinearData.extensionPoint1);
-    RS_Vector dimP2 = dimLine.getNearestPointOnEntity(m_dimLinearData.extensionPoint2);
-
-    // Definitive dimension line:
-    double distance = dimP1.distanceTo(dimP2);
-
-    double dist = prepareLabelLinearDistance(distance);
-    QString distanceLabel =  createLinearMeasuredLabel(dist);
-    return distanceLabel;
-}
-
-bool RS_DimLinear::hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) const{
-        return (m_dimLinearData.extensionPoint1.isInWindow(v1, v2) ||
-                m_dimLinearData.extensionPoint2.isInWindow(v1, v2));
 }
 
 /**
@@ -145,8 +121,19 @@ void RS_DimLinear::doUpdateDim() {
     RS_Vector dimP1 = dimLine.getNearestPointOnEntity(m_dimLinearData.extensionPoint1);
     RS_Vector dimP2 = dimLine.getNearestPointOnEntity(m_dimLinearData.extensionPoint2);
 
+    auto extLineStyle = m_dimStyleTransient->extensionLine();
+    bool showExtLine1 = extLineStyle->suppressFirstLine() == LC_DimStyle::ExtensionLine::DONT_SUPPRESS;
+    bool showExtLine2 = extLineStyle->suppressSecondLine() == LC_DimStyle::ExtensionLine::DONT_SUPPRESS;
+
+    auto dimLineStyle = m_dimStyleTransient->dimensionLine();
+
+    bool showDimLine1 = dimLineStyle->suppressFirstLine() == LC_DimStyle::DimensionLine::DONT_SUPPRESS;
+    bool showArrow1 = showExtLine1 && showDimLine1;
+    bool showDimLine2 = dimLineStyle->suppressSecondLine() == LC_DimStyle::DimensionLine::DONT_SUPPRESS;
+    bool showArrow2 = showExtLine2 && showDimLine2;
+
     // Definitive dimension line:
-    createDimensionLine(dimP1, dimP2, true, true, m_dimGenericData.autoText);
+    createDimensionLine(dimP1, dimP2, showArrow1, showArrow2, showDimLine1, showDimLine2, m_dimGenericData.autoText);
 
     double extAngle1, extAngle2;
 
@@ -194,8 +181,43 @@ void RS_DimLinear::doUpdateDim() {
     }
 
     // extension lines:
-    addDimExtensionLine(m_dimLinearData.extensionPoint1+vDimexo1, dimP1+vDimexe1);
-    addDimExtensionLine(m_dimLinearData.extensionPoint2+vDimexo2, dimP2+vDimexe2);
+
+    if (showExtLine1) {
+        addDimExtensionLine(m_dimLinearData.extensionPoint1+vDimexo1, dimP1+vDimexe1, true);
+    }
+
+    if (showExtLine2) {
+        addDimExtensionLine(m_dimLinearData.extensionPoint2+vDimexo2, dimP2+vDimexe2, false);
+    }
+}
+
+/**
+ * @return Automatically created label for the default
+ * measurement of this dimension.
+ */
+QString RS_DimLinear::getMeasuredLabel() {
+    // direction of dimension line
+    RS_Vector dirDim = RS_Vector::polar(100.0, m_dimLinearData.angle);
+
+    // construction line for dimension line
+    RS_ConstructionLine dimLine(nullptr,
+                                RS_ConstructionLineData(m_dimGenericData.definitionPoint,
+                                                        m_dimGenericData.definitionPoint + dirDim));
+
+    RS_Vector dimP1 = dimLine.getNearestPointOnEntity(m_dimLinearData.extensionPoint1);
+    RS_Vector dimP2 = dimLine.getNearestPointOnEntity(m_dimLinearData.extensionPoint2);
+
+    // Definitive dimension line:
+    double distance = dimP1.distanceTo(dimP2);
+
+    double dist = prepareLabelLinearDistance(distance);
+    QString distanceLabel =  createLinearMeasuredLabel(dist);
+    return distanceLabel;
+}
+
+bool RS_DimLinear::hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) const {
+    return (m_dimLinearData.extensionPoint1.isInWindow(v1, v2) ||
+        m_dimLinearData.extensionPoint2.isInWindow(v1, v2));
 }
 
 void RS_DimLinear::move(const RS_Vector& offset) {
@@ -209,7 +231,6 @@ void RS_DimLinear::move(const RS_Vector& offset) {
 void RS_DimLinear::rotate(const RS_Vector& center, double angle) {
     RS_Vector angleVector(angle);
     RS_Dimension::rotate(center, angleVector);
-
     m_dimLinearData.extensionPoint1.rotate(center, angleVector);
     m_dimLinearData.extensionPoint2.rotate(center, angleVector);
     m_dimLinearData.angle = RS_Math::correctAngle(m_dimLinearData.angle+angle);
@@ -218,7 +239,6 @@ void RS_DimLinear::rotate(const RS_Vector& center, double angle) {
 
 void RS_DimLinear::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
     RS_Dimension::rotate(center, angleVector);
-
     m_dimLinearData.extensionPoint1.rotate(center, angleVector);
     m_dimLinearData.extensionPoint2.rotate(center, angleVector);
     m_dimLinearData.angle = RS_Math::correctAngle(m_dimLinearData.angle+angleVector.angle());
@@ -227,7 +247,6 @@ void RS_DimLinear::rotate(const RS_Vector& center, const RS_Vector& angleVector)
 
 void RS_DimLinear::scale(const RS_Vector& center, const RS_Vector& factor) {
     RS_Dimension::scale(center, factor);
-
     m_dimLinearData.extensionPoint1.scale(center, factor);
     m_dimLinearData.extensionPoint2.scale(center, factor);
     update();
@@ -245,7 +264,6 @@ void RS_DimLinear::getDimPoints(RS_Vector& dimP1, RS_Vector& dimP2){
 
 void RS_DimLinear::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     RS_Dimension::mirror(axisPoint1, axisPoint2);
-
     m_dimLinearData.extensionPoint1.mirror(axisPoint1, axisPoint2);
     m_dimLinearData.extensionPoint2.mirror(axisPoint1, axisPoint2);
 
@@ -262,8 +280,7 @@ void RS_DimLinear::stretch(const RS_Vector& firstCorner,
                            const RS_Vector& offset) {
 
     //e->calculateBorders();
-    if (getMin().isInWindow(firstCorner, secondCorner) &&
-            getMax().isInWindow(firstCorner, secondCorner)) {
+    if (getMin().isInWindow(firstCorner, secondCorner) && getMax().isInWindow(firstCorner, secondCorner)) {
 
         move(offset);
     } else {
@@ -272,12 +289,10 @@ void RS_DimLinear::stretch(const RS_Vector& firstCorner,
         //double ang1 = edata.extensionPoint1.angleTo(edata.extensionPoint2)
 		//              + M_PI_2;
 
-        if (m_dimLinearData.extensionPoint1.isInWindow(firstCorner,
-                                            secondCorner)) {
+        if (m_dimLinearData.extensionPoint1.isInWindow(firstCorner,secondCorner)) {
             m_dimLinearData.extensionPoint1.move(offset);
         }
-        if (m_dimLinearData.extensionPoint2.isInWindow(firstCorner,
-                                            secondCorner)) {
+        if (m_dimLinearData.extensionPoint2.isInWindow(firstCorner,secondCorner)) {
             m_dimLinearData.extensionPoint2.move(offset);
         }
 

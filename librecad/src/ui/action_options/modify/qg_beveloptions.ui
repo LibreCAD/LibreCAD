@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>341</width>
+    <width>400</width>
     <height>24</height>
    </rect>
   </property>
@@ -97,6 +97,20 @@
     </widget>
    </item>
    <item>
+    <widget class="QToolButton" name="tbPickLength1">
+     <property name="toolTip">
+      <string>Pick first length form drawing</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_distance.lci</normaloff>:/icons/interactive_pick_distance.lci</iconset>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QLabel" name="lLength2">
      <property name="text">
       <string>Length 2:</string>
@@ -113,10 +127,26 @@
      </property>
     </widget>
    </item>
+   <item>
+    <widget class="QToolButton" name="tbPickLength2">
+     <property name="toolTip">
+      <string>Pick second length form drawing</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_distance.lci</normaloff>:/icons/interactive_pick_distance.lci</iconset>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../../../../res/icons/icons.qrc"/>
+ </resources>
  <connections/>
  <slots>
   <slot>updateData()</slot>

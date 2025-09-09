@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LC_DimStylePreviewPanel</class>
+ <widget class="QWidget" name="LC_DimStylePreviewPanel">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>94</width>
+    <height>22</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>2</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <property name="horizontalSpacing">
+    <number>0</number>
+   </property>
+   <item row="0" column="2">
+    <widget class="QToolButton" name="tbZoomAuto">
+     <property name="toolTip">
+      <string>Zoom Auto</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/zoom_auto.lci</normaloff>:/icons/zoom_auto.lci</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="0">
+    <widget class="QToolButton" name="tbZoomIn">
+     <property name="toolTip">
+      <string>Zoom In</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/zoom_in.lci</normaloff>:/icons/zoom_in.lci</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QToolButton" name="tbZoomOut">
+     <property name="toolTip">
+      <string>Zoom Out</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/zoom_out.lci</normaloff>:/icons/zoom_out.lci</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QToolButton" name="tbZoomPan">
+     <property name="toolTip">
+      <string>Zoom Pan</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/zoom_pan.lci</normaloff>:/icons/zoom_pan.lci</iconset>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../../../../../../res/icons/icons.qrc"/>
+ </resources>
+ <connections/>
+</ui>

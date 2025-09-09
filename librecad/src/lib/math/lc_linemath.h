@@ -68,5 +68,6 @@ namespace LC_LineMath {
      * @return - the convex hull
      */
     RS_VectorSolutions convexHull(const RS_VectorSolutions& points);
+    double angleFor3Points(const RS_Vector& edgePoint1, const RS_Vector& intersection, const RS_Vector& edgePoint2);
 }
 #endif // LC_LINEMATH_H

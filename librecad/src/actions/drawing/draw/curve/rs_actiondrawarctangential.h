@@ -44,7 +44,6 @@ public:
     RS_ActionDrawArcTangential(LC_ActionContext *actionContext);
     ~RS_ActionDrawArcTangential() override;
     void reset();
-    void init(int status) override;
     void preparePreview();
     void setRadius(double r);
     double getRadius() const;
@@ -57,8 +56,8 @@ protected:
  * Action States.
  */
     enum Status {
-        SetBaseEntity,   /**< Setting base entity. */
-        SetEndAngle      /**< Setting end angle. */
+        SetBaseEntity = InitialActionStatus,   /**< Setting base entity. */
+        SetEndAngle                            /**< Setting end angle. */
     };
 
     /**
@@ -83,8 +82,9 @@ protected:
     double m_angleLength = 0.;
     bool m_byRadius = false;
     bool m_alternateArc = false;
-
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPosition) override;
     RS_Vector forecastArcCenter() const;
+    void setBaseEntity(RS_Entity* entity, RS_Vector coord);
     void updateOptionsRadius(double radius);
     void updateOptionsAngle(double angle);
     RS2::CursorType doGetMouseCursor(int status) override;
@@ -95,5 +95,7 @@ protected:
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void updateMouseButtonHints() override;
     void doTrigger() override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angle) override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 #endif

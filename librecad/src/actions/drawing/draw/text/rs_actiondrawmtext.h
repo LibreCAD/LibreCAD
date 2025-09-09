@@ -55,7 +55,7 @@ protected:
     * Action States.
     */
     enum Status {
-        ShowDialog,           /**< Showing the text dialog. */
+        ShowDialog = InitialActionStatus,           /**< Showing the text dialog. */
         SetPos,               /**< Setting the position. */
         SetText               /**< Setting the text in the command line. */
     };
@@ -73,5 +73,7 @@ protected:
     void updateMouseButtonHints() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void doTrigger() override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) override;
+    void setUcsAngle(double ucsRelAngle);
 };
 #endif

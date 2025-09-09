@@ -32,24 +32,24 @@ class RS_Polyline;
 class LC_ActionSplineFromPolyline :public RS_PreviewActionInterface{
     Q_OBJECT
 public:
-    LC_ActionSplineFromPolyline(LC_ActionContext *actionContext);
+    explicit LC_ActionSplineFromPolyline(LC_ActionContext *actionContext);
     ~LC_ActionSplineFromPolyline() override = default;
-    bool isUseCurrentAttributes() {return m_useCurrentAttributes;};
+    bool isUseCurrentAttributes() const {return m_useCurrentAttributes;};
     void setUseCurrentAttributes(bool b) {m_useCurrentAttributes  = b;};
-    bool isUseCurrentLayer() {return m_useCurrentLayer;};
+    bool isUseCurrentLayer() const {return m_useCurrentLayer;};
     void setUseCurrentLayer(bool b) {m_useCurrentLayer = b;}
-    bool isKeepOriginals() {return m_keepOriginals;};
+    bool isKeepOriginals() const {return m_keepOriginals;};
     void setKeepOriginals(bool b) {m_keepOriginals = b;}
     void setSplineDegree(int degree){m_splineDegree = degree;};
-    int getSplineDegree(){return m_splineDegree;}
-    int getSegmentPoints(){return m_segmentMiddlePoints;}
+    int getSplineDegree() const {return m_splineDegree;}
+    int getSegmentPoints() const {return m_segmentMiddlePoints;}
     void setSegmentPoints(int val){m_segmentMiddlePoints = val;}
     void setUseFitPoints(bool val){m_vertexesAreFitPoints = val;}
-    bool isUseFitPoints(){return m_vertexesAreFitPoints;}
+    bool isUseFitPoints() const {return m_vertexesAreFitPoints;}
     void finish(bool updateTB) override;
 protected:
     enum State {
-        SetEntity
+        SetEntity = InitialActionStatus
     };
 
     RS_Polyline *m_entityToModify = nullptr;
@@ -60,12 +60,14 @@ protected:
     int m_splineDegree = 3;
     int m_segmentMiddlePoints = 1;
 
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     RS_Entity* createSplineForPolyline(RS_Entity *p);
     void fillControlPointsListFromPolyline(const RS_Polyline *polyline, std::vector<RS_Vector> &controlPoints) const;
     void setupAndAddCreatedEntity(RS_Entity *createdEntity, RS_Layer *layerToSet, const RS_Pen &penToUse);
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    void setEntityToModify(RS_Entity* polyline);
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;
     LC_ActionOptionsWidget *createOptionsWidget() override;

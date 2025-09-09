@@ -32,7 +32,7 @@ class LC_ActionPenSyncActiveByLayer:public RS_ActionInterface {
 public:
     LC_ActionPenSyncActiveByLayer(LC_ActionContext *actionContext);
     void init(int status) override;
-
+    bool isSupportsPredecessorAction() override {return true;}
 };
 
 #endif // LC_ACTIONPENSYNCACTIVEBYLAYER_H

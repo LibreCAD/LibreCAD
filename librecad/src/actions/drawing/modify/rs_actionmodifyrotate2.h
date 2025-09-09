@@ -43,9 +43,9 @@ public:
     RS_ActionModifyRotate2(LC_ActionContext *actionContext);
     ~RS_ActionModifyRotate2() override;
     void init(int status) override;
-    void setAngle1(double d);
+    void setAngle1(double angleRad);
     double getAngle1();
-    void setAngle2(double d);
+    void setAngle2(double angleRad);
     double getAngle2();
     void setUseSameAngle2ForCopies(bool b);
     bool isUseSameAngle2ForCopies();
@@ -75,5 +75,6 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget *createOptionsWidget() override;
     void doTrigger(bool keepSelected) override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) override;
 };
 #endif

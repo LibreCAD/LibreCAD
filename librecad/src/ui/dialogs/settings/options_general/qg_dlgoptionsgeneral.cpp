@@ -123,8 +123,7 @@ void QG_DlgOptionsGeneral::init(){
         RS_DEBUG->print("QG_DlgOptionsGeneral::init: adding %s to combobox",
                         lang.toLatin1().data());
 
-        QString l = RS_SYSTEM->symbolToLanguage(lang);
-        if (!l.isEmpty() && cbLanguage->findData(lang) == -1) {
+        if (QString l = RS_SYSTEM->symbolToLanguage(lang); !l.isEmpty() && cbLanguage->findData(lang) == -1) {
             RS_DEBUG->print("QG_DlgOptionsGeneral::init: %s", l.toLatin1().data());
             cbLanguage->addItem(l, lang);
             cbLanguageCmd->addItem(l, lang);
@@ -137,6 +136,8 @@ void QG_DlgOptionsGeneral::init(){
         QString def_lang = "en";
         QString lang = LC_GET_STR("Language", def_lang);
         cbLanguage->setCurrentIndex(cbLanguage->findText(RS_SYSTEM->symbolToLanguage(lang)));
+
+        m_initialLanguageGUIIdx = cbLanguage->currentIndex();
 
         QString langCmd = LC_GET_STR("LanguageCmd", def_lang);
         cbLanguageCmd->setCurrentIndex(cbLanguageCmd->findText(RS_SYSTEM->symbolToLanguage(langCmd)));
@@ -221,6 +222,9 @@ void QG_DlgOptionsGeneral::init(){
 
         int gridType = LC_GET_INT("GridType", 0);
         cbGridType->setCurrentIndex(gridType);
+
+        int metaGridEvery = LC_GET_INT("MetaGridEvery", 10);
+        sbGridMetaMajorEvery->setValue(metaGridEvery);
 
         // preview:
         initComboBox(cbMaxPreview, LC_GET_STR("MaxPreview", "100"));
@@ -583,6 +587,8 @@ void QG_DlgOptionsGeneral::init(){
         bool anglesCounterClockwise = LC_GET_BOOL("AnglesCounterClockwise", true);
         rbDefAngleBasePositive->setChecked(anglesCounterClockwise);
         leDefAngleBaseZero->setText(defaultAnglesBase);
+
+        cbInteractiveInputInActionToolbarEnabled->setChecked(LC_GET_BOOL("InteractiveInputEnabled", true));
     }
     LC_GROUP_END();
 
@@ -629,12 +635,16 @@ void QG_DlgOptionsGeneral::init(){
         cbExpandToolsMenuTillEntity->setChecked(expandToolsMenuTillEntity);
 
         cbExpandToolsMenuTillEntity->setEnabled(useExpandedToolsMenu);
+
+        m_originalShowToolbarTooltips = LC_GET_BOOL("ShowToolbarsTooltip", true);
+        cbStartupTBTooltips->setChecked(m_originalShowToolbarTooltips);
     }
     LC_GROUP_END();
 
     LC_GROUP("Keyboard"); {
         cbEvaluateOnSpace->setChecked(LC_GET_BOOL("EvaluateCommandOnSpace"));
         cbToggleFreeSnapOnSpace->setChecked(LC_GET_BOOL("ToggleFreeSnapOnSpace"));
+        cbEnableKeyboardZoomAdjust->setChecked(LC_GET_BOOL("AllowScrollMoveAdjustByKeys", true));
     }
 
     cbCheckNewVersionIgnorePreRelease->setEnabled(!XSTR(LC_PRERELEASE));
@@ -675,7 +685,11 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("VisualizePreviewRefPoints", cbDisplayRefPoints->isChecked());
             LC_SET("MinGridSpacing", cbMinGridSpacing->currentText());
             LC_SET("MaxPreview", cbMaxPreview->currentText());
-            LC_SET("Language", cbLanguage->itemData(cbLanguage->currentIndex()).toString());
+            int langGuiIdx = cbLanguage->currentIndex();
+            if (langGuiIdx != m_initialLanguageGUIIdx) {
+                setRestartNeeded();
+            }
+            LC_SET("Language", cbLanguage->itemData(langGuiIdx).toString());
             LC_SET("LanguageCmd", cbLanguageCmd->itemData(cbLanguageCmd->currentIndex()).toString());
             LC_SET("indicator_lines_state", indicator_lines_checkbox->isChecked());
             LC_SET("indicator_lines_type", indicator_lines_combobox->currentIndex());
@@ -708,11 +722,13 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("metaGridLinesLineType", wMetaGridLinesLineType->getLineType());
             LC_SET("metaGridPointsLineWidth", sbMetaGridPointsWidth->value());
             LC_SET("metaGridLinesLineWidth", sbMetaGridLinesWidth->value());
+            LC_SET("MetaGridEvery", sbGridMetaMajorEvery->value());
             LC_SET("GridLinesLineType", wGridLinesLineType->getLineType());
             LC_SET("GridLinesLineWidth", sbGridLinesLineWidth->value());
             LC_SET("GridRenderSimple", cbSimpleGridRendring->isChecked());
             LC_SET("GridDisableWithinPan", cbDisableGridOnPanning->isChecked());
             LC_SET("GridDrawIsoVerticalForTop", cbDrawVerticalForIsoTop->isChecked());
+
             double zoomFactor = sbDefaultZoomFactor->value();
             int zoomFactor1000 = (int) (zoomFactor * 1000.0);
             LC_SET("ScrollZoomFactor", zoomFactor1000);
@@ -877,6 +893,7 @@ void QG_DlgOptionsGeneral::ok(){
 
             LC_SET("AnglesBaseAngle", leDefAngleBaseZero->text());
             LC_SET("AnglesCounterClockwise", rbDefAngleBasePositive->isChecked());
+            LC_SET("InteractiveInputEnabled", cbInteractiveInputInActionToolbarEnabled->isChecked());
         }
         LC_GROUP_END();
 
@@ -906,12 +923,14 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("IgnorePreReleaseVersions", cbCheckNewVersionIgnorePreRelease->isChecked());
             LC_SET("ExpandedToolsMenu", cbExpandToolsMenu->isChecked());
             LC_SET("ExpandedToolsMenuTillEntity", cbExpandToolsMenuTillEntity->isChecked());
+            LC_SET("ShowToolbarsTooltip", cbStartupTBTooltips->isChecked());
         }
         LC_GROUP_END();
 
         LC_GROUP("Keyboard"); {
             LC_SET("EvaluateCommandOnSpace", cbEvaluateOnSpace->isChecked());
             LC_SET("ToggleFreeSnapOnSpace", cbToggleFreeSnapOnSpace->isChecked());
+            LC_SET("AllowScrollMoveAdjustByKeys", cbEnableKeyboardZoomAdjust->isChecked());
         }
         LC_GROUP_END();
         saveReferencePoints();
@@ -925,10 +944,11 @@ void QG_DlgOptionsGeneral::ok(){
     accept();
 }
 
-bool QG_DlgOptionsGeneral::checkRestartNeeded(){
+bool QG_DlgOptionsGeneral::checkRestartNeeded() {
     bool result = m_originalUseClassicToolbar != cbClassicStatusBar->isChecked() ||
                   m_originalLibraryPath != lePathLibrary->text().trimmed() ||
-                  m_originalAllowsMenusTearOff != cbAllowMenusDetaching->isChecked();
+                  m_originalAllowsMenusTearOff != cbAllowMenusDetaching->isChecked() ||
+                  m_originalShowToolbarTooltips != cbStartupTBTooltips->isChecked();
     return result;
 }
 
@@ -1281,10 +1301,12 @@ void QG_DlgOptionsGeneral::initReferencePoints(){
     if (!ok) {
         pdsize = LC_DEFAULTS_PDSize;
     }
-    if (pdsize <= 0.0)
+    if (pdsize <= 0.0) {
         rbRelSize->setChecked(true);
-    else
+    }
+    else {
         rbAbsSize->setChecked(true);
+    }
 
     lePointSize->setText(QString::number(std::abs(pdsize), 'g', 6));
 

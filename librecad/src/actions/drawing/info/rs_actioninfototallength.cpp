@@ -59,7 +59,7 @@ void RS_ActionInfoTotalLength::doTrigger([[maybe_unused]]bool selected) {
 void RS_ActionInfoTotalLength::finishMouseMoveOnSelection([[maybe_unused]] LC_MouseEvent *event) {
     const RS_EntityContainer::LC_SelectionInfo &selectionInfo = m_container->getSelectionInfo();
     unsigned int selectedCount = selectionInfo.count;
-    auto builder = msg(tr("Selected:"), QString::number(selectedCount));
+    auto builder = msgStart().string(tr("Selected:"), QString::number(selectedCount));
     if (selectedCount > 0) {
         builder.linear(tr("Total Length:"),selectionInfo.length);
     }

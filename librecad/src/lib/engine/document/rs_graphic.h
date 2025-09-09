@@ -24,8 +24,10 @@
 #ifndef RS_GRAPHIC_H
 #define RS_GRAPHIC_H
 
+#include <memory>
 #include <QDateTime>
 
+#include "lc_dimstyle.h"
 #include "lc_ucslist.h"
 #include "lc_viewslist.h"
 #include "rs_blocklist.h"
@@ -33,7 +35,10 @@
 #include "rs_layerlist.h"
 #include "rs_variabledict.h"
 #include "lc_dimstyleslist.h"
+#include "lc_textstylelist.h"
 
+class RS_Dimension;
+class LC_DimStyleToVariablesMapper;
 class LC_DimStylesList;
 class QString;
 
@@ -42,6 +47,7 @@ class QG_LayerWidget;
 
 class LC_GraphicModificationListener {
 public:
+    virtual ~LC_GraphicModificationListener() = default;
     virtual void graphicModified(const RS_Graphic* g, bool modified) = 0;
     virtual void undoStateChanged(const RS_Graphic* g, bool undoAvailable, bool redoAvailable) = 0;
 };
@@ -57,8 +63,9 @@ public:
 class RS_Graphic : public RS_Document {
 public:
     RS_Graphic(RS_EntityContainer* parent=nullptr);
-    virtual ~RS_Graphic();
+    ~RS_Graphic() override;
 
+    virtual void onLoadingCompleted();
     /** @return RS2::EntityGraphic */
     RS2::EntityType rtti() const override {return RS2::EntityGraphic;}
 
@@ -69,6 +76,7 @@ public:
     LC_ViewList* getViewList() override {return &namedViewsList;}
     LC_UCSList* getUCSList() override {return &ucsList;}
     LC_DimStylesList* getDimStyleList() override {return &dimstyleList;}
+    LC_TextStyleList* getTextStyleList() override {return &textStyleList;}
     void addDimStyle(LC_DimStyle* style) {dimstyleList.addDimStyle(style);}
     void newDoc() override;
     // Wrappers for Layer functions:
@@ -116,6 +124,11 @@ public:
 
         // Wrappers for variable functions:
     void clearVariables();
+    QString getCustomProperty(const QString& key, const QString& defaultValue);
+    void addCustomProperty(const QString& key, const QString& value);
+    void removeCustomProperty(const QString& key);
+    bool hasCustomProperty(const QString& key);
+    const QHash<QString, RS_Variable>& getCustomProperties() const;
     int countVariables() const;
 
     void addVariable(const QString& key, const RS_Vector& value, int code);
@@ -132,14 +145,21 @@ public:
     bool getVariableBool(const QString& key, bool def) const;
     double getVariableDouble(const QString& key, double def) const;
 
+    void setVariableDictObject(RS_VariableDict inputVariableDict) {m_variableDict = inputVariableDict;}
+
     RS_VariableDict getVariableDictObject() const{
-        return variableDict;
+        return m_variableDict;
     }
 
-    void setVariableDictObject(RS_VariableDict inputVariableDict) {variableDict = inputVariableDict;}
+    RS_VariableDict* getVariableDictObjectRef() {
+        return &m_variableDict;
+    }
 
     RS2::LinearFormat getLinearFormat() const;
-    RS2::LinearFormat convertLinearFormatDXF2LC(int f) const;
+    void replaceCustomVars(const QHash<QString, QString>& hash);
+    virtual void prepareForSave();
+
+    static RS2::LinearFormat convertLinearFormatDXF2LC(int f);
     int getLinearPrecision() const;
     RS2::AngleFormat getAngleFormat() const;
     int getAnglePrecision() const;
@@ -212,7 +232,6 @@ public:
     double getMarginTopInUnits();
     double getMarginRightInUnits();
     double getMarginBottomInUnits();
-
     /**
      * Number of pages drawing occupies
      */
@@ -260,6 +279,14 @@ public:
 
     void setModificationListener(LC_GraphicModificationListener * listener) {m_modificationListener = listener;}
 
+    LC_DimStyle* getFallBackDimStyleFromVars() const;
+    LC_DimStyle* getDimStyleByName(const QString &name, RS2::EntityType dimType = RS2::EntityUnknown) const;
+    QString getDefaultDimStyleName() const;
+    void setDefaultDimStyleName(QString name);
+    LC_DimStyle* getEffectiveDimStyle(const QString &styleName, RS2::EntityType dimType, LC_DimStyle* styleOverride) const;
+    virtual LC_DimStyle* getResolvedDimStyle(const QString &dimStyleName, RS2::EntityType dimType = RS2::EntityUnknown) const;
+    void updateFallbackDimStyle(LC_DimStyle* get_copy);
+    void replaceDimStylesList(const QString& defaultStyleName, const QList<LC_DimStyle*>& styles);
 protected:
     void fireUndoStateChanged(bool undoAvailable, bool redoAvailable) const override;
 private:
@@ -269,10 +296,13 @@ private:
     // fixme - sand - files - change to unique_ptrs?
     RS_LayerList layerList{};
     RS_BlockList blockList{true};
-    RS_VariableDict variableDict;
+    RS_VariableDict m_variableDict;
+    RS_VariableDict m_customVariablesDict;
     LC_ViewList namedViewsList;
     LC_UCSList ucsList;
     LC_DimStylesList dimstyleList;
+    LC_TextStyleList textStyleList;
+
     //if set to true, will refuse to modify paper scale
     bool paperScaleFixed = false;
 

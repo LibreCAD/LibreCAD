@@ -37,42 +37,6 @@ class LC_ActionModifyBreakDivide:public LC_AbstractActionWithPreview{
         SetLine
     };
 
-   /**
-    * configuration of segment of entity on which snap selection occurred
-    */
-    enum{
-        SEGMENT_INSIDE, // segment is between two intersection points
-        SEGMENT_TO_START, // snap is between start point of entity and intersection point
-        SEGMENT_TO_END // snap is between end point of entity and intersection point
-    };
-
-    /**
-     * Snap segment info for line
-     */
-    struct LineSegmentData{
-        int segmentDisposition;
-        RS_Vector snap;
-        RS_Vector snapSegmentStart;
-        RS_Vector snapSegmentEnd;
-    };
-
-    /**
-     * Snap segment for angle
-     */
-    struct ArcSegmentData{
-        int segmentDisposition;
-        double snapSegmentStartAngle;
-        double snapSegmentEndAngle;
-    };
-
-    /**
-     * Snap segment for circle     *
-     */
-    struct CircleSegmentData{
-        double snapSegmentStartAngle;
-        double snapSegmentEndAngle;
-    };
-
     /**
      * Structure used to pass data to trigger method
      */
@@ -83,7 +47,7 @@ class LC_ActionModifyBreakDivide:public LC_AbstractActionWithPreview{
     };
 
 public:
-    LC_ActionModifyBreakDivide(LC_ActionContext *actionContext);
+    explicit LC_ActionModifyBreakDivide(LC_ActionContext *actionContext);
 
     bool isRemoveSegment() const{return m_removeSegments;}
     void setRemoveSegment(bool value){m_removeSegments = value;};
@@ -104,18 +68,10 @@ protected:
 
     bool doCheckMayDrawPreview(LC_MouseEvent *event, int status) override;
     void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
-    LineSegmentData *calculateLineSegment(RS_Line *line, RS_Vector &snap);
-    QVector<RS_Vector>  collectAllIntersectionsWithEntity(RS_Entity *entity);
-    void addPointsFromSolutionToList(RS_VectorSolutions &sol, QVector<RS_Vector> &result) const;
-    LineSegmentData *findLineSegmentEdges(RS_Line *line, RS_Vector &snap, QVector<RS_Vector> intersections);
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void createEntitiesForLine(RS_Line *line, RS_Vector &snap, QList<RS_Entity *> &list, bool preview);
     void createEntitiesForCircle(RS_Circle *circle, RS_Vector &vector, QList<RS_Entity *> &list, bool preview);
     void createEntitiesForArc(RS_Arc *arc, RS_Vector &snap, QList<RS_Entity *> &list, bool preview);
-    ArcSegmentData *calculateArcSegments(RS_Arc *arc, RS_Vector &snap);
-    ArcSegmentData *findArcSegmentEdges(RS_Arc *arc, RS_Vector &snap, const QVector<RS_Vector>& intersections);
-    CircleSegmentData *calculateCircleSegment(RS_Circle *circle, RS_Vector &snap);
-    CircleSegmentData *findCircleSegmentEdges(RS_Circle *circle, RS_Vector &snap, const QVector<RS_Vector> &intersections);
     void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;
     bool doCheckMayTrigger() override;
     void performTriggerDeletions() override;

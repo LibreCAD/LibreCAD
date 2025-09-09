@@ -30,14 +30,14 @@ public:
     explicit LC_ActionSingleEntitySelectBase(const char *name,LC_ActionContext *actionContext,RS2::ActionType actionType);
     ~LC_ActionSingleEntitySelectBase() override;
 
-    void init(int status) override;
 protected:
     enum Status {
-        SetEntity
+        SetEntity = InitialActionStatus
     };
 
     RS_Entity* m_entity;
-
+    void doInitialInit() override;
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     virtual QString doGetMouseButtonHint() = 0;
     virtual bool doCheckMaySelectEntity(RS_Entity* e) = 0;
     void updateMouseButtonHints() override;

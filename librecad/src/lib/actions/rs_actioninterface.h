@@ -27,6 +27,8 @@
 #ifndef RS_ACTIONINTERFACE_H
 #define RS_ACTIONINTERFACE_H
 
+#include "lc_actioncontext.h"
+#include "lc_latecompletionrequestor.h"
 #include "lc_modifiersinfo.h"
 #include "rs.h"
 #include "rs_math.h"
@@ -61,19 +63,21 @@ namespace{
  */
 //fixme - actually, inheritance from snapper is rather bad design... not all actions (say, file open or print-preview) should be
 // inherited from snapper - only ones that really work with drawing should be snap-aware
-class RS_ActionInterface : public RS_Snapper {
+class RS_ActionInterface : public RS_Snapper, public LC_LateCompletionRequestor {
 Q_OBJECT
 public:
+    enum ActionStatus {
+        InitialActionStatus = 0
+    };
     RS_ActionInterface(const char* name,
                        LC_ActionContext *actionContext,
                        RS2::ActionType actionType /*= RS2::ActionNone*/);
    ~RS_ActionInterface() override;
 
     virtual RS2::ActionType rtti() const;
-
+    virtual bool isSupportsPredecessorAction(){return false;}
     void setName(const char* _name);
     QString getName();
-
     virtual void init(int status);
     virtual void mouseMoveEvent(QMouseEvent*);
     virtual void mousePressEvent(QMouseEvent*);
@@ -89,11 +93,15 @@ public:
     virtual bool isFinished() const;
     virtual void setFinished();
     virtual void finish(bool updateTB = true );
-    virtual void setPredecessor(RS_ActionInterface* pre);
+    virtual void setPredecessor(std::shared_ptr<RS_ActionInterface> pre);
+    std::shared_ptr<RS_ActionInterface> getPredecessor() const;
+
     void suspend() override;
     void resume() override;
+    virtual bool mayBeTerminatedExternally() {return true;}
     virtual void hideOptions();
     virtual void showOptions();
+    void onLateRequestCompleted(bool shouldBeSkipped) override;
 private:
     /**
      * Current status of the action. After an action has
@@ -129,10 +137,14 @@ protected:
     /**
      * Predecessor of this action or NULL.
      */
-    RS_ActionInterface* m_predecessor = nullptr; // fixme- sand - review!!!
+    std::shared_ptr<RS_ActionInterface> m_predecessor = nullptr; // fixme - sand - review!!!
     RS2::ActionType m_actionType = RS2::ActionNone;
     std::unique_ptr<LC_ActionOptionsWidget> m_optionWidget;
     double m_snapToAngleStep = DEFAULT_SNAP_ANGLE_STEP;
+
+    virtual bool mayInitWithContextEntity(int status);
+    virtual void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos);
+    virtual void doInitialInit();
 
     void switchToAction(RS2::ActionType actionType, void* data = nullptr);
     QString msgAvailableCommands();
@@ -144,7 +156,7 @@ protected:
     void updateSelectionWidget(int countSelected, double selectedLength) const;
 
     virtual LC_ActionOptionsWidget* createOptionsWidget();
-    void updateOptions();
+    void updateOptions(const QString& tagToFocus = "");
     void updateOptionsUI(int mode);
 
     virtual RS2::CursorType doGetMouseCursor(int status);
@@ -161,6 +173,7 @@ protected:
 
     static bool isControl(const QInputEvent *e);
     static bool isShift(const QInputEvent *e);
+    static bool isAlt(const QInputEvent *e);
 
     virtual void onMouseLeftButtonRelease(int status, QMouseEvent * e);
     virtual void onMouseRightButtonRelease(int status, QMouseEvent * e);
@@ -198,6 +211,10 @@ protected:
     void undoCycleEnd() const;
     void undoCycleStart() const;
     void setPenAndLayerToActive(RS_Entity* e);
+
+    virtual bool doUpdateAngleByInteractiveInput([[maybe_unused]]const QString& tag,[[maybe_unused]] double angleRad) {return false;}
+    virtual bool doUpdateDistanceByInteractiveInput([[maybe_unused]]const QString& tag, [[maybe_unused]]double distance) {return false;}
+    virtual bool doUpdatePointByInteractiveInput([[maybe_unused]]const QString& tag, [[maybe_unused]]RS_Vector &point) {return false;}
 
 };
 #endif

@@ -46,6 +46,14 @@ public:
      */
     RS_AtomicEntity(RS_EntityContainer* parent=nullptr);
 
+    explicit RS_AtomicEntity(const RS_Entity& entity)
+        : RS_Entity{entity} {
+    }
+
+    explicit RS_AtomicEntity(RS_Entity&& entity)
+        : RS_Entity{entity} {
+    }
+
     /**
      * @return false because entities made from subclasses are
      *  atomic entities.

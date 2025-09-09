@@ -32,11 +32,11 @@ class dwgBuffer;
 *  or use add* helper functions.
 *  @author Rallaz
 */
-class DRW_Header {
+class DRW_Header : public DRW_ParseableEntity{
     SETHDRFRIENDS
 public:
     DRW_Header();
-    ~DRW_Header() {
+    ~DRW_Header() override {
         clearVars();
     }
 
@@ -76,7 +76,10 @@ public:
         for (auto it=h.vars.begin(); it!=h.vars.end(); ++it){
             this->vars[it->first] = new DRW_Variant( *(it->second) );
         }
-        this->curr = NULL;
+        for (auto it=h.customVars.begin(); it!=h.customVars.end(); ++it){
+            this->customVars[it->first] = new DRW_Variant( *(it->second) );
+        }
+        this->curr = nullptr;
     }
     DRW_Header& operator=(const DRW_Header &h) {
        if(this != &h) {
@@ -85,6 +88,10 @@ public:
            this->comments = h.comments;
            for (auto it=h.vars.begin(); it!=h.vars.end(); ++it){
                this->vars[it->first] = new DRW_Variant( *(it->second) );
+           }
+
+           for (auto it=h.customVars.begin(); it!=h.customVars.end(); ++it){
+               this->customVars[it->first] = new DRW_Variant( *(it->second) );
            }
        }
        return *this;
@@ -97,28 +104,27 @@ public:
     std::string getComments() const {return comments;}
     void write(dxfWriter *writer, DRW::Version ver);
     void addComment(std::string c);
-
-protected:
-    bool parseCode(int code, dxfReader *reader);
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf, duint8 mv=0);
-private:
-    bool getDouble(std::string key, double *varDouble);
-    bool getInt(std::string key, int *varInt);
-    bool getStr(std::string key, std::string *varStr);
-    bool getCoord(std::string key, DRW_Coord *varStr);
-    void clearVars(){
-        for (auto it=vars.begin(); it!=vars.end(); ++it)
-            delete it->second;
-
-        vars.clear();
-    }
-
-public:
+    bool parseCode(int code, dxfReader *reader) override;
     std::unordered_map<std::string,DRW_Variant*> vars;
+    std::unordered_map<std::string,DRW_Variant*> customVars;
+    static int measurement(const int unit);
+protected:
+    void writeVar(dxfWriter* writer, std::string name, double defaultValue, int varCode = 40);
+    void writeVar(dxfWriter* writer, std::string name, int defaultValue, int varCode = 70);
+    void writeVar(dxfWriter* writer, DRW::Version ver, std::string name, std::string defaultValue="", int varCode = 1);
+    void writeDimVars(dxfWriter* writer, DRW::Version ver);
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf, duint8 mv=0);
 private:
     std::string comments;
     std::string name;
     DRW_Variant* curr {nullptr};
+    enum WaitingFor {
+        VARIABLE_VALUE,
+        CUSTOM_VAR_NAME,
+        CUSTOM_VAR_VALUE
+    };
+    WaitingFor waitingFor = VARIABLE_VALUE;
+    std::string currentCustomVarName{""};
     int version; //to use on read
 
     duint32 linetypeCtrl;
@@ -132,7 +138,22 @@ private:
     duint32 vportCtrl;
     duint32 vpEntHeaderCtrl;
 
-    int measurement(const int unit);
+    bool getDouble(std::string key, double *varDouble);
+    bool getInt(std::string key, int *varInt);
+    bool getStr(std::string key, std::string *varStr);
+    bool getCoord(std::string key, DRW_Coord *varStr);
+
+    void clearVars(){
+        for (auto it=vars.begin(); it!=vars.end(); ++it)
+            delete it->second;
+
+        vars.clear();
+
+        for (auto it=customVars.begin(); it!=customVars.end(); ++it)
+            delete it->second;
+
+        customVars.clear();
+    }
 };
 
 #endif

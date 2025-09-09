@@ -33,6 +33,9 @@ LC_ModifyGapOptions::LC_ModifyGapOptions() :
     connect(ui->leDistance, &QLineEdit::editingFinished, this, &LC_ModifyGapOptions::onDistanceEditingFinished);
     connect(ui->cbLineSnap, &QComboBox::currentIndexChanged, this, &LC_ModifyGapOptions::onLineSnapModeIndexChanged);
     connect(ui->cbGapSnap, &QComboBox::currentIndexChanged, this, &LC_ModifyGapOptions::onGapSnapModeIndexChanged);
+
+    pickDistanceSetup("size", ui->tbPickSize, ui->leSize);
+    pickDistanceSetup("snap", ui->tbPickSnap, ui->leDistance);
 }
 
 LC_ModifyGapOptions::~LC_ModifyGapOptions(){
@@ -124,6 +127,7 @@ void LC_ModifyGapOptions::setGapIsFreeToActionAndView(bool val){
     ui->cbFree->setChecked(val);
 
     ui->leSize->setEnabled(!val);
+    ui->tbPickSize->setEnabled(!val);
     ui->cbGapSnap->setEnabled(!val);
 }
 

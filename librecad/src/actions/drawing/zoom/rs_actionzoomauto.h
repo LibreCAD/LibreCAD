@@ -40,6 +40,7 @@ public:
     RS_ActionZoomAuto(LC_ActionContext *actionContext, bool keepAspectRatio=true);
 	void init(int status) override;
 	void trigger() override;
+    bool isSupportsPredecessorAction() override {return true;}
 protected:
     bool m_keepAspectRatio = false;
 };

@@ -82,12 +82,13 @@ RS_Vector LC_LineMath::relativePoint(const RS_Vector &startPoint, double distanc
     return result;
 }
 
-RS_Vector LC_LineMath::calculateAngleSegment(const RS_Vector &startPoint, const RS_Vector &previousLineStart, const RS_Vector &previousLineEnd, double angleValueDegree, bool angleRelative, double distance){
-
+RS_Vector LC_LineMath::calculateAngleSegment(const RS_Vector& startPoint, const RS_Vector& previousLineStart,
+                                             const RS_Vector& previousLineEnd, double angleValueDegree,
+                                             bool angleRelative, double distance) {
     double angle = RS_Math::deg2rad(angleValueDegree);
     double realAngle = defineActualSegmentAngle(angle, angleRelative, previousLineStart, previousLineEnd);
     RS_Vector line = RS_Vector::polar(distance, realAngle);
-    RS_Vector result  = startPoint + line;
+    RS_Vector result = startPoint + line;
     return result;
 }
 
@@ -99,16 +100,17 @@ RS_Vector LC_LineMath::calculateAngleSegment(const RS_Vector &startPoint, const 
  * @param previousLineEnd previous line segment end
  * @return
  */
-double LC_LineMath::defineActualSegmentAngle(double angle, bool angleIsRelative, const RS_Vector &previousLineStart, const RS_Vector &previousLineEnd){
+double LC_LineMath::defineActualSegmentAngle(double angle, bool angleIsRelative, const RS_Vector& previousLineStart,
+                                             const RS_Vector& previousLineEnd) {
     double result = angle;
-    if (angleIsRelative){
+    if (angleIsRelative) {
         RS_Vector line = previousLineEnd - previousLineStart;
         double previousSegmentAngle = line.angle();
-        result  = angle + previousSegmentAngle;
-
+        result = angle + previousSegmentAngle;
     }
     return result;
 }
+
 /**
  * Calculates projection of given point to infinite line (ray), that extends lines provided by coordinates
  * @param coord point coordinates
@@ -116,10 +118,11 @@ double LC_LineMath::defineActualSegmentAngle(double angle, bool angleIsRelative,
  * @param lineEndPoint  line end
  * @return projectsion coordinates
  */
-RS_Vector LC_LineMath::getNearestPointOnInfiniteLine(const RS_Vector &coord, const RS_Vector &lineStartPoint, const RS_Vector &lineEndPoint){
+RS_Vector LC_LineMath::getNearestPointOnInfiniteLine(const RS_Vector& coord, const RS_Vector& lineStartPoint,
+                                                     const RS_Vector& lineEndPoint) {
     RS_Vector ae = lineEndPoint - lineStartPoint;
-    RS_Vector ea = lineStartPoint-lineEndPoint;
-    RS_Vector ap = coord-lineStartPoint;
+    RS_Vector ea = lineStartPoint - lineEndPoint;
+    RS_Vector ap = coord - lineStartPoint;
 
     double magnitude = ae.magnitude();
     if (magnitude < RS_TOLERANCE || ea.magnitude() < RS_TOLERANCE) {
@@ -127,9 +130,9 @@ RS_Vector LC_LineMath::getNearestPointOnInfiniteLine(const RS_Vector &coord, con
     }
 
     // Orthogonal projection from both sides:
-    RS_Vector ba = ae * RS_Vector::dotP(ae, ap)/ (magnitude * magnitude);
+    RS_Vector ba = ae * RS_Vector::dotP(ae, ap) / (magnitude * magnitude);
 
-    return lineStartPoint+ba;
+    return lineStartPoint + ba;
 }
 
 /**
@@ -141,26 +144,31 @@ RS_Vector LC_LineMath::getNearestPointOnInfiniteLine(const RS_Vector &coord, con
  * @param toSnapPoint snap point
  * @return end point for the segment
  */
-RS_Vector LC_LineMath::calculateEndpointForAngleDirection(double wcsAngleRad, const RS_Vector &startPoint, const RS_Vector &toSnapPoint){
+RS_Vector LC_LineMath::calculateEndpointForAngleDirection(double wcsAngleRad, const RS_Vector& startPoint,
+                                                          const RS_Vector& toSnapPoint) {
     RS_Vector possibleEndPoint;
 
     RS_Vector infiniteTickStartPoint = startPoint;
     RS_Vector infiniteTickEndPoint = infiniteTickStartPoint.relative(10.0, wcsAngleRad);
-    RS_Vector pointOnInfiniteTick = getNearestPointOnInfiniteLine(toSnapPoint, infiniteTickStartPoint, infiniteTickEndPoint);
+    RS_Vector pointOnInfiniteTick = getNearestPointOnInfiniteLine(toSnapPoint, infiniteTickStartPoint,
+                                                                  infiniteTickEndPoint);
 
     possibleEndPoint = pointOnInfiniteTick;
     return possibleEndPoint;
 }
 
-RS_Vector LC_LineMath::calculateEndpointForAngleDirection(double angleValueDegree, bool angleIsRelative, const RS_Vector &fromPoint, const RS_Vector &toSnapPoint,
-                                                          const RS_Vector &previousLineStart, const RS_Vector &previousLineEnd){
+RS_Vector LC_LineMath::calculateEndpointForAngleDirection(double angleValueDegree, bool angleIsRelative,
+                                                          const RS_Vector& fromPoint, const RS_Vector& toSnapPoint,
+                                                          const RS_Vector& previousLineStart,
+                                                          const RS_Vector& previousLineEnd) {
     double angle = RS_Math::deg2rad(angleValueDegree);
     RS_Vector infiniteTickStartPoint = fromPoint;
     double realAngle = defineActualSegmentAngle(angle, angleIsRelative, previousLineStart, previousLineEnd);
 
     RS_Vector infiniteTickVector = RS_Vector::polar(10.0, realAngle);
     RS_Vector infiniteTickEndPoint = infiniteTickStartPoint + infiniteTickVector;
-    RS_Vector pointOnInfiniteTick = getNearestPointOnInfiniteLine(toSnapPoint, infiniteTickStartPoint, infiniteTickEndPoint);
+    RS_Vector pointOnInfiniteTick = getNearestPointOnInfiniteLine(toSnapPoint, infiniteTickStartPoint,
+                                                                  infiniteTickEndPoint);
 
     return pointOnInfiniteTick;
 }
@@ -198,25 +206,31 @@ RS_Vector LC_LineMath::findPointOnCircle(double radius, double arcAngle, const R
  * @param point  point to check
  * @return point position
  */
-int LC_LineMath::getPointPosition(const RS_Vector &startPos, const RS_Vector &endPos, const RS_Vector &point)
-{
+int LC_LineMath::getPointPosition(const RS_Vector &startPos, const RS_Vector &endPos, const RS_Vector &point){
     RS_Vector a = endPos - startPos; // 1
     RS_Vector b = point - startPos; // 2
     double sa = a. x * b.y - b.x * a.y; // 3
-    if (sa > 0.0)
+    if (sa > 0.0) {
         return LEFT;
-    if (sa < 0.0)
+    }
+    if (sa < 0.0) {
         return RIGHT;
-    if ((a.x * b.x < 0.0) || (a.y * b.y < 0.0))
+    }
+    if ((a.x * b.x < 0.0) || (a.y * b.y < 0.0)) {
         return BEHIND;
-    if (a.magnitude() < b.magnitude())
+    }
+    if (a.magnitude() < b.magnitude()) {
         return BEYOND;
-    if (startPos == point)
+    }
+    if (startPos == point) {
         return ORIGIN;
-    if (endPos == point)
+    }
+    if (endPos == point) {
         return DESTINATION;
+    }
     return BETWEEN;
 }
+
 /**
  * Checks whether two lines defined by their edge points lay on the same ray vector
  * @param line1Start
@@ -225,7 +239,8 @@ int LC_LineMath::getPointPosition(const RS_Vector &startPos, const RS_Vector &en
  * @param line2End
  * @return
  */
-bool LC_LineMath::areLinesOnSameRay(const RS_Vector &line1Start, const RS_Vector &line1End, const RS_Vector &line2Start, const RS_Vector &line2End){
+bool LC_LineMath::areLinesOnSameRay(const RS_Vector& line1Start, const RS_Vector& line1End, const RS_Vector& line2Start,
+                                    const RS_Vector& line2End) {
     // TODO: create a generic algorithm to find whether points are collinear
     // Find the rank of the matrix formed by point homogeneous coordinates:
     // coincidence: rank = 1
@@ -242,7 +257,7 @@ bool LC_LineMath::areLinesOnSameRay(const RS_Vector &line1Start, const RS_Vector
     angle3 = RS_Math::correctAngle0ToPi(angle3);
 
     bool sameLine = false;
-    if (std::abs(angle1 - angle2) < RS_TOLERANCE_ANGLE && std::abs(angle1 - angle3) < RS_TOLERANCE_ANGLE){
+    if (std::abs(angle1 - angle2) < RS_TOLERANCE_ANGLE && std::abs(angle1 - angle3) < RS_TOLERANCE_ANGLE) {
         sameLine = true;
     }
     return sameLine;
@@ -362,15 +377,16 @@ RS_LineData LC_LineMath::createParallel(const RS_Vector &start, const RS_Vector 
  * @param e2  end of line 2
  * @return intersection point, invalid vector if no intersection point found
  */
-RS_Vector LC_LineMath::getIntersectionLineLine(const RS_Vector& s1, const RS_Vector& e1, const RS_Vector& s2, const RS_Vector& e2) {
+RS_Vector LC_LineMath::getIntersectionLineLine(const RS_Vector& s1, const RS_Vector& e1, const RS_Vector& s2,
+                                               const RS_Vector& e2) {
     RS_Line line1{nullptr, {s1, e1}};
     RS_Line line2{nullptr, {s2, e2}};
     RS_VectorSolutions sol = RS_Information::getIntersectionLineLine(&line1, &line2);
     return sol.empty() ? RS_Vector{false} : sol.at(0);
 }
 
-RS_Vector LC_LineMath::getIntersectionLineLineFast(const RS_Vector& s1, const RS_Vector& e1, const RS_Vector& s2, const RS_Vector& e2) {
-
+RS_Vector LC_LineMath::getIntersectionLineLineFast(const RS_Vector& s1, const RS_Vector& e1, const RS_Vector& s2,
+                                                   const RS_Vector& e2) {
     RS_Vector ret;
 
     double num = ((e2.x - s2.x) * (s1.y - s2.y) - (e2.y - s2.y) * (s1.x - s2.x));
@@ -425,8 +441,6 @@ RS_Vector LC_LineMath::getIntersectionInfiniteLineLineFast(const RS_Vector& s1, 
     return ret;
 }
 
-
-
 bool LC_LineMath::hasIntersectionLineRect(const RS_Vector& lineStart, const RS_Vector& lineEnd, const RS_Vector& rectMin, const RS_Vector& rectMax) {
     RS_Vector direction =  lineEnd - lineStart;
     // fixme - rewrite to faster implementation as it is used in rendering pipeline!!
@@ -438,7 +452,6 @@ bool LC_LineMath::hasIntersectionLineRect(const RS_Vector& lineStart, const RS_V
     else{
         return hasLineIntersection(lineStart, direction, {rectMin.x, rectMax.y}, {rectMax.x, rectMin.y}); // intersection with second diagnonal
     }
-
 }
 
 /*
@@ -471,16 +484,16 @@ bool LC_LineMath::hasLineIntersection(RS_Vector p0, RS_Vector direction, RS_Vect
  * @param points - input points
  * @return - the convex hull found
  */
-RS_VectorSolutions LC_LineMath::convexHull(const RS_VectorSolutions& points)
-{
+RS_VectorSolutions LC_LineMath::convexHull(const RS_VectorSolutions& points){
     RS_VectorSolutions sol = points;
     // ignore invalid points
     auto it = std::remove_if(sol.begin(), sol.end(), [](const RS_Vector& p) {
         return ! p.valid;});
     sol = {{sol.begin(), it}};
 
-    if (sol.size() <= 1)
+    if (sol.size() <= 1) {
         return sol;
+    }
 
     // find the left-most and lowest corner
     std::sort(sol.begin(), sol.end(), compareCoordinates);
@@ -488,12 +501,14 @@ RS_VectorSolutions LC_LineMath::convexHull(const RS_VectorSolutions& points)
     // avoid duplicates
     RS_VectorSolutions hull{{sol.at(0)}};
     for(size_t i = 1; i < sol.size(); ++i) {
-        if (hull.back().distanceTo(sol.at(i)) > RS_TOLERANCE)
+        if (hull.back().distanceTo(sol.at(i)) > RS_TOLERANCE) {
             hull.push_back(sol.at(i));
+        }
     }
 
-    if (hull.size() <= 2)
+    if (hull.size() <= 2) {
         return hull;
+    }
 
     // soft by the angle to the corner
     std::sort(hull.begin() + 1, hull.end(),
@@ -507,8 +522,9 @@ RS_VectorSolutions LC_LineMath::convexHull(const RS_VectorSolutions& points)
         const double angle0 = sol.at(0).angleTo(sol.back());
         const double angle1 = sol.at(0).angleTo(hull.at(i));
         if (RS_Math::equal(angle0, angle1, RS_TOLERANCE)) {
-            if (sol.at(0).distanceTo(hull.at(i)) < sol.at(0).distanceTo(sol.back()))
+            if (sol.at(0).distanceTo(hull.at(i)) < sol.at(0).distanceTo(sol.back())) {
                 sol.back() = hull.at(i);
+            }
         } else {
             sol.push_back(hull.at(i));
         }
@@ -518,10 +534,21 @@ RS_VectorSolutions LC_LineMath::convexHull(const RS_VectorSolutions& points)
     hull = {sol.at(0), sol.at(1)};
     for (size_t i = 2; i < sol.size(); ++i) {
         const size_t j = hull.size() - 1;
-        if (isCounterClockwise(hull.at(j-1), hull.at(j), sol.at(i)))
+        if (isCounterClockwise(hull.at(j-1), hull.at(j), sol.at(i))) {
             hull.push_back(sol.at(i));
-        else
+        }
+        else {
             hull.at(j) = sol.at(i);
+        }
     }
     return hull;
+}
+
+double LC_LineMath::angleFor3Points(const RS_Vector& edgePoint1, const RS_Vector& intersection, const RS_Vector& edgePoint2) {
+    double angle1 = intersection.angleTo(edgePoint1);
+    double angle2 = intersection.angleTo(edgePoint2);
+    double angle = RS_Math::getAngleDifference(angle1, angle2, false);
+    angle = RS_Math::correctAngle0ToPi(angle);
+    // double angle = RS_Math::correctAngle(angle1-angle2);
+    return angle;
 }

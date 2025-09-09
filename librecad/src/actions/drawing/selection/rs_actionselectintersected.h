@@ -39,6 +39,7 @@ class RS_ActionSelectIntersected:public RS_PreviewActionInterface {
 public:
     RS_ActionSelectIntersected(LC_ActionContext *actionContext,bool select);
     ~RS_ActionSelectIntersected() override;
+    void reset();
     void init(int status) override;
 protected:
     /**
@@ -52,11 +53,13 @@ protected:
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
     bool m_performSelect = false;
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void onMouseLeftButtonPress(int status, LC_MouseEvent *e) override;
+    bool isValidEntityForSelection(RS_Entity* entity);
     void updateMouseButtonHints() override;
     void doTrigger() override;
 };

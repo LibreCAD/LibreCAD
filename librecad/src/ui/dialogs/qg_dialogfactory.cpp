@@ -35,57 +35,34 @@
 #include <QMessageBox>
 #include <QRegularExpression>
 
-#include "LC_DlgParabola.h"
-#include "lc_dimordinate.h"
-#include "lc_dlgdimordinate.h"
-#include "lc_dlgsplinepoints.h"
+#include "lc_dlgdimension.h"
+#include "lc_dlgentityproperties.h"
 #include "lc_parabola.h"
 #include "qc_applicationwindow.h"
 #include "qg_blockdialog.h"
 #include "qg_commandwidget.h"
-#include "qg_dlgarc.h"
 #include "qg_dlgattributes.h"
-#include "qg_dlgcircle.h"
-#include "qg_dlgdimension.h"
-#include "qg_dlgdimlinear.h"
-#include "qg_dlgellipse.h"
 #include "qg_dlghatch.h"
-#include "qg_dlgimage.h"
-#include "qg_dlginsert.h"
-#include "qg_dlgline.h"
 #include "qg_dlgmirror.h"
 #include "qg_dlgmove.h"
 #include "qg_dlgmoverotate.h"
 #include "qg_dlgmtext.h"
 #include "qg_dlgoptionsdrawing.h"
 #include "qg_dlgoptionsmakercam.h"
-#include "qg_dlgpoint.h"
-#include "qg_dlgpolyline.h"
 #include "qg_dlgrotate.h"
 #include "qg_dlgrotate2.h"
 #include "qg_dlgscale.h"
-#include "qg_dlgspline.h"
 #include "qg_dlgtext.h"
 #include "qg_layerdialog.h"
 #include "qg_selectionwidget.h"
-#include "rs_arc.h"
 #include "rs_blocklist.h"
-#include "rs_circle.h"
 #include "rs_debug.h"
 #include "rs_dimension.h"
-#include "rs_dimlinear.h"
-#include "rs_ellipse.h"
 #include "rs_hatch.h"
-#include "rs_image.h"
-#include "rs_insert.h"
 #include "rs_layer.h"
 #include "rs_layerlist.h"
-#include "rs_line.h"
 #include "rs_patternlist.h"
-#include "rs_point.h"
-#include "rs_polyline.h"
 #include "rs_settings.h"
-#include "rs_spline.h"
 #include "rs_system.h"
 #include "rs_text.h"
 
@@ -100,8 +77,7 @@ class LC_EntityPropertiesDlg;
  * @param ow Pointer to widget that can host option widgets.
  */
 QG_DialogFactory::QG_DialogFactory(QWidget* parent, [[maybe_unused]]QToolBar* optionsToolbar, [[maybe_unused]] LC_SnapOptionsWidgetsHolder* snapOptionsHolder)
-    : parent(parent)
-{
+    : parent(parent){
 }
 
 
@@ -180,8 +156,6 @@ RS_Layer* QG_DialogFactory::requestNewLayerDialog(RS_LayerList* layerList)
     return layer;
 }
 
-
-
 /**
  * Shows a dialog that asks the user if the selected layer
  * can be removed. Doesn't remove the layer. This is up to the caller.
@@ -235,7 +209,6 @@ RS_Layer* QG_DialogFactory::requestLayerRemovalDialog(RS_LayerList* layerList) {
 
     return layer;
 }
-
 
 /**
  * Shows a dialog that asks the user if the selected layers
@@ -334,7 +307,6 @@ QStringList QG_DialogFactory::requestSelectedLayersRemovalDialog(
     return QStringList();
 }
 
-
 /**
  * Shows a dialog for editing a layer. A new layer is created and
  * returned. Modifying the layer is up to the caller.
@@ -382,8 +354,6 @@ RS_Layer* QG_DialogFactory::requestEditLayerDialog(RS_LayerList* layerList) {
 
     return layer;
 }
-
-
 
 /**
  * Shows a dialog for adding a block. Doesn't add the block.
@@ -728,89 +698,88 @@ bool QG_DialogFactory::requestRotate2Dialog(RS_Rotate2Data& data) {
  */
 
 // fixme - sand - files - remove from there, move to action or so (introduces additional dependencies)
-bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity *entity, LC_GraphicViewport *viewport) {
+bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity *entity, [[maybe_unused]]LC_GraphicViewport *viewport) {
     if (!entity) return false;
 
     bool ret = false;
+
+    // fixme Sand - RESTORE!!!! Rework via EntityPropertiesEditor or, even better, via switchToAction!!!
+    // LC_DlgEntityProperties* dlg = new LC_DlgEntityProperties(parent, viewport, entity);
+    // ret = dlg->exec() == QDialog::Accepted;
+    // delete dlg;
     LC_EntityPropertiesDlg* editDialog;
     bool hasDialog = true;
 
     switch (entity->rtti()) {
-    case RS2::EntityPoint: {
-        editDialog = new QG_DlgPoint(parent, viewport, dynamic_cast<RS_Point *>(entity));
-        break;
-    }
-    case RS2::EntityLine: {
-        editDialog = new QG_DlgLine(parent, viewport, dynamic_cast<RS_Line *>(entity));
-        break;
-    }
-    case RS2::EntityArc: {
-        editDialog = new QG_DlgArc(parent, viewport, dynamic_cast<RS_Arc *>(entity));
-        break;
-    }
-    case RS2::EntityCircle: {
-        editDialog = new QG_DlgCircle(parent, viewport, dynamic_cast<RS_Circle *>(entity));
-        break;
-    }
-    case RS2::EntityEllipse: {
-        editDialog = new QG_DlgEllipse(parent, viewport,dynamic_cast<RS_Ellipse *>(entity));
-        break;
-    }
-    case RS2::EntityParabola: {
-        editDialog = new LC_DlgParabola(parent, viewport,dynamic_cast<LC_Parabola *>(entity));
-        break;
-    }
-    case RS2::EntitySpline: {
-        editDialog = new QG_DlgSpline(parent, viewport,dynamic_cast<RS_Spline *>(entity));
-        break;
-    }
-    case RS2::EntitySplinePoints: {
-        editDialog = new LC_DlgSplinePoints(parent, viewport,dynamic_cast<LC_SplinePoints *>(entity));
-        break;
-    }
-    case RS2::EntityInsert: {
-        editDialog = new QG_DlgInsert(parent, viewport,dynamic_cast<RS_Insert *>(entity));
-        break;
-    }
-    case RS2::EntityDimAligned:
-    case RS2::EntityDimAngular:
-    case RS2::EntityDimDiametric:
-    case RS2::EntityDimRadial:
-    case RS2::EntityDimArc: {
-        editDialog = new QG_DlgDimension(parent, viewport,dynamic_cast<RS_Dimension *>(entity));
-        break;
-    }
-    case RS2::EntityDimLinear: {
-        editDialog = new QG_DlgDimLinear(parent, viewport, dynamic_cast<RS_DimLinear *>(entity));
-        break;
-    }
-    case RS2::EntityDimOrdinate: {
-        editDialog = new LC_DlgDimOrdinate(parent, viewport, dynamic_cast<LC_DimOrdinate *>(entity));
-        break;
-    }
-    case RS2::EntityMText: {
-        editDialog = new QG_DlgMText(parent, viewport,dynamic_cast<RS_MText *>(entity), false);
-        break;
-    }
-    case RS2::EntityText: {
-        editDialog = new QG_DlgText(parent, viewport,dynamic_cast<RS_Text *>(entity), false);
-        break;
-    }
-    case RS2::EntityHatch: {
-        editDialog = new QG_DlgHatch(parent, viewport,dynamic_cast<RS_Hatch *>(entity), false);
-        break;
-    }
-    case RS2::EntityPolyline: {
-        editDialog = new QG_DlgPolyline(parent, viewport,dynamic_cast<RS_Polyline *>(entity));
-        break;
-    }
-    case RS2::EntityImage: {
-        editDialog = new QG_DlgImage(parent, viewport, dynamic_cast<RS_Image *>(entity));
-        break;
-    }
-    default:
-        hasDialog = false;
-        break;
+      /*  case RS2::EntityPoint: {
+            editDialog = new QG_DlgPoint(parent, viewport, dynamic_cast<RS_Point*>(entity));
+            break;
+        }
+        case RS2::EntityLine: {
+            editDialog = new QG_DlgLine(parent, viewport, dynamic_cast<RS_Line*>(entity));
+            break;
+        }
+        case RS2::EntityArc: {
+            editDialog = new QG_DlgArc(parent, viewport, dynamic_cast<RS_Arc*>(entity));
+            break;
+        }
+        case RS2::EntityCircle: {
+            editDialog = new QG_DlgCircle(parent, viewport, dynamic_cast<RS_Circle*>(entity));
+            break;
+        }
+        case RS2::EntityEllipse: {
+            editDialog = new QG_DlgEllipse(parent, viewport, dynamic_cast<RS_Ellipse*>(entity));
+            break;
+        }
+        case RS2::EntityParabola: {
+            editDialog = new LC_DlgParabola(parent, viewport, dynamic_cast<LC_Parabola*>(entity));
+            break;
+        }
+        case RS2::EntitySpline: {
+            editDialog = new QG_DlgSpline(parent, viewport, dynamic_cast<RS_Spline*>(entity));
+            break;
+        }
+        case RS2::EntitySplinePoints: {
+            editDialog = new LC_DlgSplinePoints(parent, viewport, dynamic_cast<LC_SplinePoints*>(entity));
+            break;
+        }
+        case RS2::EntityInsert: {
+            editDialog = new QG_DlgInsert(parent, viewport, dynamic_cast<RS_Insert*>(entity));
+            break;
+        }*/
+        case RS2::EntityDimAligned:
+        case RS2::EntityDimAngular:
+        case RS2::EntityDimDiametric:
+        case RS2::EntityDimRadial:
+        case RS2::EntityDimArc:
+        case RS2::EntityDimOrdinate:
+        case RS2::EntityDimLinear: {
+            editDialog = new LC_DlgDimension(parent, viewport, dynamic_cast<RS_Dimension*>(entity));
+            break;
+        }
+        case RS2::EntityMText: {
+            editDialog = new QG_DlgMText(parent, viewport, dynamic_cast<RS_MText*>(entity), false);
+            break;
+        }
+        case RS2::EntityText: {
+            editDialog = new QG_DlgText(parent, viewport, dynamic_cast<RS_Text*>(entity), false);
+            break;
+        }
+        case RS2::EntityHatch: {
+            editDialog = new QG_DlgHatch(parent, viewport, dynamic_cast<RS_Hatch*>(entity), false);
+            break;
+        }
+       /* case RS2::EntityPolyline: {
+            editDialog = new QG_DlgPolyline(parent, viewport, dynamic_cast<RS_Polyline*>(entity));
+            break;
+        }
+        case RS2::EntityImage: {
+            editDialog = new QG_DlgImage(parent, viewport, dynamic_cast<RS_Image*>(entity));
+            break;
+        }*/
+        default:
+            hasDialog = false;
+            break;
     }
 
     if (hasDialog){
@@ -894,16 +863,6 @@ QString QG_DialogFactory::requestFileSaveAsDialog(const QString& caption /* = QS
                                                   QString* selectedFilter /* = 0 */) {
 
     return QFileDialog::getSaveFileName(parent, caption, dir, filter, selectedFilter);
-}
-
-/**
- * Called whenever the selection changed.
- */
-void QG_DialogFactory::updateSelectionWidget(int num, double length) {
-    if (m_selectionWidget != nullptr) {
-        m_selectionWidget->setNumber(num);
-        m_selectionWidget->setTotalLength(length);
-    }
 }
 
 void QG_DialogFactory::displayBlockName(const QString& blockName, const bool& display){

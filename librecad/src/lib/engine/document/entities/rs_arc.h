@@ -73,6 +73,8 @@ public:
     RS_Arc(RS_EntityContainer* parent,
            const RS_ArcData& d);
 
+    RS_Arc(const RS_ArcData& d);
+
     RS_Entity* clone() const override;
 
     /**	@return RS2::EntityArc */

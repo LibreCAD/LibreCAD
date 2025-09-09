@@ -45,6 +45,7 @@ public:
     void mouseMoveEvent(QMouseEvent* e) override;
     void mousePressEvent(QMouseEvent* e) override;
     void mouseReleaseEvent(QMouseEvent* e) override;
+    bool isSupportsPredecessorAction() override {return true;}
 protected:
     /*
        ** Action States.

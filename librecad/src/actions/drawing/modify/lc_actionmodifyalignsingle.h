@@ -29,12 +29,12 @@
 class LC_ActionModifyAlignSingle:public RS_PreviewActionInterface, public LC_ActionModifyAlignData{
     Q_OBJECT
 public:
-    LC_ActionModifyAlignSingle(LC_ActionContext *actionContext);
+    explicit LC_ActionModifyAlignSingle(LC_ActionContext *actionContext);
     void setAlignType(int a) override;
     void init(int status) override;
 protected:
     enum State{
-        SetRefPoint,
+        SetRefPoint = InitialActionStatus,
         SelectEntity
     };
     RS_Vector m_alignMin = RS_Vector(false);
@@ -43,6 +43,7 @@ protected:
     RS_Entity* m_entityToAlign = nullptr;
     bool m_finishActionAfterTrigger = false;
 
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
@@ -54,6 +55,8 @@ protected:
     void previewRefLines(bool drawVertical, double verticalRef, bool drawHorizontal, double horizontalRef);
     QString prepareInfoCursorMessage(double verticalRef, bool drawVertical, double horizontalRef, bool drawHorizontal);
     void doTrigger() override;
+    void previewAlign(RS_Entity* entity, double verticalRef, bool drawVertical, double horizontalRef,
+                      bool drawHorizontal, const RS_Vector& alignMin, const RS_Vector& m_alignMax);
 };
 
 #endif // LC_ACTIONMODIFYALIGNSINGLE_H

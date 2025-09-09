@@ -35,14 +35,16 @@ public:
     void init(int status) override;
 protected:
     enum Status{
-        SetEntity
+        SetEntity = InitialActionStatus
     };
     RS_Polyline* m_polyline;
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    void setPolylineToModify(RS_Entity* entity);
     RS_Polyline *createPolyline(RS_Polyline *pPolyline);
     bool hasArcsSegments(RS_Polyline *p);
     void doTrigger() override;

@@ -31,6 +31,7 @@
 
 #include "dxf_format.h"
 #include "rs_actioninterface.h"
+#include "rs_entity.h"
 #include "rs_vector.h"
 
 class RS_Point;
@@ -55,6 +56,7 @@ struct LC_MouseEvent{
     QPoint uiPosition;
     bool isControl = false;
     bool isShift = false;
+    bool isAlt = false;
     QMouseEvent* originalEvent = nullptr;
 };
 
@@ -129,6 +131,7 @@ protected:
     void previewRefSelectablePoint(const RS_Vector &coord);
     void previewRefPoints(const std::vector<RS_Vector>& points);
     RS_Arc* previewRefArc(const RS_Vector &center, const RS_Vector &startPoint, const RS_Vector &mouse, bool determineReversal);
+    RS_Arc* previewRefArc(bool reversed, const RS_Vector &center, const RS_Vector &startPoint, const RS_Vector &mouse);
     RS_Circle* previewRefCircle(const RS_Vector &center, const double radius);
     RS_Arc *previewRefArc(const RS_ArcData &arcData);
     LC_RefEllipse *previewRefEllipse(const RS_EllipseData &arcData);
@@ -145,9 +148,10 @@ protected:
     bool is(RS_Entity* e, RS2::EntityType type) const;
     bool isLine(RS_Entity*  e) const{return is(e, RS2::EntityLine);}
     bool isPolyline(RS_Entity*  e) const{return is(e, RS2::EntityPolyline);}
-    bool isCircle(RS_Entity*  e){return is(e, RS2::EntityCircle);}
-    bool isArc(RS_Entity*  e){return is(e, RS2::EntityArc);}
-    bool isEllipse(RS_Entity*  e){return is(e, RS2::EntityEllipse);}
+    bool isCircle(RS_Entity*  e) const {return is(e, RS2::EntityCircle);}
+    bool isArc(RS_Entity*  e) const {return is(e, RS2::EntityArc);}
+    bool isEllipse(RS_Entity*  e) const {return is(e, RS2::EntityEllipse);}
+    bool isAtomic(RS_Entity* e) const {return e != nullptr && e->isAtomic();}
 
     void previewSnapAngleMark(const RS_Vector &center, double angle);
     void previewSnapAngleMark(const RS_Vector &center, const RS_Vector &refPoint);
@@ -172,6 +176,7 @@ protected:
 
     LC_ActionInfoMessageBuilder& msg(const QString& name, const QString& value);
     LC_ActionInfoMessageBuilder& msg(const QString& name);
+    LC_ActionInfoMessageBuilder& msgStart();
 
     QString obtainEntityDescriptionForInfoCursor(RS_Entity *e, RS2::EntityDescriptionLevel level);
     void prepareEntityDescription(RS_Entity *entity, RS2::EntityDescriptionLevel level);

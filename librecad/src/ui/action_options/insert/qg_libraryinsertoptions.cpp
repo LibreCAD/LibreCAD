@@ -37,6 +37,8 @@ QG_LibraryInsertOptions::QG_LibraryInsertOptions()
     ui->setupUi(this);
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &QG_LibraryInsertOptions::onAngleEditingFinished);
     connect(ui->leFactor, &QLineEdit::editingFinished, this, &QG_LibraryInsertOptions::onFactorEditingFinished);
+
+    pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);
 }
 
 /*

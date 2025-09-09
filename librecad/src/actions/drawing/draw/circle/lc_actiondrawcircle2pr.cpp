@@ -136,8 +136,9 @@ void LC_ActionDrawCircle2PR::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 bool existing = false;
                 for (auto p: *m_preview) {
                     if (isCircle(p)){
-                        if (dynamic_cast<RS_Circle *>(p)->getData() == *m_circleData)
+                        if (dynamic_cast<RS_Circle *>(p)->getData() == *m_circleData) {
                             existing = true;
+                        }
                     }
                 }
                 if (!existing){
@@ -156,6 +157,8 @@ void LC_ActionDrawCircle2PR::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 }
             }
         }
+        default:
+            break;;
     }
 }
 
@@ -198,10 +201,12 @@ void LC_ActionDrawCircle2PR::onCoordinateEvent(int status, [[maybe_unused]] bool
         case SelectCenter: {
             RS_Vector altCenter;
             bool showPreview = preparePreview(mouse, altCenter);
-            if (showPreview || m_circleData->isValid())
+            if (showPreview || m_circleData->isValid()) {
                 trigger();
-            else
+            }
+            else {
                 commandMessage(tr("Select from two possible circle centers"));
+            }
             break;
         }
         default:

@@ -57,6 +57,18 @@ void RS_ActionModifyRotate2::doTrigger(bool keepSelected) {
     finish(false);
 }
 
+bool RS_ActionModifyRotate2::doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) {
+    if (tag == "angle") {
+        setAngle1(angleRad);
+        return true;
+    }
+    if (tag == "angle2") {
+        setAngle2(angleRad);
+        return true;
+    }
+    return false;
+}
+
 void RS_ActionModifyRotate2::onMouseMoveEventSelected(int status, LC_MouseEvent *e) {
     RS_Vector mouse = e->snapPoint;
     switch (status) {
@@ -199,12 +211,12 @@ LC_ActionOptionsWidget *RS_ActionModifyRotate2::createOptionsWidget() {
     return new LC_Rotate2Options();
 }
 
-void RS_ActionModifyRotate2::setAngle2(double d) {
-    m_actionData->angle2 = toWorldAngleFromUCSBasis(d);
+void RS_ActionModifyRotate2::setAngle2(double angleRad) {
+    m_actionData->angle2 = toWorldAngleFromUCSBasis(angleRad);
 }
 
-void RS_ActionModifyRotate2::setAngle1(double d) {
-    m_actionData->angle1 = toWorldAngleFromUCSBasis(d);
+void RS_ActionModifyRotate2::setAngle1(double angleRad) {
+    m_actionData->angle1 = toWorldAngleFromUCSBasis(angleRad);
 }
 
 double RS_ActionModifyRotate2::getAngle1() {

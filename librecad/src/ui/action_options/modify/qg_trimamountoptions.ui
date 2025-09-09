@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>265</width>
+    <width>293</width>
     <height>24</height>
    </rect>
   </property>
@@ -105,6 +105,20 @@
     </widget>
    </item>
    <item>
+    <widget class="QToolButton" name="tbPickLength">
+     <property name="toolTip">
+      <string>Pick length from drawing</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_distance.lci</normaloff>:/icons/interactive_pick_distance.lci</iconset>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="Line" name="line">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -143,6 +157,8 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../../../../res/icons/icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

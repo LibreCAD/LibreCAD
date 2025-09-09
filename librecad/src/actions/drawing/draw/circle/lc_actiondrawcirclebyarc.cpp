@@ -43,6 +43,8 @@ bool LC_ActionDrawCircleByArc::doCheckMayTriggerOnInit(int status){
     return status == SetArc;
 }
 
+// fixme - sand - CTX_entity init!
+
 bool LC_ActionDrawCircleByArc::isAcceptSelectedEntityToTriggerOnInit(RS_Entity *pEntity){
     // here we'll accept only selected arcs or ellipse arcs
     int rtti = pEntity->rtti();
@@ -177,7 +179,6 @@ void LC_ActionDrawCircleByArc::drawSnapper() {
 }
 
 void LC_ActionDrawCircleByArc::doPreparePreviewEntities([[maybe_unused]]LC_MouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
-
     RS_Entity *en = catchAndDescribe(e, m_circleType, RS2::ResolveAll);
     if (en != nullptr){
         highlightHover(en);
@@ -234,6 +235,14 @@ void LC_ActionDrawCircleByArc::updateMouseButtonHints(){
             updateMouseWidget();
             break;
     }
+}
+
+bool LC_ActionDrawCircleByArc::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "radiusShift") {
+        setRadiusShift(distance);
+        return true;
+    }
+    return false;
 }
 
 RS2::CursorType LC_ActionDrawCircleByArc::doGetMouseCursor([[maybe_unused]]int status){

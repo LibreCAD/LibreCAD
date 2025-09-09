@@ -47,7 +47,7 @@ protected:
      * Action States.
      */
     enum Status {
-        ChooseLimitEntity, /**< Choosing the limiting entity. */
+        ChooseLimitEntity = InitialActionStatus, /**< Choosing the limiting entity. */
         ChooseTrimEntity /**< Choosing the entity to trim. */
     };
 
@@ -57,6 +57,7 @@ protected:
     std::unique_ptr<TrimActionData> m_actionData;
     bool m_both = false;
 
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     void previewRefTrimmedEntity(RS_Entity *trimmed, RS_Entity *original);
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;
@@ -64,5 +65,7 @@ protected:
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void doTrigger() override;
+    void previewTrim(RS_Entity* entityToTrimCandidate, RS_Entity* limitingEntity, RS_Vector trimCoordinates,
+                     RS_Vector limitCoordinates, bool& trimInvalid);
 };
 #endif

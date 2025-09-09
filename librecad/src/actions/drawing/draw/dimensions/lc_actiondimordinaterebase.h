@@ -31,7 +31,8 @@ public:
     explicit LC_ActionDimOrdinateRebase(LC_ActionContext* actionContext);
     ~LC_ActionDimOrdinateRebase() override = default;
 protected:
-    void updateMouseButtonHintsForSelection() override;
+     void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
+     void updateMouseButtonHintsForSelection() override;
     void doTrigger(bool keepSelected) override;
     bool isAllowTriggerOnEmptySelection() override;
 };

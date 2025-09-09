@@ -26,14 +26,19 @@
 #include "rs_dimension.h"
 #include "rs_preview.h"
 
-LC_ActionCircleDimBase::LC_ActionCircleDimBase(const char* name, LC_ActionContext *actionContext, RS2::ActionType actionType)
-  : RS_ActionDimension(name, actionContext, actionType)
+LC_ActionCircleDimBase::LC_ActionCircleDimBase(const char* name, LC_ActionContext *actionContext,  RS2::EntityType dimType, RS2::ActionType actionType)
+  : RS_ActionDimension(name, actionContext, dimType, actionType)
     , m_entity(nullptr)
     , m_lastStatus(SetEntity)
     , m_position(std::make_unique<RS_Vector>()){
 }
 
 LC_ActionCircleDimBase::~LC_ActionCircleDimBase() = default;
+
+void LC_ActionCircleDimBase::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    showOptions(); // force display options to update options
+    setDimSourceEntity(contextEntity, false, clickPos);
+}
 
 void LC_ActionCircleDimBase::doTrigger() {
     if (m_entity != nullptr) {
@@ -91,29 +96,35 @@ void LC_ActionCircleDimBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     }
 }
 
+void LC_ActionCircleDimBase::setDimSourceEntity(RS_Entity* en, bool controlPressed, RS_Vector pos) {
+    if (isArc(en) || isCircle(en)) {
+        m_entity = en;
+        const RS_Vector &center = en->getCenter();
+        moveRelativeZero(center);
+        if (!isAngleIsFree()){
+            m_alternateAngle = controlPressed;
+            if (!m_position->valid){
+                *m_position = pos;
+            }
+            trigger();
+            reset();
+        }
+        else {
+            setStatus(SetPos);
+        }
+    } else {
+        commandMessage(tr("Not a circle or arc entity"));
+    }
+}
+
 void LC_ActionCircleDimBase::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity: {
             RS_Entity *en = catchEntityByEvent(e, RS2::ResolveAll);
             if (en != nullptr) {
-                if (isArc(en) || isCircle(en)) {
-                    m_entity = en;
-                    const RS_Vector &center = en->getCenter();
-                    moveRelativeZero(center);
-                    if (!isAngleIsFree()){
-                        m_alternateAngle = e->isControl;
-                        if (!m_position->valid){
-                            *m_position = e->snapPoint;
-                        }
-                        trigger();
-                        reset();
-                    }
-                    else {
-                        setStatus(SetPos);
-                    }
-                } else {
-                    commandMessage(tr("Not a circle or arc entity"));
-                }
+                bool controlPressed = e->isControl;
+                auto pos = e->snapPoint;
+                setDimSourceEntity(en, controlPressed, pos);
             }
             break;
         }
@@ -157,12 +168,14 @@ bool LC_ActionCircleDimBase::doProcessCommand(int status, const QString &c) {
         enableCoordinateInput();
         setStatus(m_lastStatus);
         accept = true;
-    } else if (checkCommand("text", c)) { // command: text
-        m_lastStatus = (Status) status;
+    }
+    else if (checkCommand("text", c)) { // command: text
+        m_lastStatus = (Status)status;
         disableCoordinateInput();
         setStatus(SetText);
         accept = true;
-    } else if (status == SetPos) {// setting angle
+    }
+    else if (status == SetPos) { // setting angle
         double angle;
         bool ok = parseToUCSBasisAngle(c, angle);
         if (ok) {
@@ -175,7 +188,8 @@ bool LC_ActionCircleDimBase::doProcessCommand(int status, const QString &c) {
             trigger();
             reset();
             setStatus(SetEntity);
-        } else {
+        }
+        else {
             commandMessage(tr("Not a valid expression"));
         }
     }

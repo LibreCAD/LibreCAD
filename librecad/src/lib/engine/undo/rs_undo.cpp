@@ -205,6 +205,11 @@ void RS_Undo::updateUndoState() const{
     fireUndoStateChanged(undoAvailable, redoAvailable);
 }
 
+void RS_Undo::collectUndoState(bool& undoAvailable, bool& redoAvailable) const {
+    redoAvailable = m_redoPointer != undoList.end();
+    undoAvailable = !undoList.empty() && m_redoPointer != undoList.cbegin();
+}
+
 /**
  * Dumps the undo list to stdout.
  */

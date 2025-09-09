@@ -52,7 +52,7 @@ public:
      * action state
      */
     enum {
-        SetEntity
+        SetEntity = InitialActionStatus
     };
 
     /**
@@ -70,8 +70,8 @@ public:
     bool isDivideEntity() const{return m_doDivideEntity;}
     void setTickLength(double len){m_tickLength = len;}
     void setDrawTickOnEdgeMode(int i){m_tickEdgeDrawMode = i;}
-    void setTickAngle(double a){ m_tickAngleDegrees = a;}
-    void setCircleStartTickAngle(double a){ m_circleStartTickAngleDegrees = a;}
+    void setTickAngleDegrees(double a){ m_tickAngleDegrees = a;}
+    void setCircleStartTickAngleDegrees(double a){ m_circleStartTickAngleDegrees = a;}
     void setTickAngleRelative(bool b){m_tickAngleIsRelative = b;}
     void setDivideEntity(bool value){m_doDivideEntity = value;}
     void setTickCount(int c){m_tickCount = c;}
@@ -80,10 +80,10 @@ public:
     int getTickSnapMode() const{return m_tickSnapMode;}
     int getTickCount() const{return m_tickCount;}
     int getDrawTickOnEdgeMode() const{return m_tickEdgeDrawMode;}
-    double getTickAngle() const{return m_tickAngleDegrees;}
+    double getTickAngleDegrees() const{return m_tickAngleDegrees;}
     double getTickLength() const{return m_tickLength;}
     double getTickOffset() const{return m_tickOffset;}
-    double getCircleStartAngle() const{return m_circleStartTickAngleDegrees;}
+    double getCircleStartAngleDegrees() const{return m_circleStartTickAngleDegrees;}
     void setDistance(double val){m_distance = val;};
     double getDistance() const{return m_distance;};
     void setFixedDistance(bool value){m_fixedDistance = value;};
@@ -179,6 +179,8 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     EntityTypeList getCatchEntityTypeList() const;
     void updateMouseButtonHints() override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angle) override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 
 #endif // LC_ACTIONDRAWSLICEDIVIDE_H

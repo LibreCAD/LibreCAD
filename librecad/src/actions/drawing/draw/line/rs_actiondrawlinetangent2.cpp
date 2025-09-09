@@ -28,6 +28,7 @@
 
 #include "rs_creation.h"
 #include "rs_line.h"
+#include "rs_polyline.h"
 #include "rs_preview.h"
 
 struct RS_ActionDrawLineTangent2::ActionData {
@@ -38,10 +39,10 @@ struct RS_ActionDrawLineTangent2::ActionData {
     /** 2nd chosen entity */
     RS_Entity* circle2 = nullptr;
 };
-namespace {
 
-//list of entity types supported by current action
-    const EntityTypeList circleType = EntityTypeList{RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityParabola};
+namespace {
+    //list of entity types supported by current action
+    const auto g_circleType = EntityTypeList{RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityParabola};
 
     double linePointDist(const RS_Line &line, const RS_Vector &point){
         return point.distanceTo(line.getNearestPointOnEntity(point));
@@ -50,28 +51,33 @@ namespace {
 
 RS_ActionDrawLineTangent2::RS_ActionDrawLineTangent2(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Draw Tangents 2", actionContext, RS2::ActionDrawLineTangent2), m_actionData{std::make_unique<ActionData>()}{
-    init(SetCircle1);
 }
 
 RS_ActionDrawLineTangent2::~RS_ActionDrawLineTangent2(){
-    init(SetCircle1);
+    cleanup();
 }
 
 void RS_ActionDrawLineTangent2::init(int status){
-    setStatus(status);
-    switch (status) {
-        case SetCircle1:
-            cleanup();
-            break;
-        case SetCircle2:
-            m_actionData->circle2 = nullptr;
-            break;
-        case SelectLine:
-            break;
-        default:
-            break;
+    if (status == SetCircle1) {
+        cleanup();
     }
     RS_PreviewActionInterface::init(status);
+}
+
+void RS_ActionDrawLineTangent2::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    auto entity = contextEntity;
+    if (isPolyline(entity)) {
+        auto polyline = static_cast<RS_Polyline*>(contextEntity);
+        entity = polyline->getNearestEntity(clickPos);
+    }
+    RS2::EntityType rtti = entity->rtti();
+    if (g_circleType.contains(rtti)) {
+        m_actionData->circle1 = entity;
+        m_actionData->circle2 = nullptr;
+        setStatus(SetCircle2);
+        highlightHover(entity);
+        drawPreview();
+    }
 }
 
 void RS_ActionDrawLineTangent2::finish(bool updateTB){
@@ -80,20 +86,21 @@ void RS_ActionDrawLineTangent2::finish(bool updateTB){
 }
 
 void RS_ActionDrawLineTangent2::doTrigger() {
-    if (m_actionData->tangents.empty() || m_actionData->tangents.front() == nullptr)
+    if (m_actionData->tangents.empty() || m_actionData->tangents.front() == nullptr) {
         return;
+    }
 
     auto *newEntity = new RS_Line{m_container, m_actionData->tangents.front()->getData()};
 
     setPenAndLayerToActive(newEntity);
     undoCycleAdd(newEntity);
-    init(SetCircle1);
     cleanup();
+    setStatus(SetCircle1);
 }
 
 void RS_ActionDrawLineTangent2::cleanup(){
-    this->m_actionData->circle1 = nullptr;
-    this->m_actionData->circle2 = nullptr;
+    m_actionData->circle1 = nullptr;
+    m_actionData->circle2 = nullptr;
 }
 
 void RS_ActionDrawLineTangent2::onMouseMoveEvent(int status, LC_MouseEvent *e) {
@@ -101,14 +108,14 @@ void RS_ActionDrawLineTangent2::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetCircle1: {
             deletePreview();
-            auto *en = catchAndDescribe(e, circleType, RS2::ResolveAll);
+            auto *en = catchAndDescribe(e, g_circleType, RS2::ResolveAll);
             if (en != nullptr){
                 highlightHover(en);
             }
             break;
         }
         case SetCircle2: {
-            RS_Entity *en = catchAndDescribe(e, circleType, RS2::ResolveAll);
+            RS_Entity *en = catchAndDescribe(e, g_circleType, RS2::ResolveAll);
             highlightSelected(m_actionData->circle1);
             if (en != nullptr && en != m_actionData->circle1){
                 highlightHover(en);
@@ -136,9 +143,11 @@ void RS_ActionDrawLineTangent2::onMouseLeftButtonRelease(int status, LC_MouseEve
     deleteSnapper();
     switch (status) {
         case SetCircle1: {
-            m_actionData->circle1 = catchEntityByEvent(e, circleType, RS2::ResolveAll);
-            if (!m_actionData->circle1) return;
-            init(status + 1);
+            m_actionData->circle1 = catchEntityByEvent(e, g_circleType, RS2::ResolveAll);
+            if (m_actionData->circle1 == nullptr) {
+                return;
+            }
+            setStatus(SetCircle2);
             break;
         }
         case SetCircle2: {
@@ -147,7 +156,7 @@ void RS_ActionDrawLineTangent2::onMouseLeftButtonRelease(int status, LC_MouseEve
                 if (m_actionData->tangents.size() == 1){
                     trigger();
                 } else {
-                    init(status + 1);
+                    setStatus(SelectLine);
                     preparePreview(status, e);
                     invalidateSnapSpot();
                 }
@@ -155,8 +164,9 @@ void RS_ActionDrawLineTangent2::onMouseLeftButtonRelease(int status, LC_MouseEve
             break;
         }
         case SelectLine: {
-            if (!m_actionData->tangents.empty())
+            if (!m_actionData->tangents.empty()) {
                 trigger();
+            }
             break;
         }
         default:
@@ -167,10 +177,8 @@ void RS_ActionDrawLineTangent2::onMouseLeftButtonRelease(int status, LC_MouseEve
 void RS_ActionDrawLineTangent2::onMouseRightButtonRelease(int status, [[maybe_unused]] LC_MouseEvent *e) {
     deleteSnapper();
     deletePreview();
-    if (status == SetCircle1){
-        if (m_actionData->circle1 != nullptr){
-            m_actionData->circle1 = nullptr;
-        }
+    if (status == SetCircle1) {
+        m_actionData->circle1 = nullptr;
     }
     initPrevious(status);
 }

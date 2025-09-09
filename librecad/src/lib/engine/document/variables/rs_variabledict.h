@@ -52,18 +52,22 @@ public:
 	int count() const {
         return variables.count();
     }
-
+    void add(const QString& key, const QString& value, int code, int type);
     void add(const QString& key, const RS_Vector& value, int code);
     void add(const QString& key, const QString& value, int code);
     void add(const QString& key, int value, int code);
     void add(const QString& key, double value, int code);
+    void add(const QString& key, bool value, int code);
 
 	RS_Vector getVector(const QString& key, const RS_Vector& def) const;
 	QString getString(const QString& key, const QString& def) const;
 	int getInt(const QString& key, int def) const;
+    bool getBool(const QString& key, bool def) const;
 	double getDouble(const QString& key, double def) const;
 
 	void remove(const QString& key);
+
+    bool has(const QString& key) {return variables.contains(key);};
 
 	QHash<QString, RS_Variable> const& getVariableDict() const {
         return variables;
@@ -71,6 +75,7 @@ public:
 	QHash<QString, RS_Variable>& getVariableDict() {
 		return variables;
 	}
+
 
     //void addVariableDictListener(RS_VariableDictListener* listener);
 

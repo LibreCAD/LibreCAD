@@ -40,6 +40,12 @@ LC_SliceDivideOptions::LC_SliceDivideOptions() :
     connect(ui->cbRelAngle, &QCheckBox::clicked, this, &LC_SliceDivideOptions::onRelAngleClicked);
     connect(ui->cbDivide, &QCheckBox::clicked, this, &LC_SliceDivideOptions::onDivideClicked);
     connect(ui->cbMode, &QCheckBox::clicked, this, &LC_SliceDivideOptions::onModeClicked);
+
+    pickAngleSetup("angle", ui->tbPickAngle, ui->leTickAngle);
+    pickAngleSetup("angleCircle", ui->tbPickCircleAngle, ui->leCircleStartAngle);
+    pickDistanceSetup("distance", ui->tbPickLength, ui->leDistance);
+    pickDistanceSetup("length", ui->tbPickLength, ui->leTickLengh);
+    pickDistanceSetup("offset", ui->tbPickOffset, ui->leTickOffset);
 }
 
 LC_SliceDivideOptions::~LC_SliceDivideOptions(){
@@ -101,8 +107,8 @@ void LC_SliceDivideOptions::doSetAction(RS_ActionInterface *a, bool update){
             count = m_action->getTickCount();
             tickLen = fromDouble(m_action->getTickLength());
             tickOffset = fromDouble(m_action->getTickOffset());
-            tickAngle = fromDouble(m_action->getTickAngle());
-            circleStartAngle = fromDouble(m_action->getCircleStartAngle());
+            tickAngle = fromDouble(m_action->getTickAngleDegrees());
+            circleStartAngle = fromDouble(m_action->getCircleStartAngleDegrees());
             distance = fromDouble(m_action->getDistance());
             tickSnapMode = m_action->getTickSnapMode();
             drawEdgesMode = m_action->getDrawTickOnEdgeMode();
@@ -256,7 +262,7 @@ void LC_SliceDivideOptions::setTickLengthToActionAndView(const QString &val){
 void LC_SliceDivideOptions::setTickAngleToActionAndView(const QString &val){
     double angle;
     if (toDoubleAngleDegrees(val, angle, 0.0, false)){
-        m_action->setTickAngle(angle);
+        m_action->setTickAngleDegrees(angle);
         ui->leTickAngle->setText(fromDouble(angle));
     }
 }
@@ -272,7 +278,7 @@ void LC_SliceDivideOptions::setTickOffsetToActionAndView(const QString &val){
 void LC_SliceDivideOptions::setCircleStartAngleToActionAndView(const QString &val){
     double angle;
     if (toDoubleAngleDegrees(val, angle, 0.0, false)){
-        m_action->setCircleStartTickAngle(angle);
+        m_action->setCircleStartTickAngleDegrees(angle);
         ui->leCircleStartAngle->setText(fromDouble(angle));
     }
 }

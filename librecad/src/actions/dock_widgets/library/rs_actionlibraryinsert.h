@@ -108,5 +108,6 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angle) override;
 };
 #endif

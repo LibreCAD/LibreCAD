@@ -86,9 +86,10 @@ RS_ActionInterface::RS_ActionInterface(const char *name,
 }
 
 RS_ActionInterface::~RS_ActionInterface(){
-    if (m_optionWidget != nullptr){
+        if (m_optionWidget != nullptr){
         m_optionWidget->deleteLater();
         m_optionWidget.release();
+        m_optionWidget.reset();
     }
 }
 
@@ -112,6 +113,10 @@ void RS_ActionInterface::setName(const char* _name) {
     m_name=_name;
 }
 
+bool RS_ActionInterface::mayInitWithContextEntity(int status) {
+    return status == InitialActionStatus;
+}
+
 /**
  * Called to initiate an action. This funtcion is often
  * overwritten by the implementing action.
@@ -121,15 +126,32 @@ void RS_ActionInterface::setName(const char* _name) {
  */
 void RS_ActionInterface::init(int status){
     setStatus(status);
-    if (status>=0) {
+    if (status >= InitialActionStatus) {
         RS_Snapper::init();
         updateMouseButtonHints();
         updateMouseCursor();
-    }else{
+        if (mayInitWithContextEntity(status)) {
+            doInitialInit();
+            auto contextEntity = m_actionContext->getContextMenuActionContextEntity();
+            if (contextEntity != nullptr) {
+                // LC_ERR << "Action CTX INIT " << m_name;
+                doInitWithContextEntity(contextEntity, m_actionContext->getContextMenuActionClickPosition());
+                m_actionContext->clearContextMenuActionContext();
+            }
+        }
+    } else{
         //delete snapper when finished, bug#3416878
         deleteSnapper();
     }
 }
+
+void RS_ActionInterface::doInitWithContextEntity([[maybe_unused]]RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
+}
+
+void RS_ActionInterface::doInitialInit() {
+}
+
+
 /**
  * Called when the mouse moves and this is the current action.
  * This function can be overwritten by the implementing action.
@@ -351,8 +373,7 @@ void RS_ActionInterface::setFinished() {
 /**
  * Finishes this action.
  */
-void RS_ActionInterface::finish(bool /*updateTB*/)
-{
+void RS_ActionInterface::finish(bool /*updateTB*/){
 	RS_DEBUG->print("RS_ActionInterface::finish");
 	//refuse to quit the default action
 	if(rtti() != RS2::ActionDefault) {
@@ -368,8 +389,12 @@ void RS_ActionInterface::finish(bool /*updateTB*/)
  * Called by the event handler to give this action a chance to
  * communicate with its predecessor.
  */
-void RS_ActionInterface::setPredecessor(RS_ActionInterface* pre) {
+void RS_ActionInterface::setPredecessor(std::shared_ptr<RS_ActionInterface> pre) {
     m_predecessor = pre;
+}
+
+std::shared_ptr<RS_ActionInterface> RS_ActionInterface::getPredecessor() const {
+    return m_predecessor;
 }
 
 /**
@@ -398,7 +423,7 @@ void RS_ActionInterface::hideOptions() {
     }
 }
 
-void RS_ActionInterface::updateOptions(){
+void RS_ActionInterface::updateOptions(const QString &tagToFocus){
     if (m_optionWidget == nullptr){
         LC_ActionOptionsWidget* widget = createOptionsWidget();
         if (widget != nullptr){
@@ -417,6 +442,9 @@ void RS_ActionInterface::updateOptions(){
         }
         else{
             m_optionWidget->setAction(this, true);
+        }
+        if (!tagToFocus.isEmpty()) {
+            m_optionWidget->requestFocusForTag(tagToFocus);
         }
     }
 }
@@ -444,6 +472,34 @@ void RS_ActionInterface::showOptions() {
             }
         }
     }
+}
+
+void RS_ActionInterface::onLateRequestCompleted(bool shouldBeSkipped) {
+    if (!shouldBeSkipped) {
+        auto inputInfo = m_actionContext->getInteractiveInputInfo();
+        bool updated = false;
+        auto requestorTag = inputInfo->m_requestorTag;
+        switch (inputInfo->m_inputType) {
+            case LC_ActionContext::InteractiveInputInfo::ANGLE: {
+                updated = doUpdateAngleByInteractiveInput(requestorTag, inputInfo->m_angleRad);
+                break;
+            }
+            case LC_ActionContext::InteractiveInputInfo::DISTANCE: {
+                updated = doUpdateDistanceByInteractiveInput(requestorTag, inputInfo->m_distance);
+                break;
+            }
+            case LC_ActionContext::InteractiveInputInfo::POINT: {
+                updated = doUpdatePointByInteractiveInput(requestorTag, inputInfo->m_wcsPoint);
+                break;
+            }
+            default:
+                break;
+        }
+        if (updated) {
+            updateOptions(requestorTag);
+        }
+    }
+    m_actionContext->interactiveInputRequestCancel();
 }
 
 LC_ActionOptionsWidget* RS_ActionInterface::createOptionsWidget(){
@@ -639,6 +695,11 @@ bool RS_ActionInterface::isControl(const QInputEvent *e){
 bool RS_ActionInterface::isShift(const QInputEvent *e){
     return  e->modifiers() & Qt::ShiftModifier;
 }
+
+bool RS_ActionInterface::isAlt(const QInputEvent *e){
+    return  e->modifiers() & Qt::AltModifier;
+}
+
 
 void RS_ActionInterface::fireCoordinateEvent(const RS_Vector &coord){
     auto ce = RS_CoordinateEvent(coord);

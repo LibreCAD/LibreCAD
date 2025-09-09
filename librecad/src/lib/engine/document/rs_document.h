@@ -33,6 +33,7 @@
 #include "rs_pen.h"
 #include "rs_undo.h"
 
+class LC_TextStyleList;
 class LC_DimStylesList;
 class RS_GraphicView;
 class LC_UCSList;
@@ -58,6 +59,7 @@ public:
     virtual LC_DimStylesList* getDimStyleList() = 0;
     virtual LC_ViewList* getViewList() { return nullptr;}
     virtual LC_UCSList* getUCSList() { return nullptr;}
+    virtual LC_TextStyleList* getTextStyleList() = 0;
 
     virtual void newDoc() = 0;
 

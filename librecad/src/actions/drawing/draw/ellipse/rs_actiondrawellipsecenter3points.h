@@ -33,7 +33,7 @@
 class RS_ActionDrawEllipseCenter3Points : public LC_ActionDrawCircleBase {
     Q_OBJECT
 public:
-    RS_ActionDrawEllipseCenter3Points(LC_ActionContext *actionContext);
+    explicit RS_ActionDrawEllipseCenter3Points(LC_ActionContext *actionContext);
     ~RS_ActionDrawEllipseCenter3Points() override;
     void init(int status) override;
     bool preparePreview();
@@ -43,10 +43,10 @@ protected:
  * Action States.
  */
     enum Status {
-        SetCenter=0,   //  Setting the Center.  */
-        SetPoint1=1,   //  Setting the First Point.  */
-        SetPoint2=2,   //  Setting the Second Point.  */
-        SetPoint3=3   //  Setting the Third Point.  */
+        SetCenter = InitialActionStatus,   //  Setting the Center.  */
+        SetPoint1 = 1,   //  Setting the First Point.  */
+        SetPoint2 = 2,   //  Setting the Second Point.  */
+        SetPoint3 = 3   //  Setting the Third Point.  */
     };
 
     struct ActionData;

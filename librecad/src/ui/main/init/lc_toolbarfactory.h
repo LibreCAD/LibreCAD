@@ -42,6 +42,7 @@ public:
 private:
     LC_ActionGroupManager *m_agm;
     LC_ActionFactory *m_actionFactory;
+    bool m_showToolbarTooltips{true};
     void createStandardToolbars();
     void addInfoCursorOptionAction(QMenu *menu, const char *name, int tag) const;
     void initCADToolbars() const;
@@ -58,7 +59,7 @@ private:
     QToolBar *createCreatorsToolbar(const QSizePolicy &tbPolicy) const;
     QToolBar *createPreferencesToolbar(const QSizePolicy &tbPolicy) const;
     QToolBar *createInfoCursorToolbar(const QSizePolicy &tbPolicy);
-    QToolBar * createEntityLayersToolbar(const QSizePolicy &tbPolicy) const;
+    QToolBar *createEntityLayersToolbar(const QSizePolicy &tbPolicy) const;
 
     QToolBar *createCategoriesToolbar();
     QToolBar *createNamedViewsToolbar(const QSizePolicy &toolBarPolicy) const;
@@ -73,5 +74,6 @@ private:
     void addToTop(QToolBar *toolbar) const;
     void addToBottom(QToolBar *toolbar) const;
     void addToLeft(QToolBar *toolbar) const;
+    void setToolbarTooltip(QToolBar* toolbar, const QString& text) const;
 };
 #endif // LC_TOOLBARFACTORY_H

@@ -27,6 +27,7 @@
 #ifndef RS_ACTIONDRAWLINEPARALLEL_H
 #define RS_ACTIONDRAWLINEPARALLEL_H
 
+#include "lc_latecompletionrequestor.h"
 #include "rs_previewactioninterface.h"
 
 class RS_Vector;
@@ -46,11 +47,10 @@ public:
     void setDistance(double d);
     int getNumber() const;
     void setNumber(int n);
-
 private:
     // fixme - why no possibility to set distance via command line?
     enum Status {
-        SetEntity,    /**< Choose original entity. */
+        SetEntity = InitialActionStatus,    /**< Choose original entity. */
 //SetDistance,  /**< Setting distance in the command line. */
         SetNumber     /**< Setting number in the command line. */
 //SetThrough     /**< Setting a point for the parallel to go through. */
@@ -60,12 +60,16 @@ private:
     RS_Entity *m_parallel = nullptr;
     /** Distance of the parallel. */
     double m_distance = 0.;
-/** Number of parallels. */
+    /** Number of parallels. */
     int m_numberToCreate = 0;
-/** Coordinate of the mouse. */
+    /** Coordinate of the mouse. */
     std::unique_ptr<RS_Vector> m_coord;
-/** Original entity. */
+    /** Original entity. */
     RS_Entity *m_entity = nullptr;
+protected:
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
+private:
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;

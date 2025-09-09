@@ -96,7 +96,7 @@ public:
         MinColorDistance = 20,  //< in %
     };
 
-    bool isEqualIgnoringFlags(const RS_Color& c){
+    bool isEqualIgnoringFlags(const RS_Color& c) const{
         return red()==c.red() &&
                green()==c.green() &&
                blue()==c.blue() &&

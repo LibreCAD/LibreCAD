@@ -36,7 +36,7 @@ public:
     QStringList getAvailableCommands() override;
 protected:
     enum State{
-        SetPoint1,
+        SetPoint1 = InitialActionStatus,
         SetPoint2,
         SetParameterValue
     };
@@ -65,10 +65,10 @@ protected:
     virtual QString getParameterCommand() = 0;
     virtual void setParameterValue(double r);
     virtual QString getParameterPromptValue() const = 0;
-
     virtual QString getAlternativePoint2Prompt() const;
-
     void doTrigger() override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angle) override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 
 #endif // LC_ACTIONDRAWARC2POINTSBASE_H

@@ -30,6 +30,7 @@
 #include "rs_blocklist.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"
+#include "rs_line.h"
 
 RS_BlockData::RS_BlockData(const QString& _name,
                            const RS_Vector& _basePoint,
@@ -76,6 +77,11 @@ RS_BlockList* RS_Block::getBlockList() {
 LC_DimStylesList* RS_Block::getDimStyleList() {
     RS_Graphic* g = getGraphic();
     return (g != nullptr) ? g->getDimStyleList() : nullptr;
+}
+
+LC_TextStyleList* RS_Block::getTextStyleList() {
+    RS_Graphic* g = getGraphic();
+    return (g != nullptr) ? g->getTextStyleList() : nullptr;
 }
 
 // bool RS_Block::save(bool isAutoSave) {
@@ -178,6 +184,16 @@ QStringList RS_Block::findNestedInsert(const QString& bName) {
     }
 
     return bnChain;
+}
+
+void RS_Block::addByBlockLine(const RS_Vector& start, const RS_Vector& end) {
+    addByBlockEntity(new RS_Line(start, end));
+}
+
+void RS_Block::addByBlockEntity(RS_Entity* entity) {
+    RS_Pen byBlockPen(RS2::FlagByBlock,  RS2::WidthByBlock, RS2::LineByBlock);
+    entity->setPen(byBlockPen);
+    addEntity(entity);
 }
 
 std::ostream& operator << (std::ostream& os, const RS_Block& b) {

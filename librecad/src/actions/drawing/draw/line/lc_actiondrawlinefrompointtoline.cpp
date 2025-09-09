@@ -23,18 +23,41 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "lc_actiondrawlinefrompointtoline.h"
 
+#include <boost/math/tools/fraction.hpp>
+
 #include "lc_linefrompointtolineoptions.h"
 #include "lc_linemath.h"
 #include "rs_line.h"
+#include "rs_polyline.h"
+
+// fixme - sand - add support of line and circle!
 
 LC_ActionDrawLineFromPointToLine::LC_ActionDrawLineFromPointToLine(LC_ActionContext *actionContext)
     :LC_AbstractActionWithPreview("Draw Line To Line", actionContext,RS2::ActionDrawLineFromPointToLine){
 }
+
+void LC_ActionDrawLineFromPointToLine::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    auto entity = contextEntity;
+    if (isPolyline(contextEntity)) {
+        auto polyline = static_cast<RS_Polyline*>(contextEntity);
+        entity = polyline->getNearestEntity(clickPos);
+    }
+    if (isLine(entity)) {
+        m_targetLine = static_cast<RS_Line*>(entity);
+        m_selectLineFirst = true;
+    }
+}
+
 /*
  * check that we're fine to trigger
  */
 bool LC_ActionDrawLineFromPointToLine::doCheckMayTrigger(){
-    return m_targetLine != nullptr;
+    if (m_selectLineFirst) {
+       return m_startPoint.valid && m_targetLine != nullptr;
+    }
+    else {
+        return m_targetLine != nullptr;
+    }
 }
 
 /**
@@ -43,7 +66,7 @@ bool LC_ActionDrawLineFromPointToLine::doCheckMayTrigger(){
  */
 void LC_ActionDrawLineFromPointToLine::doPrepareTriggerEntities(QList<RS_Entity *> &list){
     RS_Vector intersection;
-    RS_Line* line = createLineFromPointToTarget(m_targetLine, intersection);
+    RS_Line* line = createLineFromPointToTarget(m_targetLine, m_startPoint, intersection);
     list << line;
 }
 
@@ -51,8 +74,13 @@ void LC_ActionDrawLineFromPointToLine::doPrepareTriggerEntities(QList<RS_Entity 
  * do post trigger cleanup and go to point selection state
  */
 void LC_ActionDrawLineFromPointToLine::doAfterTrigger(){
-    m_targetLine = nullptr;
-    m_startPoint = RS_Vector(false);
+    if (m_selectLineFirst) {
+        m_startPoint = RS_Vector(false);
+    }
+    else {
+        m_targetLine = nullptr;
+        m_startPoint = RS_Vector(false);
+    }
     restoreSnapMode();
     setStatus(SetPoint);
 }
@@ -65,8 +93,16 @@ void LC_ActionDrawLineFromPointToLine::doBack(LC_MouseEvent *pEvent, int status)
 }
 
 void LC_ActionDrawLineFromPointToLine::doFinish([[maybe_unused]]bool updateTB){
-    if (getStatus() == SelectLine){
-        restoreSnapMode();
+    int status = getStatus();
+    if (m_selectLineFirst) {
+        if (status == SetPoint){
+            restoreSnapMode();
+        }
+    }
+    else {
+        if (status == SelectLine){
+            restoreSnapMode();
+        }
     }
 }
 
@@ -106,8 +142,10 @@ void LC_ActionDrawLineFromPointToLine::doOnLeftMouseButtonRelease([[maybe_unused
             RS_Entity* en = catchModifiableEntity(e, RS2::EntityLine);
             if (en != nullptr){
                 m_targetLine = dynamic_cast<RS_Line *>(en);
-                trigger();
-                invalidateSnapSpot();
+                if (!m_selectLineFirst) {
+                    trigger();
+                    invalidateSnapSpot();
+                }
             }
             break;
         }
@@ -123,7 +161,12 @@ void LC_ActionDrawLineFromPointToLine::doOnLeftMouseButtonRelease([[maybe_unused
  * @return
  */
 bool LC_ActionDrawLineFromPointToLine::doCheckMayDrawPreview([[maybe_unused]] LC_MouseEvent *event, int status){
-    return status != SetPoint; // draw preview if we're selecting the line only
+    if (m_selectLineFirst) {
+        return status == SetPoint;
+    }
+    else {
+        return status != SetPoint; // draw preview if we're selecting the line only
+    }
 }
 
 /**
@@ -134,7 +177,29 @@ bool LC_ActionDrawLineFromPointToLine::doCheckMayDrawPreview([[maybe_unused]] LC
  * @param status
  */
 void LC_ActionDrawLineFromPointToLine::doPreparePreviewEntities([[maybe_unused]]LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
-    if (status == SelectLine){
+    if (m_selectLineFirst) {
+        if (status == SetPoint){
+            deleteSnapper();
+
+            highlightHover(m_targetLine);
+            auto intersectionPoint = RS_Vector(false);
+            auto line = createLineFromPointToTarget(m_targetLine, snap, intersectionPoint);
+            if (m_showRefEntitiesOnPreview) {
+                createRefPoint(line->getEndpoint(), list);
+                if (m_sizeMode == SIZE_INTERSECTION && LC_LineMath::isMeaningful(m_endOffset)) {
+                    createRefPoint(intersectionPoint, list);
+                }
+            }
+
+            previewEntityToCreate(line, false);
+            if (m_showRefEntitiesOnPreview) {
+                createRefSelectablePoint(snap, list);
+                createRefPoint(m_startPoint, list);
+            }
+            list << line;
+        }
+    }
+    else  if (status == SelectLine){
         deleteSnapper();
         RS_Entity* en = catchModifiableAndDescribe(e, RS2::EntityLine);
         RS_Line* line;
@@ -142,7 +207,7 @@ void LC_ActionDrawLineFromPointToLine::doPreparePreviewEntities([[maybe_unused]]
             auto potentialLine = dynamic_cast<RS_Line *>(en);
             highlightHover(potentialLine);
             auto intersectionPoint = RS_Vector(false);
-            line = createLineFromPointToTarget(potentialLine, intersectionPoint);
+            line = createLineFromPointToTarget(potentialLine, m_startPoint, intersectionPoint);
             if (m_showRefEntitiesOnPreview) {
                 createRefPoint(line->getEndpoint(), list);
                 if (m_sizeMode == SIZE_INTERSECTION && LC_LineMath::isMeaningful(m_endOffset)) {
@@ -162,6 +227,26 @@ void LC_ActionDrawLineFromPointToLine::doPreparePreviewEntities([[maybe_unused]]
     }
 }
 
+bool LC_ActionDrawLineFromPointToLine::doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) {
+    if (tag == "angle") {
+        setAngleDegrees(RS_Math::rad2deg(angleRad));
+        return true;
+    }
+    return false;
+}
+
+bool LC_ActionDrawLineFromPointToLine::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "offset") {
+        setEndOffset(distance);
+        return true;
+    }
+    if (tag == "length") {
+        setLength(distance);
+        return true;
+    }
+    return false;
+}
+
 /**
  * processing of coordinates for start point via mouse click or command widget
  * @param coord
@@ -169,7 +254,12 @@ void LC_ActionDrawLineFromPointToLine::doPreparePreviewEntities([[maybe_unused]]
  * @param status
  */
 void LC_ActionDrawLineFromPointToLine::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &coord) {
-    if (status == SetPoint){
+    if (m_selectLineFirst) {
+        m_startPoint = coord;
+        trigger();
+        invalidateSnapSpot();
+    }
+    else  if (status == SetPoint){
         m_startPoint = coord;
         // for simplicity of line selection, remove snap restrictions until we'll select a line
         setFreeSnap();
@@ -190,7 +280,7 @@ void LC_ActionDrawLineFromPointToLine::onCoordinateEvent(int status, [[maybe_unu
  * @param line
  * @return
  */
-RS_Line *LC_ActionDrawLineFromPointToLine::createLineFromPointToTarget(RS_Line *line, RS_Vector& intersection){
+RS_Line *LC_ActionDrawLineFromPointToLine::createLineFromPointToTarget(RS_Line *line, const RS_Vector& point, RS_Vector& intersection){
     RS_Vector lineStart = line->getStartpoint();
     RS_Vector lineEnd = line->getEndpoint();
 
@@ -198,8 +288,8 @@ RS_Line *LC_ActionDrawLineFromPointToLine::createLineFromPointToTarget(RS_Line *
 
     // rotate line coordinates around lineStart point, so they will be parallel to X axis
 
-    lineStart.rotate(m_startPoint, -targetLineAngle);
-    lineEnd.rotate(m_startPoint, -targetLineAngle);
+    lineStart.rotate(point, -targetLineAngle);
+    lineEnd.rotate(point, -targetLineAngle);
 
     // define angle that should be used
     double vectorAngle;
@@ -210,16 +300,16 @@ RS_Line *LC_ActionDrawLineFromPointToLine::createLineFromPointToTarget(RS_Line *
     else{
         // determine which angle should be used - normal or alternate
         // alternative angle allows to simplify angle setting - so in ui the angle is within 0..90 degrees.
-        double angleToUse = m_angle;
+        double angleToUse = m_angleDegrees;
         if (m_alternativeActionMode){
-            angleToUse = -m_angle;
+            angleToUse = -m_angleDegrees;
         }
         double resultingAngle = RS_Math::deg2rad(angleToUse);
         vectorAngle = resultingAngle;
 //        vectorAngle = RS_Math::correctAngle3(resultingAngle);
     }
 
-    if (m_startPoint.y >= lineStart.y){ // lineStart point is above
+    if (point.y >= lineStart.y){ // lineStart point is above
     }
     else{
         vectorAngle = -vectorAngle;
@@ -234,21 +324,21 @@ RS_Line *LC_ActionDrawLineFromPointToLine::createLineFromPointToTarget(RS_Line *
 
     switch (m_sizeMode) {
         case SIZE_INTERSECTION: { // create line from point to intersection point
-            ortLineStart = m_startPoint; // in this mode, we just build the line from start point
+            ortLineStart = point; // in this mode, we just build the line from start point
 
             // calculate end point of direction vector positioned in start point
-            RS_Vector vectorEnd = m_startPoint + directionVector;
+            RS_Vector vectorEnd = point + directionVector;
 
             // determine intersection point
-            RS_Vector intersectionPoint = LC_LineMath::getIntersectionLineLine(m_startPoint, vectorEnd, lineStart, lineEnd);
+            RS_Vector intersectionPoint = LC_LineMath::getIntersectionLineLine(point, vectorEnd, lineStart, lineEnd);
 
             if (intersectionPoint.valid){
                 // rotate intersection back to return to drawing coordinates
-                RS_Vector restoredIntersection = intersectionPoint.rotate(m_startPoint, targetLineAngle);
+                RS_Vector restoredIntersection = intersectionPoint.rotate(point, targetLineAngle);
                 // process end offset from intersection point, if needed
                 RS_Vector endPoint = restoredIntersection;
                 if (LC_LineMath::isMeaningful(m_endOffset)){
-                    RS_Vector offsetVector = RS_Vector::polar(m_endOffset, m_startPoint.angleTo(restoredIntersection));
+                    RS_Vector offsetVector = RS_Vector::polar(m_endOffset, point.angleTo(restoredIntersection));
                     endPoint = restoredIntersection + offsetVector;
                 }
 
@@ -266,7 +356,7 @@ RS_Line *LC_ActionDrawLineFromPointToLine::createLineFromPointToTarget(RS_Line *
             switch (m_lineSnapMode) {
                 case SNAP_START: // start point of line will be in initial point
                     // correct start point according to current snap mode
-                    ortLineStart = m_startPoint;
+                    ortLineStart = point;
                     // define end point of line
                     if (m_alternativeActionMode){
                         ortLineEnd = ortLineStart + directionVector;
@@ -276,7 +366,7 @@ RS_Line *LC_ActionDrawLineFromPointToLine::createLineFromPointToTarget(RS_Line *
                     }
                     break;
                 case SNAP_END: // end point of the line will be in initial point
-                    ortLineEnd = m_startPoint;
+                    ortLineEnd = point;
                     if (m_alternativeActionMode){
                         ortLineStart = ortLineEnd - directionVector;
                     }
@@ -288,18 +378,18 @@ RS_Line *LC_ActionDrawLineFromPointToLine::createLineFromPointToTarget(RS_Line *
                 case SNAP_MIDDLE: // middle point of line will be in initial point
                     RS_Vector vectorOffsetCorrection = RS_Vector::polar(m_length / 2, vectorAngle);
                     if (m_alternativeActionMode){
-                        ortLineStart = m_startPoint - vectorOffsetCorrection;
-                        ortLineEnd = m_startPoint + vectorOffsetCorrection;
+                        ortLineStart = point - vectorOffsetCorrection;
+                        ortLineEnd = point + vectorOffsetCorrection;
                     }
                     else{
-                        ortLineStart = m_startPoint + vectorOffsetCorrection;
-                        ortLineEnd = m_startPoint - vectorOffsetCorrection;
+                        ortLineStart = point + vectorOffsetCorrection;
+                        ortLineEnd = point - vectorOffsetCorrection;
                     }
                     break;
             }
             // restore rotated position back to drawing
-            ortLineStart.rotate(m_startPoint, targetLineAngle);
-            ortLineEnd.rotate(m_startPoint, targetLineAngle);
+            ortLineStart.rotate(point, targetLineAngle);
+            ortLineEnd.rotate(point, targetLineAngle);
             break;
         }
     }

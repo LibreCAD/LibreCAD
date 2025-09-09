@@ -36,6 +36,10 @@ void LC_ActionPenPick::init(int status){
     RS_PreviewActionInterface::init(status);
 }
 
+void LC_ActionPenPick::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
+    pickPen(contextEntity);
+}
+
 /**
  * Cleanup that is needed if action was finished by escape
  * @param updateTB
@@ -54,6 +58,14 @@ void LC_ActionPenPick::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     }
 }
 
+void LC_ActionPenPick::pickPen(RS_Entity* en) {
+    applyPenToPenToolBar(en);
+    init( getStatus() - 1);
+    finish(true);
+    redraw();
+    m_graphicView->back();
+}
+
 void LC_ActionPenPick::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     if (status == SelectEntity){
         // Well, actually, it's possible to use Shift modifier for determining whether pen should be
@@ -61,13 +73,9 @@ void LC_ActionPenPick::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
         // UIX with Pen Palette Widget
         RS_Entity *en = catchEntityByEvent(e, RS2::ResolveNone);
         if (en != nullptr){
-            applyPenToPenToolBar(en);
-            init( getStatus() - 1);
-            finish(true);
-            m_graphicView->back();
+            pickPen(en);
         }
     }
-    redraw();
 }
 
 void LC_ActionPenPick::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {

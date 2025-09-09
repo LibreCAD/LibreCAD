@@ -36,6 +36,7 @@ QG_MTextOptions::QG_MTextOptions()
     , ui{std::make_unique<Ui::Ui_MTextOptions>()}{
 	ui->setupUi(this);
     connect(ui->leAngle, &QLineEdit::textEdited, this, &QG_MTextOptions::updateAngle);
+    pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);
 }
 
 /*

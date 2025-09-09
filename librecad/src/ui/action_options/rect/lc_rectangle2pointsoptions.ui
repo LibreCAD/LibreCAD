@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1255</width>
+    <width>1398</width>
     <height>24</height>
    </rect>
   </property>
@@ -26,28 +26,6 @@
    <property name="bottomMargin">
     <number>1</number>
    </property>
-   <item row="0" column="20">
-    <widget class="QComboBox" name="cbEdges">
-     <property name="toolTip">
-      <string>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</string>
-     </property>
-     <item>
-      <property name="text">
-       <string>Both</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Vertical</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Horizontal</string>
-      </property>
-     </item>
-    </widget>
-   </item>
    <item row="0" column="1">
     <widget class="QComboBox" name="cbSnapStart">
      <property name="toolTip">
@@ -76,9 +54,140 @@
     </widget>
    </item>
    <item row="0" column="9">
+    <widget class="QCheckBox" name="cbPolyline">
+     <property name="toolTip">
+      <string>If checked, the entire rectangle will be drawn as polyline.</string>
+     </property>
+     <property name="text">
+      <string>Polyline</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="11">
+    <widget class="QComboBox" name="cbCorners">
+     <property name="toolTip">
+      <string>Defines how corners of rectangle should be drawn. </string>
+     </property>
+     <item>
+      <property name="text">
+       <string>Straight</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Round</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Bevel</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Start Snap:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="8">
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="7">
+    <widget class="QToolButton" name="tbPickAngle">
+     <property name="toolTip">
+      <string>Pick rectangle rotation angle from drawing</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_angle.lci</normaloff>:/icons/interactive_pick_angle.lci</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="13">
+    <widget class="QLineEdit" name="leRadius">
+     <property name="minimumSize">
+      <size>
+       <width>30</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Radius of rounded corners. </string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="14">
+    <widget class="QToolButton" name="tbPickRadius">
+     <property name="toolTip">
+      <string>Pick radius of rounded corners from drawing. </string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_distance.lci</normaloff>:/icons/interactive_pick_distance.lci</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="6">
+    <widget class="QLineEdit" name="leAngle">
+     <property name="minimumSize">
+      <size>
+       <width>30</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Rectangle rotation angle.</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="10">
     <widget class="QLabel" name="label_3">
      <property name="text">
       <string>Corners:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="20">
+    <widget class="QLineEdit" name="leLenY">
+     <property name="minimumSize">
+      <size>
+       <width>30</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Length of bevel in Y direction. </string>
      </property>
     </widget>
    </item>
@@ -109,61 +218,53 @@
      </item>
     </widget>
    </item>
-   <item row="0" column="19">
-    <widget class="QLabel" name="lblEdges">
-     <property name="text">
-      <string>Edges:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="7">
-    <widget class="Line" name="line_2">
+   <item row="0" column="22">
+    <widget class="Line" name="line_3">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
+   <item row="0" column="19">
+    <widget class="QLabel" name="lblLenY">
      <property name="text">
-      <string>Start Snap:</string>
+      <string>Length Y:</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="17">
-    <widget class="QLineEdit" name="leLenY">
-     <property name="minimumSize">
+   <item row="0" column="25">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
       <size>
-       <width>30</width>
-       <height>0</height>
+       <width>0</width>
+       <height>20</height>
       </size>
      </property>
-     <property name="maximumSize">
-      <size>
-       <width>60</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Length of bevel in Y direction. </string>
-     </property>
-    </widget>
+    </spacer>
    </item>
-   <item row="0" column="13">
-    <widget class="QCheckBox" name="cbSnapRadiusCenter">
+   <item row="0" column="24">
+    <widget class="QComboBox" name="cbEdges">
      <property name="toolTip">
-      <string>If checked, specifies that snap points should be shifted by radius of corners.</string>
+      <string>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</string>
      </property>
-     <property name="text">
-      <string>Snap shift</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="14">
-    <widget class="QLabel" name="lblX">
-     <property name="text">
-      <string>Length X:</string>
-     </property>
+     <item>
+      <property name="text">
+       <string>Both</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Vertical</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Horizontal</string>
+      </property>
+     </item>
     </widget>
    </item>
    <item row="0" column="4">
@@ -173,10 +274,17 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="11">
-    <widget class="QLabel" name="lblRadius">
+   <item row="0" column="18">
+    <widget class="QToolButton" name="tbPickLengthX">
+     <property name="toolTip">
+      <string>Pick length of bevel in X direction from drawing.</string>
+     </property>
      <property name="text">
-      <string>Radius:</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_distance.lci</normaloff>:/icons/interactive_pick_distance.lci</iconset>
      </property>
     </widget>
    </item>
@@ -190,104 +298,31 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="6">
-    <widget class="QLineEdit" name="leAngle">
-     <property name="minimumSize">
-      <size>
-       <width>30</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>60</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Rectangle rotation angle.</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="2">
-    <widget class="QLabel" name="label_4">
+   <item row="0" column="16">
+    <widget class="QLabel" name="lblX">
      <property name="text">
-      <string>End Snap:</string>
+      <string>Length X:</string>
      </property>
-    </widget>
-   </item>
-   <item row="0" column="10">
-    <widget class="QComboBox" name="cbCorners">
-     <property name="toolTip">
-      <string>Defines how corners of rectangle should be drawn. </string>
-     </property>
-     <item>
-      <property name="text">
-       <string>Straight</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Round</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Bevel</string>
-      </property>
-     </item>
     </widget>
    </item>
    <item row="0" column="12">
-    <widget class="QLineEdit" name="leRadius">
-     <property name="minimumSize">
-      <size>
-       <width>30</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>60</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Radius of rounded corners. </string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="16">
-    <widget class="QLabel" name="lblLenY">
+    <widget class="QLabel" name="lblRadius">
      <property name="text">
-      <string>Length Y:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="21">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>0</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="0" column="8">
-    <widget class="QCheckBox" name="cbPolyline">
-     <property name="toolTip">
-      <string>If checked, the entire rectangle will be drawn as polyline.</string>
-     </property>
-     <property name="text">
-      <string>Polyline</string>
+      <string>Radius:</string>
      </property>
     </widget>
    </item>
    <item row="0" column="15">
+    <widget class="QCheckBox" name="cbSnapRadiusCenter">
+     <property name="toolTip">
+      <string>If checked, specifies that snap points should be shifted by radius of corners.</string>
+     </property>
+     <property name="text">
+      <string>Snap shift</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="17">
     <widget class="QLineEdit" name="leX">
      <property name="minimumSize">
       <size>
@@ -306,15 +341,38 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="18">
-    <widget class="Line" name="line_3">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
+   <item row="0" column="2">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>End Snap:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="23">
+    <widget class="QLabel" name="lblEdges">
+     <property name="text">
+      <string>Edges:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="21">
+    <widget class="QToolButton" name="tbPickLengthY">
+     <property name="toolTip">
+      <string>Pick length of bevel in Y direction from drawing. </string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_distance.lci</normaloff>:/icons/interactive_pick_distance.lci</iconset>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../../../res/icons/icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

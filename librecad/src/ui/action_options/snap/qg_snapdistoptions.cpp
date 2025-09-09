@@ -26,6 +26,11 @@
 
 
 #include "qg_snapdistoptions.h"
+
+#include <QToolBar>
+
+#include "lc_actioncontext.h"
+#include "qc_applicationwindow.h"
 #include "rs_math.h"
 #include "ui_qg_snapdistoptions.h"
 
@@ -38,6 +43,7 @@ QG_SnapDistOptions::QG_SnapDistOptions(QWidget* parent)
 	, ui(new Ui::Ui_SnapDistOptions{}){
     ui->setupUi(this);
     connect(ui->leDist, &QLineEdit::editingFinished, this, &QG_SnapDistOptions::onDistEditingFinished);
+    connect(ui->tbPickDistance,  &QToolButton::clicked, this, &QG_SnapDistOptions::onPickDistanceClicked);
 }
 
 /*
@@ -66,6 +72,11 @@ void QG_SnapDistOptions::useSnapDistanceValue(double* d) {
     ui->leDist->setText(value);
 }
 
+void QG_SnapDistOptions::onPickDistanceClicked([[maybe_unused]]bool clicked) {
+    LC_ActionContext* context = QC_ApplicationWindow::getAppWindow()->getActionContext();
+    context->interactiveInputStart(LC_ActionContext::InteractiveInputInfo::DISTANCE, this, "dist");
+}
+
 void QG_SnapDistOptions::onDistEditingFinished() {
     if (m_dist) {
         QString value = ui->leDist->text();
@@ -77,6 +88,11 @@ void QG_SnapDistOptions::onDistEditingFinished() {
 }
 
 void QG_SnapDistOptions::doShow() {
+    bool interactiveInputControlsAutoRaise = LC_GET_ONE_BOOL("Widgets", "PickValueButtonsFlatIcons", true);
+    bool interactiveInputControlsVisible = LC_GET_ONE_BOOL("Defaults", "InteractiveInputEnabled", true);
+    ui->tbPickDistance->setVisible(interactiveInputControlsVisible);
+    ui->tbPickDistance->setAutoRaise(interactiveInputControlsAutoRaise);
+
     bool requestFocus = !isVisible();
     show();
     if (requestFocus){
@@ -86,4 +102,19 @@ void QG_SnapDistOptions::doShow() {
 
 double* QG_SnapDistOptions::getDistanceValue() {
     return m_dist;
+}
+
+void QG_SnapDistOptions::onLateRequestCompleted(bool shouldBeSkipped) {
+    LC_ActionContext* context = QC_ApplicationWindow::getAppWindow()->getActionContext();
+    if (!shouldBeSkipped) {
+        auto inputInfo = context->getInteractiveInputInfo();
+        if (inputInfo->m_inputType == LC_ActionContext::InteractiveInputInfo::DISTANCE && inputInfo->m_requestorTag == "dist") {
+            *m_dist = inputInfo->m_distance;
+            auto value = QString::number(*m_dist, 'g', 6);
+            ui->leDist->setText(value);
+            ui->leDist->setFocus();
+            saveSettings();
+        }
+    }
+    context->interactiveInputRequestCancel();
 }

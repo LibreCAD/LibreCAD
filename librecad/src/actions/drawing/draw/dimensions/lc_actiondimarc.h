@@ -40,19 +40,21 @@ public:
     QStringList getAvailableCommands() override;
 protected:
     enum Status{
-        SetEntity,
+        SetEntity = InitialActionStatus,
         SetPos
     };
-    RS_Entity* m_selectedArcEntity = nullptr;
+    RS_Arc* m_selectedArcEntity = nullptr;
     LC_DimArcData m_dimArcData;
-    void reset()   override;
+   void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
+   void reset()   override;
     void setRadius(const RS_Vector& selectedPosition);
     void updateMouseButtonHints() override;
     bool doProcessCommand(int status, const QString &command)  override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
-    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+   void setArcEntity(RS_Entity* entity);
+   void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void doTrigger() override;
 };
 #endif //LC_ACTIONDIMARC_H

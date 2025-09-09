@@ -29,10 +29,13 @@
 
 class LC_DimOrdinate;
 
-LC_ActionDimOrdinateRebase::LC_ActionDimOrdinateRebase(LC_ActionContext* actionContext):LC_ActionPreSelectionAwareBase("DimOrdinateRebase",
-                                                                                                                       actionContext, RS2::ActionDimOrdinateRebase) {
+LC_ActionDimOrdinateRebase::LC_ActionDimOrdinateRebase(LC_ActionContext* actionContext)
+    :LC_ActionPreSelectionAwareBase("DimOrdinateRebase", actionContext, RS2::ActionDimOrdRebase) {
 }
 
+void LC_ActionDimOrdinateRebase::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    LC_ActionPreSelectionAwareBase::doInitWithContextEntity(contextEntity, clickPos);
+}
 
 void LC_ActionDimOrdinateRebase::updateMouseButtonHintsForSelection() {
     updateMouseWidgetTRCancel("Select Ordinate dimension to rebase (Enter - to complete)", MOD_CTRL(tr("Select and rebase")));
@@ -52,13 +55,14 @@ void LC_ActionDimOrdinateRebase::doTrigger([[maybe_unused]]bool keepSelected) {
 
         for (auto e: m_selectedEntities) {
             auto* dimOrdinate = dynamic_cast<LC_DimOrdinate*>(e);
-
-            auto clone = dynamic_cast<LC_DimOrdinate*>(dimOrdinate->clone());
-            clone->setHDir(horizontalDirection);
-            clone->setDefinitionPoint(origin);
-            m_container->addEntity(clone); // fixme - sand - dims - probably it's better to merge adding to container with undo?
-            undoCycleReplace(e, clone);
-            clone->update();
+            if (dimOrdinate != nullptr) {
+                auto clone = dynamic_cast<LC_DimOrdinate*>(dimOrdinate->clone());
+                clone->setHDir(horizontalDirection);
+                clone->setDefinitionPoint(origin);
+                m_container->addEntity(clone); // fixme - sand - dims - probably it's better to merge adding to container with undo?
+                undoCycleReplace(e, clone);
+                clone->update();
+            }
         }
 
         undoCycleEnd();

@@ -39,7 +39,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>9</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="tabAppearance">
       <attribute name="title">
@@ -101,7 +101,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -165,7 +165,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -207,7 +207,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -277,7 +277,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -322,7 +322,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -367,7 +367,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -474,7 +474,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -770,7 +770,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -808,7 +808,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -888,7 +888,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -928,20 +928,60 @@
           <string>Grid General</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_21">
-          <item row="7" column="0">
-           <widget class="QLabel" name="lMinGridSpacing">
+          <item row="8" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbDrawGrid">
+            <property name="toolTip">
+             <string>If checked, grid wil be drawn</string>
+            </property>
             <property name="text">
-             <string>Minimal Grid Spacing (p&amp;x):</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbMinGridSpacing</cstring>
+             <string>Draw grid</string>
             </property>
            </widget>
           </item>
-          <item row="13" column="1">
+          <item row="9" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbDrawMetaGrid">
+            <property name="toolTip">
+             <string>If checked, metagrid will be drawn as part of grid drawing.</string>
+            </property>
+            <property name="text">
+             <string>Draw meta-grid</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="3">
+           <widget class="QCheckBox" name="cbScaleGrid">
+            <property name="toolTip">
+             <string>If checked, the grid will be scalled automatically</string>
+            </property>
+            <property name="text">
+             <string>A&amp;utomatically scale grid</string>
+            </property>
+            <property name="shortcut">
+             <string>Alt+U</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="0" colspan="3">
+           <widget class="QCheckBox" name="cbDrawVerticalForIsoTop">
+            <property name="toolTip">
+             <string>If unchecked, vertical line will not be drawn for &quot;Top&quot; isometric view</string>
+            </property>
+            <property name="text">
+             <string>Draw vertical lines for &quot;Top&quot; isometric grid</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="3">
+           <widget class="QCheckBox" name="cbDisableGridOnPanning">
+            <property name="toolTip">
+             <string>If checked, grid will not be drawn within view pan by mouse operation</string>
+            </property>
+            <property name="text">
+             <string>Don't draw grid on panning</string>
+            </property>
+           </widget>
+          </item>
+          <item row="14" column="1">
            <widget class="QComboBox" name="cbGridType">
             <property name="minimumSize">
              <size>
@@ -970,7 +1010,40 @@
             </item>
            </widget>
           </item>
-          <item row="13" column="0">
+          <item row="2" column="0" colspan="3">
+           <widget class="QCheckBox" name="cbSimpleGridRendring">
+            <property name="toolTip">
+             <string>If checked, Meta Grid lines will be drawn on top of grid. Simple grid is faster yet is less visually lean.</string>
+            </property>
+            <property name="text">
+             <string>Simple grid rendering</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="3">
+           <widget class="QCheckBox" name="cb_unitless_grid">
+            <property name="toolTip">
+             <string>If checked, grid will not be adjusted to current units of drawing</string>
+            </property>
+            <property name="text">
+             <string>Unitless grid</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="lMinGridSpacing">
+            <property name="text">
+             <string>Minimal Grid Spacing (p&amp;x):</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="buddy">
+             <cstring>cbMinGridSpacing</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="14" column="0">
            <widget class="QLabel" name="lGridType">
             <property name="text">
              <string>&amp;Grid type:</string>
@@ -1039,76 +1112,26 @@
             </item>
            </widget>
           </item>
-          <item row="4" column="0" colspan="3">
-           <widget class="QCheckBox" name="cbScaleGrid">
-            <property name="toolTip">
-             <string>If checked, the grid will be scalled automatically</string>
-            </property>
+          <item row="10" column="0">
+           <widget class="QLabel" name="label_40">
             <property name="text">
-             <string>A&amp;utomatically scale grid</string>
-            </property>
-            <property name="shortcut">
-             <string>Alt+U</string>
+             <string>Decimal meta-grid every:</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="0" colspan="3">
-           <widget class="QCheckBox" name="cbDisableGridOnPanning">
+          <item row="10" column="1">
+           <widget class="QSpinBox" name="sbGridMetaMajorEvery">
             <property name="toolTip">
-             <string>If checked, grid will not be drawn within view pan by mouse operation</string>
+             <string>Controls the frequency of major grid lines compared to minor grid lines.</string>
             </property>
-            <property name="text">
-             <string>Don't draw grid on panning</string>
+            <property name="minimum">
+             <number>1</number>
             </property>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="3">
-           <widget class="QCheckBox" name="cbSimpleGridRendring">
-            <property name="toolTip">
-             <string>If checked, Meta Grid lines will be drawn on top of grid. Simple grid is faster yet is less visually lean.</string>
+            <property name="maximum">
+             <number>100</number>
             </property>
-            <property name="text">
-             <string>Simple grid rendering</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0" colspan="3">
-           <widget class="QCheckBox" name="cb_unitless_grid">
-            <property name="toolTip">
-             <string>If checked, grid will not be adjusted to current units of drawing</string>
-            </property>
-            <property name="text">
-             <string>Unitless grid</string>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="0" colspan="3">
-           <widget class="QCheckBox" name="cbDrawVerticalForIsoTop">
-            <property name="toolTip">
-             <string>If unchecked, vertical line will not be drawn for &quot;Top&quot; isometric view</string>
-            </property>
-            <property name="text">
-             <string>Draw vertical lines for &quot;Top&quot; isometric grid</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbDrawGrid">
-            <property name="toolTip">
-             <string>If checked, grid wil be drawn</string>
-            </property>
-            <property name="text">
-             <string>Draw grid</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbDrawMetaGrid">
-            <property name="toolTip">
-             <string>If checked, metagrid will be drawn as part of grid drawing.</string>
-            </property>
-            <property name="text">
-             <string>Draw meta-grid</string>
+            <property name="value">
+             <number>10</number>
             </property>
            </widget>
           </item>
@@ -1172,7 +1195,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset>
+                 <iconset resource="../../../../../res/controls/controls.qrc">
                   <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
                 </property>
                </widget>
@@ -1287,7 +1310,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset>
+                 <iconset resource="../../../../../res/controls/controls.qrc">
                   <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
                 </property>
                </widget>
@@ -1391,7 +1414,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset>
+                 <iconset resource="../../../../../res/controls/controls.qrc">
                   <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
                 </property>
                </widget>
@@ -1461,7 +1484,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset>
+                 <iconset resource="../../../../../res/controls/controls.qrc">
                   <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
                 </property>
                </widget>
@@ -1845,7 +1868,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -1888,7 +1911,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -2058,7 +2081,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -2095,7 +2118,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -2250,7 +2273,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -2270,7 +2293,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -2512,7 +2535,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -2610,7 +2633,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -2772,7 +2795,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_blank_square.lci</normaloff>:/icons/point_blank_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -2813,7 +2836,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_plus_circle.lci</normaloff>:/icons/point_plus_circle.lci</iconset>
             </property>
             <property name="iconSize">
@@ -2854,7 +2877,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_cross_square.lci</normaloff>:/icons/point_cross_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -2895,7 +2918,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_tick_circle_square.lci</normaloff>:/icons/point_tick_circle_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -2936,7 +2959,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_dot_square.lci</normaloff>:/icons/point_dot_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -2977,7 +3000,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_dot_circle.lci</normaloff>:/icons/point_dot_circle.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3018,7 +3041,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_cross_circle.lci</normaloff>:/icons/point_cross_circle.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3062,7 +3085,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_blank.lci</normaloff>:/icons/point_blank.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3094,7 +3117,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_dot.lci</normaloff>:/icons/point_dot.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3135,7 +3158,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_tick_square.lci</normaloff>:/icons/point_tick_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3176,7 +3199,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_tick_circle.lci</normaloff>:/icons/point_tick_circle.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3217,7 +3240,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_blank_circle_square.lci</normaloff>:/icons/point_blank_circle_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3258,7 +3281,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_tick.lci</normaloff>:/icons/point_tick.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3299,7 +3322,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_blank_circle.lci</normaloff>:/icons/point_blank_circle.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3340,7 +3363,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_plus_circle_square.lci</normaloff>:/icons/point_plus_circle_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3381,7 +3404,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_cross_circle_square.lci</normaloff>:/icons/point_cross_circle_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3422,7 +3445,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_plus_square.lci</normaloff>:/icons/point_plus_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3463,7 +3486,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_plus.lci</normaloff>:/icons/point_plus.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3504,7 +3527,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_cross.lci</normaloff>:/icons/point_cross.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3545,7 +3568,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/point_dot_circle_square.lci</normaloff>:/icons/point_dot_circle_square.lci</iconset>
             </property>
             <property name="iconSize">
@@ -3605,7 +3628,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -3711,7 +3734,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/controls/controls.qrc">
               <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
@@ -3960,7 +3983,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
+                <iconset resource="../../../../../res/controls/controls.qrc">
                  <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
                </property>
               </widget>
@@ -3980,7 +4003,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
+                <iconset resource="../../../../../res/controls/controls.qrc">
                  <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
                </property>
               </widget>
@@ -4020,7 +4043,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
+                <iconset resource="../../../../../res/controls/controls.qrc">
                  <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
                </property>
               </widget>
@@ -4086,7 +4109,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
+                <iconset resource="../../../../../res/controls/controls.qrc">
                  <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
                </property>
               </widget>
@@ -4284,6 +4307,16 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QCheckBox" name="cbEnableKeyboardZoomAdjust">
+            <property name="toolTip">
+             <string>If enabled, it is possible to do with keys - zooming via +/-, scrolling via arrow keys, moving selected entities position via arrow keys and SHIFT/CTRL modifiers.</string>
+            </property>
+            <property name="text">
+             <string>Enable scroll and position adjustment via keyboard</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -4305,23 +4338,26 @@
           <string>Program Defaults</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_17">
-          <item row="7" column="0">
-           <widget class="QCheckBox" name="cbChangingViewOnlyModifiesDrawing">
+          <item row="10" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbInteractiveInputInActionToolbarEnabled">
             <property name="toolTip">
-             <string>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </string>
+             <string>If selected, controls for picking values from drawing are available in Tool Options toolbar, allowing to pick length and angle values from drawing. </string>
             </property>
             <property name="text">
-             <string>Changing view only modifies drawing</string>
+             <string>Tool options toolbar includes pick values controls</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QCheckBox" name="cbPersistentDialogs">
+          <item row="9" column="0">
+           <widget class="QCheckBox" name="cbExpandToolsMenuTillEntity">
             <property name="toolTip">
-             <string>If checked, dialogs will be positioned and resized to position/size of last invocation.</string>
+             <string>If selected, separate menu will be created for each group of entity-related commands. Otherwise, these command will be under the same menu. </string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">margin-left:15px</string>
             </property>
             <property name="text">
-             <string>Persistent dialogs location and size</string>
+             <string>Separate menu per entity</string>
             </property>
            </widget>
           </item>
@@ -4335,16 +4371,43 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
-           <widget class="QCheckBox" name="cbPersistentDialogSizeOnly">
+          <item row="1" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbShowKeyboardShortcutsInToolTips">
             <property name="toolTip">
-             <string>If checked, location of dialog will not be saved, but size will</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">margin-left:15px</string>
+             <string>If checked, keyboard shortcut will be shown in tooltip for action</string>
             </property>
             <property name="text">
-             <string>Persist dialog size only</string>
+             <string>Show keyboard shortcuts in actions tooltips</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QCheckBox" name="cbExpandToolsMenu">
+            <property name="toolTip">
+             <string>If selected, menu will include top-level items for drawing tools. Otherwise, they will under the same menu item. </string>
+            </property>
+            <property name="text">
+             <string>Expand &quot;Tools&quot; commands in menu</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QCheckBox" name="cbTabCloseButton">
+            <property name="toolTip">
+             <string>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</string>
+            </property>
+            <property name="text">
+             <string>Show Close button on drawings tabs</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbShowCurrentActionIconInOptions">
+            <property name="toolTip">
+             <string>If checked, the icon for current action will be shown in options toolbar before action's options</string>
+            </property>
+            <property name="text">
+             <string>Show current command icon in options toolbar</string>
             </property>
            </widget>
           </item>
@@ -4362,46 +4425,13 @@
             </item>
            </widget>
           </item>
-          <item row="8" column="0">
-           <widget class="QCheckBox" name="cbExpandToolsMenu">
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="cbPersistentDialogs">
             <property name="toolTip">
-             <string>If selected, menu will include top-level items for drawing tools. Otherwise, they will under the same menu item. </string>
+             <string>If checked, dialogs will be positioned and resized to position/size of last invocation.</string>
             </property>
             <property name="text">
-             <string>Expand &quot;Tools&quot; commands in menu</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbShowCurrentActionIconInOptions">
-            <property name="toolTip">
-             <string>If checked, the icon for current action will be shown in options toolbar before action's options</string>
-            </property>
-            <property name="text">
-             <string>Show current command icon in options toolbar</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="0">
-           <widget class="QCheckBox" name="cbExpandToolsMenuTillEntity">
-            <property name="toolTip">
-             <string>If selected, separate menu will be created for each group of entity-related commands. Otherwise, these command will be under the same menu. </string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">margin-left:15px</string>
-            </property>
-            <property name="text">
-             <string>Separate menu per entity</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbShowKeyboardShortcutsInToolTips">
-            <property name="toolTip">
-             <string>If checked, keyboard shortcut will be shown in tooltip for action</string>
-            </property>
-            <property name="text">
-             <string>Show keyboard shortcuts in actions tooltips</string>
+             <string>Persistent dialogs location and size</string>
             </property>
            </widget>
           </item>
@@ -4412,13 +4442,26 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
-           <widget class="QCheckBox" name="cbTabCloseButton">
+          <item row="7" column="0">
+           <widget class="QCheckBox" name="cbChangingViewOnlyModifiesDrawing">
             <property name="toolTip">
-             <string>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</string>
+             <string>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </string>
             </property>
             <property name="text">
-             <string>Show Close button on drawings tabs</string>
+             <string>Changing view only modifies drawing</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="cbPersistentDialogSizeOnly">
+            <property name="toolTip">
+             <string>If checked, location of dialog will not be saved, but size will</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">margin-left:15px</string>
+            </property>
+            <property name="text">
+             <string>Persist dialog size only</string>
             </property>
            </widget>
           </item>
@@ -4591,7 +4634,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
+                <iconset resource="../../../../../res/icons/icons.qrc">
                  <normaloff>:/icons/dirpos_plus.lci</normaloff>:/icons/dirpos_plus.lci</iconset>
                </property>
                <property name="checked">
@@ -4620,7 +4663,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
+                <iconset resource="../../../../../res/icons/icons.qrc">
                  <normaloff>:/icons/dirneg_plus.lci</normaloff>:/icons/dirneg_plus.lci</iconset>
                </property>
                <property name="checkable">
@@ -4797,6 +4840,26 @@
           <string>Startup</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_29">
+          <item row="9" column="0" colspan="2">
+           <widget class="QCheckBox" name="cad_toolbars_checkbox">
+            <property name="toolTip">
+             <string>If checked, toolbars with commands will be enabled. </string>
+            </property>
+            <property name="text">
+             <string>Enable CAD toolbars</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QCheckBox" name="tab_mode_check_box">
+            <property name="toolTip">
+             <string>Controls default mode for drawings</string>
+            </property>
+            <property name="text">
+             <string>Start in tab mode</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0" colspan="2">
            <widget class="QCheckBox" name="cbSplash">
             <property name="toolTip">
@@ -4804,6 +4867,36 @@
             </property>
             <property name="text">
              <string>Display loading screen</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0" colspan="2">
+           <widget class="QCheckBox" name="left_sidebar_checkbox">
+            <property name="toolTip">
+             <string>If checked, dock widgets with commands for left sidebar will be enabled. Otherwise, they will be disabled. </string>
+            </property>
+            <property name="text">
+             <string>Enable CAD dockwidgets</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbOpenLastFiles">
+            <property name="toolTip">
+             <string>If set, previously opened files during previous closing of the application will be re-opened.</string>
+            </property>
+            <property name="text">
+             <string>Open last opened files</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbAllowMenusDetaching">
+            <property name="toolTip">
+             <string>If enabled, drop-down menus may become floating</string>
+            </property>
+            <property name="text">
+             <string>Allow menus detaching</string>
             </property>
            </widget>
           </item>
@@ -4827,36 +4920,6 @@
             </property>
            </widget>
           </item>
-          <item row="7" column="0" colspan="2">
-           <widget class="QCheckBox" name="left_sidebar_checkbox">
-            <property name="toolTip">
-             <string>If checked, dock widgets with commands for left sidebar will be enabled. Otherwise, they will be disabled. </string>
-            </property>
-            <property name="text">
-             <string>Enable CAD dockwidgets</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0" colspan="2">
-           <widget class="QCheckBox" name="cad_toolbars_checkbox">
-            <property name="toolTip">
-             <string>If checked, toolbars with commands will be enabled. </string>
-            </property>
-            <property name="text">
-             <string>Enable CAD toolbars</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbAllowMenusDetaching">
-            <property name="toolTip">
-             <string>If enabled, drop-down menus may become floating</string>
-            </property>
-            <property name="text">
-             <string>Allow menus detaching</string>
-            </property>
-           </widget>
-          </item>
           <item row="6" column="0" colspan="2">
            <widget class="QCheckBox" name="cbDuplicateActionsPromptsInStatusBar">
             <property name="toolTip">
@@ -4870,23 +4933,13 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbOpenLastFiles">
+          <item row="7" column="0">
+           <widget class="QCheckBox" name="cbStartupTBTooltips">
             <property name="toolTip">
-             <string>If set, previously opened files during previous closing of the application will be re-opened.</string>
+             <string>If enabled, tooltips toolbar's name will be shown</string>
             </property>
             <property name="text">
-             <string>Open last opened files</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QCheckBox" name="tab_mode_check_box">
-            <property name="toolTip">
-             <string>Controls default mode for drawings</string>
-            </property>
-            <property name="text">
-             <string>Start in tab mode</string>
+             <string>Show tooltips for toolbars</string>
             </property>
            </widget>
           </item>
@@ -4905,53 +4958,6 @@
           </size>
          </property>
         </spacer>
-       </item>
-       <item row="2" column="1">
-        <widget class="QGroupBox" name="groupBox_3">
-         <property name="title">
-          <string>Clear Settings</string>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <property name="topMargin">
-           <number>6</number>
-          </property>
-          <property name="bottomMargin">
-           <number>6</number>
-          </property>
-          <item>
-           <widget class="QPushButton" name="pb_clear_geometry">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Restores program geometry/layout to original state</string>
-            </property>
-            <property name="text">
-             <string>Layout</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pb_clear_all">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Restores the program settings to its original state</string>
-            </property>
-            <property name="text">
-             <string>All</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
        </item>
        <item row="1" column="1">
         <widget class="QGroupBox" name="groupBox_12">
@@ -5053,6 +5059,53 @@
          </layout>
         </widget>
        </item>
+       <item row="2" column="1" rowspan="2">
+        <widget class="QGroupBox" name="groupBox_3">
+         <property name="title">
+          <string>Clear Settings</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <property name="topMargin">
+           <number>6</number>
+          </property>
+          <property name="bottomMargin">
+           <number>6</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="pb_clear_geometry">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Restores program geometry/layout to original state</string>
+            </property>
+            <property name="text">
+             <string>Layout</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pb_clear_all">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Restores the program settings to its original state</string>
+            </property>
+            <property name="text">
+             <string>All</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tabPaths">
@@ -5101,7 +5154,7 @@
              <string>Click to select file</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/open.lci</normaloff>:/icons/open.lci</iconset>
             </property>
            </widget>
@@ -5126,7 +5179,7 @@
              <string>Click to select directory</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/open.lci</normaloff>:/icons/open.lci</iconset>
             </property>
            </widget>
@@ -5184,7 +5237,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/open.lci</normaloff>:/icons/open.lci</iconset>
             </property>
            </widget>
@@ -5195,7 +5248,7 @@
              <string>Click to select directory</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/open.lci</normaloff>:/icons/open.lci</iconset>
             </property>
            </widget>
@@ -5209,7 +5262,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/open.lci</normaloff>:/icons/open.lci</iconset>
             </property>
            </widget>
@@ -5230,7 +5283,7 @@
              <string>Click to select directory</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/open.lci</normaloff>:/icons/open.lci</iconset>
             </property>
            </widget>
@@ -5285,7 +5338,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../../../../../res/icons/icons.qrc">
               <normaloff>:/icons/open.lci</normaloff>:/icons/open.lci</iconset>
             </property>
            </widget>
@@ -5685,7 +5738,11 @@
  <tabstops>
   <tabstop>buttonBox</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../../../../../res/controls/controls.qrc"/>
+  <include location="../../../../../res/icons/icons.qrc"/>
+  <include location="../../../../../res/controls/controls.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

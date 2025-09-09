@@ -31,7 +31,7 @@
 #include "rs_preview.h"
 
 LC_ActionDimArc::LC_ActionDimArc(LC_ActionContext *actionContext):
-    RS_ActionDimension("Draw Arc Dimensions", actionContext, RS2::ActionDimArc){
+    RS_ActionDimension("Draw Arc Dimensions", actionContext,RS2::EntityDimArc, RS2::ActionDimArc){
     reset();
 }
 
@@ -49,6 +49,10 @@ void LC_ActionDimArc::reset(){
     m_selectedArcEntity = nullptr;
 
     updateOptions(); // fixme - check whether it's necessary there
+}
+
+void LC_ActionDimArc::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
+   setArcEntity(contextEntity);
 }
 
 void LC_ActionDimArc::doTrigger() {
@@ -97,38 +101,40 @@ void LC_ActionDimArc::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     }
 }
 
+void LC_ActionDimArc::setArcEntity(RS_Entity* entity) {
+    if (entity->is(RS2::EntityArc)){
+        m_selectedArcEntity = static_cast<RS_Arc*>(entity);
+        m_dimArcData.centre = m_selectedArcEntity->getCenter();
+        m_dimArcData.arcLength = m_selectedArcEntity->getLength();
+
+        auto selectedEntity = static_cast<RS_Arc*>(m_selectedArcEntity);
+        m_dimArcData.startAngle = RS_Vector(selectedEntity->getAngle1());
+        m_dimArcData.endAngle = RS_Vector(selectedEntity->getAngle2());
+
+        m_dimensionData->definitionPoint = m_selectedArcEntity->getStartpoint();
+
+        if (m_selectedArcEntity->isReversed()){
+            const RS_Vector tempAngle = RS_Vector(m_dimArcData.startAngle);
+            m_dimArcData.startAngle = m_dimArcData.endAngle;
+            m_dimArcData.endAngle = tempAngle;
+            m_dimensionData->definitionPoint = m_selectedArcEntity->getEndpoint();
+        }
+
+        setStatus(SetPos);
+    } else {
+        RS_DEBUG->print(RS_Debug::D_ERROR,
+                        "LC_ActionDimArc::mouseReleaseEvent: selectedArcEntity is not an arc.");
+
+        m_selectedArcEntity = nullptr;
+    }
+}
+
 void LC_ActionDimArc::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity: {
-            m_selectedArcEntity = catchEntityByEvent(e, RS2::ResolveAll);
-
-            if (m_selectedArcEntity != nullptr){
-                if (m_selectedArcEntity->is(RS2::EntityArc)){
-                    m_dimArcData.centre = m_selectedArcEntity->getCenter();
-                    m_dimArcData.arcLength = m_selectedArcEntity->getLength();
-
-                    auto selectedEntity = static_cast<RS_Arc*>(m_selectedArcEntity);
-                    m_dimArcData.startAngle = RS_Vector(selectedEntity->getAngle1());
-                    m_dimArcData.endAngle = RS_Vector(selectedEntity->getAngle2());
-
-                    m_dimensionData->definitionPoint = m_selectedArcEntity->getStartpoint();
-
-                    if (static_cast<RS_Arc*>(m_selectedArcEntity)->isReversed()){
-                        const RS_Vector tempAngle = RS_Vector(m_dimArcData.startAngle);
-
-                        m_dimArcData.startAngle = m_dimArcData.endAngle;
-                        m_dimArcData.endAngle = tempAngle;
-
-                        m_dimensionData->definitionPoint = m_selectedArcEntity->getEndpoint();
-                    }
-
-                    setStatus(SetPos);
-                } else {
-                    RS_DEBUG->print(RS_Debug::D_ERROR,
-                                    "LC_ActionDimArc::mouseReleaseEvent: selectedArcEntity is not an arc.");
-
-                    m_selectedArcEntity = nullptr;
-                }
+            auto entity = catchEntityByEvent(e, RS2::ResolveAll);
+            if (entity != nullptr){
+                setArcEntity(entity);
             }
             break;
         }
@@ -141,7 +147,6 @@ void LC_ActionDimArc::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
         default:
             break;
     }
-
 }
 
 void LC_ActionDimArc::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {

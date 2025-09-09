@@ -92,6 +92,8 @@ void RS_ActionZoomPan::mouseReleaseEvent(QMouseEvent* e) {
             break;
         default:
             setStatus(SetPanStart);
+            m_viewport->setPanning(false);
+            m_viewport->notifyChanged();
     }
     trigger();
     //RS_DEBUG->print("RS_ActionZoomPan::mousePressEvent(): %f %f", v1.x, v1.y);

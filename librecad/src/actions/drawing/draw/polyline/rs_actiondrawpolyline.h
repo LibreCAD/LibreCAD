@@ -72,7 +72,7 @@ public:
     int getMode() const;
     void setRadius(double r);
     double getRadius() const;
-    void setAngle(double a);
+    void setAngleDegrees(double a);
     double getAngle() const;
     void setReversed(bool c);
     bool isReversed() const;
@@ -82,8 +82,8 @@ protected:
             * Action States.
             */
     enum Status {
-        SetStartpoint, /*  Setting the startpoint.  */
-        SetNextPoint,  /*  Setting the endpoint.    */
+        SetStartpoint = InitialActionStatus, /*  Setting the startpoint.  */
+        SetNextPoint,                        /*  Setting the endpoint.    */
     };
 
     struct Points {
@@ -128,7 +128,7 @@ protected:
     RS_PolylineData& getData() const;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     double m_radius = 0.;
-    double m_angle = 0.;
+    double m_angleDegrees = 0.;
     SegmentMode m_mode{};
     int m_alternateArc = false;
     int m_reversed = 1;
@@ -161,5 +161,7 @@ protected:
     void setParserExpression(const QString& expression);
     bool getPlottingX(QString command, double& x);
     void doTrigger() override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angle) override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 #endif

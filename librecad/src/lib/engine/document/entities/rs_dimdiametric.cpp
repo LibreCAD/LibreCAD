@@ -37,6 +37,10 @@ RS_DimDiametricData::RS_DimDiametricData():
 	leader(0.0) {
 }
 
+RS_DimDiametricData::RS_DimDiametricData(const RS_DimDiametricData& other) :
+    definitionPoint{other.definitionPoint}, leader{other.leader} {
+}
+
 /**
  * Constructor with initialisation.
  *
@@ -66,14 +70,14 @@ RS_DimDiametric::RS_DimDiametric(RS_EntityContainer* parent,
                            const RS_DimensionData& d,
                            const RS_DimDiametricData& ed)
         : RS_Dimension(parent, d), m_dimDiametricData(ed) {
+}
 
-    calculateBorders();
+RS_DimDiametric::RS_DimDiametric(const RS_DimDiametric& other)
+    : RS_Dimension(other), m_dimDiametricData(other.m_dimDiametricData) {
 }
 
 RS_Entity* RS_DimDiametric::clone() const {
-    auto* d = new RS_DimDiametric(getParent(), getData(), getEData());
-	d->setOwner(isOwner());
-	d->detach();
+    auto* d = new RS_DimDiametric(*this);
 	return d;
 }
 
@@ -105,8 +109,9 @@ RS_VectorSolutions RS_DimDiametric::getRefPoints() const {
 void RS_DimDiametric::doUpdateDim() {
     RS_DEBUG->print("RS_DimDiametric::update");
     // dimension line:
+    // fixme - sand - rework diametric dimension
     createDimensionLine(m_dimGenericData.definitionPoint, m_dimDiametricData.definitionPoint,
-                              true, true, m_dimGenericData.autoText);
+                              true, true, true, true, m_dimGenericData.autoText);
 }
 
 void RS_DimDiametric::move(const RS_Vector& offset) {

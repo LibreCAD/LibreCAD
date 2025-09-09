@@ -48,6 +48,16 @@ void LC_ActionDrawArc2PointsBase::doTrigger() {
     }
 }
 
+bool LC_ActionDrawArc2PointsBase::doUpdateAngleByInteractiveInput([[maybe_unused]]const QString& tag, double angle) {
+    setParameter(angle);
+    return true;
+}
+
+bool LC_ActionDrawArc2PointsBase::doUpdateDistanceByInteractiveInput([[maybe_unused]]const QString& tag, double distance) {
+    setParameter(distance);
+    return true;
+}
+
 void LC_ActionDrawArc2PointsBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     RS_Vector mouse = e->snapPoint;
     switch (status){
@@ -134,8 +144,9 @@ bool LC_ActionDrawArc2PointsBase::doProcessCommand(int status, const QString &co
            }else {
                commandMessage(tr("Positive value is expected"));
            }
-       } else
+       } else {
            commandMessage(tr("Not a valid expression"));
+       }
        accept = true;
    }
    return accept;

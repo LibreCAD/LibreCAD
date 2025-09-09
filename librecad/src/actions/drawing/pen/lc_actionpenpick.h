@@ -33,7 +33,7 @@ class LC_ActionPenPick:public RS_PreviewActionInterface {
        Q_OBJECT
 public:
     enum {
-          SelectEntity
+          SelectEntity = InitialActionStatus
      };
     LC_ActionPenPick(LC_ActionContext *actionContext,bool resolve);
     void init(int status) override;
@@ -45,10 +45,12 @@ private:
     bool m_resolveMode;
     void applyPenToPenToolBar(RS_Entity* entity);
 protected:
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
-    void updateMouseButtonHints() override;
+       void pickPen(RS_Entity* en);
+       void updateMouseButtonHints() override;
 };
 #endif // LC_ACTIONPENPICK_H
