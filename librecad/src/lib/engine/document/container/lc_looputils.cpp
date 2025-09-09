@@ -61,7 +61,9 @@ struct LoopExtractor::LoopData {
     bool reversed = false;
 };
 
-LoopExtractor::LoopExtractor(RS_EntityContainer& edges) : m_data(new LoopData) {
+LoopExtractor::LoopExtractor(const RS_EntityContainer& edges) :
+    m_data(std::make_unique<LoopData>())
+{
     for (RS_Entity* e : edges) {
         if (e->isAtomic()) {
             m_data->unprocessed.push_back(e);
@@ -255,7 +257,7 @@ struct LoopSorter::AreaPredicate {
     }
 };
 
-std::vector<RS_EntityContainer*> LoopSorter::getResults() {
+std::vector<LC_Loops> LoopSorter::getResults() {
     std::vector<RS_EntityContainer*> sorted;
     for (auto& p : m_data->loops) {
         sorted.push_back(p.get());
@@ -265,11 +267,24 @@ std::vector<RS_EntityContainer*> LoopSorter::getResults() {
         RS_EntityContainer* child = sorted[i];
         findAncestors(child);
     }
-    std::vector<RS_EntityContainer*> top;
+    std::vector<LC_Loops> tops;
     for (auto* l : sorted) {
-        if (l->getParent() == nullptr) top.push_back(l);
+        if (l->getParent() == nullptr) {
+            tops.emplace_back(buildLC_Loops(l, m_data->loops));
+        }
     }
-    return top;
+    return tops;
+}
+
+LC_Loops LoopSorter::buildLC_Loops(RS_EntityContainer* cont, const std::vector<std::unique_ptr<RS_EntityContainer>>& allLoops) const {
+    auto loopCopy = std::make_shared<RS_EntityContainer>(*cont);
+    LC_Loops lc(loopCopy, true);
+    for (const auto& p : allLoops) {
+        if (p.get()->getParent() == cont) {
+            lc.addChild(buildLC_Loops(p.get(), allLoops));
+        }
+    }
+    return lc;
 }
 
 const std::vector<std::unique_ptr<RS_EntityContainer>>& LoopSorter::getAllLoops() const {
@@ -630,7 +645,174 @@ RS_Entity* LC_Loops::createSubEntity(RS_Entity* e, const RS_Vector& p1, const RS
         double lang1 = std::atan2(lp1.y / ell->getMinorRadius(), lp1.x / ell->getMajorRadius());
         RS_Vector lp2 = (p2 - center).rotate(-rot);
         double lang2 = std::atan2(lp2.y / ell->getMinorRadius(), lp2.x / ell->getMajorRadius());
-        return new RS_Ellipse(nullptr, RS_EllipseData{center, ell->getMajorP(), ell->getRatio(), lang1, lang2, ell->isReversed()});
+        return new RS_Ellipse(nullptr, RS_EllipseData(center, ell->getMajorP(), ell->getRatio(), lang1, lang2, ell->isReversed()));
+    }
+    return nullptr;
+}
+std::vector<RS_Vector> LC_Loops::sortPointsAlongEntity(RS_Entity* e, std::vector<RS_Vector> inters) const {
+    std::vector<std::pair<double, RS_Vector>> param_points;
+    RS2::EntityType type = e->rtti();
+    if (type == RS2::EntityLine) {
+        RS_Line* line = static_cast<RS_Line*>(e);
+        RS_Vector start = line->getStartpoint();
+        RS_Vector dir = line->getEndpoint() - start;
+        double len = dir.magnitude();
+        if (len < RS_TOLERANCE) return {};
+        RS_Vector unit = dir / len;
+        for (RS_Vector v : inters) {
+            double t = (v - start).dotP(unit);
+            if (t >= 0 - RS_TOLERANCE && t <= len + RS_TOLERANCE) param_points.emplace_back(t, v);
+        }
+    } else if (type == RS2::EntityArc) {
+        RS_Arc* arc = static_cast<RS_Arc*>(e);
+        RS_Vector center = arc->getCenter();
+        double a1 = arc->getAngle1();
+        bool reversed = arc->isReversed();
+        for (RS_Vector v : inters) {
+            double ang = (v - center).angle();
+            double diff = RS_Math::getAngleDifference(a1, ang, reversed);
+            param_points.emplace_back(diff, v);
+        }
+    } else if (type == RS2::EntityCircle) {
+        RS_Circle* circle = static_cast<RS_Circle*>(e);
+        RS_Vector center = circle->getCenter();
+        if (!inters.empty()) {
+            double ref_ang = (inters[0] - center).angle();
+            for (RS_Vector v : inters) {
+                double ang = (v - center).angle();
+                double diff = RS_Math::correctAngle(ang - ref_ang);
+                param_points.emplace_back(diff, v);
+            }
+        }
+    } else if (type == RS2::EntityEllipse) {
+        RS_Ellipse* ell = static_cast<RS_Ellipse*>(e);
+        RS_Vector center = ell->getCenter();
+        double rot = ell->getAngle();
+        double a1 = ell->getAngle1();
+        bool reversed = ell->isReversed();
+        for (RS_Vector v : inters) {
+            RS_Vector local = (v - center).rotate(-rot);
+            double ang = std::atan2(local.y / ell->getMinorRadius(), local.x / ell->getMajorRadius());
+            double diff = RS_Math::getAngleDifference(a1, ang, reversed);
+            param_points.emplace_back(diff, v);
+        }
+    }
+    std::sort(param_points.begin(), param_points.end(), [](const auto& a, const auto& b){
+        return a.first < b.first;
+    });
+    std::vector<RS_Vector> sorted;
+    for (auto& p : param_points) sorted.push_back(p.second);
+    return sorted;
+}
+
+double LC_Loops::getTotalArea() const {
+    double area = std::abs(m_loop->areaLineIntegral());
+    for(const auto& child: m_children) area -= child.getTotalArea();
+    return area;
+}
+
+bool LC_Loops::overlap(const LC_Rect& other) const {
+    const bool ret = std::any_of(m_loop->begin(), m_loop->end(), [&other](const RS_Entity* entity) {
+        return entity != nullptr && other.overlaps(LC_Rect{entity->getMin(), entity->getMax()});
+    });
+    return ret || std::any_of(m_children.cbegin(), m_children.cend(), [&other](const LC_Loops& loop) {
+               return loop.overlap(other);
+           });
+}
+
+std::vector<RS_Entity*> LC_Loops::getAllBoundaries() const {
+    std::vector<const RS_EntityContainer*> loops;
+    getAllLoops(loops);
+    std::vector<RS_Entity*> bounds;
+    for (auto* l : loops) {
+        for (RS_Entity* e : *l) {
+            if (e->isAtomic()) bounds.push_back(e);
+        }
+    }
+    return bounds;
+}
+
+std::vector<RS_Vector> LC_Loops::sortPointsAlongEntity(RS_Entity* e, std::vector<RS_Vector> inters) const {
+    std::vector<std::pair<double, RS_Vector>> param_points;
+    RS2::EntityType type = e->rtti();
+    if (type == RS2::EntityLine) {
+        RS_Line* line = static_cast<RS_Line*>(e);
+        RS_Vector start = line->getStartpoint();
+        RS_Vector dir = line->getEndpoint() - start;
+        double len = dir.magnitude();
+        if (len < RS_TOLERANCE) return {};
+        RS_Vector unit = dir / len;
+        for (RS_Vector v : inters) {
+            double t = (v - start).dotP(unit);
+            if (t >= 0 - RS_TOLERANCE && t <= len + RS_TOLERANCE) param_points.emplace_back(t, v);
+        }
+    } else if (type == RS2::EntityArc) {
+        RS_Arc* arc = static_cast<RS_Arc*>(e);
+        RS_Vector center = arc->getCenter();
+        double a1 = arc->getAngle1();
+        bool reversed = arc->isReversed();
+        for (RS_Vector v : inters) {
+            double ang = (v - center).angle();
+            double diff = RS_Math::getAngleDifference(a1, ang, reversed);
+            param_points.emplace_back(diff, v);
+        }
+    } else if (type == RS2::EntityCircle) {
+        RS_Circle* circle = static_cast<RS_Circle*>(e);
+        RS_Vector center = circle->getCenter();
+        if (!inters.empty()) {
+            double ref_ang = (inters[0] - center).angle();
+            for (RS_Vector v : inters) {
+                double ang = (v - center).angle();
+                double diff = RS_Math::correctAngle(ang - ref_ang);
+                param_points.emplace_back(diff, v);
+            }
+        }
+    } else if (type == RS2::EntityEllipse) {
+        RS_Ellipse* ell = static_cast<RS_Ellipse*>(e);
+        RS_Vector center = ell->getCenter();
+        double rot = ell->getAngle();
+        double a1 = ell->getAngle1();
+        bool reversed = ell->isReversed();
+        for (RS_Vector v : inters) {
+            RS_Vector local = (v - center).rotate(-rot);
+            double ang = std::atan2(local.y / ell->getMinorRadius(), local.x / ell->getMajorRadius());
+            double diff = RS_Math::getAngleDifference(a1, ang, reversed);
+            param_points.emplace_back(diff, v);
+        }
+    }
+    std::sort(param_points.begin(), param_points.end(), [](const auto& a, const auto& b){
+        return a.first < b.first;
+    });
+    std::vector<RS_Vector> sorted;
+    for (auto& p : param_points) sorted.push_back(p.second);
+    return sorted;
+}
+
+RS_Entity* LC_Loops::createSubEntity(RS_Entity* e, const RS_Vector& p1, const RS_Vector& p2) const {
+    RS2::EntityType type = e->rtti();
+    if (type == RS2::EntityLine) {
+        return new RS_Line(nullptr, RS_LineData(p1, p2));
+    } else if (type == RS2::EntityArc) {
+        RS_Arc* arc = static_cast<RS_Arc*>(e);
+        RS_Vector center = arc->getCenter();
+        double ang1 = (p1 - center).angle();
+        double ang2 = (p2 - center).angle();
+        return new RS_Arc(nullptr, RS_ArcData(center, arc->getRadius(), ang1, ang2, arc->isReversed()));
+    } else if (type == RS2::EntityCircle) {
+        RS_Circle* circle = static_cast<RS_Circle*>(e);
+        RS_Vector center = circle->getCenter();
+        double ang1 = (p1 - center).angle();
+        double ang2 = (p2 - center).angle();
+        return new RS_Arc(nullptr, RS_ArcData(center, circle->getRadius(), ang1, ang2, false));
+    } else if (type == RS2::EntityEllipse) {
+        RS_Ellipse* ell = static_cast<RS_Ellipse*>(e);
+        RS_Vector center = ell->getCenter();
+        double rot = ell->getAngle();
+        RS_Vector lp1 = (p1 - center).rotate(-rot);
+        double lang1 = std::atan2(lp1.y / ell->getMinorRadius(), lp1.x / ell->getMajorRadius());
+        RS_Vector lp2 = (p2 - center).rotate(-rot);
+        double lang2 = std::atan2(lp2.y / ell->getMinorRadius(), lp2.x / ell->getMajorRadius());
+        return new RS_Ellipse(nullptr, RS_EllipseData(center, ell->getMajorP(), ell->getRatio(), lang1, lang2, ell->isReversed()));
     }
     return nullptr;
 }
@@ -648,6 +830,103 @@ bool LC_Loops::overlap(const LC_Rect& other) const {
     return ret || std::any_of(m_children.cbegin(), m_children.cend(), [&other](const LC_Loops& loop) {
                return loop.overlap(other);
            });
+}
+
+std::vector<RS_Entity*> LC_Loops::getAllBoundaries() const {
+    std::vector<const RS_EntityContainer*> loops;
+    getAllLoops(loops);
+    std::vector<RS_Entity*> bounds;
+    for (auto* l : loops) {
+        for (RS_Entity* e : *l) {
+            if (e->isAtomic()) bounds.push_back(e);
+        }
+    }
+    return bounds;
+}
+
+std::vector<RS_Vector> LC_Loops::sortPointsAlongEntity(RS_Entity* e, std::vector<RS_Vector> inters) const {
+    std::vector<std::pair<double, RS_Vector>> param_points;
+    RS2::EntityType type = e->rtti();
+    if (type == RS2::EntityLine) {
+        RS_Line* line = static_cast<RS_Line*>(e);
+        RS_Vector start = line->getStartpoint();
+        RS_Vector dir = line->getEndpoint() - start;
+        double len = dir.magnitude();
+        if (len < RS_TOLERANCE) return {};
+        RS_Vector unit = dir / len;
+        for (RS_Vector v : inters) {
+            double t = (v - start).dotP(unit);
+            if (t >= 0 - RS_TOLERANCE && t <= len + RS_TOLERANCE) param_points.emplace_back(t, v);
+        }
+    } else if (type == RS2::EntityArc) {
+        RS_Arc* arc = static_cast<RS_Arc*>(e);
+        RS_Vector center = arc->getCenter();
+        double a1 = arc->getAngle1();
+        bool reversed = arc->isReversed();
+        for (RS_Vector v : inters) {
+            double ang = (v - center).angle();
+            double diff = RS_Math::getAngleDifference(a1, ang, reversed);
+            param_points.emplace_back(diff, v);
+        }
+    } else if (type == RS2::EntityCircle) {
+        RS_Circle* circle = static_cast<RS_Circle*>(e);
+        RS_Vector center = circle->getCenter();
+        if (!inters.empty()) {
+            double ref_ang = (inters[0] - center).angle();
+            for (RS_Vector v : inters) {
+                double ang = (v - center).angle();
+                double diff = RS_Math::correctAngle(ang - ref_ang);
+                param_points.emplace_back(diff, v);
+            }
+        }
+    } else if (type == RS2::EntityEllipse) {
+        RS_Ellipse* ell = static_cast<RS_Ellipse*>(e);
+        RS_Vector center = ell->getCenter();
+        double rot = ell->getAngle();
+        double a1 = ell->getAngle1();
+        bool reversed = ell->isReversed();
+        for (RS_Vector v : inters) {
+            RS_Vector local = (v - center).rotate(-rot);
+            double ang = std::atan2(local.y / ell->getMinorRadius(), local.x / ell->getMajorRadius());
+            double diff = RS_Math::getAngleDifference(a1, ang, reversed);
+            param_points.emplace_back(diff, v);
+        }
+    }
+    std::sort(param_points.begin(), param_points.end(), [](const auto& a, const auto& b){
+        return a.first < b.first;
+    });
+    std::vector<RS_Vector> sorted;
+    for (auto& p : param_points) sorted.push_back(p.second);
+    return sorted;
+}
+
+RS_Entity* LC_Loops::createSubEntity(RS_Entity* e, const RS_Vector& p1, const RS_Vector& p2) const {
+    RS2::EntityType type = e->rtti();
+    if (type == RS2::EntityLine) {
+        return new RS_Line(nullptr, RS_LineData(p1, p2));
+    } else if (type == RS2::EntityArc) {
+        RS_Arc* arc = static_cast<RS_Arc*>(e);
+        RS_Vector center = arc->getCenter();
+        double ang1 = (p1 - center).angle();
+        double ang2 = (p2 - center).angle();
+        return new RS_Arc(nullptr, RS_ArcData(center, arc->getRadius(), ang1, ang2, arc->isReversed()));
+    } else if (type == RS2::EntityCircle) {
+        RS_Circle* circle = static_cast<RS_Circle*>(e);
+        RS_Vector center = circle->getCenter();
+        double ang1 = (p1 - center).angle();
+        double ang2 = (p2 - center).angle();
+        return new RS_Arc(nullptr, RS_ArcData(center, circle->getRadius(), ang1, ang2, false));
+    } else if (type == RS2::EntityEllipse) {
+        RS_Ellipse* ell = static_cast<RS_Ellipse*>(e);
+        RS_Vector center = ell->getCenter();
+        double rot = ell->getAngle();
+        RS_Vector lp1 = (p1 - center).rotate(-rot);
+        double lang1 = std::atan2(lp1.y / ell->getMinorRadius(), lp1.x / ell->getMajorRadius());
+        RS_Vector lp2 = (p2 - center).rotate(-rot);
+        double lang2 = std::atan2(lp2.y / ell->getMinorRadius(), lp2.x / ell->getMajorRadius());
+        return new RS_Ellipse(nullptr, RS_EllipseData(center, ell->getMajorP(), ell->getRatio(), lang1, lang2, ell->isReversed()));
+    }
+    return nullptr;
 }
 
 }  // namespace LC_LoopUtils

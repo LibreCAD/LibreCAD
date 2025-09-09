@@ -92,7 +92,7 @@ public:
      * @brief LoopExtractor constructor
      * @param edges - edges to process
      */
-    LoopExtractor(RS_EntityContainer& edges);
+    LoopExtractor(const RS_EntityContainer& edges);
     ~LoopExtractor();
 
     /**
@@ -157,10 +157,10 @@ public:
 
     /**
      * @brief getResults - the sorting results
-     * @return std::vector<RS_EntityContainer*> - the top level loops, i.e. outermost loops, after sorting
+     * @return std::vector<LC_Loops> - the top level loops, i.e. outermost loops, after sorting
      * each inner loop has its parent set to its immediate parent loop
      */
-    std::vector<RS_EntityContainer*> getResults();
+    std::vector<LC_Loops> getResults();
 
     const std::vector<std::unique_ptr<RS_EntityContainer>>& getAllLoops() const;
 

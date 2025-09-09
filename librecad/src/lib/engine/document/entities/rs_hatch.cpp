@@ -121,18 +121,21 @@ bool RS_Hatch::validate() {
     bool ret = true;
 
     // loops:
-    for (RS_Entity* l : *this) {
-        auto* loop = dynamic_cast<RS_EntityContainer*>(l);
-        if (loop != nullptr) {
-            // skip zero length edges
-            avoidZeroLength(*loop);
-            ret = loop->optimizeContours() && ret;
-            loop->setOwner(true);  // Ensure sub-loops own their entities
+    if (needOptimization) {
+        try {
+            LC_LoopUtils::LoopOptimizer optimizer{*this};
+            m_orderedLoops = optimizer.GetResults();
+            if (!m_orderedLoops || (m_orderedLoops->loop() == nullptr && m_orderedLoops->children().empty())) {
+                throw std::runtime_error("Optimization failed: empty loops");
+            }
+        } catch (const std::exception& e) {
+            RS_DEBUG->print(RS_Debug::D_ERROR, "Optimization error: %s", e.what());
+            updateError = HATCH_INVALID_CONTOUR;
+            updateRunning = false;
+            return false;
         }
+        needOptimization = false;
     }
-
-    if (ret)
-        getTotalArea();
 
     return ret;
 }
@@ -454,6 +457,11 @@ void RS_Hatch::stretch(const RS_Vector& firstCorner, const RS_Vector& secondCorn
     RS_EntityContainer::stretch(firstCorner, secondCorner, offset);
     m_solidPath.reset();  // Invalidate cache
     update();
+}
+
+void RS_Hatch::setPattern(const QString& pattern)
+{
+    data.pattern = pattern;
 }
 
 std::ostream& operator << (std::ostream& os, const RS_Hatch& p) {
