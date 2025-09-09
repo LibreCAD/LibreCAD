@@ -214,7 +214,7 @@ RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const {
         for (size_t k = 0; k < sol.getNumber(); ++k) {
             RS_Vector v = sol.get(k);
             double dist = v.distanceTo(m_data->endPoint);
-            if (fabs(dist - radius) > RS_TOLERANCE) continue;  // IMPROVED: Use RS_TOLERANCE
+            if (std::abs(dist - radius) > RS_TOLERANCE) continue;  // IMPROVED: Use RS_TOLERANCE
 
             double a = (v - m_data->endPoint).angle();
             double adiff = RS_Math::correctAngle(a - outgoingAngle);
@@ -250,9 +250,9 @@ struct LoopSorter::Data {
 
 struct LoopSorter::AreaPredicate {
     bool operator() (const RS_EntityContainer* a, const RS_EntityContainer* b) const {
-        double areaA = fabs(a->areaLineIntegral());
-        double areaB = fabs(b->areaLineIntegral());
-        if (fabs(areaA - areaB) < RS_TOLERANCE) {
+        double areaA = std::abs(a->areaLineIntegral());
+        double areaB = std::abs(b->areaLineIntegral());
+        if (std::abs(areaA - areaB) < RS_TOLERANCE) {
             double diagA = (a->getMax() - a->getMin()).magnitude();
             double diagB = (b->getMax() - b->getMin()).magnitude();
             return diagA < diagB;
@@ -311,18 +311,19 @@ void LoopSorter::init() {
 
 void LoopSorter::findParent(RS_EntityContainer* loop, const std::vector<RS_EntityContainer*>& sorted) {
     LC_Rect childBox{loop->getMin(), loop->getMax()};
-    double childArea = fabs(loop->areaLineIntegral());
+    double childArea = std::abs(loop->areaLineIntegral());
     RS_Vector testPoint = (loop->getMin() + loop->getMax()) / 2.0;  // IMPROVED: Use bbox center
     for (auto it = sorted.begin(); it != sorted.end(); ++it) {  // IMPROVED: Small to large
         auto* potentialParent = *it;
         if (potentialParent == loop) continue;
-        double parentArea = fabs(potentialParent->areaLineIntegral());
+        double parentArea = std::abs(potentialParent->areaLineIntegral());
         if (parentArea <= childArea + RS_TOLERANCE) continue;
         LC_Rect parentBox{potentialParent->getMin(), potentialParent->getMax()};
         if (childBox.numCornersInside(parentBox) != 4) continue;
         bool onContour = false;
         if (RS_Information::isPointInsideContour(testPoint, potentialParent, &onContour)) {
             loop->setParent(potentialParent);
+            potentialParent->addEntity(loop);
             return;
         }
     }
@@ -560,11 +561,11 @@ bool LC_Loops::is_entity_closed(const RS_Entity* e) const {
     if (type == RS2::EntityCircle) return true;
     if (type == RS2::EntityEllipse) {
         const RS_Ellipse* ell = static_cast<const RS_Ellipse*>(e);
-        return fabs(ell->getAngleLength() - 2 * M_PI) < RS_TOLERANCE_ANGLE;
+        return std::abs(ell->getAngleLength() - 2 * M_PI) < RS_TOLERANCE_ANGLE;
     }
     if (type == RS2::EntityArc) {
         const RS_Arc* arc = static_cast<const RS_Arc*>(e);
-        return fabs(arc->getAngleLength() - 2 * M_PI) < RS_TOLERANCE_ANGLE;
+        return std::abs(arc->getAngleLength() - 2 * M_PI) < RS_TOLERANCE_ANGLE;
     }
     if (type == RS2::EntityLine) return e->getStartpoint() == e->getEndpoint();
     return false;
@@ -646,7 +647,7 @@ std::unique_ptr<RS_EntityContainer> LC_Loops::trimPatternEntities(const RS_Patte
             } else {
                 points = sorted_inters;
             }
-            for (size_t i = 0; i < points.size() - 1; i += 2) {
+            for (size_t i = 0; i < points.size() - 1; ++i) {
                 RS_Vector p1 = points[i];
                 RS_Vector p2 = points[i + 1];
                 if (p1.distanceTo(p2) < RS_TOLERANCE)

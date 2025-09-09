@@ -326,6 +326,7 @@ void RS_Hatch::activateContour(bool on) {
 }
 
 void RS_Hatch::draw(RS_Painter* painter) {
+            painter->save();
     if (data.solid) {
         if (m_solidPath) {
             // Use cached shared path for filling
@@ -334,13 +335,11 @@ void RS_Hatch::draw(RS_Painter* painter) {
             QBrush fillBrush = brush;
             fillBrush.setColor(pen.getColor());
             fillBrush.setStyle(Qt::SolidPattern);
-            painter->save();
             painter->setBrush(fillBrush);
             QTransform transform = painter->getToGuiTransform();
             painter->setTransform(transform, false);
             for(const QPainterPath& path: *m_solidPath)
                 painter->drawPath(path);  // Dereference
-            painter->restore();
         } else {
             // Fallback: Regenerate if cache miss (shouldn't happen)
             LC_ERR<<__func__<<"(): RS_Hatch solid fill failure: no QPainterPath created";
@@ -353,6 +352,7 @@ void RS_Hatch::draw(RS_Painter* painter) {
             }
         }
     }
+            painter->restore();
 }
 
 
