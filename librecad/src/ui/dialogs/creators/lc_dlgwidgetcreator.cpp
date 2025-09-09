@@ -532,7 +532,7 @@ void LC_DlgWidgetCreator::loadCustomWidgets() {
                   }
               });
 
-        for (const auto p: activatorsList) {
+        for (const auto &p: activatorsList) {
             auto key = p.first;
             auto activator = p.second;
             QString message = createMenuItemDisplayName(key, activator);
