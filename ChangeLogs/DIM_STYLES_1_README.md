@@ -1,264 +1,287 @@
-## Dimensions Styles and Context actions
+## Dimension Styles and Context Actions
 
-This pull request contains the following major functionality: 
-1) Initial support of dimension styles;
-2) Changes in dimension-related actions, new actions for dimension styles
-2) Support of the "context entity" by actions;
-3) Reworked default context popup menu for drawing area, support of entity-specific context menus; 
-4) Reworked Custom Toolbar Creator, Custom Menu Creator, wide support of invocation shortcuts for custom menus.
-5) Added support of the drawing's metadata (author, title, subject, description etc.)
-6) Added support of predefined and custom user data for the drawing document;
-7) Interactive input of action's parameters and entities properties
-8) Keyboard support improvements, moving selected entities by keys
-9) Various minor fixes and improvements;
+This pull request contains the following major functionality:
+
+1.  Initial support of dimension styles.
+2.  Changes in dimension-related actions; new actions for dimension styles.
+3.  Support of the "context entity" by actions.
+4.  Reworked default context popup menu for drawing area; support of entity-specific context menus.
+5.  Reworked Custom Toolbar Creator and Custom Menu Creator; wide support of invocation shortcuts for custom menus.
+6.  Added support of the drawing's metadata (author, title, subject, description, etc.).
+7.  Added support of predefined and custom user data for the drawing document.
+8.  Interactive input of action's parameters and entities properties - Measure Instead of Type. 
+9.  Keyboard support improvements; moving selected entities by keys.
+10. Various minor fixes and improvements.
 
 ### Dimension Styles
 
-The major focus of this PR is to provide full support of dimension styles reading, editing and storing, by adding DXF parsing and writing functionality, as well as adding UI, needed for dimension styles management and editing.
+The major focus of this PR is to provide full support of dimension styles reading, editing, and storing by adding DXF parsing and writing functionality, as well as adding UI needed for dimension styles management and editing.
 
-**NOTE: Support of rendering of dimensions according to dimension styles attributes is STILL LIMITED and NOT ALL attributes of dimension style affects created dimensions!** 
+**NOTE: Support of rendering of dimensions according to dimension style attributes is STILL LIMITED and NOT ALL attributes of dimension style affect created dimensions!**
 
-The logic of dimensions creation should be reworked deeper, and full support of dimension style attributes will be included into the next Pull Request.
+The logic of dimensions creation should be reworked deeper, and full support of dimension style attributes will be included in the next Pull Request.
 
-#### Dimensions styles management
+#### Dimensions Styles Management
 
-Dimension styles, included into the drawing, are managed using Drawing Preferences dialog, in tab Dimensions.
+Dimension styles included in the drawing are managed using the Drawing Preferences dialog, in the Dimensions tab.
 
-XXX_IMAGE
+`XXX_IMAGE`
 
-Here the list of dimension styles is present, as well as the set of corresponding related commands, such as:
-* New Style;
-* Remove Style
-* Edit Style
-* Rename Style
-* Mark as Active (so it will be used as default for newly created dimensions)
-* Export/Import
+Here the list of dimension styles is present, as well as a set of corresponding related commands, such as:
 
-Live preview of dimensions with applied dimension style is also available.
+*   New Style
+*   Remove Style
+*   Edit Style
+*   Rename Style
+*   Mark as Active (so it will be used as default for newly created dimensions)
+*   Export/Import
 
-Demo Video:
+A live preview of dimensions with the applied dimension style is also available.
 
 #### Editing Dimension Style
 
-Editing of the dimension style attributes is performed via new dialog, that contains UI for entering attributes and preview area that reflects dimension style rendering.
+Editing of the dimension style attributes is performed via a new dialog that contains UI for entering attributes and a preview area that reflects dimension style rendering.
 
-XXX_IMAGE
+`XXX_IMAGE`
 
-Demo Video:
- 
+**Demo Video:** https://youtu.be/bYCbS-gcDR8
+
 #### Dimension Entity Properties, Style Override
 
-The dialog for dimension entity properties now includes functionality for selecting dimension style. 
+The dialog for dimension entity properties now includes functionality for selecting a dimension style.
 
-Also, using that dialog it is possible to specify dimension style override. Style override is the set of dimension style attributes, that is specific for particular dimension only.
-XXX_IMAGE
+Also, using that dialog, it is possible to specify a dimension style override. A style override is a set of dimension style attributes that is specific for a particular dimension only.
 
-Demo Video:
+`XXX_IMAGE`
 
-Using style override, it is possible to fine tune individual dimension entities. 
+**Demo Video:** https://youtu.be/aOacuCBkwFA
 
-#### Specifying Dimension Style during Dimension entity creation
+Using style override, it is possible to fine-tune individual dimension entities.
 
-Dimension options toolbar now includes style selection combobox. 
+#### Specifying Dimension Style During Dimension Entity Creation
 
-XXX_IMAGE
+The dimension options toolbar now includes a style selection combobox.
+
+`XXX_IMAGE`
 
 ### Dimension Actions
 
-Several changes were introduced to actions, related to dimensions.
+Several changes were introduced to actions related to dimensions.
 
 #### New Actions
-Several new actions, related to dimensions were added:
 
-1) **Copy Style Action** - allows to pick the style from one dimension entity and apply to another one
-2) **Regenerate Dimensions Action** - forcefully re-creates dimension
-3) **Dimension Styles Action** - invokes Dimensions Styles manager
+Several new actions related to dimensions were added:
 
-XXX_IMAGE
+1.  **Copy Style Action** - allows you to pick the style from one dimension entity and apply it to another one.
+2.  **Regenerate Dimensions Action** - forcefully re-creates a dimension.
+3.  **Dimension Styles Action** - invokes the Dimension Styles manager.
 
-Demo Video:
+`XXX_IMAGE`
 
-#### Changes in Dimension Related actions
+**Demo Video:**  https://youtu.be/lGD_dR25VOU
 
-1) For linear dimensions, it's possible to select line entity (that might be standalone or a part of polyline) using context menu or pressed CTRL key.
+#### Changes in Dimension Related actions - faster dimensioning
+
+1. For linear dimensions, it's possible to select line entity (that might be standalone or a part of polyline) using context menu or pressed CTRL key.
 Linear, Aligned, Horizontal or Vertical dimension will be created with base points that corresponds to the line start and end points.
    
-2) In action used for creation of Horizontal or Vertical dimension, now it is possible to change direction using CTRL key modifier. 
+2. In action used for creation of Horizontal or Vertical dimension, now it is possible to change direction using CTRL key modifier. 
 
-Demo Video:
+**Demo Video:** https://youtu.be/Qt2Q3daDQhU
 
 ### Support of "Context Entity" in Actions
 
-Now all actions support a notion of "Context" entity - the entity that is passed to the action on action's invocation. 
+Now all actions support the notion of a "Context" entity - the entity that is passed to the action on action's invocation.
 
-If context entity is available, the action will be executed for that entity only (regardless whether selection is present in drawing). 
-Also, where possible, the initial entity selection state of the action is skipped, and so the user is not prompted to select entity for the action's execution.
+If a context entity is available, the action will be executed for that entity only (regardless of whether a selection is present in the drawing). Also, where possible, the initial entity selection state of the action is skipped, and so the user is not prompted to select an entity for the action's execution.
 
-At the moment, the context entity is set to the action via context popup menu (if the user invoked menu in the point that is near to the entity).
+At the moment, the context entity is set to the action via the context popup menu (if the user invoked the menu near an entity).
 
+`XXX_IMAGE`
+
+However, later this concept may be used, for example, in plugins.
+
+#### Context Menu
+
+The default popup menu that is shown in the drawing area by a right mouse button click was reworked to include more operations and support more efficient drawing operations. The popup menu in the graphic view is now truly context-aware.
+
+There are two major modes of the menu's operation:
+
+1.  **Generic Popup menu:** Shown when no selected entities are present and the click is not on an entity.
+    XXX_IMAGE 
+ 
+2.  **Selection Popup menu:** Show it there are selected entities in the drawing and the click point this is outside of drawing entity;
 XXX_IMAGE
 
-However, later this concept may be used, for example, in plugins or so.
+3.  **Entity Context menu:** Shown when menu is invoked with a click on an entity.
+    `XXX_IMAGE`
 
-#### Context menu 
+For the context menu, the structure of the menu is adapted to correspond to the clicked entity type, and it reflects operations that are relevant for the selected entity.
 
-Default popup menu that is shown in the drawing area by Right Mouse Button click was reworked, in order to include more operations and support more efficient drawing operations.
-Now the popup menu in graphic view is truly context-aware one. 
+`XXX_IMAGE`
 
-There are to major modes of the menu's operation: 
+The entity for the context menu is pre-selected and is passed to the invoked action as a "context" entity.
 
-1) Generic menu that is invoked in point that this is outside of drawing entity;
-2) Context menu - invoked with click on entity. 
+Due to this, the user is not required to select the entity again during the action's invocation, and thus the drawing operation is performed in a more convenient and faster way.
 
-For the context menu, the structure of the menu is adapted to correspond clicked entity type, and it reflects operations, that are relevant for selected entity.
+**Demo Video:** https://youtu.be/Px-JoJdCJg4
 
-XXX_IMAGE
+### Custom Toolbar and Custom Menu Creator
 
-The entity for context menu is pre-selected and is passed to the invoked action as a "context" entity. 
+The Custom Toolbar Creator tool was reworked internally; from a UI point of view, it's a small facelift without significant changes to the functionality.
 
-Due to this, the user is not required to select the entity again during the action's invocation, and thus the drawing operation is performed in more convenient and faster way.
+`XXX_IMAGE`
 
-Demo Video:
+The Custom Menu Creator tool was also reworked internally, with a couple of important improvements:
 
-### Custom Toolbar And Custom Menu Creator
+1.  Added wider support of invocation shortcuts. The user may specify various key modifiers and mouse buttons that are used for the menu invocation.
+    `XXX_IMAGE`
+2.  Assigned invocation shortcuts are visible in the list of menus.
+    `XXX_IMAGE`
+3.  Automatic invocation of actions in menus that contain only one action. This mechanism allows the invocation of a specified action using an assigned mouse/keys shortcut.
 
-The Custom Toolbar Creator tool was reworked internally, yet from UI point of view it's rather a small face-lifting without significant changes of the functionality.
+Custom menus are also context-aware; if a menu is clicked on an entity, that entity will be passed to the action.
 
-XXX_IMAGE
+Also, it is possible to create several menus for the same shortcut but for different entity types. 
 
-The Custom Menu Creator tool as also reworked internally, yet there are a couple of important improvements:
+**Demo Video:** https://youtu.be/m-RyW-Vq8r4
 
-XXX_IMAGE
+### Support of Metadata for Drawing
 
-1) Added wider support of invocation's shortcuts. Now the user may specify various key modifiers and mouse buttons, that are used for the menu invocation. 
-2) Assigned invocation shortcuts are visible in the list of menus. 
-  XXX_IMAGE
-3) Automatic invocation of actions in menus, that contains only one action. This mechanism allows to invoke specified action using assigned mouse/keys shortcut.
+It is now possible to manage DXF metadata fields in the Drawing Preferences dialog.
 
-Custom menus are also context-aware, and if menu is clicked on entity - that entity will be passed to the action.
+`XXX_IMAGE`
 
-Demo Video:
+### Support of User Data
 
-### Support of metadata for drawing
+User data of the drawing document are manageable in the Drawing Preferences dialog.
 
-Now it's possible to manage DXF metadata fields in Drawing Preferences dialog.
+`XXX_IMAGE`
 
-XXX_IMAGE
-
-### Support of user data
-
-User data of the drawing document are manageable in Drawing Preferences dialog.
-
-XXX_IMAGE
-
-### Other changes in actions
+### Other Changes in Actions
 
 In addition to support of context entity, there are small changes in action workflows:
 
-1) "Select Intersecting Entities" action now allows to specify the entity and all entities that intersects it will be selected. 
-2) Linear dimensions actions allows to select a line for faster creation of the dimension
-3) Dim Ordinate Action - if invoked with a context, may snap to the line endpoint or circle/arc center.
-4) Trim and Trim Two actions - if invoked with a context, considers provided entity as an entity that should be trimmed.
-5) Draw Arc Tangential action - if invoked with a context, starts arc creation from the nearest endpoint of the selected entity.
-6) Draw tangential lines actions - state depends on provided context entity type
+1.  "Select Intersecting Entities" action now allows you to specify an entity, and all entities that intersect it will be selected.
+2.  Linear dimensions actions allow you to select a line for faster creation of the dimension.
+3.  Dim Ordinate Action - if invoked with a context, may snap to a line endpoint or circle/arc center.
+4.  Trim and Trim Two actions - if invoked with a context, consider the provided entity as an entity that should be trimmed.
+5.  Draw Arc Tangential action - if invoked with a context, starts arc creation from the nearest endpoint of the selected entity.
+6.  Draw tangential lines actions - state depends on provided context entity type.
    
-Demo Video:
+**Demo Video:**
 
-### Interactive Inpout 
+### Interactive Input
 
-This merge request brings another new user experience. Now the user is able to measure some value on the drawing instead of direct entering that value into input field.
-Thus, it is possible to enter values that are equals to another geometry values that are present in the drawing.  
+This update introduces a new user experience. The user is now able to measure a value on the drawing instead of directly typing that value into an input field. This makes it possible to enter values that are equal to other geometry values present in the drawing.
 
-The following types of values are supported: 
-* Position coordinates;
-* Linear value (length)
-* Angle value
-  
-Demo Video:
+The following types of values are supported:
 
-#### Interactive input in Tool Options toolbar
+*   Position coordinates
+*   Linear value (length)
+*   Angle value
 
-Now Tool Options toolbar may include buttons that initiates interactive input of values.   
+#### Interactive Input in Tool Options Toolbar
 
-There is a setting in Application Preferences dialog, that allows to enable or disable interactive input support for Tool Options.
+The Tool Options toolbar may now include buttons that initiate interactive input of values.
 
-XXX_IMAGE
+There is a setting in the Application Preferences dialog that allows you to enable or disable interactive input support for Tool Options.
+
+`XXX_IMAGE`
 
 #### Entity Properties Dialog
 
-Entity Properties dialogs now includes support of interactive input.
+The Entity Properties dialog now includes support for interactive input.
 
-XXX_IMAGE
+`XXX_IMAGE`
 
-#### Specifics of measuring values
+#### Specifics of Measuring Values
 
-When interactive input is initiated, there user is prompted to measure corresponding value on the drawing.   
+When interactive input is initiated, the user is prompted to measure the corresponding value on the drawing.
 
-Supported functionality depends on the type of the value, that is measured. 
+Supported functionality depends on the type of value being measured. 
 
 ##### Pick Point Coordinates
 
-For point coordinates, the user should just select some location and click on it. Coordinates of that location will be set to appropriate inputs. 
+For point coordinates, the user should select a location and click on it. The coordinates of that location will be set to the appropriate inputs. 
 
 ##### Pick Distance
 
-For measuring the distance, there are several possible modes: 
+For measuring distance, there are several possible modes:
 
-1) Major flow - the user should specify positions of first and second point and resulting length is calculated as a distance between these points.
-2) **SHIFT** pressed - distance is determined based on Geometry of the object under the mouse cursor:
-   * Line - length of line is selected
-   * Circle, Arc - radius is selected. With **CTRL** pressed - the diameter is picked instead of the radius.
-3) **CTRL** pressed - for line under cursor, the length of line **segment** between points of intersections with other entities will be used.
-
-Demo Video:
+1.  **Major flow:** The user specifies positions of the first and second point; the resulting length is calculated as the distance between these points.
+2.  **SHIFT pressed:** Distance is determined based on the geometry of the object under the mouse cursor:
+    *   Line - the length of the line is selected.
+    *   Circle, Arc - the radius is selected. With CTRL pressed - the diameter is picked instead of the radius.
+3.  **CTRL pressed:** For a line under the cursor, the length of the line segment between points of intersections with other entities will be used.
 
 ##### Pick Angle
 
-Picking the angle value also supports several modes: 
+Picking the angle value also supports several modes:
 
-1) Major - 3 points angle. The user should specify 3 points (edge, intersection, second edge) and angle is measure as an angle between to lines directed from edge points to intersection.
-2) Angle of Line -  click on the line with pressed **CTRL** key will pick the angle of the line. If **SHIFT** is pressed during click, instead of the line's angle, a supplementary angle (one that supplements line's angle to 180 degree) will be used.  
-3) Click on Line with **SHIFT** key - lets the user select two existing lines and measure the angle between them.
-4) 2 points angle - if 3 points angle measurement started, if second point is selected with **CTRL** pressed, the angle between two points will be selected. 
+1.  **Major - 3 points angle:** The user specifies 3 points (edge, intersection, second edge) and the angle is measured as the angle between two lines directed from the edge points to the intersection.
+2.  **Angle of Line:** Click on a line with the CTRL key pressed will pick the angle of the line. If SHIFT is pressed during the click, a supplementary angle (the angle that supplements the line's angle to 180 degrees) will be used.
+3.  **Click on Line with SHIFT key:** Allows the user to select two existing lines and measure the angle between them.
+4.  **2 points angle:** If a 3-point angle measurement is started, and the second point is selected with CTRL pressed, the angle between two points will be selected.
 
-Based on angle selection way, it is possible to pick measured angle value, or value of supplementary angle.
+Based on the angle selection method, it is possible to pick the measured angle value or the value of its supplementary angle.
 
-Demo Video:
+**Demo Video:** https://youtu.be/GvpN6Y6PQsk
 
-#### Keyboard support improvement
+#### Point Coordinates Info Action
 
-Support of keyboard was slightly improved (yet focus management still requires polishing). Changes are:  
-1) better visual support of setting Free Snap via **SPACE** key (if enabled by settings)
-2) Scrolling drawing area by pressing **LEFT**, **RIGHT**, **UP** or **DOWN** keys; 
-3) Zoom in\out by **+** and **-** keys;
-4) Moving current selected entities by keyboard. 
+An additional Info action was added - **Point Coordinates**. This action allows the user to select a point on the drawing, and its coordinates are added to the command widget.
 
-Keyboard support for scroll and moving selected objects may be enabled/disabled via appropriate setting in General Preferences dialog.  
+`XXX_IMAGE`
 
-XXX_IMAGE
+### Keyboard Support Improvement
 
-##### Moving selected objects by keyboard
+Support for keyboard was slightly improved (though focus management still requires polishing). Changes are:
 
-If there are selected entities within drawing, their position may be adjusted via keyboard. Depending on the used modifiers, the offset for entities move is calculated differently. 
-The offset depends on the current grid size as well as meta grid step (controlled by setting *Generic Preferences Dialog  -> Grid -> Draw meta grid every*), and is calculated as follows: 
+1.  Better visual support of setting Free Snap via the SPACE key (if enabled by settings).
+2.  Scrolling the drawing area by pressing LEFT, RIGHT, UP, or DOWN keys.
+3.  Zoom in/out by + and - keys.
+4.  Moving currently selected entities by keyboard.
 
-1) **SHIFT + DIRECTION_KEY** - default mode. The offset for move calculated as width of current grid cell in specified direction (so non-square grids are fine).  
+Keyboard support for scroll and moving selected objects may be enabled/disabled via the appropriate setting in the General Preferences dialog.
 
-2) **CTRL + DIRECTION_KEY** - precise mode. The offset is calculated as current grid cell size in specified direction, DIVIDED on meta-grid step value. This mode may be used for fine-tuning the position.
+`XXX_IMAGE`
+
+#### Moving Selected Objects by Keyboard
+
+If there are selected entities within the drawing, their position may be adjusted via the keyboard. Depending on the used modifiers, the offset for moving entities is calculated differently. The offset depends on the current grid size and meta grid step.
+
+The offset is calculated as follows:
+
+1.  **SHIFT + DIRECTION_KEY:** Default mode. The offset is the width of the current grid cell in the specified direction.
+2.  **CTRL + DIRECTION_KEY:** Precise mode. The offset is the current grid cell size divided by the meta-grid step value. Used for fine-tuning.
+3.  **CTRL + SHIFT + DIRECTION_KEY:** Fast mode. The offset is the current grid cell size multiplied by the meta-grid step value. Used for faster, rough positioning.
+
+Where **DIRECTION_KEY** is one of the **LEFT / RIGHT / UP / DOWN** keys.
+
+**Demo Video:** https://youtu.be/frAccXDuTIk
+
+### Various Minor Fixes and Improvements
+
+1.  Displaying tooltips with toolbar name (plus setting in General Preferences).
+2.  Support of the user-defined step of the meta-grid (GRIDMAJOR) - with a corresponding setting in General Preferences.
+3.  Default location of custom icons engine is added as library path (directory is APP_DIR + "/iconengines"), so if icon engine dll is located there icon theeming settings should work. 
+3.  Lots of small polishings and minor improvements.
+
+### Changes in General Preferences
+
+1.  Added option for meta-grid step.
+2.  Added option for displaying tooltips for toolbars.
+3.  Added option for enabling/disabling interactive input controls in tool options toolbars.
+4.  Added option for enabling/disabling moving entities via keyboard.
  
-2) **CTRL + SHIFT + DIRECTION_KEY** - fast mode. The offset is calculated as current grid cell size in specified direction, MULTIPLIED on meta-grid step value. This mode may be used for faster rough positioning.
+ XXX_IMAGE
 
-Where **DIRECTION_KEY** is one of **LEFT / RIGHT / UP / DOWN** keys; 
+#### Widget Preferences
 
-Demo Video:
+Added an option that controls whether buttons for interactive input should be flat or not.
 
-### Various minor fixes and improvements  
- 
-1) Displaying tooltips with toolbar mame (plus setting in Generic Preferences) (LibreCAD#2254); 
-2) Support of the user-defined step of meta-grid (GRIDMAJOR) - with corresponding setting in Generic Preferences);
-3) lots of small polishings and minor improvements
-
-Fixed issues
+### Fixed Issues
 1) LibreCAD#2144
 2) LibreCAD#2174
 3) LibreCAD#2177

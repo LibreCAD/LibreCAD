@@ -39,84 +39,6 @@
     </message>
 </context>
 <context>
-    <name>DlgParabola</name>
-    <message>
-        <location filename="../src/ui/dialogs/entity/LC_DlgParabola.ui" line="26"/>
-        <source>Parabola</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/LC_DlgParabola.ui" line="62"/>
-        <source>Layer:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/LC_DlgParabola.ui" line="95"/>
-        <source>Geometry</source>
-        <translation type="unfinished">Геометрія</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/LC_DlgParabola.ui" line="110"/>
-        <location filename="../src/ui/dialogs/entity/LC_DlgParabola.ui" line="113"/>
-        <source>Points on Spline</source>
-        <translation type="unfinished">Точки на сплайні</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/LC_DlgParabola.ui" line="142"/>
-        <source>Control Points</source>
-        <translation type="unfinished">Контрольні точки</translation>
-    </message>
-</context>
-<context>
-    <name>DlgSplinePoints</name>
-    <message>
-        <location filename="../src/ui/dialogs/entity/lc_dlgsplinepoints.ui" line="26"/>
-        <source>SplinePoints</source>
-        <translation>Точки сплайна</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/lc_dlgsplinepoints.ui" line="62"/>
-        <source>Layer:</source>
-        <translation>Шар:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/lc_dlgsplinepoints.ui" line="95"/>
-        <source>Geometry</source>
-        <translation>Геометрія</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/lc_dlgsplinepoints.ui" line="101"/>
-        <source>Closed</source>
-        <translation>Замкнено</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/lc_dlgsplinepoints.ui" line="110"/>
-        <source>If selected, spline points are used</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/lc_dlgsplinepoints.ui" line="113"/>
-        <source>Spline Points</source>
-        <translation>Точки сплайну</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/lc_dlgsplinepoints.ui" line="123"/>
-        <source>If selected, control points are used</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/lc_dlgsplinepoints.ui" line="126"/>
-        <source>Control Points</source>
-        <translation>Контрольні точки</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/lc_dlgsplinepoints.ui" line="141"/>
-        <location filename="../src/ui/dialogs/entity/lc_dlgsplinepoints.ui" line="144"/>
-        <source>Points on Spline</source>
-        <translation>Точки на сплайні</translation>
-    </message>
-</context>
-<context>
     <name>LC_AbstractActionDrawLine</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="41"/>
@@ -403,22 +325,22 @@
         <translation type="unfinished">Довжина:</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.cpp" line="47"/>
+        <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.cpp" line="48"/>
         <source>Pick radius from drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.cpp" line="54"/>
+        <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.cpp" line="55"/>
         <source>Pick height from drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.cpp" line="61"/>
+        <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.cpp" line="62"/>
         <source>Pick length from drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.cpp" line="68"/>
+        <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.cpp" line="69"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3273,142 +3195,142 @@ End Edge Point: (%9 , %10)</source>
 <context>
     <name>LC_ActionInteractivePickAngle</name>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="202"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="140"/>
         <source>Lines are parallel</source>
         <translation type="unfinished">Лінії паралельні</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="222"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="160"/>
         <source>Angle Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="223"/>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="379"/>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="398"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="161"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="318"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="337"/>
         <source>Angle:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="224"/>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="380"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="162"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="319"/>
         <source>Complementary:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="225"/>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="381"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="163"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="320"/>
         <source>Supplementary:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="226"/>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="382"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="164"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="321"/>
         <source>Alternative: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="227"/>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="384"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="165"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="323"/>
         <source>Intersection:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="228"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="166"/>
         <source>Line 1 Angle:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="229"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="167"/>
         <source>Line 2 Angle:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="350"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="289"/>
         <source>Select first edge point of angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="350"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="289"/>
         <source>Select first line/Pick Supplementary</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="350"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="289"/>
         <source>Pick from line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="354"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="293"/>
         <source>Select second (intersection) point of angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="354"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="293"/>
         <source>Pick angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="358"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="297"/>
         <source>Select second edge point of angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="358"/>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="362"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="297"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="301"/>
         <source>Pick Supplementary</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="362"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="301"/>
         <source>Specify second line</source>
         <translation type="unfinished">Вкажіть другу лінію</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="362"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="301"/>
         <source>Pick Complementary</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="378"/>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="396"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="317"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="335"/>
         <source>Pick Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="383"/>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="399"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="322"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="338"/>
         <source>From:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="385"/>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="400"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="324"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="339"/>
         <source>To:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="386"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="325"/>
         <source>Distance1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="387"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="326"/>
         <source>Distance2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="388"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="327"/>
         <source>Angle 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="389"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="328"/>
         <source>Angle 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="397"/>
+        <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="336"/>
         <source>Distance:</source>
         <translation type="unfinished">Відстань:</translation>
     </message>
@@ -7038,182 +6960,292 @@ Are you sure you are going to discard changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="20"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="212"/>
         <source> Click with desired combination to set invocation shortcut. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="23"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="215"/>
         <source>Invocation Shortcut (click to set components)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="29"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="221"/>
         <source>Resulting invocation shortcut. Click with desired combination to set. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="32"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="224"/>
         <source>CTRL+ALT+SHIFT+Middle Button Double-Click</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="48"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="26"/>
         <source>Note:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="59"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="37"/>
         <source>This shortcut is already assigned to &quot;Dimensions My&quot; menu!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="75"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="163"/>
+        <source>Entity Context</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="169"/>
+        <source>Applicable if invoked for:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="176"/>
+        <source>Defines the context for menu and whether click on specific entity will trigger menu invocation. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="186"/>
         <source>Defines type of mouse click for invocation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="78"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="189"/>
         <source>Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="84"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="195"/>
         <source>Single Click (Release)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="91"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="202"/>
         <source>Double Click</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="101"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="130"/>
         <source>Specify pressed key modifier(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="104"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="133"/>
         <source>Key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="110"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="139"/>
         <source>CTRL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="117"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="146"/>
         <source>SHIFT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="124"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="153"/>
         <source>ALT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="134"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="76"/>
         <source>Defines which mouse button is part of menu invocation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="137"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="79"/>
         <source>Mouse Button</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="143"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="85"/>
         <source>Left </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="150"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="92"/>
         <source>Middle</source>
         <translation type="unfinished">Середина</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="157"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="99"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="164"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="106"/>
         <source>Back</source>
         <translation type="unfinished">Назад</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="171"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="113"/>
         <source>Forward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="178"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="120"/>
         <source>Task</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="211"/>
-        <source>Context</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="217"/>
-        <source>If set, the menu will be shown only in mouse click is performed on drawing&apos;s entity. Otherwise, it will be invoked for click at any area of drawing.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.ui" line="220"/>
-        <source>Entity should be present in mouse click position</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="98"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="102"/>
         <source>Menu Assignment - &quot;%1&quot; Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="201"/>
-        <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Entity Properties&apos;.</source>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="106"/>
+        <source>Either Absent or Any Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="204"/>
-        <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Entity Select&apos;.</source>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="107"/>
+        <source>Absent Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="207"/>
-        <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Pan&apos;.</source>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="108"/>
+        <source>Any Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="210"/>
-        <source>NNOTE: Menu assignment will be ignored. It is reserved for &apos;Select Contour&apos;.</source>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="109"/>
+        <source>Line</source>
+        <translation type="unfinished">Лінія</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="110"/>
+        <source>Circle</source>
+        <translation type="unfinished">Коло</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="111"/>
+        <source>Arc</source>
+        <translation type="unfinished">Дуга</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="112"/>
+        <source>Polyline</source>
+        <translation type="unfinished">Ламана</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="113"/>
+        <source>Spline</source>
+        <translation type="unfinished">Сплайн</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="114"/>
+        <source>Spline By Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="213"/>
-        <source>NOTE: This combination is reserved for default context menu and may prevent invocation of it!</source>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="115"/>
+        <source>Ellipse</source>
+        <translation type="unfinished">Еліпс</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="116"/>
+        <source>Point</source>
+        <translation type="unfinished">Точка</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="117"/>
+        <source>Parabola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="216"/>
-        <source>NOTE: This combination is reserved for Pan! Menu assignment will be ignored</source>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="118"/>
+        <source>Image</source>
+        <translation type="unfinished">Зображення</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="119"/>
+        <source>Hatch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="221"/>
-        <source>NOTE: This shortcut is already assigned to &quot;%1&quot; menu and that menu will be unassigned on save!</source>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="120"/>
+        <source>Insert</source>
+        <translation type="unfinished">Вставка</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="121"/>
+        <source>Dimension Linear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="225"/>
-        <source>Shortcut is valid to use.</source>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="122"/>
+        <source>Dimension Aligned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="123"/>
+        <source>Dimension Diametric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="124"/>
+        <source>Dimension Radial</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="125"/>
+        <source>Dimension Ordinate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="126"/>
+        <source>Dimension Arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="127"/>
+        <source>Leader</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="230"/>
+        <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Entity Properties&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="233"/>
+        <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Entity Select&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="236"/>
+        <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Pan&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="239"/>
+        <source>NNOTE: Menu assignment will be ignored. It is reserved for &apos;Select Contour&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="242"/>
+        <source>NOTE: This combination is reserved for default context menu and may prevent invocation of it!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="245"/>
+        <source>NOTE: This combination is reserved for Pan! Menu assignment will be ignored</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="250"/>
+        <source>NOTE: This shortcut is already assigned to &quot;%1&quot; menu and that menu will be unassigned on save!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="254"/>
+        <source>Shortcut is valid to use.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="259"/>
         <source>Note: make sure that selected button is supported by your mouse device.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7649,27 +7681,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/creators/lc_dlgnewwidget.cpp" line="70"/>
         <source>Name is not unique. Please enter unique name.</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgParabola</name>
-    <message>
-        <location filename="../src/ui/dialogs/entity/LC_DlgParabola.cpp" line="51"/>
-        <source>Pen</source>
-        <translation type="unfinished">Перо</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/LC_DlgParabola.cpp" line="113"/>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgSplinePoints</name>
-    <message>
-        <location filename="../src/ui/dialogs/entity/lc_dlgsplinepoints.cpp" line="39"/>
-        <source>Pen</source>
-        <translation type="unfinished">Перо</translation>
     </message>
 </context>
 <context>
@@ -8156,100 +8167,100 @@ Are you sure you are going to discard changes?</source>
         <translation type="unfinished">Верхня</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="59"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="60"/>
         <source>Destroy Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="60"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="61"/>
         <source>New Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="62"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="63"/>
         <source>Define a custom menu by specifying the set of used actions. Menu will be shown as a popup in the drawing area as soon as menu invocation shortcut is invoked. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="57"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="58"/>
         <source>Custom Menu Creator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="58"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="59"/>
         <source>Menu Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="61"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="62"/>
         <source>Name of Custom Nenu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="69"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="70"/>
         <source>Custom Toolbar Creator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="70"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="71"/>
         <source>Toolbar Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="71"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="72"/>
         <source>Destroy toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="72"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="73"/>
         <source>New Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="73"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="74"/>
         <source>Name of Custom Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="74"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="75"/>
         <source>Define a custom toolbar by specifying the set of used actions. Once created, the custom toolbar will behave exactly as built-in ones.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="201"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="202"/>
         <source>Unassign menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="202"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="203"/>
         <source>Are you sure you&apos;d like to unassign &quot;%1&quot; menu? Note: Just an invocation shortcut will be removed and menu will not be deleted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="215"/>
-        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="355"/>
-        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="386"/>
-        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="460"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="216"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="356"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="387"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="461"/>
         <source>NOT ASSIGNED</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="423"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="424"/>
         <source>menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="426"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="427"/>
         <source>toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="429"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="430"/>
         <source>Remove %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="430"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="431"/>
         <source>Are you sure you&apos;d like to remove  %2&quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16543,7 +16554,7 @@ Warning: this action can NOT be undone!</source>
         <translation>Новий рисунок створено.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1689"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1690"/>
         <source>Opening recent file...</source>
         <translation>Відкриття нещодавно редагованого файлу…</translation>
     </message>
@@ -17137,99 +17148,6 @@ Please check its existence and permissions.</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgArc</name>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgarc.ui" line="26"/>
-        <source>Arc</source>
-        <translation>Дуга</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgarc.ui" line="63"/>
-        <source>Layer:</source>
-        <translation>Шар:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgarc.ui" line="73"/>
-        <source>Layer of arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgarc.ui" line="88"/>
-        <source>Pen attributes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgarc.ui" line="109"/>
-        <source>Geometry</source>
-        <translation>Геометрія</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgarc.ui" line="288"/>
-        <source>Radius:</source>
-        <translation>Радіус:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgarc.ui" line="247"/>
-        <source>Radius of arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgarc.ui" line="209"/>
-        <source>Center (y):</source>
-        <translation>Центр (y):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgarc.ui" line="174"/>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgarc.ui" line="370"/>
-        <source>Center (x):</source>
-        <translation>Центр (x):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgarc.ui" line="139"/>
-        <source>X Coordinate of arc&apos;s center</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgarc.ui" line="266"/>
-        <source>Start Angle:</source>
-        <translation>Початковий кут:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgarc.ui" line="310"/>
-        <source>Starting angle of arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgarc.ui" line="329"/>
-        <source>End angle of arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgarc.ui" line="348"/>
-        <source>End Angle:</source>
-        <translation>Кінцевий кут:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgarc.ui" line="187"/>
-        <source>Defines whether arc is reversed (clockwise)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgarc.ui" line="190"/>
-        <source>Reversed</source>
-        <translation>Зворотний напрям</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgarc.cpp" line="63"/>
-        <source>Pen</source>
-        <translation type="unfinished">Перо</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgAttributes</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgattributes.ui" line="26"/>
@@ -17265,174 +17183,6 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgattributes.cpp" line="61"/>
-        <source>Pen</source>
-        <translation type="unfinished">Перо</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgCircle</name>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgcircle.ui" line="26"/>
-        <source>Circle</source>
-        <translation>Коло</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgcircle.ui" line="44"/>
-        <source>Layer:</source>
-        <translation>Шар:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgcircle.ui" line="71"/>
-        <source>Geometry</source>
-        <translation>Геометрія</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgcircle.ui" line="77"/>
-        <source>Radius:</source>
-        <translation>Радіус:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgcircle.ui" line="93"/>
-        <source>Radius of cricle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgcircle.ui" line="100"/>
-        <source>Center (y):</source>
-        <translation>Центр (y):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgcircle.ui" line="116"/>
-        <source>Y Coordinate of circle&apos;s center</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgcircle.ui" line="123"/>
-        <source>Center (x):</source>
-        <translation>Центр (x):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgcircle.ui" line="139"/>
-        <source>X Coordinate of circle&apos;s center</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgcircle.cpp" line="69"/>
-        <source>Pen</source>
-        <translation type="unfinished">Перо</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgEllipse</name>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="26"/>
-        <source>Ellipse</source>
-        <translation>Еліпс</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="41"/>
-        <source>Layer:</source>
-        <translation>Шар:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="63"/>
-        <source>Layer of ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="109"/>
-        <source>Geometry</source>
-        <translation>Геометрія</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="159"/>
-        <source>Center (y):</source>
-        <translation>Центр (y):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="200"/>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="378"/>
-        <source>Center (x):</source>
-        <translation>Центр (x):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="365"/>
-        <source>X Coordinate of ellipse&apos;s center</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="232"/>
-        <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="251"/>
-        <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="289"/>
-        <source>in degrees</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="292"/>
-        <source>End Angle(°):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="181"/>
-        <source>End angle of elliptic arc, degrees</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="314"/>
-        <source>Start angle of elliptic arc, degrees</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="235"/>
-        <source>Start Angle(°):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="254"/>
-        <source>Rotation(°):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="130"/>
-        <source>Rotation angle for the major axis of ellipse, degrees</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="276"/>
-        <source>Radius of minor axis of the ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="343"/>
-        <source>Minor:</source>
-        <translation>Менша:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="327"/>
-        <source>Major:</source>
-        <translation>Більша:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="219"/>
-        <source>Radius of major axis of ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="143"/>
-        <source>Defines whether arc is reversed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgellipse.ui" line="146"/>
-        <source>Reversed</source>
-        <translation>Зворотний напрям</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgellipse.cpp" line="66"/>
         <source>Pen</source>
         <translation type="unfinished">Перо</translation>
     </message>
@@ -17511,129 +17261,6 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgImage</name>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgimage.ui" line="26"/>
-        <source>Image</source>
-        <translation>Зображення</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgimage.ui" line="44"/>
-        <source>Layer:</source>
-        <translation>Шар:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgimage.ui" line="54"/>
-        <source>Layer of image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgimage.ui" line="84"/>
-        <source>Geometry</source>
-        <translation>Геометрія</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgimage.ui" line="110"/>
-        <source>Width of image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgimage.ui" line="130"/>
-        <source>X coordinate of insertion point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgimage.ui" line="137"/>
-        <source>Resolution (dots per inch)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgimage.ui" line="150"/>
-        <source>Path to image file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgimage.ui" line="166"/>
-        <source>Scaling factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgimage.ui" line="186"/>
-        <source>Rotation angle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgimage.ui" line="199"/>
-        <source>Y coordinate of insertion point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgimage.ui" line="265"/>
-        <source>Size of image in pixels</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgimage.ui" line="282"/>
-        <source>Width:</source>
-        <translation>Ширина: </translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgimage.ui" line="97"/>
-        <source>Height:</source>
-        <translation>Висота: </translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgimage.ui" line="229"/>
-        <source>insert (x):</source>
-        <translation>Положення (x): </translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgimage.ui" line="252"/>
-        <source>Scale:</source>
-        <translation>Масштаб: </translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgimage.ui" line="173"/>
-        <source>Size (px):</source>
-        <translation>Розмір (пкс): </translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgimage.ui" line="222"/>
-        <source>path:</source>
-        <translation>шлях: </translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgimage.ui" line="117"/>
-        <source>insert (y):</source>
-        <translation>Положення (y): </translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgimage.ui" line="90"/>
-        <source>Angle:</source>
-        <translation>Кут: </translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgimage.ui" line="275"/>
-        <source>DPI</source>
-        <translation>DPI</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgimage.ui" line="295"/>
-        <source>Height of image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgimage.ui" line="302"/>
-        <source>Select an image file</source>
-        <translation>Оберіть файл зображення</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgimage.cpp" line="69"/>
-        <source>Pen</source>
-        <translation type="unfinished">Перо</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgInitial</name>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="14"/>
@@ -17665,197 +17292,6 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="129"/>
         <source>Command Language:</source>
         <translation>Мова команд:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgInsert</name>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlginsert.ui" line="26"/>
-        <source>Insert</source>
-        <translation>Вставка</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlginsert.ui" line="44"/>
-        <source>Layer:</source>
-        <translation>Шар:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlginsert.ui" line="54"/>
-        <source>Layer of insert</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlginsert.ui" line="75"/>
-        <source>Geometry</source>
-        <translation>Геометрія</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlginsert.ui" line="91"/>
-        <source>Insertion point (x):</source>
-        <translation>Точка вставки (x):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlginsert.ui" line="81"/>
-        <source>Insertion point (y):</source>
-        <translation>Точка вставки (y):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlginsert.ui" line="107"/>
-        <source>Amount of rows for copies</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlginsert.ui" line="120"/>
-        <source>Rotation angle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlginsert.ui" line="133"/>
-        <source>Spacing between columns</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlginsert.ui" line="146"/>
-        <source>Scaling factor by X axis</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlginsert.ui" line="159"/>
-        <source>X coordinate of insertion point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlginsert.ui" line="172"/>
-        <source>Spacing between rows</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlginsert.ui" line="201"/>
-        <source>Amount of columns for copies</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlginsert.ui" line="214"/>
-        <source>Scaling factor by Y axis</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlginsert.ui" line="241"/>
-        <source>Angle:</source>
-        <translation>Кут:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlginsert.ui" line="231"/>
-        <source>Rows:</source>
-        <translation>Ряди:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlginsert.ui" line="257"/>
-        <source>Y coordinate of insertion point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlginsert.ui" line="274"/>
-        <source>Columns:</source>
-        <translation>Стовпці:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlginsert.ui" line="264"/>
-        <source>Row Spacing:</source>
-        <translation>Відстань між рядами:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlginsert.ui" line="310"/>
-        <source>Column Spacing:</source>
-        <translation>Відстань між стовпцями:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlginsert.ui" line="284"/>
-        <source>Scale X:</source>
-        <translation>Масштаб по X: </translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlginsert.ui" line="221"/>
-        <source>Scale Y:</source>
-        <translation>Мастштаб по Y: </translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlginsert.cpp" line="70"/>
-        <source>Pen</source>
-        <translation type="unfinished">Перо</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgLine</name>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgline.ui" line="29"/>
-        <source>Line</source>
-        <translation>Лінія</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgline.ui" line="54"/>
-        <source>Layer:</source>
-        <translation>Шар:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgline.ui" line="64"/>
-        <source>Layer of line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgline.ui" line="91"/>
-        <source>Geometry</source>
-        <translation>Геометрія</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgline.ui" line="97"/>
-        <source>End point (x):</source>
-        <translation>Кінцева точка (x):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgline.ui" line="113"/>
-        <source>Ending point X coordinate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgline.ui" line="126"/>
-        <source>Ending point Y coordinate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgline.ui" line="133"/>
-        <source>End point (y):</source>
-        <translation>Кінцева точка (y):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgline.ui" line="143"/>
-        <source>Start point (y):</source>
-        <translation>Початкова точка (y):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgline.ui" line="159"/>
-        <source>Starting point Y coordinate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgline.ui" line="166"/>
-        <source>Start point (x):</source>
-        <translation>Початкова точка (x):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgline.ui" line="182"/>
-        <source>Starting point X coordinate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgline.ui" line="35"/>
-        <source>ID: </source>
-        <translation type="unfinished">ID: </translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgline.cpp" line="67"/>
-        <source>Pen</source>
-        <translation type="unfinished">Перо</translation>
     </message>
 </context>
 <context>
@@ -18853,27 +18289,27 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>Довжина</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1907"/>
+        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1919"/>
         <source>Decimal</source>
         <translation>Десятковий</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1906"/>
+        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1918"/>
         <source>Scientific</source>
         <translation>Науковий</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1908"/>
+        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1920"/>
         <source>Engineering</source>
         <translation>Інженерний</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1909"/>
+        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1921"/>
         <source>Architectural</source>
         <translation>Архітектурний</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1910"/>
+        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1922"/>
         <source>Fractional</source>
         <translation>Дробовий</translation>
     </message>
@@ -18885,12 +18321,12 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>Кут</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1919"/>
+        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1931"/>
         <source>Decimal Degrees</source>
         <translation>Десяткові градуси</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1922"/>
+        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1934"/>
         <source>Radians</source>
         <translation>Радіани</translation>
     </message>
@@ -18929,17 +18365,17 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation>одиниці виміру</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1920"/>
+        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1932"/>
         <source>Deg/min/sec</source>
         <translation>Град/хв/сек</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1921"/>
+        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1933"/>
         <source>Gradians</source>
         <translation>Градіани</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1923"/>
+        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1935"/>
         <source>Surveyor&apos;s units</source>
         <translatorcomment>?</translatorcomment>
         <translation>Геометричні одиниці</translation>
@@ -19066,38 +18502,38 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1189"/>
+        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1197"/>
         <source>VOID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1192"/>
+        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1200"/>
         <source>INT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1196"/>
+        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1204"/>
         <source>DOUBLE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1200"/>
+        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1208"/>
         <source>STRING</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1204"/>
+        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1212"/>
         <source>VECTOR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1553"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1561"/>
+        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1569"/>
         <source>Options</source>
         <translation>Параметри</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1554"/>
+        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1562"/>
         <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
         <translation>Для форматів довжин „Інженерний“ та „Архітектурний“ як одиниць виміру повинні бути обрані дюйми.</translation>
     </message>
@@ -19186,8 +18622,8 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="997"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="921"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="924"/>
-        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1437"/>
-        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1442"/>
+        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1445"/>
+        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1450"/>
         <source>auto</source>
         <translation>авто</translation>
     </message>
@@ -19967,7 +19403,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3130"/>
-        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1895"/>
+        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1907"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1322"/>
         <source>Dwg Units</source>
         <translation>Одиниці виміру Dwg</translation>
@@ -19998,17 +19434,17 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <translation type="unfinished">(0 =&gt;5% відносно розміру екрана)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1911"/>
+        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1923"/>
         <source>Architectural (metric)</source>
         <translation type="unfinished">Архітектурний (метричний)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1562"/>
+        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1570"/>
         <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
         <translation type="unfinished">Для формату довжини «Архітектурний (метричний)» одиницею виміру має бути метр.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1893"/>
+        <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1905"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1320"/>
         <source>Screen %</source>
         <translation type="unfinished">Екран %</translation>
@@ -22480,92 +21916,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgPoint</name>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgpoint.ui" line="26"/>
-        <source>Point</source>
-        <translation>Точка</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgpoint.ui" line="44"/>
-        <source>Layer:</source>
-        <translation>Шар:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgpoint.ui" line="54"/>
-        <source>Layer of point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgpoint.ui" line="75"/>
-        <source>Geometry</source>
-        <translation>Геометрія</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgpoint.ui" line="81"/>
-        <source>Position (y):</source>
-        <translation>Координата (y):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgpoint.ui" line="97"/>
-        <source>Position of point by Y coordinate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgpoint.ui" line="104"/>
-        <source>Position (x):</source>
-        <translation>Координата (x):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgpoint.ui" line="120"/>
-        <source>Position of point by X coordinate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgpoint.cpp" line="64"/>
-        <source>Pen</source>
-        <translation type="unfinished">Перо</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPolyline</name>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgpolyline.ui" line="26"/>
-        <source>Polyline</source>
-        <translation>Ламана</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgpolyline.ui" line="44"/>
-        <source>Layer:</source>
-        <translation>Шар: </translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgpolyline.ui" line="54"/>
-        <source>Layer of polyline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgpolyline.ui" line="81"/>
-        <source>Geometry</source>
-        <translation>Геометрія</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgpolyline.ui" line="119"/>
-        <source>Defines whether polyline is closed contour</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgpolyline.ui" line="122"/>
-        <source>Closed</source>
-        <translation>Закрита</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgpolyline.cpp" line="70"/>
-        <source>Pen</source>
-        <translation type="unfinished">Перо</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgRotate</name>
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgrotate.ui" line="26"/>
@@ -22732,54 +22082,6 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgscale.ui" line="89"/>
         <source>Y</source>
         <translation>Y</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgSpline</name>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgspline.ui" line="26"/>
-        <source>Spline</source>
-        <translation>Сплайн</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgspline.ui" line="51"/>
-        <source>Layer:</source>
-        <translation>Шар:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgspline.ui" line="61"/>
-        <source>Layer of spline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgspline.ui" line="88"/>
-        <source>Geometry</source>
-        <translation>Геометрія</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgspline.ui" line="126"/>
-        <source>Degree:</source>
-        <translation>Ступінь: </translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgspline.ui" line="136"/>
-        <source>Defines whether spline defines closed contour</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgspline.ui" line="139"/>
-        <source>Closed</source>
-        <translation>Закрито</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgspline.ui" line="152"/>
-        <source>Degree used to approximate spline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_dlgspline.cpp" line="66"/>
-        <source>Pen</source>
-        <translation type="unfinished">Перо</translation>
     </message>
 </context>
 <context>
@@ -24238,7 +23540,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="118"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="97"/>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="862"/>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1003"/>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1123"/>
@@ -24246,30 +23548,30 @@ p, li { white-space: pre-wrap; }
         <translation>Попередження</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="211"/>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="223"/>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="284"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="190"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="202"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="263"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1725"/>
         <source>Remove Layer</source>
         <translation>Вилучити шар</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="224"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="203"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
         <translation>Шар „%1“ ніколи не можна вилучати.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="364"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="343"/>
         <source>Layer Dialog</source>
         <translation>Діалогове вікно шару</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="476"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="455"/>
         <source>Remove Block</source>
         <translation>Вилучити блок</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="477"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="456"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
         <translation>Блок „%1“ та усі його об’єкти будуть вилучені.</translation>
     </message>
@@ -24286,20 +23588,20 @@ p, li { white-space: pre-wrap; }
         <translation>Шар з назвою „%1“ вже існує. Вкажіть, будь ласка, іншу назву. </translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="212"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="191"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
         <translation>Шар &quot;%1&quot; і усі елементи на ньому будуть видалені.
 Ця дія НЕ може бути відміненою.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="285"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1725"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
         <translation>Шар &quot;0&quot; не можна видалити.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="295"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="274"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1773"/>
         <source>Remove %n layer(s)</source>
         <translation>
@@ -24309,30 +23611,30 @@ This action can NOT be undone.</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="299"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="278"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1774"/>
         <source>Listed layers and all entities on them will be removed.</source>
         <translation>Перераховані шари і усі елементи на них буде видалено.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="301"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="280"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1775"/>
         <source>Warning: this action can NOT be undone!</source>
         <translation>Застереження: цю дію НЕ можна відмінити!</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="306"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="285"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
         <translation>Застереження: шар &quot;0&quot; не можна видалити.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="310"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="289"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1776"/>
         <source>Layers for removal:</source>
         <translation>Шари для видалення:</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="535"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="514"/>
         <source>Remove %n block(s)</source>
         <translation>
             <numerusform>Видалити %n блок</numerusform>
@@ -24341,12 +23643,12 @@ This action can NOT be undone.</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="537"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="516"/>
         <source>Listed blocks and all their entities will be removed.</source>
         <translation>Перераховані блоки і всі їхні елементи буде видалено.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="540"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="519"/>
         <source>Blocks for removal:</source>
         <translation>Блоки для видалення:</translation>
     </message>
@@ -24555,62 +23857,62 @@ Do you want to replace it?</source>
         <translation>Відкрити креслення</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="602"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="581"/>
         <source>Open Image</source>
         <translation>Відкрити зображення</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="937"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="916"/>
         <source>Windows Bitmap</source>
         <translation>Растрове зображення Windows</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="939"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="918"/>
         <source>Joint Photographic Experts Group</source>
         <translation>Формат об’єднаної групи експертів-фотографів (JPEG)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="943"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="922"/>
         <source>Multiple-image Network Graphics</source>
         <translation>Формат мережевої графіки багатьох зображень (MNG)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="945"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="924"/>
         <source>Portable Bit Map</source>
         <translation>Формат переносимої  бітової карти (PBM)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="947"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="926"/>
         <source>Portable Grey Map</source>
         <translation>Формат переносимої сірої карти (PGM)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="949"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="928"/>
         <source>Portable Network Graphic</source>
         <translation>Формат переносимої мережевої графіки (PNG)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="951"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="930"/>
         <source>Portable Pixel Map</source>
         <translation>Формат переносимої піксельної карти (PPM)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="953"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="932"/>
         <source>X Bitmap Format</source>
         <translation>Формат бітової карти Х</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="955"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="934"/>
         <source>X Pixel Map</source>
         <translation>Формат піксельної карти Х</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="595"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="574"/>
         <source>All Image Files (%1)</source>
         <translation>Усі файли зображень (%1)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="941"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="920"/>
         <source>Graphics Interchange Format</source>
         <translation>Формат обміну графічними даними (GIF)</translation>
     </message>
@@ -24630,7 +23932,7 @@ Do you want to replace it?</source>
         <translation>Шрифт %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="597"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="576"/>
         <source>All Files (*.*)</source>
         <translation>Усі файли (*.*)</translation>
     </message>
@@ -24919,62 +24221,62 @@ Do you want to replace it?</source>
         <translation>Jww %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="957"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="936"/>
         <source>Scalable Vector Graphics</source>
         <translation>Векторний формат SVG</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="959"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="938"/>
         <source>SGI Black &amp; White</source>
         <translation>Чорно-білий SGI</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="961"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="940"/>
         <source>Encapsulated PostScript</source>
         <translation>Вбудовуваний PostScript</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="963"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="942"/>
         <source>Encapsulated PostScript Format</source>
         <translation>Вбудований формат Postscript</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="965"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="944"/>
         <source>Encapsulated PostScript Interchange</source>
         <translation>Вбудований формат Postscript для обміну</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="967"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="946"/>
         <source>Windows Icon</source>
         <translation>Іконка Windows</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="969"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="948"/>
         <source>JPEG 2000</source>
         <translation>JPEG 2000</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="971"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="950"/>
         <source>ZSoft Paintbrush</source>
         <translation>ZSoft Paintbrush</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="973"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="952"/>
         <source>PC Paint</source>
         <translation>PC Paint</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="975"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="954"/>
         <source>SGI-Bilddatei</source>
         <translation>SGI-Bilddatei</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="977"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="956"/>
         <source>Targa Image File</source>
         <translation>Файл зображення Targa</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="979"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="958"/>
         <source>Tagged Image File Format</source>
         <translation>Тегований формат растрових зображень</translation>
     </message>
@@ -24989,52 +24291,52 @@ Do you want to replace it?</source>
         <translation>Відкритий файл DWG версії %1.</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5193"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5230"/>
         <source>unknown error opening dwg file</source>
         <translation>невідома помилка при відкритті файлу DWG</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5197"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5234"/>
         <source>can&apos;t open this dwg file</source>
         <translation>неможливо відкрити цей файл DWG</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5201"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5238"/>
         <source>unsupported dwg version</source>
         <translation>непідтримувана версія DWG</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5205"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5242"/>
         <source>error reading file metadata in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5209"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5246"/>
         <source>error reading file header in dwg file</source>
         <translation>помилка читання заголовку DWG-файлу</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5213"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5250"/>
         <source>error reading header vars in dwg file</source>
         <translation>помилка читання заголовку змінних DWG-файлу</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5217"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5254"/>
         <source>error reading classes in dwg file</source>
         <translation>помилка читання класів DWG-файлу</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5221"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5258"/>
         <source>error reading offsets in dwg file</source>
         <translation>помилка читання зміщень DWG-файлу</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5225"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5262"/>
         <source>error reading tables in dwg file</source>
         <translation>помилка читання таблиць DWG-файлу</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5233"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5270"/>
         <source>error reading entities in dwg file</source>
         <translation>помилка читання об’єктів DWG-файлу</translation>
     </message>
@@ -25049,7 +24351,7 @@ Do you want to replace it?</source>
         <translation>Файл на диску змінено.  Будь ласка, збережіть в інший файл, щоб уникнути втрати даних!  Змінений файл: %1</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1682"/>
+        <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1687"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
         <translation type="unfinished">Штрихування не застосовано бо промжки=%1 від (%2, %3) і до (%4, %5)</translation>
     </message>
@@ -25059,12 +24361,12 @@ Do you want to replace it?</source>
         <translation>Застереження</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5229"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5266"/>
         <source>error reading blocks in dwg file</source>
         <translation>помилка читання блоку у файлі dwg</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5237"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5274"/>
         <source>error reading objects in dwg file</source>
         <translation>помилка читання об&apos;єктів у фалі dwg</translation>
     </message>
@@ -26240,7 +25542,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="87"/>
+        <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="88"/>
         <source>All</source>
         <translation>Усе</translation>
     </message>
@@ -28349,7 +27651,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="139"/>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="118"/>
         <source>noname</source>
         <comment>default layer name</comment>
         <translation>без імені</translation>
@@ -28548,7 +27850,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/rs_graphic.cpp" line="740"/>
+        <location filename="../src/lib/engine/document/rs_graphic.cpp" line="741"/>
         <source>Invalid printing scale %1. Cannot fit print preview to page</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28563,49 +27865,155 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="290"/>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="435"/>
         <source>Left-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="293"/>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="438"/>
         <source>Middle-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="296"/>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="441"/>
         <source>Right-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="299"/>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="444"/>
         <source>Forward-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="302"/>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="447"/>
         <source>Back-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="305"/>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="450"/>
         <source>Task-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="309"/>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="454"/>
         <source>Click</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="312"/>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="457"/>
         <source>Double-Click</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="315"/>
-        <source>Entity</source>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="468"/>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="552"/>
+        <source>Any</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="472"/>
+        <source>Either</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="476"/>
+        <source>Line</source>
+        <translation type="unfinished">Лінія</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="480"/>
+        <source>Circle</source>
+        <translation type="unfinished">Коло</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="484"/>
+        <source>Arc</source>
+        <translation type="unfinished">Дуга</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="488"/>
+        <source>Polyline</source>
+        <translation type="unfinished">Ламана</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="492"/>
+        <source>Spline</source>
+        <translation type="unfinished">Сплайн</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="496"/>
+        <source>Spline by Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="500"/>
+        <source>Ellipse</source>
+        <translation type="unfinished">Еліпс</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="504"/>
+        <source>Point</source>
+        <translation type="unfinished">Точка</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="508"/>
+        <source>Parabola</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="512"/>
+        <source>Image</source>
+        <translation type="unfinished">Зображення</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="516"/>
+        <source>Hatch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="520"/>
+        <source>Insert</source>
+        <translation type="unfinished">Вставка</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="524"/>
+        <source>Dim. Linear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="528"/>
+        <source>Dim. Aligned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="532"/>
+        <source>Dim. Diametric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="536"/>
+        <source>Dim. Radial</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="540"/>
+        <source>Dim. Arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="544"/>
+        <source>Dim. Ordinate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="548"/>
+        <source>Leader</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="556"/>
+        <source>None</source>
+        <translation type="unfinished">Немає</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstylestreemodel.cpp" line="48"/>
@@ -30061,7 +29469,7 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionInfoAngle</name>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="152"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="147"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="201"/>
         <source>Lines are parallel</source>
         <translation>Лінії паралельні</translation>
@@ -30077,7 +29485,7 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="103"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="98"/>
         <source>Angle: %1
 Complementary: %2
 Supplementary: %3
@@ -30086,7 +29494,7 @@ Alternative: %4
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="145"/>
+        <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="140"/>
         <source>Angle: %1
 Complementary: %2
 Supplementary: %3

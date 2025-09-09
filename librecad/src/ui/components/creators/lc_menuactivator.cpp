@@ -31,7 +31,7 @@ LC_MenuActivator::LC_MenuActivator()
 }
 
 LC_MenuActivator::LC_MenuActivator(const QString& shortcutString, bool ctrl, bool alt, bool shift, Button button, Type type, bool entityRequired, RS2::EntityType entityType)
-    :m_keyModifiers{NONE}, m_eventType{type}, m_requiresEntity{entityRequired}, m_button{button}, m_shortcutString{shortcutString}, m_entityType{entityType}{
+    :m_keyModifiers{NONE}, m_eventType{type}, m_requiresEntity{entityRequired}, m_entityType{entityType}, m_button{button}, m_shortcutString{shortcutString}{
     setKeys(ctrl, alt, shift);
 }
 
