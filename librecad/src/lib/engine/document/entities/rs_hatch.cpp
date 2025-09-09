@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 
+#include <algorithm>
 #include <iostream>
 #include <set>
 #include <memory>  // For std::shared_ptr
@@ -43,6 +44,7 @@
 #include "rs_pattern.h"
 #include "rs_patternlist.h"
 #include "rs_pen.h"
+#include "lc_containertraverser.h"
 
 namespace {
 
@@ -95,7 +97,7 @@ std::ostream& operator<<(std::ostream& os, const RS_HatchData& td) {
 RS_Hatch::RS_Hatch(RS_EntityContainer* parent, const RS_HatchData& d)
     : RS_EntityContainer(parent), data(d) {
     // Initialize m_orderedLoops with owning behavior to match RS_Hatch's ownership
-    m_orderedLoops = std::make_shared<LC_LoopUtils::LC_Loops>(true);
+    m_orderedLoops = std::make_shared<std::vector<LC_LoopUtils::LC_Loops>>(true);
     // Explicitly set ownership for this container
     setOwner(true);
 }
@@ -106,12 +108,7 @@ RS_Entity* RS_Hatch::clone() const {
     t->setOwner(isOwner());
     t->detach();
     // Deep copy shared members
-    if (m_solidPath) {
-        t->m_solidPath = std::make_shared<QPainterPath>(*m_solidPath);
-    }
-    if (m_orderedLoops) {
-        t->m_orderedLoops = std::make_shared<LC_LoopUtils::LC_Loops>(*m_orderedLoops);
-    }
+
     t->update();
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::clone(): OK");
     return t;
@@ -121,11 +118,18 @@ bool RS_Hatch::validate() {
     bool ret = true;
 
     // loops:
-    if (needOptimization) {
+    if (needOptimization && count() > 0) {
         try {
-            LC_LoopUtils::LoopOptimizer optimizer{*this};
+            // copy to a container
+            RS_EntityContainer container{nullptr, false};
+            std::copy(begin(), end(), std::back_inserter(container));
+            lc::LC_ContainerTraverser traverser{container, RS2::ResolveAll};
+            for(RS_Entity* en: traverser.entities())
+                if (en->isAtomic())
+                    container.addEntity(en);
+            LC_LoopUtils::LoopOptimizer optimizer{container};
             m_orderedLoops = optimizer.GetResults();
-            if (!m_orderedLoops || (m_orderedLoops->loop() == nullptr && m_orderedLoops->children().empty())) {
+            if (!m_orderedLoops) {
                 throw std::runtime_error("Optimization failed: empty loops");
             }
         } catch (const std::exception& e) {
@@ -176,18 +180,14 @@ void RS_Hatch::update() {
     }
 
     // Clear cached path upfront
-    m_solidPath.reset();  // Or m_solidPath = nullptr;
+    m_solidPath = std::make_shared<std::vector<QPainterPath>>();
 
     // Save attributes for the current hatch
     RS_Layer* hatch_layer = this->getLayer();
     RS_Pen hatch_pen = this->getPen();
 
     // Delete old hatch
-    if (hatch) {
-        hatch->clear();  // Remove all children without deleting them (no ownership transfer yet)
-        removeEntity(hatch);
-        hatch = nullptr;
-    }
+    hatch = std::make_shared<RS_EntityContainer>(nullptr, true);
 
     if (isUndone()) {
         RS_DEBUG->print(RS_Debug::D_NOTICE, "RS_Hatch::update: skip undone hatch");
@@ -205,9 +205,16 @@ void RS_Hatch::update() {
     // Optimize loops if needed
     if (needOptimization) {
         try {
-            LC_LoopUtils::LoopOptimizer optimizer{*this};
+            // copy to a container
+            RS_EntityContainer container{nullptr, false};
+            std::copy(begin(), end(), std::back_inserter(container));
+            lc::LC_ContainerTraverser traverser{container, RS2::ResolveAll};
+            for(RS_Entity* en: traverser.entities())
+                if (en->isAtomic())
+                    container.addEntity(en);
+            LC_LoopUtils::LoopOptimizer optimizer{container};
             m_orderedLoops = optimizer.GetResults();
-            if (!m_orderedLoops || (m_orderedLoops->loop() == nullptr && m_orderedLoops->children().empty())) {
+            if (!m_orderedLoops || m_orderedLoops->empty()) {
                 throw std::runtime_error("Optimization failed: empty loops");
             }
         } catch (const std::exception& e) {
@@ -220,7 +227,6 @@ void RS_Hatch::update() {
     }
 
     // Create new hatch container
-    hatch = new RS_EntityContainer(this);
     hatch->setPen(hatch_pen);
     hatch->setLayer(hatch_layer);
     hatch->setFlag(RS2::FlagTemp);
@@ -229,13 +235,8 @@ void RS_Hatch::update() {
     if (data.solid) {
         RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: processing solid hatch");
         // Generate and cache the shared QPainterPath for solid fill
-        QPainterPath tempPath = m_orderedLoops->getPainterPath();
-        if (tempPath.isEmpty()) {
-            updateError = HATCH_INVALID_CONTOUR;
-            updateRunning = false;
-            return;
-        }
-        m_solidPath = std::make_shared<QPainterPath>(tempPath);
+        m_solidPath = std::make_shared<std::vector<QPainterPath>>();
+        std::transform(m_orderedLoops->begin(), m_orderedLoops->end(), std::back_inserter(*m_solidPath), [](const LC_LoopUtils::LC_Loops& loop){return loop.getPainterPath();});
     } else {
         RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: processing pattern hatch");
         // Search for pattern
@@ -285,18 +286,20 @@ void RS_Hatch::update() {
         }
 
         // Use LC_Loops to trim pattern entities and add to hatch
-        auto trimmed = m_orderedLoops->trimPatternEntities(*pat);
-        for (auto* e : *trimmed) {
-            e->setPen(hatch_pen);
-            e->setLayer(hatch_layer);
-            e->reparent(hatch);
-            e->setFlag(RS2::FlagHatchChild);
-            hatch->addEntity(e);  // hatch takes ownership
+        hatch->clear();
+        for(const LC_LoopUtils::LC_Loops& loop: *m_orderedLoops) {
+            auto trimmed = loop.trimPatternEntities(*pat);
+            for (auto* e : *trimmed) {
+                e->setPen(hatch_pen);
+                e->setLayer(hatch_layer);
+                e->reparent(hatch.get());
+                e->setFlag(RS2::FlagHatchChild);
+                hatch->addEntity(e);  // hatch takes ownership
+            }
+            trimmed->clear();  // Empty without deleting (since transferred)
         }
-        trimmed->clear();  // Empty without deleting (since transferred)
     }
 
-    addEntity(hatch);  // RS_Hatch owns hatch
     forcedCalculateBorders();
     activateContour(false);
     updateRunning = false;
@@ -332,12 +335,13 @@ void RS_Hatch::draw(RS_Painter* painter) {
             fillBrush.setColor(pen.getColor());
             fillBrush.setStyle(Qt::SolidPattern);
             painter->setBrush(fillBrush);
-            painter->drawPath(*m_solidPath);  // Dereference
+            for(const QPainterPath& path: *m_solidPath)
+                painter->drawPath(path);  // Dereference
             painter->setBrush(brush);
             painter->setPen(pen);
         } else {
             // Fallback: Regenerate if cache miss (shouldn't happen)
-            drawSolidFill(painter);  // Retain old method as backup
+            LC_ERR<<__func__<<"(): RS_Hatch solid fill failure: no QPainterPath created";
         }
     } else {
         // Existing: Draw hatch children for patterns
@@ -349,34 +353,7 @@ void RS_Hatch::draw(RS_Painter* painter) {
     }
 }
 
-void RS_Hatch::drawSolidFill(RS_Painter* painter) {
-    if (needOptimization) {
-        LC_LoopUtils::LoopOptimizer optimizer{*this};
-        m_orderedLoops = optimizer.GetResults();
-        needOptimization = false;
-    }
 
-    if (m_orderedLoops == nullptr)
-        return;
-
-    const QBrush brush(painter->brush());
-    const RS_Pen pen = painter->getPen();
-    try {
-        QPainterPath path = m_orderedLoops->getPainterPath();
-        QBrush fillBrush = brush;
-        fillBrush.setColor(pen.getColor());
-        fillBrush.setStyle(Qt::SolidPattern);
-        painter->setBrush(fillBrush);
-        painter->drawPath(path);
-    } catch (...) {
-    }
-    painter->setBrush(brush);
-    painter->setPen(pen);
-}
-
-QPainterPath RS_Hatch::createSolidFillPath() const {
-    return m_orderedLoops ? m_orderedLoops->getPainterPath() : QPainterPath();
-}
 
 void RS_Hatch::debugOutPath(const QPainterPath& tmpPath) const {
     int c = tmpPath.elementCount();
@@ -392,7 +369,9 @@ double RS_Hatch::getTotalArea() const {
     if (needOptimization) {
         const_cast<RS_Hatch*>(this)->update();  // Force update in non-const context if needed
     }
-    m_area = m_orderedLoops ? m_orderedLoops->getTotalArea() : 0.0;
+    m_area = std::accumulate(m_orderedLoops->begin(), m_orderedLoops->end(), 0, [](double area, const LC_LoopUtils::LC_Loops& loop) {
+        return area + loop.getTotalArea();
+    } );
     return m_area;
 }
 

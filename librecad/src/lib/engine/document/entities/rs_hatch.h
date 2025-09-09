@@ -169,19 +169,17 @@ public:
 
 protected:
     RS_HatchData data;
-    RS_EntityContainer* hatch = nullptr;
+    std::shared_ptr<RS_EntityContainer> hatch;
     mutable double m_area = RS_MAXDOUBLE;
     RS_HatchError updateError = HATCH_UNDEFINED;
     bool updateRunning = false;
     bool needOptimization = true;
     bool m_updated=false;
-    std::shared_ptr<LC_LoopUtils::LC_Loops> m_orderedLoops;
+    std::shared_ptr<std::vector<LC_LoopUtils::LC_Loops>> m_orderedLoops;
 
 private:
-    void drawSolidFill(RS_Painter* painter);
     void debugOutPath(const QPainterPath& tmpPath) const;
-    QPainterPath createSolidFillPath() const;
-    std::shared_ptr<QPainterPath> m_solidPath; // Cached shared path for solid fills
+    std::shared_ptr<std::vector<QPainterPath>> m_solidPath; // Cached shared path for solid fills
 };
 
 #endif
