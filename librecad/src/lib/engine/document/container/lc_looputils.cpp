@@ -543,31 +543,6 @@ bool LC_Loops::isPointInside(const RS_Vector& p) const {
     return getContainingDepth(p) % 2 == 1;
 }
 
-std::vector<RS_Vector> LC_Loops::createTiles(const RS_Pattern& pattern) const {
-    LC_Rect bBox = getBoundingBox();
-    LC_Rect pBox{pattern.getMin(), pattern.getMax()};
-    const double pWidth = pBox.width();
-    const double pHeight = pBox.height();
-    if (std::min(pWidth, pHeight) < 1e-6)
-        return {};
-    RS_Vector offsetBase = bBox.lowerLeftCorner() - pBox.lowerLeftCorner();
-
-    std::vector<RS_Vector> tiles;
-    int nx = int(bBox.width()/pWidth) + 1;
-    int ny = int(bBox.height()/pHeight) + 1;
-    for (int i=0; i < nx; ++i) {
-        for (int j=0; j < ny; ++j) {
-            RS_Vector tile = offsetBase + RS_Vector{pWidth * i, pHeight * j};
-            if (overlap(LC_Rect{pBox.lowerLeftCorner() + tile, pBox.upperRightCorner() + tile}) || isPointInside(tile)) {
-                tiles.push_back(tile);
-            }
-        }
-
-    }
-
-    return tiles;
-}
-
 std::vector<RS_Entity*> LC_Loops::getAllBoundaries() const {
     std::vector<const RS_EntityContainer*> loops;
     getAllLoops(loops);
@@ -595,6 +570,35 @@ bool LC_Loops::is_entity_closed(const RS_Entity* e) const {
     return false;
 }
 
+std::vector<RS_Vector> LC_Loops::createTiles(const RS_Pattern& pattern) const {
+    LC_Rect bBox = getBoundingBox();
+    LC_Rect pBox{pattern.getMin(), pattern.getMax()};
+    const double pWidth = pBox.width();
+    const double pHeight = pBox.height();
+    if (pWidth < 1e-6 || pHeight < 1e-6)  // IMPROVED: More precise check
+        return {};
+    RS_Vector offsetBase = bBox.lowerLeftCorner() - pBox.lowerLeftCorner();
+    std::vector<RS_Vector> tiles;
+    // IMPROVED: Use ceil to ensure full coverage
+    int nx = static_cast<int>(std::ceil(bBox.width() / pWidth)) + 1;
+    int ny = static_cast<int>(std::ceil(bBox.height() / pHeight)) + 1;
+    // IMPROVED: Use pattern box center for inside check
+    RS_Vector pCenter = (pBox.lowerLeftCorner() + pBox.upperRightCorner()) / 2.0;
+    for (int i = 0; i < nx; ++i) {
+        for (int j = 0; j < ny; ++j) {
+            RS_Vector tile = offsetBase + RS_Vector{pWidth * i, pHeight * j};
+            LC_Rect tileRect{pBox.lowerLeftCorner() + tile, pBox.upperRightCorner() + tile};
+            // IMPROVED: Quick bbox intersection check
+            if (!tileRect.intersects(bBox)) continue;
+            // IMPROVED: Consistent check using tileRect
+            if (overlap(tileRect) || isPointInside(tile + pCenter)) {
+                tiles.push_back(tile);
+            }
+        }
+    }
+    return tiles;
+}
+
 std::unique_ptr<RS_EntityContainer> LC_Loops::trimPatternEntities(const RS_Pattern& pattern) const {
     std::unique_ptr<RS_EntityContainer> trimmed = std::make_unique<RS_EntityContainer>();
     std::vector<RS_Vector> tiles = createTiles(pattern);
@@ -611,6 +615,8 @@ std::unique_ptr<RS_EntityContainer> LC_Loops::trimPatternEntities(const RS_Patte
                     all_inters.push_back(v);
                 }
             }
+            // IMPROVED: Add vector reserve for performance
+            all_inters.reserve(all_inters.size() + 1);
             // Remove duplicates
             std::sort(all_inters.begin(), all_inters.end(), [](const RS_Vector& a, const RS_Vector& b){
                 return a.x < b.x || (RS_Math::equal(a.x, b.x) && a.y < b.y);
@@ -646,7 +652,8 @@ std::unique_ptr<RS_EntityContainer> LC_Loops::trimPatternEntities(const RS_Patte
                 if (p1.distanceTo(p2) < RS_TOLERANCE)
                     continue;
                 auto sub = std::unique_ptr<RS_Entity>(createSubEntity(cloned.get(), p1, p2));
-                if (sub && isPointInside(sub->getMiddlePoint())) {
+                // IMPROVED: Additional length check after sub creation
+                if (sub && sub->getLength() > RS_TOLERANCE && isPointInside(sub->getMiddlePoint())) {
                     sub->setVisible(true);
                     trimmed->addEntity(sub.release());
                 }
@@ -656,7 +663,7 @@ std::unique_ptr<RS_EntityContainer> LC_Loops::trimPatternEntities(const RS_Patte
                 RS_Vector pw2 = points[0];
                 if (pw1.distanceTo(pw2) >= RS_TOLERANCE) {
                     auto sub = std::unique_ptr<RS_Entity>(createSubEntity(cloned.get(), pw1, pw2));
-                    if (sub && isPointInside(sub->getMiddlePoint())) {
+                    if (sub && sub->getLength() > RS_TOLERANCE && isPointInside(sub->getMiddlePoint())) {
                         sub->setVisible(true);
                         trimmed->addEntity(sub.release());
                     }

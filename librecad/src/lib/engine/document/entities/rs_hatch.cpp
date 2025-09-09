@@ -382,6 +382,14 @@ double RS_Hatch::getDistanceToPoint(
     RS_Entity** entity,
     RS2::ResolveLevel level,
     double solidDist) const {
+    if (std::any_of(m_orderedLoops->begin(), m_orderedLoops->end(), [&coord](const LC_LoopUtils::LC_Loops& loops) {
+            return loops.isInside(coord);
+        })) {
+        if (entity != nullptr) {
+            *entity = const_cast<RS_Hatch*>(this);
+        }
+        return 0.;
+    }
     if (data.solid == true) {
         if (entity) {
             *entity = const_cast<RS_Hatch*>(this);
