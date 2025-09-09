@@ -459,9 +459,15 @@ void LC_Loops::addEllipticArc(QPainterPath& path, const RS_Vector& center, doubl
     double aspect = std::max(major, minor) / std::min(major, minor);
     int extra_segments = static_cast<int>(std::ceil(aspect - 1.0));
     double sweep = a2 - a1;
-    int n = static_cast<int>(std::ceil(std::fabs(sweep) / (M_PI / 2.0))) + extra_segments;
+    int n = static_cast<int>(std::ceil(std::abs(sweep) / (M_PI / 2.0))) + extra_segments;
     double dt = sweep / n;
     double current_t = a1;
+    RS_Vector startPoint = e_point(center, major, minor, rot, a1);
+    if (path.isEmpty()) {
+        path.moveTo(startPoint.x, startPoint.y);
+    } else {
+        path.lineTo(startPoint.x, startPoint.y);
+    }
     for (int i = 0; i < n; ++i) {
         double t0 = current_t;
         double t1 = current_t + dt;
@@ -479,15 +485,17 @@ void LC_Loops::addEllipticArc(QPainterPath& path, const RS_Vector& center, doubl
 
 QPainterPath LC_Loops::buildPathFromLoop(const RS_EntityContainer& cont) const {
     QPainterPath path;
-    if (cont.count() == 0) return path;
-    RS_Entity* first = cont.first();
-    RS_Vector start = first->getStartpoint();
-    path.moveTo(start.x, start.y);
+    if (cont.count() == 0)
+        return path;
     for (RS_Entity* e : cont) {
         if (e->isAtomic()) {
             RS_Vector end = e->getEndpoint();
             switch (e->rtti()) {
             case RS2::EntityLine:
+                if (path.isEmpty() ) {
+                    RS_Vector start = e->getStartpoint();
+                    path.moveTo(start.x, start.y);
+                }
                 path.lineTo(end.x, end.y);
                 break;
             case RS2::EntityArc:

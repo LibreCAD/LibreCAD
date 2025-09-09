@@ -85,6 +85,7 @@ public:
     void toGui(const RS_Vector& pos, double &x, double &y) const;
     double toGuiDX(double d) const;
     double toGuiDY(double d) const;
+    QTransform getToGuiTransform() const;
 
     bool isPrinting() const
     {
