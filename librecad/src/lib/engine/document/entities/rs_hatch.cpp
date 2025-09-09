@@ -296,7 +296,7 @@ void RS_Hatch::update() {
                 e->setFlag(RS2::FlagHatchChild);
                 hatch->addEntity(e);  // hatch takes ownership
             }
-            trimmed->clear();  // Empty without deleting (since transferred)
+            trimmed->setOwner(false);
         }
     }
 

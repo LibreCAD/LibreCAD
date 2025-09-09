@@ -546,15 +546,15 @@ bool LC_Loops::isPointInside(const RS_Vector& p) const {
 std::vector<RS_Vector> LC_Loops::createTiles(const RS_Pattern& pattern) const {
     LC_Rect bBox = getBoundingBox();
     LC_Rect pBox{pattern.getMin(), pattern.getMax()};
-    const double pWidth = pBox.right().x - pBox.left().x;
-    const double pHeight = pBox.top().y - pBox.bottom().y;
+    const double pWidth = pBox.width();
+    const double pHeight = pBox.height();
     if (std::min(pWidth, pHeight) < 1e-6)
         return {};
     RS_Vector offsetBase = bBox.lowerLeftCorner() - pBox.lowerLeftCorner();
 
     std::vector<RS_Vector> tiles;
-    int nx = int((bBox.right().x - bBox.left().x)/pWidth) + 1;
-    int ny = int((bBox.top().y - bBox.bottom().y)/pHeight) + 1;
+    int nx = int(bBox.width()/pWidth) + 1;
+    int ny = int(bBox.height()/pHeight) + 1;
     for (int i=0; i < nx; ++i) {
         for (int j=0; j < ny; ++j) {
             RS_Vector tile = offsetBase + RS_Vector{pWidth * i, pHeight * j};
@@ -623,6 +623,7 @@ std::unique_ptr<RS_EntityContainer> LC_Loops::trimPatternEntities(const RS_Patte
             bool closed = is_entity_closed(cloned.get());
             if (sorted_inters.empty()) {
                 if (isPointInside(cloned->getMiddlePoint())) {
+                    cloned->setVisible(true);
                     trimmed->addEntity(cloned.release());
                 }
                 continue;
@@ -642,9 +643,11 @@ std::unique_ptr<RS_EntityContainer> LC_Loops::trimPatternEntities(const RS_Patte
             for (size_t i = 0; i < points.size() - 1; i += 2) {
                 RS_Vector p1 = points[i];
                 RS_Vector p2 = points[i + 1];
-                if (p1.distanceTo(p2) < RS_TOLERANCE) continue;
+                if (p1.distanceTo(p2) < RS_TOLERANCE)
+                    continue;
                 auto sub = std::unique_ptr<RS_Entity>(createSubEntity(cloned.get(), p1, p2));
                 if (sub && isPointInside(sub->getMiddlePoint())) {
+                    sub->setVisible(true);
                     trimmed->addEntity(sub.release());
                 }
             }
@@ -654,6 +657,7 @@ std::unique_ptr<RS_EntityContainer> LC_Loops::trimPatternEntities(const RS_Patte
                 if (pw1.distanceTo(pw2) >= RS_TOLERANCE) {
                     auto sub = std::unique_ptr<RS_Entity>(createSubEntity(cloned.get(), pw1, pw2));
                     if (sub && isPointInside(sub->getMiddlePoint())) {
+                        sub->setVisible(true);
                         trimmed->addEntity(sub.release());
                     }
                 }
