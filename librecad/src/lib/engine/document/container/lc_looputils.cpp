@@ -323,7 +323,9 @@ void LoopSorter::findParent(RS_EntityContainer* loop, const std::vector<RS_Entit
         bool onContour = false;
         if (RS_Information::isPointInsideContour(testPoint, potentialParent, &onContour)) {
             loop->setParent(potentialParent);
-            potentialParent->addEntity(loop);
+            // REMOVED: potentialParent->addEntity(loop);  // Avoids ownership transfer; prevents double deletion
+            // Hierarchy tracked via setParent() only for buildLC_Loops
+            RS_DEBUG->print("LoopSorter: Assigned parent for loop with area %f", childArea);  // IMPROVED: Log success
             return;
         }
     }
@@ -405,14 +407,21 @@ bool LC_Loops::ownsEntities() const {
     return m_ownsEntities;
 }
 
-bool LC_Loops::isInside(const RS_Vector& point) const {
-    bool onContour;
+// Private helper: Check inside outer contour only (non-recursive)
+bool LC_Loops::isInsideOuter(const RS_Vector& point) const {
+    bool onContour = false;
     return RS_Information::isPointInsideContour(point, const_cast<RS_EntityContainer*>(loop()), &onContour);
 }
 
+// IMPROVED: Now recursive; supports holes via even-odd rule on depth
+bool LC_Loops::isInside(const RS_Vector& point) const {
+    return getContainingDepth(point) % 2 == 1;
+}
+
+// UPDATED: Use isInsideOuter for outer check to avoid recursion cycle
 int LC_Loops::getContainingDepth(const RS_Vector& point) const {
     int depth = 0;
-    if (isInside(point)) {
+    if (isInsideOuter(point)) {  // Outer only
         depth = 1;
         for (const auto& child : m_children) {
             depth += child.getContainingDepth(point);
@@ -420,6 +429,7 @@ int LC_Loops::getContainingDepth(const RS_Vector& point) const {
     }
     return depth;
 }
+
 
 QPainterPath LC_Loops::getPainterPath() const {
     QPainterPath path = buildPathFromLoop(*m_loop);

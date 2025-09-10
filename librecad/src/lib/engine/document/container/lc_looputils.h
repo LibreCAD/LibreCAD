@@ -175,6 +175,7 @@ public:
     bool overlap(const LC_Rect& other) const;
 
 private:
+    bool isInsideOuter(const RS_Vector& point) const;
     std::shared_ptr<RS_EntityContainer> m_loop;
     std::vector<LC_Loops> m_children;
     bool m_ownsEntities;
