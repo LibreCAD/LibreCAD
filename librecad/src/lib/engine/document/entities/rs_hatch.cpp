@@ -186,8 +186,6 @@ void RS_Hatch::update() {
     RS_Layer* hatch_layer = this->getLayer();
     RS_Pen hatch_pen = this->getPen();
 
-    // Delete old hatch
-    hatch = std::make_shared<RS_EntityContainer>(nullptr, true);
 
     if (isUndone()) {
         RS_DEBUG->print(RS_Debug::D_NOTICE, "RS_Hatch::update: skip undone hatch");
@@ -226,11 +224,6 @@ void RS_Hatch::update() {
         needOptimization = false;
     }
 
-    // Create new hatch container
-    hatch->setPen(hatch_pen);
-    hatch->setLayer(hatch_layer);
-    hatch->setFlag(RS2::FlagTemp);
-    hatch->setOwner(true);  // Explicitly set hatch to own its child entities
 
     if (data.solid) {
         RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: processing solid hatch");
@@ -286,7 +279,13 @@ void RS_Hatch::update() {
         }
 
         // Use LC_Loops to trim pattern entities and add to hatch
-        hatch->clear();
+        // Create new hatch container
+        // Delete old hatch
+        hatch = std::make_shared<RS_EntityContainer>(nullptr, true);
+        hatch->setPen(hatch_pen);
+        hatch->setLayer(hatch_layer);
+        //hatch->setFlag(RS2::FlagTemp);
+        hatch->setOwner(true);  // Explicitly set hatch to own its child entities
         for(const LC_LoopUtils::LC_Loops& loop: *m_orderedLoops) {
             auto trimmed = loop.trimPatternEntities(*pat);
             for (auto* e : *trimmed) {
@@ -390,18 +389,7 @@ double RS_Hatch::getDistanceToPoint(
         }
         return 0.;
     }
-    if (data.solid == true) {
-        if (entity) {
-            *entity = const_cast<RS_Hatch*>(this);
-        }
-        bool onContour;
-        if (RS_Information::isPointInsideContour(coord, const_cast<RS_Hatch*>(this), &onContour)) {
-            return solidDist;
-        }
-        return RS_MAXDOUBLE;
-    } else {
-        return RS_EntityContainer::getDistanceToPoint(coord, entity, level, solidDist);
-    }
+    return RS_MAXDOUBLE;
 }
 
 void RS_Hatch::move(const RS_Vector& offset) {
