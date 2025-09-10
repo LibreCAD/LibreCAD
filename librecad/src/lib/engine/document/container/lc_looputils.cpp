@@ -431,10 +431,13 @@ int LC_Loops::getContainingDepth(const RS_Vector& point) const {
 }
 
 
-QPainterPath LC_Loops::getPainterPath() const {
+QPainterPath LC_Loops::getPainterPath(int level) const {
     QPainterPath path = buildPathFromLoop(*m_loop);
+    if (level % 2 == 1)
+        path = path.toReversed();
     for (const auto& child : m_children) {
-        path.addPath(child.buildPathFromLoop(*child.m_loop));  // Direct build, no isHole
+        QPainterPath childPath = child.getPainterPath(level + 1);
+        path.addPath(childPath);  // Direct build, no isHole
     }
     path.setFillRule(Qt::OddEvenFill);
     return path;
@@ -566,7 +569,7 @@ std::vector<RS_Entity*> LC_Loops::getAllBoundaries() const {
     return bounds;
 }
 
-bool LC_Loops::is_entity_closed(const RS_Entity* e) const {
+bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
     RS2::EntityType type = e->rtti();
     if (type == RS2::EntityCircle) return true;
     if (type == RS2::EntityEllipse) {
@@ -600,7 +603,8 @@ std::vector<RS_Vector> LC_Loops::createTiles(const RS_Pattern& pattern) const {
             RS_Vector tile = offsetBase + RS_Vector{pWidth * i, pHeight * j};
             LC_Rect tileRect{pBox.lowerLeftCorner() + tile, pBox.upperRightCorner() + tile};
             // IMPROVED: Quick bbox intersection check
-            if (!tileRect.intersects(bBox)) continue;
+            if (!tileRect.intersects(bBox))
+                continue;
             // IMPROVED: Consistent check using tileRect
             if (overlap(tileRect) || isPointInside(tile + pCenter)) {
                 tiles.push_back(tile);
@@ -637,7 +641,7 @@ std::unique_ptr<RS_EntityContainer> LC_Loops::trimPatternEntities(const RS_Patte
             });
             all_inters.erase(last, all_inters.end());
             auto sorted_inters = sortPointsAlongEntity(cloned.get(), all_inters);
-            bool closed = is_entity_closed(cloned.get());
+            bool closed = isEntityClosed(cloned.get());
             if (sorted_inters.empty()) {
                 if (isPointInside(cloned->getMiddlePoint())) {
                     cloned->setVisible(true);

@@ -168,7 +168,7 @@ public:
     bool ownsEntities() const;
     bool isInside(const RS_Vector& point) const;
     int getContainingDepth(const RS_Vector& point) const;
-    QPainterPath getPainterPath() const;
+    QPainterPath getPainterPath(int level = 0) const;
     std::vector<RS_Vector> createTiles(const RS_Pattern& pattern) const;
     std::unique_ptr<RS_EntityContainer> trimPatternEntities(const RS_Pattern& pattern) const;
     double getTotalArea() const;
@@ -189,7 +189,7 @@ private:
     std::vector<RS_Entity*> getAllBoundaries() const;
     std::vector<RS_Vector> sortPointsAlongEntity(RS_Entity* e, std::vector<RS_Vector> inters) const;
     RS_Entity* createSubEntity(RS_Entity* e, const RS_Vector& p1, const RS_Vector& p2) const;
-    bool is_entity_closed(const RS_Entity* e) const;
+    bool isEntityClosed(const RS_Entity* e) const;
 };
 
 }
