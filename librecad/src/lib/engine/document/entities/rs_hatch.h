@@ -86,7 +86,7 @@ public:
     };
 
     RS_Hatch() = default;
-    virtual ~RS_Hatch() = default;
+    ~RS_Hatch() override;
 
     RS_Hatch(RS_EntityContainer* parent, const RS_HatchData& d);
 
@@ -104,13 +104,13 @@ public:
     RS_HatchData getData() const { return data; }
 
     /**
-     * Validates and optimizes boundary loops.
+     * Validates and optimizes boundary loops into subcontainers.
      * @return true on success.
      */
     bool validate();
 
     /**
-     * @return Number of optimized loops.
+     * @return Number of optimized loops (subcontainers).
      */
     int countLoops() const;
 
@@ -141,10 +141,15 @@ public:
     RS_HatchError getUpdateError() const { return updateError; }
 
     /**
-     * Toggles visibility of boundary contours.
+     * Toggles visibility of boundary contours in subcontainers.
      * @param on true to show boundaries.
      */
     void activateContour(bool on);
+
+    /**
+     * @return Subcontainer for the boundary loop at index (0-based).
+     */
+    RS_EntityContainer* getBoundaryContainer(int loopIndex) const;
 
     void draw(RS_Painter* painter) override;
 
@@ -166,7 +171,6 @@ protected:
     RS_HatchData data{};
 
 private:
-    std::shared_ptr<RS_EntityContainer> hatch{nullptr};
     mutable double m_area = RS_MAXDOUBLE;
     RS_HatchError updateError = HATCH_UNDEFINED;
     bool updateRunning = false;
@@ -176,6 +180,9 @@ private:
         std::make_shared<std::vector<LC_LoopUtils::LC_Loops>>();
     mutable std::shared_ptr<std::vector<QPainterPath>> m_solidPath =
         std::make_shared<std::vector<QPainterPath>>();
+
+    // Internal: Vector of boundary subcontainers (one per loop)
+    mutable std::vector<std::shared_ptr<RS_EntityContainer>> m_boundaryContainers;
 
     void debugOutPath(const QPainterPath& tmpPath) const;
     void drawPatternLines(RS_Painter* painter) const;

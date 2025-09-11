@@ -64,8 +64,24 @@ void avoidZeroLength(RS_EntityContainer& container) {
     }
 }
 
-}  // anonymous namespace
+void collectSingle(std::vector<std::shared_ptr<RS_EntityContainer>>& collected,
+                   const LC_LoopUtils::LC_Loops& lcLoops)
+{
+    collected.push_back(lcLoops.getOuterLoop());
+    for(const LC_LoopUtils::LC_Loops& child: lcLoops.children())
+        collectSingle(collected, child);
+}
 
+std::vector<std::shared_ptr<RS_EntityContainer>> collectLoops(std::shared_ptr<std::vector<LC_LoopUtils::LC_Loops>> lcLoopsVPtr)
+{
+    if (lcLoopsVPtr==nullptr)
+        return {};
+    std::vector<std::shared_ptr<RS_EntityContainer>> collected;
+    for(const LC_LoopUtils::LC_Loops& loop: *lcLoopsVPtr)
+        collectSingle(collected, loop);
+    return collected;
+}
+}  // anonymous namespace
 
 std::ostream& operator<<(std::ostream& os, const RS_HatchData& td) {
     os << "(" << td.pattern.toLatin1().data() << ")";
@@ -80,7 +96,8 @@ RS_Hatch::RS_Hatch(RS_EntityContainer* parent, const RS_HatchData& d)
     , updateError(HATCH_UNDEFINED)
     , updateRunning(false)
     , needOptimization(true)
-    , m_updated(false) {
+    , m_updated(false)
+    , m_boundaryContainers() {
     // Initialize caches
 
     // Clean up zero-length entities in boundaries
@@ -89,16 +106,23 @@ RS_Hatch::RS_Hatch(RS_EntityContainer* parent, const RS_HatchData& d)
     setOwner(true);
 }
 
+
+RS_Hatch::~RS_Hatch()
+{
+}
+
+
 RS_Entity* RS_Hatch::clone() const {
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::clone()");
     auto* cloneHatch = new RS_Hatch(*this);
     cloneHatch->setOwner(isOwner());
     cloneHatch->detach();
 
-    // Force re-optimization and update to deep-copy caches
+    // Force re-optimization and update to deep-copy caches and subcontainers
     cloneHatch->needOptimization = true;
     cloneHatch->m_area = RS_MAXDOUBLE;
     cloneHatch->m_updated = false;
+    cloneHatch->m_boundaryContainers.clear();  // Will be regenerated
     cloneHatch->update();
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::clone(): OK");
@@ -106,7 +130,13 @@ RS_Entity* RS_Hatch::clone() const {
 }
 
 /**
- * Validates the hatch boundaries by optimizing them into ordered loops.
+ * Validates the hatch boundaries by optimizing them into ordered loops and subcontainers.
+ * This step is crucial for both solid and pattern hatches to ensure valid contours.
+ *
+ * @return true if validation succeeds, false otherwise.
+ */
+/**
+ * Validates the hatch boundaries by optimizing them into ordered loops and subcontainers.
  * This step is crucial for both solid and pattern hatches to ensure valid contours.
  *
  * @return true if validation succeeds, false otherwise.
@@ -119,18 +149,32 @@ bool RS_Hatch::validate() {
     }
 
     try {
-        // Flatten container to atomic entities only, avoiding duplicates
+        // Flatten container to atomic entities only by cloning to avoid ownership issues
         RS_EntityContainer flatContainer{nullptr, false};
-        lc::LC_ContainerTraverser traverser{*this, RS2::ResolveAll};
-        std::set<RS_Entity*> addedEntities;
+        std::set<const RS_Entity*> addedEntities;  // Use const to track uniques safely
+        std::vector<RS_Entity*> loops;
+        for(RS_Entity* en: std::as_const(*this)) {
+            if (en == nullptr || ! en->isContainer())
+                continue;
 
-        for (RS_Entity* entity : traverser.entities()) {
-            if (entity && entity->isAtomic() && addedEntities.insert(entity).second) {
-                flatContainer.addEntity(entity);  // Share pointer (read-only)
+            lc::LC_ContainerTraverser traverser{*static_cast<RS_EntityContainer*>(en), RS2::ResolveAll};
+            for (RS_Entity* entity : traverser.entities()) {
+                if (entity != nullptr && entity->isAtomic() && addedEntities.insert(entity).second) {
+                    // Clone to flatContainer to decouple from original ownership
+                    RS_Entity* cloneEntity = entity->clone();
+                    flatContainer.addEntity(cloneEntity);
+                }
             }
+            loops.push_back(en);
         }
 
-        // Clean zero-length entities
+        // Now safely clear the original container (temporarily disable ownership)
+        setOwner(false);
+        clear();
+        setOwner(true);
+        std::copy(loops.begin(), loops.end(), std::back_inserter(*this));
+
+        // Clean up zero-length entities in the flat container
         avoidZeroLength(flatContainer);
 
         // Optimize into loops
@@ -143,6 +187,10 @@ bool RS_Hatch::validate() {
 
         m_orderedLoops = results;
         needOptimization = false;
+
+        // Create subcontainers for each loop's boundaries by cloning entities
+        m_boundaryContainers = collectLoops(results);
+        m_boundaryContainers.reserve(results->size());
     } catch (const std::exception& e) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "Hatch validation error: %s", e.what());
         updateError = HATCH_INVALID_CONTOUR;
@@ -153,14 +201,24 @@ bool RS_Hatch::validate() {
 }
 
 /**
- * Counts the number of optimized boundary loops.
+ * Counts the number of optimized boundary loops (subcontainers).
  * For solid hatches, this represents the fill areas.
  * For patterns, it represents regions to trim into.
  *
  * @return Number of loops.
  */
 int RS_Hatch::countLoops() const {
-    return m_orderedLoops ? static_cast<int>(m_orderedLoops->size()) : 0;
+    return m_orderedLoops ? static_cast<int>(m_orderedLoops->size()) : static_cast<int>(m_boundaryContainers.size());
+}
+
+/**
+ * @return Subcontainer for the boundary loop at index (0-based).
+ */
+RS_EntityContainer* RS_Hatch::getBoundaryContainer(int loopIndex) const {
+    if (loopIndex >= 0 && loopIndex < static_cast<int>(m_boundaryContainers.size())) {
+        return m_boundaryContainers[loopIndex].get();
+    }
+    return nullptr;
 }
 
 /**
@@ -175,7 +233,7 @@ void RS_Hatch::calculateBorders() {
 }
 
 /**
- * Updates the hatch by validating boundaries, generating fill paths or trimmed patterns,
+ * Updates the hatch by validating boundaries, generating fill paths or trimmed patterns directly in container,
  * and caching results. Skips if already updating or disabled.
  * Sets updateError on failure.
  */
@@ -203,7 +261,7 @@ void RS_Hatch::update() {
     m_solidPath = std::make_shared<std::vector<QPainterPath>>();
     m_area = RS_MAXDOUBLE;
 
-    // Validate and optimize loops
+    // Validate and optimize loops (moves boundaries to subcontainers)
     if (!validate()) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::update: Validation failed");
         updateRunning = false;
@@ -213,6 +271,17 @@ void RS_Hatch::update() {
     // Store original attributes for child entities
     RS_Layer* layer = getLayer();
     RS_Pen pen = getPen();
+
+    // Clear any existing trimmed pattern entities (direct children with FlagHatchChild)
+    std::set<RS_Entity*> toRemove;
+    for (RS_Entity* e : *this) {
+        if (e && e->getFlag(RS2::FlagHatchChild)) {
+            toRemove.insert(e);
+        }
+    }
+    for (RS_Entity* e : toRemove) {
+        removeEntity(e);
+    }
 
     if (isSolid()) {
         updateSolidHatch(layer, pen);
@@ -252,7 +321,7 @@ void RS_Hatch::updateSolidHatch([[maybe_unused]] RS_Layer* layer, [[maybe_unused
 }
 
 /**
- * Helper: Loads, scales, rotates, and trims pattern into a child container.
+ * Helper: Loads, scales, rotates, and trims pattern into direct children of RS_Hatch.
  * Performs sanity checks on sizes to prevent overflows or invalid operations.
  */
 void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
@@ -302,50 +371,53 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
         return;
     }
 
-    // Create child container for trimmed pattern entities
-    hatch = std::make_shared<RS_EntityContainer>(this, true);
-    hatch->setPen(pen);
-    hatch->setLayer(layer);
-    hatch->setOwner(true);
-
-    // Trim pattern lines to each loop and add to hatch
-    for (const auto& loop : *m_orderedLoops) {
+    // Trim pattern lines to each loop and add directly to RS_Hatch
+    int addedCount = 0;
+    for (int i = 0; i < static_cast<int>(m_orderedLoops->size()); ++i) {
+        const auto& loop = (*m_orderedLoops)[i];
         auto trimmedEntities = loop.trimPatternEntities(*pattern);
         for (RS_Entity* entity : *trimmedEntities) {
-            entity->setPen(pen);
-            entity->setLayer(layer);
-            entity->reparent(hatch.get());
-            entity->setFlag(RS2::FlagHatchChild);
-            hatch->addEntity(entity);  // Transfers ownership
+            if (entity) {
+                entity->setPen(pen);
+                entity->setLayer(layer);
+                entity->reparent(this);  // Reparent to RS_Hatch
+                entity->setFlag(RS2::FlagHatchChild);
+                addEntity(entity);  // Transfers ownership; direct child
+                ++addedCount;
+            }
         }
         trimmedEntities->setOwner(false);  // Release after transfer
     }
 
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::updatePatternHatch: Added %zu entities",
-                    hatch->count());
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::updatePatternHatch: Added %d direct entities",
+                    addedCount);
 }
 
 /**
- * Toggles visibility of boundary contour entities.
+ * Toggles visibility of boundary contour entities in subcontainers.
  * Used during border calculation or for debugging.
  *
  * @param visible true to show boundaries, false to hide.
  */
 void RS_Hatch::activateContour(bool visible) {
     RS_DEBUG->print("RS_Hatch::activateContour: %d", static_cast<int>(visible));
-    for (RS_Entity* entity : *this) {
-        if (!entity->isUndone() && !entity->getFlag(RS2::FlagTemp)) {
-            RS_DEBUG->print("RS_Hatch::activateContour: Setting visibility for entity %d",
-                            entity->getId());
-            entity->setVisible(visible);
+    for (const auto& sub : m_boundaryContainers) {
+        if (sub) {
+            for (RS_Entity* entity : *sub) {
+                if (!entity->isUndone() && !entity->getFlag(RS2::FlagTemp)) {
+                    RS_DEBUG->print("RS_Hatch::activateContour: Setting visibility for entity %d",
+                                    entity->getId());
+                    entity->setVisible(visible);
+                }
+            }
         }
     }
     RS_DEBUG->print("RS_Hatch::activateContour: OK");
 }
 
 /**
- * Draws the hatch: solid fill via cached paths or pattern lines via child entities.
- * Boundaries are not drawn by default (use activateContour for that).
+ * Draws the hatch: solid fill via cached paths or pattern lines via direct children.
+ * Boundaries (in subcontainers) are not drawn by default (use activateContour for that).
  *
  * @param painter The painter to draw with.
  */
@@ -392,17 +464,17 @@ void RS_Hatch::drawSolidFill(RS_Painter* painter) {
 }
 
 /**
- * Helper: Draws pattern lines from the child container.
+ * Helper: Draws pattern lines from direct atomic children (trimmed entities).
+ * Skips subcontainers (boundaries).
  */
 void RS_Hatch::drawPatternLines(RS_Painter* painter) const {
-    if (!hatch) {
-        return;
-    }
-
     const bool selected = isSelected();
-    for (RS_Entity* subEntity : *hatch) {
-        subEntity->setSelected(selected);
-        painter->drawEntity(subEntity);
+    for (RS_Entity* subEntity : *this) {
+        // Draw only direct atomic children with FlagHatchChild (patterns); skip subcontainers
+        if (subEntity && !subEntity->isContainer() && subEntity->getFlag(RS2::FlagHatchChild)) {
+            subEntity->setSelected(selected);
+            painter->drawEntity(subEntity);
+        }
     }
 }
 
@@ -446,7 +518,7 @@ double RS_Hatch::getTotalArea() const {
 /**
  * Finds the distance from a point to the hatch.
  * For solid: 0 if inside boundaries, else infinity.
- * For pattern: Minimum distance to any trimmed line.
+ * For pattern: Minimum distance to any trimmed line (direct children).
  *
  * @param coord Point to test.
  * @param entity [out] Closest entity (if found).
@@ -468,12 +540,13 @@ double RS_Hatch::getDistanceToPoint(const RS_Vector& coord, RS_Entity** entity,
         }
         return RS_MAXDOUBLE;
     } else {
-        // For patterns: Min distance to lines
+        // For patterns: Min distance to direct trimmed entities
         double minDistance = RS_MAXDOUBLE;
         RS_Entity* closestEntity = nullptr;
 
-        if (hatch) {
-            for (RS_Entity* subEntity : *hatch) {
+        for (RS_Entity* subEntity : *this) {
+            // Only direct atomic children with FlagHatchChild
+            if (subEntity && !subEntity->isContainer() && subEntity->getFlag(RS2::FlagHatchChild)) {
                 double distance = subEntity->getDistanceToPoint(coord, nullptr, level, solidDist);
                 if (distance < minDistance) {
                     minDistance = distance;

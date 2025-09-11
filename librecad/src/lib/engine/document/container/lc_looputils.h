@@ -173,6 +173,13 @@ public:
     std::unique_ptr<RS_EntityContainer> trimPatternEntities(const RS_Pattern& pattern) const;
     double getTotalArea() const;
     bool overlap(const LC_Rect& other) const;
+    std::shared_ptr<RS_EntityContainer> getOuterLoop() const {
+        return m_loop;
+    }
+
+    const std::vector<LC_Loops>& getChildren() const {
+        return m_children;
+    }
 
 private:
     bool isInsideOuter(const RS_Vector& point) const;
