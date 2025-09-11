@@ -27,9 +27,11 @@
 #include <algorithm>
 #include <iostream>
 #include <set>
-#include <memory>  // For std::shared_ptr
+#include <memory>
+#include <vector>
 
 #include <QPainterPath>
+
 #include "lc_looputils.h"
 #include "lc_rect.h"
 #include "rs_arc.h"
@@ -48,10 +50,13 @@
 
 namespace {
 
+// Computes angular distance, considering direction.
 double angularDist(double a, double startAngle, bool reversed) {
-    return reversed ? RS_Math::correctAngle(startAngle - a) : RS_Math::correctAngle(a - startAngle);
+    return reversed ? RS_Math::correctAngle(startAngle - a)
+                    : RS_Math::correctAngle(a - startAngle);
 }
 
+// Debug printer for loops (recursive for containers).
 void pr(RS_EntityContainer* loop) {
     if (loop == nullptr) {
         LC_ERR << "-nullptr-;";
@@ -64,358 +69,471 @@ void pr(RS_EntityContainer* loop) {
         } else if (e) {
             auto vp0 = static_cast<RS_AtomicEntity*>(e)->getStartpoint();
             auto vp1 = static_cast<RS_AtomicEntity*>(e)->getEndpoint();
-            LC_ERR << ", " << e->getId() << ": " << vp0.x << ", " << vp0.y << " :: " << vp1.x << ", " << vp1.y;
+            LC_ERR << ", " << e->getId() << ": " << vp0.x << ", " << vp0.y
+                   << " :: " << vp1.x << ", " << vp1.y;
         }
     }
     LC_ERR << " |" << loop->getId() << " )";
 }
 
+// Removes zero-length entities from the container (recursive).
 void avoidZeroLength(RS_EntityContainer& container) {
     std::set<RS_Entity*> toCleanUp;
     for (RS_Entity* e : container) {
-        if (e != nullptr && e->isContainer())
+        if (e != nullptr && e->isContainer()) {
             avoidZeroLength(*static_cast<RS_EntityContainer*>(e));
-        else if (e != nullptr && RS_Math::equal(e->getLength(), 0.)) {
+        } else if (e != nullptr && RS_Math::equal(e->getLength(), 0.)) {
             toCleanUp.insert(e);
         }
     }
-    for (RS_Entity* e : toCleanUp)
+    for (RS_Entity* e : toCleanUp) {
         container.removeEntity(e);
+    }
 }
 
-}
+}  // anonymous namespace
 
-RS_HatchData::RS_HatchData(bool solid, double scale, double angle, QString pattern)
-    : solid{solid}, scale{scale}, angle{angle}, pattern{std::move(pattern)} {
-}
 
 std::ostream& operator<<(std::ostream& os, const RS_HatchData& td) {
     os << "(" << td.pattern.toLatin1().data() << ")";
     return os;
 }
 
+// RS_Hatch implementation
 RS_Hatch::RS_Hatch(RS_EntityContainer* parent, const RS_HatchData& d)
-    : RS_EntityContainer(parent), data(d) {
-    // Initialize m_orderedLoops with owning behavior to match RS_Hatch's ownership
-    m_orderedLoops = std::make_shared<std::vector<LC_LoopUtils::LC_Loops>>(true);
-    // Explicitly set ownership for this container
+    : RS_EntityContainer(parent)
+    , data(d)
+    , m_area(RS_MAXDOUBLE)
+    , updateError(HATCH_UNDEFINED)
+    , updateRunning(false)
+    , needOptimization(true)
+    , m_updated(false) {
+    // Initialize caches
+
+    // Clean up zero-length entities in boundaries
+    avoidZeroLength(*this);
+
     setOwner(true);
 }
 
 RS_Entity* RS_Hatch::clone() const {
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::clone()");
-    auto* t = new RS_Hatch(*this);
-    t->setOwner(isOwner());
-    t->detach();
-    // Deep copy shared members
+    auto* cloneHatch = new RS_Hatch(*this);
+    cloneHatch->setOwner(isOwner());
+    cloneHatch->detach();
 
-    t->update();
+    // Force re-optimization and update to deep-copy caches
+    cloneHatch->needOptimization = true;
+    cloneHatch->m_area = RS_MAXDOUBLE;
+    cloneHatch->m_updated = false;
+    cloneHatch->update();
+
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::clone(): OK");
-    return t;
+    return cloneHatch;
 }
 
+/**
+ * Validates the hatch boundaries by optimizing them into ordered loops.
+ * This step is crucial for both solid and pattern hatches to ensure valid contours.
+ *
+ * @return true if validation succeeds, false otherwise.
+ */
 bool RS_Hatch::validate() {
-    bool ret = true;
+    bool success = true;
 
-    // loops:
-    if (needOptimization && count() > 0) {
-        try {
-            // copy to a container
-            RS_EntityContainer container{nullptr, false};
-            std::copy(begin(), end(), std::back_inserter(container));
-            lc::LC_ContainerTraverser traverser{container, RS2::ResolveAll};
-            for(RS_Entity* en: traverser.entities())
-                if (en->isAtomic())
-                    container.addEntity(en);
-            LC_LoopUtils::LoopOptimizer optimizer{container};
-            m_orderedLoops = optimizer.GetResults();
-            if (!m_orderedLoops) {
-                throw std::runtime_error("Optimization failed: empty loops");
+    if (!needOptimization || count() == 0) {
+        return success;
+    }
+
+    try {
+        // Flatten container to atomic entities only, avoiding duplicates
+        RS_EntityContainer flatContainer{nullptr, false};
+        lc::LC_ContainerTraverser traverser{*this, RS2::ResolveAll};
+        std::set<RS_Entity*> addedEntities;
+
+        for (RS_Entity* entity : traverser.entities()) {
+            if (entity && entity->isAtomic() && addedEntities.insert(entity).second) {
+                flatContainer.addEntity(entity);  // Share pointer (read-only)
             }
-        } catch (const std::exception& e) {
-            RS_DEBUG->print(RS_Debug::D_ERROR, "Optimization error: %s", e.what());
-            updateError = HATCH_INVALID_CONTOUR;
-            updateRunning = false;
-            return false;
         }
+
+        // Clean zero-length entities
+        avoidZeroLength(flatContainer);
+
+        // Optimize into loops
+        LC_LoopUtils::LoopOptimizer optimizer{flatContainer};
+        auto results = optimizer.GetResults();
+
+        if (!results || results->empty()) {
+            throw std::runtime_error("Loop optimization failed: no loops generated");
+        }
+
+        m_orderedLoops = results;
         needOptimization = false;
+    } catch (const std::exception& e) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "Hatch validation error: %s", e.what());
+        updateError = HATCH_INVALID_CONTOUR;
+        success = false;
     }
 
-    return ret;
+    return success;
 }
 
+/**
+ * Counts the number of optimized boundary loops.
+ * For solid hatches, this represents the fill areas.
+ * For patterns, it represents regions to trim into.
+ *
+ * @return Number of loops.
+ */
 int RS_Hatch::countLoops() const {
-    if (data.solid) {
-        return count();
-    } else {
-        return count() - 1;
-    }
+    return m_orderedLoops ? static_cast<int>(m_orderedLoops->size()) : 0;
 }
 
-bool RS_Hatch::isContainer() const {
-    return !isSolid();
-}
-
+/**
+ * Calculates the bounding box, temporarily activating contours for accurate computation.
+ */
 void RS_Hatch::calculateBorders() {
     RS_DEBUG->print("RS_Hatch::calculateBorders");
-
     activateContour(true);
     RS_EntityContainer::calculateBorders();
     RS_DEBUG->print("RS_Hatch::calculateBorders: size: %f,%f", getSize().x, getSize().y);
     activateContour(false);
 }
 
+/**
+ * Updates the hatch by validating boundaries, generating fill paths or trimmed patterns,
+ * and caching results. Skips if already updating or disabled.
+ * Sets updateError on failure.
+ */
 void RS_Hatch::update() {
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update");
 
-    updateError = HATCH_OK;
+    // Early exits for invalid states
     if (updateRunning) {
-        RS_DEBUG->print(RS_Debug::D_NOTICE, "RS_Hatch::update: skip hatch in updating process");
+        RS_DEBUG->print(RS_Debug::D_NOTICE, "RS_Hatch::update: Already updating, skipping");
         return;
     }
-
-    if (updateEnabled == false) {
-        RS_DEBUG->print(RS_Debug::D_NOTICE, "RS_Hatch::update: skip hatch forbidden to update");
+    if (!updateEnabled) {
+        RS_DEBUG->print(RS_Debug::D_NOTICE, "RS_Hatch::update: Updates disabled, skipping");
         return;
     }
-
-    // Clear cached path upfront
-    m_solidPath = std::make_shared<std::vector<QPainterPath>>();
-
-    // Save attributes for the current hatch
-    RS_Layer* hatch_layer = this->getLayer();
-    RS_Pen hatch_pen = this->getPen();
-
-
     if (isUndone()) {
-        RS_DEBUG->print(RS_Debug::D_NOTICE, "RS_Hatch::update: skip undone hatch");
-        updateRunning = false;
+        RS_DEBUG->print(RS_Debug::D_NOTICE, "RS_Hatch::update: Undone hatch, skipping");
         return;
     }
 
+    updateRunning = true;
+    updateError = HATCH_OK;
+
+    // Reset caches
+    m_solidPath = std::make_shared<std::vector<QPainterPath>>();
+    m_area = RS_MAXDOUBLE;
+
+    // Validate and optimize loops
     if (!validate()) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::update: invalid contour in hatch found");
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::update: Validation failed");
         updateRunning = false;
-        updateError = HATCH_INVALID_CONTOUR;
         return;
     }
 
-    // Optimize loops if needed
-    if (needOptimization) {
-        try {
-            // copy to a container
-            RS_EntityContainer container{nullptr, false};
-            std::copy(begin(), end(), std::back_inserter(container));
-            lc::LC_ContainerTraverser traverser{container, RS2::ResolveAll};
-            for(RS_Entity* en: traverser.entities())
-                if (en->isAtomic())
-                    container.addEntity(en);
-            LC_LoopUtils::LoopOptimizer optimizer{container};
-            m_orderedLoops = optimizer.GetResults();
-            if (!m_orderedLoops || m_orderedLoops->empty()) {
-                throw std::runtime_error("Optimization failed: empty loops");
-            }
-        } catch (const std::exception& e) {
-            RS_DEBUG->print(RS_Debug::D_ERROR, "Optimization error: %s", e.what());
-            updateError = HATCH_INVALID_CONTOUR;
-            updateRunning = false;
-            return;
-        }
-        needOptimization = false;
-    }
+    // Store original attributes for child entities
+    RS_Layer* layer = getLayer();
+    RS_Pen pen = getPen();
 
-
-    if (data.solid) {
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: processing solid hatch");
-        // Generate and cache the shared QPainterPath for solid fill
-        m_solidPath = std::make_shared<std::vector<QPainterPath>>();
-        std::transform(m_orderedLoops->begin(), m_orderedLoops->end(), std::back_inserter(*m_solidPath), [](const LC_LoopUtils::LC_Loops& loop){return loop.getPainterPath();});
+    if (isSolid()) {
+        updateSolidHatch(layer, pen);
     } else {
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: processing pattern hatch");
-        // Search for pattern
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: requesting pattern");
-        std::unique_ptr<RS_Pattern> pat = RS_PATTERNLIST->requestPattern(data.pattern);
-        if (pat == nullptr) {
-            updateRunning = false;
-            RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::update: requesting pattern: %s not found", data.pattern.toUtf8().constData());
-            updateError = HATCH_PATTERN_NOT_FOUND;
-            return;
-        } else {
-            RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: requesting pattern: OK");
-            // Make a working copy of hatch pattern
-            RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: cloning pattern");
-            pat.reset((RS_Pattern*)pat->clone());
-            if (pat != nullptr) {
-                RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: cloning pattern: OK");
-                pat->setOwner(true);  // Ensure cloned pattern owns its entities
-            } else {
-                RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::update: error while cloning hatch pattern");
-                return;
-            }
-        }
-
-        // Scale and rotate pattern
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: scaling pattern");
-        pat->scale(getCenter(), RS_Vector(data.scale, data.scale));
-        pat->rotate(getCenter(), data.angle);
-        pat->calculateBorders();
-        forcedCalculateBorders();
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: scaling pattern: OK");
-
-        // Check pattern sizes for sanity
-        RS_Vector pSize = pat->getSize();
-        RS_Vector cSize = getSize();
-        if (cSize.x < 1.0e-6 || cSize.y < 1.0e-6 || pSize.x < 1.0e-6 || pSize.y < 1.0e-6 ||
-            cSize.x > RS_MAXDOUBLE - 1 || cSize.y > RS_MAXDOUBLE - 1 ||
-            pSize.x > RS_MAXDOUBLE - 1 || pSize.y > RS_MAXDOUBLE - 1) {
-            updateRunning = false;
-            RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::update: contour size or pattern size too small");
-            updateError = HATCH_TOO_SMALL;
-            return;
-        } else if (cSize.x * cSize.y / (pSize.x * pSize.y) > 1e4) {
-            RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::update: contour size too large or pattern size too small");
-            updateError = HATCH_AREA_TOO_BIG;
-            return;
-        }
-
-        // Use LC_Loops to trim pattern entities and add to hatch
-        // Create new hatch container
-        // Delete old hatch
-        hatch = std::make_shared<RS_EntityContainer>(nullptr, true);
-        hatch->setPen(hatch_pen);
-        hatch->setLayer(hatch_layer);
-        //hatch->setFlag(RS2::FlagTemp);
-        hatch->setOwner(true);  // Explicitly set hatch to own its child entities
-        for(const LC_LoopUtils::LC_Loops& loop: *m_orderedLoops) {
-            auto trimmed = loop.trimPatternEntities(*pat);
-            for (auto* e : *trimmed) {
-                e->setPen(hatch_pen);
-                e->setLayer(hatch_layer);
-                e->reparent(hatch.get());
-                e->setFlag(RS2::FlagHatchChild);
-                hatch->addEntity(e);  // hatch takes ownership
-            }
-            trimmed->setOwner(false);
-        }
+        updatePatternHatch(layer, pen);
     }
+
+    // Compute total area from loops
+    m_area = std::accumulate(m_orderedLoops->begin(), m_orderedLoops->end(), 0.0,
+                             [](double accum, const LC_LoopUtils::LC_Loops& loop) {
+                                 return accum + loop.getTotalArea();
+                             });
 
     forcedCalculateBorders();
-    activateContour(false);
+    activateContour(false);  // Hide boundaries by default
     updateRunning = false;
     m_updated = true;
 
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: OK");
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: Completed successfully");
 }
 
-void RS_Hatch::activateContour(bool on) {
-    RS_DEBUG->print("RS_Hatch::activateContour: %d", (int)on);
-    for (RS_Entity* e : *this) {
-        if (!e->isUndone()) {
-            if (!e->getFlag(RS2::FlagTemp)) {
-                RS_DEBUG->print("RS_Hatch::activateContour: set visible");
-                e->setVisible(on);
-            } else {
-                RS_DEBUG->print("RS_Hatch::activateContour: entity temp");
-            }
-        } else {
-            RS_DEBUG->print("RS_Hatch::activateContour: entity undone");
+/**
+ * Helper: Generates and caches QPainterPaths for solid fill from optimized loops.
+ */
+void RS_Hatch::updateSolidHatch([[maybe_unused]] RS_Layer* layer, [[maybe_unused]] const RS_Pen& pen) {
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::updateSolidHatch");
+
+    // Transform loops into painter paths
+    std::transform(m_orderedLoops->begin(), m_orderedLoops->end(),
+                   std::back_inserter(*m_solidPath),
+                   [](const LC_LoopUtils::LC_Loops& loop) {
+                       return loop.getPainterPath();
+                   });
+
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::updateSolidHatch: Cached %zu paths",
+                    m_solidPath->size());
+}
+
+/**
+ * Helper: Loads, scales, rotates, and trims pattern into a child container.
+ * Performs sanity checks on sizes to prevent overflows or invalid operations.
+ */
+void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::updatePatternHatch");
+
+    // Request and clone pattern
+    std::unique_ptr<RS_Pattern> pattern = RS_PATTERNLIST->requestPattern(data.pattern);
+    if (!pattern) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::updatePatternHatch: Pattern '%s' not found",
+                        data.pattern.toUtf8().constData());
+        updateError = HATCH_PATTERN_NOT_FOUND;
+        return;
+    }
+
+    // Clone to avoid modifying the shared pattern
+    pattern.reset(dynamic_cast<RS_Pattern*>(pattern->clone()));
+    if (!pattern) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::updatePatternHatch: Failed to clone pattern");
+        updateError = HATCH_PATTERN_NOT_FOUND;
+        return;
+    }
+    pattern->setOwner(true);
+
+    // Apply transformations
+    RS_Vector center = getCenter();
+    pattern->scale(center, RS_Vector{data.scale, data.scale});
+    pattern->rotate(center, data.angle);
+    pattern->calculateBorders();
+    forcedCalculateBorders();
+
+    // Sanity checks: Ensure sizes are reasonable to avoid computation issues
+    RS_Vector patternSize = pattern->getSize();
+    RS_Vector contourSize = getSize();
+    if (contourSize.x < 1e-6 || contourSize.y < 1e-6 ||
+        patternSize.x < 1e-6 || patternSize.y < 1e-6 ||
+        contourSize.x > RS_MAXDOUBLE - 1 || contourSize.y > RS_MAXDOUBLE - 1 ||
+        patternSize.x > RS_MAXDOUBLE - 1 || patternSize.y > RS_MAXDOUBLE - 1) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::updatePatternHatch: Invalid sizes (too small/large)");
+        updateError = HATCH_TOO_SMALL;
+        return;
+    }
+    double areaRatio = (contourSize.x * contourSize.y) / (patternSize.x * patternSize.y);
+    if (areaRatio > 1e4) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::updatePatternHatch: Area ratio too large (%.2f)",
+                        areaRatio);
+        updateError = HATCH_AREA_TOO_BIG;
+        return;
+    }
+
+    // Create child container for trimmed pattern entities
+    hatch = std::make_shared<RS_EntityContainer>(this, true);
+    hatch->setPen(pen);
+    hatch->setLayer(layer);
+    hatch->setOwner(true);
+
+    // Trim pattern lines to each loop and add to hatch
+    for (const auto& loop : *m_orderedLoops) {
+        auto trimmedEntities = loop.trimPatternEntities(*pattern);
+        for (RS_Entity* entity : *trimmedEntities) {
+            entity->setPen(pen);
+            entity->setLayer(layer);
+            entity->reparent(hatch.get());
+            entity->setFlag(RS2::FlagHatchChild);
+            hatch->addEntity(entity);  // Transfers ownership
+        }
+        trimmedEntities->setOwner(false);  // Release after transfer
+    }
+
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::updatePatternHatch: Added %zu entities",
+                    hatch->count());
+}
+
+/**
+ * Toggles visibility of boundary contour entities.
+ * Used during border calculation or for debugging.
+ *
+ * @param visible true to show boundaries, false to hide.
+ */
+void RS_Hatch::activateContour(bool visible) {
+    RS_DEBUG->print("RS_Hatch::activateContour: %d", static_cast<int>(visible));
+    for (RS_Entity* entity : *this) {
+        if (!entity->isUndone() && !entity->getFlag(RS2::FlagTemp)) {
+            RS_DEBUG->print("RS_Hatch::activateContour: Setting visibility for entity %d",
+                            entity->getId());
+            entity->setVisible(visible);
         }
     }
     RS_DEBUG->print("RS_Hatch::activateContour: OK");
 }
 
+/**
+ * Draws the hatch: solid fill via cached paths or pattern lines via child entities.
+ * Boundaries are not drawn by default (use activateContour for that).
+ *
+ * @param painter The painter to draw with.
+ */
 void RS_Hatch::draw(RS_Painter* painter) {
-            painter->save();
-    if (data.solid) {
-        if (m_solidPath) {
-            // Use cached shared path for filling
-            const QBrush brush(painter->brush());
-            const RS_Pen pen = painter->getPen();
-            QBrush fillBrush = brush;
-            fillBrush.setColor(pen.getColor());
-            fillBrush.setStyle(Qt::SolidPattern);
-            painter->setBrush(fillBrush);
-            QTransform transform = painter->getToGuiTransform();
-            painter->setTransform(transform, false);
-            for(const QPainterPath& path: *m_solidPath)
-                painter->drawPath(path);  // Dereference
-        } else {
-            // Fallback: Regenerate if cache miss (shouldn't happen)
-            LC_ERR<<__func__<<"(): RS_Hatch solid fill failure: no QPainterPath created";
-        }
+    painter->save();
+
+    if (isSolid()) {
+        drawSolidFill(painter);
     } else {
-        // Existing: Draw hatch children for patterns
-        if (hatch) {
-            for (RS_Entity* se : *hatch) {
-                painter->drawEntity(se);
-            }
-        }
+        drawPatternLines(painter);
     }
-            painter->restore();
+
+    painter->restore();
 }
 
+/**
+ * Helper: Draws solid fill using cached QPainterPaths.
+ */
+void RS_Hatch::drawSolidFill(RS_Painter* painter) {
+    if (!m_solidPath || m_solidPath->empty()) {
+        LC_ERR << __func__ << "(): No cached paths for solid fill";
+        return;
+    }
 
+    QBrush originalBrush = painter->brush();
+    RS_Pen originalPen = painter->getPen();
 
-void RS_Hatch::debugOutPath(const QPainterPath& tmpPath) const {
-    int c = tmpPath.elementCount();
-    for (int i = 0; i < c; i++) {
-        const QPainterPath::Element& element = tmpPath.elementAt(i);
-        LC_ERR << "i " << i << "(" << element.x << "," << element.y << ") Line To " << element.isLineTo()
-               << " Move To: " << element.isMoveTo() << " Is Curve:" << element.isCurveTo();
+    // Use pen color for solid fill
+    QBrush fillBrush = originalBrush;
+    fillBrush.setColor(originalPen.getColor());
+    fillBrush.setStyle(Qt::SolidPattern);
+
+    painter->setBrush(fillBrush);
+
+    QTransform transform = painter->getToGuiTransform();
+    painter->setTransform(transform, false);
+
+    for (const QPainterPath& path : *m_solidPath) {
+        painter->drawPath(path);
+    }
+
+    // Restore original
+    painter->setBrush(originalBrush);
+}
+
+/**
+ * Helper: Draws pattern lines from the child container.
+ */
+void RS_Hatch::drawPatternLines(RS_Painter* painter) const {
+    if (!hatch) {
+        return;
+    }
+
+    for (RS_Entity* subEntity : *hatch) {
+        painter->drawEntity(subEntity);
     }
 }
 
+/**
+ * Debug: Outputs path elements to log.
+ */
+void RS_Hatch::debugOutPath(const QPainterPath& path) const {
+    int elementCount = path.elementCount();
+    for (int i = 0; i < elementCount; ++i) {
+        const QPainterPath::Element& element = path.elementAt(i);
+        LC_ERR << "Element " << i << " (" << element.x << "," << element.y << ") "
+               << "LineTo: " << element.isLineTo()
+               << " MoveTo: " << element.isMoveTo()
+               << " Curve: " << element.isCurveTo() << "\n";
+    }
+}
+
+/**
+ * Computes the total enclosed area from all optimized loops.
+ * Caches the result for efficiency.
+ *
+ * @return Total area, or 0 if unoptimized/invalid.
+ */
 double RS_Hatch::getTotalArea() const {
-    if (m_area + RS_Math::ulp(m_area) < RS_MAXDOUBLE) return m_area;
-    if (needOptimization) {
-        const_cast<RS_Hatch*>(this)->update();  // Force update in non-const context if needed
+    if (m_area < RS_MAXDOUBLE - RS_Math::ulp(m_area)) {
+        return m_area;
     }
-    m_area = std::accumulate(m_orderedLoops->begin(), m_orderedLoops->end(), 0, [](double area, const LC_LoopUtils::LC_Loops& loop) {
-        return area + loop.getTotalArea();
-    } );
+
+    if (!m_orderedLoops || m_orderedLoops->empty()) {
+        return 0.0;
+    }
+
+    // Const-safe accumulation (no mutation needed if already optimized)
+    m_area = std::accumulate(m_orderedLoops->begin(), m_orderedLoops->end(), 0.0,
+                             [](double accum, const LC_LoopUtils::LC_Loops& loop) {
+                                 return accum + loop.getTotalArea();
+                             });
     return m_area;
 }
 
-double RS_Hatch::getDistanceToPoint(
-    const RS_Vector& coord,
-    RS_Entity** entity,
-    RS2::ResolveLevel level,
-    double solidDist) const {
-    if (std::any_of(m_orderedLoops->begin(), m_orderedLoops->end(), [&coord](const LC_LoopUtils::LC_Loops& loops) {
-            return loops.isInside(coord);
-        })) {
-        if (entity != nullptr) {
-            *entity = const_cast<RS_Hatch*>(this);
+/**
+ * Finds the distance from a point to the hatch.
+ * For solid: 0 if inside boundaries, else infinity.
+ * For pattern: Minimum distance to any trimmed line.
+ *
+ * @param coord Point to test.
+ * @param entity [out] Closest entity (if found).
+ * @param level Resolution level.
+ * @param solidDist Solid distance fallback.
+ * @return Distance.
+ */
+double RS_Hatch::getDistanceToPoint(const RS_Vector& coord, RS_Entity** entity,
+                                    RS2::ResolveLevel level, double solidDist) const {
+    if (isSolid()) {
+        // Check if point is inside any loop
+        for (const auto& loop : *m_orderedLoops) {
+            if (loop.isInside(coord)) {
+                if (entity) {
+                    *entity = const_cast<RS_Hatch*>(this);
+                }
+                return 0.0;
+            }
         }
-        return 0.;
+        return RS_MAXDOUBLE;
+    } else {
+        // For patterns: Min distance to lines
+        double minDistance = RS_MAXDOUBLE;
+        RS_Entity* closestEntity = nullptr;
+
+        if (hatch) {
+            for (RS_Entity* subEntity : *hatch) {
+                double distance = subEntity->getDistanceToPoint(coord, nullptr, level, solidDist);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestEntity = subEntity;
+                }
+            }
+        }
+
+        if (entity && minDistance < RS_MAXDOUBLE) {
+            *entity = closestEntity ? closestEntity : const_cast<RS_Hatch*>(this);
+        }
+        return minDistance;
     }
-    return RS_MAXDOUBLE;
 }
 
 void RS_Hatch::move(const RS_Vector& offset) {
     RS_EntityContainer::move(offset);
-    m_solidPath.reset();  // Invalidate cache
     update();
 }
 
 void RS_Hatch::rotate(const RS_Vector& center, double angle) {
     RS_EntityContainer::rotate(center, angle);
     data.angle = RS_Math::correctAngle(data.angle + angle);
-    m_solidPath.reset();  // Invalidate cache
     update();
 }
 
 void RS_Hatch::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
     RS_EntityContainer::rotate(center, angleVector);
     data.angle = RS_Math::correctAngle(data.angle + angleVector.angle());
-    m_solidPath.reset();  // Invalidate cache
     update();
 }
 
 void RS_Hatch::scale(const RS_Vector& center, const RS_Vector& factor) {
     RS_EntityContainer::scale(center, factor);
-    data.scale *= factor.x;
-    m_solidPath.reset();  // Invalidate cache
+    data.scale *= factor.x;  // Assume uniform scaling
     needOptimization = true;
     m_area = RS_MAXDOUBLE;
     m_updated = false;
@@ -424,24 +542,18 @@ void RS_Hatch::scale(const RS_Vector& center, const RS_Vector& factor) {
 
 void RS_Hatch::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     RS_EntityContainer::mirror(axisPoint1, axisPoint2);
-    double ang = axisPoint1.angleTo(axisPoint2);
-    data.angle = RS_Math::correctAngle(data.angle + ang * 2.0);
-    m_solidPath.reset();  // Invalidate cache
+    double mirrorAngle = axisPoint1.angleTo(axisPoint2);
+    data.angle = RS_Math::correctAngle(data.angle + mirrorAngle * 2.0);
     update();
 }
 
-void RS_Hatch::stretch(const RS_Vector& firstCorner, const RS_Vector& secondCorner, const RS_Vector& offset) {
+void RS_Hatch::stretch(const RS_Vector& firstCorner, const RS_Vector& secondCorner,
+                       const RS_Vector& offset) {
     RS_EntityContainer::stretch(firstCorner, secondCorner, offset);
-    m_solidPath.reset();  // Invalidate cache
     update();
 }
 
-void RS_Hatch::setPattern(const QString& pattern)
-{
-    data.pattern = pattern;
-}
-
-std::ostream& operator << (std::ostream& os, const RS_Hatch& p) {
-    os << " Hatch: " << p.getData() << "\n";
+std::ostream& operator<<(std::ostream& os, const RS_Hatch& hatchEntity) {
+    os << "Hatch: " << hatchEntity.getData() << "\n";
     return os;
 }
