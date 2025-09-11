@@ -49,33 +49,6 @@
 #include "lc_containertraverser.h"
 
 namespace {
-
-// Computes angular distance, considering direction.
-double angularDist(double a, double startAngle, bool reversed) {
-    return reversed ? RS_Math::correctAngle(startAngle - a)
-                    : RS_Math::correctAngle(a - startAngle);
-}
-
-// Debug printer for loops (recursive for containers).
-void pr(RS_EntityContainer* loop) {
-    if (loop == nullptr) {
-        LC_ERR << "-nullptr-;";
-        return;
-    }
-    LC_ERR << "( id=" << loop->getId() << "| ";
-    for (auto* e : *loop) {
-        if (e && e->rtti() == RS2::EntityContainer) {
-            pr(static_cast<RS_EntityContainer*>(e));
-        } else if (e) {
-            auto vp0 = static_cast<RS_AtomicEntity*>(e)->getStartpoint();
-            auto vp1 = static_cast<RS_AtomicEntity*>(e)->getEndpoint();
-            LC_ERR << ", " << e->getId() << ": " << vp0.x << ", " << vp0.y
-                   << " :: " << vp1.x << ", " << vp1.y;
-        }
-    }
-    LC_ERR << " |" << loop->getId() << " )";
-}
-
 // Removes zero-length entities from the container (recursive).
 void avoidZeroLength(RS_EntityContainer& container) {
     std::set<RS_Entity*> toCleanUp;
@@ -426,7 +399,9 @@ void RS_Hatch::drawPatternLines(RS_Painter* painter) const {
         return;
     }
 
+    const bool selected = isSelected();
     for (RS_Entity* subEntity : *hatch) {
+        subEntity->setSelected(selected);
         painter->drawEntity(subEntity);
     }
 }
