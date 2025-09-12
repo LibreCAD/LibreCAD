@@ -171,6 +171,12 @@ protected:
     RS_HatchData data{};
 
 private:
+    void debugOutPath(const QPainterPath& tmpPath) const;
+    void drawPatternLines(RS_Painter* painter) const;
+    void drawSolidFill(RS_Painter* painter);
+    void updatePatternHatch(RS_Layer* layer, const RS_Pen& pen);
+    void updateSolidHatch(RS_Layer* layer, const RS_Pen& pen);
+
     mutable double m_area = RS_MAXDOUBLE;
     RS_HatchError updateError = HATCH_UNDEFINED;
     bool updateRunning = false;
@@ -181,12 +187,6 @@ private:
 
     // Internal: Vector of boundary subcontainers (one per loop)
     mutable std::vector<std::shared_ptr<RS_EntityContainer>> m_boundaryContainers;
-
-    void debugOutPath(const QPainterPath& tmpPath) const;
-    void drawPatternLines(RS_Painter* painter) const;
-    void drawSolidFill(RS_Painter* painter);
-    void updatePatternHatch(RS_Layer* layer, const RS_Pen& pen);
-    void updateSolidHatch(RS_Layer* layer, const RS_Pen& pen);
 };
 
 #endif

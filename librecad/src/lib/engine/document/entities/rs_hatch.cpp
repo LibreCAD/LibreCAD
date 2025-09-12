@@ -32,21 +32,16 @@
 
 #include <QPainterPath>
 
+#include "lc_containertraverser.h"
 #include "lc_looputils.h"
-#include "lc_rect.h"
-#include "rs_arc.h"
-#include "rs_circle.h"
 #include "rs_debug.h"
-#include "rs_ellipse.h"
 #include "rs_hatch.h"
 #include "rs_information.h"
-#include "rs_line.h"
 #include "rs_math.h"
 #include "rs_painter.h"
 #include "rs_pattern.h"
 #include "rs_patternlist.h"
 #include "rs_pen.h"
-#include "lc_containertraverser.h"
 
 namespace {
 // Removes zero-length entities from the container (recursive).
