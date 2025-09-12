@@ -176,10 +176,8 @@ private:
     bool updateRunning = false;
     bool needOptimization = true;
     bool m_updated = false;
-    mutable std::shared_ptr<std::vector<LC_LoopUtils::LC_Loops>> m_orderedLoops =
-        std::make_shared<std::vector<LC_LoopUtils::LC_Loops>>();
-    mutable std::shared_ptr<std::vector<QPainterPath>> m_solidPath =
-        std::make_shared<std::vector<QPainterPath>>();
+    mutable std::shared_ptr<std::vector<LC_LoopUtils::LC_Loops>> m_orderedLoops;
+    mutable std::shared_ptr<std::vector<QPainterPath>> m_solidPath;
 
     // Internal: Vector of boundary subcontainers (one per loop)
     mutable std::vector<std::shared_ptr<RS_EntityContainer>> m_boundaryContainers;

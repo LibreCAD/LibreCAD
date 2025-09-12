@@ -97,7 +97,10 @@ RS_Hatch::RS_Hatch(RS_EntityContainer* parent, const RS_HatchData& d)
     , updateRunning(false)
     , needOptimization(true)
     , m_updated(false)
-    , m_boundaryContainers() {
+    , m_orderedLoops{std::make_shared<std::vector<LC_LoopUtils::LC_Loops>>()}
+    , m_solidPath{std::make_shared<std::vector<QPainterPath>>()}
+    , m_boundaryContainers()
+{
     // Initialize caches
 
     // Clean up zero-length entities in boundaries
@@ -106,11 +109,7 @@ RS_Hatch::RS_Hatch(RS_EntityContainer* parent, const RS_HatchData& d)
     setOwner(true);
 }
 
-
-RS_Hatch::~RS_Hatch()
-{
-}
-
+RS_Hatch::~RS_Hatch() = default;
 
 RS_Entity* RS_Hatch::clone() const {
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::clone()");
