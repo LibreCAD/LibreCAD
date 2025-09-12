@@ -392,14 +392,6 @@ void LC_Loops::addEntity(RS_Entity* entity) {
     m_loop->addEntity(entity);
 }
 
-const RS_EntityContainer* LC_Loops::loop() const {
-    return m_loop.get();
-}
-
-const std::vector<LC_Loops>& LC_Loops::children() const {
-    return m_children;
-}
-
 bool LC_Loops::ownsEntities() const {
     return m_ownsEntities;
 }
@@ -407,7 +399,7 @@ bool LC_Loops::ownsEntities() const {
 // Private helper: Check inside outer contour only (non-recursive)
 bool LC_Loops::isInsideOuter(const RS_Vector& point) const {
     bool onContour = false;
-    return RS_Information::isPointInsideContour(point, const_cast<RS_EntityContainer*>(loop()), &onContour);
+    return RS_Information::isPointInsideContour(point, m_loop.get(), &onContour);
 }
 
 // IMPROVED: Now recursive; supports holes via even-odd rule on depth

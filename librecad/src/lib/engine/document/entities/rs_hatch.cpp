@@ -68,7 +68,7 @@ void collectSingle(std::vector<std::shared_ptr<RS_EntityContainer>>& collected,
                    const LC_LoopUtils::LC_Loops& lcLoops)
 {
     collected.push_back(lcLoops.getOuterLoop());
-    for(const LC_LoopUtils::LC_Loops& child: lcLoops.children())
+    for(const LC_LoopUtils::LC_Loops& child: lcLoops.getChildren())
         collectSingle(collected, child);
 }
 

@@ -66,8 +66,6 @@ public:
 
     void addChild(LC_Loops child);
     void addEntity(RS_Entity* entity);
-    const RS_EntityContainer* loop() const;
-    const std::vector<LC_Loops>& children() const;
     bool ownsEntities() const;
     bool isInside(const RS_Vector& point) const;
     int getContainingDepth(const RS_Vector& point) const;
