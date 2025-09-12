@@ -42,15 +42,28 @@
 #include "rs_vector.h"
 #include "rs.h"
 
-namespace LC_LoopUtils {
+namespace {
 
-bool isEnclosed(RS_EntityContainer& loop, RS_AtomicEntity& entity) {
-    RS_Vector mid = entity.getMiddlePoint();
-    bool onContour = false;
-    return RS_Information::isPointInsideContour(mid, &loop, &onContour);
+
+// Definition for buildLC_Loops (moved to namespace level for accessibility)
+LC_LoopUtils::LC_Loops buildLoops(const RS_EntityContainer* cont, const std::vector<std::unique_ptr<RS_EntityContainer>>& allLoops) {
+    auto loopCopy = std::make_shared<RS_EntityContainer>(nullptr, true);
+    for (RS_Entity* e : *cont) {
+        if (e && !e->isContainer()) {
+            loopCopy->addEntity(e->clone());  // IMPROVED: Clone atomics for ownership
+        }
+    }
+    LC_LoopUtils::LC_Loops lc(loopCopy, true);
+    for (const auto& p : allLoops) {
+        if (p.get()->getParent() == cont) {
+            lc.addChild(buildLoops(p.get(), allLoops));
+        }
+    }
+    return lc;
+}
 }
 
-// LoopExtractor implementation (IMPROVED: Added endpoint tolerance, skip zero-length edges)
+namespace LC_LoopUtils {
 
 struct LoopExtractor::LoopData {
     std::vector<RS_Entity*> unprocessed;
@@ -300,7 +313,7 @@ std::shared_ptr<std::vector<LC_Loops>> LoopSorter::getResults() const {
 std::shared_ptr<std::vector<LC_Loops>> LoopSorter::forestToLoops(std::vector<RS_EntityContainer*> forest) const {
     auto loops = std::make_shared<std::vector<LC_Loops>>();
     for (RS_EntityContainer* container: forest) {
-        loops->push_back(LC_LoopUtils::buildLC_Loops(container, m_data->loops));  // FIXED: Qualify with namespace
+        loops->push_back(buildLoops(container, m_data->loops));  // FIXED: Qualify with namespace
     }
     return loops;
 }
@@ -355,22 +368,6 @@ void LoopOptimizer::AddContainer(const RS_EntityContainer& contour) {
     m_data->results = sorter.getResults();
 }
 
-// Definition for buildLC_Loops (moved to namespace level for accessibility)
-LC_Loops buildLC_Loops(const RS_EntityContainer* cont, const std::vector<std::unique_ptr<RS_EntityContainer>>& allLoops) {
-    auto loopCopy = std::make_shared<RS_EntityContainer>(nullptr, true);
-    for (RS_Entity* e : *cont) {
-        if (e && !e->isContainer()) {
-            loopCopy->addEntity(e->clone());  // IMPROVED: Clone atomics for ownership
-        }
-    }
-    LC_Loops lc(loopCopy, true);
-    for (const auto& p : allLoops) {
-        if (p.get()->getParent() == cont) {
-            lc.addChild(buildLC_Loops(p.get(), allLoops));
-        }
-    }
-    return lc;
-}
 
 // LC_Loops implementation (IMPROVED: Explicit destructor cleanup)
 

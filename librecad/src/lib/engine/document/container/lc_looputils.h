@@ -52,17 +52,55 @@ using LC_Rect = lc::geo::Area;
  * and correct immediate parent assignment in sorting to fix nested hatching issues.
  */
 namespace LC_LoopUtils {
-class LC_Loops;
-LC_Loops buildLC_Loops(const RS_EntityContainer* cont, const std::vector<std::unique_ptr<RS_EntityContainer>>& allLoops);
 
 /**
- * @brief isEnclosed - whether the entity is enclosed in the loop. It's assumed the entity shouldn't intersect
- * with the loop.
- * @param loop - a simple closed contour
- * @param entity - an atomic entity
- * @return bool - true if the entity is enclosed
- */
-bool isEnclosed(RS_EntityContainer& loop, RS_AtomicEntity& entity);
+ * @brief The LC_Loops class - recursive representation of contour loops with holes.
+ * IMPROVED: Explicit ownership handling in destructor; cloning support in building.
+ * ...
+ */ // (rest of docstring unchanged)
+
+class LC_Loops {
+public:
+    LC_Loops(std::shared_ptr<RS_EntityContainer> loop = std::make_shared<RS_EntityContainer>(), bool ownsEntities = true);
+    ~LC_Loops();
+
+    void addChild(LC_Loops child);
+    void addEntity(RS_Entity* entity);
+    const RS_EntityContainer* loop() const;
+    const std::vector<LC_Loops>& children() const;
+    bool ownsEntities() const;
+    bool isInside(const RS_Vector& point) const;
+    int getContainingDepth(const RS_Vector& point) const;
+    QPainterPath getPainterPath(int level = 0) const;
+    std::vector<RS_Vector> createTiles(const RS_Pattern& pattern) const;
+    std::unique_ptr<RS_EntityContainer> trimPatternEntities(const RS_Pattern& pattern) const;
+    double getTotalArea() const;
+    bool overlap(const LC_Rect& other) const;
+    std::shared_ptr<RS_EntityContainer> getOuterLoop() const {
+        return m_loop;
+    }
+
+    const std::vector<LC_Loops>& getChildren() const {
+        return m_children;
+    }
+
+private:
+    bool isInsideOuter(const RS_Vector& point) const;
+    std::shared_ptr<RS_EntityContainer> m_loop;
+    std::vector<LC_Loops> m_children;
+    bool m_ownsEntities;
+    QPainterPath buildPathFromLoop(const RS_EntityContainer& cont) const;
+    void getAllLoops(std::vector<const RS_EntityContainer*>& loops) const;
+    LC_Rect getBoundingBox() const;
+    bool isPointInside(const RS_Vector& p) const;
+    RS_Vector e_point(const RS_Vector& center, double major, double minor, double rot, double t) const;
+    RS_Vector e_prime(double major, double minor, double rot, double t) const;
+    void addEllipticArc(QPainterPath& path, const RS_Vector& center, double major, double minor, double rot, double a1, double a2) const;
+    std::vector<RS_Entity*> getAllBoundaries() const;
+    std::vector<RS_Vector> sortPointsAlongEntity(RS_Entity* e, std::vector<RS_Vector> inters) const;
+    RS_Entity* createSubEntity(RS_Entity* e, const RS_Vector& p1, const RS_Vector& p2) const;
+    bool isEntityClosed(const RS_Entity* e) const;
+};
 
 /**
  * @brief The LoopExtractor class, to extract closed loops from edges.
@@ -149,56 +187,6 @@ private:
     struct Data;
     std::shared_ptr<Data> m_data;
 };
-
-/**
- * @brief The LC_Loops class - recursive representation of contour loops with holes.
- * IMPROVED: Explicit ownership handling in destructor; cloning support in building.
- * ...
- */ // (rest of docstring unchanged)
-
-class LC_Loops {
-public:
-    LC_Loops(std::shared_ptr<RS_EntityContainer> loop = std::make_shared<RS_EntityContainer>(), bool ownsEntities = true);
-    ~LC_Loops();
-
-    void addChild(LC_Loops child);
-    void addEntity(RS_Entity* entity);
-    const RS_EntityContainer* loop() const;
-    const std::vector<LC_Loops>& children() const;
-    bool ownsEntities() const;
-    bool isInside(const RS_Vector& point) const;
-    int getContainingDepth(const RS_Vector& point) const;
-    QPainterPath getPainterPath(int level = 0) const;
-    std::vector<RS_Vector> createTiles(const RS_Pattern& pattern) const;
-    std::unique_ptr<RS_EntityContainer> trimPatternEntities(const RS_Pattern& pattern) const;
-    double getTotalArea() const;
-    bool overlap(const LC_Rect& other) const;
-    std::shared_ptr<RS_EntityContainer> getOuterLoop() const {
-        return m_loop;
-    }
-
-    const std::vector<LC_Loops>& getChildren() const {
-        return m_children;
-    }
-
-private:
-    bool isInsideOuter(const RS_Vector& point) const;
-    std::shared_ptr<RS_EntityContainer> m_loop;
-    std::vector<LC_Loops> m_children;
-    bool m_ownsEntities;
-    QPainterPath buildPathFromLoop(const RS_EntityContainer& cont) const;
-    void getAllLoops(std::vector<const RS_EntityContainer*>& loops) const;
-    LC_Rect getBoundingBox() const;
-    bool isPointInside(const RS_Vector& p) const;
-    RS_Vector e_point(const RS_Vector& center, double major, double minor, double rot, double t) const;
-    RS_Vector e_prime(double major, double minor, double rot, double t) const;
-    void addEllipticArc(QPainterPath& path, const RS_Vector& center, double major, double minor, double rot, double a1, double a2) const;
-    std::vector<RS_Entity*> getAllBoundaries() const;
-    std::vector<RS_Vector> sortPointsAlongEntity(RS_Entity* e, std::vector<RS_Vector> inters) const;
-    RS_Entity* createSubEntity(RS_Entity* e, const RS_Vector& p1, const RS_Vector& p2) const;
-    bool isEntityClosed(const RS_Entity* e) const;
-};
-
 }
 
 #endif // LC_LOOPUTILS_H
