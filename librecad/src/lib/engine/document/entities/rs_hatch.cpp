@@ -509,52 +509,22 @@ double RS_Hatch::getTotalArea() const {
     return m_area;
 }
 
-/**
- * Finds the distance from a point to the hatch.
- * For solid: 0 if inside boundaries, else infinity.
- * For pattern: Minimum distance to any trimmed line (direct children).
- *
- * @param coord Point to test.
- * @param entity [out] Closest entity (if found).
- * @param level Resolution level.
- * @param solidDist Solid distance fallback.
- * @return Distance.
- */
+
 double RS_Hatch::getDistanceToPoint(const RS_Vector& coord, RS_Entity** entity,
-                                    RS2::ResolveLevel level, double solidDist) const {
-    if (isSolid()) {
-        // Check if point is inside any loop
-        for (const auto& loop : *m_orderedLoops) {
-            if (loop.isInside(coord)) {
-                if (entity) {
-                    *entity = const_cast<RS_Hatch*>(this);
-                }
-                return 0.0;
+                                    [[maybe_unused]] RS2::ResolveLevel level, [[maybe_unused]] double solidDist) const
+{
+    // Check if point is on the solid fill/hatch
+    for (const auto& loop : *m_orderedLoops) {
+        if (loop.isInside(coord)) {
+            if (entity) {
+                *entity = const_cast<RS_Hatch*>(this);
             }
+            return 0.0;
         }
-        return RS_MAXDOUBLE;
-    } else {
-        // For patterns: Min distance to direct trimmed entities
-        double minDistance = RS_MAXDOUBLE;
-        RS_Entity* closestEntity = nullptr;
-
-        for (RS_Entity* subEntity : *this) {
-            // Only direct atomic children with FlagHatchChild
-            if (subEntity && !subEntity->isContainer() && subEntity->getFlag(RS2::FlagHatchChild)) {
-                double distance = subEntity->getDistanceToPoint(coord, nullptr, level, solidDist);
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    closestEntity = subEntity;
-                }
-            }
-        }
-
-        if (entity && minDistance < RS_MAXDOUBLE) {
-            *entity = closestEntity ? closestEntity : const_cast<RS_Hatch*>(this);
-        }
-        return minDistance;
     }
+    return RS_MAXDOUBLE;
 }
+
 
 void RS_Hatch::move(const RS_Vector& offset) {
     RS_EntityContainer::move(offset);
