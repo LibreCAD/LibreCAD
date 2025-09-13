@@ -181,7 +181,7 @@ private:
     mutable double m_area = RS_MAXDOUBLE;
     RS_HatchError updateError = HATCH_UNDEFINED;
     bool updateRunning = false;
-    bool needOptimization = true;
+    bool m_needOptimization = true;
     bool m_updated = false;
     mutable std::shared_ptr<std::vector<LC_LoopUtils::LC_Loops>> m_orderedLoops;
     mutable std::shared_ptr<std::vector<QPainterPath>> m_solidPath;

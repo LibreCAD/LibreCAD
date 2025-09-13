@@ -44,18 +44,16 @@
 #include "rs_pen.h"
 
 namespace {
-// Removes zero-length entities from the container (recursive).
-void avoidZeroLength(RS_EntityContainer& container) {
+// Removes zero-length entities from the container
+void avoidZeroLength(std::set<RS_Entity*>& container) {
     std::set<RS_Entity*> toCleanUp;
     for (RS_Entity* e : container) {
-        if (e != nullptr && e->isContainer()) {
-            avoidZeroLength(*static_cast<RS_EntityContainer*>(e));
-        } else if (e != nullptr && RS_Math::equal(e->getLength(), 0.)) {
+        if (e != nullptr && RS_Math::equal(e->getLength(), 0.)) {
             toCleanUp.insert(e);
         }
     }
     for (RS_Entity* e : toCleanUp) {
-        container.removeEntity(e);
+        container.erase(e);
     }
 }
 
@@ -90,16 +88,13 @@ RS_Hatch::RS_Hatch(RS_EntityContainer* parent, const RS_HatchData& d)
     , m_area(RS_MAXDOUBLE)
     , updateError(HATCH_UNDEFINED)
     , updateRunning(false)
-    , needOptimization(true)
+    , m_needOptimization(true)
     , m_updated(false)
     , m_orderedLoops{std::make_shared<std::vector<LC_LoopUtils::LC_Loops>>()}
     , m_solidPath{std::make_shared<std::vector<QPainterPath>>()}
     , m_boundaryContainers()
 {
     // Initialize caches
-
-    // Clean up zero-length entities in boundaries
-    avoidZeroLength(*this);
 
     setOwner(true);
 }
@@ -113,7 +108,7 @@ RS_Entity* RS_Hatch::clone() const {
     cloneHatch->detach();
 
     // Force re-optimization and update to deep-copy caches and subcontainers
-    cloneHatch->needOptimization = true;
+    cloneHatch->m_needOptimization = true;
     cloneHatch->m_area = RS_MAXDOUBLE;
     cloneHatch->m_updated = false;
     cloneHatch->m_boundaryContainers.clear();  // Will be regenerated
@@ -138,14 +133,13 @@ RS_Entity* RS_Hatch::clone() const {
 bool RS_Hatch::validate() {
     bool success = true;
 
-    if (!needOptimization || count() == 0) {
+    if (!m_needOptimization || count() == 0) {
         return success;
     }
 
     try {
         // Flatten container to atomic entities only by cloning to avoid ownership issues
-        RS_EntityContainer flatContainer{nullptr, false};
-        std::set<const RS_Entity*> addedEntities;  // Use const to track uniques safely
+        std::set<RS_Entity*> contourEdges;  // Use const to track uniques safely
         std::vector<RS_Entity*> loops;
         for(RS_Entity* en: std::as_const(*this)) {
             if (en == nullptr || ! en->isContainer())
@@ -153,10 +147,8 @@ bool RS_Hatch::validate() {
 
             lc::LC_ContainerTraverser traverser{*static_cast<RS_EntityContainer*>(en), RS2::ResolveAll};
             for (RS_Entity* entity : traverser.entities()) {
-                if (entity != nullptr && entity->isAtomic() && addedEntities.insert(entity).second) {
-                    // Clone to flatContainer to decouple from original ownership
-                    RS_Entity* cloneEntity = entity->clone();
-                    flatContainer.addEntity(cloneEntity);
+                if (entity != nullptr && entity->isAtomic()) {
+                    contourEdges.insert(entity);
                 }
             }
             loops.push_back(en);
@@ -169,10 +161,12 @@ bool RS_Hatch::validate() {
         std::copy(loops.begin(), loops.end(), std::back_inserter(*this));
 
         // Clean up zero-length entities in the flat container
-        avoidZeroLength(flatContainer);
+        avoidZeroLength(contourEdges);
 
         // Optimize into loops
-        LC_LoopUtils::LoopOptimizer optimizer{flatContainer};
+        RS_EntityContainer edgeContainer{nullptr, false};
+        std::copy(contourEdges.cbegin(), contourEdges.cend(), std::back_inserter(edgeContainer));
+        LC_LoopUtils::LoopOptimizer optimizer{edgeContainer};
         auto results = optimizer.GetResults();
 
         if (!results || results->empty()) {
@@ -180,7 +174,7 @@ bool RS_Hatch::validate() {
         }
 
         m_orderedLoops = results;
-        needOptimization = false;
+        m_needOptimization = false;
 
         // Create subcontainers for each loop's boundaries by cloning entities
         m_boundaryContainers = collectLoops(results);
@@ -265,17 +259,6 @@ void RS_Hatch::update() {
     // Store original attributes for child entities
     RS_Layer* layer = getLayer();
     RS_Pen pen = getPen();
-
-    // Clear any existing trimmed pattern entities (direct children with FlagHatchChild)
-    std::set<RS_Entity*> toRemove;
-    for (RS_Entity* e : *this) {
-        if (e && e->getFlag(RS2::FlagHatchChild)) {
-            toRemove.insert(e);
-        }
-    }
-    for (RS_Entity* e : toRemove) {
-        removeEntity(e);
-    }
 
     if (isSolid()) {
         updateSolidHatch(layer, pen);
@@ -496,16 +479,6 @@ double RS_Hatch::getTotalArea() const {
     if (m_area < RS_MAXDOUBLE - RS_Math::ulp(m_area)) {
         return m_area;
     }
-
-    if (!m_orderedLoops || m_orderedLoops->empty()) {
-        return 0.0;
-    }
-
-    // Const-safe accumulation (no mutation needed if already optimized)
-    m_area = std::accumulate(m_orderedLoops->begin(), m_orderedLoops->end(), 0.0,
-                             [](double accum, const LC_LoopUtils::LC_Loops& loop) {
-                                 return accum + loop.getTotalArea();
-                             });
     return m_area;
 }
 
@@ -533,7 +506,7 @@ void RS_Hatch::prepareUpdate()
 
 
 void RS_Hatch::move(const RS_Vector& offset) {
-    needOptimization = true;
+    m_needOptimization = true;
     for(RS_Entity* en: std::as_const(*this))
         if(en->isContainer())
             en->move(offset);
@@ -545,7 +518,7 @@ void RS_Hatch::rotate(const RS_Vector& center, double angle) {
 }
 
 void RS_Hatch::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
-    needOptimization = true;
+    m_needOptimization = true;
     for(RS_Entity* en: std::as_const(*this))
         if(en->isContainer())
             en->rotate(center, angleVector);
@@ -554,19 +527,18 @@ void RS_Hatch::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
 }
 
 void RS_Hatch::scale(const RS_Vector& center, const RS_Vector& factor) {
-    needOptimization = true;
+    m_needOptimization = true;
     for(RS_Entity* en: std::as_const(*this))
         if(en->isContainer())
             en->scale(center, factor);
     data.scale *= factor.x;  // Assume uniform scaling
-    needOptimization = true;
-    m_area = RS_MAXDOUBLE;
+    m_needOptimization = true;
     m_updated = false;
     update();
 }
 
 void RS_Hatch::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
-    needOptimization = true;
+    m_needOptimization = true;
     for(RS_Entity* en: std::as_const(*this))
         if(en->isContainer())
             en->mirror(axisPoint1, axisPoint2);
@@ -577,7 +549,7 @@ void RS_Hatch::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) 
 
 void RS_Hatch::stretch(const RS_Vector& firstCorner, const RS_Vector& secondCorner,
                        const RS_Vector& offset) {
-    needOptimization = true;
+    m_needOptimization = true;
     for(RS_Entity* en: std::as_const(*this))
         if(en->isContainer())
             en->stretch(firstCorner, secondCorner, offset);
