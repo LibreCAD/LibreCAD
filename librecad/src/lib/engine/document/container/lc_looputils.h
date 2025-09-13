@@ -66,7 +66,6 @@ public:
 
     void addChild(LC_Loops child);
     void addEntity(RS_Entity* entity);
-    bool ownsEntities() const;
     bool isInside(const RS_Vector& point) const;
     int getContainingDepth(const RS_Vector& point) const;
     QPainterPath getPainterPath(int level = 0) const;
@@ -86,7 +85,6 @@ private:
     bool isInsideOuter(const RS_Vector& point) const;
     std::shared_ptr<RS_EntityContainer> m_loop;
     std::vector<LC_Loops> m_children;
-    bool m_ownsEntities;
     QPainterPath buildPathFromLoop(const RS_EntityContainer& cont) const;
     void getAllLoops(std::vector<const RS_EntityContainer*>& loops) const;
     LC_Rect getBoundingBox() const;

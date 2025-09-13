@@ -371,29 +371,17 @@ void LoopOptimizer::AddContainer(const RS_EntityContainer& contour) {
 
 // LC_Loops implementation (IMPROVED: Explicit destructor cleanup)
 
-LC_Loops::LC_Loops(std::shared_ptr<RS_EntityContainer> loop, bool ownsEntities) : m_loop(loop), m_ownsEntities(ownsEntities) {
+LC_Loops::LC_Loops(std::shared_ptr<RS_EntityContainer> loop, bool ownsEntities) : m_loop(loop) {
     // IMPROVED: Assume autoDelete true; could set if exposed
 }
 
-LC_Loops::~LC_Loops() {
-    // if (m_ownsEntities) {
-    //     for (RS_Entity* e : *m_loop) {
-    //         delete e;
-    //     }
-    //     m_loop->clear();
-    // }
-    // Children handle own cleanup
-}
+LC_Loops::~LC_Loops() = default;
 
 void LC_Loops::addChild(LC_Loops child) {
     m_children.push_back(std::move(child));
 }
 void LC_Loops::addEntity(RS_Entity* entity) {
     m_loop->addEntity(entity);
-}
-
-bool LC_Loops::ownsEntities() const {
-    return m_ownsEntities;
 }
 
 // Private helper: Check inside outer contour only (non-recursive)
@@ -434,7 +422,7 @@ QPainterPath LC_Loops::getPainterPath(int level) const {
 
 double LC_Loops::getTotalArea() const {
     return std::accumulate(m_children.begin(), m_children.end(), m_loop->areaLineIntegral(), [](double area, const LC_Loops& loop) {
-        return area + loop.getTotalArea();
+        return area - loop.getTotalArea();
     });
 }
 
