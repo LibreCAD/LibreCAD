@@ -525,26 +525,39 @@ double RS_Hatch::getDistanceToPoint(const RS_Vector& coord, RS_Entity** entity,
     return RS_MAXDOUBLE;
 }
 
+void RS_Hatch::prepareUpdate()
+{
+    // called before foreced update
+
+}
+
 
 void RS_Hatch::move(const RS_Vector& offset) {
-    RS_EntityContainer::move(offset);
+    needOptimization = true;
+    for(RS_Entity* en: std::as_const(*this))
+        if(en->isContainer())
+            en->move(offset);
     update();
 }
 
 void RS_Hatch::rotate(const RS_Vector& center, double angle) {
-    RS_EntityContainer::rotate(center, angle);
-    data.angle = RS_Math::correctAngle(data.angle + angle);
-    update();
+    rotate(center, RS_Vector{angle});
 }
 
 void RS_Hatch::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
-    RS_EntityContainer::rotate(center, angleVector);
+    needOptimization = true;
+    for(RS_Entity* en: std::as_const(*this))
+        if(en->isContainer())
+            en->rotate(center, angleVector);
     data.angle = RS_Math::correctAngle(data.angle + angleVector.angle());
     update();
 }
 
 void RS_Hatch::scale(const RS_Vector& center, const RS_Vector& factor) {
-    RS_EntityContainer::scale(center, factor);
+    needOptimization = true;
+    for(RS_Entity* en: std::as_const(*this))
+        if(en->isContainer())
+            en->scale(center, factor);
     data.scale *= factor.x;  // Assume uniform scaling
     needOptimization = true;
     m_area = RS_MAXDOUBLE;
@@ -553,7 +566,10 @@ void RS_Hatch::scale(const RS_Vector& center, const RS_Vector& factor) {
 }
 
 void RS_Hatch::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
-    RS_EntityContainer::mirror(axisPoint1, axisPoint2);
+    needOptimization = true;
+    for(RS_Entity* en: std::as_const(*this))
+        if(en->isContainer())
+            en->mirror(axisPoint1, axisPoint2);
     double mirrorAngle = axisPoint1.angleTo(axisPoint2);
     data.angle = RS_Math::correctAngle(data.angle + mirrorAngle * 2.0);
     update();
@@ -561,7 +577,10 @@ void RS_Hatch::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) 
 
 void RS_Hatch::stretch(const RS_Vector& firstCorner, const RS_Vector& secondCorner,
                        const RS_Vector& offset) {
-    RS_EntityContainer::stretch(firstCorner, secondCorner, offset);
+    needOptimization = true;
+    for(RS_Entity* en: std::as_const(*this))
+        if(en->isContainer())
+            en->stretch(firstCorner, secondCorner, offset);
     update();
 }
 

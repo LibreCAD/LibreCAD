@@ -176,6 +176,7 @@ private:
     void drawSolidFill(RS_Painter* painter);
     void updatePatternHatch(RS_Layer* layer, const RS_Pen& pen);
     void updateSolidHatch(RS_Layer* layer, const RS_Pen& pen);
+    void prepareUpdate();
 
     mutable double m_area = RS_MAXDOUBLE;
     RS_HatchError updateError = HATCH_UNDEFINED;
