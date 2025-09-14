@@ -295,7 +295,7 @@ public:
     LoopSorter(std::vector<std::unique_ptr<RS_EntityContainer>> loops);
     ~LoopSorter();
 
-    struct AreaPredicate;  // Sorts by absolute area, ties by bounding box diagonal
+    struct AreaPredicate;  // Sorts by ascending absolute area (small to large), ties by bounding box diagonal
 
     /**
      * @brief Gets the sorted hierarchical results.
@@ -351,13 +351,6 @@ private:
      * @param contour The input contour.
      */
     void AddContainer(const RS_EntityContainer& contour);
-    /**
-     * @brief Builds an LC_Loops tree from a container and all loops.
-     * @param cont The root container.
-     * @param allLoops All extracted loops for parent lookup.
-     * @return The built LC_Loops.
-     */
-    LC_Loops buildLC_Loops(const RS_EntityContainer* cont, const std::vector<std::unique_ptr<RS_EntityContainer>>& allLoops) const;
 
     struct Data;
     std::shared_ptr<Data> m_data;  ///< Private data for optimization results

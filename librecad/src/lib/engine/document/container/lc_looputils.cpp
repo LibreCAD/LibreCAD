@@ -24,10 +24,12 @@
 */
 // File: lc_looputils.cpp
 
+#include <algorithm>
+#include <cmath>
 #include <map>
+#include <set>
 #include <QPen>
 #include <QPainterPath>
-#include <QTransform>
 
 #include "lc_looputils.h"
 #include "lc_rect.h"
@@ -67,6 +69,31 @@ LC_LoopUtils::LC_Loops buildLoops(const RS_EntityContainer* cont, const std::vec
     }
     return lc;
 }
+
+/**
+ * @brief Extends a line to cover the bounding box by computing intersections with box sides.
+ * @param line The line to extend.
+ * @param bbox The bounding rectangle.
+ */
+void extendLineToBBox(RS_Line& line, const LC_Rect& bbox) {
+    const double maxSize = 1.5 * std::max(bbox.width(), bbox.height());
+    const RS_Vector offset = line.getTangentDirection({}).normalized() * maxSize;
+
+    line.setStartpoint(line.getStartpoint() - offset);
+    line.setEndpoint(line.getEndpoint() + offset);
+}
+
+// Compare double with tolerance
+struct DoublePredicate {
+    bool operator()(double a, double b) const {
+        // If the absolute difference is within epsilon, consider them equal
+        if (std::abs(a - b) <= RS_TOLERANCE * 100.) {
+            return false; // They are considered equal, so neither is "less than" the other in a strict sense
+        }
+        return a < b; // Otherwise, use standard less-than comparison
+    }
+};
+
 }
 
 namespace LC_LoopUtils {
@@ -237,7 +264,7 @@ std::vector<RS_Entity*> LoopExtractor::getConnected() const {
 
 /**
  * @brief Selects the "outermost" edge from connected ones using tangent angle differences.
- * Uses a small circle for intersection and prefers minimal signed turn (e.g., left turns for CCW).
+ * Uses a small circle for intersection and prefers left turns (largest positive diff) for CCW outer boundary.
  */
 RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const {
     double radius = 1e-6;
@@ -284,9 +311,9 @@ RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const {
     }
 
     if (angleDiffs.empty()) return nullptr;
-    // Sort by ascending signed diff to prefer "outer" (e.g., right turns for outer boundary in CCW)
+    // Sort by descending signed diff to prefer left turns (largest positive diff) for CCW outer boundary
     std::sort(angleDiffs.begin(), angleDiffs.end(), [](const auto& a, const auto& b) {
-        return a.first < b.first;
+        return a.first > b.first;
     });
     return angleDiffs[0].second;
 }
@@ -298,8 +325,8 @@ struct LoopSorter::Data {
 };
 
 /**
- * @brief Predicate for sorting loops: descending absolute area, tie-break by bounding box diagonal.
- * Ensures robust ordering for containment detection (larger areas first implicitly via processing).
+ * @brief Predicate for sorting loops: ascending absolute area (small to large for parent assignment), tie-break by bounding box diagonal.
+ * Ensures robust ordering for containment detection.
  */
 struct LoopSorter::AreaPredicate {
     bool operator() (const RS_EntityContainer* a, const RS_EntityContainer* b) const {
@@ -511,27 +538,25 @@ double LC_Loops::getTotalArea() const {
 /**
  * @brief Parametric equation for point on ellipse.
  */
+/**
+ * @brief Parametric equation for point on ellipse.
+ */
 RS_Vector LC_Loops::e_point(const RS_Vector& center, double major, double minor, double rot, double t) const {
-    double ct = std::cos(t);
-    double st = std::sin(t);
-    double cr = std::cos(rot);
-    double sr = std::sin(rot);
-    double x = major * ct * cr - minor * st * sr;
-    double y = major * ct * sr + minor * st * cr;
-    return center + RS_Vector(x, y);
+    RS_Vector local(major * std::cos(t), minor * std::sin(t));
+    local.rotate(rot);
+    return center + local;
 }
 
 /**
  * @brief First derivative (tangent vector) for ellipse.
  */
+/**
+ * @brief First derivative (tangent vector) for ellipse.
+ */
 RS_Vector LC_Loops::e_prime(double major, double minor, double rot, double t) const {
-    double ct = std::cos(t);
-    double st = std::sin(t);
-    double cr = std::cos(rot);
-    double sr = std::sin(rot);
-    double dx = -major * st * cr - minor * ct * sr;
-    double dy = -major * st * sr + minor * ct * cr;
-    return RS_Vector(dx, dy);
+    RS_Vector local_prime(-major * std::sin(t), minor * std::cos(t));
+    local_prime.rotate(rot);
+    return local_prime;
 }
 
 /**
@@ -709,16 +734,35 @@ std::vector<RS_Vector> LC_Loops::createTiles(const RS_Pattern& pattern) const {
 /**
  * @brief Trims pattern entities to loop boundaries: Intersects, sorts params, creates subs inside loop.
  * Handles closed/open entities; skips odd intersections for closed.
+ * For RS_Line: extends to bbox, dedups tiles by perpendicular intercept.
  */
 std::unique_ptr<RS_EntityContainer> LC_Loops::trimPatternEntities(const RS_Pattern& pattern) const {
     std::unique_ptr<RS_EntityContainer> trimmed = std::make_unique<RS_EntityContainer>();
     std::vector<RS_Vector> tiles = createTiles(pattern);
     auto boundaries = getAllBoundaries();
+    std::map<const RS_Entity*, std::set<double, DoublePredicate>> savedIntercepts;
+    LC_Rect bBox = getBoundingBox();
     for (const RS_Vector& tile : tiles) {
         for (RS_Entity* e : pattern) {
             if (!e->isAtomic()) continue;
             auto cloned = std::unique_ptr<RS_Entity>(e->clone());
             cloned->move(tile);
+
+            // For RS_Line, extend the line to cover the whole contour, if the pattern line is seen for the first time
+            // If the extended line is coincident with a previous one, skip it
+            if (e->rtti() == RS2::EntityLine) {
+                RS_Line* cline = static_cast<RS_Line*>(cloned.get());
+                RS_Vector normal = cline->getNormalVector();
+                double intr = normal.dotP(cline->getStartpoint());
+                constexpr double TOL = 1e-6;
+                double key = std::round(intr / TOL) * TOL;
+                std::set<double, DoublePredicate>& sset = savedIntercepts[e];
+                if (sset.find(key) != sset.end())
+                    continue;
+                sset.insert(key);
+                // Extend to bbox
+                extendLineToBBox(*cline, bBox);
+            }
             std::vector<RS_Vector> all_inters;
             for (auto* b : boundaries) {
                 RS_VectorSolutions sol = RS_Information::getIntersection(cloned.get(), b, true);
@@ -726,8 +770,6 @@ std::unique_ptr<RS_EntityContainer> LC_Loops::trimPatternEntities(const RS_Patte
                     all_inters.push_back(v);
                 }
             }
-            // Reserve for performance
-            all_inters.reserve(all_inters.size() + 1);
             // Remove duplicates
             std::sort(all_inters.begin(), all_inters.end(), [](const RS_Vector& a, const RS_Vector& b){
                 return a.x < b.x || (RS_Math::equal(a.x, b.x) && a.y < b.y);
