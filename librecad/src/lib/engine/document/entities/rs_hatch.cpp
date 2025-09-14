@@ -166,6 +166,11 @@ bool RS_Hatch::validate() {
         // Optimize into loops
         RS_EntityContainer edgeContainer{nullptr, false};
         std::copy(contourEdges.cbegin(), contourEdges.cend(), std::back_inserter(edgeContainer));
+
+        // simulate pattern rotation: rotate contour by -angle;
+        // tiling the pattern;
+        // rotate the contour and tiles by angle
+        edgeContainer.rotate((getMin() + getMax()) * 0.5, - data.angle);
         LC_LoopUtils::LoopOptimizer optimizer{edgeContainer};
         auto results = optimizer.GetResults();
 
@@ -323,9 +328,8 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
     pattern->setOwner(true);
 
     // Apply transformations
-    RS_Vector center = getCenter();
-    pattern->scale(center, RS_Vector{data.scale, data.scale});
-    pattern->rotate(center, data.angle);
+    pattern->scale((pattern->getMin() + pattern->getMax()) * 0.5, RS_Vector{data.scale, data.scale});
+    //pattern->rotate(center, data.angle);
     pattern->calculateBorders();
     forcedCalculateBorders();
 
@@ -337,19 +341,22 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
         contourSize.x > RS_MAXDOUBLE - 1 || contourSize.y > RS_MAXDOUBLE - 1 ||
         patternSize.x > RS_MAXDOUBLE - 1 || patternSize.y > RS_MAXDOUBLE - 1) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::updatePatternHatch: Invalid sizes (too small/large)");
-        updateError = HATCH_TOO_SMALL;
-        return;
+        //updateError = HATCH_TOO_SMALL;
+        //return;
     }
     double areaRatio = (contourSize.x * contourSize.y) / (patternSize.x * patternSize.y);
     if (areaRatio > 1e4) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::updatePatternHatch: Area ratio too large (%.2f)",
                         areaRatio);
-        updateError = HATCH_AREA_TOO_BIG;
-        return;
+        //updateError = HATCH_AREA_TOO_BIG;
+        //return;
     }
 
-    // Trim pattern lines to each loop and add directly to RS_Hatch
+    // pattern rotation
+    const RS_Vector center = (getMin() + getMax()) * 0.5;
+    const RS_Vector rotationVector{data.angle};
     int addedCount = 0;
+    // Trim pattern lines to each loop and add directly to RS_Hatch
     for (int i = 0; i < static_cast<int>(m_orderedLoops->size()); ++i) {
         const auto& loop = (*m_orderedLoops)[i];
         auto trimmedEntities = loop.trimPatternEntities(*pattern);
@@ -359,6 +366,7 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
                 entity->setLayer(layer);
                 entity->reparent(this);  // Reparent to RS_Hatch
                 entity->setFlag(RS2::FlagHatchChild);
+                entity->rotate(center, rotationVector);
                 addEntity(entity);  // Transfers ownership; direct child
                 ++addedCount;
             }
