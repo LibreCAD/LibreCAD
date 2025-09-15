@@ -166,11 +166,13 @@ bool RS_Hatch::validate() {
         // Optimize into loops
         RS_EntityContainer edgeContainer{nullptr, false};
         std::copy(contourEdges.cbegin(), contourEdges.cend(), std::back_inserter(edgeContainer));
+        edgeContainer.forcedCalculateBorders();
 
         // simulate pattern rotation: rotate contour by -angle;
         // tiling the pattern;
         // rotate the contour and tiles by angle
-        edgeContainer.rotate((getMin() + getMax()) * 0.5, - data.angle);
+        const RS_Vector center = (edgeContainer.getMin() + edgeContainer.getMax()) * 0.5;
+        edgeContainer.rotate(center, - data.angle);
         LC_LoopUtils::LoopOptimizer optimizer{edgeContainer};
         auto results = optimizer.GetResults();
 
@@ -340,19 +342,24 @@ void RS_Hatch::updatePatternHatch(RS_Layer* layer, const RS_Pen& pen) {
         patternSize.x < 1e-6 || patternSize.y < 1e-6 ||
         contourSize.x > RS_MAXDOUBLE - 1 || contourSize.y > RS_MAXDOUBLE - 1 ||
         patternSize.x > RS_MAXDOUBLE - 1 || patternSize.y > RS_MAXDOUBLE - 1) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::updatePatternHatch: Invalid sizes (too small/large)");
-        //updateError = HATCH_TOO_SMALL;
-        //return;
+        LC_ERR<<"RS_Hatch::"<<__func__<<"(): contour or pattern size too small, "
+               "contour=["<<contourSize.x<<'x'<<contourSize.y
+               <<"], patternSize=["<<patternSize.x<<'x'<<patternSize.y<<']';
+        updateError = HATCH_TOO_SMALL;
+        return;
     }
     double areaRatio = (contourSize.x * contourSize.y) / (patternSize.x * patternSize.y);
     if (areaRatio > 1e4) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::updatePatternHatch: Area ratio too large (%.2f)",
-                        areaRatio);
-        //updateError = HATCH_AREA_TOO_BIG;
-        //return;
+        LC_ERR<<"RS_Hatch::"<<__func__<<"(): contour to pattern ratio too large, "
+                                              "contour=["<<contourSize.x<<'x'<<contourSize.y
+               <<"], patternSize=["<<patternSize.x<<'x'<<patternSize.y<<']';
+        updateError = HATCH_AREA_TOO_BIG;
+        return;
     }
 
     // pattern rotation
+    // simulate pattern tiling has been done with the contour rotated by -angle;
+    // After pattern tiling, need to rotate the tiles by angle
     const RS_Vector center = (getMin() + getMax()) * 0.5;
     const RS_Vector rotationVector{data.angle};
     int addedCount = 0;
