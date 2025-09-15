@@ -567,7 +567,7 @@ void LC_Loops::addEllipticArc(QPainterPath& path, const RS_Vector& center, doubl
     double aspect = std::max(major, minor) / std::min(major, minor);
     int extra_segments = static_cast<int>(std::ceil(aspect - 1.0));  // More segments for high aspect
     double sweep = a2 - a1;
-    int n = static_cast<int>(std::ceil(std::abs(sweep) / (M_PI / 2.0))) + extra_segments;  // Quadrants + extra
+    int n = static_cast<int>(std::ceil(std::abs(sweep) * 12. / M_PI )) + extra_segments;  // Quadrants + extra
     double dt = sweep / n;
     double current_t = a1;
     RS_Vector startPoint = e_point(center, major, minor, rot, a1);
