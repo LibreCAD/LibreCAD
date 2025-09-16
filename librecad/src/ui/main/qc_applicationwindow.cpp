@@ -954,7 +954,7 @@ void QC_ApplicationWindow::updateWidgetsAsDocumentLoaded(const QC_MDIWindow *w){
 }
 
 void QC_ApplicationWindow::autoZoomAfterLoad(QG_GraphicView *graphicView){
-    if (LC_GET_ONE_BOOL("CADPreferences", "AutoZoomDrawing")) {
+    if (LC_GET_ONE_BOOL("CADPreferences", "AutoZoomDrawing", true)) {
         graphicView->zoomAuto(false);
     }
 }
