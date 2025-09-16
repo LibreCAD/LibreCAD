@@ -4,6 +4,7 @@
 **
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
+** Copyright LibreCAD librecad.org
 **
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -23,8 +24,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include "rs_modification.h"
-
+// File: rs_modification.cpp
 #include <QSet>
 
 #include "lc_containertraverser.h"
@@ -45,6 +45,7 @@
 #include "rs_layer.h"
 #include "rs_line.h"
 #include "rs_math.h"
+#include "rs_modification.h"
 #include "rs_mtext.h"
 #include "rs_polyline.h"
 #include "rs_settings.h"
@@ -3183,7 +3184,15 @@ bool RS_Modification::explode(const bool remove /*= true*/,  const bool forceUnd
     }
 
     std::vector<RS_Entity*> selectedEntities;
+    RS_Layer* activeLayer = graphic->getActiveLayer();
+
+    // Issue #2271 : copy/paste across documents is through the current active layer
+    // collectSelected() may fail, if the active layer is frozen
+    const bool isFrozen = activeLayer->isFrozen();
+    activeLayer->freeze(false);
     container->collectSelected(selectedEntities, false);
+    activeLayer->freeze(isFrozen);
+
     return explode(selectedEntities, remove, forceUndoableOperation);
 }
 
