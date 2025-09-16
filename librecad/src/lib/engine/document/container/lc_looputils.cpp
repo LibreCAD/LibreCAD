@@ -562,32 +562,40 @@ RS_Vector LC_Loops::e_prime(double major, double minor, double rot, double t) co
 /**
  * @brief Appends an elliptic arc to path using cubic Bezier segments.
  * Segments based on sweep angle and aspect ratio for smoothness.
+ * Optimized to reuse endpoint and tangent calculations across segments.
  */
 void LC_Loops::addEllipticArc(QPainterPath& path, const RS_Vector& center, double major, double minor, double rot, double a1, double a2) const {
     double aspect = std::max(major, minor) / std::min(major, minor);
     int extra_segments = static_cast<int>(std::ceil(aspect - 1.0));  // More segments for high aspect
     double sweep = a2 - a1;
-    int n = static_cast<int>(std::ceil(std::abs(sweep) * 12. / M_PI )) + extra_segments;  // Quadrants + extra
+    int n = static_cast<int>(std::ceil(std::abs(sweep) * 24. / M_PI )) + extra_segments;  // Quadrants + extra
+    if (n <= 0) return;  // Degenerate case
     double dt = sweep / n;
+    double lambda = (4.0 / 3.0) * std::tan(dt / 4.0);  // Bezier control factor (constant)
     double current_t = a1;
-    RS_Vector startPoint = e_point(center, major, minor, rot, a1);
-    if (path.isEmpty()) {
-        path.moveTo(startPoint.x, startPoint.y);
+
+    // Initial endpoint and tangent for first segment
+    RS_Vector p0 = e_point(center, major, minor, rot, current_t);
+    RS_Vector prime0 = e_prime(major, minor, rot, current_t) * lambda;
+
+    if ((path.currentPosition() - QPointF{p0.x, p0.y}).manhattanLength() >= RS_TOLERANCE * 100.) {
+        path.moveTo(p0.x, p0.y);
     } else {
-        path.lineTo(startPoint.x, startPoint.y);
+        path.lineTo(p0.x, p0.y);
     }
+
     for (int i = 0; i < n; ++i) {
-        double t0 = current_t;
         double t1 = current_t + dt;
-        double lambda = (4.0 / 3.0) * std::tan(dt / 4.0);  // Bezier control factor
-        RS_Vector p0 = e_point(center, major, minor, rot, t0);
         RS_Vector p3 = e_point(center, major, minor, rot, t1);
-        RS_Vector prime0 = e_prime(major, minor, rot, t0) * lambda;
         RS_Vector prime1 = e_prime(major, minor, rot, t1) * lambda;
         RS_Vector p1 = p0 + prime0;
         RS_Vector p2 = p3 - prime1;
         path.cubicTo(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
-        current_t += dt;
+
+        // Reuse for next segment
+        p0 = p3;
+        prime0 = prime1;
+        current_t = t1;
     }
 }
 
@@ -601,15 +609,19 @@ QPainterPath LC_Loops::buildPathFromLoop(const RS_EntityContainer& cont) const {
         return path;
     for (RS_Entity* e : cont) {
         if (e->isAtomic()) {
+            RS_Vector start = e->getStartpoint();
+            // avoid small gaps due to rounding errors
+            if ((path.currentPosition() - QPointF{start.x, start.y}).manhattanLength() >= RS_TOLERANCE * 100.) {
+                path.moveTo(start.x, start.y);
+            } else {
+                path.lineTo(start.x, start.y);
+            }
             RS_Vector end = e->getEndpoint();
             switch (e->rtti()) {
-            case RS2::EntityLine:
-                if (path.isEmpty() ) {
-                    RS_Vector start = e->getStartpoint();
-                    path.moveTo(start.x, start.y);
-                }
+            case RS2::EntityLine: {
                 path.lineTo(end.x, end.y);
-                break;
+            }
+            break;
             case RS2::EntityArc:
             {
                 RS_Arc* arc = static_cast<RS_Arc*>(e);

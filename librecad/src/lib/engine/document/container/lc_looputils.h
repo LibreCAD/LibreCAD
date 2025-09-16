@@ -227,6 +227,28 @@ private:
 /**
  * @brief The LoopExtractor class, to extract closed loops from edges.
  * Processes a container of edges to form closed loops, handling connectivity and orientation.
+ *
+ *  * The algorithm:
+ * 0. Mark all edges as unprocessed.
+ * 1. Draw a line crossing the first edge and find intersections with all unprocessed edges; select the edge with the closest intersection to the line start as the first edge on an outermost loop.
+ * 2. Set the start or end point as the target point based on direction for counterclockwise traversal.
+ * 3. Mark the edge as processed and add to the current loop.
+ * 4. From the current end point, find all unprocessed edges connected to it.
+ * 5. If one connected edge, use it as next; if multiple, draw a small circle around the end point, find intersections with the current and connected edges.
+ * 6. Calculate angles from the end point to these intersections.
+ * 7. Sort by the smallest left-turning angle difference from the current edge's angle to find the next outermost edge.
+ * 8. Update the current edge and end point.
+ * 9. Repeat steps 4-8 until the end point matches the target point, closing the loop.
+ * 10. Add the closed loop and repeat steps 1-9 until all edges are processed.
+ *
+ * The algorithm has the following assumptions:
+ * 1. Contours are closed loops, so each edge has its start/end points connected to other edges;
+ * 2. Each loop is simply closed with number of edges equals the number of vertices (Shared endpoints),
+ * i.e. Euler characteristic 0;
+ * 3. Full circles/ellipses are accepted as individual closed contours;
+ * 4. No self-intersection among contours; i.e. no edge crosses another edge;
+ * 5. Multiple edges are allowed to be connected at a single point;
+ * 6. Closed contours may share edge endpoints, but no edge is shared by more than one contours.
  */
 class LoopExtractor {
 
@@ -289,6 +311,10 @@ private:
 /**
  * @brief The LoopSorter class - find topologic relations of loops
  * Sorts loops by containment to build a hierarchy, filtering degenerates and assigning parents.
+ *
+ * Each input loop is assumed to be a simple closed loop, and contains only edges.
+ * The input loops should not contain sub-loops
+
  */
 class LoopSorter {
 public:
