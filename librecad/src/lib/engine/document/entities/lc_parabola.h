@@ -165,6 +165,15 @@ public:
     void revertDirection() override;
 
     /**
+ * @brief areaLineIntegral, line integral for contour area calculation by Green's Theorem
+ * Contour Area = \oint x dy
+ * @return line integral \oint x dy along the parabola entity
+ * @author Dongxu Li
+ */
+    double areaLineIntegral() const override;
+
+
+    /**
      * @brief approximateOffset - approximate offset by a parabola
      * @param dist - the approximate distance for offset, positive direction is when the new parabola appears to be
      *               outside of the original
