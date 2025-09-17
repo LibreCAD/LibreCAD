@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+// File: rs_spline.h
 
 #ifndef RS_SPLINE_H
 #define RS_SPLINE_H
@@ -34,7 +34,7 @@
  * Holds the data that defines a line.
  */
 struct RS_SplineData {
-/**
+    /**
  * Default constructor. Leaves the data object uninitialized.
  */
     RS_SplineData() = default;
@@ -42,13 +42,15 @@ struct RS_SplineData {
     RS_SplineData(int degree, bool closed);
 
 
-/** Degree of the spline (1, 2, 3) */
+    /** Degree of the spline (1, 2, 3) */
     int degree = 3;
-/** Closed flag. */
+    /** Closed flag. */
     bool closed = false;
-/** Control points of the spline. */
+    /** Control points of the spline. */
     std::vector<RS_Vector> controlPoints;
     std::vector<double> knotslist;
+    /** Weights for NURBS (default 1.0 for B-spline). Size must match controlPoints. */
+    std::vector<double> weights;
 };
 
 std::ostream& operator << (std::ostream& os, const RS_SplineData& ld);
@@ -75,35 +77,43 @@ public:
         return false;
     }
 
-/** @return Copy of data that defines the spline. */
+    /** @return Copy of data that defines the spline. */
     const RS_SplineData& getData() const {
         return data;
     }
 
-/** Sets the splines degree (1-3). */
+    /** Sets the splines degree (1-3). */
     void setDegree(int degree);
 
-/** @return Degree of this spline curve (1-3).*/
+    /** @return Degree of this spline curve (1-3).*/
     int getDegree() const;
 
-/** @return 0. */
+    /** @return 0. */
     int getNumberOfKnots() {
         return 0;
     }
 
-/** @return Number of control points. */
+    /** @return Number of control points. */
     size_t getNumberOfControlPoints() const;
 
-/**
+    /**
   * @retval true if the spline is closed.
   * @retval false otherwise.
   */
     bool isClosed() const;
 
-/**
+    /**
   * Sets the closed flag of this spline.
   */
     void setClosed(bool c);
+
+    /** @return Copy of weights (empty = uniform 1.0). */
+    const std::vector<double>& getWeights() const {
+        return data.weights;
+    }
+
+    /** Sets weights (must match control points count). */
+    void setWeights(const std::vector<double>& w);
 
     RS_VectorSolutions getRefPoints() const override;
     RS_Vector getNearestRef( const RS_Vector& coord, double* dist = nullptr) const override;
@@ -121,8 +131,8 @@ public:
 
     RS_Vector getNearestEndpoint(const RS_Vector& coord,
                                  double* dist = nullptr)const override;
-//RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-//        bool onEntity=true, double* dist = nullptr, RS_Entity** entity=nullptr);
+    //RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
+    //        bool onEntity=true, double* dist = nullptr, RS_Entity** entity=nullptr);
     RS_Vector getNearestCenter(const RS_Vector& coord,
                                double* dist = nullptr)const override;
     RS_Vector getNearestMiddle(const RS_Vector& coord,
@@ -132,7 +142,15 @@ public:
                              const RS_Vector& coord,
                              double* dist = nullptr)const override;
 
-    void addControlPoint(const RS_Vector& v);
+    /**
+     * Appends the given point and weight to the control points/weights.
+     * Weight defaults to 1.0 (B-spline).
+     */
+    void addControlPoint(const RS_Vector& v, double w = 1.0);
+
+    /**
+     * Removes the last control point/weight.
+     */
     void removeLastControlPoint();
 
     void move(const RS_Vector& offset) override;
@@ -176,4 +194,4 @@ protected:
     RS_SplineData data;
 };
 
-#endif
+#endif // RS_SPLINE_H

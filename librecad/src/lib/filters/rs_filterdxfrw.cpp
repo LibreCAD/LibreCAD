@@ -24,48 +24,48 @@
 **********************************************************************/
 
 #include<cstdlib>
+#include<vector>
+
+
+#include <QFileInfo>
 #include <QRegularExpression>
 #include <QStringList>
 #include <QStringConverter>
 
-
-#include <QFile>
-#include <QFileInfo>
-
-#include "rs_filterdxfrw.h"
+#include "dxf_format.h"
 #include "lc_containertraverser.h"
+#include "lc_defaults.h"
+#include "lc_dimordinate.h"
+#include "lc_dimstyle.h"
 #include "lc_parabola.h"
+#include "lc_splinepoints.h"
+#include "lc_tolerance.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
+#include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_dimaligned.h"
 #include "rs_dimangular.h"
 #include "rs_dimdiametric.h"
 #include "rs_dimlinear.h"
 #include "rs_dimradial.h"
 #include "rs_ellipse.h"
+#include "rs_filterdxfrw.h"
+#include "rs_graphicview.h"
 #include "rs_hatch.h"
 #include "rs_image.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
 #include "rs_leader.h"
 #include "rs_line.h"
+#include "rs_math.h"
 #include "rs_mtext.h"
 #include "rs_point.h"
 #include "rs_polyline.h"
 #include "rs_solid.h"
 #include "rs_spline.h"
-#include "lc_splinepoints.h"
 #include "rs_system.h"
 #include "rs_text.h"
-#include "rs_graphicview.h"
-#include "rs_dialogfactory.h"
-#include "rs_dialogfactoryinterface.h"
-#include "rs_math.h"
-#include "dxf_format.h"
-#include "lc_defaults.h"
-#include "lc_dimordinate.h"
-#include "lc_dimstyle.h"
-#include "lc_tolerance.h"
 
 #ifdef DWGSUPPORT
 #include "libdwgr.h"
@@ -806,8 +806,15 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
                         "Accepted values are 1..3.", data->degree);
         return;
     }
-    for (auto const& vert: data->controllist)
-        spline->addControlPoint({vert->x, vert->y});
+    assert(data->controllist.size() == data->weightlist.size());
+    if (data->controllist.size() != data->weightlist.size()) {
+        return;
+    }
+    for (size_t i=0; i < data->controllist.size(); ++i) {
+        const std::shared_ptr<DRW_Coord>& vert = data->controllist[i];
+        const double weight = data->weightlist[i];
+        spline->addControlPoint({vert->x, vert->y}, weight);
+    }
 
     if (data->ncontrol== 0 && data->degree != 2){
         for (auto const& vert: data->fitlist)
@@ -2611,6 +2618,7 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
     {
         sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
     }
+    sp.weightlist = s->getWeights();
 
     sp.ncontrol = sp.controllist.size();
     sp.degree = s->getDegree();

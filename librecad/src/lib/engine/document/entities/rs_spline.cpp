@@ -32,14 +32,14 @@
 #include "rs_pen.h"
 
 RS_SplineData::RS_SplineData(int _degree, bool _closed):
-	degree(_degree)
-  ,closed(_closed)
+    degree(_degree)
+    ,closed(_closed)
 {
 }
 
 std::ostream& operator << (std::ostream& os, const RS_SplineData& ld) {
     os << "( degree: " << ld.degree <<
-       " closed: " << ld.closed;
+        " closed: " << ld.closed;
     if (ld.controlPoints.size()) {
         os << "\n(control points:\n";
         for (auto const& v: ld.controlPoints)
@@ -52,6 +52,12 @@ std::ostream& operator << (std::ostream& os, const RS_SplineData& ld) {
             os<<v;
         os<<")\n";
     }
+    if (ld.weights.size()) {
+        os << "\n(weights:\n";
+        for (auto const& v: ld.weights)
+            os<<v;
+        os<<")\n";
+    }
     os  << ")";
     return os;
 }
@@ -61,7 +67,12 @@ std::ostream& operator << (std::ostream& os, const RS_SplineData& ld) {
  */
 RS_Spline::RS_Spline(RS_EntityContainer* parent,
                      const RS_SplineData& d)
-        :RS_EntityContainer(parent), data(d) {
+    :RS_EntityContainer(parent), data(d) {
+    // Validate weights on init
+    if (data.weights.size() != data.controlPoints.size()) {
+        data.weights.assign(data.controlPoints.size(), 1.0);
+        RS_DEBUG->print(RS_Debug::D_NOTICE, "RS_Spline::RS_Spline: Weights resized to match controls (%zu)", data.controlPoints.size());
+    }
     calculateBorders();
 }
 
@@ -108,7 +119,7 @@ size_t RS_Spline::getNumberOfControlPoints() const {
  * @retval false otherwise.
  */
 bool RS_Spline::isClosed() const {
-		return data.closed;
+    return data.closed;
 }
 
 /**
@@ -121,9 +132,23 @@ void RS_Spline::setClosed(bool c) {
     // when switching from closed to open, remove wrapped control points
     if (data.closed && hasWrappedControlPoints()) {
         data.controlPoints.erase(data.controlPoints.begin() + (data.controlPoints.size() - data.degree), data.controlPoints.end());
+        // Remove wrapped weights too
+        if (!data.weights.empty()) {
+            data.weights.erase(data.weights.begin() + (data.weights.size() - data.degree), data.weights.end());
+        }
     }
     data.closed = c;
 
+    update();
+}
+
+void RS_Spline::setWeights(const std::vector<double>& w) {
+    if (w.size() == data.controlPoints.size()) {
+        data.weights = w;
+    } else {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::setWeights: Size mismatch (%zu vs %zu)", w.size(), data.controlPoints.size());
+        data.weights.clear();
+    }
     update();
 }
 
@@ -132,14 +157,14 @@ RS_VectorSolutions RS_Spline::getRefPoints() const{
 }
 
 RS_Vector RS_Spline::getNearestRef( const RS_Vector& coord,
-                                    double* dist /*= nullptr*/) const{
+                                   double* dist /*= nullptr*/) const{
     // override the RS_EntityContainer method
     // use RS_Entity instead for spline point dragging
     return RS_Entity::getNearestRef(coord, dist);
 }
 
 RS_Vector RS_Spline::getNearestSelectedRef( const RS_Vector& coord,
-                                            double* dist /*= nullptr*/) const{
+                                           double* dist /*= nullptr*/) const{
     // override the RS_EntityContainer method
     // use RS_Entity instead for spline point dragging
     return RS_Entity::getNearestSelectedRef(coord, dist);
@@ -171,6 +196,12 @@ void RS_Spline::update() {
         return;
     }
 
+    // Validate weights
+    if (data.weights.size() != data.controlPoints.size()) {
+        data.weights.assign(data.controlPoints.size(), 1.0);
+        RS_DEBUG->print(RS_Debug::D_NOTICE, "RS_Spline::update: Weights resized to match controls (%zu)", data.controlPoints.size());
+    }
+
     resetBorders();
 
     int splineSegments = getGraphicVariableInt("$SPLINESEGS", 8);
@@ -192,11 +223,21 @@ void RS_Spline::update() {
 }
 
 void RS_Spline::fillStrokePoints(int splineSegments, std::vector<RS_Vector>& points) {// wrap control points, if it's not wrapped yet
-    std::vector<RS_Vector>& tControlPoints = data.controlPoints;
+    // Local copies for temporary wrapping
+    std::vector<RS_Vector> tControlPoints = data.controlPoints;
+    std::vector<double> tWeights = data.weights.empty() ? std::vector<double>(data.controlPoints.size(), 1.0) : data.weights;
+
+    // wrap control points and weights, if it's not wrapped yet
     if (data.closed && (data.degree == 2 || !hasWrappedControlPoints())) {
         std::vector<RS_Vector> wrappedPoints{data.controlPoints.cbegin(), data.controlPoints.cbegin() + data.degree};
         tControlPoints.insert(tControlPoints.end(), wrappedPoints.cbegin(), wrappedPoints.cend());
         RS_DEBUG->print(RS_Debug::D_NOTICE, "%s: controlPoints: size=%llu\n", __func__, data.controlPoints.size());
+
+        // Wrap weights too
+        if (!data.weights.empty()) {
+            std::vector<double> wrappedWeights{data.weights.cbegin(), data.weights.cbegin() + data.degree};
+            tWeights.insert(tWeights.end(), wrappedWeights.cbegin(), wrappedWeights.cend());
+        }
     }
 
     const size_t npts = tControlPoints.size();
@@ -207,24 +248,23 @@ void RS_Spline::fillStrokePoints(int splineSegments, std::vector<RS_Vector>& poi
     // order:
     const size_t  k = data.degree + 1;
 
-    std::vector<double> h(npts+1, 1.);
     points.resize(pointsCount);
     std::fill(points.begin(), points.end(),RS_Vector{0., 0.});
     if (data.closed) {
-        rbsplinu(npts, k, pointsCount, tControlPoints, h, points);
+        rbsplinu(npts, k, pointsCount, tControlPoints, tWeights, points);
     } else {
-        rbspline(npts, k, pointsCount, tControlPoints, h, points);
+        rbspline(npts, k, pointsCount, tControlPoints, tWeights, points);
     }
 }
 
 RS_Vector RS_Spline::getStartpoint() const {
-   if (data.closed) return RS_Vector(false);
-   return static_cast<RS_Line*>(const_cast<RS_Spline*>(this)->firstEntity())->getStartpoint();
+    if (data.closed) return RS_Vector(false);
+    return static_cast<RS_Line*>(const_cast<RS_Spline*>(this)->firstEntity())->getStartpoint();
 }
 
 RS_Vector RS_Spline::getEndpoint() const {
-   if (data.closed) return RS_Vector(false);
-   return static_cast<RS_Line*>(const_cast<RS_Spline*>(this)->lastEntity())->getEndpoint();
+    if (data.closed) return RS_Vector(false);
+    return static_cast<RS_Line*>(const_cast<RS_Spline*>(this)->lastEntity())->getEndpoint();
 }
 
 RS_Vector RS_Spline::getNearestEndpoint(const RS_Vector& coord,
@@ -232,27 +272,27 @@ RS_Vector RS_Spline::getNearestEndpoint(const RS_Vector& coord,
     double minDist = RS_MAXDOUBLE;
     RS_Vector ret(false);
     if(! data.closed) { // no endpoint for closed spline
-       RS_Vector vp1(getStartpoint());
-       RS_Vector vp2(getEndpoint());
-       double d1( (coord-vp1).squared());
-       double d2( (coord-vp2).squared());
-       if( d1<d2){
-           ret=vp1;
-           minDist=std::sqrt(d1);
-       }else{
-           ret=vp2;
-           minDist=std::sqrt(d2);
-       }
-//        for (int i=0; i<data.controlPoints.count(); i++) {
-//            d = (data.controlPoints.at(i)).distanceTo(coord);
+        RS_Vector vp1(getStartpoint());
+        RS_Vector vp2(getEndpoint());
+        double d1( (coord-vp1).squared());
+        double d2( (coord-vp2).squared());
+        if( d1<d2){
+            ret=vp1;
+            minDist=std::sqrt(d1);
+        }else{
+            ret=vp2;
+            minDist=std::sqrt(d2);
+        }
+        //        for (int i=0; i<data.controlPoints.count(); i++) {
+        //            d = (data.controlPoints.at(i)).distanceTo(coord);
 
-//            if (d<minDist) {
-//                minDist = d;
-//                ret = data.controlPoints.at(i);
-//            }
-//        }
+        //            if (d<minDist) {
+        //                minDist = d;
+        //                ret = data.controlPoints.at(i);
+        //            }
+        //        }
     }
-	if (dist) {
+    if (dist) {
         *dist = minDist;
     }
     return ret;
@@ -310,7 +350,7 @@ void RS_Spline::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
     for (RS_Vector& vp: data.controlPoints) {
         vp.rotate(center, angleVector);
     }
-//    update();
+    //    update();
 }
 
 void RS_Spline::scale(const RS_Vector& center, const RS_Vector& factor) {
@@ -347,6 +387,9 @@ void RS_Spline::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 
 void RS_Spline::revertDirection() {
     std::reverse(data.controlPoints.begin(), data.controlPoints.end());
+    if (!data.weights.empty()) {
+        std::reverse(data.weights.begin(), data.weights.end());
+    }
 }
 
 void RS_Spline::draw(RS_Painter* painter) {
@@ -364,12 +407,17 @@ const std::vector<RS_Vector>& RS_Spline::getControlPoints() const{
 /**
  * Appends the given point to the control points.
  */
-void RS_Spline::addControlPoint(const RS_Vector& v) {
+void RS_Spline::addControlPoint(const RS_Vector& v, double w /*= 1.0*/) {
     if (isClosed() && hasWrappedControlPoints()) {
         data.controlPoints.insert(data.controlPoints.begin() + (data.controlPoints.size() - data.degree), v );
+        if (!data.weights.empty()) {
+            data.weights.insert(data.weights.begin() + (data.weights.size() - data.degree), w );
+        }
     } else {
         data.controlPoints.push_back(v);
+        data.weights.push_back(w);
     }
+    update();
 }
 
 /**
@@ -378,9 +426,14 @@ void RS_Spline::addControlPoint(const RS_Vector& v) {
 void RS_Spline::removeLastControlPoint() {
     if (isClosed() && hasWrappedControlPoints()) {
         data.controlPoints.erase(data.controlPoints.begin() + (data.controlPoints.size() - data.degree));
+        if (!data.weights.empty()) {
+            data.weights.erase(data.weights.begin() + (data.weights.size() - data.degree));
+        }
     } else {
         data.controlPoints.pop_back();
+        data.weights.pop_back();
     }
+    update();
 }
 
 /**
@@ -395,7 +448,7 @@ bool RS_Spline::hasWrappedControlPoints() const {
         return false;
 
     return std::equal(controlPoints.cbegin(), controlPoints.cbegin() + data.degree,
-               controlPoints.cbegin() + controlPoints.size() - data.degree);
+                      controlPoints.cbegin() + controlPoints.size() - data.degree);
 }
 
 //TODO: private interface cleanup; de Boor's Algorithm
@@ -404,64 +457,64 @@ bool RS_Spline::hasWrappedControlPoints() const {
  * equal to the order at the ends.
  */
 std::vector<double> RS_Spline::knot(size_t num, size_t order) const{
-	if (data.knotslist.size() == num + order) {
-		//use custom knot vector
-		return data.knotslist;
-	}
+    if (data.knotslist.size() == num + order) {
+        //use custom knot vector
+        return data.knotslist;
+    }
 
-	std::vector<double> knotVector(num + order, 0.);
-	//use uniform knots
-	std::iota(knotVector.begin() + order, knotVector.begin() + num + 1, 1);
-	std::fill(knotVector.begin() + num + 1, knotVector.end(), knotVector[num]);
-	return knotVector;
+    std::vector<double> knotVector(num + order, 0.);
+    //use uniform knots
+    std::iota(knotVector.begin() + order, knotVector.begin() + num + 1, 1);
+    std::fill(knotVector.begin() + num + 1, knotVector.end(), knotVector[num]);
+    return knotVector;
 }
 
 /**
  * Generates rational B-spline basis functions for an open knot vector.
  */
 namespace{
-    std::vector<double> rbasis(int c, double t, int npts,
-                               const std::vector<double>& x,
-                               const std::vector<double>& h) {
+std::vector<double> rbasis(int c, double t, int npts,
+                           const std::vector<double>& x,
+                           const std::vector<double>& h) {
 
-        int const nplusc = npts + c;
+    int const nplusc = npts + c;
 
-        std::vector<double> temp(nplusc,0.);
+    std::vector<double> temp(nplusc,0.);
 
-        // calculate the first order nonrational basis functions n[i]
-        for (int i = 0; i< nplusc-1; i++)
-            if ((t >= x[i]) && (t < x[i+1])) temp[i] = 1;
+    // calculate the first order nonrational basis functions n[i]
+    for (int i = 0; i< nplusc-1; i++)
+        if ((t >= x[i]) && (t < x[i+1])) temp[i] = 1;
 
-        /* calculate the higher order nonrational basis functions */
+    /* calculate the higher order nonrational basis functions */
 
-        for (int k = 2; k <= c; k++) {
-            for (int i = 0; i < nplusc-k; i++) {
-// if the lower order basis function is zero skip the calculation
-                if (temp[i] != 0)
-                    temp[i] = ((t-x[i])*temp[i])/(x[i+k-1]-x[i]);
-                // if the lower order basis function is zero skip the calculation
-                if (temp[i+1] != 0)
-                    temp[i] += ((x[i+k]-t)*temp[i+1])/(x[i+k]-x[i+1]);
-            }
+    for (int k = 2; k <= c; k++) {
+        for (int i = 0; i < nplusc-k; i++) {
+            // if the lower order basis function is zero skip the calculation
+            if (temp[i] != 0)
+                temp[i] = ((t-x[i])*temp[i])/(x[i+k-1]-x[i]);
+            // if the lower order basis function is zero skip the calculation
+            if (temp[i+1] != 0)
+                temp[i] += ((x[i+k]-t)*temp[i+1])/(x[i+k]-x[i+1]);
         }
-
-        // pick up last point
-        if (t >= x[nplusc-1]) temp[npts-1] = 1;
-
-        // calculate sum for denominator of rational basis functions
-        double sum = 0.;
-        for (int i = 0; i < npts; i++) {
-            sum += temp[i]*h[i];
-        }
-
-        std::vector<double> r(npts, 0);
-        // form rational basis functions and put in r vector
-        if (sum != 0) {
-            for (int i = 0; i < npts; i++)
-                r[i] = (temp[i]*h[i])/sum;
-        }
-        return r;
     }
+
+    // pick up last point
+    if (t >= x[nplusc-1]) temp[npts-1] = 1;
+
+    // calculate sum for denominator of rational basis functions
+    double sum = 0.;
+    for (int i = 0; i < npts; i++) {
+        sum += temp[i]*h[i];
+    }
+
+    std::vector<double> r(npts, 0);
+    // form rational basis functions and put in r vector
+    if (sum != 0) {
+        for (int i = 0; i < npts; i++)
+            r[i] = (temp[i]*h[i])/sum;
+    }
+    return r;
+}
 }
 
 
@@ -472,33 +525,33 @@ void RS_Spline::rbspline(size_t npts, size_t k, size_t p1,
                          const std::vector<RS_Vector>& b,
                          const std::vector<double>& h,
                          std::vector<RS_Vector>& p) const{
-	size_t const nplusc = npts + k;
+    size_t const nplusc = npts + k;
 
-	// generate the open knot vector
-	auto const x = knot(npts, k);
+    // generate the open knot vector
+    auto const x = knot(npts, k);
 
     // calculate the points on the rational B-spline curve
     double t {x[0]};
     double const step {(x[nplusc-1] - t) / (p1-1)};
 
-	for (auto& vp: p) {
-		if (x[nplusc-1] - t < 5e-6) t = x[nplusc-1];
+    for (auto& vp: p) {
+        if (x[nplusc-1] - t < 5e-6) t = x[nplusc-1];
 
         // generate the basis function for this value of t
-		auto const nbasis = rbasis(k, t, npts, x, h);
+        auto const nbasis = rbasis(k, t, npts, x, h);
 
         // generate a point on the curve
-		for (size_t i = 0; i < npts; i++)
-			vp += b[i] * nbasis[i];
+        for (size_t i = 0; i < npts; i++)
+            vp += b[i] * nbasis[i];
 
-		t += step;
+        t += step;
     }
 
 }
 
 std::vector<double> RS_Spline::knotu(size_t num, size_t order) const{
     if (data.knotslist.size() == num + order) {
-//use custom knot vector
+        //use custom knot vector
         return data.knotslist;
     }
     std::vector<double> knotVector(num + order, 0.);
@@ -512,7 +565,7 @@ void RS_Spline::rbsplinu(size_t npts, size_t k, size_t p1,
                          std::vector<RS_Vector>& p) const{
     size_t const nplusc = npts + k;
 
-/* generate the periodic knot vector */
+    /* generate the periodic knot vector */
     std::vector<double> const x = knotu(npts, k);
 
     /*    calculate the points on the rational B-spline curve */
@@ -522,9 +575,9 @@ void RS_Spline::rbsplinu(size_t npts, size_t k, size_t p1,
     for (auto& vp: p) {
         if (x[nplusc-1] - t < 5e-6) t = x[nplusc-1];
 
-/* generate the basis function for this value of t */
+        /* generate the basis function for this value of t */
         auto const nbasis = rbasis(k, t, npts, x, h);
-/* generate a point on the curve, for x, y, z */
+        /* generate a point on the curve, for x, y, z */
         for (size_t i = 0; i < npts; i++)
             vp += b[i] * nbasis[i];
 
@@ -542,7 +595,7 @@ std::ostream& operator << (std::ostream& os, const RS_Spline& l) {
 
 RS_Vector RS_Spline::getNearestPointOnEntity(const RS_Vector &coord, bool onEntity, double *dist, RS_Entity **entity) const {
     return RS_EntityContainer::getNearestPointOnEntity(coord, onEntity, dist, entity);
-/*    RS_Vector point(false);
+    /*    RS_Vector point(false);
 
     RS_Entity *en = getNearestEntity(coord, dist, RS2::ResolveNone);
 
