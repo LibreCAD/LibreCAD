@@ -44,6 +44,8 @@
 #include "rs_pattern.h"
 #include "rs_vector.h"
 #include "rs.h"
+#include "lc_splinepoints.h"  // ADDED: For LC_SplinePoints support
+#include "lc_parabola.h"      // ADDED: For LC_Parabola support
 
 namespace {
 // Definition for buildLC_Loops (moved to namespace level for accessibility)
@@ -186,6 +188,14 @@ bool LoopExtractor::validate() const {
         if (type == RS2::EntityEllipse) {
             RS_Ellipse* ell = static_cast<RS_Ellipse*>(e);
             return ell->getAngleLength() >= 2 * M_PI - RS_TOLERANCE;
+        }
+        if (type == RS2::EntitySpline) {  // SUPPORT: Closed splines
+            LC_SplinePoints* spl = static_cast<LC_SplinePoints*>(e);
+            return spl->isClosed();
+        }
+        if (type == RS2::EntityParabola) {  // SUPPORT: Valid if primitives computed successfully
+            LC_Parabola* para = static_cast<LC_Parabola*>(e);
+            return para->getData().valid;
         }
         return e->getStartpoint().distanceTo(e->getEndpoint()) <= ENDPOINT_TOLERANCE;
     }
@@ -538,18 +548,12 @@ double LC_Loops::getTotalArea() const {
 /**
  * @brief Parametric equation for point on ellipse.
  */
-/**
- * @brief Parametric equation for point on ellipse.
- */
 RS_Vector LC_Loops::e_point(const RS_Vector& center, double major, double minor, double rot, double t) const {
     RS_Vector local(major * std::cos(t), minor * std::sin(t));
     local.rotate(rot);
     return center + local;
 }
 
-/**
- * @brief First derivative (tangent vector) for ellipse.
- */
 /**
  * @brief First derivative (tangent vector) for ellipse.
  */
@@ -600,7 +604,7 @@ void LC_Loops::addEllipticArc(QPainterPath& path, const RS_Vector& center, doubl
 }
 
 /**
- * @brief Converts container entities to QPainterPath, handling lines, arcs, circles, ellipses.
+ * @brief Converts container entities to QPainterPath, handling lines, arcs, circles, ellipses, splines, and parabolas.
  * Closes the subpath; skips unsupported types.
  */
 QPainterPath LC_Loops::buildPathFromLoop(const RS_EntityContainer& cont) const {
@@ -622,24 +626,37 @@ QPainterPath LC_Loops::buildPathFromLoop(const RS_EntityContainer& cont) const {
                 path.lineTo(end.x, end.y);
             }
             break;
-            case RS2::EntityArc:
-            {
+            case RS2::EntityArc: {
                 RS_Arc* arc = static_cast<RS_Arc*>(e);
                 double r = arc->getRadius();
                 addEllipticArc(path, arc->getCenter(), r, r, 0.0, arc->getAngle1(), arc->getAngle2());
             }
             break;
-            case RS2::EntityCircle:
-            {
+            case RS2::EntityCircle: {
                 RS_Circle* circle = static_cast<RS_Circle*>(e);
                 double r = circle->getRadius();
                 addEllipticArc(path, circle->getCenter(), r, r, 0.0, 0.0, 2 * M_PI);
             }
             break;
-            case RS2::EntityEllipse:
-            {
+            case RS2::EntityEllipse: {
                 RS_Ellipse* ellipse = static_cast<RS_Ellipse*>(e);
                 addEllipticArc(path, ellipse->getCenter(), ellipse->getMajorRadius(), ellipse->getMinorRadius(), ellipse->getAngle(), ellipse->getAngle1(), ellipse->getAngle2());
+            }
+            break;
+            case RS2::EntitySpline:
+            case RS2::EntityParabola: {  // IMPROVED: Adaptive strokes for splines and parabolas
+                LC_SplinePoints* curve = static_cast<LC_SplinePoints*>(e);  // Parabola inherits from SplinePoints
+                int segments = 20;  // Base density
+                double len = curve->getLength();
+                if (len > 0) segments = std::max(20, static_cast<int>(len / 0.1));  // ~0.1 unit per segment
+                std::vector<RS_Vector> points;
+                curve->fillStrokePoints(segments, points);
+                if (!points.empty()) {
+                    // Start already connected; draw segments
+                    for (size_t i = 1; i < points.size(); ++i) {
+                        path.lineTo(points[i].x, points[i].y);
+                    }
+                }
             }
             break;
             default:
@@ -704,6 +721,13 @@ bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
     if (type == RS2::EntityArc) {
         const RS_Arc* arc = static_cast<const RS_Arc*>(e);
         return std::abs(arc->getAngleLength() - 2 * M_PI) < RS_TOLERANCE_ANGLE;
+    }
+    if (type == RS2::EntitySpline) {  // SUPPORT: Closed splines
+        const LC_SplinePoints* spl = static_cast<const LC_SplinePoints*>(e);
+        return spl->isClosed();
+    }
+    if (type == RS2::EntityParabola) {  // SUPPORT: Parabolas are finite open arcs
+        return false;
     }
     if (type == RS2::EntityLine) return e->getStartpoint() == e->getEndpoint();
     return false;
@@ -840,7 +864,7 @@ std::unique_ptr<RS_EntityContainer> LC_Loops::trimPatternEntities(const RS_Patte
 }
 
 /**
- * @brief Creates a trimmed sub-entity (line/arc/circle/ellipse) between two points.
+ * @brief Creates a trimmed sub-entity (line/arc/circle/ellipse/spline/parabola) between two points.
  * Handles type-specific parameterization.
  */
 RS_Entity* LC_Loops::createSubEntity(RS_Entity* e, const RS_Vector& p1, const RS_Vector& p2) const {
@@ -868,12 +892,63 @@ RS_Entity* LC_Loops::createSubEntity(RS_Entity* e, const RS_Vector& p1, const RS
         RS_Vector lp2 = (p2 - center).rotate(-rot);
         double lang2 = std::atan2(lp2.y / ell->getMinorRadius(), lp2.x / ell->getMajorRadius());
         return new RS_Ellipse(nullptr, {center, ell->getMajorP(), ell->getRatio(), lang1, lang2, ell->isReversed()});
+    } else if (type == RS2::EntitySpline) {  // IMPROVED: Use cut() for precise trimming
+        LC_SplinePoints* spl = static_cast<LC_SplinePoints*>(e);
+        double total_len = spl->getLength();
+        if (total_len < RS_TOLERANCE) return nullptr;
+        double t1 = spl->getDistanceToPoint(p1) / total_len;
+        double t2 = spl->getDistanceToPoint(p2) / total_len;
+        if (t1 > t2) std::swap(t1, t2);  // Ensure order
+        LC_SplinePoints* seg1 = spl->cut(p1);  // Trims original to start-p1
+        if (seg1) {
+            LC_SplinePoints* sub = seg1->cut(p2);  // Further trim p1-p2
+            if (sub && sub->getLength() > RS_TOLERANCE) return sub;
+            delete seg1;  // Cleanup
+        }
+        // Fallback: Resample splinePoints between nearest indices
+        auto points = spl->getPoints();
+        size_t i1 = 0, i2 = points.size() - 1;
+        double min_d1 = RS_MAXDOUBLE, min_d2 = RS_MAXDOUBLE;
+        for (size_t i = 0; i < points.size(); ++i) {
+            double d = points[i].distanceTo(p1);
+            if (d < min_d1) { min_d1 = d; i1 = i; }
+            d = points[i].distanceTo(p2);
+            if (d < min_d2) { min_d2 = d; i2 = i; }
+        }
+        if (i1 > i2) std::swap(i1, i2);
+        LC_SplinePointsData sub_data;
+        sub_data.splinePoints.assign(points.begin() + i1, points.begin() + i2 + 1);
+        return new LC_SplinePoints(nullptr, sub_data);
+    } else if (type == RS2::EntityParabola) {  // IMPROVED: Exact tangents via FromEndPointsTangents
+        LC_Parabola* para = static_cast<LC_Parabola*>(e);
+        RS_Vector tan1 = para->getTangentDirection(p1).normalize();
+        RS_Vector tan2 = para->getTangentDirection(p2).normalize();
+        std::array<RS_Vector, 2> ends = {p1, p2};
+        std::array<RS_Vector, 2> tans = {tan1, tan2};
+        LC_ParabolaData sub_data = LC_ParabolaData::FromEndPointsTangents(ends, tans);
+        if (sub_data.valid) {
+            return new LC_Parabola(nullptr, sub_data);
+        }
+        // Fallback: Interpolate controls
+        auto cps = para->getData().controlPoints;
+        std::sort(cps.begin(), cps.end(), [](const RS_Vector& a, const RS_Vector& b){ return a.x < b.x; });
+        double x1 = p1.x, x2 = p2.x;
+        if (x1 > x2) std::swap(x1, x2);
+        std::array<RS_Vector, 3> sub_cps;
+        double range = x2 - x1;
+        if (range < RS_TOLERANCE) return nullptr;
+        for (int i = 0; i < 3; ++i) {
+            double ratio = (cps[i].x - x1) / range;
+            if (ratio < 0) ratio = 0; else if (ratio > 1) ratio = 1;
+            sub_cps[i] = RS_Vector{x1 + ratio * range, cps[i].y};  // Preserve y for parabolic shape
+        }
+        return new LC_Parabola(nullptr, LC_ParabolaData{sub_cps});
     }
     return nullptr;
 }
 
 /**
- * @brief Sorts intersection points by parameterization along the entity (t for lines, angle for curves).
+ * @brief Sorts intersection points by parameterization along the entity (t for lines, angle for curves, arc-len/x-param for splines/parabolas).
  */
 std::vector<RS_Vector> LC_Loops::sortPointsAlongEntity(RS_Entity* e, std::vector<RS_Vector> inters) const {
     std::vector<std::pair<double, RS_Vector>> param_points;
@@ -921,6 +996,37 @@ std::vector<RS_Vector> LC_Loops::sortPointsAlongEntity(RS_Entity* e, std::vector
             double ang = std::atan2(local.y / ell->getMinorRadius(), local.x / ell->getMajorRadius());
             double diff = RS_Math::getAngleDifference(a1, ang, reversed);
             param_points.emplace_back(diff, v);
+        }
+    } else if (type == RS2::EntitySpline) {  // IMPROVED: Binary search for arc-length param
+        LC_SplinePoints* spl = static_cast<LC_SplinePoints*>(e);
+        double total_len = spl->getLength();
+        if (total_len < RS_TOLERANCE) return {};
+        for (RS_Vector v : inters) {
+            RS_Vector nearest = spl->getNearestPointOnEntity(v);
+            // Binary search approx for param t (normalized [0,1])
+            double low = 0.0, high = total_len;
+            for (int iter = 0; iter < 10; ++iter) {  // ~1e-3 precision
+                double mid = (low + high) / 2.0;
+                RS_Vector mid_pt = spl->getNearestDist(mid, spl->getStartpoint());  // Point at dist mid
+                double mid_dist_to_v = mid_pt.distanceTo(v);
+                if (mid_dist_to_v < RS_TOLERANCE) break;
+                if (mid < total_len / 2) high = mid; else low = mid;
+            }
+            double dist_along = (low + high) / 2.0;
+            param_points.emplace_back(dist_along / total_len, v);
+        }
+    } else if (type == RS2::EntityParabola) {  // IMPROVED: Exact x-param normalization
+        LC_Parabola* para = static_cast<LC_Parabola*>(e);
+        LC_ParabolaData& d = para->getData();
+        if (!d.valid) return {};
+        double x_min = std::min({d.controlPoints[0].x, d.controlPoints[1].x, d.controlPoints[2].x});
+        double x_max = std::max({d.controlPoints[0].x, d.controlPoints[1].x, d.controlPoints[2].x});
+        double x_range = x_max - x_min;
+        if (x_range < RS_TOLERANCE) return {};
+        for (RS_Vector v : inters) {
+            double x_param = d.FindX(v);
+            double norm_param = (x_param - x_min) / x_range;  // [0,1]
+            param_points.emplace_back(norm_param, v);
         }
     }
     std::sort(param_points.begin(), param_points.end(), [](const auto& a, const auto& b){
