@@ -142,38 +142,7 @@ void RS_Spline::setClosed(bool c) {
     update();
 }
 
-
-
-/** @return Copy of weights (empty = uniform 1.0). */
-const std::vector<double>& RS_Spline::getWeights() const
-{
-    if (data.closed && hasWrappedControlPoints()) {
-        std::vector<double> weights = data.weights;
-        weights.erase(weights.begin() + (weights.size() - data.degree), weights.end());
-        return weights;
-    }
-    return data.weights;
-}
-
-/** @return Copy of control points */
-const std::vector<RS_Vector>& RS_Spline::getControlPoints() const
-{
-    if (data.closed && hasWrappedControlPoints()) {
-        std::vector<RS_Vector> ctlPoints = data.controlPoints;
-        ctlPoints.erase(ctlPoints.begin() + (ctlPoints.size() - data.degree), ctlPoints.end());
-        return ctlPoints;
-    }
-    return data.controlPoints;
-}
-
-/** @return Copy of control points */
-void RS_Spline::setControlPoints(std::vector<RS_Vector> controlPoints)
-{
-    data.controlPoints = std::move(controlPoints);
-    update();
-}
-
-void RS_Spline::setWeights(std::vector<double> w) {
+void RS_Spline::setWeights(const std::vector<double>& w) {
     if (w.size() == data.controlPoints.size()) {
         data.weights = w;
     } else {
@@ -181,14 +150,6 @@ void RS_Spline::setWeights(std::vector<double> w) {
         data.weights.clear();
     }
     update();
-}
-
-const std::vector<double>& RS_Spline::getKnots() const {
-    return data.knotslist;
-}
-
-void RS_Spline::setKnots(std::vector<double> knots) {
-    data.knotslist = std::move(knots);
 }
 
 RS_VectorSolutions RS_Spline::getRefPoints() const{
@@ -433,6 +394,14 @@ void RS_Spline::revertDirection() {
 
 void RS_Spline::draw(RS_Painter* painter) {
     painter->drawSplineWCS(*this);
+}
+
+
+/**
+ * @return The reference points of the spline.
+ */
+const std::vector<RS_Vector>& RS_Spline::getControlPoints() const{
+    return data.controlPoints;
 }
 
 /**

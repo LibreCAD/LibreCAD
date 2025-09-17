@@ -108,24 +108,12 @@ public:
     void setClosed(bool c);
 
     /** @return Copy of weights (empty = uniform 1.0). */
-    const std::vector<double>& getWeights() const;
-    const std::vector<double>& getKnots() const;
-    void setWeights(std::vector<double> weights);
-    void setKnots(std::vector<double> knots);
-    /** @return Copy of control points */
-    const std::vector<RS_Vector>& getControlPoints() const;
-    void setControlPoints(std::vector<RS_Vector> controlPoints);
+    const std::vector<double>& getWeights() const {
+        return data.weights;
+    }
 
-    /**
-     * Appends the given point and weight to the control points/weights.
-     * Weight defaults to 1.0 (B-spline).
-     */
-    void addControlPoint(const RS_Vector& v, double w = 1.0);
-
-    /**
-     * Removes the last control point/weight.
-     */
-    void removeLastControlPoint();
+    /** Sets weights (must match control points count). */
+    void setWeights(const std::vector<double>& w);
 
     RS_VectorSolutions getRefPoints() const override;
     RS_Vector getNearestRef( const RS_Vector& coord, double* dist = nullptr) const override;
@@ -154,6 +142,17 @@ public:
                              const RS_Vector& coord,
                              double* dist = nullptr)const override;
 
+    /**
+     * Appends the given point and weight to the control points/weights.
+     * Weight defaults to 1.0 (B-spline).
+     */
+    void addControlPoint(const RS_Vector& v, double w = 1.0);
+
+    /**
+     * Removes the last control point/weight.
+     */
+    void removeLastControlPoint();
+
     void move(const RS_Vector& offset) override;
     void rotate(const RS_Vector& center, double angle) override;
     void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
@@ -165,6 +164,7 @@ public:
     void revertDirection() override;
 
     void draw(RS_Painter* painter) override;
+    const std::vector<RS_Vector>& getControlPoints() const;
     friend std::ostream& operator << (std::ostream& os, const RS_Spline& l);
     void calculateBorders() override;
     void fillStrokePoints(int splineSegments, std::vector<RS_Vector>& points);
