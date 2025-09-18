@@ -125,7 +125,7 @@ void QG_DlgMText::updateUniCharComboBox(int) {
 
     cbUniChar->clear();
     for (int c=min; c<=max; c++) {
-        char buf[5];
+        char buf[5] = {};
         snprintf(buf,5, "%04X", c);
         cbUniChar->addItem(QString("[%1] %2").arg(buf).arg(QChar(c)));
     }
@@ -369,7 +369,13 @@ int QG_DlgMText::getAlignment() {
 }
 
 void QG_DlgMText::setFont(const QString& f) {
-    cbFont->setCurrentIndex( cbFont->findText(f) );
+    int index = cbFont->findText(f);
+
+    // Issue #2069: default to unicode fonts
+    if (index == -1)
+        index = cbFont->findText("unicode");
+    if (index >= 0)
+        cbFont->setCurrentIndex(index);
     font = cbFont->getFont();
     defaultChanged(false);
 }
@@ -460,4 +466,3 @@ bool QG_DlgMText::eventFilter(QObject *obj, QEvent *event) {
     }
     return false;
 }
-

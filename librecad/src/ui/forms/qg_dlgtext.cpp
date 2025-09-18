@@ -425,7 +425,12 @@ int QG_DlgText::getAlignment() {
 }
 
 void QG_DlgText::setFont(const QString& f) {
-    cbFont->setCurrentIndex( cbFont->findText(f) );
+   int index = cbFont->findText(f);
+    // Issue #2069: default to unicode fonts
+    if (index == -1)
+        index = cbFont->findText("unicode");
+    if (index >= 0)
+        cbFont->setCurrentIndex(index);
     font = cbFont->getFont();
 //    defaultChanged(false);
 }
@@ -494,4 +499,3 @@ void QG_DlgText::insertChar() {
 //    teText->textCursor().insertText( QString("%1").arg(QChar(c)) );
     teText->insert( QString("%1").arg(QChar(c)) );
 }
-
