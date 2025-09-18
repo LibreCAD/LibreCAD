@@ -58,7 +58,11 @@ QG_DlgMText::QG_DlgMText(QWidget* parent, bool modal, Qt::WindowFlags fl)
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_DlgMText::~QG_DlgMText() = default;
+QG_DlgMText::~QG_DlgMText()
+{
+    destroy();
+    // no need to delete child widgets, Qt does it all for us
+}
 
 /*
  *  Sets the strings of the subwidgets using the current
