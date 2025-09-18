@@ -52,12 +52,6 @@ namespace LC_LoopUtils {
  */
 bool isEnclosed(RS_EntityContainer& loop, RS_AtomicEntity& entity);
 
-// Helper method to check if an RS_EntityContainer forms a closed loop.
-// Assumes the container has only edge entity children (e.g., lines, arcs, etc.).
-// Returns true if all consecutive edges are connected within g_contourGapTolerance,
-// and the last edge's endpoint connects back to the first edge's startpoint.
-bool isLoopClosed(const RS_EntityContainer& loop);
-
 /**
  * @brief The LoopExtractor class, to extract closed loops from edges.
  * The algorithm:
