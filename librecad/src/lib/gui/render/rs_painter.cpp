@@ -1617,6 +1617,20 @@ RS_Vector RS_Painter::toGui(const RS_Vector& worldCoordinates) const
    return uiPosition;
 }
 
+QTransform RS_Painter::getToGuiTransform() const
+{
+    QPolygonF wcs{ {0., 0.}, {1., 0.}, {0., 1.}, {1., 1.}};
+    QPolygonF gui;
+    std::transform(wcs.begin(), wcs.end(), std::back_inserter(gui), [this](const QPointF& wcsPoint) {
+        RS_Vector guiV = toGui({wcsPoint.x(), wcsPoint.y()});
+        return QPointF{guiV.x, guiV.y};
+    });
+    QTransform transform;
+    QTransform::quadToQuad(wcs, gui, transform);
+    return transform;
+}
+
+
 QPointF RS_Painter::toGuiPointF(const RS_Vector& worldCoordinates) const{
     RS_Vector uiPos = toGui(worldCoordinates);
     return {uiPos.x, uiPos.y};

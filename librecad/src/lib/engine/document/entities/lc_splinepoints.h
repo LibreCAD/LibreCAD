@@ -242,6 +242,14 @@ public:
     static QPolygonF getBoundingRect(const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& x2);
     //! \}
     void fillStrokePoints(int splineSegments, std::vector<RS_Vector>& points) const;
+
+    /**
+ * @brief areaLineIntegral, line integral for contour area calculation by Green's Theorem
+ * Contour Area = \oint x dy
+ * @return line integral \oint x dy along the spline entity
+ * @author Dongxu Li
+ */
+    double areaLineIntegral() const override;
 };
 
 #endif

@@ -163,8 +163,9 @@ RS_EntityContainer::~RS_EntityContainer() {
     if (autoDelete) {
         while (!m_entities.isEmpty())
             delete m_entities.takeFirst();
-    } else
+    } else {
         m_entities.clear();
+    }
 }
 
 RS_Entity *RS_EntityContainer::clone() const {

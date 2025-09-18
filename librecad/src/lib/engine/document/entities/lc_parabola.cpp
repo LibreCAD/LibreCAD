@@ -572,3 +572,22 @@ std::unique_ptr<LC_Parabola> LC_Parabola::approximateOffset(double dist) const
     LC_ParabolaData offsetData{controlPoints};
     return std::make_unique<LC_Parabola>(nullptr, offsetData);
 }
+
+double LC_Parabola::areaLineIntegral() const
+{
+    if (!data.valid) {
+        return 0.0;
+    }
+    const RS_Vector& p0 = data.controlPoints[0];
+    const RS_Vector& p1 = data.controlPoints[1];
+    const RS_Vector& p2 = data.controlPoints[2];
+    double x0 = p0.x, y0 = p0.y;
+    double x1 = p1.x, y1 = p1.y;
+    double x2 = p2.x, y2 = p2.y;
+
+    double a = -x0 / 2.0 - x1 / 3.0 - x2 / 6.0;
+    double b =  x0 / 3.0 - x2 / 3.0;
+    double c =  x0 / 6.0 + x1 / 3.0 + x2 / 2.0;
+
+    return a * y0 + b * y1 + c * y2;
+}

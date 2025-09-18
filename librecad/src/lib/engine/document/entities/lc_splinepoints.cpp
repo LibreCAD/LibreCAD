@@ -3340,3 +3340,94 @@ QPolygonF LC_SplinePoints::getBoundingRect(const RS_Vector& x1, const RS_Vector&
     ret<<ret.front();
     return ret;
 }
+
+/**
+ * @brief areaLineIntegral, line integral for contour area calculation by Green's Theorem
+ * Contour Area = \oint x dy
+ * @return line integral \oint x dy along the spline entity
+ * @author Dongxu Li
+ */
+double LC_SplinePoints::areaLineIntegral() const
+{
+    size_t n = data.controlPoints.size();
+    if (n < 2) {
+        return 0.0;
+    }
+
+    auto quadAreaIntegral = [](const RS_Vector& p0, const RS_Vector& p1, const RS_Vector& p2) -> double {
+        double x0 = p0.x, y0 = p0.y;
+        double x1 = p1.x, y1 = p1.y;
+        double x2 = p2.x, y2 = p2.y;
+
+        double A = 2.0 * (y1 - y0);
+        double B = 2.0 * (y2 - 2.0 * y1 + y0);
+        double C = x0;
+        double D = 2.0 * (x1 - x0);
+        double E = x0 - 2.0 * x1 + x2;
+
+        double int1 = C * A;
+        double int2 = (C * B + D * A) / 2.0;
+        double int3 = (D * B + E * A) / 3.0;
+        double int4 = E * B / 4.0;
+
+        return int1 + int2 + int3 + int4;
+    };
+
+    double res = 0.0;
+    RS_Vector vStart, vControl, vEnd;
+
+    if (!data.closed) {
+        if (n == 2) {
+            RS_Vector s = getStartpoint();
+            RS_Vector e = getEndpoint();
+            return (s.x + e.x) / 2.0 * (e.y - s.y);
+        }
+
+        // n >= 3
+        vStart = data.controlPoints[0];
+        vControl = data.controlPoints[1];
+        if (n == 3) {
+            vEnd = data.controlPoints[2];
+            return quadAreaIntegral(vStart, vControl, vEnd);
+        }
+
+        vEnd = (data.controlPoints[1] + data.controlPoints[2]) / 2.0;
+        res += quadAreaIntegral(vStart, vControl, vEnd);
+
+        for (size_t i = 2; i < n - 2; ++i) {
+            vStart = vEnd;
+            vControl = data.controlPoints[i];
+            vEnd = (data.controlPoints[i] + data.controlPoints[i + 1]) / 2.0;
+            res += quadAreaIntegral(vStart, vControl, vEnd);
+        }
+
+        vStart = vEnd;
+        vControl = data.controlPoints[n - 2];
+        vEnd = data.controlPoints[n - 1];
+        res += quadAreaIntegral(vStart, vControl, vEnd);
+    } else {
+        // closed, n >= 3
+        if (n < 3) {
+            return 0.0;
+        }
+
+        vStart = (data.controlPoints[n - 1] + data.controlPoints[0]) / 2.0;
+        vControl = data.controlPoints[0];
+        vEnd = (data.controlPoints[0] + data.controlPoints[1]) / 2.0;
+        res += quadAreaIntegral(vStart, vControl, vEnd);
+
+        for (size_t i = 1; i < n - 1; ++i) {
+            vStart = vEnd;
+            vControl = data.controlPoints[i];
+            vEnd = (data.controlPoints[i] + data.controlPoints[i + 1]) / 2.0;
+            res += quadAreaIntegral(vStart, vControl, vEnd);
+        }
+
+        vStart = vEnd;
+        vControl = data.controlPoints[n - 1];
+        vEnd = (data.controlPoints[n - 1] + data.controlPoints[0]) / 2.0;
+        res += quadAreaIntegral(vStart, vControl, vEnd);
+    }
+
+    return res;
+}

@@ -22,717 +22,1030 @@
 **
 **********************************************************************************
 */
-#include <algorithm>
-#include <array>
-#include <deque>
-#include <map>
-#include <random>
-#include <set>
-#include <unordered_map>
-#include <vector>
+// File: lc_looputils.cpp
 
-#include <boost/numeric/ublas/matrix.hpp>
-#include <boost/numeric/ublas/io.hpp>
-#include <boost/geometry.hpp>
-#include <boost/geometry/geometries/register/point.hpp>
-#include <boost/geometry/index/rtree.hpp>
+#include <algorithm>
+#include <cmath>
+#include <map>
+#include <set>
+#include <QPen>
+#include <QPainterPath>
 
 #include "lc_looputils.h"
+#include "lc_rect.h"
+#include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_debug.h"
 #include "rs_ellipse.h"
-#include "rs_entity.h"
 #include "rs_entitycontainer.h"
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_math.h"
+#include "rs_pattern.h"
 #include "rs_vector.h"
+#include "rs.h"
+#include "lc_splinepoints.h"  // ADDED: For LC_SplinePoints support
+#include "lc_parabola.h"      // ADDED: For LC_Parabola support
 
 namespace {
+// Definition for buildLC_Loops (moved to namespace level for accessibility)
+/**
+ * @brief Recursively builds an LC_Loops hierarchy from a container and all loops.
+ * Clones atomic entities and traverses children via parent pointers.
+ * @param cont The root container.
+ * @param allLoops All loops for parent-child lookup.
+ * @return The built LC_Loops tree.
+ */
+LC_LoopUtils::LC_Loops buildLoops(const RS_EntityContainer* cont, const std::vector<std::unique_ptr<RS_EntityContainer>>& allLoops) {
+    auto loopCopy = std::make_shared<RS_EntityContainer>(nullptr, true);
+    for (RS_Entity* e : *cont) {
+        if (e && !e->isContainer()) {
+            loopCopy->addEntity(e->clone());  // Clone atomics for independent ownership
+        }
+    }
+    LC_LoopUtils::LC_Loops lc(loopCopy, true);
+    for (const auto& p : allLoops) {
+        if (p.get()->getParent() == cont) {
+            lc.addChild(buildLoops(p.get(), allLoops));
+        }
+    }
+    return lc;
+}
 
-constexpr double g_contourGapTolerance = 1E-6; // Increased slightly for better handling of imported file gaps
+/**
+ * @brief Extends a line to cover the bounding box by computing intersections with box sides.
+ * @param line The line to extend.
+ * @param bbox The bounding rectangle.
+ */
+void extendLineToBBox(RS_Line& line, const LC_Rect& bbox) {
+    const double maxSize = 1.5 * std::max(bbox.width(), bbox.height());
+    const RS_Vector offset = line.getTangentDirection({}).normalized() * maxSize;
 
-// a random angle between 0 and 2 pi
-double getRandomAngle();
+    line.setStartpoint(line.getStartpoint() - offset);
+    line.setEndpoint(line.getEndpoint() + offset);
+}
 
-// Create a random ray: starting from an internal point of the loop
-std::unique_ptr<RS_Line> getRandomRay(RS_EntityContainer* loop);
-
-// Find intersection between a line and a loop
-RS_VectorSolutions getIntersection(const RS_Entity& line, const RS_EntityContainer& loop);
-
-// Build a loop to loop area lookup table
-std::unordered_map<const RS_EntityContainer*, double> findAreas(const std::vector<std::unique_ptr<RS_EntityContainer>>& loops );
-
-struct ComparePoints {
-    ComparePoints() = default;
-    ComparePoints(const RS_Vector& ref) : m_ref{ref}{}
-    bool operator()(const RS_Vector &p0, const RS_Vector &p1) const;
-    RS_Vector m_ref{false};
+// Compare double with tolerance
+struct DoublePredicate {
+    bool operator()(double a, double b) const {
+        // If the absolute difference is within epsilon, consider them equal
+        if (std::abs(a - b) <= RS_TOLERANCE * 100.) {
+            return false; // They are considered equal, so neither is "less than" the other in a strict sense
+        }
+        return a < b; // Otherwise, use standard less-than comparison
+    }
 };
 
-// the closest distance from a point to the end points of an entity
-double getEndPointDistance(const RS_Vector& point, const RS_Entity& entity);
-
-// Whether two entities are connected by an end point
-bool isConnected( const RS_Entity& entity1, const RS_Entity& entity2);
-
-// randomEngine
-std::default_random_engine randomEngine;
-
-// ------------------------------------------------------------------------------------- //
-// a random angle between 0 and 2 pi
-double getRandomAngle() {
-    static std::uniform_real_distribution<double> uniformDistribution(0.0,
-                                                                      2. * M_PI);
-    return uniformDistribution(randomEngine);
 }
-
-// the closest distance from a point to the end points of an entity
-double getEndPointDistance(const RS_Vector& point, const RS_Entity& entity)
-{
-    double distance = RS_MAXDOUBLE;
-    RS_Vector endPoint = entity.getNearestEndpoint(point, &distance);
-    return endPoint.valid ? distance : RS_MAXDOUBLE;
-}
-
-// Whether two entities are connected by an end point
-bool isConnected( const RS_Entity& entity1, const RS_Entity& entity2)
-{
-    const double distance = std::min(getEndPointDistance(entity1.getStartpoint(), entity2),
-                                     getEndPointDistance(entity1.getEndpoint(), entity2));
-    if (distance > g_contourGapTolerance)
-    {
-        LC_ERR<<"loop gap of "<<distance<<" between "<<entity1.getId()<<", "<<entity2.getId();
-        LC_ERR<<"("<<entity1.getStartpoint().x<<", "<<entity1.getEndpoint().y<<") - "
-                                                                                         "("<<entity2.getStartpoint().x<<", "<<entity2.getEndpoint().y<<")";
-        return false;
-    }
-    return true;
-}
-
-RS_Vector getInternalPoint(const RS_EntityContainer& loop)
-{
-    RS_Vector p0 = loop.firstEntity()->getNearestPointOnEntity(loop.getMin(), true);
-    double size = loop.getSize().magnitude();
-    for(short i=0; i<32; i++) // Increased retries for robustness
-    {
-        RS_Vector offset =  RS_Vector(getRandomAngle())*size;
-        auto line = std::make_unique<RS_Line>(p0 - offset, p0 + offset);
-        RS_VectorSolutions results = getIntersection(*line, loop);
-        // need even number of intersections
-        if (results.empty() || results.size() % 2 == 1)
-            continue;
-        std::sort(results.begin(), results.end(), ComparePoints{});
-        // find an internal point
-        return (results.at(0) + results.at(1)) * 0.5;
-    }
-    LC_LOG<<__func__<<"(): failed to find a line passing the loop: "<<loop.getId();
-    return RS_Vector{false};
-}
-
-std::unique_ptr<RS_Line> getRandomRay(RS_EntityContainer* loop)
-{
-    assert(loop != nullptr);
-    RS_Vector p0 = getInternalPoint(*loop);
-    double size = loop->getSize().magnitude();
-    return std::make_unique<RS_Line>(nullptr, p0, p0 + RS_Vector{getRandomAngle()}*size);
-}
-
-std::unordered_map<const RS_EntityContainer*, double> findAreas(const std::vector<std::unique_ptr<RS_EntityContainer>>& loops ) {
-    std::unordered_map<const RS_EntityContainer*, double> ret;
-    for(const std::unique_ptr<RS_EntityContainer>& loop: loops) {
-        double area = loop->areaLineIntegral();
-        if (area < 0) { // Ensure positive area by reversing if clockwise (fixes issues like #1572)
-            // Manually reverse the container: collect entities, clear, add in reverse order while reversing each entity
-            std::vector<RS_Entity*> entities;
-            for (RS_Entity* e = loop->firstEntity(); e; e = loop->nextEntity()) {
-                entities.push_back(e);
-            }
-            // Clear the container
-            while (loop->firstEntity()) {
-                loop->removeEntity(loop->firstEntity());
-            }
-            // Add back in reverse order, reversing each entity
-            for (auto it = entities.rbegin(); it != entities.rend(); ++it) {
-                if ((*it)->isEdge()) {
-                    static_cast<RS_AtomicEntity*>(*it)->reverse();
-                }
-                loop->addEntity(*it);
-            }
-            area = -area;
-        }
-        ret.emplace(loop.get(), std::abs(area));
-    }
-    return ret;
-}
-
-RS_VectorSolutions getIntersection(const RS_Entity& line,
-                                   const RS_EntityContainer &loop) {
-    RS_VectorSolutions ret;
-    for (RS_Entity *entity : loop) {
-        if (entity != nullptr && entity->isEdge()) {
-            auto intersections = RS_Information::getIntersection(&line, entity, true);
-            ret.push_back(intersections);
-        }
-    }
-    return ret;
-}
-
-bool ComparePoints::operator()(const RS_Vector &p0, const RS_Vector &p1) const {
-    if (m_ref.valid)
-        return m_ref.squaredTo(p0) < m_ref.squaredTo(p1);
-    if (p0.x + RS_TOLERANCE < p1.x)
-        return true;
-    else if (p0.x > p1.x + RS_TOLERANCE)
-        return false;
-    return p0.y + RS_TOLERANCE < p1.y;
-}
-} // namespace
 
 namespace LC_LoopUtils {
 
-struct CompareDistance {
-    CompareDistance(const RS_Vector& point):
-        m_point{point}
-    {}
-
-    bool operator() (const RS_Vector &p0, const RS_Vector &p1) const {
-        return p0.squaredTo(m_point) < p1.squaredTo(m_point);
-    }
-
-    const RS_Vector& m_point;
-};
-
-bool isEnclosed(RS_EntityContainer& loop, RS_AtomicEntity& entity)
-{
-    RS_VectorSolutions intersections = getIntersection(entity, loop);
-    if (!intersections.empty())
-        return false;
-    RS_Line line{nullptr, {getInternalPoint(loop), entity.getMiddlePoint()}};
-    intersections = getIntersection(line, loop);
-    return intersections.size()%2 == 0;
-}
-
+// Private implementation for LoopExtractor
 struct LoopExtractor::LoopData {
-    LoopData(RS_EntityContainer &edges):
-        edges{edges}
-    {
-        edges.forcedCalculateBorders();
-        size = edges.getSize().magnitude();
-    }
-    double size = 0.;
-    RS_Vector vertex;
-    RS_Vector vertexTarget;
-    RS_Entity* current = nullptr;
-    RS_EntityContainer& edges;
+    std::vector<RS_Entity*> unprocessed;  ///< Remaining edges to process
+    std::map<RS_Entity*, bool> processed; ///< Flag for processed status
+    RS_Entity* current = nullptr;         ///< Current entity in loop
+    RS_Vector endPoint;                   ///< Current endpoint
+    RS_Vector targetPoint;                ///< Target start point for closure
+    bool reversed = false;                ///< Direction reversal flag
 };
 
-LoopExtractor::LoopExtractor(RS_EntityContainer &edges) :
-    m_data{std::make_unique<LoopData>(edges)}
+/**
+ * @brief Constructs LoopExtractor and initializes unprocessed edges.
+ * Filters to atomic entities with length > ENDPOINT_TOLERANCE.
+ */
+LoopExtractor::LoopExtractor(const RS_EntityContainer& edges) :
+    m_data(std::make_unique<LoopData>())
 {
-    // edges must be a valid contour, so its bounding box size cannot be zero
-    assert(m_data->size > RS_TOLERANCE);
-    assert(!edges.isEmpty());
+    for (RS_Entity* e : edges) {
+        if (e->isAtomic() && e->getLength() > ENDPOINT_TOLERANCE) {  // Skip degenerate zero-length edges
+            m_data->unprocessed.push_back(e);
+            m_data->processed[e] = false;
+        }
+    }
 }
 
-//------------------------------------------------------------------------------------//
-std::vector<RS_Entity*> LoopExtractor::getConnected() const
-{
-    std::vector<RS_Entity *> connected;
-    std::copy_if(m_data->edges.begin(), m_data->edges.end(), std::back_inserter(connected),
-                 [vertex = m_data->vertex, current = m_data->current](const RS_Entity *e) {
-                     if (e == current)
-                         return false;
-                     double dist = RS_MAXDOUBLE;
-                     e->getNearestEndpoint(vertex, &dist);
-                     return dist < g_contourGapTolerance;
-                 });
-    return connected;
-}
-
-//------------------------------------------------------------------------------------//
 LoopExtractor::~LoopExtractor() = default;
 
+/**
+ * @brief Extracts closed loops iteratively until no unprocessed edges remain.
+ * Builds each loop by chaining connected edges, clones and orients for positive area.
+ * @return Vector of unique_ptr to valid loop containers.
+ */
+std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract() {
+    std::vector<std::unique_ptr<RS_EntityContainer>> results;
+    while (!m_data->unprocessed.empty()) {
+        m_loop = std::make_unique<RS_EntityContainer>();
+        RS_Entity* first = findFirst();
+        if (first) {
+            RS_Entity* cloned_first = first->clone();
+            m_loop->addEntity(cloned_first);
+            m_data->processed[first] = true;
+            m_data->current = cloned_first;
+            RS_Vector start = cloned_first->getStartpoint();
+            RS_Vector end = cloned_first->getEndpoint();
+            m_data->targetPoint = start;
+            m_data->endPoint = end;
+            m_data->unprocessed.erase(std::remove(m_data->unprocessed.begin(), m_data->unprocessed.end(), first), m_data->unprocessed.end());
+            while (m_data->endPoint.distanceTo(m_data->targetPoint) > ENDPOINT_TOLERANCE) {  // Continue until closure within tolerance
+                if (findNext()) {
+                    if (m_data->endPoint.distanceTo(m_data->targetPoint) <= ENDPOINT_TOLERANCE) break;
+                } else {
+                    break;
+                }
+            }
+            if (validate()) {
+                double area = m_loop->areaLineIntegral();
+                if (area < 0.0) {
+                    // Reverse direction for positive area (counter-clockwise)
+                    auto new_loop = std::make_unique<RS_EntityContainer>();
+                    for (int i = static_cast<int>(m_loop->count()) - 1; i >= 0; --i) {
+                        RS_Entity* e = m_loop->entityAt(static_cast<unsigned>(i))->clone();
+                        e->revertDirection();
+                        new_loop->addEntity(e);
+                    }
+                    m_loop = std::move(new_loop);
+                }
+                results.push_back(std::move(m_loop));
+            } else {
+                RS_DEBUG->print("LoopExtractor: Invalid loop discarded");  // Log invalid loops
+            }
+        }
+    }
+    return results;
+}
 
-//------------------------------------------------------------------------------------//
-// The algorithm:
-// Keep finding outermost loops from unprocessed edges and remove the loops from unprocess edges.
-// To find the first edge on the outermost, draw a line acrossing one middle point, sort the intersections
-// with all edges by coordinates, the first and last intersections are on the outermost loop
-// To find the next connected edge, search the along the counterclockwise direction, the next outermost edge
-// requires the smallest left turning angles.
-RS_Entity* LoopExtractor::findFirst() const
-{
+/**
+ * @brief Validates a loop for proper closure based on entity count and types.
+ * Special handling for single closed entities like circles or full ellipses.
+ */
+bool LoopExtractor::validate() const {
+    if (m_loop->count() == 0) return false;
+    if (m_loop->count() == 1) {
+        RS_Entity* e = m_loop->entityAt(0);
+        RS2::EntityType type = e->rtti();
+        if (type == RS2::EntityCircle) return true;
+        if (type == RS2::EntityEllipse) {
+            RS_Ellipse* ell = static_cast<RS_Ellipse*>(e);
+            return ell->getAngleLength() >= 2 * M_PI - RS_TOLERANCE;
+        }
+        if (type == RS2::EntitySpline) {  // SUPPORT: Closed splines
+            LC_SplinePoints* spl = static_cast<LC_SplinePoints*>(e);
+            return spl->isClosed();
+        }
+        if (type == RS2::EntityParabola) {  // SUPPORT: Valid if primitives computed successfully
+            LC_Parabola* para = static_cast<LC_Parabola*>(e);
+            return para->getData().valid;
+        }
+        return e->getStartpoint().distanceTo(e->getEndpoint()) <= ENDPOINT_TOLERANCE;
+    }
+    RS_Entity* first = m_loop->entityAt(0);
+    RS_Entity* last = m_loop->last();
+    return first->getStartpoint().distanceTo(last->getEndpoint()) <= ENDPOINT_TOLERANCE;
+}
 
-    // draw a line crossing the first edge
-    RS_Entity* first = m_data->edges.firstEntity();
-    RS_Vector p0 = first->getMiddlePoint();
-    RS_Vector t0 = first->getTangentDirection(p0).normalize();
-    // The dP0 direction is off the normal direction by a random angle smaller than 0.06*Pi
-    RS_Vector dP0 = t0.rotate(M_PI/2 + (getRandomAngle() - M_PI) * 0.06) * m_data->size * 1.1;
-
-    // draw a line
-    std::array<RS_Vector, 2> linePoints = {{p0 - dP0, p0 + dP0}};
-    std::sort(std::begin(linePoints), std::end(linePoints), ComparePoints{});
-    RS_Line line0{linePoints.front(), linePoints.back()};
-
-    // Find intersections: only keep the intersection of minimum xy-coordinates
-    double dist=RS_MAXDOUBLE * RS_MAXDOUBLE;
-    for(RS_Entity* edge: m_data->edges)
-    {
-        RS_VectorSolutions sol0 = RS_Information::getIntersection(&line0, edge, true);
-        if (!sol0.empty()) {
-            for (const RS_Vector& p00: sol0) {
-                double dist2 = p00.squaredTo(linePoints.front());
-                if (dist2 < dist) {
-                    first = edge;
-                    dist = dist2;
-                    p0 = p00;
+/**
+ * @brief Finds the first edge using a ray-casting heuristic (closest to a leftward ray).
+ * Selects an edge likely on the outer boundary.
+ */
+RS_Entity* LoopExtractor::findFirst() const {
+    if (m_data->unprocessed.empty()) return nullptr;
+    RS_Entity* firstEdge = m_data->unprocessed[0];
+    RS_Vector mid = firstEdge->getMiddlePoint();
+    RS_Vector lineStart(mid.x - 1000, mid.y);
+    RS_Line testLine(lineStart, mid);
+    double minDist = RS_MAXDOUBLE;
+    RS_Entity* closest = nullptr;
+    for (RS_Entity* e : m_data->unprocessed) {
+        RS_VectorSolutions sol = RS_Information::getIntersection(&testLine, e, true);
+        if (sol.hasValid()) {
+            for (RS_Vector v : sol) {
+                double d = v.distanceTo(lineStart);
+                if (d < minDist) {
+                    minDist = d;
+                    closest = e;
                 }
             }
         }
     }
-
-    // The outermost intersection is from an outermost edge, and choose this edge as the beginning of a loop
-
-    // Always search the next loop edge in the counter-clock direction
-    // getTangentDirection() always along the curve, the direction is from the curve start point to the end point
-    // if cross.z is positive, the tangential direction is counterclockwise.
-    RS_Vector cross = RS_Vector::crossP(linePoints.front() - p0, first->getTangentDirection(p0));
-    bool reversed = std::signbit(cross.z);
-
-    m_data->vertex = reversed ? first->getStartpoint() : first->getEndpoint();
-    m_data->vertexTarget = reversed ? first->getEndpoint() : first->getStartpoint();
-    m_data->current = first;
-    m_loop = std::make_unique<RS_EntityContainer>(nullptr, false);
-    m_loop->addEntity(m_data->current);
-    m_data->edges.removeEntity(first);
-    return first;
+    return closest ? closest : firstEdge;
 }
 
-//------------------------------------------------------------------------------------//
-RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const
-{
-    assert(edges.size() >= 2);
-    double edgeLength = RS_MAXDOUBLE;
-    // Include current entity's length in the min calculation to avoid no-intersection assertion (fixes #2137)
-    if (m_data->current->getLength() > RS_TOLERANCE)
-        edgeLength = std::min(edgeLength, m_data->current->getLength());
-    for(RS_Entity* edge: edges)
-        if (edge->getLength() > RS_TOLERANCE)
-            edgeLength = std::min({edgeLength, std::max(edge->getLength(), edge->getStartpoint().distanceTo(edge->getEndpoint()))});
-
-    if (edgeLength >= RS_MAXDOUBLE) {
-        LC_ERR << "Contour size too large"; // Replaced assert with log for better crash handling
-        return nullptr; // Graceful return instead of assert
-    }
-
-    // draw a small circle around the current end point
-    RS_Circle circle{nullptr, {m_data->vertex, edgeLength * 0.01}};
-    auto getCut = [&circle, p0 = m_data->vertex](RS_Entity* edge) {
-        RS_VectorSolutions sol = RS_Information::getIntersection(&circle, edge, true);
-        if (sol.empty()) {
-            return std::make_tuple(edge, 0., false);
-        }
-        // Sort intersections by distance to p0 for robustness with curves/multiple intersections
-        std::sort(sol.begin(), sol.end(), CompareDistance{p0});
-        return std::make_tuple(edge, p0.angleTo(sol.at(0)), true);
-    };
-    using CutPair = std::tuple<RS_Entity*, double, bool>;
-    // find the angle for the current edge
-    CutPair current = getCut(m_data->current);
-    // The current edge must intersect with the small circle
-    if (!std::get<bool>(current)) {
-        LC_ERR << "No intersection with current edge in findOutermost"; // Log instead of throw for better diagnostics
-        return nullptr; // Graceful handling
-    }
-    std::vector<CutPair> cuts;
-    for (RS_Entity* edge: edges) {
-        CutPair cut = getCut(edge);
-        if (std::get<bool>(cut))
-            cuts.push_back(cut);
-    }
-    if (cuts.empty()) {
-        LC_ERR << "No cuts found in findOutermost";
-        return nullptr;
-    }
-
-    // find the minimum left turning angle to get the next outermost edge
-    std::sort(cuts.begin(), cuts.end(),
-              [a0=std::get<double>(current)](const CutPair& cut0, const CutPair& cut1){
-                  using namespace RS_Math;
-                  return getAngleDifference(a0, std::get<double>(cut0)) < getAngleDifference(a0, std::get<double>(cut1));
-              });
-    return std::get<RS_Entity*>(cuts.front());
-}
-
-//------------------------------------------------------------------------------------//
-bool LoopExtractor::findNext() const
-{
+/**
+ * @brief Finds and adds the next connected edge to the loop.
+ * Selects outermost if multiple connections; clones and reverses direction if needed.
+ */
+bool LoopExtractor::findNext() const {
     std::vector<RS_Entity*> connected = getConnected();
-    switch (connected.size()) {
-    case 0:
-        LC_ERR << __func__
-               << "(): disconnected at point: ("<<m_data->vertex.x<<", "<<m_data->vertex.y<<")";
-        return false;
-    case 1:
-        m_data->current = connected.front();
-        break;
-    default:
-    {
-        m_data->current = findOutermost(connected);
-        if (m_data->current == nullptr) return false; // Handle failure gracefully
+    if (connected.empty()) return false;
+    RS_Entity* next = nullptr;
+    if (connected.size() == 1) {
+        next = connected[0];
+    } else {
+        next = findOutermost(connected);
     }
+    if (next) {
+        RS_Entity* cloned = next->clone();
+        m_loop->addEntity(cloned);
+        m_data->processed[next] = true;
+        m_data->unprocessed.erase(std::remove(m_data->unprocessed.begin(), m_data->unprocessed.end(), next), m_data->unprocessed.end());
+        if (cloned->getStartpoint().distanceTo(m_data->endPoint) > ENDPOINT_TOLERANCE) {
+            cloned->revertDirection();
+        }
+        m_data->endPoint = cloned->getEndpoint();
+        m_data->current = cloned;
+        return true;
     }
-    m_data->vertex = (m_data->vertex.squaredTo(m_data->current->getStartpoint()) > RS_TOLERANCE) ? m_data->current->getStartpoint() : m_data->current->getEndpoint();
-    m_loop->addEntity(m_data->current);
-    m_data->edges.removeEntity(m_data->current);
-    return true;
+    return false;
 }
 
-
-//------------------------------------------------------------------------------------//
-std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract() {
-    LC_LOG<<__func__<<"(): begin";
-    std::vector<std::unique_ptr<RS_EntityContainer>> loops;
-    if (m_data->size < RS_TOLERANCE)
-        return loops;
-
-    bool success = true;
-    while(success && !m_data->edges.isEmpty()) {
-        findFirst();
-        while(success && m_data->vertex.squaredTo(m_data->vertexTarget) > RS_TOLERANCE) {
-            LC_LOG<<m_data->vertex.x<<", "<< m_data->vertex.y<<" : "<<" : ds2 = "
-                   <<m_data->vertex.squaredTo(m_data->vertexTarget);
-            LC_LOG<<"id = "<<m_data->current->getId();
-            success = findNext();
+/**
+ * @brief Returns unprocessed entities connected to the current endpoint within tolerance.
+ */
+std::vector<RS_Entity*> LoopExtractor::getConnected() const {
+    std::vector<RS_Entity*> ret;
+    for (RS_Entity* e : m_data->unprocessed) {
+        if (e->getStartpoint().distanceTo(m_data->endPoint) <= ENDPOINT_TOLERANCE || e->getEndpoint().distanceTo(m_data->endPoint) <= ENDPOINT_TOLERANCE) {
+            ret.push_back(e);
         }
-        if (!validate())
-            LC_ERR << __func__<<"(): invalid loop of size = "<<m_loop->count();
-        loops.push_back(std::move(m_loop));
     }
-    LC_LOG<<__func__<<"(): loops.size() = "<<loops.size();
+    return ret;
+}
+
+/**
+ * @brief Selects the "outermost" edge from connected ones using tangent angle differences.
+ * Uses a small circle for intersection and prefers left turns (largest positive diff) for CCW outer boundary.
+ */
+RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const {
+    double radius = 1e-6;
+    RS_Circle circle(nullptr, RS_CircleData(m_data->endPoint, radius));
+    double currentAngle = m_data->current->getDirection2();  // Incoming tangent at junction
+    std::vector<std::pair<double, RS_Entity*>> angleDiffs;
+    for (RS_Entity* e : edges) {
+        // Compute outgoing tangent, accounting for potential reversal
+        bool needsReversal = (e->getStartpoint().distanceTo(m_data->endPoint) > ENDPOINT_TOLERANCE);
+        double outgoingAngle;
+        if (!needsReversal) {
+            outgoingAngle = e->getDirection1();  // Tangent at start
+        } else {
+            outgoingAngle = RS_Math::correctAngle(e->getDirection2() + M_PI);  // Flip by pi for reversal
+        }
+
+        RS_VectorSolutions sol = RS_Information::getIntersection(&circle, e, true);
+        if (!sol.hasValid()) continue;
+
+        // Select the intersection closest to the outgoing direction
+        RS_Vector selected_v;
+        double min_adiff = RS_MAXDOUBLE;
+        for (size_t k = 0; k < sol.getNumber(); ++k) {
+            RS_Vector v = sol.get(k);
+            double dist = v.distanceTo(m_data->endPoint);
+            if (std::abs(dist - radius) > RS_TOLERANCE) continue;  // Filter valid radius intersections
+
+            double a = (v - m_data->endPoint).angle();
+            double adiff = RS_Math::correctAngle(a - outgoingAngle);
+            if (adiff > M_PI) adiff = 2 * M_PI - adiff;  // Minimal unsigned difference
+            if (adiff < min_adiff) {
+                min_adiff = adiff;
+                selected_v = v;
+            }
+        }
+
+        if (min_adiff > 1e-4) continue;  // Skip if no close match (numerical or curvature issues)
+
+        double angle = (selected_v - m_data->endPoint).angle();
+        double diff = RS_Math::correctAngle(angle - currentAngle);
+        if (diff > M_PI) diff -= 2 * M_PI;  // Signed difference in (-pi, pi]
+
+        angleDiffs.push_back({diff, e});
+    }
+
+    if (angleDiffs.empty()) return nullptr;
+    // Sort by descending signed diff to prefer left turns (largest positive diff) for CCW outer boundary
+    std::sort(angleDiffs.begin(), angleDiffs.end(), [](const auto& a, const auto& b) {
+        return a.first > b.first;
+    });
+    return angleDiffs[0].second;
+}
+
+// Private implementation for LoopSorter
+struct LoopSorter::Data {
+    std::vector<std::unique_ptr<RS_EntityContainer>> loops;  ///< Input loops
+    std::shared_ptr<std::vector<LC_Loops>> results;          ///< Output hierarchy
+};
+
+/**
+ * @brief Predicate for sorting loops: ascending absolute area (small to large for parent assignment), tie-break by bounding box diagonal.
+ * Ensures robust ordering for containment detection.
+ */
+struct LoopSorter::AreaPredicate {
+    bool operator() (const RS_EntityContainer* a, const RS_EntityContainer* b) const {
+        double areaA = std::abs(a->areaLineIntegral());
+        double areaB = std::abs(b->areaLineIntegral());
+        if (std::abs(areaA - areaB) < RS_TOLERANCE) {
+            double diagA = (a->getMax() - a->getMin()).magnitude();
+            double diagB = (b->getMax() - b->getMin()).magnitude();
+            return diagA < diagB;
+        }
+        return areaA < areaB;  // Ascending abs area (small to large for parent assignment)
+    }
+};
+
+/**
+ * @brief Constructs LoopSorter, filters degenerates, sorts, and builds hierarchy.
+ */
+LoopSorter::LoopSorter(std::vector<std::unique_ptr<RS_EntityContainer>> loops) : m_data(new Data) {
+    m_data->loops = std::move(loops);
+    sortAndBuild();
+}
+
+LoopSorter::~LoopSorter() = default;
+
+/**
+ * @brief Main sorting and hierarchy building: Filters zero-area, sorts ascending area, assigns parents small-to-large.
+ * Builds forest of roots and converts to LC_Loops.
+ */
+void LoopSorter::sortAndBuild() {
+    std::vector<RS_EntityContainer*> sorted;
+    for (auto& p : m_data->loops) {
+        p->setParent(nullptr);  // Reset parents
+        double area = std::abs(p->areaLineIntegral());
+        if (area < RS_TOLERANCE) {
+            RS_DEBUG->print("LoopSorter: Skipping degenerate zero-area loop");
+            continue;
+        }
+        sorted.push_back(p.get());
+    }
+    std::sort(sorted.begin(), sorted.end(), AreaPredicate());
+    std::vector<RS_EntityContainer*> unprocessed = sorted;
+    std::vector<RS_EntityContainer*> forest;
+    while (!unprocessed.empty()) {
+        RS_EntityContainer* child = unprocessed[0];
+        findParent(child, sorted);  // Assign immediate parent
+        if (child->getParent() == nullptr) {
+            forest.push_back(child);  // Root if no parent
+        }
+        unprocessed.erase(unprocessed.begin());
+    }
+    m_data->results = forestToLoops(forest);
+}
+
+/**
+ * @brief Accessor for results.
+ */
+std::shared_ptr<std::vector<LC_Loops>> LoopSorter::getResults() const {
+    return m_data->results;
+}
+
+/**
+ * @brief Converts forest roots to recursive LC_Loops trees using buildLoops.
+ */
+std::shared_ptr<std::vector<LC_Loops>> LoopSorter::forestToLoops(std::vector<RS_EntityContainer*> forest) const {
+    auto loops = std::make_shared<std::vector<LC_Loops>>();
+    for (RS_EntityContainer* container: forest) {
+        loops->push_back(buildLoops(container, m_data->loops));  // Build recursive hierarchy
+    }
     return loops;
 }
 
-//------------------------------------------------------------------------------------//
-bool LoopExtractor::validate() const
-{
-    if (m_loop == nullptr || m_loop->isEmpty())
-        return false;
-    auto testEdge = [it = m_loop->begin()](const RS_Entity* entity) mutable {
-        return entity != nullptr && isConnected(*entity, **it++);
-    };
-    switch (m_loop->count())
-    {
-    case 0:
-    case 1:
-        // single edge loop is not expected
-        return false;
-    default:
-        return std::all_of(m_loop->begin() + 1, m_loop->end(), testEdge);
-    }
+void LoopSorter::init() {
+    // Placeholder for future initialization
 }
 
-//------------------------------------------------------------------------------------//
-struct LoopSorter::AreaPredicate {
-    AreaPredicate(const LoopSorter& sorter);
-    bool operator () (const RS_EntityContainer* lhs, const RS_EntityContainer* rhs) const;
-    const LoopSorter& m_sorter;
-};
-
-//------------------------------------------------------------------------------------//
-struct LoopSorter::Data {
-    Data(LoopSorter* sorter, std::vector<std::unique_ptr<RS_EntityContainer>> loops):
-        loops{std::move(loops)}
-        , area{findAreas(this->loops)}
-        , areaComparison{*sorter}
-        , toProcess{areaComparison}
-    {}
-
-    // hold input loops
-    std::vector<std::unique_ptr<RS_EntityContainer>> loops;
-    // lookup table to find enclosed area of each loop
-    std::unordered_map<const RS_EntityContainer*, double> area;
-    // compare loops by their enclosed areas
-    // The area of any ancestor loop is larger than the child loop.
-    // Always find ancestors using the loop with the smallest unprocessed loop.
-    // For each loop, only need to find its parent once.
-    LoopSorter::AreaPredicate areaComparison;
-    // Candidate loops, sorted by their enclosed areas
-    std::multiset<RS_EntityContainer*, LoopSorter::AreaPredicate> toProcess;
-    // lookup table for parent loops
-    std::unordered_map<RS_EntityContainer*, RS_EntityContainer*> parents;
-};
-
-//------------------------------------------------------------------------------------//
-LoopSorter::AreaPredicate::AreaPredicate(const LoopSorter &sorter):
-    m_sorter{sorter}
-{}
-
-//------------------------------------------------------------------------------------//
-bool LoopSorter::AreaPredicate::operator ()(const RS_EntityContainer* lhs, const RS_EntityContainer* rhs) const
-{
-    return m_sorter.m_data->area.at(lhs) + RS_TOLERANCE < m_sorter.m_data->area.at(rhs);
-}
-
-//------------------------------------------------------------------------------------//
-LoopSorter::LoopSorter(std::vector<std::unique_ptr<RS_EntityContainer>> loops):
-    m_data{std::make_unique<LoopSorter::Data>(this, std::move(loops))}
-{
-    init();
-}
-
-//------------------------------------------------------------------------------------//
-LoopSorter::~LoopSorter() = default;
-
-//------------------------------------------------------------------------------------//
-void LoopSorter::init()
-{
-    for(const auto& loop: m_data->loops)
-        m_data->toProcess.insert(loop.get());
-    std::vector<RS_EntityContainer*> loops{m_data->toProcess.begin(), m_data->toProcess.end()};
-
-    for (RS_EntityContainer* loop : loops)
-        findAncestors(loop);
-}
-
-//------------------------------------------------------------------------------------//
-void LoopSorter::findAncestors(RS_EntityContainer* loop)
-{
-    if (m_data->toProcess.erase(loop) == 0)
-        return;
-
-    // use a random direction to avoid passing tangential directions
-    // TODO, to complete avoid tangential
-    auto ray = getRandomRay(loop);
-    // sorting by floating points is okay, the loops shouldn't be close to each other, with exception
-    // of touching points
-    std::map<double, RS_EntityContainer*> ancestors;
-    for(RS_EntityContainer* candidate: m_data->toProcess) {
-        if (candidate == loop || candidate == nullptr) // Added NULL check for robustness (related to #1468)
-            continue;
-        RS_VectorSolutions intersections = getIntersection(*ray, *candidate);
-        if (intersections.size()%2 == 0)
-            continue;
-        // a parent loop has odd intersections for a ray starting from an inner point
-        double distance = intersections.getClosestDistance(ray->getStartpoint());
-        ancestors.emplace(distance, candidate);
-    }
-    // ancestors found: from innermost to outermost
-    RS_EntityContainer* current = loop;
-    for (const auto& entry: ancestors)
-    {
-        RS_EntityContainer* parent = entry.second;
-        m_data->toProcess.erase(parent);
-        if (m_data->parents.count(current) == 1)
-            break;
-        m_data->parents[current] = parent;
-        parent->addEntity(current);
-        current = parent;
-    }
-}
-
-
-//------------------------------------------------------------------------------------//
-std::vector<RS_EntityContainer*> LoopSorter::getResults() const
-{
-    std::set<RS_EntityContainer*> roots;
-    for (const auto& loop: m_data->loops)
-        if (m_data->parents.count(loop.get()) == 0)
-            roots.insert(loop.get());
-    return {roots.begin(), roots.end()};
-}
-
-struct ContourPoint {
-    std::shared_ptr<std::deque<RS_Entity*>> loop;
-    RS2::EndPointType pointType = RS2::EndPointType::Start;
-    bool operator == (const ContourPoint other) const {
-        return loop == other.loop
-               && pointType == other.pointType;
-    }
-};
-
-namespace bg = boost::geometry;
-namespace bgi = boost::geometry::index;
-using BPoint = bg::model::point<double, 2, bg::cs::cartesian> ;
-using BBox = bg::model::box<BPoint>;
-using TreeValue = std::pair<BBox, ContourPoint>;
-
-struct LoopOptimizer::Data: public bgi::rtree< TreeValue, bgi::quadratic<16> >
-{
-    Data(double tolerance):
-        m_tolerance{tolerance},
-        m_halfBox{0.5 * m_tolerance, 0.5 * m_tolerance}
-    {}
-
-    ~Data()
-    {
-        std::set<RS_Entity*> edges;
-        for(const auto& [box, contourPoint]: *this) {
-            std::copy(contourPoint.loop->begin(), contourPoint.loop->end(), std::inserter(edges, edges.begin()));
-        }
-        qDeleteAll(edges);
-    }
-
-    static BPoint ToPoint(const RS_Vector& point)
-    {
-        return {point.x, point.y};
-    }
-
-    BBox ToBox(const RS_Vector& point) const
-    {
-        return {ToPoint(point - m_halfBox), ToPoint(point + m_halfBox)};
-    }
-
-    std::vector<TreeValue> Intersects(const BBox& box) const
-    {
-        std::vector<TreeValue> result_s;
-        query(bgi::intersects(box), std::back_inserter(result_s));
-        return result_s;
-    }
-
-    std::vector<TreeValue> Intersects(const RS_Vector& point) const
-    {
-        return Intersects(ToBox(point));
-    }
-
-    void RemoveAll(const BBox& box)
-    {
-        auto it = qbegin(bgi::intersects(box));
-        if (it != qend())
-            remove(*it);
-    }
-
-    /**
- * @brief Add an edge
- *        If the edge is closed curve (circle/ellipse), add a new loop to the result;
- *        If the edge is not connected to any existing contours, add a new contour;
- *        If the edge is connected to one existing contour by one end, extend the contour with the new edge
- *        If the edge is connected to one existing contour by both end, the contour is now closed, remove the contour,
- *        and add a loop to the result.
- *        TODO: add self-intersection support
- *
- * @author Dongxu Li
+/**
+ * @brief Assigns the smallest enclosing parent using bbox inclusion and point-in-contour test.
+ * Processes small-to-large to ensure immediate (direct) parent.
  */
-    void AddEdge(RS_AtomicEntity* entity);
-
-    // total ownership of edges
-    std::shared_ptr<RS_EntityContainer> m_result = std::make_shared<RS_EntityContainer>(nullptr, true);
-
-    double m_tolerance = RS_TOLERANCE;
-    RS_Vector m_halfBox{false};
-};
-
-void LoopOptimizer::Data::AddEdge(RS_AtomicEntity* entity)
-{
-    switch(entity->rtti()) {
-    case RS2::EntityEllipse:
-        if (static_cast<RS_Ellipse*>(entity)->isEllipticArc())
-            break;
-        [[fallthrough]];
-    case RS2::EntityCircle: {
-        auto loopContainer = std::make_unique<RS_EntityContainer>(m_result.get(), true);
-        loopContainer->push_back(entity);
-        m_result->addEntity(loopContainer.get());
-        loopContainer.release();
-        return;
-    }
-    default:
-        break;
-    }
-
-    BBox startBox = ToBox(entity->getStartpoint());
-    BBox endBox = ToBox(entity->getEndpoint());
-    std::vector<TreeValue> startResults = Intersects(startBox);
-    std::vector<TreeValue> endResults = Intersects(endBox);
-    if (startResults.empty() && endResults.empty()) {
-        // insert new loop
-        auto newLoop = std::make_shared<std::deque<RS_Entity*>>();
-        newLoop->push_back(entity);
-        insert(TreeValue{startBox, {newLoop, RS2::EndPointType::Start}});
-        insert(TreeValue{endBox, {newLoop, RS2::EndPointType::End}});
-    } else if (!startResults.empty() && !endResults.empty()) {
-        // loop complete
-        ContourPoint& node = endResults.front().second;
-        if (node.pointType == RS2::EndPointType::End) {
-            // append the new edge
-            entity->revertDirection();
-            node.loop->push_back(entity);
-        } else {
-            // prepend the new edge
-            node.loop->push_front(entity);
+void LoopSorter::findParent(RS_EntityContainer* loop, const std::vector<RS_EntityContainer*>& sorted) {
+    LC_Rect childBox{loop->getMin(), loop->getMax()};
+    double childArea = std::abs(loop->areaLineIntegral());
+    RS_Vector testPoint = (loop->getMin() + loop->getMax()) / 2.0;  // Use bbox center for containment test
+    for (auto it = sorted.begin(); it != sorted.end(); ++it) {  // Iterate small to large
+        auto* potentialParent = *it;
+        if (potentialParent == loop) continue;
+        double parentArea = std::abs(potentialParent->areaLineIntegral());
+        if (parentArea <= childArea + RS_TOLERANCE) continue;  // Skip smaller or equal
+        LC_Rect parentBox{potentialParent->getMin(), potentialParent->getMax()};
+        if (childBox.numCornersInside(parentBox) != 4) continue;  // Quick bbox containment
+        bool onContour = false;
+        if (RS_Information::isPointInsideContour(testPoint, potentialParent, &onContour)) {
+            loop->setParent(potentialParent);  // Track hierarchy via parent pointer only
+            RS_DEBUG->print("LoopSorter: Assigned parent for loop with area %f", childArea);  // Log assignment
+            return;
         }
-        auto loopContainer = std::make_unique<RS_EntityContainer>(m_result.get(), true);
-        std::copy(node.loop->cbegin(), node.loop->cend(), std::back_inserter(*loopContainer));
-        m_result->addEntity(loopContainer.get());
-        loopContainer.release();
-        RemoveAll(startBox);
-        RemoveAll(endBox);
-    } else if (startResults.empty()) {
-        // connect by end point of the new edge
-        ContourPoint& node = endResults.front().second;
-        if (node.pointType == RS2::EndPointType::End) {
-            // append the new edge
-            entity->revertDirection();
-            node.loop->push_back(entity);
-            // update the end point in tree
-            insert({startBox, {node.loop, RS2::EndPointType::End}});
-        } else {
-            // prepend the new edge
-            node.loop->push_front(entity);
-            // update the start point in tree
-            insert({startBox, {node.loop, RS2::EndPointType::Start}});
-        }
-        // remove the merged point
-        RemoveAll(endBox);
-    } else {
-        // connected by the start point of the new edge
-        ContourPoint& node = startResults.front().second;
-        if (node.pointType == RS2::EndPointType::Start) {
-            // prepend the new edge
-            entity->revertDirection();
-            node.loop->push_front(entity);
-            insert({endBox, {node.loop, RS2::EndPointType::Start}});
-        } else {
-            // append the new edge
-            node.loop->push_back(entity);
-            insert({endBox, {node.loop, RS2::EndPointType::End}});
-        }
-        // remove the merged point
-        RemoveAll(startBox);
     }
+    RS_DEBUG->print("LoopSorter: No parent found for loop with area %f", childArea);  // Log orphan
 }
 
-LoopOptimizer::LoopOptimizer(const RS_EntityContainer &contour):
-    m_data{std::make_shared<LoopOptimizer::Data>(g_contourGapTolerance)}
-{
+// Private implementation for LoopOptimizer
+struct LoopOptimizer::Data {
+    std::shared_ptr<std::vector<LC_Loops>> results;  ///< Processed results
+};
+
+/**
+ * @brief Constructs LoopOptimizer and processes the input contour.
+ */
+LoopOptimizer::LoopOptimizer(const RS_EntityContainer& contour) : m_data(new Data) {
     AddContainer(contour);
 }
 
 LoopOptimizer::~LoopOptimizer() = default;
 
-std::shared_ptr<RS_EntityContainer> LoopOptimizer::GetResults() const
-{
-    return m_data->m_result;
+/**
+ * @brief Accessor for results.
+ */
+std::shared_ptr<std::vector<LC_Loops>> LoopOptimizer::GetResults() const {
+    return m_data->results;
 }
 
-void LoopOptimizer::AddContainer(const RS_EntityContainer& contour)
-{
-    for(RS_Entity* entity: contour) {
-        if (entity == nullptr)
-            continue;
-        if (entity->isContainer()) {
-            auto container = static_cast<RS_EntityContainer*>(entity);
-            AddContainer(*container);
-        } else if (entity->isEdge()){
-            auto edge = static_cast<RS_AtomicEntity*>(entity->clone());
-            edge->reparent(nullptr);
-            edge->calculateBorders();
-            m_data->AddEdge(edge);
+/**
+ * @brief Processes a contour: Extract loops, sort, and build hierarchy.
+ */
+void LoopOptimizer::AddContainer(const RS_EntityContainer& contour) {
+    LoopExtractor extractor(contour);
+    auto loops = extractor.extract();
+    LoopSorter sorter(std::move(loops));
+    m_data->results = sorter.getResults();
+}
+
+// LC_Loops implementation
+
+LC_Loops::LC_Loops(std::shared_ptr<RS_EntityContainer> loop, bool ownsEntities) : m_loop(loop) {
+    // Ownership managed via shared_ptr; autoDelete assumed true
+}
+
+LC_Loops::~LC_Loops() = default;
+
+/**
+ * @brief Moves a child into the children vector.
+ */
+void LC_Loops::addChild(LC_Loops child) {
+    m_children.push_back(std::move(child));
+}
+
+/**
+ * @brief Adds an entity to the outer loop container.
+ */
+void LC_Loops::addEntity(RS_Entity* entity) {
+    m_loop->addEntity(entity);
+}
+
+/**
+ * @brief Non-recursive check for point inside outer loop using winding rule.
+ */
+bool LC_Loops::isInsideOuter(const RS_Vector& point) const {
+    bool onContour = false;
+    return RS_Information::isPointInsideContour(point, m_loop.get(), &onContour);
+}
+
+/**
+ * @brief Recursive inside check using odd-even parity on depth.
+ */
+bool LC_Loops::isInside(const RS_Vector& point) const {
+    return getContainingDepth(point) % 2 == 1;
+}
+
+/**
+ * @brief Computes recursive depth: 1 for outer + sum of children.
+ * Uses outer-only check to avoid cycles.
+ */
+int LC_Loops::getContainingDepth(const RS_Vector& point) const {
+    int depth = 0;
+    if (isInsideOuter(point)) {  // Check outer only
+        depth = 1;
+        for (const auto& child : m_children) {
+            depth += child.getContainingDepth(point);
         }
+    }
+    return depth;
+}
+
+/**
+ * @brief Builds hierarchical QPainterPath: Outer path (reversed if odd level), add children recursively.
+ * Applies OddEvenFill for holes.
+ */
+QPainterPath LC_Loops::getPainterPath(int level) const {
+    QPainterPath path = buildPathFromLoop(*m_loop);
+    if (level % 2 == 1)
+        path = path.toReversed();  // Reverse for hole winding
+    for (const auto& child : m_children) {
+        QPainterPath childPath = child.getPainterPath(level + 1);
+        path.addPath(childPath);
+    }
+    path.setFillRule(Qt::OddEvenFill);
+    return path;
+}
+
+/**
+ * @brief Computes net area: Outer area minus children's total areas (subtracts holes, adds islands).
+ */
+double LC_Loops::getTotalArea() const {
+    return std::accumulate(m_children.begin(), m_children.end(), m_loop->areaLineIntegral(), [](double area, const LC_Loops& loop) {
+        return area - loop.getTotalArea();  // Recursive subtraction
+    });
+}
+
+/**
+ * @brief Parametric equation for point on ellipse.
+ */
+RS_Vector LC_Loops::e_point(const RS_Vector& center, double major, double minor, double rot, double t) const {
+    RS_Vector local(major * std::cos(t), minor * std::sin(t));
+    local.rotate(rot);
+    return center + local;
+}
+
+/**
+ * @brief First derivative (tangent vector) for ellipse.
+ */
+RS_Vector LC_Loops::e_prime(double major, double minor, double rot, double t) const {
+    RS_Vector local_prime(-major * std::sin(t), minor * std::cos(t));
+    local_prime.rotate(rot);
+    return local_prime;
+}
+
+/**
+ * @brief Appends an elliptic arc to path using cubic Bezier segments.
+ * Segments based on sweep angle and aspect ratio for smoothness.
+ * Optimized to reuse endpoint and tangent calculations across segments.
+ */
+void LC_Loops::addEllipticArc(QPainterPath& path, const RS_Vector& center, double major, double minor, double rot, double a1, double a2) const {
+    double aspect = std::max(major, minor) / std::min(major, minor);
+    int extra_segments = static_cast<int>(std::ceil(aspect - 1.0));  // More segments for high aspect
+    double sweep = a2 - a1;
+    int n = static_cast<int>(std::ceil(std::abs(sweep) * 24. / M_PI )) + extra_segments;  // Quadrants + extra
+    if (n <= 0) return;  // Degenerate case
+    double dt = sweep / n;
+    double lambda = (4.0 / 3.0) * std::tan(dt / 4.0);  // Bezier control factor (constant)
+    double current_t = a1;
+
+    // Initial endpoint and tangent for first segment
+    RS_Vector p0 = e_point(center, major, minor, rot, current_t);
+    RS_Vector prime0 = e_prime(major, minor, rot, current_t) * lambda;
+
+    if ((path.currentPosition() - QPointF{p0.x, p0.y}).manhattanLength() >= RS_TOLERANCE * 100.) {
+        path.moveTo(p0.x, p0.y);
+    } else {
+        path.lineTo(p0.x, p0.y);
+    }
+
+    for (int i = 0; i < n; ++i) {
+        double t1 = current_t + dt;
+        RS_Vector p3 = e_point(center, major, minor, rot, t1);
+        RS_Vector prime1 = e_prime(major, minor, rot, t1) * lambda;
+        RS_Vector p1 = p0 + prime0;
+        RS_Vector p2 = p3 - prime1;
+        path.cubicTo(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+
+        // Reuse for next segment
+        p0 = p3;
+        prime0 = prime1;
+        current_t = t1;
     }
 }
 
-} // namespace LC_LoopUtils
+/**
+ * @brief Converts container entities to QPainterPath, handling lines, arcs, circles, ellipses, splines, and parabolas.
+ * Closes the subpath; skips unsupported types.
+ */
+QPainterPath LC_Loops::buildPathFromLoop(const RS_EntityContainer& cont) const {
+    QPainterPath path;
+    if (cont.count() == 0)
+        return path;
+    for (RS_Entity* e : cont) {
+        if (e->isAtomic()) {
+            RS_Vector start = e->getStartpoint();
+            // avoid small gaps due to rounding errors
+            if ((path.currentPosition() - QPointF{start.x, start.y}).manhattanLength() >= RS_TOLERANCE * 100.) {
+                path.moveTo(start.x, start.y);
+            } else {
+                path.lineTo(start.x, start.y);
+            }
+            RS_Vector end = e->getEndpoint();
+            switch (e->rtti()) {
+            case RS2::EntityLine: {
+                path.lineTo(end.x, end.y);
+            }
+            break;
+            case RS2::EntityArc: {
+                RS_Arc* arc = static_cast<RS_Arc*>(e);
+                double r = arc->getRadius();
+                addEllipticArc(path, arc->getCenter(), r, r, 0.0, arc->getAngle1(), arc->getAngle2());
+            }
+            break;
+            case RS2::EntityCircle: {
+                RS_Circle* circle = static_cast<RS_Circle*>(e);
+                double r = circle->getRadius();
+                addEllipticArc(path, circle->getCenter(), r, r, 0.0, 0.0, 2 * M_PI);
+            }
+            break;
+            case RS2::EntityEllipse: {
+                RS_Ellipse* ellipse = static_cast<RS_Ellipse*>(e);
+                addEllipticArc(path, ellipse->getCenter(), ellipse->getMajorRadius(), ellipse->getMinorRadius(), ellipse->getAngle(), ellipse->getAngle1(), ellipse->getAngle2());
+            }
+            break;
+            case RS2::EntitySpline:
+            case RS2::EntityParabola: {  // IMPROVED: Adaptive strokes for splines and parabolas
+                LC_SplinePoints* curve = static_cast<LC_SplinePoints*>(e);  // Parabola inherits from SplinePoints
+                int segments = 20;  // Base density
+                double len = curve->getLength();
+                if (len > 0) segments = std::max(20, static_cast<int>(len / 0.1));  // ~0.1 unit per segment
+                std::vector<RS_Vector> points;
+                curve->fillStrokePoints(segments, points);
+                if (!points.empty()) {
+                    // Start already connected; draw segments
+                    for (size_t i = 1; i < points.size(); ++i) {
+                        path.lineTo(points[i].x, points[i].y);
+                    }
+                }
+            }
+            break;
+            default:
+                RS_DEBUG->print("LC_Loops::buildPathFromLoop: Unsupported entity type");
+                break;
+            }
+        }
+    }
+    path.closeSubpath();
+    return path;
+}
+
+/**
+ * @brief Recursively collects all descendant loop containers.
+ */
+void LC_Loops::getAllLoops(std::vector<const RS_EntityContainer*>& loops) const {
+    if (m_loop) loops.push_back(m_loop.get());
+    for (const auto& child : m_children) {
+        child.getAllLoops(loops);
+    }
+}
+
+/**
+ * @brief Gets the bounding box from the outer loop.
+ */
+LC_Rect LC_Loops::getBoundingBox() const {
+    return {m_loop->getMin(), m_loop->getMax()};
+}
+
+/**
+ * @brief Convenience alias for isInside.
+ */
+bool LC_Loops::isPointInside(const RS_Vector& p) const {
+    return getContainingDepth(p) % 2 == 1;
+}
+
+/**
+ * @brief Flattens all atomic boundary entities from the hierarchy.
+ */
+std::vector<RS_Entity*> LC_Loops::getAllBoundaries() const {
+    std::vector<const RS_EntityContainer*> loops;
+    getAllLoops(loops);
+    std::vector<RS_Entity*> bounds;
+    for (auto* l : loops) {
+        for (RS_Entity* e : *l) {
+            if (e->isAtomic()) bounds.push_back(e);
+        }
+    }
+    return bounds;
+}
+
+/**
+ * @brief Checks if entity represents a closed shape (e.g., full circle, zero-length line).
+ */
+bool LC_Loops::isEntityClosed(const RS_Entity* e) const {
+    RS2::EntityType type = e->rtti();
+    if (type == RS2::EntityCircle) return true;
+    if (type == RS2::EntityEllipse) {
+        const RS_Ellipse* ell = static_cast<const RS_Ellipse*>(e);
+        return std::abs(ell->getAngleLength() - 2 * M_PI) < RS_TOLERANCE_ANGLE;
+    }
+    if (type == RS2::EntityArc) {
+        const RS_Arc* arc = static_cast<const RS_Arc*>(e);
+        return std::abs(arc->getAngleLength() - 2 * M_PI) < RS_TOLERANCE_ANGLE;
+    }
+    if (type == RS2::EntitySpline) {  // SUPPORT: Closed splines
+        const LC_SplinePoints* spl = static_cast<const LC_SplinePoints*>(e);
+        return spl->isClosed();
+    }
+    if (type == RS2::EntityParabola) {  // SUPPORT: Parabolas are finite open arcs
+        return false;
+    }
+    if (type == RS2::EntityLine) return e->getStartpoint() == e->getEndpoint();
+    return false;
+}
+
+/**
+ * @brief Generates tile offsets for pattern repetition within the bounding box.
+ * Filters tiles that intersect or contain points inside the loop.
+ */
+std::vector<RS_Vector> LC_Loops::createTiles(const RS_Pattern& pattern) const {
+    LC_Rect bBox = getBoundingBox();
+    LC_Rect pBox{pattern.getMin(), pattern.getMax()};
+    const double pWidth = pBox.width();
+    const double pHeight = pBox.height();
+    if (pWidth < 1e-6 || pHeight < 1e-6)  // Skip degenerate patterns
+        return {};
+    RS_Vector offsetBase = bBox.lowerLeftCorner() - pBox.lowerLeftCorner();
+    std::vector<RS_Vector> tiles;
+    // Use ceil for full coverage
+    int nx = static_cast<int>(std::ceil(bBox.width() / pWidth)) + 1;
+    int ny = static_cast<int>(std::ceil(bBox.height() / pHeight)) + 1;
+    // Use pattern center for inside check
+    RS_Vector pCenter = (pBox.lowerLeftCorner() + pBox.upperRightCorner()) / 2.0;
+    for (int i = 0; i < nx; ++i) {
+        for (int j = 0; j < ny; ++j) {
+            RS_Vector tile = offsetBase + RS_Vector{pWidth * i, pHeight * j};
+            LC_Rect tileRect{pBox.lowerLeftCorner() + tile, pBox.upperRightCorner() + tile};
+            // Quick bbox intersection
+            if (!tileRect.intersects(bBox))
+                continue;
+            // Include if overlaps or center inside
+            if (overlap(tileRect) || isPointInside(tile + pCenter)) {
+                tiles.push_back(tile);
+            }
+        }
+    }
+    return tiles;
+}
+
+/**
+ * @brief Trims pattern entities to loop boundaries: Intersects, sorts params, creates subs inside loop.
+ * Handles closed/open entities; skips odd intersections for closed.
+ * For RS_Line: extends to bbox, dedups tiles by perpendicular intercept.
+ */
+std::unique_ptr<RS_EntityContainer> LC_Loops::trimPatternEntities(const RS_Pattern& pattern) const {
+    std::unique_ptr<RS_EntityContainer> trimmed = std::make_unique<RS_EntityContainer>();
+    std::vector<RS_Vector> tiles = createTiles(pattern);
+    auto boundaries = getAllBoundaries();
+    std::map<const RS_Entity*, std::set<double, DoublePredicate>> savedIntercepts;
+    LC_Rect bBox = getBoundingBox();
+    for (const RS_Vector& tile : tiles) {
+        for (RS_Entity* e : pattern) {
+            if (!e->isAtomic()) continue;
+            auto cloned = std::unique_ptr<RS_Entity>(e->clone());
+            cloned->move(tile);
+
+            // For RS_Line, extend the line to cover the whole contour, if the pattern line is seen for the first time
+            // If the extended line is coincident with a previous one, skip it
+            if (e->rtti() == RS2::EntityLine) {
+                RS_Line* cline = static_cast<RS_Line*>(cloned.get());
+                RS_Vector normal = cline->getNormalVector();
+                double intr = normal.dotP(cline->getStartpoint());
+                constexpr double TOL = 1e-6;
+                double key = std::round(intr / TOL) * TOL;
+                std::set<double, DoublePredicate>& sset = savedIntercepts[e];
+                if (sset.find(key) != sset.end())
+                    continue;
+                sset.insert(key);
+                // Extend to bbox
+                extendLineToBBox(*cline, bBox);
+            }
+            std::vector<RS_Vector> all_inters;
+            for (auto* b : boundaries) {
+                RS_VectorSolutions sol = RS_Information::getIntersection(cloned.get(), b, true);
+                for (RS_Vector v : sol) {
+                    all_inters.push_back(v);
+                }
+            }
+            // Remove duplicates
+            std::sort(all_inters.begin(), all_inters.end(), [](const RS_Vector& a, const RS_Vector& b){
+                return a.x < b.x || (RS_Math::equal(a.x, b.x) && a.y < b.y);
+            });
+            auto last = std::unique(all_inters.begin(), all_inters.end(), [](const RS_Vector& a, const RS_Vector& b){
+                return a.distanceTo(b) < RS_TOLERANCE;
+            });
+            all_inters.erase(last, all_inters.end());
+            auto sorted_inters = sortPointsAlongEntity(cloned.get(), all_inters);
+            bool closed = isEntityClosed(cloned.get());
+            if (sorted_inters.empty()) {
+                if (isPointInside(cloned->getMiddlePoint())) {
+                    cloned->setVisible(true);
+                    trimmed->addEntity(cloned.release());
+                }
+                continue;
+            }
+            if (closed && sorted_inters.size() % 2 != 0) {
+                RS_DEBUG->print("LC_Loops::trimPatternEntities: Odd intersections for closed entity, skipping");
+                continue;
+            }
+            std::vector<RS_Vector> points;
+            if (!closed) {
+                points.push_back(cloned->getStartpoint());
+                points.insert(points.end(), sorted_inters.begin(), sorted_inters.end());
+                points.push_back(cloned->getEndpoint());
+            } else {
+                points = sorted_inters;
+            }
+            for (size_t i = 0; i < points.size() - 1; ++i) {
+                RS_Vector p1 = points[i];
+                RS_Vector p2 = points[i + 1];
+                if (p1.distanceTo(p2) < RS_TOLERANCE)
+                    continue;
+                auto sub = std::unique_ptr<RS_Entity>(createSubEntity(cloned.get(), p1, p2));
+                // Filter short subs and add if inside
+                if (sub && sub->getLength() > RS_TOLERANCE && isPointInside(sub->getMiddlePoint())) {
+                    sub->setVisible(true);
+                    trimmed->addEntity(sub.release());
+                }
+            }
+            if (closed && sorted_inters.size() > 0) {
+                RS_Vector pw1 = points.back();
+                RS_Vector pw2 = points[0];
+                if (pw1.distanceTo(pw2) >= RS_TOLERANCE) {
+                    auto sub = std::unique_ptr<RS_Entity>(createSubEntity(cloned.get(), pw1, pw2));
+                    if (sub && sub->getLength() > RS_TOLERANCE && isPointInside(sub->getMiddlePoint())) {
+                        sub->setVisible(true);
+                        trimmed->addEntity(sub.release());
+                    }
+                }
+            }
+        }
+    }
+    return trimmed;
+}
+
+/**
+ * @brief Creates a trimmed sub-entity (line/arc/circle/ellipse/spline/parabola) between two points.
+ * Handles type-specific parameterization.
+ */
+RS_Entity* LC_Loops::createSubEntity(RS_Entity* e, const RS_Vector& p1, const RS_Vector& p2) const {
+    RS2::EntityType type = e->rtti();
+    if (type == RS2::EntityLine) {
+        return new RS_Line(nullptr, RS_LineData(p1, p2));
+    } else if (type == RS2::EntityArc) {
+        RS_Arc* arc = static_cast<RS_Arc*>(e);
+        RS_Vector center = arc->getCenter();
+        double ang1 = (p1 - center).angle();
+        double ang2 = (p2 - center).angle();
+        return new RS_Arc(nullptr, RS_ArcData(center, arc->getRadius(), ang1, ang2, arc->isReversed()));
+    } else if (type == RS2::EntityCircle) {
+        RS_Circle* circle = static_cast<RS_Circle*>(e);
+        RS_Vector center = circle->getCenter();
+        double ang1 = (p1 - center).angle();
+        double ang2 = (p2 - center).angle();
+        return new RS_Arc(nullptr, RS_ArcData(center, circle->getRadius(), ang1, ang2, false));
+    } else if (type == RS2::EntityEllipse) {
+        RS_Ellipse* ell = static_cast<RS_Ellipse*>(e);
+        RS_Vector center = ell->getCenter();
+        double rot = ell->getAngle();
+        RS_Vector lp1 = (p1 - center).rotate(-rot);
+        double lang1 = std::atan2(lp1.y / ell->getMinorRadius(), lp1.x / ell->getMajorRadius());
+        RS_Vector lp2 = (p2 - center).rotate(-rot);
+        double lang2 = std::atan2(lp2.y / ell->getMinorRadius(), lp2.x / ell->getMajorRadius());
+        return new RS_Ellipse(nullptr, {center, ell->getMajorP(), ell->getRatio(), lang1, lang2, ell->isReversed()});
+    } else if (type == RS2::EntitySpline) {  // IMPROVED: Use cut() for precise trimming
+        LC_SplinePoints* spl = static_cast<LC_SplinePoints*>(e);
+        double total_len = spl->getLength();
+        if (total_len < RS_TOLERANCE) return nullptr;
+        double t1 = spl->getDistanceToPoint(p1) / total_len;
+        double t2 = spl->getDistanceToPoint(p2) / total_len;
+        if (t1 > t2) std::swap(t1, t2);  // Ensure order
+        LC_SplinePoints* seg1 = spl->cut(p1);  // Trims original to start-p1
+        if (seg1) {
+            LC_SplinePoints* sub = seg1->cut(p2);  // Further trim p1-p2
+            if (sub && sub->getLength() > RS_TOLERANCE) return sub;
+            delete seg1;  // Cleanup
+        }
+        // Fallback: Resample splinePoints between nearest indices
+        auto points = spl->getPoints();
+        size_t i1 = 0, i2 = points.size() - 1;
+        double min_d1 = RS_MAXDOUBLE, min_d2 = RS_MAXDOUBLE;
+        for (size_t i = 0; i < points.size(); ++i) {
+            double d = points[i].distanceTo(p1);
+            if (d < min_d1) { min_d1 = d; i1 = i; }
+            d = points[i].distanceTo(p2);
+            if (d < min_d2) { min_d2 = d; i2 = i; }
+        }
+        if (i1 > i2) std::swap(i1, i2);
+        LC_SplinePointsData sub_data;
+        sub_data.splinePoints.assign(points.begin() + i1, points.begin() + i2 + 1);
+        return new LC_SplinePoints(nullptr, sub_data);
+    } else if (type == RS2::EntityParabola) {  // IMPROVED: Exact tangents via FromEndPointsTangents
+        LC_Parabola* para = static_cast<LC_Parabola*>(e);
+        RS_Vector tan1 = para->getTangentDirection(p1).normalize();
+        RS_Vector tan2 = para->getTangentDirection(p2).normalize();
+        std::array<RS_Vector, 2> ends = {p1, p2};
+        std::array<RS_Vector, 2> tans = {tan1, tan2};
+        LC_ParabolaData sub_data = LC_ParabolaData::FromEndPointsTangents(ends, tans);
+        if (sub_data.valid) {
+            return new LC_Parabola(nullptr, sub_data);
+        }
+        // Fallback: Interpolate controls
+        auto cps = para->getData().controlPoints;
+        std::sort(cps.begin(), cps.end(), [](const RS_Vector& a, const RS_Vector& b){ return a.x < b.x; });
+        double x1 = p1.x, x2 = p2.x;
+        if (x1 > x2) std::swap(x1, x2);
+        std::array<RS_Vector, 3> sub_cps;
+        double range = x2 - x1;
+        if (range < RS_TOLERANCE) return nullptr;
+        for (int i = 0; i < 3; ++i) {
+            double ratio = (cps[i].x - x1) / range;
+            if (ratio < 0) ratio = 0; else if (ratio > 1) ratio = 1;
+            sub_cps[i] = RS_Vector{x1 + ratio * range, cps[i].y};  // Preserve y for parabolic shape
+        }
+        return new LC_Parabola(nullptr, LC_ParabolaData{sub_cps});
+    }
+    return nullptr;
+}
+
+/**
+ * @brief Sorts intersection points by parameterization along the entity (t for lines, angle for curves, arc-len/x-param for splines/parabolas).
+ */
+std::vector<RS_Vector> LC_Loops::sortPointsAlongEntity(RS_Entity* e, std::vector<RS_Vector> inters) const {
+    std::vector<std::pair<double, RS_Vector>> param_points;
+    RS2::EntityType type = e->rtti();
+    if (type == RS2::EntityLine) {
+        RS_Line* line = static_cast<RS_Line*>(e);
+        RS_Vector start = line->getStartpoint();
+        RS_Vector dir = line->getEndpoint() - start;
+        double len = dir.magnitude();
+        if (len < RS_TOLERANCE) return {};
+        RS_Vector unit = dir / len;
+        for (RS_Vector v : inters) {
+            double t = (v - start).dotP(unit);
+            if (t >= 0 - RS_TOLERANCE && t <= len + RS_TOLERANCE) param_points.emplace_back(t, v);
+        }
+    } else if (type == RS2::EntityArc) {
+        RS_Arc* arc = static_cast<RS_Arc*>(e);
+        RS_Vector center = arc->getCenter();
+        double a1 = arc->getAngle1();
+        bool reversed = arc->isReversed();
+        for (RS_Vector v : inters) {
+            double ang = (v - center).angle();
+            double diff = RS_Math::getAngleDifference(a1, ang, reversed);
+            param_points.emplace_back(diff, v);
+        }
+    } else if (type == RS2::EntityCircle) {
+        RS_Circle* circle = static_cast<RS_Circle*>(e);
+        RS_Vector center = circle->getCenter();
+        if (!inters.empty()) {
+            double ref_ang = (inters[0] - center).angle();
+            for (RS_Vector v : inters) {
+                double ang = (v - center).angle();
+                double diff = RS_Math::correctAngle(ang - ref_ang);
+                param_points.emplace_back(diff, v);
+            }
+        }
+    } else if (type == RS2::EntityEllipse) {
+        RS_Ellipse* ell = static_cast<RS_Ellipse*>(e);
+        RS_Vector center = ell->getCenter();
+        double rot = ell->getAngle();
+        double a1 = ell->getAngle1();
+        bool reversed = ell->isReversed();
+        for (RS_Vector v : inters) {
+            RS_Vector local = (v - center).rotate(-rot);
+            double ang = std::atan2(local.y / ell->getMinorRadius(), local.x / ell->getMajorRadius());
+            double diff = RS_Math::getAngleDifference(a1, ang, reversed);
+            param_points.emplace_back(diff, v);
+        }
+    } else if (type == RS2::EntitySpline) {  // IMPROVED: Binary search for arc-length param
+        LC_SplinePoints* spl = static_cast<LC_SplinePoints*>(e);
+        double total_len = spl->getLength();
+        if (total_len < RS_TOLERANCE) return {};
+        for (RS_Vector v : inters) {
+            RS_Vector nearest = spl->getNearestPointOnEntity(v);
+            // Binary search approx for param t (normalized [0,1])
+            double low = 0.0, high = total_len;
+            for (int iter = 0; iter < 10; ++iter) {  // ~1e-3 precision
+                double mid = (low + high) / 2.0;
+                RS_Vector mid_pt = spl->getNearestDist(mid, spl->getStartpoint());  // Point at dist mid
+                double mid_dist_to_v = mid_pt.distanceTo(v);
+                if (mid_dist_to_v < RS_TOLERANCE) break;
+                if (mid < total_len / 2) high = mid; else low = mid;
+            }
+            double dist_along = (low + high) / 2.0;
+            param_points.emplace_back(dist_along / total_len, v);
+        }
+    } else if (type == RS2::EntityParabola) {  // IMPROVED: Exact x-param normalization
+        LC_Parabola* para = static_cast<LC_Parabola*>(e);
+        LC_ParabolaData& d = para->getData();
+        if (!d.valid) return {};
+        double x_min = std::min({d.controlPoints[0].x, d.controlPoints[1].x, d.controlPoints[2].x});
+        double x_max = std::max({d.controlPoints[0].x, d.controlPoints[1].x, d.controlPoints[2].x});
+        double x_range = x_max - x_min;
+        if (x_range < RS_TOLERANCE) return {};
+        for (RS_Vector v : inters) {
+            double x_param = d.FindX(v);
+            double norm_param = (x_param - x_min) / x_range;  // [0,1]
+            param_points.emplace_back(norm_param, v);
+        }
+    }
+    std::sort(param_points.begin(), param_points.end(), [](const auto& a, const auto& b){
+        return a.first < b.first;
+    });
+    std::vector<RS_Vector> sorted;
+    for (auto& p : param_points) sorted.push_back(p.second);
+    return sorted;
+}
+
+/**
+ * @brief Recursive overlap check: Any entity bbox overlaps or child overlaps.
+ */
+bool LC_Loops::overlap(const LC_Rect& other) const {
+    const bool ret = std::any_of(m_loop->begin(), m_loop->end(), [&other](const RS_Entity* entity) {
+        return entity != nullptr && other.overlaps(LC_Rect{entity->getMin(), entity->getMax()});
+    });
+    return ret || std::any_of(m_children.cbegin(), m_children.cend(), [&other](const LC_Loops& loop) {
+               return loop.overlap(other);
+           });
+}
+}  // namespace LC_LoopUtils
