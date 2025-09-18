@@ -65,7 +65,7 @@ void QG_DlgText::languageChange(){
 
 void QG_DlgText::init() {
     cbFont->init();
-    font=nullptr;
+    m_font=nullptr;
     entity = nullptr;
     m_isNew = false;
     leOblique->setDisabled(true);
@@ -426,8 +426,14 @@ int QG_DlgText::getAlignment() {
 }
 
 void QG_DlgText::setFont(const QString& f) {
-    cbFont->setCurrentIndex( cbFont->findText(f) );
-    font = cbFont->getFont();
+    int index = cbFont->findText(f);
+
+    // Issue #2069: default to unicode fonts
+    if (index == -1)
+        index = cbFont->findText("unicode");
+    if (index >= 0)
+        cbFont->setCurrentIndex(index);
+    m_font = cbFont->getFont();
 //    defaultChanged(false);
 }
 

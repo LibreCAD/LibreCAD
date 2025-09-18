@@ -383,7 +383,13 @@ int QG_DlgMText::getAlignment() {
 }
 
 void QG_DlgMText::setFont(const QString& f) {
-    cbFont->setCurrentIndex( cbFont->findText(f) );
+    int index = cbFont->findText(f);
+
+    // Issue #2069: default to unicode fonts
+    if (index == -1)
+        index = cbFont->findText("unicode");
+    if (index >= 0)
+        cbFont->setCurrentIndex(index);
     m_font = cbFont->getFont();
     defaultChanged(false);
 }
