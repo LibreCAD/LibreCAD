@@ -44,10 +44,12 @@ LC_DimOrdinate::LC_DimOrdinate(RS_EntityContainer* parent, const RS_DimensionDat
    RS_EntityContainer::calculateBorders();
 }
 
+LC_DimOrdinate::LC_DimOrdinate(const LC_DimOrdinate& other)
+    :RS_Dimension(other), m_dimOrdinateData{other.m_dimOrdinateData} {
+}
+
 RS_Entity* LC_DimOrdinate::clone() const {
     auto* d = new LC_DimOrdinate(*this);
-    d->setOwner(isOwner());
-    d->detach();
     return d;
 }
 
@@ -221,6 +223,8 @@ void LC_DimOrdinate::doUpdateDim() {
     RS_Vector textOffsetV;   // normal vector in direction of text offset
     determineKneesPositions(featurePoint, leaderEndPoint, kneeOne, kneeTwo, textOffsetV);
 
+    auto linePen = getPenExtensionLine(true);
+
     if (featurePoint.distanceTo(kneeOne) > dimexo) {
         auto startPoint = featurePoint + textOffsetV*dimexo;
         if (xAxisRotatedInUCS) {
@@ -228,11 +232,11 @@ void LC_DimOrdinate::doUpdateDim() {
         }
         // RS_Line* dummy;
         // adjustExtensionLineFixLength(line, dummy, false);
-        addDimDimensionLine(startPoint, kneeOne);
+        addDimComponentLine(startPoint, kneeOne, linePen);
     }
 
-    addDimDimensionLine(kneeOne, kneeTwo);
-    addDimDimensionLine(kneeTwo,m_dimOrdinateData.leaderEndPoint);
+    addDimComponentLine(kneeOne, kneeTwo, linePen);
+    addDimComponentLine(kneeTwo,m_dimOrdinateData.leaderEndPoint, linePen);
 
     double textHeight = getTextHeight() * dimscale;
     double dimgap = getDimensionLineGap();

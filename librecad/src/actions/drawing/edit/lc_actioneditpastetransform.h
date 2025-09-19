@@ -50,7 +50,7 @@ public:
     double getAngle() const;
 protected:
     enum Status{
-        SetReferencePoint
+        SetReferencePoint = InitialActionStatus
     };
 
     std::unique_ptr<RS_Vector> m_referencePoint;
@@ -77,7 +77,8 @@ protected:
     void previewMultipleReferencePoints();
     void updateMouseButtonHints() override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-
     void doTrigger() override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angle) override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 #endif // LC_ACTIONEDITPASTETRANSFORM_H

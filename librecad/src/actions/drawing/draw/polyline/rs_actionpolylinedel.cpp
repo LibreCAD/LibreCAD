@@ -25,6 +25,7 @@
 **********************************************************************/
 #include "rs_actionpolylinedel.h"
 
+#include "lc_actioncontext.h"
 #include "rs_debug.h"
 #include "rs_modification.h"
 #include "rs_polyline.h"
@@ -36,11 +37,12 @@ RS_ActionPolylineDel::RS_ActionPolylineDel(LC_ActionContext *actionContext)
 
 RS_ActionPolylineDel::~RS_ActionPolylineDel() = default;
 
-void RS_ActionPolylineDel::init(int status) {
-    RS_PreviewActionInterface::init(status);
-    if (status <= SetPolyline){
-        m_polylineToModify = nullptr;
-    }
+void RS_ActionPolylineDel::doInitialInit() {
+    m_polylineToModify = nullptr;
+}
+
+void RS_ActionPolylineDel::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
+    setPolylineToModify(contextEntity);
 }
 
 void RS_ActionPolylineDel::drawSnapper() {
@@ -68,7 +70,6 @@ void RS_ActionPolylineDel::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             break;
         }
         case SetVertex1:{
-
             RS_Vector vertex;
             RS_Entity * segment;
             getSelectedPolylineVertex(e, vertex, segment);
@@ -86,20 +87,24 @@ void RS_ActionPolylineDel::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     }
 }
 
+void RS_ActionPolylineDel::setPolylineToModify(RS_Entity* en) {
+    if (en == nullptr){
+        commandMessage(tr("No Entity found."));
+    } else if (!isPolyline(en)){
+        commandMessage(tr("Entity must be a polyline."));
+    } else {
+        m_polylineToModify = dynamic_cast<RS_Polyline *>(en);
+        m_polylineToModify->setSelected(true);
+        setStatus(SetVertex1);
+        redraw();
+    }
+}
+
 void RS_ActionPolylineDel::onMouseLeftButtonRelease(int status, LC_MouseEvent *e){
     switch (status) {
         case SetPolyline: {
             auto en = catchEntityByEvent(e);
-            if (en == nullptr){
-                commandMessage(tr("No Entity found."));
-            } else if (!isPolyline(en)){
-                commandMessage(tr("Entity must be a polyline."));
-            } else {
-                m_polylineToModify = dynamic_cast<RS_Polyline *>(en);
-                m_polylineToModify->setSelected(true);
-                setStatus(SetVertex1);
-                redraw();
-            }
+            setPolylineToModify(en);
             break;
         }
         case SetVertex1: {

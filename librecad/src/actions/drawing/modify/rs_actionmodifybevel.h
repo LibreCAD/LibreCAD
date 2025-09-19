@@ -32,7 +32,6 @@
 class RS_AtomicEntity;
 class RS_Entity;
 
-
 /**
  * This action class can handle user events to bevel corners.
  *
@@ -58,7 +57,7 @@ protected:
      * Action States.
      */
     enum Status {
-        SetEntity1,      /**< Choosing the 1st entity. */
+        SetEntity1 = InitialActionStatus,      /**< Choosing the 1st entity. */
         SetEntity2,      /**< Choosing the 2nd entity. */
         SetLength1,      /**< Setting length 1 in command line. */
         SetLength2       /**< Setting length 2 in command line. */
@@ -70,6 +69,7 @@ protected:
     /** Last status before entering angle. */
     Status m_lastStatus = SetEntity1;
 
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     bool isEntityAccepted(RS_Entity *en) const;
     bool areBothEntityAccepted(RS_Entity *en1, RS_Entity *en2) const;
     void previewLineModifications(const RS_Entity *original, const RS_Entity *trimmed, bool trimOnStart);
@@ -80,7 +80,7 @@ protected:
     bool doProcessCommand(int status, const QString &command) override;
     void updateMouseButtonHints() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
-
     void doTrigger() override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 #endif

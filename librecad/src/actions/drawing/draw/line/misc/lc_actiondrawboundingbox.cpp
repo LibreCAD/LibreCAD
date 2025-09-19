@@ -146,6 +146,14 @@ bool LC_ActionDrawBoundingBox::isAllowTriggerOnEmptySelection() {
     return false;
 }
 
+bool LC_ActionDrawBoundingBox::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "offset") {
+        setOffset(distance);
+        return true;
+    }
+    return false;
+}
+
 LC_ActionOptionsWidget *LC_ActionDrawBoundingBox::createOptionsWidget() {
     return new LC_DrawBoundingBoxOptions();
 }

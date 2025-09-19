@@ -41,6 +41,7 @@ class QG_SelectionWidget : public QWidget, public LC_GraphicViewAware, public Ui
 public:
     QG_SelectionWidget(QWidget* parent = nullptr, const char* name = nullptr, Qt::WindowFlags fl = {});
     ~QG_SelectionWidget() override;
+    QToolButton* getActionsButton();
 public slots:
     void setNumber(int n);
     void setTotalLength(double l);

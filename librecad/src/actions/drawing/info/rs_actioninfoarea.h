@@ -49,7 +49,7 @@ protected:
  * Action States.
  */
     enum Status {
-        SetFirstPoint,    /**< Setting the 1st point of the polygon. */
+        SetFirstPoint = InitialActionStatus,    /**< Setting the 1st point of the polygon. */
         SetNextPoint      /**< Setting a next point. */
     };
     std::unique_ptr<RS_InfoArea> m_infoArea;

@@ -43,6 +43,7 @@ public:
     ~RS_ActionSnapIntersectionManual() override;
     void init(int status) override;
     void trigger() override;
+    bool isSupportsPredecessorAction() override {return true;}
 protected:
 
     /**

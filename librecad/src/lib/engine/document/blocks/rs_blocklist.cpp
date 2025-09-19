@@ -223,6 +223,25 @@ RS_Block* RS_BlockList::find(const QString& name) {
 	return nullptr;
 }
 
+RS_Block* RS_BlockList::findCaseInsensitive(const QString& name) const {
+    try {
+        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_BlockList::find(): %s", name.toLatin1().constData());
+    }
+    catch(...) {
+        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_BlockList::find(): wrong name to find");
+        return nullptr;
+    }
+    // Todo : reduce this from O(N) to O(log(N)) complexity based on sorted list or hash
+    //DFS
+    for(RS_Block* b: m_blocks) {
+        if (b->getName().compare(name, Qt::CaseInsensitive) == 0) {
+            return b;
+        }
+    }
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_BlockList::find(): bad");
+    return nullptr;
+}
+
 /**
  * Finds a new unique block name.
  *

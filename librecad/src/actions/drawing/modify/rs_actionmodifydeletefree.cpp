@@ -56,9 +56,9 @@ void RS_ActionModifyDeleteFree::init(int status) {
 }
 
 void RS_ActionModifyDeleteFree::trigger(){
-    if (m_entity1 && m_entity2) {
+    if (m_entity1 != nullptr && m_entity2 != nullptr) {
         RS_EntityContainer *parent = m_entity2->getParent();
-        if (parent) {
+        if (parent != nullptr) {
             if (parent->rtti() == RS2::EntityPolyline) {
                 if (parent->getId() == m_polyline->getId()) {
 
@@ -71,7 +71,7 @@ void RS_ActionModifyDeleteFree::trigger(){
                                     *m_entity2, m_actionData->v2,
                                     &pl1, &pl2);
 
-                    if (m_document) {
+                    if (m_document != nullptr) {
                         m_document->startUndoCycle();
                         m_document->addUndoable(m_polyline);
                         m_document->addUndoable(pl1);
@@ -105,9 +105,9 @@ void RS_ActionModifyDeleteFree::onMouseLeftButtonRelease(int status, QMouseEvent
         case 0: {
             m_actionData->v1 = snapPoint(e);
             m_entity1 = getKeyEntity();
-            if (m_entity1) {
+            if (m_entity1 != nullptr) {
                 RS_EntityContainer *parent = m_entity1->getParent();
-                if (parent) {
+                if (parent != nullptr) {
                     if (parent->rtti() == RS2::EntityPolyline) {
                         m_polyline = dynamic_cast<RS_Polyline *>(parent);
                         setStatus(1);
@@ -126,7 +126,7 @@ void RS_ActionModifyDeleteFree::onMouseLeftButtonRelease(int status, QMouseEvent
             m_actionData->v2 = snapPoint(e);
             m_entity2 = getKeyEntity();
 
-            if (m_entity2) {
+            if (m_entity2 != nullptr) {
                 trigger();
             } else {
                 commandMessage(tr("Second entity is nullptr"));

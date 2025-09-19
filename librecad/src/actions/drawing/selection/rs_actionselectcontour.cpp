@@ -35,6 +35,14 @@ RS_ActionSelectContour::RS_ActionSelectContour(LC_ActionContext *actionContext)
 	,m_entity(nullptr){
 }
 
+void RS_ActionSelectContour::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
+    if (contextEntity->isAtomic()) {
+        m_entity = contextEntity;
+        trigger();
+        redrawDrawing();
+    }
+}
+
 void RS_ActionSelectContour::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *event) {
     auto ent = catchAndDescribe(event);
     if (ent != nullptr){
@@ -47,7 +55,7 @@ void RS_ActionSelectContour::onMouseMoveEvent([[maybe_unused]]int status, LC_Mou
 }
 
 void RS_ActionSelectContour::doTrigger() {
-    if (m_entity){
+    if (m_entity != nullptr) {
         if (m_entity->isAtomic()){ // fixme - why it is so??? why it's not suitable to select, say, polyline here too?
             RS_Selection s(*m_container, m_viewport);
             s.selectContour(m_entity);

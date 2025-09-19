@@ -114,5 +114,6 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
+   bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 #endif // LC_ACTIONDRAWSTAR_H

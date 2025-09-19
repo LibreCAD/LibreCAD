@@ -44,7 +44,7 @@ public:
     void finish(bool updateTB) override;
 protected:
     enum Status {
-        SetCircle1,     /**< Choose the startpoint. */
+        SetCircle1 = InitialActionStatus,     /**< Choose the startpoint. */
         SetCircle2,     /**< Choose the circle / arc. */
         SelectLine      /**<Choose the tangent*/
     };
@@ -53,6 +53,8 @@ protected:
     void preparePreview(int status, LC_MouseEvent *e);
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
+
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
 
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

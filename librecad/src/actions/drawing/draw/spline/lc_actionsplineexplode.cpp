@@ -96,6 +96,10 @@ void LC_ActionSplineExplode::doTrigger() {
     }
 }
 
+bool LC_ActionSplineExplode::mayModifySplineEntity(RS_Entity* e) {
+    return e != nullptr && g_enTypeList.contains(e->rtti());
+}
+
 void LC_ActionSplineExplode::setupAndAddCreatedEntity(RS_Entity *createdEntity, RS_Layer *layerToSet, const RS_Pen &penToUse) {
     createdEntity->setParent(m_container);
     createdEntity->setPen(penToUse);
@@ -125,12 +129,16 @@ void LC_ActionSplineExplode::onMouseMove(RS_Vector mouse, int status, LC_MouseEv
     }
 }
 
+void LC_ActionSplineExplode::setEntityToModify(RS_Entity* entity) {
+    m_entityToModify = entity;
+    trigger();
+}
+
 void LC_ActionSplineExplode::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
     auto entity = catchEntityByEvent(e, g_enTypeList);
     if (entity != nullptr) {
         if (mayModifySplineEntity(entity)) {
-            m_entityToModify = entity;
-            trigger();
+            setEntityToModify(entity);
         }
     }
 }

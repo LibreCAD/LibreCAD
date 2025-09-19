@@ -26,6 +26,7 @@
 
 #include "rs_actiondimlinear.h"
 
+#include "lc_linemath.h"
 #include "rs_constructionline.h"
 #include "rs_dimlinear.h"
 
@@ -37,7 +38,7 @@
  *                   false: The user can change the angle in a option widget.
  */
 RS_ActionDimLinear::RS_ActionDimLinear(LC_ActionContext *actionContext,double angle,bool _fixedAngle, RS2::ActionType type)
-    :LC_ActionDimLinearBase("Draw linear dimensions", actionContext, type),
+    :LC_ActionDimLinearBase("Draw linear dimensions", actionContext, RS2::EntityDimLinear, type),
      m_edata(std::make_unique<RS_DimLinearData>(RS_Vector(0., 0.), RS_Vector(0., 0.), angle, 0.)),
      m_fixedAngle(_fixedAngle), m_lastStatus(SetExtPoint1){
     setUcsAngleDegrees(angle);
@@ -55,15 +56,15 @@ void RS_ActionDimLinear::reset(){
     *m_edata = {{}, {}, toWorldAngleFromUCSBasisDegrees(angleDeg), toWorldAngle(0.0)};
 }
 
-void RS_ActionDimLinear::preparePreview(){
-    double angle = getDimAngle();
+void RS_ActionDimLinear::preparePreview(bool alternateMode){
+    double angle = getDimAngle(alternateMode);
     RS_Vector dirV = RS_Vector::polar(100., angle + M_PI_2);
     RS_ConstructionLine cl(nullptr,RS_ConstructionLineData(m_edata->extensionPoint2,m_edata->extensionPoint2 + dirV));
     m_dimensionData->definitionPoint = cl.getNearestPointOnEntity(m_dimensionData->definitionPoint);
 }
 
 RS_Entity *RS_ActionDimLinear::createDim(RS_EntityContainer* parent){
-    m_edata->angle = getDimAngle();
+    m_edata->angle = getDimAngle(m_alternateDimDirection);
     m_edata->oblique =  toWorldAngle(0.0);
     auto *dim = new RS_DimLinear(parent, *m_dimensionData, *m_edata);
     return dim;
@@ -165,7 +166,7 @@ RS_Vector RS_ActionDimLinear::getExtensionPoint2(){
     return m_edata->extensionPoint2;
 }
 
-double RS_ActionDimLinear::getDimAngle(){
+double RS_ActionDimLinear::getDimAngle(bool alternateMode){
 // Todo - sand - option for dim behaviour?
 // This is good place for optional behavior for Hor/Vert dims.
 // Implementation below created dims orthogonal to X and Y axises. 0 in UCS Abs values, ignore basis there??
@@ -174,14 +175,53 @@ double RS_ActionDimLinear::getDimAngle(){
 
     switch (m_actionType){
         case RS2::ActionDimLinearHor:{
-            return toWorldAngle(0);
+            double angle = alternateMode ? M_PI_2: 0;
+            return toWorldAngle(angle);
         }
         case RS2::ActionDimLinearVer:{
-            return toWorldAngle(M_PI_2);
+            double angle = alternateMode ? 0: M_PI_2;
+            return toWorldAngle(angle);
         }
         default:{
-            return toWorldAngleFromUCSBasisDegrees(m_ucsBasisAngleDegrees);
+            double angleDegrees = m_ucsBasisAngleDegrees;
+            if (alternateMode) {
+                if (!LC_LineMath::isMeaningfulAngle(m_ucsBasisAngleDegrees)) {
+                    angleDegrees = 90.0;
+                }
+                else if (!LC_LineMath::isMeaningfulAngle(m_ucsBasisAngleDegrees - 90.0)) {
+                    angleDegrees = 0.0;
+                }
+            }
+            return toWorldAngleFromUCSBasisDegrees(angleDegrees);
         }
+    }
+}
+
+bool RS_ActionDimLinear::checkMaySwitchDimDirection() {
+    bool maySwitchDirection = m_actionType == RS2::ActionDimLinearHor || m_actionType == RS2::ActionDimLinearVer;
+    if (!maySwitchDirection) {
+        maySwitchDirection  = !LC_LineMath::isMeaningfulAngle(m_ucsBasisAngleDegrees) || !LC_LineMath::isMeaningfulAngle(m_ucsBasisAngleDegrees - M_PI_2);
+    }
+    return maySwitchDirection;
+}
+
+void RS_ActionDimLinear::updateMouseButtonHintForExtPoint2() {
+    bool maySwitchDirection = checkMaySwitchDimDirection();
+    if (maySwitchDirection) {
+        updateMouseWidgetTRBack(tr("Specify second extension line origin"), MOD_SHIFT_AND_CTRL( MSG_REL_ZERO, tr("Switch Direction")));
+    }
+    else {
+        LC_ActionDimLinearBase::updateMouseButtonHintForExtPoint2();
+    }
+}
+
+void RS_ActionDimLinear::updateMouseButtonHintForDefPoint() {
+    bool maySwitchDirection = checkMaySwitchDimDirection();
+    if (maySwitchDirection) {
+        updateMouseWidgetTRBack(tr("Specify dimension line location"), MOD_SHIFT_AND_CTRL(tr("Snap to Adjacent Dim"), tr("Switch Direction")));
+    }
+    else {
+        LC_ActionDimLinearBase::updateMouseButtonHintForDefPoint();
     }
 }
 

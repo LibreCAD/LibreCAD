@@ -49,14 +49,14 @@ public:
     /**
      * Creates a pen with the given attributes.
      */
-    RS_Pen(const RS_Color& c,
-           RS2::LineWidth w,
-           RS2::LineType t)
-    {
-        setColor(c);
-        setWidth(w);
-        setLineType(t);
+    RS_Pen(const RS_Color& color,
+           RS2::LineWidth width,
+           RS2::LineType type){
+        setColor(color);
+        setWidth(width);
+        setLineType(type);
     }
+
     /**
      * Creates a default pen with the given flags. This is 
      * usually used to create invalid pens.

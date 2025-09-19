@@ -41,7 +41,7 @@ public:
 
 	void init(int status) override;
 	void trigger() override;
-
+    bool isSupportsPredecessorAction() override {return true;}
 protected:
     RS2::Direction m_direction = RS2::Up;
     bool m_hasOffset = false;

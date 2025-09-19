@@ -39,6 +39,8 @@ LC_StarOptions::LC_StarOptions() :
     connect(ui->leRadusOuter, &QLineEdit::editingFinished, this, &LC_StarOptions::onRadiusOuterEditingFinished);
     connect(ui->cbPolyline, &QCheckBox::clicked, this, &LC_StarOptions::onPolylineClicked);
     connect(ui->sbNumber, &QSpinBox::valueChanged, this, &LC_StarOptions::onNumberChanged);
+    pickDistanceSetup("radiusOuter", ui->tbPickRadiusOuter, ui->leRadusOuter);
+    pickDistanceSetup("radiusInner", ui->tbPickRadiusInner, ui->leRadiusInner);
 }
 
 LC_StarOptions::~LC_StarOptions(){
@@ -154,6 +156,7 @@ void LC_StarOptions::setRadiusInnerEnabledToModelAndView(bool value){
     m_action->setInnerRounded(value);
     ui->cbRadiusInner ->setChecked(value);
     ui->leRadiusInner->setEnabled(value);
+    ui->tbPickRadiusInner->setEnabled(value);
 }
 
 void LC_StarOptions::setSymmetricToModelAndView(bool value){
@@ -171,6 +174,7 @@ void LC_StarOptions::setRadiusOuterEnabledToModelAndView(bool value){
     m_action->setOuterRounded(value);
     ui->cbRadiusOuter->setChecked(value);
     ui->leRadusOuter->setEnabled(value);
+    ui->tbPickRadiusOuter->setEnabled(value);
 }
 
 void LC_StarOptions::setNumberToModelAndView(int value){

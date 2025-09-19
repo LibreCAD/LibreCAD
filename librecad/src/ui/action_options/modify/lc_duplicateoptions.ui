@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>545</width>
+    <width>713</width>
     <height>24</height>
    </rect>
   </property>
@@ -26,69 +26,44 @@
    <property name="bottomMargin">
     <number>1</number>
    </property>
-   <item row="0" column="4">
-    <widget class="QLineEdit" name="leOffsetY">
-     <property name="minimumSize">
+   <item row="0" column="12">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
       <size>
-       <width>30</width>
-       <height>0</height>
+       <width>0</width>
+       <height>20</height>
       </size>
      </property>
-     <property name="maximumSize">
-      <size>
-       <width>50</width>
-       <height>16777215</height>
-      </size>
-     </property>
+    </spacer>
+   </item>
+   <item row="0" column="11">
+    <widget class="QComboBox" name="cbLayer">
      <property name="toolTip">
-      <string>Vertical offset of duplicate from original entity</string>
+      <string>Layer to which duplicate should be placed</string>
      </property>
+     <item>
+      <property name="text">
+       <string comment="layer">Active</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string comment="layer">Original</string>
+      </property>
+     </item>
     </widget>
    </item>
-   <item row="0" column="2">
-    <widget class="QLineEdit" name="leOffsetX">
-     <property name="minimumSize">
-      <size>
-       <width>30</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>50</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Horizontal offset of duplicate from original entity</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="6">
-    <widget class="QLabel" name="label_3">
+   <item row="0" column="1">
+    <widget class="QLabel" name="label">
      <property name="text">
-      <string>Pen:</string>
+      <string>Offset X:</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QCheckBox" name="cbInPlace">
-     <property name="toolTip">
-      <string>If checked, duplicate will be positioned in original's coordinates</string>
-     </property>
-     <property name="text">
-      <string>In Place</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="8">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Layer:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="7">
+   <item row="0" column="9">
     <widget class="QComboBox" name="cbPen">
      <property name="toolTip">
       <string>Pen to apply to created duplicate</string>
@@ -110,59 +85,114 @@
      </item>
     </widget>
    </item>
-   <item row="0" column="9">
-    <widget class="QComboBox" name="cbLayer">
-     <property name="toolTip">
-      <string>Layer to which duplicate should be placed</string>
-     </property>
-     <item>
-      <property name="text">
-       <string comment="layer">Active</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string comment="layer">Original</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="0" column="3">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Offset Y:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="10">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
+   <item row="0" column="2">
+    <widget class="QLineEdit" name="leOffsetX">
+     <property name="minimumSize">
       <size>
-       <width>0</width>
-       <height>20</height>
+       <width>60</width>
+       <height>0</height>
       </size>
      </property>
-    </spacer>
-   </item>
-   <item row="0" column="1">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Offset X:</string>
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Horizontal offset of duplicate from original entity</string>
      </property>
     </widget>
    </item>
    <item row="0" column="5">
+    <widget class="QLineEdit" name="leOffsetY">
+     <property name="minimumSize">
+      <size>
+       <width>60</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Vertical offset of duplicate from original entity</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QToolButton" name="tbPickOffsetX">
+     <property name="toolTip">
+      <string>Pick offset by X from drawing</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_distance.lci</normaloff>:/icons/interactive_pick_distance.lci</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="7">
     <widget class="Line" name="line">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
     </widget>
    </item>
+   <item row="0" column="4">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Offset Y:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="8">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Pen:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="10">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Layer:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QCheckBox" name="cbInPlace">
+     <property name="toolTip">
+      <string>If checked, duplicate will be positioned in original's coordinates</string>
+     </property>
+     <property name="text">
+      <string>In Place</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="6">
+    <widget class="QToolButton" name="tbPickOffsetY">
+     <property name="toolTip">
+      <string>Pick offset by Y from drawing</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_distance.lci</normaloff>:/icons/interactive_pick_distance.lci</iconset>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../../../res/icons/icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

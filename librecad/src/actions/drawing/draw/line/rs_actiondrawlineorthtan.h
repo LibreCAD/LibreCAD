@@ -41,15 +41,17 @@ public:
     void finish(bool updateTB) override;
 protected:
     enum Status {
-        SetLine,     /**< Choose the line orthogonal to the tangent line */
+        SetLine = InitialActionStatus,     /**< Choose the line orthogonal to the tangent line */
         SetCircle    /**< Choose the arc/circle/ellipse to create its tangent line*/
     };
 
     void clearLines();
+    bool setLine(RS_Entity* en);
 
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
 
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

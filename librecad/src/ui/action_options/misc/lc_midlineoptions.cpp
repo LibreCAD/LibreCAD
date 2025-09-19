@@ -29,6 +29,7 @@ LC_MidLineOptions::LC_MidLineOptions()
     , ui(new Ui::LC_MidLineOptions){
     ui->setupUi(this);
     connect(ui->leOffset, &QLineEdit::editingFinished, this, &LC_MidLineOptions::onOffsetEditingFinished);
+    pickDistanceSetup("offset", ui->tbPickOffset, ui->leOffset);
 }
 
 LC_MidLineOptions::~LC_MidLineOptions(){

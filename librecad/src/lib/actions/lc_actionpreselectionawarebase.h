@@ -42,7 +42,10 @@ protected:
 
     RS_Vector m_selectionCorner1 = RS_Vector(false);
     bool m_inBoxSelectionMode = false;
+    bool m_forceSelectContextEntity = false;
 
+    virtual bool isForceSelectContextEntity() {return true;}
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     void selectionFinishedByKey(QKeyEvent *e, bool escape) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>556</width>
+    <width>766</width>
     <height>551</height>
    </rect>
   </property>
@@ -27,9 +27,9 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>4</number>
      </property>
-     <widget class="QWidget" name="tab1">
+     <widget class="QWidget" name="tabPaper">
       <attribute name="title">
        <string>&amp;Paper</string>
       </attribute>
@@ -348,7 +348,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab2">
+     <widget class="QWidget" name="tabUnits">
       <attribute name="title">
        <string>&amp;Units</string>
       </attribute>
@@ -718,7 +718,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab3">
+     <widget class="QWidget" name="tabGrid">
       <attribute name="title">
        <string>&amp;Grid</string>
       </attribute>
@@ -1044,7 +1044,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab4">
+     <widget class="QWidget" name="tabDimsOld">
       <attribute name="title">
        <string>&amp;Dimensions</string>
       </attribute>
@@ -1245,7 +1245,7 @@
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>30</height>
+           <height>0</height>
           </size>
          </property>
         </spacer>
@@ -1793,7 +1793,216 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab5">
+     <widget class="QWidget" name="tabDims">
+      <attribute name="title">
+       <string>Dimensions</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_22">
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="gbDimLeft">
+         <property name="maximumSize">
+          <size>
+           <width>250</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="title">
+          <string>Styles</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_23">
+          <item row="0" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QToolButton" name="tbDimNew">
+              <property name="toolTip">
+               <string>New style creation</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../../../res/icons/icons.qrc">
+                <normaloff>:/icons/add.lci</normaloff>:/icons/add.lci</iconset>
+              </property>
+              <property name="autoRaise">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="tbDimRemove">
+              <property name="toolTip">
+               <string>Remove Style</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../../../res/icons/icons.qrc">
+                <normaloff>:/icons/remove.lci</normaloff>:/icons/remove.lci</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="tbDimEdit">
+              <property name="toolTip">
+               <string>Edit Style</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../../../res/icons/icons.qrc">
+                <normaloff>:/icons/attributes.lci</normaloff>:/icons/attributes.lci</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="tbDimRename">
+              <property name="toolTip">
+               <string>Rename Style</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../../../res/icons/icons.qrc">
+                <normaloff>:/icons/rename_active_block.lci</normaloff>:/icons/rename_active_block.lci</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="tbDimDefault">
+              <property name="toolTip">
+               <string>Marks style as active one. Active style will be used during creation of dimensions.</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../../../res/icons/icons.qrc">
+                <normaloff>:/icons/dim_default.lci</normaloff>:/icons/dim_default.lci</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_10">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QToolButton" name="tbDimExport">
+              <property name="toolTip">
+               <string>Export</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../../../res/icons/icons.qrc">
+                <normaloff>:/icons/export.lci</normaloff>:/icons/export.lci</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="tbDimImport">
+              <property name="toolTip">
+               <string>Import</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../../../res/icons/icons.qrc">
+                <normaloff>:/icons/import.lci</normaloff>:/icons/import.lci</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_9">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>0</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="0">
+           <widget class="QTreeView" name="lvDimStyles">
+            <property name="uniformRowHeights">
+             <bool>true</bool>
+            </property>
+            <property name="itemsExpandable">
+             <bool>true</bool>
+            </property>
+            <property name="expandsOnDoubleClick">
+             <bool>false</bool>
+            </property>
+            <attribute name="headerVisible">
+             <bool>false</bool>
+            </attribute>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QGroupBox" name="groupBox_7">
+            <property name="title">
+             <string>Active Style</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_24">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_23">
+               <property name="text">
+                <string>Style Name:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLabel" name="lblActiveStyle">
+               <property name="text">
+                <string>TextLabel</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="dbDimEmbeddArrowBlocks">
+            <property name="toolTip">
+             <string>If checked, used non-default arrow blocks will be added during drawing's saving. Embedding arrow blocks is needed for drawings that are later opened in AutoCAD.  This check may be unset if all editing is performed in LibreCAD. </string>
+            </property>
+            <property name="text">
+             <string>Embed arrows blocks on save</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QGroupBox" name="gbDimStylesPreview">
+         <property name="title">
+          <string>Preview</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabSplines">
       <attribute name="title">
        <string>&amp;Splines and Lines</string>
       </attribute>
@@ -1962,7 +2171,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab6">
+     <widget class="QWidget" name="tabPoints">
       <attribute name="title">
        <string>&amp;Points</string>
       </attribute>
@@ -3045,7 +3254,284 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="tabMeta">
+      <attribute name="title">
+       <string>Metadata</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_25">
+       <item row="0" column="2">
+        <widget class="QLineEdit" name="leMetaTitle">
+         <property name="toolTip">
+          <string>Specifies the title of the drawing.</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="2">
+        <widget class="QLabel" name="label_27">
+         <property name="text">
+          <string>Keywords:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="2">
+        <widget class="QLabel" name="label_28">
+         <property name="text">
+          <string>Comments:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_24">
+         <property name="text">
+          <string>Title:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QLineEdit" name="leMetaSubject">
+         <property name="toolTip">
+          <string>Specifies the subject of the drawing.</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLineEdit" name="leMetaAuthor">
+         <property name="toolTip">
+          <string>Specifies the author of the drawing.</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QLineEdit" name="leMetaKeywords">
+         <property name="toolTip">
+          <string>Specifies drawing-specific keywords.</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QLabel" name="label_25">
+         <property name="text">
+          <string>Subject:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QLabel" name="label_26">
+         <property name="text">
+          <string>Author:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="4" column="2" rowspan="2">
+        <widget class="QTextEdit" name="leMetaComments">
+         <property name="toolTip">
+          <string>Provides a space to add comments to the drawing.</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabCustom">
+      <attribute name="title">
+       <string>User Data</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_27">
+       <item row="3" column="0" colspan="4">
+        <widget class="QGroupBox" name="groupBox_10">
+         <property name="title">
+          <string>Custom Properties</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_29">
+          <item row="0" column="1">
+           <widget class="QPushButton" name="pbCustomVarAdd">
+            <property name="text">
+             <string>Add New</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QPushButton" name="pbCustomVarDelete">
+            <property name="text">
+             <string>Delete</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <spacer name="verticalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="0" rowspan="3">
+           <widget class="QTableWidget" name="twCustomVars"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="2" rowspan="2">
+        <widget class="QGroupBox" name="groupBox_9">
+         <property name="title">
+          <string>Floating point variables</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_28">
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_37">
+            <property name="text">
+             <string>$USERR2</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_36">
+            <property name="text">
+             <string>$USERR5</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_34">
+            <property name="text">
+             <string>$USERR3</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_38">
+            <property name="text">
+             <string>$USERR4</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_35">
+            <property name="text">
+             <string>$USERR1</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="leUserR1"/>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="leUserR2"/>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="leUserR3"/>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLineEdit" name="leUserR4"/>
+          </item>
+          <item row="5" column="1">
+           <widget class="QLineEdit" name="leUserR5"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QGroupBox" name="groupBox_8">
+         <property name="title">
+          <string> Integer variables</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_26">
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_32">
+            <property name="text">
+             <string>$USERI4</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QSpinBox" name="sbUserI4">
+            <property name="maximum">
+             <number>2147483647</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QSpinBox" name="sbUserI3">
+            <property name="maximum">
+             <number>2147483647</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QSpinBox" name="sbUserI1">
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>2147483647</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QLabel" name="label_30">
+            <property name="text">
+             <string>$USERI2</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="2">
+           <widget class="QLabel" name="label_29">
+            <property name="text">
+             <string>$USERI1</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_31">
+            <property name="text">
+             <string>$USERI3</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QSpinBox" name="sbUserI2">
+            <property name="maximum">
+             <number>2147483647</number>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QSpinBox" name="sbUserI5">
+            <property name="maximum">
+             <number>2147483647</number>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_33">
+            <property name="text">
+             <string>$USERI5</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabVars">
       <attribute name="title">
        <string>Variables</string>
       </attribute>
@@ -3141,18 +3627,27 @@
   <tabstop>lePaperHeight</tabstop>
   <tabstop>rbLandscape</tabstop>
   <tabstop>rbPortrait</tabstop>
-  <tabstop>leMarginTop</tabstop>
   <tabstop>leMarginLeft</tabstop>
+  <tabstop>leMarginTop</tabstop>
   <tabstop>leMarginRight</tabstop>
   <tabstop>leMarginBottom</tabstop>
   <tabstop>sbPagesNumH</tabstop>
   <tabstop>sbPagesNumV</tabstop>
-  <tabstop>gvPaperPreview</tabstop>
   <tabstop>cbUnit</tabstop>
   <tabstop>cbLengthFormat</tabstop>
   <tabstop>cbLengthPrecision</tabstop>
   <tabstop>cbAngleFormat</tabstop>
   <tabstop>cbAnglePrecision</tabstop>
+  <tabstop>leAngleBaseZero</tabstop>
+  <tabstop>rbAngleBasePositive</tabstop>
+  <tabstop>rbAngleBaseNegative</tabstop>
+  <tabstop>cbGridOn</tabstop>
+  <tabstop>rbOrthogonalGrid</tabstop>
+  <tabstop>rbIsoLeft</tabstop>
+  <tabstop>rbIsoTop</tabstop>
+  <tabstop>rbIsoRight</tabstop>
+  <tabstop>cbXSpacing</tabstop>
+  <tabstop>cbYSpacing</tabstop>
   <tabstop>cbDimScale</tabstop>
   <tabstop>cbDimFactor</tabstop>
   <tabstop>cbDimTextHeight</tabstop>
@@ -3161,7 +3656,6 @@
   <tabstop>cbDimClrT</tabstop>
   <tabstop>cbDimExo</tabstop>
   <tabstop>cbDimExe</tabstop>
-  <tabstop>cbDimFxLon</tabstop>
   <tabstop>cbDimFxL</tabstop>
   <tabstop>cbDimClrE</tabstop>
   <tabstop>cbDimLwE</tabstop>
@@ -3176,6 +3670,18 @@
   <tabstop>cbDimAUnit</tabstop>
   <tabstop>cbDimADec</tabstop>
   <tabstop>cbDimAZin</tabstop>
+  <tabstop>tbDimNew</tabstop>
+  <tabstop>cbDimFxLon</tabstop>
+  <tabstop>tbDimRemove</tabstop>
+  <tabstop>tbDimEdit</tabstop>
+  <tabstop>tbDimRename</tabstop>
+  <tabstop>tbDimDefault</tabstop>
+  <tabstop>tbDimExport</tabstop>
+  <tabstop>tbDimImport</tabstop>
+  <tabstop>lvDimStyles</tabstop>
+  <tabstop>cbSplineSegs</tabstop>
+  <tabstop>cbLineCap</tabstop>
+  <tabstop>cbLineJoin</tabstop>
   <tabstop>bDot</tabstop>
   <tabstop>bBlank</tabstop>
   <tabstop>bPlus</tabstop>
@@ -3199,9 +3705,9 @@
   <tabstop>lePointSize</tabstop>
   <tabstop>rbRelSize</tabstop>
   <tabstop>rbAbsSize</tabstop>
+  <tabstop>tabVariables</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../../../res/icons/icons.qrc"/>
   <include location="../../../../../res/icons/icons.qrc"/>
  </resources>
  <connections>
@@ -3212,8 +3718,8 @@
    <slot>validate()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>261</x>
-     <y>492</y>
+     <x>270</x>
+     <y>541</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -3228,8 +3734,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>261</x>
-     <y>492</y>
+     <x>270</x>
+     <y>541</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>

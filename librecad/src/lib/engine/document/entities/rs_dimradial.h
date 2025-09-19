@@ -38,6 +38,7 @@ struct RS_DimRadialData {
      * Default constructor. Leaves the data object uninitialized.
      */
     RS_DimRadialData();
+        RS_DimRadialData(const RS_DimRadialData& other);
     /**
      * Constructor with initialisation.
      *
@@ -64,8 +65,9 @@ public:
     RS_DimRadial(RS_EntityContainer* parent,
                  const RS_DimensionData& d,
                  const RS_DimRadialData& ed);
+        RS_DimRadial(const RS_DimRadial& other);
 
-	RS_Entity* clone() const override;
+    RS_Entity* clone() const override;
 
     /**	@return RS2::EntityDimRadial */
 	RS2::EntityType rtti() const override{

@@ -20,6 +20,8 @@
 #include <cmath>
 #include <unordered_map>
 
+class dxfReader;
+
 #ifdef DRW_ASSERTS
 # define drw_assert(a) assert(a)
 #else
@@ -232,6 +234,12 @@ public:
 };
 
 
+class DRW_ParseableEntity {
+public:
+    virtual ~DRW_ParseableEntity() = default;
+    virtual bool parseCode(int code, dxfReader *reader) = 0;
+};
+
 //! Class to handle vertex
 /*!
 *  Class to handle vertex for lwpolyline entity
@@ -294,8 +302,11 @@ public:
     void setCoordY(double d) { if (vType == COORD) vdata.y = d;}
     void setCoordZ(double d) { if (vType == COORD) vdata.z = d;}
     enum TYPE type() const { return vType;}
-    int code() { return vCode;}            /*!< returns dxf code of this value*/
-
+    int code() const { return vCode;}            /*!< returns dxf code of this value*/
+    const char* c_str() const  {return content.s->c_str();}
+    double d_val() const  {return content.d;}
+    dint32 i_val() const  {return content.i;}
+    DRW_Coord* coord() const  {return content.v;}
 private:
     std::string sdata;
     DRW_Coord vdata;

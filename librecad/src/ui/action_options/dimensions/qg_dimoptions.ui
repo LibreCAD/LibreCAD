@@ -45,6 +45,20 @@
     <number>1</number>
    </property>
    <item>
+    <widget class="QLabel" name="lblStyle">
+     <property name="text">
+      <string>Style:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QComboBox" name="cbStyle">
+     <property name="toolTip">
+      <string>Dimension style</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QLabel" name="lLabel">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">

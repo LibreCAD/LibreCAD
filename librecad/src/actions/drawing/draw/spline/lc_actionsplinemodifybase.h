@@ -35,7 +35,7 @@ public:
     void finish(bool updateTB) override;
 protected:
     enum State{
-        SetEntity,
+        SetEntity = InitialActionStatus,
         SetBeforeControlPoint,
         SetControlPoint
     };
@@ -46,6 +46,8 @@ protected:
     bool m_directionFromStart = false;
 
     void clean();
+    virtual void setEntityToModify(RS_Entity* entity) = 0;
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     virtual bool mayModifySplineEntity([[maybe_unused]]RS_Entity *pEntity) {return true;};
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;

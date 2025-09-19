@@ -33,6 +33,10 @@ LC_CrossOptions::LC_CrossOptions() :
     connect(ui->leY, &QLineEdit::editingFinished, this, &LC_CrossOptions::onYEditingFinished);
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_CrossOptions::onAngleEditingFinished);
     connect(ui->cbMode, &QComboBox::currentIndexChanged, this, &LC_CrossOptions::onModeIndexChanged);
+
+    pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);
+    pickDistanceSetup("x", ui->tbPickX, ui->leX);
+    pickDistanceSetup("y", ui->tbPickY, ui->leY);
 }
 
 LC_CrossOptions::~LC_CrossOptions() {
@@ -50,7 +54,7 @@ void LC_CrossOptions::doSetAction(RS_ActionInterface* a, bool update) {
     if (update) {
         x = fromDouble(m_action->getLenX());
         y = fromDouble(m_action->getLenY());
-        angle = fromDouble(m_action->getCrossAngle());
+        angle = fromDouble(m_action->getCrossAngleDegrees());
         mode = m_action->getCrossMode();
     }
     else {
@@ -110,7 +114,7 @@ void LC_CrossOptions::setYToActionAndView(const QString& strValue) {
 void LC_CrossOptions::setAngleToActionAndView(const QString& expr) {
     double angle;
     if (toDoubleAngleDegrees(expr, angle, 0.0, false)) {
-        m_action->setCrossAngle(angle);
+        m_action->setCrossAngleDegrees(angle);
         ui->leAngle->setText(fromDouble(angle));
     }
 }

@@ -66,6 +66,7 @@ protected:
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angle) override;
 };
 
 #endif // LC_ACTIONUCSCREATE_H

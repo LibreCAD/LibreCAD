@@ -31,6 +31,7 @@ public:
     explicit LC_ActionSelectDimOrdinateSameOrigin(LC_ActionContext* actionContext);
     ~LC_ActionSelectDimOrdinateSameOrigin() override;
 protected:
+    void selectOrdinatesWithTheSameBase();
     void doTrigger() override;
     bool doCheckMaySelectEntity(RS_Entity* e) override;
     QString doGetMouseButtonHint() override;

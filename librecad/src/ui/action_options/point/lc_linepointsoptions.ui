@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>643</width>
+    <width>708</width>
     <height>24</height>
    </rect>
   </property>
@@ -32,7 +32,30 @@
    <property name="bottomMargin">
     <number>1</number>
    </property>
-   <item row="0" column="13">
+   <item row="0" column="0">
+    <widget class="QCheckBox" name="cbAngle">
+     <property name="toolTip">
+      <string>If checked, line of points will be drawn with specified angle</string>
+     </property>
+     <property name="text">
+      <string>Angle:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="11">
+    <widget class="Line" name="line">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>18</height>
+      </size>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="14">
     <widget class="QComboBox" name="cbEdgePoints">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -65,53 +88,7 @@
      </item>
     </widget>
    </item>
-   <item row="0" column="5">
-    <widget class="QSpinBox" name="sbPointsCount">
-     <property name="toolTip">
-      <string>Number of points to create</string>
-     </property>
-     <property name="minimum">
-      <number>1</number>
-     </property>
-     <property name="maximum">
-      <number>1000</number>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="10">
-    <widget class="Line" name="line">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>18</height>
-      </size>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="12">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Edge Points:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="14">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>0</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="0" column="7">
+   <item row="0" column="8">
     <widget class="QFrame" name="frmFixed">
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
@@ -132,7 +109,7 @@
       <property name="bottomMargin">
        <number>0</number>
       </property>
-      <item row="0" column="2">
+      <item row="0" column="3">
        <widget class="QCheckBox" name="cbWithinLine">
         <property name="toolTip">
          <string>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</string>
@@ -170,33 +147,24 @@
         </property>
        </widget>
       </item>
+      <item row="0" column="2">
+       <widget class="QToolButton" name="tbPickDistance">
+        <property name="toolTip">
+         <string>Pick distance from drawing</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../res/icons/icons.qrc">
+          <normaloff>:/icons/interactive_pick_distance.lci</normaloff>:/icons/interactive_pick_distance.lci</iconset>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QCheckBox" name="cbAngle">
-     <property name="toolTip">
-      <string>If checked, line of points will be drawn with specified angle</string>
-     </property>
-     <property name="text">
-      <string>Angle:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="3">
-    <widget class="QLabel" name="label">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>Number of points:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="6">
+   <item row="0" column="7">
     <widget class="QCheckBox" name="cbFixedDistance">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -211,6 +179,52 @@
       <string>Fixed Distance</string>
      </property>
     </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="6">
+    <widget class="QSpinBox" name="sbPointsCount">
+     <property name="toolTip">
+      <string>Number of points to create</string>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="QLabel" name="label">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>Number of points:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="15">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item row="0" column="1">
     <widget class="QLineEdit" name="leAngle">
@@ -237,15 +251,31 @@
      </property>
     </widget>
    </item>
+   <item row="0" column="13">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Edge Points:</string>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="2">
-    <widget class="Line" name="line_2">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
+    <widget class="QToolButton" name="tbPickAngle">
+     <property name="toolTip">
+      <string>Pick angle from drawing</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_angle.lci</normaloff>:/icons/interactive_pick_angle.lci</iconset>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../../../res/icons/icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

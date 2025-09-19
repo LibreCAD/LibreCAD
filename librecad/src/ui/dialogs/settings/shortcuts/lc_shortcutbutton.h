@@ -31,7 +31,7 @@ public:
     explicit LC_ShortcutButton(QWidget *parent = nullptr);
     QSize sizeHint() const override;
 signals:
-       void keySequenceChanged(const QKeySequence &sequence);
+    void keySequenceChanged(const QKeySequence &sequence);
 protected:
     bool eventFilter(QObject *obj, QEvent *evt) override;
 private:

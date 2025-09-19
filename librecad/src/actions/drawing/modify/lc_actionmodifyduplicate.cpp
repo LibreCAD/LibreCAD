@@ -48,6 +48,13 @@ bool LC_ActionModifyDuplicate::isAcceptSelectedEntityToTriggerOnInit([[maybe_unu
     return true;
 }
 
+void LC_ActionModifyDuplicate::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
+    m_selectedEntity = contextEntity;
+    RS_Vector center = getEntityCenterPoint(m_selectedEntity);
+    moveRelativeZero(center);
+    setStatus(SetOffsetDirection);
+}
+
 // trigger support
 bool LC_ActionModifyDuplicate::doCheckMayTrigger(){
     return m_selectedEntity != nullptr;
@@ -64,7 +71,7 @@ void LC_ActionModifyDuplicate::doPrepareTriggerEntities(QList<RS_Entity *> &list
 void LC_ActionModifyDuplicate::doCreateEntitiesOnTrigger(RS_Entity *en, QList<RS_Entity *> &list){
     // create clone
     RS_Entity* clone = en->clone();
-    if (clone != nullptr){
+    if (clone != nullptr) {
         clone->setHighlighted(false);
 
         // move clone if needed to offset        
@@ -263,6 +270,18 @@ void LC_ActionModifyDuplicate::updateMouseButtonHints(){
         default:
             LC_AbstractActionWithPreview::updateMouseButtonHints();
     }
+}
+
+bool LC_ActionModifyDuplicate::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "offsetX") {
+        setOffsetX(distance);
+        return true;
+    }
+    if (tag == "offsetY") {
+        setOffsetY(distance);
+        return true;
+    }
+    return false;
 }
 
 LC_ActionOptionsWidget* LC_ActionModifyDuplicate::createOptionsWidget(){

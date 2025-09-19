@@ -52,7 +52,7 @@ protected:
      * Action States.
      */
     enum Status {
-        SetCenter,         /**< Setting the center point. */
+        SetCenter  = InitialActionStatus,         /**< Setting the center point. */
         SetRadius          /**< Setting radius in command line. */
     };
     LC_ActionOptionsWidget* createOptionsWidget() override;
@@ -64,9 +64,8 @@ protected:
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
-
     void doTrigger() override;
-
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 #endif

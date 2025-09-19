@@ -39,6 +39,8 @@ LC_LineOptions::LC_LineOptions()
     connect(ui->rbAngle, &QRadioButton::toggled, this, &LC_LineOptions::onAngleClicked);
     connect(ui->cbRelAngle, &QCheckBox::clicked, this, &LC_LineOptions::onAngleRelativeClicked);
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_LineOptions::onSetAngle);
+
+    pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);
 }
 
 bool LC_LineOptions::checkActionRttiValid(RS2::ActionType actionType) {
@@ -93,7 +95,7 @@ void LC_LineOptions::doSetAction(RS_ActionInterface* a, bool update) {
     setupAngleRelatedUI(angleDirection);
 
     if (update){
-        angle = fromDouble(m_action->getAngle());
+        angle = fromDouble(m_action->getAngleDegrees());
         angleRelative = m_action->isAngleRelative();
     } else {
         angle = load("Angle", "0.0");
@@ -195,6 +197,7 @@ void LC_LineOptions::setAngleDirectionToActionAndView(bool value) const {
 void LC_LineOptions::setupAngleRelatedUI(bool value) const {
     ui->rbAngle->setChecked(value);
     ui->leAngle->setEnabled(value);
+    ui->tbPickAngle->setEnabled(value);
     ui->cbRelAngle->setEnabled(value);
 }
 
@@ -209,10 +212,10 @@ void LC_LineOptions::setAngleToActionAndView(const QString& val, bool affectStat
     double angle;
     if (toDoubleAngleDegrees(val, angle, 0.0, false)){
         if (affectState){
-            m_action->setAngleValue(angle);
+            m_action->setAngleValueDegrees(angle);
         }
         else {
-            m_action->setAngle(angle);
+            m_action->setAngleDegrees(angle);
         }
         ui->leAngle->setText(fromDouble(angle));
     }

@@ -66,7 +66,7 @@ struct RS_BlockData {
  *
  * @author Andrew Mustun
  */
-class RS_Block : public RS_Document {
+class   RS_Block : public RS_Document {
    friend class RS_BlockList;
 public:
     /**
@@ -95,6 +95,7 @@ public:
     RS_LayerList* getLayerList() override;
     RS_BlockList* getBlockList() override;
     LC_DimStylesList* getDimStyleList() override;
+    LC_TextStyleList* getTextStyleList() override;
 
     /**
      * Reimplementation from RS_Document. Does nothing.
@@ -183,6 +184,9 @@ public:
      * @return block name chain to the block that contain searched insert
      */
     QStringList findNestedInsert(const QString& bName);
+   void addByBlockLine(const RS_Vector& start, const RS_Vector& end);
+
+   void addByBlockEntity(RS_Entity* entity);
 
 protected:
 //! Block data

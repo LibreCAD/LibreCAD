@@ -30,6 +30,7 @@
 #include "qg_linebisectoroptions.h"
 #include "rs_creation.h"
 #include "rs_line.h"
+#include "rs_polyline.h"
 
 namespace {
 
@@ -70,11 +71,28 @@ int RS_ActionDrawLineBisector::getNumber() const{
     return m_numberToCreate;
 }
 
+bool RS_ActionDrawLineBisector::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "length") {
+        setLength(distance);
+        return true;
+    }
+    return false;
+}
+
 void RS_ActionDrawLineBisector::init(int status){
-    RS_PreviewActionInterface::init(status);
     if (status >= 0){
         invalidateSnapSpot();
     }
+    RS_PreviewActionInterface::init(status);
+}
+
+void RS_ActionDrawLineBisector::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+   auto entity = contextEntity;
+   if (isPolyline(contextEntity)) {
+       auto polyline = static_cast<RS_Polyline*> (contextEntity);
+       entity = polyline->getNearestEntity(clickPos);
+   }
+   setFirstLine(entity);
 }
 
 void RS_ActionDrawLineBisector::setStatus(int status) {
@@ -139,17 +157,21 @@ void RS_ActionDrawLineBisector::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     }
 }
 
+void RS_ActionDrawLineBisector::setFirstLine(RS_Entity* en) {
+    if (isLine(en)){ // fixme - support of polyline
+        m_line1 = dynamic_cast<RS_Line *>(en);
+        m_line2 = nullptr;
+        setStatus(SetLine2);
+    }
+}
+
 void RS_ActionDrawLineBisector::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     RS_Vector mouse = e->graphPoint;
     switch (status) {
         case SetLine1: {
             m_actionData->coord1 = mouse;
-            RS_Entity *en = RS_Snapper::catchEntity(mouse,g_enTypeList,RS2::ResolveAll);
-            if (isLine(en)){
-                m_line1 = dynamic_cast<RS_Line *>(en);
-                m_line2 = nullptr;
-                setStatus(SetLine2);
-            }
+            RS_Entity *en = catchEntity(mouse,g_enTypeList,RS2::ResolveAll); // fixme - support of polyline
+            setFirstLine(en);
             break;
         }
         case SetLine2:
@@ -202,11 +224,13 @@ bool RS_ActionDrawLineBisector::doProcessCommand(int status, const QString &c) {
             int n = std::lround(RS_Math::eval(c, &ok));
             if (ok){
                 accept= true;
-                if (n > 0 && n <= 200)
+                if (n > 0 && n <= 200) {
                     m_numberToCreate = n;
-                else
+                }
+                else {
                     commandMessage(
-                        tr("Number sector lines not in range: ", "number of bisector to create must be in [1, 200]") + QString::number(n));
+                       tr("Number sector lines not in range: ", "number of bisector to create must be in [1, 200]") + QString::number(n));
+                }
             } else {
                 commandMessage(tr("Not a valid expression"));
             }

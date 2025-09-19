@@ -1209,7 +1209,8 @@ bool RS_FilterDXF1::readFromBuffer() {
                                         "ISO-25",
                                         0.0,
                                         0.0,
-                                        customTextLocation
+                                        customTextLocation,
+                                        nullptr, false, false
                                     ),
                                     RS_DimLinearData(
                                         RS_Vector(v13, v23),
@@ -1247,7 +1248,8 @@ bool RS_FilterDXF1::readFromBuffer() {
                                         "ISO-25",
                                         0.0,
                                         0.0,
-                                        customTextLocation
+                                        customTextLocation,
+                                        nullptr, false, false
                                     ),
                                     RS_DimAlignedData(
                                         RS_Vector(v13, v23),
@@ -1312,7 +1314,8 @@ bool RS_FilterDXF1::readFromBuffer() {
                                             "ISO-25",
                                             0.0,
                                             0.0,
-                                            customTextLocation
+                                            customTextLocation,
+                                            nullptr, false, false
                                         ),
                                         RS_DimAngularData(
                                             RS_Vector(v13, v23),
@@ -1356,7 +1359,8 @@ bool RS_FilterDXF1::readFromBuffer() {
                                         "ISO-25",
                                         0.0,
                                         0.0,
-                                        customTextLocation
+                                        customTextLocation,
+                                        nullptr, false, false
                                     ),
                                     RS_DimRadialData(
                                         RS_Vector(v10, v20) + v2,
@@ -1405,7 +1409,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                             d->update();
                             graphic->addEntity(d);
 							*/
-							RS_LeaderData data(true);
+							RS_LeaderData data(true, "");
 							RS_Leader* d = 
 								new RS_Leader(graphic, data);
 							d->addVertex(RS_Vector(v14, v24));

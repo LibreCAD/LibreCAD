@@ -26,6 +26,7 @@
 
 #include "rs_actionpolylineadd.h"
 
+#include "lc_actioncontext.h"
 #include "rs_debug.h"
 #include "rs_entity.h"
 #include "rs_modification.h"
@@ -38,11 +39,17 @@ RS_ActionPolylineAdd::RS_ActionPolylineAdd(LC_ActionContext *actionContext)
 
 RS_ActionPolylineAdd::~RS_ActionPolylineAdd() = default;
 
+
+
 void RS_ActionPolylineAdd::init(int status) {
-    RS_PreviewActionInterface::init(status);
     m_polylineToModify = nullptr;
     m_addSegment = nullptr;
     *m_addCoord = {};
+    RS_PreviewActionInterface::init(status);
+}
+
+void RS_ActionPolylineAdd::doInitWithContextEntity(RS_Entity* contextEntity,[[maybe_unused]] const RS_Vector& pos) {
+    setPolylineToModify(contextEntity);
 }
 
 void RS_ActionPolylineAdd::doTrigger() {
@@ -51,10 +58,9 @@ void RS_ActionPolylineAdd::doTrigger() {
     if (m_polylineToModify && m_addSegment->isAtomic() && m_addCoord->valid &&
         m_addSegment->isPointOnEntity(*m_addCoord)) {
         RS_Modification m(*m_container, m_viewport);
-        RS_Polyline *createdPolyline = m.addPolylineNode(
-            *m_polylineToModify,
-            (RS_AtomicEntity &) *m_addSegment,
-            *m_addCoord);
+        RS_Polyline* createdPolyline = m.addPolylineNode(*m_polylineToModify,
+                                                         reinterpret_cast<RS_AtomicEntity&>(*m_addSegment),
+                                                         *m_addCoord);
         if (createdPolyline != nullptr){
             m_polylineToModify = createdPolyline;
         }
@@ -91,20 +97,24 @@ void RS_ActionPolylineAdd::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     }
 }
 
+void RS_ActionPolylineAdd::setPolylineToModify(RS_Entity* en) {
+    if (en == nullptr){
+        commandMessage(tr("No Entity found."));
+    } else if (!isPolyline(en)){
+        commandMessage(tr("Entity must be a polyline."));
+    } else {
+        m_polylineToModify = dynamic_cast<RS_Polyline *>(en);
+        m_polylineToModify->setSelected(true);
+        redraw();
+        setStatus(SetAddCoord);
+    }
+}
+
 void RS_ActionPolylineAdd::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case ChooseSegment: {
             auto en = catchEntityByEvent(e);
-            if (!en){
-                commandMessage(tr("No Entity found."));
-            } else if (!isPolyline(en)){
-                commandMessage(tr("Entity must be a polyline."));
-            } else {
-                m_polylineToModify = dynamic_cast<RS_Polyline *>(en);
-                m_polylineToModify->setSelected(true);
-                redraw();
-                setStatus(SetAddCoord);
-            }
+            setPolylineToModify(en);
             break;
         }
         case SetAddCoord: {

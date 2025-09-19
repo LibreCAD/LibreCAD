@@ -38,6 +38,11 @@ LC_LineAngleRelOptions::LC_LineAngleRelOptions() :
     connect(ui->cbTickSnapMode, &QComboBox::currentIndexChanged,this,  &LC_LineAngleRelOptions::onTickSnapModeIndexChanged);
     connect(ui->cbLineSnapMode, &QComboBox::currentIndexChanged,this, &LC_LineAngleRelOptions::onLineSnapModeIndexChanged);
     connect(ui->leDistance, &QLineEdit::editingFinished, this, &LC_LineAngleRelOptions::onDistanceEditingFinished);
+
+    pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);
+    pickDistanceSetup("length", ui->tbPickLength, ui->leLength);
+    pickDistanceSetup("offset", ui->tbPickOffset, ui->leOffset);
+    pickDistanceSetup("snapDistance", ui->tbPickSnapDistance, ui->leDistance);
 }
 
 LC_LineAngleRelOptions::~LC_LineAngleRelOptions(){
@@ -63,7 +68,7 @@ void LC_LineAngleRelOptions::doSetAction(RS_ActionInterface *a, bool update){
     if (update) {
         length = fromDouble(m_action->getTickLength());
         offset = fromDouble(m_action->getTickOffset());
-        angle = fromDouble(m_action->getTickAngle());
+        angle = fromDouble(m_action->getTickAngleDegrees());
         lineSnapMode = m_action->getLineSnapMode();
         tickSnapMode = m_action->getTickSnapMode();
         angleIsRelative = m_action->isAngleRelative();
@@ -85,7 +90,9 @@ void LC_LineAngleRelOptions::doSetAction(RS_ActionInterface *a, bool update){
     }
     ui->leAngle->setVisible(!m_fixedAngle);
     ui->lblAngle->setVisible(!m_fixedAngle);
+    ui->tbPickAngle->setVisible(!m_fixedAngle && m_interactiveInputControlsVisible);
     ui->cbRelativeAngle->setVisible(!m_fixedAngle);
+    ui->lnAngleRight->setVisible(!m_fixedAngle);
 
     setLengthIsFreeToActionAndView(lengthIsFree);
     setLengthToActionAndView(length);
@@ -125,7 +132,7 @@ void LC_LineAngleRelOptions::languageChange(){
 void LC_LineAngleRelOptions::setAngleToActionAndView(const QString &expr){
     double angle = 0.;
     if (toDoubleAngleDegrees(expr, angle, 0.0, false)){
-        m_action->setTickAngle(angle);
+        m_action->setTickAngleDegrees(angle);
         ui->leAngle->setText(fromDouble(angle));
     }
 }
@@ -180,6 +187,7 @@ void LC_LineAngleRelOptions::setLineSnapModeToActionAndView(int mode){
     bool notFreeSnap = mode != 0;
     ui->lblDistance->setVisible(notFreeSnap);
     ui->leDistance->setVisible(notFreeSnap);
+    ui->tbPickSnapDistance->setVisible(notFreeSnap && m_interactiveInputControlsVisible);
 }
 
 void LC_LineAngleRelOptions::onLengthEditingFinished(){

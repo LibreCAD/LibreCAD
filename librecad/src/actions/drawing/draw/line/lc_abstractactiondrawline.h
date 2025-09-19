@@ -44,9 +44,9 @@ public:
     void setSetPointDirectionState();
     void setSetXDirectionState();
     void setSetYDirectionState();
-    void setAngleValue(double value);
-    void setAngle(double value){doSetAngle(m_angleDegrees = value);};
-    double getAngle() const;
+    void setAngleValueDegrees(double value);
+    void setAngleDegrees(double value){doSetAngleDegrees(value);}
+    double getAngleDegrees() const;
     bool isAngleRelative() const;
     void setAngleIsRelative(bool value);
     virtual bool mayStart();
@@ -54,7 +54,7 @@ public:
 protected:
     // action statuses
     enum Status {
-        SetStartPoint,
+        SetStartPoint = InitialActionStatus,
         SetDirection,
         SetDistance,
         SetPoint,
@@ -82,6 +82,6 @@ protected:
     void doInitialSnapToRelativeZero(RS_Vector vector) override;
     void setStatusForValidStartPoint(int newStatus);
     virtual bool isAllowDirectionCommands();
-    void doSetAngle(double value);
+    void doSetAngleDegrees(double value);
 };
 #endif //LIBRECAD_LC_ABSTRACTACTIONDRAWLINE_H

@@ -46,6 +46,9 @@ LC_Rotate2Options::LC_Rotate2Options()
 
     // fixme - remove later if the control will not be reused for some other flag
     ui->cbSameAngleForCopies->hide();
+
+    pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle1);
+    pickAngleSetup("angle2", ui->tbPickAngle2, ui->leAngle2);
 }
 
 LC_Rotate2Options::~LC_Rotate2Options(){
@@ -145,6 +148,7 @@ void LC_Rotate2Options::setCopiesNumberToActionAndView(int number) {
 void LC_Rotate2Options::setAnglesMirroredToModelAndView(bool checked) {
     ui->cbAnglesMirrored->setChecked(checked);
     ui->leAngle2->setEnabled(!checked);
+    ui->tbPickAngle2->setEnabled(!checked);
     m_action->setMirrorAngles(checked);
     setAngle1ToActionAndView(ui->leAngle1->text()); // just force update both edits
 }

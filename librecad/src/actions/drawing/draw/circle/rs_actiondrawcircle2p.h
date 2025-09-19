@@ -49,7 +49,7 @@ protected:
  * Action States.
  */
     enum Status {
-        SetPoint1,       /**< Setting the 1st point. */
+        SetPoint1 = InitialActionStatus,       /**< Setting the 1st point. */
         SetPoint2        /**< Setting the 2nd point. */
     };
 

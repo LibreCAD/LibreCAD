@@ -34,7 +34,7 @@ class RS_Arc;
 
 struct LC_DimArcData {
     LC_DimArcData() = default;
-    LC_DimArcData(const LC_DimArcData& input_dimArcData);
+    LC_DimArcData(const LC_DimArcData& other);
     LC_DimArcData(double input_radius,
                   double input_arcLength,
                   const RS_Vector& input_centre,
@@ -53,6 +53,7 @@ std::ostream& operator <<(std::ostream& os, const LC_DimArcData& input_dimArcDat
 class LC_DimArc : public RS_Dimension {
     friend std::ostream& operator <<(std::ostream& os, const LC_DimArc& input_dimArc);
 public:
+    LC_DimArc(const LC_DimArc& other);
     LC_DimArc(RS_EntityContainer* parent,
               const RS_DimensionData& input_commonDimData,
               const LC_DimArcData& input_dimArcData);

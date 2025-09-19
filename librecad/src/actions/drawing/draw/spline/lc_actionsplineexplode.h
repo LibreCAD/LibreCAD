@@ -31,20 +31,20 @@ class RS_Layer;
 class LC_ActionSplineExplode:public LC_ActionSplineModifyBase{
 Q_OBJECT
 public:
-    LC_ActionSplineExplode(LC_ActionContext *actionContext);
+    explicit LC_ActionSplineExplode(LC_ActionContext *actionContext);
     ~LC_ActionSplineExplode() override = default;
     int getSegmentsCountFromDrawing();
-    bool isUseCurrentAttributes() {return m_useCurrentAttributes;};
+    bool isUseCurrentAttributes() const {return m_useCurrentAttributes;};
     void setUseCurrentAttributes(bool b) {m_useCurrentAttributes  = b;};
-    bool isUseCurrentLayer() {return m_useCurrentLayer;};
+    bool isUseCurrentLayer() const {return m_useCurrentLayer;};
     void setUseCurrentLayer(bool b) {m_useCurrentLayer = b;}
-    bool isKeepOriginals() {return m_keepOriginals;};
+    bool isKeepOriginals() const {return m_keepOriginals;};
     void setKeepOriginals(bool b) {m_keepOriginals = b;};
-    bool isToPolyline() {return m_createPolyline;};
+    bool isToPolyline() const {return m_createPolyline;};
     void setUsePolyline(bool b) {m_createPolyline = b;};
-    int getCustomSegmentsCount() {return m_customSegmentsCount;};
+    int getCustomSegmentsCount() const {return m_customSegmentsCount;};
     void setSegmentsCountValue(int i) {m_customSegmentsCount = i;};
-    bool isUseCustomSegmentsCount() {return m_useCustomSegmentsCount;};
+    bool isUseCustomSegmentsCount() const {return m_useCustomSegmentsCount;};
     void setUseCustomSegmentsCount(bool b) {m_useCustomSegmentsCount = b;}
 protected:
     bool m_createPolyline {false};
@@ -53,11 +53,12 @@ protected:
     bool m_useCurrentAttributes {false};
     bool m_useCustomSegmentsCount {false};
     int m_customSegmentsCount = 8;
-
+    bool mayModifySplineEntity(RS_Entity* pEntity) override;
     RS_Entity *createPolylineByVertexes(const std::vector<RS_Vector> &strokePoints, bool closed) const;
     int obtainSegmentsCount();
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMove(RS_Vector mouse, int status, LC_MouseEvent *e) override;
+    void setEntityToModify(RS_Entity* entity) override;
     void fillStrokePoints(RS_Entity *e, int segmentsCount, std::vector<RS_Vector> &strokePoints, bool &closed) const;
     void setupAndAddCreatedEntity(RS_Entity *createdEntity, RS_Layer *layerToSet, const RS_Pen &penToUse);
     void updateMouseButtonHints() override;

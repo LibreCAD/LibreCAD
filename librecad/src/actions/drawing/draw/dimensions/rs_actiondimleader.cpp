@@ -58,7 +58,7 @@ void RS_ActionDimLeader::init(int status) {
 void RS_ActionDimLeader::doTrigger() {
     if (!m_actionData->points.empty()){
 
-        auto *leaderEntity = new RS_Leader(m_container, RS_LeaderData(true));
+        auto *leaderEntity = new RS_Leader(m_container, RS_LeaderData(true, ""));
         setPenAndLayerToActive(leaderEntity);
 
         for (const auto &vp: m_actionData->points) {

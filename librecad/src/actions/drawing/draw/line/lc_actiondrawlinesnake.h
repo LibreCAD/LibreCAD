@@ -125,6 +125,8 @@ private:
     double defineActualSegmentAngle(double relativeAngleRad);
     bool isNonZeroLine(const RS_Vector &possiblePoint) const;
     void createEntities(RS_Vector &potentialEndPoint, QList<RS_Entity *> &entitiesList);
+protected:
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) override;
 };
 
 #endif // LC_ACTIONDRAWLINEREL_H

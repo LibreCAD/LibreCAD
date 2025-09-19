@@ -39,16 +39,16 @@ public:
 
     double getLenX() const {return m_lenX;};
     double getLenY() const {return m_lenY;};
-    double getCrossAngle() const{return m_ucsBasisAngleDegrees;};
+    double getCrossAngleDegrees() const{return m_ucsBasisAngleDegrees;};
     int getCrossMode() const{return m_crossSizeMode;};
 
     void setXLength(double d) {m_lenX = d;};
     void setYLength(double d) {m_lenY = d;};
-    void setCrossAngle(double d) { m_ucsBasisAngleDegrees = d;};
+    void setCrossAngleDegrees(double d) { m_ucsBasisAngleDegrees = d;};
     void setCrossMode(int i) {m_crossSizeMode = i;};
 protected:
     enum Status {
-        SetEntity      /**< Choose the circle / arc. */
+        SetEntity = InitialActionStatus     /**< Choose the circle / arc. */
     };
 
     /**
@@ -85,7 +85,12 @@ protected:
      */
     double m_ucsBasisAngleDegrees = 0.0;
 
-    void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
+    bool isSetActivePenAndLayerOnTrigger() override;
+    void setupCrossLinePenAndLayer(RS_Line* line) const;
+    RS2::LineType getLineTypeForCenterLine() const;
+    void collectEntitiesForTriggerOnInit(QList<RS_Entity*> &selectedEntities, QList<RS_Entity*> &entitiesForTrigger) override;
+    void doPrepareTriggerEntities(QList<RS_Entity*>& list) override;
     bool doCheckMayTrigger() override;
     RS_Vector doGetRelativeZeroAfterTrigger() override;
     void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;
@@ -100,6 +105,8 @@ protected:
     void updateMouseButtonHints() override;
     LC_CrossData createCrossDataForEntity(RS_Entity *ent) const;
     LC_ActionOptionsWidget* createOptionsWidget() override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 
 #endif //LC_ACTIONDRAWCROSS_H

@@ -37,7 +37,8 @@ struct RS_DimAlignedData {
 	/**
 	 * Default constructor
 	 */
-    RS_DimAlignedData() = default;;
+    RS_DimAlignedData() = default;
+    RS_DimAlignedData(const RS_DimAlignedData& other);
 	/**
 	 * Constructor with initialisation.
 	 *
@@ -68,6 +69,7 @@ public:
         RS_EntityContainer *parent,
         const RS_DimensionData &d,
         const RS_DimAlignedData &ed);
+        RS_DimAligned(const RS_DimAligned& parent);
     RS_Entity *clone() const override;
 
     /**	@return RS2::EntityDimAligned */

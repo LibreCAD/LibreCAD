@@ -42,6 +42,11 @@ LC_Rectangle2PointsOptions::LC_Rectangle2PointsOptions() :
 
     connect(ui->cbPolyline, &QCheckBox::clicked, this,  &LC_Rectangle2PointsOptions::onUsePolylineClicked);
     connect(ui->cbSnapRadiusCenter, &QCheckBox::clicked, this,  &LC_Rectangle2PointsOptions::onSnapToCornerArcCenterClicked);
+
+    pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);
+    pickDistanceSetup("radius", ui->tbPickRadius, ui->leRadius);
+    pickDistanceSetup("lengthY", ui->tbPickLengthY, ui->leLenY);
+    pickDistanceSetup("lengthX", ui->tbPickLengthX, ui->leX);
 }
 
 LC_Rectangle2PointsOptions::~LC_Rectangle2PointsOptions(){
@@ -142,12 +147,15 @@ void LC_Rectangle2PointsOptions::setCornersModeToActionAndView(int index){
 
     ui->lblRadius->setVisible(round);
     ui->leRadius->setVisible(round);
+    ui->tbPickRadius->setVisible(round);
     ui->cbSnapRadiusCenter->setVisible(round);
 
     ui->lblLenY->setVisible(bevel);
     ui->lblX->setVisible(bevel);
     ui->leLenY->setVisible(bevel);
+    ui->tbPickLengthY->setVisible(bevel);
     ui->leX->setVisible(bevel);
+    ui->tbPickLengthX->setVisible(bevel);
 
     bool straight = index == LC_AbstractActionDrawRectangle::CORNER_STRAIGHT;
     ui->lblEdges->setVisible(straight);
@@ -226,6 +234,7 @@ void LC_Rectangle2PointsOptions::setBaseAngleFixedToActionAndView(bool value){
     ui->chkFixedBaseAngle->setChecked(value);
     m_action->setBaseAngleFixed(value);
     ui->leAngle->setEnabled(value);
+    ui->tbPickAngle->setEnabled(value);
 }
 
 void LC_Rectangle2PointsOptions::setAngleToActionAndView(const QString &val){

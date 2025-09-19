@@ -24,8 +24,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_actiondrawcross.h"
 
 #include "lc_crossoptions.h"
+#include "rs_document.h"
 #include "rs_ellipse.h"
 #include "rs_line.h"
+#include "rs_pen.h"
 
 /**
  * Structure that contains information about cross lines
@@ -69,8 +71,23 @@ LC_ActionDrawCross::LC_ActionDrawCross(LC_ActionContext *actionContext)
 
 LC_ActionDrawCross::~LC_ActionDrawCross() = default;
 
-// support of creation cross for already selected entities on action invocation
+void LC_ActionDrawCross::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
+    if (isAcceptSelectedEntityToTriggerOnInit(contextEntity)) {
+        m_entity = contextEntity;
+    }
+}
 
+void LC_ActionDrawCross::collectEntitiesForTriggerOnInit(QList<RS_Entity*> &selectedEntities,
+    QList<RS_Entity*> &entitiesForTrigger) {
+    if (m_entity == nullptr) {
+        LC_AbstractActionWithPreview::collectEntitiesForTriggerOnInit(selectedEntities, entitiesForTrigger);
+    }
+    else {
+        entitiesForTrigger << m_entity;
+    }
+}
+
+// support of creation cross for already selected entities on action invocation
 bool LC_ActionDrawCross::doCheckMayTriggerOnInit(int status){
     return status == SetEntity;
 }
@@ -86,6 +103,25 @@ void LC_ActionDrawCross::doCreateEntitiesOnTrigger(RS_Entity *en, QList<RS_Entit
     addCrossDataEntities(list, crossData);
 }
 
+bool LC_ActionDrawCross::isSetActivePenAndLayerOnTrigger() {
+    return false;
+}
+
+void LC_ActionDrawCross::setupCrossLinePenAndLayer(RS_Line* line) const {
+    line->setLayerToActive(); // fixme - sand - change to some annotation layer?
+    RS2::LineType lineType = getLineTypeForCenterLine();
+    RS_Pen pen = m_document->getActivePen();
+    if (lineType != RS2::LineTypeUnchanged) {
+        pen.setLineType(lineType);
+    }
+    line->setPen(pen);
+}
+
+RS2::LineType LC_ActionDrawCross::getLineTypeForCenterLine() const{
+    return RS2::CenterLine2; // fixme - retrieve from settings (CENTERLTYPE)
+}
+
+
 /**
  * Creates entities (2 lines) that will added as result of trigger to the drawing
  * @param list
@@ -100,17 +136,57 @@ void LC_ActionDrawCross::doPrepareTriggerEntities(QList<RS_Entity *> &list){
  * @param crossData
  */
 void LC_ActionDrawCross::addCrossDataEntities(QList<RS_Entity *> &list, const LC_CrossData &crossData) const{
+    // fixme - support more settings for CenterMark - like in AutoCAD.
+    // fixme- sand - CENTERMARK size, gap, etc...
+    // fixme - sand - rework drawing of the centermark to fit these settings.
+
     // create horizontal and vertical lines
 
     RS_LineData horizontalData = crossData.horizontal;
-    RS_Entity *horizontalLine = new RS_Line(m_container, horizontalData);
+    auto *horizontalLine = new RS_Line(m_container, horizontalData);
+
+    setupCrossLinePenAndLayer(horizontalLine);
 
     list << horizontalLine;
 
     RS_LineData verticalData = crossData.vertical;
-    RS_Entity *verticalLine = new RS_Line(m_container, verticalData);
+    auto *verticalLine = new RS_Line(m_container, verticalData);
+
+    setupCrossLinePenAndLayer(verticalLine);
 
     list << verticalLine;
+
+    /*
+
+    // Drawing centermark from center point using 2 segments for each direction
+
+    RS_LineData horizontalData = crossData.horizontal;
+
+    RS_LineData lineData;
+    lineData.startpoint = crossData.centerPoint;
+
+    lineData.endpoint = horizontalData.startpoint;
+    auto *hLine1 = new RS_Line(m_container, lineData);
+    setupCrossLinePenAndLayer(hLine1);
+    list << hLine1;
+
+    lineData.endpoint = horizontalData.endpoint;
+    auto *hLine2 = new RS_Line(m_container, lineData);
+    setupCrossLinePenAndLayer(hLine2);
+    list << hLine2;
+
+    RS_LineData verticalData = crossData.vertical;
+
+    lineData.endpoint = verticalData.startpoint;
+    auto *vLine1 = new RS_Line(m_container, lineData);
+    setupCrossLinePenAndLayer(vLine1);
+    list << vLine1;
+
+    lineData.endpoint = verticalData.endpoint;
+    auto *vLine2 = new RS_Line(m_container, lineData);
+    setupCrossLinePenAndLayer(vLine2);
+    list << vLine2;
+    */
 }
 
 bool LC_ActionDrawCross::doCheckMayTrigger(){
@@ -311,6 +387,26 @@ void LC_ActionDrawCross::updateMouseButtonHints(){
             updateMouseWidget();
             break;
     }
+}
+
+bool LC_ActionDrawCross::doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) {
+    if (tag == "angle") {
+        setCrossAngleDegrees(RS_Math::rad2deg(angleRad));
+        return true;
+    }
+    return false;
+}
+
+bool LC_ActionDrawCross::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "x") {
+        setXLength(distance);
+        return true;
+    }
+    if (tag == "y") {
+        setYLength(distance);
+        return true;
+    }
+    return false;
 }
 
 /**

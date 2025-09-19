@@ -60,14 +60,24 @@ void RS_ActionDrawCircleTan2_1P::init(int status){
     if (status > pointsSize) {
         status = pointsSize;
     }
-    LC_ActionDrawCircleBase::init(status);
     for (int i = 0; i < status; ++i) {
-        if (!m_actionData->circles[i]){
+        if (m_actionData->circles[i] == nullptr) {
             status = i;
             break;
         }
     }
     m_actionData->circles.resize(status >= 0 ? status : 0);
+    LC_ActionDrawCircleBase::init(status);
+}
+
+void RS_ActionDrawCircleTan2_1P::doInitialInit() {
+    LC_ActionDrawCircleBase::doInitialInit();
+}
+
+void RS_ActionDrawCircleTan2_1P::doInitWithContextEntity(RS_Entity* contextEntity,[[maybe_unused]] const RS_Vector& clickPos) {
+    if (g_enTypeList.contains(contextEntity->rtti())) {
+        setCircle(contextEntity, SetCircle1);
+    }
 }
 
 void RS_ActionDrawCircleTan2_1P::finish(bool updateTB){
@@ -91,7 +101,9 @@ void RS_ActionDrawCircleTan2_1P::doTrigger() {
 }
 
 bool RS_ActionDrawCircleTan2_1P::getCenters(){
-    if (m_actionData->circles.size() < 2) return false;
+    if (m_actionData->circles.size() < 2) {
+        return false;
+    }
     LC_Quadratic lc0(m_actionData->circles[0], m_actionData->point);
     LC_Quadratic lc1(m_actionData->circles[1], m_actionData->point);
     auto const &list = LC_Quadratic::getIntersection(lc0, lc1);
@@ -127,7 +139,7 @@ void RS_ActionDrawCircleTan2_1P::onMouseMoveEvent(int status, LC_MouseEvent *e) 
         case SetCircle1:
         case SetCircle2: {
             deleteSnapper();
-            auto *circle = catchCircle(e, true);
+            auto *circle = catchTangentEntity(e, true);
             if (circle != nullptr){
                 highlightHover(circle);
             }
@@ -167,13 +179,15 @@ void RS_ActionDrawCircleTan2_1P::onMouseMoveEvent(int status, LC_MouseEvent *e) 
 }
 
 bool RS_ActionDrawCircleTan2_1P::preparePreview(){
-    if (!getCenters()) return false;
+    if (!getCenters()) {
+        return false;
+    }
     m_actionData->cData.center = m_actionData->centers.getClosest(m_actionData->coord);
     m_actionData->cData.radius = m_actionData->point.distanceTo(m_actionData->cData.center);
     return true;
 }
 
-RS_Entity *RS_ActionDrawCircleTan2_1P::catchCircle(LC_MouseEvent *e, bool forPreview){
+RS_Entity *RS_ActionDrawCircleTan2_1P::catchTangentEntity(LC_MouseEvent *e, bool forPreview){
     RS_Entity *ret = nullptr;
     RS_Entity *en;
     if (forPreview) {
@@ -182,26 +196,37 @@ RS_Entity *RS_ActionDrawCircleTan2_1P::catchCircle(LC_MouseEvent *e, bool forPre
     else{
         en = catchModifiableEntity(e, g_enTypeList);
     }
-    if (!en) return ret;
-    if (!en->isVisible()) return ret;
+    if (en == nullptr) {
+        return ret;
+    }
+    if (!en->isVisible()) {
+        return ret;
+    }
     for (auto p: m_actionData->circles) {
-        if (p && en->getId() == p->getId()) return ret; //do not pull in the same line again
+        if (p && en->getId() == p->getId()) {
+            return ret; //do not pull in the same line again
+        }
     }
     return en;
+}
+
+void RS_ActionDrawCircleTan2_1P::setCircle(RS_Entity* en, int status) {
+    auto atomicEntity = dynamic_cast<RS_AtomicEntity *>(en);
+    if (atomicEntity == nullptr) {
+        return;
+    }
+    m_actionData->circles.resize(status);
+    m_actionData->circles.push_back(atomicEntity);
+    redrawDrawing();
+    setStatus(status + 1);
 }
 
 void RS_ActionDrawCircleTan2_1P::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetCircle1:
         case SetCircle2: {
-            m_actionData->circles.resize(status);
-            auto en = dynamic_cast<RS_AtomicEntity *>(catchCircle(e, false));
-            if (en == nullptr) {
-                return;
-            }
-            m_actionData->circles.push_back(en);
-            redrawDrawing();
-            setStatus(getStatus() + 1);
+            auto entity = catchTangentEntity(e, false);
+            setCircle(entity, status);
             invalidateSnapSpot();
             break;
         }
@@ -212,7 +237,9 @@ void RS_ActionDrawCircleTan2_1P::onMouseLeftButtonRelease(int status, LC_MouseEv
         }
         case SetCenter: {
             m_actionData->coord = e->graphPoint;
-            if (preparePreview()) trigger();
+            if (preparePreview()) {
+                trigger();
+            }
             invalidateSnapSpot();
             break;
         }
@@ -311,7 +338,7 @@ void RS_ActionDrawCircleTan2_1P::updateMouseButtonHints() {
             updateMouseWidgetTRCancel(tr("Specify a line/arc/circle"));
             break;
         case SetCircle2:
-            updateMouseWidgetTRBack(tr("Specify the another arc/circle"));
+            updateMouseWidgetTRBack(tr("Specify the another line/arc/circle"));
             break;
         case SetPoint:
             updateMouseWidgetTRBack(tr("Specify a point on the tangent circle"));

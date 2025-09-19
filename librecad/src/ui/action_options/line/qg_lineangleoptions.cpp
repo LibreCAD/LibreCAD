@@ -40,6 +40,9 @@ QG_LineAngleOptions::QG_LineAngleOptions()
     connect(ui->leLength, &QLineEdit::editingFinished, this, &QG_LineAngleOptions::onLengthEditingFinished);
     connect(ui->cbSnapPoint, &QComboBox::currentIndexChanged, this, &QG_LineAngleOptions::onSnapPointCurrentIndexChanged);
     connect(ui->cbForAnglesBasis, &QCheckBox::toggled, this, &QG_LineAngleOptions::onAnglesBasisToggled);
+
+    pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);
+    pickDistanceSetup("length", ui->tbPickLength, ui->leLength);
 }
 
 /*
@@ -90,6 +93,7 @@ void QG_LineAngleOptions::doSetAction(RS_ActionInterface *a, bool update){
     }
 
     ui->leAngle->setVisible(!angleIsFixed);
+    ui->tbPickAngle->setVisible(!angleIsFixed && m_interactiveInputControlsVisible);
     ui->lAngle->setVisible(!angleIsFixed);
 
     bool hasCustomAnglesBasis = m_action->hasNonDefaultAnglesBasis();

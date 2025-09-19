@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>150</width>
+    <width>185</width>
     <height>24</height>
    </rect>
   </property>
@@ -18,13 +18,13 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>130</width>
+    <width>160</width>
     <height>22</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>150</width>
+    <width>185</width>
     <height>32767</height>
    </size>
   </property>
@@ -61,6 +61,20 @@
      </property>
     </widget>
    </item>
+   <item>
+    <widget class="QToolButton" name="tbPickDistance">
+     <property name="toolTip">
+      <string>Pick distance from drawing.</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_distance.lci</normaloff>:/icons/interactive_pick_distance.lci</iconset>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -68,7 +82,9 @@
   <include location="local">rs_circle.h</include>
   <include location="local">rs_settings.h</include>
  </includes>
- <resources/>
+ <resources>
+  <include location="../../../../res/icons/icons.qrc"/>
+ </resources>
  <connections/>
  <slots>
   <slot>updateDist(QString)</slot>

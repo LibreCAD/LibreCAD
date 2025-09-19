@@ -38,9 +38,28 @@ void LC_ActionPenApply::init(int status){
     if (status == SelectEntity && !m_copyMode){
         status = ApplyToEntity;
     }
-    RS_PreviewActionInterface::init(status);
     if (status < 0){
         m_srcEntity = nullptr;
+    }
+    RS_PreviewActionInterface::init(status);
+}
+
+bool LC_ActionPenApply::mayInitWithContextEntity([[maybe_unused]]int status) {
+   return true;
+}
+
+void LC_ActionPenApply::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
+    if (getStatus() == SelectEntity) {
+        m_srcEntity = contextEntity;
+        setStatus(ApplyToEntity);
+    }
+    else {
+        QG_PenToolBar *penToolBar = QC_ApplicationWindow::getAppWindow()->getPenToolBar();
+        if (penToolBar != nullptr){
+            auto penToApply = penToolBar->getPen();
+            applyPen(contextEntity, penToApply);
+            redraw();
+        }
     }
 }
 
@@ -66,6 +85,23 @@ void LC_ActionPenApply::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 void LC_ActionPenApply::finish(bool updateTB){
     RS_PreviewActionInterface::finish(updateTB);
     m_srcEntity = nullptr;
+}
+
+void LC_ActionPenApply::applyPen(RS_Entity* en, RS_Pen penToApply) {
+    // do actual modifications
+    RS_AttributesData data;
+    data.pen = penToApply;
+    data.layer = "0";
+    data.changeColor = true;
+    data.changeLineType = true;
+    data.changeWidth = true;
+    data.changeLayer = false;
+
+    std::vector<RS_Entity *> selectedEntities;
+    selectedEntities.push_back(en);
+
+    RS_Modification m(*m_container, m_viewport);
+    m.changeAttributes(data, selectedEntities, m_container, false);
 }
 
 void LC_ActionPenApply::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
@@ -95,21 +131,7 @@ void LC_ActionPenApply::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_
                         }
                     }
 
-                    // do actual modifications
-                    RS_AttributesData data;
-                    data.pen = penToApply;
-                    data.layer = "0";
-                    data.changeColor = true;
-                    data.changeLineType = true;
-                    data.changeWidth = true;
-                    data.changeLayer = false;
-
-                    // this is temporary selection, it is needed as RS_Modification relies on selected entities.
-                    // fixme - sand - replace by version with explicitly provided entity rather than one that relies on selection
-                    en->setSelected(true);
-
-                    RS_Modification m(*m_container, m_viewport);
-                    m.changeAttributes(data, false);
+                    applyPen(en, penToApply);
                 }
                 break;
             }

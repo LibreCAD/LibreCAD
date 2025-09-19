@@ -58,6 +58,7 @@ public:
 	RS_Circle()=default;
     RS_Circle (RS_EntityContainer* parent,
                const RS_CircleData& d);
+    RS_Circle (const RS_CircleData& d);
 	~RS_Circle() = default;
 
 	RS_Entity* clone() const override;

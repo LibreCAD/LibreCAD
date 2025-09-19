@@ -24,6 +24,7 @@
 #include "lc_actionentitylayertoggle.h"
 
 #include "rs_graphic.h"
+#include "rs_layer.h"
 
 LC_ActionLayerToggle::LC_ActionLayerToggle(LC_ActionContext* context, RS2::ActionType actionType):
     LC_ActionLayerBase{"Layer of Entity Toggle Action", context, actionType}{
@@ -51,6 +52,16 @@ void LC_ActionLayerToggle::doWithLayer(RS_Graphic* graphic, RS_Layer* layer) {
             graphic->toggleLayerPrint(layer);
             break;
         }
+        case RS2::ActionLayerEntityHideOthers: {
+            auto layersList = graphic->getLayerList();
+            for (RS_Layer* l: *layersList) {
+                if (l != layer) {
+                    l->freeze(true);
+                }
+            }
+            layersList->fireLayerToggled();
+            break;
+        }
         default:
             break;
     }
@@ -64,6 +75,10 @@ void LC_ActionLayerToggle::updateMouseButtonHintsForSelection() {
         }
         case RS2::ActionLayerEntityToggleLock: {
             updateMouseWidgetTRCancel("Select entity to toggle layer lock");
+            break;
+        }
+        case RS2::ActionLayerEntityHideOthers: {
+            updateMouseWidgetTRCancel("Select entity to hide other layers");
             break;
         }
         case RS2::ActionLayerEntityToggleView: {

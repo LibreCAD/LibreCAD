@@ -442,8 +442,8 @@ void LC_NamedViewsListWidget::onCustomContextMenu([[maybe_unused]] const QPoint 
 
 
     using ActionMemberFunc = void (LC_NamedViewsListWidget::*)();
-    const auto addActionFunc = [this, &contextMenu](const QString& name, ActionMemberFunc func) {
-        contextMenu->addAction(name, this, func);
+    const auto addActionFunc = [this, &contextMenu](const QString& iconName, const QString& name, ActionMemberFunc func) {
+        contextMenu->addAction(QIcon(":/icons/" + iconName + ".lci"), name, this, func);
     };
 
     QModelIndex index = ui->tvTable->indexAt(pos);
@@ -452,34 +452,34 @@ void LC_NamedViewsListWidget::onCustomContextMenu([[maybe_unused]] const QPoint 
         qsizetype selectedItemsCount = ui->tvTable->selectionModel()->selectedRows().size();
         if (selectedItemsCount > 1){
             if (notInPrintPreview) {
-                addActionFunc(tr("&Add View"), &LC_NamedViewsListWidget::addNewView);
+                addActionFunc("nview_add", tr("&Add View"), &LC_NamedViewsListWidget::addNewView);
                 contextMenu->addSeparator();
             }
-            addActionFunc(tr("R&emove Selected Views"), &LC_NamedViewsListWidget::removeView);
+            addActionFunc("remove", tr("R&emove Selected Views"), &LC_NamedViewsListWidget::removeView);
         }
         else {
             if (notInPrintPreview) {
-                addActionFunc(tr("&Add View"), &LC_NamedViewsListWidget::addNewView);
+                addActionFunc("nview_add", tr("&Add View"), &LC_NamedViewsListWidget::addNewView);
                 contextMenu->addSeparator();
             }
-            addActionFunc(tr("&Restore View"), &LC_NamedViewsListWidget::invokeView);
-            addActionFunc(tr("Re&name View"), &LC_NamedViewsListWidget::renameView);
-            addActionFunc(tr("&Update View"), &LC_NamedViewsListWidget::updateView);
-            addActionFunc(tr("R&emove View"), &LC_NamedViewsListWidget::removeView);
+            addActionFunc("nview_visible", tr("&Restore View"), &LC_NamedViewsListWidget::invokeView);
+            addActionFunc("rename_active_block", tr("Re&name View"), &LC_NamedViewsListWidget::renameView);
+            addActionFunc("nview_update",tr("&Update View"), &LC_NamedViewsListWidget::updateView);
+            addActionFunc("remove", tr("R&emove View"), &LC_NamedViewsListWidget::removeView);
             contextMenu->addSeparator();
-            addActionFunc(tr("Remove A&ll Views"), &LC_NamedViewsListWidget::removeAllViews);
+            addActionFunc("close_all", tr("Remove A&ll Views"), &LC_NamedViewsListWidget::removeAllViews);
         }
     }
     else{
         // click is not on item
         if (notInPrintPreview) {
-            addActionFunc(tr("&Add View"), &LC_NamedViewsListWidget::addNewView);
+            addActionFunc("nview_add", tr("&Add View"), &LC_NamedViewsListWidget::addNewView);
         }
         if (m_currentViewList->count() > 0){
             if (notInPrintPreview) {
                 contextMenu->addSeparator();
             }
-            addActionFunc(tr("Remove A&ll Views"), &LC_NamedViewsListWidget::removeAllViews);
+            addActionFunc("close_all",tr("Remove A&ll Views"), &LC_NamedViewsListWidget::removeAllViews);
         }
     }
     contextMenu->exec(QCursor::pos());

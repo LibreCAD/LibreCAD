@@ -262,35 +262,31 @@ void LC_PenPaletteWidget::onTableViewContextMenuInvoked([[maybe_unused]] const Q
     int selectedItemsCount = tableView->selectionModel()->selectedRows().size();
     if (itemsCount >0 && selectedItemsCount > 0){
         auto contextMenu = std::make_unique<QMenu>(this);
-        QLabel *caption = new QLabel(tr("Pens Menu"), this);
+        /*QLabel *caption = new QLabel(tr("Pens Menu"), this);
         QPalette palette;
         palette.setColor(caption->backgroundRole(), RS_Color(0, 0, 0));
         palette.setColor(caption->foregroundRole(), RS_Color(255, 255, 255));
         caption->setPalette(palette);
-        caption->setAlignment(Qt::AlignCenter);
-        typedef void (LC_PenPaletteWidget::*MemFn)();
-        auto addAction = [&contextMenu, this](const std::pair<QString, MemFn>& item) {
-            auto* action = contextMenu->addAction(item.first);
-            connect(action, &QAction::triggered, this, item.second);
-        };
-        auto addActions = [&addAction](std::initializer_list<std::pair<QString, MemFn>> menuEntries){
-            for (const auto& menuEntry: menuEntries)
-                addAction(menuEntry);
+        caption->setAlignment(Qt::AlignCenter);*/
+
+        using ActionMemberFunc = void (LC_PenPaletteWidget::*)();
+        const auto addActionFunc = [this, &contextMenu](const QString& iconName, const QString& name, ActionMemberFunc func) {
+            contextMenu->addAction(QIcon(":/icons/"+iconName+".lci"), name, this, func);
         };
 
         if (selectedItemsCount == 1){
-            addActions({ {tr("&Apply Pen To Selection"), &LC_PenPaletteWidget::applySelectedPenToSelection},
-                        {tr("&Set As Current Pen"), &LC_PenPaletteWidget::applySelectedPenItemToPenToolBar},
-                        {tr("&Apply Pen To Active Layer"), &LC_PenPaletteWidget::applySelectedPenItemToActiveLayer},
-                        {tr("&Select Entities With Attributes Pen"), &LC_PenPaletteWidget::selectEntitiesWithAttributesPenBySelectedPenItem},
-                        {tr("&Select Entities With Drawing Pen"), &LC_PenPaletteWidget::selectEntitiesWithDrawingPenBySelectedPenItem}});
+            addActionFunc("pen_apply_to_selection",tr("&Apply Pen To Selection"), &LC_PenPaletteWidget::applySelectedPenToSelection);
+            addActionFunc("pen_2_current",tr("&Set As Current Pen"), &LC_PenPaletteWidget::applySelectedPenItemToPenToolBar);
+            addActionFunc("pen_to_layer",tr("&Apply Pen To Active Layer"), &LC_PenPaletteWidget::applySelectedPenItemToActiveLayer);
+            addActionFunc("select_by_pen_resolved",tr("&Select Entities With Attributes Pen"), &LC_PenPaletteWidget::selectEntitiesWithAttributesPenBySelectedPenItem);
+            addActionFunc("select_by_pen_drawing",tr("&Select Entities With Drawing Pen"), &LC_PenPaletteWidget::selectEntitiesWithDrawingPenBySelectedPenItem);
 
             contextMenu->addSeparator();
-            addActions({{tr("&Edit Pen"), &LC_PenPaletteWidget::editSelectedPenItem},
-                        {tr("&Remove Pen"), &LC_PenPaletteWidget::removeSelectedPenItem}});
+            addActionFunc("rename_active_block",tr("&Edit Pen"), &LC_PenPaletteWidget::editSelectedPenItem);
+            addActionFunc("remove",tr("&Remove Pen"), &LC_PenPaletteWidget::removeSelectedPenItem);
         }
         else{ // for multiselect - only rename
-            addAction({tr("&Remove Pens"), &LC_PenPaletteWidget::removeSelectedPenItems});
+            addActionFunc("remove", tr("&Remove Pens"), &LC_PenPaletteWidget::removeSelectedPenItems);
         }
         contextMenu->exec(QCursor::pos());
     }

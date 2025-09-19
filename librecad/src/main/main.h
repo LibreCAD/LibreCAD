@@ -27,11 +27,11 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include<QStringList>
 
 #define STR(x)   #x
 #define XSTR(x)  STR(x)
 
+class QMainWindow;
 /**
  * @brief handleArgs
  * @param argc cli argument counter from main()

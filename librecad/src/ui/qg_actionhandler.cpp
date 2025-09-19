@@ -158,15 +158,11 @@ bool QG_ActionHandler::command(const QString& cmd){
     if (cmd.isEmpty()){
         if (LC_GET_BOOL("Keyboard/ToggleFreeSnapOnSpace")) {
             RS_DEBUG->print("QG_ActionHandler::command: toggle Snap Free: begin");
-            RS_SnapMode smFree = {};
-            RS_SnapMode smGV = m_snapManager->getSnaps();
-            if (smFree != smGV) {
-                const bool isSnappingFree = view->getDefaultSnapMode() == smFree;
-                view->setDefaultSnapMode(isSnappingFree ? smGV: smFree);
-                RS_DIALOGFACTORY->commandMessage(isSnappingFree?
-                                                     tr("Spacebar: restored snapping mode to normal")
-                                                   : tr("Spacebar: temporarily set snapping mode to free snapping"));
-            }
+            bool isSnappingFree = m_snapManager->toggleTemporarySnapFree();
+            /*RS_DIALOGFACTORY->commandMessage(isSnappingFree?
+                                                 tr("Spacebar: restored snapping mode to normal")
+                                               : tr("Spacebar: temporarily set snapping mode to free snapping"));*/
+
             RS_DEBUG->print("QG_ActionHandler::command: toggle Snap Free: OK");
         }
         return true;
@@ -246,7 +242,9 @@ void QG_ActionHandler::slotLockRelativeZero(bool on){
 
 void QG_ActionHandler::setDocumentAndView(RS_Document *doc, RS_GraphicView *graphicView){
     m_actionContext->setDocumentAndView(doc, graphicView);
-    m_snapManager->setGraphicView(graphicView);
+    if (m_snapManager != nullptr) {
+        m_snapManager->setGraphicView(graphicView);
+    }
     view = graphicView;
     document = doc;
 }

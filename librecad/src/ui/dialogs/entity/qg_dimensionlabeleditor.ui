@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>220</width>
-    <height>144</height>
+    <width>270</width>
+    <height>140</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>220</width>
+    <width>270</width>
     <height>0</height>
    </size>
   </property>
@@ -28,173 +28,213 @@
    </property>
    <item>
     <widget class="QGroupBox" name="bgLabel">
+     <property name="minimumSize">
+      <size>
+       <width>270</width>
+       <height>140</height>
+      </size>
+     </property>
      <property name="title">
       <string>Dimension Label:</string>
      </property>
-     <layout class="QVBoxLayout">
-      <property name="spacing">
-       <number>0</number>
+     <layout class="QGridLayout" name="gridLayout" columnstretch="0,0,1,0">
+      <property name="topMargin">
+       <number>2</number>
       </property>
-      <item>
-       <layout class="QHBoxLayout">
-        <item>
-         <layout class="QHBoxLayout">
-          <item>
-           <widget class="QLabel" name="lLabel">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="text">
-             <string>Label:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="bDiameter">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Symbol before dimensional text</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../../res/icons/icons.qrc">
-              <normaloff>:/icons/char_diameter.lci</normaloff>:/icons/char_diameter.lci</iconset>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="leLabel">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Format of the dimension text, &amp;lt;&amp;gt; can be used as a placeholder for the dimension measurement value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QLineEdit" name="leTol1">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Superscript</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="leTol2">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Subscript</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
+      <property name="verticalSpacing">
+       <number>6</number>
+      </property>
+      <item row="0" column="3">
+       <widget class="QLineEdit" name="leTol1">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>70</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Superscript</string>
+        </property>
+       </widget>
       </item>
-      <item>
-       <layout class="QHBoxLayout">
+      <item row="3" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Raw text:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" rowspan="2">
+       <widget class="QToolButton" name="bDiameter">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>23</width>
+          <height>23</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>23</width>
+          <height>23</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Symbol before dimensional text</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../res/icons/icons.qrc">
+          <normaloff>:/icons/char_diameter.lci</normaloff>:/icons/char_diameter.lci</iconset>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1" colspan="3">
+       <widget class="QLineEdit" name="leRawText">
+        <property name="minimumSize">
+         <size>
+          <width>180</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="textLabel1">
+        <property name="text">
+         <string>Insert:</string>
+        </property>
+        <property name="wordWrap">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QLineEdit" name="leTol2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>70</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Subscript</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" rowspan="2">
+       <widget class="QLabel" name="lLabel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="text">
+         <string>Label:</string>
+        </property>
+        <property name="wordWrap">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2" rowspan="2">
+       <widget class="QLineEdit" name="leLabel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>90</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Format of the dimension text, &lt;&gt; can be used as a placeholder for the dimension measurement value</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1" colspan="2">
+       <widget class="QComboBox" name="cbSymbol">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>Symbol to insert</string>
+        </property>
         <item>
-         <widget class="QLabel" name="textLabel1">
-          <property name="text">
-           <string>Insert:</string>
-          </property>
-          <property name="wordWrap">
-           <bool>false</bool>
-          </property>
-         </widget>
+         <property name="text">
+          <string>⌀ (Diameter)</string>
+         </property>
         </item>
         <item>
-         <widget class="QComboBox" name="cbSymbol">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="toolTip">
-           <string>Symbol to insert</string>
-          </property>
-          <item>
-           <property name="text">
-            <string>⌀ (Diameter)</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>R (Radial)</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>° (Degree)</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>± (Plus / Minus)</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>π (Pi)</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>× (Times)</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>÷ (Division)</string>
-           </property>
-          </item>
-         </widget>
+         <property name="text">
+          <string>R (Radial)</string>
+         </property>
         </item>
-       </layout>
+        <item>
+         <property name="text">
+          <string>° (Degree)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>± (Plus / Minus)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>π (Pi)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>× (Times)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>÷ (Division)</string>
+         </property>
+        </item>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -203,7 +243,6 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../../../../res/icons/icons.qrc"/>
   <include location="../../../../res/icons/icons.qrc"/>
  </resources>
  <connections/>

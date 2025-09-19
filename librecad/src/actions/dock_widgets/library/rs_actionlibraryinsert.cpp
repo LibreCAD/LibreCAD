@@ -228,3 +228,11 @@ RS2::CursorType RS_ActionLibraryInsert::doGetMouseCursor([[maybe_unused]] int st
 LC_ActionOptionsWidget* RS_ActionLibraryInsert::createOptionsWidget() {
     return new QG_LibraryInsertOptions();
 }
+
+bool RS_ActionLibraryInsert::doUpdateAngleByInteractiveInput(const QString& tag, double angle) {
+    if (tag == "angle") {
+        setAngle(angle);
+        return true;
+    }
+    return false;
+}

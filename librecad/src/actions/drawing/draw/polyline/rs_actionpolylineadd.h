@@ -47,19 +47,20 @@ protected:
      * Action States.
      */
     enum Status {
-        ChooseSegment,  /**< Choosing a segment of existing polyline to add node. */
+        ChooseSegment = InitialActionStatus,  /**< Choosing a segment of existing polyline to add node. */
         SetAddCoord   /**< Setting the reference point. */
     };
 
     RS_Polyline *m_polylineToModify = nullptr;
     RS_Entity *m_addSegment = nullptr;
     std::unique_ptr<RS_Vector> m_addCoord;
-
+    void doInitWithContextEntity(RS_Entity* rs_entity, const RS_Vector& rs_vector) override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void updateMouseButtonHints() override;
     void doTrigger() override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    void setPolylineToModify(RS_Entity* en);
 };
 #endif

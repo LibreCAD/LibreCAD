@@ -40,6 +40,12 @@ QG_DimensionLabelEditor::QG_DimensionLabelEditor(QWidget* parent, Qt::WindowFlag
     // Initialize the symbol selection
     cbSymbol->setCurrentIndex(-1);
     connect(cbSymbol, &QComboBox::currentTextChanged, this, &QG_DimensionLabelEditor::insertSign);
+
+    leRawText->setReadOnly(true);
+
+    connect(leLabel, &QLineEdit::editingFinished, this, &QG_DimensionLabelEditor::updateRawLabelText);
+    connect(leTol1, &QLineEdit::editingFinished, this, &QG_DimensionLabelEditor::updateRawLabelText);
+    connect(leTol2, &QLineEdit::editingFinished, this, &QG_DimensionLabelEditor::updateRawLabelText);
 }
 
 /*
@@ -51,9 +57,13 @@ QG_DimensionLabelEditor::~QG_DimensionLabelEditor() = default;
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_DimensionLabelEditor::languageChange()
-{
+void QG_DimensionLabelEditor::languageChange(){
     retranslateUi(this);
+}
+
+void QG_DimensionLabelEditor::updateRawLabelText() {
+     QString label = getLabel();
+     leRawText->setText(label);
 }
 
 void QG_DimensionLabelEditor::setLabel(const QString& l) {
@@ -136,47 +146,55 @@ QString QG_DimensionLabelEditor::getLabel() {
 void QG_DimensionLabelEditor::insertSign(const QString& s) {
     const QString prefix = s.left(1);
     const QString &current = leLabel->text();
-    if (current.isEmpty())
+    if (current.isEmpty()) {
         leLabel->setText(prefix + R"(<>)");
-    else if (!current.startsWith(prefix))
+    }
+    else if (!current.startsWith(prefix)) {
         leLabel->setText(prefix + current);
+    }
+    updateRawLabelText();
 }
 
 void QG_DimensionLabelEditor::updatePrefix(bool isChecked)
 {
     QString prefix = bDiameter->text();
-    if (prefix.startsWith('&'))
+    if (prefix.startsWith('&')) {
         prefix = prefix.mid(1);
+    }
     QRegularExpression re{QString{R"(^\s*%1)"}.arg(prefix)};
     QString label = leLabel->text();
     auto match = re.match(label);
-    if (!isChecked && match.hasMatch())
+    if (!isChecked && match.hasMatch()) {
         leLabel->setText(label.mid(match.capturedEnd(0)));
+        updateRawLabelText();
+    }
 }
 
-void QG_DimensionLabelEditor::setRadialType(const RS_Dimension& dim)
-{
-    switch(dim.rtti()) {
-    case RS2::EntityDimRadial:
-        bDiameter->setIcon({});
-        bDiameter->setText(tr("R", "Radial dimesnion prefix"));
-        bDiameter->setCheckable(true);
-        bDiameter->setVisible(true);
-	m_hasDiameter = true;
-        break;
-    case RS2::EntityDimDiametric:
-        bDiameter->setIcon({});
-        bDiameter->setText({{QChar(g_diametericPrefix)}});
-        bDiameter->setCheckable(true);
-        bDiameter->setVisible(true);
-	m_hasDiameter = true;
-        break;
-    default:
-        bDiameter->setIcon({});
-        bDiameter->setText({});
-        bDiameter->setChecked(false);
-        bDiameter->setVisible(false);
-	m_hasDiameter = false;
-        break;
+void QG_DimensionLabelEditor::setRadialType(const RS_Dimension& dim){
+    switch (dim.rtti()) {
+        case RS2::EntityDimRadial: {
+            bDiameter->setIcon({});
+            bDiameter->setText(tr("R", "Radial dimension prefix"));
+            bDiameter->setCheckable(true);
+            bDiameter->setVisible(true);
+            m_hasDiameter = true;
+            break;
+        }
+        case RS2::EntityDimDiametric: {
+            bDiameter->setIcon({});
+            bDiameter->setText({{QChar(g_diametericPrefix)}});
+            bDiameter->setCheckable(true);
+            bDiameter->setVisible(true);
+            m_hasDiameter = true;
+            break;
+        }
+        default: {
+            bDiameter->setIcon({});
+            bDiameter->setText({});
+            bDiameter->setChecked(false);
+            bDiameter->setVisible(false);
+            m_hasDiameter = false;
+            break;
+        }
     }
 }

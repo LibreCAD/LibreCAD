@@ -25,7 +25,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_circle.h"
 #include "rs_debug.h"
 #include "rs_line.h"
+#include "rs_polyline.h"
 #include "rs_preview.h"
+
+class RS_Polyline;
 
 struct RS_ActionDrawCircleInscribe::ActionData {
     RS_CircleData cData;
@@ -47,8 +50,9 @@ RS_ActionDrawCircleInscribe::~RS_ActionDrawCircleInscribe() = default;
 
 void RS_ActionDrawCircleInscribe::clearLines(bool checkStatus){
     while (!m_actionData->lines.empty()) {
-        if (checkStatus && (int) m_actionData->lines.size() <= getStatus())
+        if (checkStatus && (int) m_actionData->lines.size() <= getStatus()) {
             break;
+        }
         m_actionData->lines.pop_back();
     }
 }
@@ -57,9 +61,20 @@ void RS_ActionDrawCircleInscribe::drawSnapper() {
     // disable snapper
 }
 
+void RS_ActionDrawCircleInscribe::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    auto entity = contextEntity;
+    if (isPolyline(entity)) {
+        auto polyline = static_cast<RS_Polyline*>(contextEntity);
+        entity = polyline->getNearestEntity(clickPos);
+    }
+    if (isLine(entity)) {
+        setLine1(static_cast<RS_Line*> (entity));
+    }
+}
+
 void RS_ActionDrawCircleInscribe::init(int status){
     LC_ActionDrawCircleBase::init(status);
-    if (status >= 0){
+    if (getStatus() >= 0){
         RS_PreviewActionInterface::suspend();
     }
     clearLines(true);
@@ -112,7 +127,7 @@ void RS_ActionDrawCircleInscribe::onMouseMoveEvent(int status, LC_MouseEvent *e)
                             RS_Vector &center = m_actionData->cData.center;
                             previewRefPoint(m_actionData->lines[SetLine1]->getNearestPointOnEntity(center, false));
                             previewRefPoint(m_actionData->lines[SetLine2]->getNearestPointOnEntity(center, false));
-                            previewRefPoint(m_actionData->lines[SetLine3]->getNearestPointOnEntity(center, false));
+                            previewRefPoint(line->getNearestPointOnEntity(center, false));
                         }
                     }
                 }
@@ -124,12 +139,23 @@ void RS_ActionDrawCircleInscribe::onMouseMoveEvent(int status, LC_MouseEvent *e)
     }
 }
 
+void RS_ActionDrawCircleInscribe::setLine1(RS_Line* line) {
+    m_actionData->lines.push_back(line);
+    setStatus(SetLine2);
+}
+
 void RS_ActionDrawCircleInscribe::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
-    RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine);
-    if (!en) return;
-    if (!(en->isVisible() && isLine(en))) return;
+    RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine); // fixme - support of polyline
+    if (en == nullptr) {
+        return;
+    }
+    if (!(en->isVisible() && isLine(en))) {
+        return;
+    }
     for (int i = 0; i < status; i++) {
-        if (en->getId() == m_actionData->lines[i]->getId()) return; //do not pull in the same line again
+        if (en->getId() == m_actionData->lines[i]->getId()) {
+            return; //do not pull in the same line again
+        }
     }
 
     m_actionData->coord = e->graphPoint;
@@ -137,12 +163,11 @@ void RS_ActionDrawCircleInscribe::onMouseLeftButtonRelease(int status, LC_MouseE
 
     switch (status) {
         case SetLine1:{
-            m_actionData->lines.push_back(line);
-            setStatus(SetLine2);
+            setLine1(line);
             break;
         }
         case SetLine2:
-            m_actionData->lines.push_back(line);
+                m_actionData->lines.push_back(line);
             setStatus(SetLine3);
             break;
         case SetLine3:

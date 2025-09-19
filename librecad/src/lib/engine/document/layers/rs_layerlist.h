@@ -90,6 +90,7 @@ public:
     void togglePrintMulti(QList<RS_Layer*> layers);
     void toggleConstructionMulti(QList<RS_Layer*> layers);
     void toggleFreezeMulti(QList<RS_Layer*> layers);
+
     void setFreezeMulti(QList<RS_Layer*> layersEnable, QList<RS_Layer*> layersDisable);
 				void setLockMulti(QList<RS_Layer*> layersToUnlock, QList<RS_Layer*> layersToLock);
     void setPrintMulti(QList<RS_Layer*> layersNoPrint, QList<RS_Layer*> layersPrint);
@@ -114,11 +115,11 @@ public:
      */
     void sort();
     void fireLayerAdded(RS_Layer* layer);
+    void fireLayerToggled();
     void slotUpdateLayerList();
     friend std::ostream& operator << (std::ostream& os, RS_LayerList& l);
 
 private:
-    void fireLayerToggled();
 	//! layers in the graphic
     QList<RS_Layer*> m_layers;
     //! List of registered LayerListListeners

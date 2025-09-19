@@ -38,6 +38,9 @@ QG_BevelOptions::QG_BevelOptions()
     connect(ui->cbTrim, &QCheckBox::toggled, this, &QG_BevelOptions::onTrimToggled);
     connect(ui->leLength1, &QLineEdit::editingFinished, this, &QG_BevelOptions::onLength1EditingFinished);
     connect(ui->leLength2, &QLineEdit::editingFinished, this, &QG_BevelOptions::onLength2EditingFinished);
+
+    pickDistanceSetup("length1", ui->tbPickLength1, ui->leLength1);
+    pickDistanceSetup("length2", ui->tbPickLength2, ui->leLength2);
 }
 
 /*

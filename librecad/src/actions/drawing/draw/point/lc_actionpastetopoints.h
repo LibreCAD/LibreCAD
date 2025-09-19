@@ -37,15 +37,16 @@ public:
     void setRemovePointAfterPaste(bool removePointAfterPaste);
     void init(int status) override;
 protected:
+    double m_angleRad = 0.0;
+    double m_scaleFactor = 1.0;
+    bool m_removePointAfterPaste = false;
+
     LC_ActionOptionsWidget *createOptionsWidget() override;
     bool isAllowTriggerOnEmptySelection() override;
     bool isEntityAllowedToSelect(RS_Entity *ent) const override;
     void updateMouseButtonHintsForSelection() override;
     void doTrigger(bool selected) override;
-
-    double m_angle = 0.0;
-    double m_scaleFactor = 1.0;
-    bool m_removePointAfterPaste = false;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angle) override;
 };
 
 #endif // LC_ACTIONPASTETOPOINTS_H

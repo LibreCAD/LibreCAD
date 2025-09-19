@@ -32,6 +32,8 @@ LC_DrawBoundingBoxOptions::LC_DrawBoundingBoxOptions()
     connect(ui->cbCornerPointsOnly, &QCheckBox::toggled, this, &LC_DrawBoundingBoxOptions::onCornerPointsToggled);
     connect(ui->cbPolyline, &QCheckBox::toggled, this, &LC_DrawBoundingBoxOptions::onPolylineToggled);
     connect(ui->leOffset, &QLineEdit::editingFinished, this, &LC_DrawBoundingBoxOptions::onOffsetEditingFinished);
+
+    pickDistanceSetup("offset", ui->tbPickOffset, ui->leOffset);
 }
 
 LC_DrawBoundingBoxOptions::~LC_DrawBoundingBoxOptions() {

@@ -8,6 +8,7 @@ namespace Ui {
     class LC_ActionDrawArc2POptions;
 }
 
+class RS_ActionInterface;
 class LC_ActionDrawArc2PointsBase;
 
 class LC_ActionDrawArc2POptions : public LC_ActionOptionsWidget{

@@ -27,7 +27,7 @@ public:
     };
     enum TYPE type;
 public:
-    dxfReader(std::ifstream *stream){
+    dxfReader(std::istream *stream){
         filestr = stream;
         type = INVALID;
     }
@@ -35,7 +35,7 @@ public:
     bool readRec(int *code);
 
     std::string getString() {return strData;}
-    int getHandleString();//Convert hex string to int
+    int getHandleId();//Convert hex string to int
     std::string toUtf8String(std::string t) {return decoder.toUtf8(t);}
     std::string getUtf8String() {return decoder.toUtf8(strData);}
     double getDouble() {return doubleData;}
@@ -60,7 +60,7 @@ protected:
     virtual bool readBool() = 0;
 
 protected:
-    std::ifstream *filestr;
+    std::istream *filestr;
     std::string strData;
     double doubleData;
     signed int intData; //32 bits integer
@@ -73,7 +73,7 @@ private:
 
 class dxfReaderBinary : public dxfReader {
 public:
-    dxfReaderBinary(std::ifstream *stream):dxfReader(stream){skip = false; }
+    dxfReaderBinary(std::istream *stream):dxfReader(stream){skip = false; }
     bool readCode(int *code) override;
     bool readString(std::string *text) override;
     bool readString() override;
@@ -87,7 +87,7 @@ public:
 
 class dxfReaderAscii : public dxfReader {
 public:
-    dxfReaderAscii(std::ifstream *stream):dxfReader(stream){skip = true; }
+    dxfReaderAscii(std::istream *stream):dxfReader(stream){skip = true; }
     bool readCode(int *code) override;
     bool readString(std::string *text) override;
     bool readString() override;

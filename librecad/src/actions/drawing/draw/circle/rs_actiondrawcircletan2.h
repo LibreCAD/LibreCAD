@@ -44,23 +44,23 @@ public:
     void finish(bool updateTB) override;
     void setRadius(double);
     double getRadius() const;
-
     void drawSnapper() override;
-
 protected:
     /**
  * Action States.
  */
     enum Status {
-        SetCircle1,   //  Setting the First Circle.  */
+        SetCircle1  = InitialActionStatus,   //  Setting the First Circle.  */
         SetCircle2,   //  Setting the Second Circle.  */
         SetCenter   //  select the closest tangential Circle.  */
     };
 
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
-
-    RS_Entity *catchCircle(LC_MouseEvent *e, bool forPreview);
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
+    void doInitialInit() override;
+    RS_Entity *catchTangentEntity(LC_MouseEvent *e, bool forPreview);
+    void setCircleOne(RS_Entity* en);
     RS_Vector getTangentPoint(RS_Vector creatingCircleCenter, double creatingCircleRadius, const RS_AtomicEntity * circle);
     LC_ActionOptionsWidget* createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
@@ -69,5 +69,6 @@ protected:
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void updateMouseButtonHints() override;
     void doTrigger() override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 #endif

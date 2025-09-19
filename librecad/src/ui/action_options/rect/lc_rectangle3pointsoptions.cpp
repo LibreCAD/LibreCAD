@@ -41,6 +41,12 @@ LC_Rectangle3PointsOptions::LC_Rectangle3PointsOptions() :
     connect(ui->chkFixedBaseAngle, &QCheckBox::clicked, this, &LC_Rectangle3PointsOptions::onBaseAngleFixedClicked);
     connect(ui->cbSnapRadiusCenter, &QCheckBox::clicked, this, &LC_Rectangle3PointsOptions::onSnapToCornerArcCenterClicked);
     connect(ui->cbEdges,&QComboBox::currentIndexChanged, this, &LC_Rectangle3PointsOptions::onEdgesIndexChanged);
+
+    pickAngleSetup("angleBase", ui->tbPickAngleBase, ui->leAngle);
+    pickAngleSetup("angleInner", ui->tbPickAngleInner, ui->leInnerAngle);
+    pickDistanceSetup("radius", ui->tbPickRadius, ui->leRadius);
+    pickDistanceSetup("lengthY", ui->tbPickLengthY, ui->leLenY);
+    pickDistanceSetup("lengthX", ui->tbPickLengthX, ui->leX);
 }
 
 LC_Rectangle3PointsOptions::~LC_Rectangle3PointsOptions(){
@@ -148,12 +154,15 @@ void LC_Rectangle3PointsOptions::setCornersModeToActionAndView(int index){
 
     ui->lblRadius->setVisible(round);
     ui->leRadius->setVisible(round);
+    ui->tbPickRadius->setVisible(round);
     ui->cbSnapRadiusCenter->setVisible(round);
 
     ui->lblLenY->setVisible(bevel);
     ui->lblX->setVisible(bevel);
     ui->leLenY->setVisible(bevel);
+    ui->tbPickLengthY->setVisible(bevel);
     ui->leX->setVisible(bevel);
+    ui->tbPickLengthX->setVisible(bevel);
 
     bool straight = index == LC_AbstractActionDrawRectangle::CORNER_STRAIGHT || ui->cbQuadrangle->isChecked();
     ui->lblEdges->setVisible(straight);
@@ -278,12 +287,14 @@ void LC_Rectangle3PointsOptions::setInnerAngleFixedToActionAndView(bool value){
     ui->cbFixedInnerAngle->setChecked(value);
     m_action->setInnerAngleFixed(value);
     ui->leInnerAngle->setEnabled(value);
+    ui->tbPickAngleInner->setEnabled(value);
 }
 
 void LC_Rectangle3PointsOptions::setBaseAngleFixedToActionAndView(bool value){
     ui->chkFixedBaseAngle->setChecked(value);
     m_action->setBaseAngleFixed(value);
     ui->leAngle->setEnabled(value);
+    ui->tbPickAngleBase->setEnabled(value);
 }
 
 void LC_Rectangle3PointsOptions::setInnerAngleToActionAndView(const QString& value){

@@ -97,6 +97,14 @@ void RS_ActionDrawImage::doTrigger() {
     finish(false);
 }
 
+bool RS_ActionDrawImage::doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) {
+    if (tag == "angle") {
+        setUcsAngleDegrees(RS_Math::rad2deg(angleRad));
+        return true;
+    }
+    return false;
+}
+
 void RS_ActionDrawImage::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     if (status == SetTargetPoint){
         bool snappedToRelZero = trySnapToRelZeroCoordinateEvent(e);

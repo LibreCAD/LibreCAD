@@ -36,6 +36,10 @@ LC_Ellipse1PointOptions::LC_Ellipse1PointOptions()
     connect(ui->cbFreeAngle, &QCheckBox::toggled, this, &LC_Ellipse1PointOptions::onFreeAngleClicked);
     connect(ui->rbPos, &QRadioButton::toggled, this, &LC_Ellipse1PointOptions::onDirectionChanged);
     connect(ui->rbNeg, &QRadioButton::toggled, this, &LC_Ellipse1PointOptions::onDirectionChanged);
+
+    pickDistanceSetup("major", ui->tbPickMajor, ui->leMajorRadius);
+    pickDistanceSetup("minor", ui->tbPickMinor, ui->leMinorRadius);
+    pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);
 }
 
 LC_Ellipse1PointOptions::~LC_Ellipse1PointOptions(){
@@ -136,12 +140,15 @@ void LC_Ellipse1PointOptions::setAngleIsFreeToActionAndView(bool val) {
     m_action->setAngleFree(val);
     ui->cbFreeAngle->setChecked(val);
     ui->leAngle->setEnabled(!val);
+    ui->tbPickAngle->setEnabled(!val);
 }
 
 void LC_Ellipse1PointOptions::setUseAngleAngleToActionAndView(bool val) {
     ui->cbAngle->setChecked(val);
     m_action->setHasAngle(val);
-    ui->leAngle->setEnabled(val && !ui->cbFreeAngle->isChecked());
+    bool angleInputAllowed = val && !ui->cbFreeAngle->isChecked();
+    ui->leAngle->setEnabled(angleInputAllowed);
+    ui->tbPickAngle->setEnabled(angleInputAllowed);
     ui->cbFreeAngle->setEnabled(val);
 }
 

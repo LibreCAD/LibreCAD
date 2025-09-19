@@ -44,8 +44,9 @@ LC_ActionDrawParabola4Points::~LC_ActionDrawParabola4Points() = default;
 
 void LC_ActionDrawParabola4Points::init(int status) {
     RS_PreviewActionInterface::init(status);
-    if (status == SetPoint1)
+    if (status == SetPoint1) {
         m_actionData->points.clear();
+    }
 }
 
 void LC_ActionDrawParabola4Points::doTrigger() {

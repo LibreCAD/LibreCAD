@@ -33,6 +33,9 @@ LC_DuplicateOptions::LC_DuplicateOptions():
     connect(ui->cbInPlace, &QCheckBox::clicked, this, &LC_DuplicateOptions::onInPlaceClicked);
     connect(ui->cbPen, &QComboBox::currentIndexChanged, this, &LC_DuplicateOptions::onPenModeIndexChanged);
     connect(ui->cbLayer, &QComboBox::currentIndexChanged, this, &LC_DuplicateOptions::onLayerModeIndexChanged);
+
+    pickDistanceSetup("offsetX", ui->tbPickOffsetX, ui->leOffsetX);
+    pickDistanceSetup("offsetY", ui->tbPickOffsetY, ui->leOffsetY);
 }
 
 LC_DuplicateOptions::~LC_DuplicateOptions(){
@@ -126,6 +129,8 @@ void LC_DuplicateOptions::setOffsetYToActionAndView(const QString &val){
 void LC_DuplicateOptions::setInPlaceDuplicateToActionAndView(bool inplace){
     ui->leOffsetX->setEnabled(!inplace);
     ui->leOffsetY->setEnabled(!inplace);
+    ui->tbPickOffsetX->setEnabled(!inplace);
+    ui->tbPickOffsetY->setEnabled(!inplace);
     ui->cbPen->setEnabled(!inplace);
     ui->cbLayer->setEnabled(!inplace);
     m_action->setDuplicateInPlace(inplace);

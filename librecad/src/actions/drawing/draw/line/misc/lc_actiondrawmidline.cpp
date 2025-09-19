@@ -24,13 +24,14 @@
 
 #include "lc_linemath.h"
 #include "lc_midlineoptions.h"
+#include "rs_document.h"
 #include "rs_information.h"
 #include "rs_line.h"
+#include "rs_pen.h"
 
 namespace {
-
     //list of entity types supported by current action - only lines so far
-    const auto g_enTypeList = EntityTypeList{RS2::EntityLine};
+   const auto g_enTypeList = EntityTypeList{RS2::EntityLine};
 }
 
 LC_ActionDrawMidLine::LC_ActionDrawMidLine(LC_ActionContext *actionContext)
@@ -38,8 +39,16 @@ LC_ActionDrawMidLine::LC_ActionDrawMidLine(LC_ActionContext *actionContext)
 }
 
 void LC_ActionDrawMidLine::init(int status) {
-    RS_PreviewActionInterface::init(status);
     m_mainStatus = SetEntity1;
+    RS_PreviewActionInterface::init(status);
+}
+
+void LC_ActionDrawMidLine::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
+    if (g_enTypeList.contains(contextEntity->rtti())) {
+        m_firstEntity = contextEntity;
+        setStatus(SetEntity2);
+        m_mainStatus = SetEntity2;
+    }
 }
 
 void LC_ActionDrawMidLine::doTrigger() {
@@ -49,11 +58,33 @@ void LC_ActionDrawMidLine::doTrigger() {
         RS_Line *lineToCreate = lineInfo.line;
         if (lineToCreate != nullptr) {
             lineToCreate->reparent(m_container);
-            setPenAndLayerToActive(lineToCreate);
+            setupCenterlinePenLayer(lineToCreate);
             undoCycleAdd(lineToCreate);
         }
     }
     setStatus(SetEntity1);
+}
+
+bool LC_ActionDrawMidLine::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "offset") {
+        setOffset(distance);
+        return true;
+    }
+    return false;
+}
+
+void LC_ActionDrawMidLine::setupCenterlinePenLayer(RS_Line* line) const{
+    line->setLayerToActive(); // fixme - sand - change to some annotation layer?
+    RS2::LineType lineType = getLineTypeForCenterLine();
+    RS_Pen pen = m_document->getActivePen();
+    if (lineType != RS2::LineTypeUnchanged) {
+        pen.setLineType(lineType);
+    }
+    line->setPen(pen);
+}
+
+RS2::LineType LC_ActionDrawMidLine::getLineTypeForCenterLine() const {
+    return RS2::CenterLine2; // fixme - retrieve from settings (CENTERLTYPE)
 }
 
 void LC_ActionDrawMidLine::onMouseMoveEvent(int status, LC_MouseEvent *e) {

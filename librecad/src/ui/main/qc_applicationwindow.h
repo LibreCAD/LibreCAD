@@ -34,6 +34,7 @@
 
 class LC_ActionFactory;
 class LC_ActionGroupManager;
+class LC_ActionGroup;
 class LC_ActionOptionsManager;
 class LC_AnglesBasisWidget;
 class LC_AppWindowDialogsInvoker;
@@ -112,7 +113,7 @@ public:
     bool loadStyleSheet(const QString &path);
 
     bool eventFilter(QObject *obj, QEvent *event) override;
-    void onViewCurrentActionChanged(const RS_ActionInterface *action);
+    void onViewCurrentActionChanged(RS2::ActionType actionType);
     QAction* getAction(const QString& name) const override;
 
     void activateWindow(QMdiSubWindow* w){
@@ -131,6 +132,7 @@ public:
 public slots:
     void relayAction(QAction* q_action);
     void slotFocus();
+    void disableUIForAbsentDrawing();
     void slotKillAllActions();
     void slotFocusCommandLine();
     void slotFocusOptionsWidget();
@@ -138,9 +140,11 @@ public slots:
     void slotShowDrawingOptions();
     void slotShowDrawingOptionsUnits();
     void slotWorkspacesMenuAboutToShow();
+    QMenu* createGraphicViewContentMenu(QMouseEvent* event, QG_GraphicView* view, RS_Entity* entity, const RS_Vector& pos);
+
     void slotWindowsMenuActivated(bool);
     void slotPenChanged(const RS_Pen& p);
-    void setupCustomMenu(QG_GraphicView* view);
+
 
     //void slotSnapsChanged(RS_SnapMode s);
     void slotEnableActions(bool enable);
@@ -301,9 +305,9 @@ public:
     void openFile(const QString& fileName, RS2::FormatType type);
     void changeDrawingOptions(int tabIndex);
     void closeWindow(QC_MDIWindow* w) override;
-    QG_LibraryWidget* getLibraryWidget(){return m_libraryWidget;}
-
-    LC_ActionContext* getActionContext();
+    QG_LibraryWidget* getLibraryWidget() const {return m_libraryWidget;}
+    LC_ActionGroup* getActionGroup(const QString &groupName) const;
+    LC_ActionContext* getActionContext() const;
 protected:
     void closeEvent(QCloseEvent*) override;
     bool isAcceptableDragNDropFileName(const QString& fileName);

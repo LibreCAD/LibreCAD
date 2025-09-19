@@ -38,20 +38,46 @@ bool DRW_Header::parseCode(int code, dxfReader *reader){
     }
 
     switch (code) {
-    case 9:
-        curr = new DRW_Variant();
+    case 9: {
         name = reader->getString();
-        if (version < DRW::AC1015 && name == "$DIMUNIT")
-            name="$DIMLUNIT";
-        vars[name]=curr;
-        break;
-    case 1:
-        curr->addString(code, reader->getUtf8String());
-        if (name =="$ACADVER") {
-            reader->setVersion(*curr->content.s, true);
-            version = reader->getVersion();
+        if ("$CUSTOMPROPERTYTAG" == name) {
+            waitingFor = CUSTOM_VAR_NAME;
+        }
+        else if ("$CUSTOMPROPERTY" == name) {
+            waitingFor = CUSTOM_VAR_VALUE;
+        }
+        else {
+            waitingFor = VARIABLE_VALUE;
+            curr = new DRW_Variant();
+            if (version < DRW::AC1015 && name == "$DIMUNIT")
+                name="$DIMLUNIT";
+            vars[name]=curr;
         }
         break;
+    }
+    case 1: {
+        auto value = reader->getUtf8String();
+        switch (waitingFor) {
+            case VARIABLE_VALUE: {
+                curr->addString(code, value);
+                if (name =="$ACADVER") {
+                    reader->setVersion(*curr->content.s, true);
+                    version = reader->getVersion();
+                }
+                break;
+            }
+            case CUSTOM_VAR_NAME: {
+                currentCustomVarName = value;
+                break;
+            }
+            case CUSTOM_VAR_VALUE: {
+                auto var = new DRW_Variant(1, value);
+                customVars[currentCustomVarName]=var;
+                break;
+            }
+        }
+        break;
+    }
     case 2:
         curr->addString(code, reader->getUtf8String());
         break;
@@ -112,6 +138,159 @@ bool DRW_Header::parseCode(int code, dxfReader *reader){
     }
 
     return true;
+}
+
+void DRW_Header::writeVar(dxfWriter* writer, std::string name, double defaultValue, int varCode) {
+    double varDouble;
+    writer->writeString(9, name);
+    if (getDouble(name, &varDouble)) {
+        writer->writeDouble(varCode, varDouble);
+    }
+    else {
+        writer->writeDouble(varCode, defaultValue);
+    }
+}
+
+void DRW_Header::writeVar(dxfWriter* writer, std::string name, int defaultValue, int varCode) {
+    int varInt;
+    writer->writeString(9, name);
+    if (getInt(name, &varInt)) {
+        writer->writeInt16(varCode, varInt);
+    }
+    else {
+        writer->writeInt16(varCode, defaultValue);
+    }
+}
+
+void DRW_Header::writeVar(dxfWriter* writer, DRW::Version ver, std::string name, std::string defaultValue, int varCode) {
+    std::string varStr;
+    writer->writeString(9, name);
+    if (getStr(name, &varStr)) {
+        if (ver == DRW::AC1009) {
+            writer->writeUtf8Caps(varCode, varStr);
+        }
+        else {
+            writer->writeUtf8String(varCode, varStr);
+        }
+    }
+    else {
+        writer->writeString(varCode, defaultValue);
+    }
+}
+
+void DRW_Header::writeDimVars(dxfWriter* writer, DRW::Version ver) {
+    writeVar(writer, "$DIMSCALE", 2.5);
+    writeVar(writer, "$DIMASZ", 2.5);
+    writeVar(writer, "$DIMEXO", 0.625);
+    writeVar(writer, "$DIMDLI", 3.75);
+    writeVar(writer, "$DIMRND", 0.0);
+    writeVar(writer, "$DIMDLE", 0.0);
+    writeVar(writer, "$DIMEXE", 1.25);
+    writeVar(writer, "$DIMTP", 0.0);
+    writeVar(writer, "$DIMTM", 0.0);
+    writeVar(writer, "$DIMTXT", 2.5);
+    writeVar(writer, "$DIMCEN", 2.5);
+    writeVar(writer, "$DIMTSZ", 0.0);
+
+    writeVar(writer, "$DIMTOL", 0);
+    writeVar(writer, "$DIMLIM", 0);
+    writeVar(writer, "$DIMTIH", 0);
+    writeVar(writer, "$DIMTOH", 0);
+    writeVar(writer, "$DIMSE1", 0);
+    writeVar(writer, "$DIMSE2", 0);
+    writeVar(writer, "$DIMTAD", 1);
+    writeVar(writer, "$DIMZIN", 8);
+
+    writeVar(writer, ver, "$DIMBLK");
+
+    writeVar(writer, "$DIMASO", 1);
+    writeVar(writer, "$DIMSHO", 1);
+
+    writeVar(writer, ver, "$DIMPOST");
+    writeVar(writer, ver, "$DIMAPOST");
+
+    writeVar(writer, "$DIMALT", 0);
+    writeVar(writer, "$DIMALTD", 3);
+    writeVar(writer, "$DIMALTF", 0.03937);
+    writeVar(writer, "$DIMLFAC", 1.0);
+    writeVar(writer, "$DIMTOFL", 1);
+    writeVar(writer, "$DIMTVP", 0.0);
+    writeVar(writer, "$DIMTIX", 0);
+    writeVar(writer, "$DIMSOXD", 0);
+    writeVar(writer, "$DIMSAH", 0);
+
+    writeVar(writer, ver, "$DIMBLK1");
+    writeVar(writer, ver, "$DIMBLK2");
+    writeVar(writer, ver, "$DIMSTYLE", "STANDARD", 2);
+    writeVar(writer, "$DIMCLRD", 0);
+    writeVar(writer, "$DIMCLRE", 0);
+    writeVar(writer, "$DIMCLRT", 0);
+    writeVar(writer, "$DIMTFAC", 1.0);
+    writeVar(writer, "$DIMGAP", 0.625);
+    //post r12 dim vars
+    if (ver > DRW::AC1009) {
+        writeVar(writer, "$DIMJUST", 0);
+        writeVar(writer, "$DIMSD1", 0);
+        writeVar(writer, "$DIMSD2", 0);
+        writeVar(writer, "$DIMTOLJ", 0);
+        writeVar(writer, "$DIMTZIN", 8);
+        writeVar(writer, "$DIMALTZ", 0);
+        writeVar(writer, "$DIMALTTZ", 0);
+        writeVar(writer, "$DIMUPT", 0);
+        writeVar(writer, "$DIMDEC", 2);
+        writeVar(writer, "$DIMTDEC", 2);
+        writeVar(writer, "$DIMALTU", 2);
+        writeVar(writer, "$DIMALTTD", 3);
+
+        writeVar(writer, ver, "$DIMTXSTY", "STANDARD", 7);
+
+        writeVar(writer, "$DIMAUNIT", 0);
+        writeVar(writer, "$DIMADEC", 0);
+        writeVar(writer, "$DIMALTRND", 0.0);
+        writeVar(writer, "$DIMAZIN", 0);
+        writeVar(writer, "$DIMDSEP", 44);
+        writeVar(writer, "$DIMATFIT", 3);
+        writeVar(writer, "$DIMFRAC", 0);
+
+        writeVar(writer, ver, "$DIMLDRBLK", "STANDARD");
+
+        //verify if exist "$DIMLUNIT" or obsolete "$DIMUNIT" (pre v2000)
+        int varInt;
+        if ( !getInt("$DIMLUNIT", &varInt) ){
+            if (!getInt("$DIMUNIT", &varInt))
+                varInt = 2;
+        }
+        //verify valid values from 1 to 6
+        if (varInt<1 || varInt>6)
+            varInt = 2;
+        if (ver > DRW::AC1014) {
+            writer->writeString(9, "$DIMLUNIT");
+            writer->writeInt16(70, varInt);
+        } else {
+            writer->writeString(9, "$DIMUNIT");
+            writer->writeInt16(70, varInt);
+        }
+
+        writeVar(writer, "$DIMLWD", -2);
+        writeVar(writer, "$DIMLWE", -2);
+        writeVar(writer, "$DIMTMOVE", 0);
+
+        if (ver > DRW::AC1018) {// and post v2004 dim vars
+            writeVar(writer, "$DIMFXL", 1.0);
+            writeVar(writer, "$DIMFXLON", 0);
+            writeVar(writer, "$DIMJOGANG", 0.7854);
+            writeVar(writer, "$DIMTFILL", 0);
+            writeVar(writer, "$DIMTFILLCLR", 0);
+            writeVar(writer, "$DIMARCSYM", 0);
+
+            writeVar(writer, ver, "$DIMLTYPE", "", 6);
+            writeVar(writer, ver, "$DIMLTEX1", "", 6);
+            writeVar(writer, ver, "$DIMLTEX2", "", 6);
+            if (ver > DRW::AC1021) {// and post v2007 dim vars
+                writeVar(writer, "$DIMTXTDIRECTION", 0);
+            }
+        }// end post v2004 dim vars
+    }//end post r12 dim vars
 }
 
 void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
@@ -208,31 +387,13 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
         writer->writeDouble(10, 420.0);
         writer->writeDouble(20, 297.0);
     }
-    writer->writeString(9, "$ORTHOMODE");
-    if (getInt("$ORTHOMODE", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 0);
-    writer->writeString(9, "$REGENMODE");
-    if (getInt("$REGENMODE", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 1);
-    writer->writeString(9, "$FILLMODE");
-    if (getInt("$FILLMODE", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 1);
-    writer->writeString(9, "$QTEXTMODE");
-    if (getInt("$QTEXTMODE", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 0);
-    writer->writeString(9, "$MIRRTEXT");
-    if (getInt("$MIRRTEXT", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 0);
+
+    writeVar(writer, "$ORTHOMODE", 0);
+    writeVar(writer, "$REGENMODE", 1);
+    writeVar(writer, "$FILLMODE", 1);
+    writeVar(writer, "$QTEXTMODE", 0);
+    writeVar(writer, "$MIRRTEXT", 0);
+
     if (ver == DRW::AC1009){
         writer->writeString(9, "$DRAGMODE");
         if (getInt("$DRAGMODE", &varInt))
@@ -309,442 +470,7 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
             writer->writeInt16(70, 0);
     }
 
-    writer->writeString(9, "$DIMSCALE");
-    if (getDouble("$DIMSCALE", &varDouble))
-        writer->writeDouble(40, varDouble);
-    else
-        writer->writeDouble(40, 2.5);
-    writer->writeString(9, "$DIMASZ");
-    if (getDouble("$DIMASZ", &varDouble))
-        writer->writeDouble(40, varDouble);
-    else
-        writer->writeDouble(40, 2.5);
-    writer->writeString(9, "$DIMEXO");
-    if (getDouble("$DIMEXO", &varDouble))
-        writer->writeDouble(40, varDouble);
-    else
-        writer->writeDouble(40, 0.625);
-    writer->writeString(9, "$DIMDLI");
-    if (getDouble("$DIMDLI", &varDouble))
-        writer->writeDouble(40, varDouble);
-    else
-        writer->writeDouble(40, 3.75);
-    writer->writeString(9, "$DIMRND");
-    if (getDouble("$DIMRND", &varDouble))
-        writer->writeDouble(40, varDouble);
-    else
-        writer->writeDouble(40, 0.0);
-    writer->writeString(9, "$DIMDLE");
-    if (getDouble("$DIMDLE", &varDouble))
-        writer->writeDouble(40, varDouble);
-    else
-        writer->writeDouble(40, 0.0);
-    writer->writeString(9, "$DIMEXE");
-    if (getDouble("$DIMEXE", &varDouble))
-        writer->writeDouble(40, varDouble);
-    else
-        writer->writeDouble(40, 1.25);
-    writer->writeString(9, "$DIMTP");
-    if (getDouble("$DIMTP", &varDouble))
-        writer->writeDouble(40, varDouble);
-    else
-        writer->writeDouble(40, 0.0);
-    writer->writeString(9, "$DIMTM");
-    if (getDouble("$DIMTM", &varDouble))
-        writer->writeDouble(40, varDouble);
-    else
-        writer->writeDouble(40, 0.0);
-    writer->writeString(9, "$DIMTXT");
-    if (getDouble("$DIMTXT", &varDouble))
-        writer->writeDouble(40, varDouble);
-    else
-        writer->writeDouble(40, 2.5);
-    writer->writeString(9, "$DIMCEN");
-    if (getDouble("$DIMCEN", &varDouble))
-        writer->writeDouble(40, varDouble);
-    else
-        writer->writeDouble(40, 2.5);
-    writer->writeString(9, "$DIMTSZ");
-    if (getDouble("$DIMTSZ", &varDouble))
-        writer->writeDouble(40, varDouble);
-    else
-        writer->writeDouble(40, 0.0);
-    writer->writeString(9, "$DIMTOL");
-    if (getInt("$DIMTOL", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 0);
-    writer->writeString(9, "$DIMLIM");
-    if (getInt("$DIMLIM", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 0);
-    writer->writeString(9, "$DIMTIH");
-    if (getInt("$DIMTIH", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 0);
-    writer->writeString(9, "$DIMTOH");
-    if (getInt("$DIMTOH", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 0);
-    writer->writeString(9, "$DIMSE1");
-    if (getInt("$DIMSE1", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 0);
-    writer->writeString(9, "$DIMSE2");
-    if (getInt("$DIMSE2", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 0);
-    writer->writeString(9, "$DIMTAD");
-    if (getInt("$DIMTAD", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 1);
-    writer->writeString(9, "$DIMZIN");
-    if (getInt("$DIMZIN", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 8);
-    writer->writeString(9, "$DIMBLK");
-    if (getStr("$DIMBLK", &varStr))
-        if (ver == DRW::AC1009)
-            writer->writeUtf8Caps(1, varStr);
-        else
-            writer->writeUtf8String(1, varStr);
-    else
-        writer->writeString(1, "");
-    writer->writeString(9, "$DIMASO");
-    if (getInt("$DIMASO", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 1);
-    writer->writeString(9, "$DIMSHO");
-    if (getInt("$DIMSHO", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 1);
-    writer->writeString(9, "$DIMPOST");
-    if (getStr("$DIMPOST", &varStr))
-        if (ver == DRW::AC1009)
-            writer->writeUtf8Caps(1, varStr);
-        else
-            writer->writeUtf8String(1, varStr);
-    else
-        writer->writeString(1, "");
-    writer->writeString(9, "$DIMAPOST");
-    if (getStr("$DIMAPOST", &varStr))
-        if (ver == DRW::AC1009)
-            writer->writeUtf8Caps(1, varStr);
-        else
-            writer->writeUtf8String(1, varStr);
-    else
-        writer->writeString(1, "");
-    writer->writeString(9, "$DIMALT");
-    if (getInt("$DIMALT", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 0);
-    writer->writeString(9, "$DIMALTD");
-    if (getInt("$DIMALTD", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 3);
-    writer->writeString(9, "$DIMALTF");
-    if (getDouble("$DIMALTF", &varDouble))
-        writer->writeDouble(40, varDouble);
-    else
-        writer->writeDouble(40, 0.03937);
-    writer->writeString(9, "$DIMLFAC");
-    if (getDouble("$DIMLFAC", &varDouble))
-        writer->writeDouble(40, varDouble);
-    else
-        writer->writeDouble(40, 1.0);
-    writer->writeString(9, "$DIMTOFL");
-    if (getInt("$DIMTOFL", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 1);
-    writer->writeString(9, "$DIMTVP");
-    if (getDouble("$DIMTVP", &varDouble))
-        writer->writeDouble(40, varDouble);
-    else
-        writer->writeDouble(40, 0.0);
-    writer->writeString(9, "$DIMTIX");
-    if (getInt("$DIMTIX", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 0);
-    writer->writeString(9, "$DIMSOXD");
-    if (getInt("$DIMSOXD", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 0);
-    writer->writeString(9, "$DIMSAH");
-    if (getInt("$DIMSAH", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 0);
-    writer->writeString(9, "$DIMBLK1");
-    if (getStr("$DIMBLK1", &varStr))
-        if (ver == DRW::AC1009)
-            writer->writeUtf8Caps(1, varStr);
-        else
-            writer->writeUtf8String(1, varStr);
-    else
-        writer->writeString(1, "");
-    writer->writeString(9, "$DIMBLK2");
-    if (getStr("$DIMBLK2", &varStr))
-        if (ver == DRW::AC1009)
-            writer->writeUtf8Caps(1, varStr);
-        else
-            writer->writeUtf8String(1, varStr);
-    else
-        writer->writeString(1, "");
-    writer->writeString(9, "$DIMSTYLE");
-    if (getStr("$DIMSTYLE", &varStr))
-        if (ver == DRW::AC1009)
-            writer->writeUtf8Caps(2, varStr);
-        else
-            writer->writeUtf8String(2, varStr);
-    else
-        writer->writeString(2, "STANDARD");
-    writer->writeString(9, "$DIMCLRD");
-    if (getInt("$DIMCLRD", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 0);
-    writer->writeString(9, "$DIMCLRE");
-    if (getInt("$DIMCLRE", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 0);
-    writer->writeString(9, "$DIMCLRT");
-    if (getInt("$DIMCLRT", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 0);
-    writer->writeString(9, "$DIMTFAC");
-    if (getDouble("$DIMTFAC", &varDouble))
-        writer->writeDouble(40, varDouble);
-    else
-        writer->writeDouble(40, 1.0);
-    writer->writeString(9, "$DIMGAP");
-    if (getDouble("$DIMGAP", &varDouble))
-        writer->writeDouble(40, varDouble);
-    else
-        writer->writeDouble(40, 0.625);
-    //post r12 dim vars
-    if (ver > DRW::AC1009) {
-        writer->writeString(9, "$DIMJUST");
-        if (getInt("$DIMJUST", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, 0);
-        writer->writeString(9, "$DIMSD1");
-        if (getInt("$DIMSD1", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, 0);
-        writer->writeString(9, "$DIMSD2");
-        if (getInt("$DIMSD2", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, 0);
-        writer->writeString(9, "$DIMTOLJ");
-        if (getInt("$DIMTOLJ", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, 0);
-        writer->writeString(9, "$DIMTZIN");
-        if (getInt("$DIMTZIN", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, 8);
-        writer->writeString(9, "$DIMALTZ");
-        if (getInt("$DIMALTZ", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, 0);
-        writer->writeString(9, "$DIMALTTZ");
-        if (getInt("$DIMALTTZ", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, 0);
-        writer->writeString(9, "$DIMUPT");
-        if (getInt("$DIMUPT", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, 0);
-        writer->writeString(9, "$DIMDEC");
-        if (getInt("$DIMDEC", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, 2);
-        writer->writeString(9, "$DIMTDEC");
-        if (getInt("$DIMTDEC", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, 2);
-        writer->writeString(9, "$DIMALTU");
-        if (getInt("$DIMALTU", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, 2);
-        writer->writeString(9, "$DIMALTTD");
-        if (getInt("$DIMALTTD", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, 3);
-        writer->writeString(9, "$DIMTXSTY");
-        if (getStr("$DIMTXSTY", &varStr))
-            if (ver == DRW::AC1009)
-                writer->writeUtf8Caps(7, varStr);
-            else
-                writer->writeUtf8String(7, varStr);
-        else
-            writer->writeString(7, "STANDARD");
-        writer->writeString(9, "$DIMAUNIT");
-        if (getInt("$DIMAUNIT", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, 0);
-        writer->writeString(9, "$DIMADEC");
-        if (getInt("$DIMADEC", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, 0);
-        writer->writeString(9, "$DIMALTRND");
-        if (getDouble("$DIMALTRND", &varDouble))
-            writer->writeDouble(40, varDouble);
-        else
-            writer->writeDouble(40, 0.0);
-        writer->writeString(9, "$DIMAZIN");
-        if (getInt("$DIMAZIN", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, 0);
-        writer->writeString(9, "$DIMDSEP");
-        if (getInt("$DIMDSEP", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, 44);
-        writer->writeString(9, "$DIMATFIT");
-        if (getInt("$DIMATFIT", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, 3);
-        writer->writeString(9, "$DIMFRAC");
-        if (getInt("$DIMFRAC", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, 0);
-        writer->writeString(9, "$DIMLDRBLK");
-        if (getStr("$DIMLDRBLK", &varStr))
-            if (ver == DRW::AC1009)
-                writer->writeUtf8Caps(1, varStr);
-            else
-                writer->writeUtf8String(1, varStr);
-        else
-            writer->writeString(1, "STANDARD");
-    //verify if exist "$DIMLUNIT" or obsolete "$DIMUNIT" (pre v2000)
-        if ( !getInt("$DIMLUNIT", &varInt) ){
-            if (!getInt("$DIMUNIT", &varInt))
-                varInt = 2;
-        }
-        //verify valid values from 1 to 6
-        if (varInt<1 || varInt>6)
-            varInt = 2;
-        if (ver > DRW::AC1014) {
-            writer->writeString(9, "$DIMLUNIT");
-            writer->writeInt16(70, varInt);
-        } else {
-            writer->writeString(9, "$DIMUNIT");
-            writer->writeInt16(70, varInt);
-        }
-        writer->writeString(9, "$DIMLWD");
-        if (getInt("$DIMLWD", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, -2);
-        writer->writeString(9, "$DIMLWE");
-        if (getInt("$DIMLWE", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, -2);
-        writer->writeString(9, "$DIMTMOVE");
-        if (getInt("$DIMTMOVE", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, 0);
-
-        if (ver > DRW::AC1018) {// and post v2004 dim vars
-            writer->writeString(9, "$DIMFXL");
-            if (getDouble("$DIMFXL", &varDouble))
-                writer->writeDouble(40, varDouble);
-            else
-                writer->writeDouble(40, 1.0);
-            writer->writeString(9, "$DIMFXLON");
-            if (getInt("$DIMFXLON", &varInt))
-                writer->writeInt16(70, varInt);
-            else
-                writer->writeInt16(70, 0);
-            writer->writeString(9, "$DIMJOGANG");
-            if (getDouble("$DIMJOGANG", &varDouble))
-                writer->writeDouble(40, varDouble);
-            else
-                writer->writeDouble(40, 0.7854);
-            writer->writeString(9, "$DIMTFILL");
-            if (getInt("$DIMTFILL", &varInt))
-                writer->writeInt16(70, varInt);
-            else
-                writer->writeInt16(70, 0);
-            writer->writeString(9, "$DIMTFILLCLR");
-            if (getInt("$DIMTFILLCLR", &varInt))
-                writer->writeInt16(70, varInt);
-            else
-                writer->writeInt16(70, 0);
-            writer->writeString(9, "$DIMARCSYM");
-            if (getInt("$DIMARCSYM", &varInt))
-                writer->writeInt16(70, varInt);
-            else
-                writer->writeInt16(70, 0);
-            writer->writeString(9, "$DIMLTYPE");
-            if (getStr("$DIMLTYPE", &varStr))
-                if (ver == DRW::AC1009)
-                    writer->writeUtf8Caps(6, varStr);
-                else
-                    writer->writeUtf8String(6, varStr);
-            else
-                writer->writeString(6, "");
-            writer->writeString(9, "$DIMLTEX1");
-            if (getStr("$DIMLTEX1", &varStr))
-                if (ver == DRW::AC1009)
-                    writer->writeUtf8Caps(6, varStr);
-                else
-                    writer->writeUtf8String(6, varStr);
-            else
-                writer->writeString(6, "");
-            writer->writeString(9, "$DIMLTEX2");
-            if (getStr("$DIMLTEX2", &varStr))
-                if (ver == DRW::AC1009)
-                    writer->writeUtf8Caps(6, varStr);
-                else
-                    writer->writeUtf8String(6, varStr);
-            else
-                writer->writeString(6, "");
-            if (ver > DRW::AC1021) {// and post v2007 dim vars
-                writer->writeString(9, "$DIMTXTDIRECTION");
-                if (getInt("$DIMTXTDIRECTION", &varInt))
-                    writer->writeInt16(70, varInt);
-                else
-                    writer->writeInt16(70, 0);
-            }
-        }// end post v2004 dim vars
-    }//end post r12 dim vars
+    writeDimVars(writer, ver);
 
     writer->writeString(9, "$LUNITS");
     if (getInt("$LUNITS", &varInt))
@@ -2462,10 +2188,8 @@ int DRW_Header::measurement(const int unit) {
         case Units::Mil:
         case Units::Yard:
             return Units::English;
-
         default:
             break;
     }
-
     return Units::Metric;
 }

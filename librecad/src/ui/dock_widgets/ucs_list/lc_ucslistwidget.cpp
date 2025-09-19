@@ -473,8 +473,8 @@ void LC_UCSListWidget::onCustomContextMenu([[maybe_unused]] const QPoint &pos){
     auto *contextMenu = new QMenu(this);
 
     using ActionMemberFunc = void (LC_UCSListWidget::*)();
-    const auto addActionFunc = [this, &contextMenu](const QString& name, ActionMemberFunc func) {
-        contextMenu->addAction(name, this, func);
+    const auto addActionFunc = [this, &contextMenu](const QString& iconName, const QString& name, ActionMemberFunc func) {
+        contextMenu->addAction(QIcon(":/icons/"+iconName+".lci"), name, this, func);
     };
 
     QModelIndex index = ui->tvTable->indexAt(pos);
@@ -488,34 +488,34 @@ void LC_UCSListWidget::onCustomContextMenu([[maybe_unused]] const QPoint &pos){
                 contextMenu->addAction(m_createUCSAction);
                 contextMenu->addSeparator();
                 if (hasNoActiveUCS){
-                    addActionFunc(tr("&Save UCS"), &LC_UCSListWidget::saveCurrentUCS);
+                    addActionFunc("ucs_save",tr("&Save UCS"), &LC_UCSListWidget::saveCurrentUCS);
                 }
             }
-            addActionFunc(tr("&Update UCS"), &LC_UCSListWidget::saveCurrentUCS);
-            addActionFunc(tr("R&emove Selected UCSs"), &LC_UCSListWidget::removeUCS);
+            addActionFunc("ucs_save", tr("&Update UCS"), &LC_UCSListWidget::saveCurrentUCS);
+            addActionFunc("remove",tr("R&emove Selected UCSs"), &LC_UCSListWidget::removeUCS);
         }
         else {
             if (notInPrintPreview) {
                 contextMenu->addAction(m_createUCSAction);
                 if (hasNoActiveUCS){
-                    addActionFunc(tr("&Save UCS"), &LC_UCSListWidget::saveCurrentUCS);
+                    addActionFunc("ucs_save",tr("&Save UCS"), &LC_UCSListWidget::saveCurrentUCS);
                 }
             }
             LC_UCS *ucsForIndex = m_ucsListModel->getItemForIndex(index);
             if (ucsForIndex != nullptr){
                 if (hasUCS) {
                     contextMenu->addSeparator();
-                    addActionFunc(tr("&Apply UCS"), &LC_UCSListWidget::activateUCS);
-                    addActionFunc(tr("&Preview UCS"), &LC_UCSListWidget::previewUCS);
+                    addActionFunc("ucs_set", tr("&Apply UCS"), &LC_UCSListWidget::activateUCS);
+                    addActionFunc("ucs_preview", tr("&Preview UCS"), &LC_UCSListWidget::previewUCS);
                 }
                 if(ucsForIndex->isUCS()) {
-                    addActionFunc(tr("&Rename UCS"), &LC_UCSListWidget::editUCS);
-                    addActionFunc(tr("R&emove UCS"), &LC_UCSListWidget::removeUCS);
+                    addActionFunc("rename_active_block", tr("&Rename UCS"), &LC_UCSListWidget::editUCS);
+                    addActionFunc("remove", tr("R&emove UCS"), &LC_UCSListWidget::removeUCS);
                 }
             }
             if (hasUCS) {
                 contextMenu->addSeparator();
-                addActionFunc(tr("Remove A&ll UCSs"), &LC_UCSListWidget::removeAllUCSs);
+                addActionFunc("close_all",tr("Remove A&ll UCSs"), &LC_UCSListWidget::removeAllUCSs);
             }
         }
     }
@@ -524,14 +524,15 @@ void LC_UCSListWidget::onCustomContextMenu([[maybe_unused]] const QPoint &pos){
         if (notInPrintPreview) {
             contextMenu->addAction(m_createUCSAction);
             if (hasNoActiveUCS){
-                addActionFunc(tr("&Save UCS"), &LC_UCSListWidget::saveCurrentUCS);
+                addActionFunc("ucs_save", tr("&Save UCS"), &LC_UCSListWidget::saveCurrentUCS);
             }
         }
         if (hasUCS){
             if (notInPrintPreview) {
                 contextMenu->addSeparator();
             }
-            addActionFunc(tr("Remove A&ll UCSs"), &LC_UCSListWidget::removeAllUCSs);
+            addActionFunc("close_all",tr("Remove A&ll UCSs"), &LC_UCSListWidget::removeAllUCSs);
+
         }
     }
     contextMenu->exec(QCursor::pos());

@@ -36,7 +36,7 @@ public:
     ~LC_ActionDimOrdinate() override;
 protected:
     enum State {
-        SetFeaturePoint,
+        SetFeaturePoint = InitialActionStatus,
         SetLeaderEnd,
         SetText
     };
@@ -45,7 +45,7 @@ protected:
     std::unique_ptr<ActionData> m_actionData;
     State m_lastStatus = SetFeaturePoint;
 
-    void initFromGraphic(RS_Graphic* graphic) override;
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     bool doProcessCommand(int status, const QString& command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector& pos) override;
     void doTrigger() override;

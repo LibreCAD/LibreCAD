@@ -74,7 +74,6 @@ void RS_ActionBlocksCreate::doTrigger([[maybe_unused]]bool keepSelected) {
     redrawDrawing();
     setStatus(getStatus()+1); // clear mouse button hints
     updateMouseButtonHints();
-    m_graphicView->killSelectActions();
     finish(false);
 }
 

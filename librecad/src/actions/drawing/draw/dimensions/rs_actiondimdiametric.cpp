@@ -27,7 +27,7 @@
 // fixme - sand - possibility to define label inside/outside,
 // todo - think whether it's practical adding multiple dimensions to selected circles?
 RS_ActionDimDiametric::RS_ActionDimDiametric(LC_ActionContext *actionContext)
-        :LC_ActionCircleDimBase("Draw Diametric Dimensions", actionContext, RS2::ActionDimDiametric)
+        :LC_ActionCircleDimBase("Draw Diametric Dimensions", actionContext, RS2::EntityDimDiametric, RS2::ActionDimDiametric)
         , m_edata{std::make_unique<RS_DimDiametricData>()}{
     reset();
 }

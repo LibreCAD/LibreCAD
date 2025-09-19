@@ -79,7 +79,8 @@ void LC_ActionFactory::initActionGroupManager(LC_ActionGroupManager* agm) {
         {"ucs", tr("UCS"), tr("UCS operations"), ":/icons/set_ucs.lci"},
         {"widgets", tr("Widgets"), tr("Widgets management"), ":/icons/dockwidgets_bottom.lci", false},
         {"infoCursor", tr("InfoCursor"), tr("Informational Cursor"), ":/icons/info_cursor_enable.lci", false},
-        {"entity_layer", tr("Entity Layer"), tr("Entity's Layer"), ":/icons/info_cursor_enable.lci", false}
+        {"entity_layer", tr("Entity Layer"), tr("Entity's Layer"), ":/icons/layer_list.lci", false},
+        {"interactive_pick", tr("Interactive"), tr("Interactive Pick"), ":/icons/interactive_pick_point.lci", true}
     },agm);
 
     auto fileGroup = agm->getGroupByName("file");
@@ -92,19 +93,20 @@ void LC_ActionFactory::initActionGroupManager(LC_ActionGroupManager* agm) {
         }
     }
 
-    auto toolGroups = agm->toolGroups();
+    /*auto toolGroups = agm->toolGroups();
     for (auto actionGroup : toolGroups) {
         connect(actionGroup, &LC_ActionGroup::triggered, m_appWin, &QC_ApplicationWindow::relayAction);
-    }
+    }*/
 }
 
 void LC_ActionFactory::createEntityLayerActions(QMap<QString, QAction*>& map, LC_ActionGroup* group) {
     createActionHandlerActions(map, group,{
      {"EntityLayerActivate",     RS2::ActionLayerEntityActivate,          tr("Activate Entity's Layer"),           ":/icons/select_entity.lci"},
      {"EntityLayerView",         RS2::ActionLayerEntityToggleView,        tr("Hide Entity's Layer"),  ":/icons/not_visible.lci"},
+     {"EntityLayerHideOthers",   RS2::ActionLayerEntityHideOthers,        tr("Hide Other Layers than Entity's"),  ":/icons/not_visible_all.lci"},
      {"EntityLayerLock",         RS2::ActionLayerEntityToggleLock,        tr("Lock Entity's Layer"),        ":/icons/locked.lci"},
      {"EntityLayerConstruction", RS2::ActionLayerEntityToggleConstruction,tr("Toggle Entity's Layer Construction"),":/icons/construction_layer.lci"},
-     {"EntityLayerPrint",        RS2::ActionLayerEntityTogglePrint,           tr("Toggle Entity's Layer Printing"),     ":/icons/print.lci"}
+     {"EntityLayerPrint",        RS2::ActionLayerEntityTogglePrint,       tr("Toggle Entity's Layer Printing"),     ":/icons/print.lci"}
  });
 }
 
@@ -140,6 +142,7 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useT
     createEditActions(a_map, agm->getGroupByName("edit"));
 
     createEntityLayerActions(a_map, agm->getGroupByName("entity_layer"));
+    createInteractivePickActions(a_map, agm->getGroupByName("interactive_pick"));
 
     for (QAction* value: std::as_const(a_map)){
         if (value != nullptr) {
@@ -160,6 +163,7 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useT
     createWorkspacesActionsUncheckable(a_map, agm->getGroupByName("workspaces"));
     createWidgetActionsUncheckable(a_map, agm->getGroupByName("widgets"));
     createEditActionsUncheckable(a_map, agm->getGroupByName("edit"));
+    createDrawDimensionsUncheckable(a_map, agm->getGroupByName("dimension"));
 
     setupCreatedActions(a_map);
     setDefaultShortcuts(a_map, agm);
@@ -175,12 +179,6 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useT
     addActionsToMainWindow(a_map);
 
     prepareActionsToDisableInPrintPreview(m_appWin->m_actionsToDisableInPrintPreviewList, a_map);
-
-    // fixme - review why this action is not used, is it really necessary or may be removed?
-    // action = new QAction(tr("Regenerate Dimension Entities"), disable_group);
-//    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotToolRegenerateDimensions()));
-//    action->setObjectName("ToolRegenerateDimensions");
-//    a_map["ToolRegenerateDimensions"] = action;
 }
 
 void LC_ActionFactory::createDrawShapeActions(QMap<QString, QAction*>& map, QActionGroup* group) const {
@@ -218,8 +216,8 @@ void LC_ActionFactory::createDrawLineActions(QMap<QString, QAction*>& map, QActi
         {"DrawLineAngleRel",         RS2::ActionDrawLineAngleRel,        tr("Angle From Line"),        ":/icons/line_angle_rel.lci"},
         {"DrawLineOrthogonalRel",    RS2::ActionDrawLineOrthogonalRel,   tr("Orthogonal From Line"),   ":/icons/line_ortho_rel.lci"},
         {"DrawLineFromPointToLine",  RS2::ActionDrawLineFromPointToLine, tr("From Point To Line"),     ":/icons/line_to_ortho.lci"},
-        {"DrawLineMiddle",           RS2::ActionDrawLineMiddle,          tr("Middle Line"),            ":/icons/line_middle.lci"},
-        {"DrawCross",                RS2::ActionDrawCross,               tr("Cross"),                  ":/icons/cross_circle1.lci"},
+        {"DrawLineMiddle",           RS2::ActionDrawLineMiddle,          tr("Centerline"),            ":/icons/line_middle.lci"},
+        {"DrawCross",                RS2::ActionDrawCross,               tr("Center Mark"),              ":/icons/cross_circle1.lci"},
         {"DrawSliceDivideLine",      RS2::ActionDrawSliceDivideLine,     tr("Slice/Divide Line"),      ":/icons/slice_divide.lci"},
         {"DrawSliceDivideCircle",    RS2::ActionDrawSliceDivideCircle,   tr("Slice/Divide Circle"),    ":/icons/slice_divide_circle.lci"}
     });
@@ -258,9 +256,9 @@ void LC_ActionFactory::createDrawCircleActions(QMap<QString, QAction*>& map, QAc
         {"DrawCircle3P",       RS2::ActionDrawCircle3P,       tr("3 Points"),                      ":/icons/circle_3_points.lci"},
         {"DrawCircleParallel", RS2::ActionDrawCircleParallel, tr("&Concentric"),                   ":/icons/circle_concentric.lci"},
         {"DrawCircleInscribe", RS2::ActionDrawCircleInscribe, tr("Circle &Inscribed"),             ":/icons/circle_inscribed.lci"},
-        {"DrawCircleTan2",     RS2::ActionDrawCircleTan2,     tr("Tangential 2 Circles, Radius"),  ":/icons/circle_tangential_2circles_radius.lci"},
-        {"DrawCircleTan2_1P",  RS2::ActionDrawCircleTan2_1P,  tr("Tangential 2 Circles, 1 Point"), ":/icons/circle_tangential_2circles_point.lci"},
-        {"DrawCircleTan3",     RS2::ActionDrawCircleTan3,     tr("Tangential &3 Circles"),         ":/icons/circle_tangential_3entities.lci"},
+        {"DrawCircleTan2",     RS2::ActionDrawCircleTan2,     tr("Tangential 2 Entities, Radius"),  ":/icons/circle_tangential_2circles_radius.lci"},
+        {"DrawCircleTan2_1P",  RS2::ActionDrawCircleTan2_1P,  tr("Tangential 2 Entities, 1 Point"), ":/icons/circle_tangential_2circles_point.lci"},
+        {"DrawCircleTan3",     RS2::ActionDrawCircleTan3,     tr("Tangential &3 Entities"),         ":/icons/circle_tangential_3entities.lci"},
         {"DrawCircleTan1_2P",  RS2::ActionDrawCircleTan1_2P,  tr("Tangential, 2 P&oints"),         ":/icons/circle_tangential_2points.lci"}
     });
 }
@@ -277,7 +275,6 @@ void LC_ActionFactory::createDrawCurveActions(QMap<QString, QAction*>& map, QAct
         {"DrawArc2PHeight",        RS2::ActionDrawArc2PHeight,       tr("&2 Points, Height"),         ":/icons/arc_2p_height.lci"},
         {"DrawArcParallel",        RS2::ActionDrawArcParallel,       tr("&Concentric"),               ":/icons/arc_concentric.lci"},     // fixme - why this action is not in list?
         {"DrawArcTangential",      RS2::ActionDrawArcTangential,     tr("Arc &Tangential"),           ":/icons/arc_continuation.lci"}
-
     });
 }
 
@@ -349,10 +346,14 @@ void LC_ActionFactory::createDrawDimensionsActions(QMap<QString, QAction *> &map
         {"DimBaseline",       RS2::ActionDimBaseline,  tr("&Baseline"),   ":/icons/dim_baseline.lci"},
         {"DimContinue",       RS2::ActionDimContinue,  tr("&Continue"),   ":/icons/dim_continue.lci"},
         {"DimOrdinate",       RS2::ActionDimOrdinate,  tr("&Ordinate"),   ":/icons/dim_ordinate.lci"},
-        {"DimOrdinateForBase",RS2::ActionDimOrdinateSelectSameOrigin,   tr("Select Ordinates by base"),  ":/icons/dim_ordinate_by_origin.lci"},
-        {"DimOrdinateReBase",RS2::ActionDimOrdinateRebase,   tr("Ordinates Re-base"),  ":/icons/dim_ordinate_rebase.lci"}
+        {"DimOrdinateForBase",RS2::ActionDimOrdByOriginSelect,  tr("Select Ordinates by base"),  ":/icons/dim_ordinate_by_origin.lci"},
+        {"DimOrdinateReBase", RS2::ActionDimOrdRebase, tr("Ordinates Re-base"),  ":/icons/dim_ordinate_rebase.lci"},
+        {"GTDFeatureFrame",   RS2::ActionGTDFCFrame,   tr("Feature Control Frame"),  ":/icons/gdt_featurecontrolframe.lci"},
+        {"DimPickApply",      RS2::ActionDimStyleApply,tr("Copy Style"),  ":/icons/dim_apply_style.lci"},
+        {"DimModify",         RS2::ActionDimModify,    tr("Modify Style"),":/icons/dim_modify_style.lci"}
     });
 }
+
 
 void LC_ActionFactory::createModifyActions(QMap<QString, QAction *> &map, QActionGroup *group) const {
     /* action = new QAction(tr("Delete Freehand"), agm->modify);
@@ -492,7 +493,8 @@ void LC_ActionFactory::createOrderActionsUncheckable(QMap<QString, QAction *> &m
 
 void LC_ActionFactory::createInfoActions(QMap<QString, QAction *> &map, QActionGroup *group) const {
     createActionHandlerActions(map, group, {
-        {"InfoInside",       RS2::ActionInfoInside,           tr("Point inside contour"),               ""},
+        // {"InfoInside",       RS2::ActionInfoInside,           tr("Point inside contour"),               ""},
+        {"InfoPoint",        RS2::ActionInfoPoint,            tr("&Point Coordinates"),                 ":/icons/info_point.lci"},
         {"InfoDist",         RS2::ActionInfoDistPoint2Point,  tr("&Distance Point to Point"),           ":/icons/distance_point_to_point.lci"},
         {"InfoDist2",        RS2::ActionInfoDistEntity2Point, tr("Distance &Entity to Point"),          ":/icons/distance_entity_to_point.lci"},
         {"InfoDist3",        RS2::ActionInfoDistPoint2Entity, tr("Distance &Point to Entity"),          ":/icons/distance_point_to_entity.lci"},
@@ -510,7 +512,7 @@ void LC_ActionFactory::createViewActions(QMap<QString, QAction*>& map, QActionGr
         {"ZoomWindow",RS2::ActionZoomWindow, tr("&Window Zoom"), ":/icons/zoom_window.lci","zoom-select"}});
 
     createMainWindowActions(map, group, {
-        {"Fullscreen",       &QC_ApplicationWindow::toggleFullscreen,     tr("&Fullscreen")},
+        {"Fullscreen",       &QC_ApplicationWindow::toggleFullscreen,     tr("&Fullscreen"),           ":/icons/fullscreen.lci"},
         {"ViewGrid",         &QC_ApplicationWindow::slotViewGrid,         tr("&Grid"),                 ":/icons/grid.lci"},
         {"ViewDraft",        &QC_ApplicationWindow::slotViewDraft,        tr("&Draft"),                ":/icons/draft.lci"},
         {"ViewLinesDraft",   &QC_ApplicationWindow::slotViewDraftLines,   tr("&Draft Lines"),          ":/icons/draftLineWidth.lci"},
@@ -536,8 +538,8 @@ void LC_ActionFactory::createLayerActionsUncheckable(QMap<QString, QAction *> &m
         {"LayersToggleView",         RS2::ActionLayersToggleView,         tr("&Toggle Layer Visibility"),   ":/icons/visible.lci"},
         {"LayersTogglePrint",        RS2::ActionLayersTogglePrint,        tr("Toggle Layer &Print"),        ":/icons/print.lci"},
         {"LayersToggleConstruction", RS2::ActionLayersToggleConstruction, tr("Toggle &Construction Layer"), ":/icons/construction_layer.lci"},
-        {"LayersExportSelected",     RS2::ActionLayersExportSelected,     tr("&Export Selected Layer(s)")},
-        {"LayersExportVisible",      RS2::ActionLayersExportVisible,      tr("Export &Visible Layer(s)")}
+        {"LayersExportSelected",     RS2::ActionLayersExportSelected,     tr("&Export Selected Layer(s)"),  ":/icons/layer_export_selected.lci"},
+        {"LayersExportVisible",      RS2::ActionLayersExportVisible,      tr("Export &Visible Layer(s)"),   ":/icons/layer_export_visible.lci"}
     });
 }
 
@@ -612,8 +614,8 @@ void LC_ActionFactory::createWidgetActions(QMap<QString, QAction *> &map, QActio
 void LC_ActionFactory::createWidgetActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
     createMainWindowActions(map, group, {
         {"RedockWidgets",        &QC_ApplicationWindow::slotRedockWidgets,    tr("Re-dock Widgets")},
-        {"InvokeMenuCreator",    &QC_ApplicationWindow::invokeMenuCreator,    tr("Menu Creator"),    ":/icons/create_menu.lci"},
-        {"InvokeToolbarCreator", &QC_ApplicationWindow::invokeToolbarCreator, tr("Toolbar Creator"), ":/icons/create_toolbar.lci"}
+        {"InvokeMenuCreator",    &QC_ApplicationWindow::invokeMenuCreator,    tr("Custom Menu Creator"),    ":/icons/create_menu.lci"},
+        {"InvokeToolbarCreator", &QC_ApplicationWindow::invokeToolbarCreator, tr("Custom Toolbar Creator"), ":/icons/create_toolbar.lci"}
     });
 }
 
@@ -657,8 +659,28 @@ void LC_ActionFactory::createEditActionsUncheckable(QMap<QString, QAction *> &ma
     createActionHandlerActions(map, group, {
         {"EditUndo",           RS2::ActionEditUndo,           tr("&Undo"),              ":/icons/undo.lci",            "edit-undo"},
         {"EditRedo",           RS2::ActionEditRedo,           tr("&Redo"),              ":/icons/redo.lci",            "edit-redo"},
-        {"ModifyDeleteQuick",  RS2::ActionModifyDeleteQuick,       tr("&Delete Selected"),   ":/icons/delete.lci"},
+        {"ModifyDeleteQuick",  RS2::ActionModifyDeleteQuick,  tr("&Delete Selected"),   ":/icons/delete.lci"},
         {"EditKillAllActions", RS2::ActionEditKillAllActions, tr("&Selection Pointer"), ":/icons/cursor.lci",          "go-previous-view"}
+    });
+}
+void LC_ActionFactory::createDrawDimensionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) const {
+    createActionHandlerActions(map, group, {
+       {"DimRegenerate",     RS2::ActionDimRegenerate,tr("Regenerate Dimensions"),  ":/icons/dim_regenerate.lci"}
+    });
+
+    auto dimSettingsAction = justCreateAction(map,"DimStyles",tr( "&Dimension Styles"),
+       ":/icons/dim_style_manager.lci", "", group);
+
+    connect(dimSettingsAction, &QAction::triggered, this, [this](bool){
+        m_appWin->changeDrawingOptions(3);
+    });
+}
+
+void LC_ActionFactory::createInteractivePickActions(QMap<QString, QAction *> &map, QActionGroup *group) const {
+    createActionHandlerActions(map, group, {
+        {"PickPoint",    RS2::ActionInteractivePickPoint,  tr("Pick Point"),   ":/icons/interactive_pick_point.lci"},
+        {"PickDistance", RS2::ActionInteractivePickLength, tr("Pick Distance"),":/icons/interactive_pick_distance.lci"},
+        {"PickAngle",    RS2::ActionInteractivePickAngle,  tr("Pick Angle"),   ":/icons/interactive_pick_angle.lci"}
     });
 }
 
@@ -708,6 +730,10 @@ void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
 
     connect(map["InfoCursorCatchedEntity"], &QAction::triggered, infoCursorSettingsManager, &LC_InfoCursorSettingsManager::slotInfoCursorSetting);
     connect(infoCursorSettingsManager, &LC_InfoCursorSettingsManager::showInfoCursorSettingChanged, map["InfoCursorCatchedEntity"], &QAction::setEnabled);
+
+    // with this setting, the action's icon will not be set as current item in action's options bar and status bar (in QC_ApplicationWindow::relayAction())
+    map["DimStyles"]->setProperty("_SetAsCurrentActionInView", false);
+    map["LockRelativeZero"]->setProperty("_SetAsCurrentActionInView", false);
 }
 
 void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, LC_ActionGroupManager* agm) {
@@ -717,7 +743,7 @@ void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, LC_Acti
         commandLineShortcuts << QKeySequence(Qt::Key_Space);
 
     std::vector<LC_ShortcutInfo> shortcutsList = {
-        {"ModifyRevertDirection", QKeySequence(tr("Ctrl+R"))},
+        {"ModifyRevertDirection", QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_R)},
         {"ModifyDuplicate",QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_D)},
         {"OrderBottom", QKeySequence(Qt::Key_End)},
         {"OrderLower", QKeySequence(Qt::Key_PageDown)},
@@ -776,7 +802,10 @@ void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, LC_Acti
 void LC_ActionFactory::markNotEditableActionsShortcuts(const QMap<QString, QAction *> &map) {
     // placeholder for exclusion of some actions (by name) from editing in shortcuts mapping dialog
     makeActionsShortcutsNonEditable(map, {
-        "RestrictNothing"
+        "RestrictNothing",
+        "PickPoint",
+        "PickDistance",
+        "PickAngle"
     });
 }
 
@@ -931,7 +960,13 @@ void LC_ActionFactory::fillActionLists(QMap<QString, QAction *> &map){
                         "DimLeader",
                         "DimOrdinate",
                         "DimOrdinateForBase",
-                        "DimOrdinateReBase"
+                        "DimOrdinateReBase",
+        // fixme - sand - restore as GDT will be supported
+                        // "GTDFeatureFrame",
+                        // "DimModify",
+                        "DimPickApply",
+                        "DimRegenerate",
+                        "DimStyles"
                     }, map);
 
     fillActionsList(other_drawing_actions, {
@@ -980,6 +1015,7 @@ void LC_ActionFactory::fillActionLists(QMap<QString, QAction *> &map){
                     }, map);
 
     fillActionsList(info_actions, {
+                        "InfoPoint",
                         "InfoDist",
                         "InfoDist2",
                         "InfoDist3",
@@ -1031,6 +1067,7 @@ void LC_ActionFactory::fillActionLists(QMap<QString, QAction *> &map){
     fillActionsList(entity_layer_actions,{
                         "EntityLayerActivate",
                         "EntityLayerView",
+                        "EntityLayerHideOthers",
                         "EntityLayerLock",
                         "EntityLayerConstruction",
                         "EntityLayerPrint"

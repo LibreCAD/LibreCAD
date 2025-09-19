@@ -592,6 +592,12 @@ void LC_AbstractActionDrawRectangle::setUcsAngleDegrees(double ucsBasisAngleDegr
     drawPreviewForLastPoint();
 }
 
+void LC_AbstractActionDrawRectangle::setAngleRadians(double angleRad) {
+    doSetAngle(angleRad);
+    setBaseAngleFixed(true);
+    drawPreviewForLastPoint();
+}
+
 void LC_AbstractActionDrawRectangle::doSetAngle(double value) {
     m_ucsBasisBaseAngleRad = value;
 }

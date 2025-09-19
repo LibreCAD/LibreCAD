@@ -59,6 +59,9 @@ public:
     void invertSelection();
     void selectWindow(enum RS2::EntityType typeToSelect, const RS_Vector& v1, const RS_Vector& v2,bool select=true, bool cross=false);
     void selectWindow(const QList<RS2::EntityType> &typesToSelect, const RS_Vector& v1, const RS_Vector& v2,bool select=true, bool cross=false);
+    void selectIntersected(RS_Entity* entity, bool select);
+    void selectIntersectedContainer(RS_Entity* entity, bool select);
+    void selectIntersectedAtomic(RS_Entity* entity, bool select);
     void deselectWindow(enum RS2::EntityType typeToSelect,const RS_Vector& v1, const RS_Vector& v2) {selectWindow(typeToSelect,v1, v2, false);}
     void selectIntersected(const RS_Vector& v1, const RS_Vector& v2,bool select=true);
     void deselectIntersected(const RS_Vector& v1, const RS_Vector& v2) {selectIntersected(v1, v2, false);}
@@ -67,9 +70,9 @@ public:
     void selectLayer(const QString& layerName, bool select=true);
     void deselectLayer(QString& layerName) {selectLayer(layerName, false);}
 protected:
-    RS_EntityContainer* container = nullptr;
-    RS_Graphic* graphic = nullptr;
-    LC_GraphicViewport* graphicView = nullptr;
+    RS_EntityContainer* m_container = nullptr;
+    RS_Graphic* m_graphic = nullptr;
+    LC_GraphicViewport* m_graphicView = nullptr;
 };
 
 #endif

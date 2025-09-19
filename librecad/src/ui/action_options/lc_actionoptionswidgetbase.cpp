@@ -22,6 +22,14 @@
 
 #include "lc_actionoptionswidgetbase.h"
 
+#include <QSettings>
+#include <QToolButton>
+
+#include "lc_actioncontext.h"
+#include "rs_actioninterface.h"
+#include "rs_debug.h"
+#include "rs_graphicview.h"
+
 LC_ActionOptionsWidgetBase::LC_ActionOptionsWidgetBase(
     RS2::ActionType actionType, const QString &optionsGroupName, const QString &optionNamePrefix):
     LC_ActionOptionsWidget(nullptr){

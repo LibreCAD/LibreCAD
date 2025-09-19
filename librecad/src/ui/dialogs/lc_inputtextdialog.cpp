@@ -46,6 +46,8 @@ QString LC_InputTextDialog::getText(QWidget *parent, const QString &title, const
     dlg.ui->cbInput->setCurrentText(text);
     dlg.ui->cbInput->addItems(options);
 
+    dlg.ui->cbInput->setFocus();
+
     if (dlg.exec() == Accepted){
         *ok = true;
         return dlg.ui->cbInput->currentText();

@@ -135,6 +135,30 @@ void LC_ActionEditPasteTransform::updateMouseButtonHints() {
     }
 }
 
+bool LC_ActionEditPasteTransform::doUpdateAngleByInteractiveInput(const QString& tag, double angle) {
+    if (tag == "angle") {
+        setAngle(angle);
+        return true;
+    }
+    else if (tag == "arrayAngle") {
+        setArrayAngle(angle);
+        return true;
+    }
+    return false;
+}
+
+bool LC_ActionEditPasteTransform::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "spacingX") {
+        setArraySpacingX(distance);
+        return true;
+    }
+    else if (tag == "spacingY") {
+        setArraySpacingY(distance);
+        return true;
+    }
+    return false;
+}
+
 double LC_ActionEditPasteTransform::getAngle() const {return m_pasteData-> angle;}
 void LC_ActionEditPasteTransform::setAngle(double angle) {m_pasteData->angle = angle;}
 double LC_ActionEditPasteTransform::getFactor() const {return m_pasteData->factor;}

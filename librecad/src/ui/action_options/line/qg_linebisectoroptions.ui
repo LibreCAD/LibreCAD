@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>187</width>
+    <width>306</width>
     <height>24</height>
    </rect>
   </property>
@@ -24,7 +24,7 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>187</width>
+    <width>16777215</width>
     <height>24</height>
    </size>
   </property>
@@ -74,6 +74,20 @@
     </widget>
    </item>
    <item>
+    <widget class="QToolButton" name="tbPickLength">
+     <property name="toolTip">
+      <string>Pick line length from drawing</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_distance.lci</normaloff>:/icons/interactive_pick_distance.lci</iconset>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QLabel" name="lNumber">
      <property name="text">
       <string>Number:</string>
@@ -109,7 +123,9 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../../../../res/icons/icons.qrc"/>
+ </resources>
  <connections/>
  <slots>
   <slot>updateLength(QString)</slot>

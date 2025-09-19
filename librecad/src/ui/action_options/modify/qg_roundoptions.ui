@@ -96,10 +96,26 @@
      </property>
     </widget>
    </item>
+   <item>
+    <widget class="QToolButton" name="tbPickRadius">
+     <property name="toolTip">
+      <string>Pick radius from drawing</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_distance.lci</normaloff>:/icons/interactive_pick_distance.lci</iconset>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../../../../res/icons/icons.qrc"/>
+ </resources>
  <connections/>
  <slots>
   <slot>updateData()</slot>

@@ -33,7 +33,8 @@ class LC_CADDockWidget : public QDockWidget{
     Q_OBJECT
 public:
     LC_CADDockWidget(QWidget* parent);
-    void add_actions(const QList<QAction*>& list, int columns, int icon_size, bool flatButton);
+    void addSpacers(QGridLayout* layout, int columns);
+    void addActions(const QList<QAction*>& list, int columns, int icon_size, bool flatButton);
 private:
     QFrame* m_frame = nullptr;
     QGridLayout* m_gridLayout = nullptr;

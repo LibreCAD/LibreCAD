@@ -42,31 +42,30 @@ public:
      * Action states
      */
     enum {
-        SetLine,
+        SetLine = InitialActionStatus,
         SetTickLength
     };
 
     LC_ActionDrawLineAngleRel(LC_ActionContext *actionContext, double angle = 0.0, bool fixedAngle = false);
     ~LC_ActionDrawLineAngleRel() override;
-    void setLineSnapMode(int mode) {  m_lineSnapMode = mode;};
-    int getLineSnapMode() const{return m_lineSnapMode;};
-    void setTickSnapMode(int mode) {m_tickSnapMode = mode;};
-    int getTickSnapMode() const {return m_tickSnapMode;};
-    void setTickAngle(double a){ m_tickAngleDegrees = a;};
-    double getTickAngle() const {return m_tickAngleDegrees;};
-    void setTickLength(double len){m_tickLength = len;};
-    double getTickLength() const {return m_tickLength;};
-    void setTickOffset(double o){m_tickOffset = o;};
-    double getTickOffset() const {return m_tickOffset;};
-    void setSnapDistance(double d){m_snapDistance = d;};
-    double getSnapDistance() const {return m_snapDistance;};
-
-    bool isAngleRelative() const{return m_relativeAngle;};
-    void setAngleIsRelative(bool value){m_relativeAngle = value;};
-    bool isLengthFree() const{return m_lengthIsFree;};
-    void setLengthIsFree(bool value){m_lengthIsFree = value;};
-    bool isDivideLine() const{return m_divideLine;};
-    void setDivideLine(bool value){m_divideLine = value;};
+    void setLineSnapMode(int mode) {  m_lineSnapMode = mode;}
+    int getLineSnapMode() const{return m_lineSnapMode;}
+    void setTickSnapMode(int mode) {m_tickSnapMode = mode;}
+    int getTickSnapMode() const {return m_tickSnapMode;}
+    void setTickAngleDegrees(double a){ m_tickAngleDegrees = a;}
+    double getTickAngleDegrees() const {return m_tickAngleDegrees;}
+    void setTickLength(double len){m_tickLength = len;}
+    double getTickLength() const {return m_tickLength;}
+    void setTickOffset(double o){m_tickOffset = o;}
+    double getTickOffset() const {return m_tickOffset;}
+    void setSnapDistance(double d){m_snapDistance = d;}
+    double getSnapDistance() const {return m_snapDistance;}
+    bool isAngleRelative() const{return m_relativeAngle;}
+    void setAngleIsRelative(bool value){m_relativeAngle = value;}
+    bool isLengthFree() const{return m_lengthIsFree;}
+    void setLengthIsFree(bool value){m_lengthIsFree = value;}
+    bool isDivideLine() const{return m_divideLine;}
+    void setDivideLine(bool value){m_divideLine = value;}
 private:
     /**
      * Controls in which point of original line snap is performed
@@ -128,6 +127,7 @@ private:
     RS_Vector obtainLineSnapPointForMode(RS_Line* targetLine, RS_Vector& snap) const;
     TickData* prepareLineData(RS_Line* targetLine, const RS_Vector& tickSnapPosition, const RS_Vector& tickEndPosition, bool alternateAngle);
 protected:
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;
@@ -141,7 +141,10 @@ protected:
     void divideOriginalLine(TickData *pData, QList<RS_Entity *> &list);
     bool isSetActivePenAndLayerOnTrigger() override;
     void doFinish(bool updateTB) override;
+    void setLine(RS_Entity* en, const RS_Vector& snapPoint);
     void updateMouseButtonHints() override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 
 #endif // LC_ACTIONDRAWLINEANGLEREL_H

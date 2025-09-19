@@ -45,12 +45,17 @@ void RS_ActionModifyCut::init(int status){
     RS_PreviewActionInterface::init(status);
 }
 
+void RS_ActionModifyCut::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
+    if (contextEntity->trimmable()) {
+        m_cutEntity = contextEntity;
+        setStatus(SetCutCoord);
+    }
+}
+
 void RS_ActionModifyCut::doTrigger() {
     RS_DEBUG->print("RS_ActionModifyCut::trigger()");
 
-    if (m_cutEntity && m_cutEntity->isAtomic() && m_cutCoord->valid &&
-        m_cutEntity->isPointOnEntity(*m_cutCoord)){
-
+    if (isAtomic(m_cutEntity) && m_cutCoord->valid && m_cutEntity->isPointOnEntity(*m_cutCoord)){
         m_cutEntity->setHighlighted(false);
 
         RS_Modification m(*m_container, m_viewport);

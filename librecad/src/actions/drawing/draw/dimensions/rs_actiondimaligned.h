@@ -42,7 +42,7 @@ class RS_ActionDimAligned:public LC_ActionDimLinearBase {
 public:
     RS_ActionDimAligned(LC_ActionContext *actionContext);
     ~RS_ActionDimAligned() override;
-    void preparePreview() override;
+    void preparePreview(bool alternativeMode) override;
     QStringList getAvailableCommands() override;
 protected:
 /**
@@ -57,7 +57,7 @@ protected:
     RS_Entity *createDim(RS_EntityContainer* parent) override;
     RS_Vector getExtensionPoint1() override;
     RS_Vector getExtensionPoint2() override;
-    double getDimAngle() override;
+    double getDimAngle(bool alternateMode) override;
     bool doProcessCommand(int status, const QString &command) override;
 };
 

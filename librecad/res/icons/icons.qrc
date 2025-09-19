@@ -350,5 +350,24 @@
         <file alias="ucs_set_by_dimordinate.lci">ucs_set_by_dimordinate.svg</file>
         <file alias="dim_ordinate_by_origin.lci">dim_ordinate_by_origin.svg</file>
         <file alias="dim_ordinate_rebase.lci">dim_ordinate_rebase.svg</file>
+        <file alias="gdt_featurecontrolframe.lci">gdt_featurecontrolframe.svg</file>
+        <file alias="dim_style_manager.lci">dim_style_manager.svg</file>
+        <file alias="dim_default.lci">dim_default.svg</file>
+        <file alias="ucs_save.lci">ucs_save.svg</file>
+        <file alias="nview_update.lci">nview_update.svg</file>
+        <file alias="layer_export_selected.lci">layer_export_selected.svg</file>
+        <file alias="layer_export_visible.lci">layer_export_visible.svg</file>
+        <file alias="layer_export_single.lci">layer_export_single.svg</file>
+        <file alias="dim_apply_style.lci">dim_apply_style.svg</file>
+        <file alias="dim_regenerate.lci">dim_regenerate.svg</file>
+        <file alias="dim_modify_style.lci">dim_modify_style.svg</file>
+        <file alias="layer_list.lci">layer_list.svg</file>
+        <file alias="interactive_pick_distance.lci">interactive_pick_distance.svg</file>
+        <file alias="interactive_pick_point.lci">interactive_pick_point.svg</file>
+        <file alias="interactive_pick_angle.lci">interactive_pick_angle.svg</file>
+        <file alias="info_point.lci">info_point.svg</file>
+        <file alias="ui_corner_bottom.lci">ui_corner_bottom.svg</file>
+        <file alias="ui_corner_top.lci">ui_corner_top.svg</file>
+        <file alias="fullscreen.lci">fullscreen.svg</file>
     </qresource>
 </RCC>

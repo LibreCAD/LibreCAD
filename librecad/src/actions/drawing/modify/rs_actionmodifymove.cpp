@@ -193,7 +193,8 @@ void RS_ActionModifyMove::updateMouseButtonHintsForSelected(int status) {
 }
 
 void RS_ActionModifyMove::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel(tr("Select to move (Enter to complete)"),  MOD_SHIFT_AND_CTRL(tr("Select contour"),tr("Move immediately after selection")));
+    updateMouseWidgetTRCancel(tr("Select to move (Enter to complete)"),
+        MOD_SHIFT_AND_CTRL(tr("Select contour"),tr("Move immediately after selection")));
 }
 
 RS2::CursorType RS_ActionModifyMove::doGetMouseCursorSelected([[maybe_unused]]int status) {

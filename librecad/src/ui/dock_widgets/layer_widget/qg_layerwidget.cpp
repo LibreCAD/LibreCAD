@@ -596,8 +596,7 @@ void QG_LayerWidget::setGraphicView(RS_GraphicView *gview){
         auto doc = gview->getContainer();
         bool showByBlock = doc->rtti() == RS2::EntityBlock;
         if (showByBlock) {
-            // fixme - sand - files - RESTORE!
-            setLayerList(nullptr, false);
+            setLayerList(gview->getGraphic(true)->getLayerList(), false);
         }
         else {
             auto layerList = doc->getGraphic()->getLayerList();

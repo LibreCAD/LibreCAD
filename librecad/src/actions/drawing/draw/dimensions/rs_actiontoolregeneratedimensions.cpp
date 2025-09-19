@@ -25,13 +25,14 @@
 **********************************************************************/
 #include "rs_actiontoolregeneratedimensions.h"
 
+#include <QApplication>
+
 #include "rs_debug.h"
 #include "rs_dimension.h"
 #include "rs_information.h"
 
-// fixme - review
 RS_ActionToolRegenerateDimensions::RS_ActionToolRegenerateDimensions(LC_ActionContext *actionContext)
-        :RS_ActionInterface("Tool Regen Dim", actionContext, RS2::ActionToolRegenerateDimensions) {}
+        :RS_ActionInterface("Regen Dims", actionContext, RS2::ActionDimRegenerate) {}
 
 void RS_ActionToolRegenerateDimensions::init(int status) {
     RS_ActionInterface::init(status);
@@ -41,8 +42,11 @@ void RS_ActionToolRegenerateDimensions::init(int status) {
 void RS_ActionToolRegenerateDimensions::trigger() {
     RS_DEBUG->print("RS_ActionToolRegenerateDimensions::trigger()");
 
-    int num = 0;
-    for(auto e: *m_container){ // fixme - iteration over all entities in container
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+    // fixme - sand - should we use autoText there? Is options needed for autotext? review this later on dims
+    int updatedDimensionsCount = m_container->updateDimensions(false);
+    QApplication::restoreOverrideCursor();
+    /*for(auto e: *m_container){ // fixme - iteration over all entities in container
 
         if (RS_Information::isDimension(e->rtti()) && e->isVisible()) {
             num++;
@@ -52,11 +56,13 @@ void RS_ActionToolRegenerateDimensions::trigger() {
             ((RS_Dimension*)e)->updateDim(true);
         }
     }
+    */
 
-    if (num>0) {
+    if (updatedDimensionsCount > 0) {
         redrawDrawing();
-        commandMessage(tr("Regenerated %1 dimension entities").arg(num));
-    } else {
+        commandMessage(tr("Regenerated %1 dimension entities").arg(updatedDimensionsCount));
+    }
+    else {
         commandMessage(tr("No dimension entities found"));
     }
     finish(false);

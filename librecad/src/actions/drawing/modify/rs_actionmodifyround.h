@@ -30,6 +30,7 @@
 
 #include "rs_previewactioninterface.h"
 
+class RS_AtomicEntity;
 struct RS_RoundData;
 /**
  * This action class can handle user events to round corners.
@@ -60,13 +61,14 @@ protected:
         SetTrim    /**< Setting trim flag in command line. */
     };
 
-    RS_Entity *m_entity1 = nullptr;
-    RS_Entity *m_entity2 = nullptr;
+    RS_AtomicEntity *m_entity1 = nullptr;
+    RS_AtomicEntity *m_entity2 = nullptr;
     struct RoundActionData;
     std::unique_ptr<RoundActionData> m_actionData;
     /** Last status before entering angle. */
     Status m_lastStatus = SetEntity1;
 
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     bool removeOldFillet(RS_Entity *e, const bool &isPolyline);
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void previewEntityModifications(const RS_Entity *original, RS_Entity *modified, RS_Vector& roundPoint, int mode);
@@ -77,5 +79,6 @@ protected:
     void updateMouseButtonHints() override;
     void doTrigger() override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 #endif

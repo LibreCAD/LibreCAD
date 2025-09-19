@@ -670,3 +670,15 @@ void LC_ActionDrawStar::setSymmetric(bool value){
 LC_ActionOptionsWidget* LC_ActionDrawStar::createOptionsWidget(){
     return new LC_StarOptions();
 }
+
+bool LC_ActionDrawStar::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "radiusInner") {
+        setRadiusInner(distance);
+        return true;
+    }
+    if (tag == "radiusOuter") {
+        setRadiusOuter(distance);
+        return true;
+    }
+    return false;
+}

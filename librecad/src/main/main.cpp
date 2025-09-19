@@ -44,6 +44,9 @@
 #include "main.h"
 
 #include <QDir>
+#include <QPushButton>
+#include <QTimer>
+#include <QToolBar>
 
 #include "lc_iconcolorsoptions.h"
 #include "qc_applicationwindow.h"
@@ -53,6 +56,7 @@
 #include "rs_patternlist.h"
 #include "rs_settings.h"
 #include "rs_system.h"
+
 
 // fixme - sand - files - complete refactoring
 namespace
@@ -224,12 +228,21 @@ bool setupDebugLevel(char level) {
     return true;
 }
 
+
+#define QUICK_TEST_
+
 /**
  * Main. Creates Application window.
  */
  // fixme - sand - refactor and split to several specialized functions
 #ifndef BUILD_TESTS
+
 int main(int argc, char** argv) {
+
+#ifdef QUICK_TEST
+
+#    else
+
     QT_REQUIRE_VERSION(argc, argv, "5.2.1");
 
     // Check first two arguments in order to decide if we want to run librecad
@@ -262,6 +275,11 @@ int main(int argc, char** argv) {
     QCoreApplication::setApplicationName("LibreCAD");
     QCoreApplication::setApplicationVersion(XSTR(LC_VERSION));
 
+    // fixme - sand - NEED TO CHECK WHERE lc_svgicons.so is located under linux and mac!!! That's tested for Windows
+    auto appDir = app.applicationDirPath();
+    auto inconEnginesDir = appDir + "/iconengines";
+    app.addLibraryPath(inconEnginesDir);
+
     RS_Settings::init(app.organizationName(), app.applicationName());
 
     QGuiApplication::setDesktopFileName("librecad");
@@ -270,14 +288,12 @@ int main(int argc, char** argv) {
 
     bool first_load = LC_GET_ONE_BOOL("Startup", "FirstLoad", true);
 
-
     bool allowOptions=true;
     QList<int> argClean;
-    for (int i=0; i<argc; i++)
-    {
+
+    for (int i=0; i<argc; i++)   {
         QString argstr(argv[i]);
-        if(allowOptions&&QString::compare("--", argstr)==0)
-        {
+        if(allowOptions&&QString::compare("--", argstr)==0){
             allowOptions=false;
             continue;
         }
@@ -393,6 +409,7 @@ int main(int argc, char** argv) {
     setlocale(LC_NUMERIC, "C");
 
     // parse command line arguments that might not need a launched program:
+    // fixme - sand - add support of skipping of loading via cmdline flag
     QStringList fileList = handleArgs(argc, argv, argClean);
     loadFilesOnStartup(splash.get(), appWin, app, fileList);
 
@@ -418,6 +435,7 @@ int main(int argc, char** argv) {
     LC_GROUP_END();
 
     return execApplication(app);
+#    endif
 }
 #endif // BUILD_TESTS
 
@@ -431,28 +449,30 @@ QStringList handleArgs(int argc, char** argv, const QList<int>& argClean){
     QStringList ret;
 
     bool doexit = false;
-
-    for (int i=1; i<argc; i++)    {
-        if(argClean.indexOf(i)>=0) continue;
-        if (!QString(argv[i]).startsWith("-"))
-        {
-            QString fname = QDir::toNativeSeparators(
-            QFileInfo(QFile::decodeName(argv[i])).absoluteFilePath());
+    for (int i = 1; i < argc; i++) {
+        if (argClean.indexOf(i) >= 0) {
+            continue;
+        }
+        auto localFileName = argv[i];
+        if (!QString(localFileName).startsWith("-")) {
+            auto decodedName = QFile::decodeName(localFileName);
+            QFileInfo fileInfo(decodedName);
+            auto absolutePath = fileInfo.absoluteFilePath();
+            QString fname = QDir::toNativeSeparators(absolutePath);
             ret.append(fname);
         }
-        else if (QString(argv[i])=="--exit")        {
+        else if (QString(localFileName) == "--exit") {
             doexit = true;
         }
     }
-    if (doexit)    {
+    if (doexit) {
         exit(0);
     }
     RS_DEBUG->print("main: handling args: OK");
     return ret;
 }
 
-QString LCReleaseLabel()
-{
+QString LCReleaseLabel(){
     QString version{XSTR(LC_VERSION)};
     QString label;
     const std::map<QString, QString> labelMap = {

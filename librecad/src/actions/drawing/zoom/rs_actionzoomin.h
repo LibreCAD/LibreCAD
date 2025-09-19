@@ -49,7 +49,7 @@ public:
 
 	void init(int status) override;
 	void trigger() override;
-
+    bool isSupportsPredecessorAction() override {return true;}
 protected:
     double m_zoomFactor = 1.;
     RS2::ZoomDirection m_direction = RS2::In;

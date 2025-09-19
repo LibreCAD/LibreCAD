@@ -50,6 +50,7 @@ public:
     LC_ActionSnapMiddleManual(LC_ActionContext *actionContext);
     ~LC_ActionSnapMiddleManual() override;
     void init(int status)   override;
+    bool isSupportsPredecessorAction() override {return true;}
 protected:
     /* Action states */
     enum Status

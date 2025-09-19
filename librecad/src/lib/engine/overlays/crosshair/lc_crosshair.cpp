@@ -81,6 +81,10 @@ double LC_Crosshair::drawIndicator(RS_Painter* painter, const RS_Vector& uiPos)
 void LC_Crosshair::draw(RS_Painter *painter) {
     RS_Vector uiCoord = painter->toGui(wcsPos);
 
+    if (indicatorShape != NoShape) {
+        painter->setPen(shapePen);
+    }
+
     double offset = drawIndicator(painter, uiCoord);
 
     LC_GraphicViewport* viewport = painter->getViewPort();
@@ -136,6 +140,8 @@ void LC_Crosshair::draw(RS_Painter *painter) {
             drawCrosshairLines(painter, uiCoord, offset, p1, p2, p3, p4);
             break;
         }
+        default:
+            break;
     }
 }
 

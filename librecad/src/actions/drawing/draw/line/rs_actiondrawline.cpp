@@ -34,8 +34,7 @@
 #include "rs_actioneditundo.h"
 #include "qg_graphicview.h"
 
-struct RS_ActionDrawLine::History
-{
+struct RS_ActionDrawLine::History{
     History() = default;
 
     explicit History(RS_ActionDrawLine::HistoryAction action,
@@ -53,8 +52,7 @@ struct RS_ActionDrawLine::History
     int             startOffset = 0;///< offset to start point for close method
 };
 
-struct RS_ActionDrawLine::ActionData
-{
+struct RS_ActionDrawLine::ActionData{
     /// Line data defined so far
     RS_LineData data;
     /// Point history (undo/redo pointer)
@@ -70,15 +68,13 @@ struct RS_ActionDrawLine::ActionData
     size_t index(int offset = 0);
 };
 
-size_t RS_ActionDrawLine::ActionData::index(int offset /*= 0*/)
-{
+size_t RS_ActionDrawLine::ActionData::index(int offset /*= 0*/){
     return static_cast<size_t>( std::max( 0, historyIndex + offset));
 }
 
 RS_ActionDrawLine::RS_ActionDrawLine(LC_ActionContext *actionContext) :
     RS_PreviewActionInterface( "Draw lines", actionContext, RS2::ActionDrawLine),
-    m_actionData(std::make_unique<ActionData>())
-{
+    m_actionData(std::make_unique<ActionData>()){
     RS_DEBUG->print("RS_ActionDrawLine::RS_ActionDrawLine");
 }
 

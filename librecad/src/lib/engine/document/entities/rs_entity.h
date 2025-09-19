@@ -52,14 +52,14 @@ class LC_Quadratic;
 class RS_Entity:public RS_Undoable, public LC_Drawable {
 public:
     RS_Entity(RS_EntityContainer *parent = nullptr);
+    // RS_Entity(RS_EntityContainer *parent, bool setPenToActive = false);
     RS_Entity(const RS_Entity& entity);
     RS_Entity& operator = (const RS_Entity& entity);
     RS_Entity(RS_Entity&& entity);
     RS_Entity& operator = (RS_Entity&& entity);
     ~RS_Entity() override;
 
-    void init();
-    void initId();
+
     virtual RS_Entity *clone() const = 0;
     virtual RS_Entity *cloneProxy() const;
 
@@ -596,6 +596,9 @@ protected:
     RS_Layer *m_layer = nullptr;
     //! auto updating enabled?
     bool updateEnabled = false;
+
+    void init(bool setPenAndLayerToActive);
+    void initId();
 
 private:
     //! Entity m_id

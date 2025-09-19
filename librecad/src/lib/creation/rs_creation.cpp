@@ -50,36 +50,34 @@
 
 // fixme - sand - refactor - review this class completely
 namespace {
-
-/**
- * @brief isArc whether the entity supports tangent
- * @param entity
- * @return  true if the entity can have tangent (RS_Line is not considered as an arc here).
- */
-bool isArc(const RS_Entity& entity){
-    if (entity.isArc())
-        return true;
-    switch (entity.rtti()){
-    case RS2::EntityParabola:
-        return true;
-    default:
-        return false;
-    }
-}
-
-/**
-     * @brief fromLineCoordinate create a line from line coordinates (x, y, 1)
-     * @param line the line coordinates, (x, y, 1), the last coordinate is always one, and the z-component of the input
-     * vector is not used
-     * @return the same line in RS_LineData
+    /**
+     * @brief isArc whether the entity supports tangent
+     * @param entity
+     * @return  true if the entity can have tangent (RS_Line is not considered as an arc here).
      */
-RS_LineData fromLineCoordinate(const RS_Vector& line)
-{
-    RS_Vector start = RS_Vector{line}.rotate(-M_PI/4.);
-    RS_Vector stop = RS_Vector{line}.rotate(M_PI/4.);
-    return {start/(-start.dotP(line)), stop/(-stop.dotP(line))};
-}
+    bool isArc(const RS_Entity& entity) {
+        if (entity.isArc()) {
+            return true;
+        }
+        switch (entity.rtti()) {
+            case RS2::EntityParabola:
+                return true;
+            default:
+                return false;
+        }
+    }
 
+    /**
+         * @brief fromLineCoordinate create a line from line coordinates (x, y, 1)
+         * @param line the line coordinates, (x, y, 1), the last coordinate is always one, and the z-component of the input
+         * vector is not used
+         * @return the same line in RS_LineData
+         */
+    RS_LineData fromLineCoordinate(const RS_Vector& line) {
+        RS_Vector start = RS_Vector{line}.rotate(-M_PI / 4.);
+        RS_Vector stop = RS_Vector{line}.rotate(M_PI / 4.);
+        return {start / (-start.dotP(line)), stop / (-stop.dotP(line))};
+    }
 }
 
 /**
@@ -162,17 +160,13 @@ RS_Entity* RS_Creation::createParallel(const RS_Vector& coord,
     switch (e->rtti()) {
         case RS2::EntityLine:
             return createParallelLine(coord, distance, number, static_cast<RS_Line*>(e), symmetric);
-
         case RS2::EntityArc:
             return createParallelArc(coord, distance, number, static_cast<RS_Arc*>(e));
-
         case RS2::EntityCircle:
             return createParallelCircle(coord, distance, number, static_cast<RS_Circle*>(e));
-
         case RS2::EntityParabola:
         case RS2::EntitySplinePoints:
             return createParallelSplinePoints(coord, distance, number, static_cast<LC_SplinePoints*>(e));
-
         default:
             break;
     }
@@ -208,7 +202,7 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
     RS_Line* ret = nullptr;
 
     LC_UndoSection undo( m_document,m_viewport, handleUndo);
-    for (int num=1; num<=number; ++num) {
+    for (int num = 1; num <= number; ++num) {
 
         // calculate 1st parallel:
         RS_Vector p1 = RS_Vector::polar(distance*num, ang);
@@ -229,7 +223,6 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
         double minDist = std::min(dist1, dist2);
 
         if (minDist<RS_MAXDOUBLE) {
-
             RS_LineData dataToSkip;
             if (dist1 < dist2){
                 parallelData = parallel1.getData();
@@ -253,11 +246,8 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
             }
         }
     }
-
     return ret;
 }
-
-
 
 /**
  * Creates a arc parallel to the given arc e.
@@ -290,8 +280,7 @@ RS_Arc* RS_Creation::createParallelArc(const RS_Vector& coord,
         distance *= -1;
     }
 
-    for (int num=1; num<=number; ++num) {
-
+    for (int num = 1; num <= number; ++num) {
         // calculate parallel:
         bool ok = true;
         RS_Arc parallel1(nullptr, e->getData());
@@ -329,8 +318,6 @@ RS_Arc* RS_Creation::createParallelArc(const RS_Vector& coord,
     return ret;
 }
 
-
-
 /**
  * Creates a circle parallel to the given circle e.
  * Out of the 2 possible parallels, the one closest to
@@ -348,7 +335,6 @@ RS_Arc* RS_Creation::createParallelArc(const RS_Vector& coord,
 RS_Circle* RS_Creation::createParallelCircle(const RS_Vector& coord,
                                              double distance, int number,
                                              RS_Circle* e) {
-
     if (e == nullptr) {
         return nullptr;
     }
@@ -362,7 +348,7 @@ RS_Circle* RS_Creation::createParallelCircle(const RS_Vector& coord,
         distance *= -1;
     }
 
-    for (int num=1; num<=number; ++num) {
+    for (int num = 1; num <= number; ++num) {
 
         // calculate parallel:
         bool ok = true;
@@ -415,27 +401,23 @@ RS_Circle* RS_Creation::createParallelCircle(const RS_Vector& coord,
  *    parallel has been created.
  */
 LC_SplinePoints* RS_Creation::createParallelSplinePoints(const RS_Vector& coord,
-                                                         double distance, int number, LC_SplinePoints* e)
-{
-    if(e == nullptr)
+                                                         double distance, int number, LC_SplinePoints* e){
+    if (e == nullptr) {
         return nullptr;
+    }
 
     LC_SplinePoints *psp = nullptr, *ret = nullptr;
 
     LC_UndoSection undo( m_document, m_viewport,handleUndo);
-    for(int i = 1; i <= number; ++i)
-    {
+    for(int i = 1; i <= number; ++i)    {
         psp = (LC_SplinePoints*)e->clone();
         psp->offset(coord, i*distance);
-
         psp->setParent(m_container);
         if(!ret) ret = psp;
         setupAndAddEntity(psp);
     }
-
     return ret;
 }
-
 
 /**
  * Creates a bisecting line of the angle between the entities
@@ -460,10 +442,12 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
                                      RS_Line* l2) {
 
     // check given entities:
-    if (!(l1 != nullptr && l2 != nullptr))
+    if (!(l1 != nullptr && l2 != nullptr)) {
         return nullptr;
-    if (!(l1->rtti()==RS2::EntityLine && l2->rtti()==RS2::EntityLine))
+    }
+    if (!(l1->rtti()==RS2::EntityLine && l2->rtti()==RS2::EntityLine)) {
         return nullptr;
+    }
 
     // intersection between entities:
     RS_VectorSolutions const& sol =
@@ -482,10 +466,8 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
     RS_Line* ret = nullptr;
 
     LC_UndoSection undo( m_document, m_viewport, handleUndo);
-    for (int n=1; n <= num; ++n) {
-
-        double angle = angle1 +
-                (angleDiff / (num+1) * n);
+    for (int n = 1; n <= num; ++n) {
+        double angle = angle1 + (angleDiff / (num + 1) * n);
 
         RS_Vector const& v = RS_Vector::polar(length, angle);
 
@@ -510,15 +492,16 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
 std::unique_ptr<RS_Line> RS_Creation::createLineOrthTan(const RS_Vector& coord,
                                         RS_Line* normal,
                                         RS_Entity* circle,
-                                        RS_Vector& alternativeTangent)
-{
+                                        RS_Vector& alternativeTangent){
 
     // check given entities:
-    if (!(circle != nullptr && normal != nullptr))
+    if (!(circle != nullptr && normal != nullptr)) {
         return {};
+    }
     RS2::EntityType rtti = circle->rtti();
-    if (!(circle->isArc() || rtti == RS2::EntityParabola))
+    if (!(circle->isArc() || rtti == RS2::EntityParabola)) {
         return {};
+    }
     //if( normal->getLength()<RS_TOLERANCE) return ret;//line too short
     
 //    RS_Vector const& t0 = circle->getNearestOrthTan(coord,*normal,false);
@@ -550,12 +533,14 @@ std::unique_ptr<RS_Line> RS_Creation::createLineOrthTan(const RS_Vector& coord,
             RS_Vector vp = RS_Vector::polar(radius, angle);
             std::vector<RS_Vector> sol;
             bool onEntity = false;
-            for(int i=0; i <= 1; i++){
+            for (int i = 0; i <= 1; i++) {
                 if(!onEntity || RS_Math::isAngleBetween(angle,cir->getAngle1(),cir->getAngle2(),cir->isReversed())) {
-                    if (i)
+                    if (i) {
                         sol.push_back(- vp);
-                    else
+                    }
+                    else {
                         sol.push_back(vp);
+                    }
                 }
                 angle=RS_Math::correctAngle(angle+M_PI);
             }
@@ -635,8 +620,9 @@ std::unique_ptr<RS_Line> RS_Creation::createLineOrthTan(const RS_Vector& coord,
 
     alternativeTangent = t1;
 
-    if(!tangentPoint0.valid)
+    if(!tangentPoint0.valid) {
         return {};
+    }
     RS_Vector const& vp=normal->getNearestPointOnEntity(tangentPoint0, false);
     return std::make_unique<RS_Line>(m_container, vp, tangentPoint0);
     // fixme - sand - files - merge - UNDO??? Previously it was in undo cycle. Why this is changed - yet that's ok,
@@ -666,32 +652,37 @@ RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
                                      RS_Vector& tangentPoint,
                                      RS_Vector& altTangentPoint) {
     RS_Line* ret = nullptr;
-    //RS_Vector circleCenter;
-
     // check given entities:
-    if (!(circle != nullptr && point.valid)) return nullptr;
-    //    if (!(circle->isArc() || circle->rtti()==RS2::EntitySplinePoints || circle->rtti() == RS2::EntityParabola)){
-    // 	return nullptr;
-    // }
+    if (!(circle != nullptr && point.valid)) {
+        return nullptr;
+    }
 
     // the two tangent points:
-    RS_VectorSolutions sol=circle->getTangentPoint(point);
+    RS_VectorSolutions sol = circle->getTangentPoint(point);
 
-    if (!sol.getNumber())
+    // second port of if condition means that there is no solution - yet some entities (like circle) put coordinate...
+    if (sol.isEmpty() || (sol.getNumber() == 1 && sol[0] == point)){
         return nullptr;
+    }
     RS_Vector const vp2{sol.getClosest(coord)};
     RS_LineData d{};
-    if( (vp2-point).squared() > RS_TOLERANCE2 ) {
-        d={vp2, point};
-    }else{//the given point is a tangential point
-        d={point+circle->getTangentDirection(point), point};
+    if ((vp2 - point).squared() > RS_TOLERANCE2) {
+        d = {vp2, point};
+    }
+    else { //the given point is a tangential point
+        d = {point + circle->getTangentDirection(point), point};
     }
 
     tangentPoint = d.startpoint;
-    altTangentPoint = (sol[0] == vp2 ) ? sol[1] : sol[0];
+    if (sol.getNumber() == 1) { // spline by points support...
+        altTangentPoint = sol[0];
+    }
+    else {
+        altTangentPoint = (sol[0] == vp2) ? sol[1] : sol[0];
+    }
 
     // create the closest tangent:
-    LC_UndoSection undo( m_document,m_viewport, handleUndo);
+    LC_UndoSection undo(m_document, m_viewport, handleUndo);
     ret = new RS_Line{m_container, d};
     setupAndAddEntity(ret);
 
@@ -712,11 +703,13 @@ std::vector<std::unique_ptr<RS_Line>> RS_Creation::createTangent2(
                                                      RS_Entity* circle1,
                                                      RS_Entity* circle2) {
     // check given entities:
-    if(! (circle1 != nullptr && circle2 != nullptr))
+    if(! (circle1 != nullptr && circle2 != nullptr)) {
         return {};
+    }
 
-    if( !(isArc(*circle1) && isArc(*circle2)))
+    if( !(isArc(*circle1) && isArc(*circle2))) {
         return {};
+    }
 
     // Find common tangent lines in line coordinates, i.e. using dual curves
     // A common tangent line is an intersection of the dual curves
@@ -725,14 +718,16 @@ std::vector<std::unique_ptr<RS_Line>> RS_Creation::createTangent2(
     if (sol.empty())
         return {};
     RS_VectorSolutions sol1;
-    for (const auto& vp: sol)
-    {
-        if (!vp.valid)
+    for (const auto& vp: sol) {
+        if (!vp.valid) {
             continue;
-        if (sol1.empty())
+        }
+        if (sol1.empty()) {
             sol1.push_back(vp);
-        else if (sol1.getClosestDistance(vp) > RS_TOLERANCE_ANGLE)
-                sol1.push_back(vp);
+        }
+        else if (sol1.getClosestDistance(vp) > RS_TOLERANCE_ANGLE) {
+            sol1.push_back(vp);
+        }
     }
 
     // verify the tangent lines
@@ -748,8 +743,10 @@ std::vector<std::unique_ptr<RS_Line>> RS_Creation::createTangent2(
     tangents.erase(remove_if(tangents.begin(), tangents.end(), [](const std::unique_ptr<RS_Line>& line) {
         return line == nullptr;
     }), tangents.end());
-    if (tangents.empty())
+
+    if (tangents.empty()) {
         return {};
+    }
     return tangents;
 }
 
@@ -768,19 +765,19 @@ std::unique_ptr<RS_Line> RS_Creation::createLineRelAngle(const RS_Vector& coord,
                                          RS_Entity* entity,
                                          double angle,
                                          double length) {
-
     // check given entity / coord:
-    if (!(entity && coord))
+    if (!(entity && coord)) {
         return {};
+    }
 
-    switch(entity->rtti()){
-    default:
-        return {};
-    case RS2::EntityArc:
-    case RS2::EntityCircle:
-    case RS2::EntityLine:
-    case RS2::EntityEllipse:
-        break;
+    switch (entity->rtti()) {
+        default:
+            return {};
+        case RS2::EntityArc:
+        case RS2::EntityCircle:
+        case RS2::EntityLine:
+        case RS2::EntityEllipse:
+            break;
     }
 
     const RS_Vector vp = entity->getNearestPointOnEntity(coord, false);
@@ -794,7 +791,6 @@ std::unique_ptr<RS_Line> RS_Creation::createLineRelAngle(const RS_Vector& coord,
     }
     return ret;
 }
-
 
 /**
      * Creates a polygon with 'number' edges.
@@ -818,16 +814,16 @@ RS_Line* RS_Creation::createPolygon(const RS_Vector& center,
     double const da = 2.*M_PI/number;
     LC_UndoSection undo( m_document,m_viewport, handleUndo);
     for (int i=0; i < number; ++i) {
-        RS_Vector const& c0 = center +
-                RS_Vector::polar(r, angle0 + i*da);
-        RS_Vector const& c1 = center +
-                RS_Vector::polar(r, angle0 + ((i+1)%number)*da);
+        auto c0 = center + RS_Vector::polar(r, angle0 + i*da);
+        auto c1 = center +  RS_Vector::polar(r, angle0 + ((i+1)%number)*da);
 
         auto* line = new RS_Line{m_container, c0, c1};
         line->setLayerToActive();
         line->setPenToActive();
 
-        if (!ret) ret = line;
+        if (!ret) {
+            ret = line;
+        }
 
         if (m_container) {
             m_container->addEntity(line);
@@ -837,8 +833,6 @@ RS_Line* RS_Creation::createPolygon(const RS_Vector& center,
 
     return ret;
 }
-
-
 
 /**
      * Creates a polygon with 'number' edges.
@@ -871,16 +865,16 @@ RS_Line* RS_Creation::createPolygon2(const RS_Vector& corner1,
 
 
     for (int i=0; i<number; ++i) {
-        RS_Vector const c0 = center +
-                RS_Vector::polar(r, angle0 + i*da);
-        RS_Vector const c1 = center +
-                RS_Vector::polar(r, angle0 + ((i+1)%number)*da);
+        auto c0 = center + RS_Vector::polar(r, angle0 + i*da);
+        auto c1 = center + RS_Vector::polar(r, angle0 + ((i+1)%number)*da);
 
         auto* line = new RS_Line{m_container, c0, c1};
         line->setLayerToActive();
         line->setPenToActive();
 
-        if (!ret) ret = line;
+        if (!ret) {
+            ret = line;
+        }
 
         if (m_container) {
             m_container->addEntity(line);
@@ -919,16 +913,16 @@ RS_Line* RS_Creation::createPolygon3(const RS_Vector& center,    //added by txmy
     double const da = 2.*M_PI/number;
 
     for (int i=0; i < number; ++i) {
-        RS_Vector const& c0 = center +
-                RS_Vector::polar(r, angle0 + i*da);
-        RS_Vector const& c1 = center +
-                RS_Vector::polar(r, angle0 + ((i+1)%number)*da);
+        auto c0 = center + RS_Vector::polar(r, angle0 + i*da);
+        auto c1 = center +  RS_Vector::polar(r, angle0 + ((i+1)%number)*da);
 
         auto* line = new RS_Line{m_container, c0, c1};
         line->setLayerToActive();
         line->setPenToActive();
 
-        if (!ret) ret = line;
+        if (!ret) {
+            ret = line;
+        }
 
         if (m_container) {
             m_container->addEntity(line);
@@ -987,7 +981,7 @@ RS_Block* RS_Creation::createBlock(const RS_BlockData* data,
 
     // copy entities into a block
     for(auto e: *m_container){ // fixme - iterating all entities for selection
-        if (e!= nullptr && e->isSelected()) {
+        if (e != nullptr && e->isSelected()) {
 
             // delete / redraw entity in graphic view:
             if (remove) { // fixme - what's this? same logic there?

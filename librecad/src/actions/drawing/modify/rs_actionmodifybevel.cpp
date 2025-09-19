@@ -55,20 +55,25 @@ void RS_ActionModifyBevel::finish(bool updateTB){
 
 void RS_ActionModifyBevel::init(int status) {
     RS_PreviewActionInterface::init(status);
-
-    //snapMode = RS2::SnapFree;
     m_snapMode.restriction = RS2::RestrictNothing;
+}
+
+void RS_ActionModifyBevel::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    if (isLine(contextEntity)) { // can apply bevel to lines only...
+        m_entity1 = dynamic_cast<RS_AtomicEntity *>(contextEntity);
+        m_actionData->coord1 = m_entity1->getNearestPointOnEntity(clickPos, true);
+        setStatus(SetEntity2);
+    }
 }
 
 void RS_ActionModifyBevel::doTrigger() {
     RS_DEBUG->print("RS_ActionModifyBevel::trigger()");
 
-    if (m_entity1 && m_entity1->isAtomic() &&
-        m_entity2 && m_entity2->isAtomic()){
-
+    if (isAtomic(m_entity1) && isAtomic(m_entity2)) {
         RS_Modification m(*m_container, m_viewport);
-        LC_BevelResult* bevelResult = m.bevel(m_actionData->coord1, m_entity1, m_actionData->coord2, m_entity2, m_actionData->data, false);
-        if (bevelResult != nullptr){
+        LC_BevelResult* bevelResult = m.bevel(m_actionData->coord1, m_entity1, m_actionData->coord2, m_entity2,
+                                              m_actionData->data, false);
+        if (bevelResult != nullptr) {
             switch (bevelResult->error) {
                 case LC_BevelResult::OK:
                     break;
@@ -90,6 +95,18 @@ void RS_ActionModifyBevel::doTrigger() {
         m_entity1 = nullptr;
         setStatus(SetEntity1);
     }
+}
+
+bool RS_ActionModifyBevel::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "length1") {
+        setLength1(distance);
+        return true;
+    }
+    if (tag == "length2") {
+        setLength2(distance);
+        return true;
+    }
+    return false;
 }
 
 void RS_ActionModifyBevel::drawSnapper() {
@@ -243,11 +260,11 @@ void RS_ActionModifyBevel::onMouseRightButtonRelease(int status, [[maybe_unused]
 }
 
 bool RS_ActionModifyBevel::isEntityAccepted(RS_Entity *en) const{
-    return en != nullptr && en->isAtomic() && RS_Information::isTrimmable(en);
+    return isAtomic(en) && RS_Information::isTrimmable(en);
 }
 
 bool RS_ActionModifyBevel::areBothEntityAccepted(RS_Entity *en1, RS_Entity *en2) const{
-    return en2 != nullptr && en2 != en1 && en2->isAtomic() && RS_Information::isTrimmable(en1,en2);
+    return isAtomic(en2) && en2 != en1 && RS_Information::isTrimmable(en1,en2);
 }
 
 bool RS_ActionModifyBevel::doProcessCommand(int status, const QString &c) {

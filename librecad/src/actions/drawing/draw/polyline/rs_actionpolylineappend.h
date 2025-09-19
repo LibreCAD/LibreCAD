@@ -34,19 +34,20 @@ class RS_Polyline;
  */
 class RS_ActionPolylineAppend:public RS_ActionDrawPolyline {
     Q_OBJECT
-
 public:
-    RS_ActionPolylineAppend(LC_ActionContext *actionContext);
+    explicit RS_ActionPolylineAppend(LC_ActionContext *actionContext);
     void undo() override;
 protected:
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    bool setPolylineToModify(RS_Entity *entity, const RS_Vector& mouse);
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void doTrigger() override;
-
+    void doInitialInit() override;
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& pos) override;
 private:
     /**
      * Polyline entity we're working on.

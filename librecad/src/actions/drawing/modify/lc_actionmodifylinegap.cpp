@@ -36,6 +36,12 @@ LC_ActionModifyLineGap::LC_ActionModifyLineGap(LC_ActionContext *actionContext)
     :LC_AbstractActionWithPreview("Line Gap",actionContext, RS2::ActionModifyLineGap){
 }
 
+void LC_ActionModifyLineGap::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
+   if (isLine(contextEntity) && checkMayExpandEntity(contextEntity, "")) {
+       // todo - don't preselect line so far, as it will not let the user to set options. Review flow later...
+   }
+}
+
 void LC_ActionModifyLineGap::doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     switch (status){
         case (SetEntity):{ // selecting the line
@@ -131,7 +137,6 @@ void LC_ActionModifyLineGap::doOnLeftMouseButtonRelease(LC_MouseEvent *e, int st
                 auto* line = dynamic_cast<RS_Line *>(en);
                 // check whether line is expandable
                 if (checkMayExpandEntity(line, "")){
-
                     // determine where gap should be positioned on original line
                     RS_Vector nearestPoint = line->getNearestPointOnEntity(snapPoint);
                     RS_Vector gapStartPosition = obtainLineSnapPointForMode(line, nearestPoint);
@@ -460,4 +465,16 @@ RS2::CursorType LC_ActionModifyLineGap::doGetMouseCursor(int status) {
         default:
             return RS2::NoCursorChange;
     }
+}
+
+bool LC_ActionModifyLineGap::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "size") {
+        setGapSize(distance);
+        return true;
+    }
+    if (tag == "snap") {
+        setSnapDistance(distance);
+        return true;
+    }
+    return false;
 }

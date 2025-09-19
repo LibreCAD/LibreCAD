@@ -23,7 +23,7 @@
 #ifndef LC_INFODIST2OPTIONS_H
 #define LC_INFODIST2OPTIONS_H
 
-#include "lc_actionoptionswidget.h"
+#include "lc_actionoptionswidgetbase.h"
 
 namespace Ui {
     class LC_InfoDist2Options;
@@ -31,7 +31,7 @@ namespace Ui {
 
 class RS_ActionInfoDist2;
 
-class LC_InfoDist2Options : public LC_ActionOptionsWidget{
+class LC_InfoDist2Options : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
 public:
     explicit LC_InfoDist2Options();

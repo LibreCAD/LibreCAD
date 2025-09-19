@@ -142,13 +142,6 @@ unsigned QC_MDIWindow::getId() const{
 	return id;
 }
 
-RS_EventHandler* QC_MDIWindow::getEventHandler() const{
-    if (m_graphicView) {
-        return m_graphicView->getEventHandler();
-    }
-    return nullptr;
-}
-
 void QC_MDIWindow::setParentWindow(QC_MDIWindow* p) {
 	m_parentWindow = p;
 }

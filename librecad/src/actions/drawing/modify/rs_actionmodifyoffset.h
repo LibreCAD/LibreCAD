@@ -70,5 +70,6 @@ protected:
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
     void doTrigger(bool keepSelected) override;
     void onMouseMoveEventSelected(int status, LC_MouseEvent *e) override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 #endif

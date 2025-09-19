@@ -163,7 +163,10 @@ void RS_ActionSelectWindow::updateMouseButtonHints() {
             updateMouseWidgetTRCancel(tr("Click and drag for the selection window"));
             break;
         case SetCorner2:
-            updateMouseWidgetTRBack(tr("Choose second edge"), MOD_SHIFT_AND_CTRL(m_select ? tr("De-select entities") : tr("Select entities"), m_select ? tr("Select Intersecting") : tr("De-select intersecting")));
+            updateMouseWidgetTRBack(tr("Choose second edge"),
+                                    MOD_SHIFT_AND_CTRL(m_select ? tr("De-select entities") : tr("Select entities"),
+                                                       m_select ? tr("Select Intersecting") : tr(
+                                                           "De-select intersecting")));
             break;
         default:
             updateMouseWidget();
