@@ -56,6 +56,7 @@ public:
     RS_Font* requestFont(const QString& name);
     std::vector<std::unique_ptr<RS_Font> >::const_iterator begin() const;
     std::vector<std::unique_ptr<RS_Font> >::const_iterator end() const;
+    static QString getDefaultFont();
 
     friend std::ostream& operator << (std::ostream& os, RS_FontList& l);
 
@@ -64,8 +65,8 @@ private:
     RS_FontList(RS_FontList const&)=delete;
     RS_FontList& operator = (RS_FontList const&)=delete;
     static RS_FontList* uniqueInstance;
-    //! fonts in the graphic
-    std::vector<std::unique_ptr<RS_Font>> fonts;
+    //! m_fonts in the graphic
+    std::vector<std::unique_ptr<RS_Font>> m_fonts;
 };
 
 #endif

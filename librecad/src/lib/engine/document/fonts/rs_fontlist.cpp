@@ -25,13 +25,15 @@
 **********************************************************************/
 
 #include <iostream>
-#include "rs_fontlist.h"
 
 #include <QFileInfo>
+#include <QLocale>
+#include <QString>
 #include <QStringList>
 
 #include "rs_debug.h"
 #include "rs_font.h"
+#include "rs_fontlist.h"
 #include "rs_system.h"
 
 RS_FontList* RS_FontList::uniqueInstance = nullptr;
@@ -60,7 +62,7 @@ void RS_FontList::init() {
 
         QFileInfo fi( list.at(i) );
         if ( !added.contains(fi.baseName()) ) {
-			fonts.emplace_back(new RS_Font(fi.baseName()));
+            m_fonts.emplace_back(new RS_Font(fi.baseName()));
             added.insert(fi.baseName(), 1);
         }
 
@@ -69,24 +71,24 @@ void RS_FontList::init() {
 }
 
 size_t RS_FontList::countFonts() const{
-	return fonts.size();
+    return m_fonts.size();
 }
 
 std::vector<std::unique_ptr<RS_Font> >::const_iterator RS_FontList::begin() const
 {
-	return fonts.begin();
+    return m_fonts.begin();
 }
 
 std::vector<std::unique_ptr<RS_Font> >::const_iterator RS_FontList::end() const
 {
-	return fonts.end();
+    return m_fonts.end();
 }
 
 /**
- * Removes all fonts in the fontlist.
+ * Removes all m_fonts in the fontlist.
  */
 void RS_FontList::clearFonts() {
-	fonts.clear();
+    m_fonts.clear();
 }
 
 /**
@@ -112,7 +114,7 @@ RS_Font* RS_FontList::requestFont(const QString& name) {
     RS_DEBUG->print("name2: %s", name2.toLatin1().data());
 
 	// Search our list of available fonts:
-	for( auto const& f: fonts){
+    for( auto const& f: m_fonts){
 
         if (f->getFileName().toLower() == name2) {
             // Make sure this font is loaded into memory:
@@ -129,13 +131,37 @@ RS_Font* RS_FontList::requestFont(const QString& name) {
     return foundFont;
 }
 
+
+QString RS_FontList::getDefaultFont() {
+    QLocale loc = QLocale::system();
+    QLocale::Script script = loc.script();
+
+    switch (script) {
+    case QLocale::ArabicScript:
+        return "amiri-regular";
+    case QLocale::CyrillicScript:
+        return "OpenGostTypeA-Regular";
+    case QLocale::GreekScript:
+        return "greeks";
+    case QLocale::JapaneseScript:
+        return "kochigothic";
+    case QLocale::HangulScript:
+        return "kst32b";
+    case QLocale::SimplifiedHanScript:
+    case QLocale::TraditionalHanScript:
+        return "unicode";
+    default:
+        return "unicode";
+    }
+}
+
 /**
- * Dumps the fonts to stdout.
+ * Dumps the m_fonts to stdout.
  */
 std::ostream& operator << (std::ostream& os, RS_FontList& l) {
 
     os << "Fontlist: \n";
-	for(auto const& f: l.fonts){
+    for(auto const& f: l.m_fonts){
         os << *f << "\n";
     }
 
