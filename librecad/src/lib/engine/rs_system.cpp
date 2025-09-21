@@ -634,6 +634,8 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
     // not for Apple because it uses resources this is more for unix systems
     dirList.append( appDir + "/resources/" + subDirectory);
 #endif
+    QString executableDirectory = QCoreApplication::applicationDirPath();
+    dirList.append( executableDirectory + "/resources/" + subDirectory);
 
     // Individual directories:
     RS_SETTINGS->beginGroup( "/Paths");
