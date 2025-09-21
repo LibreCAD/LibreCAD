@@ -259,13 +259,13 @@ void RS_ActionPrintPreview::center() {
 
 void RS_ActionPrintPreview::fit() {
     if (graphic) {
-        RS_Vector&& paperSize=RS_Units::convert(graphic->getPaperSize(),
-                                                RS2::Millimeter, getUnit());
+        const RS_Vector paperSize=RS_Units::convert(graphic->getPaperSize(), getUnit(), RS2::Millimeter);
 
-        if(fabs(paperSize.x)<10.|| fabs(paperSize.y)<10.)
+        if(std::abs(paperSize.x) < 10.|| std::abs(paperSize.y) < 10.) {
             printWarning("Warning:: Paper size less than 10mm."
                          " Paper is too small for fitting to page\n"
                          "Please set paper size by Menu: Edit->Current Drawing Preferences->Paper");
+        }
         //        double f0=graphic->getPaperScale();
 		if ( graphic->fitToPage()==false) {
             RS_DIALOGFACTORY->commandMessage(
