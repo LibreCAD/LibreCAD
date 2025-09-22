@@ -38,6 +38,7 @@ public slots:
     void updatePrefix(bool isChecked);
 protected slots:
     void languageChange();
+    void updateRawLabelText();
 private:
     bool m_hasDiameter = false;
 };

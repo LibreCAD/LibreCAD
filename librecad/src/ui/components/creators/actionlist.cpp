@@ -27,6 +27,7 @@
 #include <QAction>
 #include "actionlist.h"
 
+#include "lc_actiongroup.h"
 
 ActionList::ActionList(QWidget* parent)
     : QListWidget(parent)
@@ -37,6 +38,13 @@ void ActionList::addActionItem(QAction *action) {
     item->setText(action->text().remove("&"));
     item->setIcon(action->icon());
     item->setWhatsThis(action->objectName());
+    auto actionGroup = action->actionGroup();
+    if (actionGroup != nullptr) {
+        LC_ActionGroup* lc_actiongroup = dynamic_cast<LC_ActionGroup*>(actionGroup);
+        if (lc_actiongroup != nullptr) {
+            item->setData(Qt::UserRole, lc_actiongroup->getName());
+        }
+    }
     addItem(item);
 }
 

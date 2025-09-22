@@ -122,6 +122,14 @@ void LC_ActionUCSCreate::onCoordinateEvent(int status, [[maybe_unused]]bool isZe
     }
 }
 
+bool LC_ActionUCSCreate::doUpdateAngleByInteractiveInput(const QString& tag, double angle) {
+    if (tag == "angle") {
+        setAngle(angle);
+        return true;
+    }
+    return false;
+}
+
 void LC_ActionUCSCreate::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {
     setStatus(getStatus() - 1); // fixme - temporary
 }

@@ -30,30 +30,33 @@
 
 class LC_SnapManager: public LC_GraphicViewAware{
 public:
-    LC_SnapManager(QG_SnapToolBar* snapToolbar);
-    void setSnaps(RS_SnapMode const& s) const;
-    bool tryToProcessSnapActions(RS2::ActionType type) const;
-    void toggleSnapFree() const;
-    void toggleSnapGrid() const;
-    void toggleSnapEndpoint() const;
-    void toggleSnapOnEntity() const;
-    void toggleSnapCenter() const;
-    void toggleSnapMiddle() const;
-    void toggleSnapDist() const;
-    void toggleSnapIntersection() const;
+    explicit LC_SnapManager(QG_SnapToolBar* snapToolbar);
+    void setSnaps(RS_SnapMode const& s);
+    bool tryToProcessSnapActions(RS2::ActionType type);
+    void toggleSnapFree();
+    bool toggleTemporarySnapFree();
+    void toggleSnapGrid();
+    void toggleSnapEndpoint();
+    void toggleSnapOnEntity();
+    void toggleSnapCenter();
+    void toggleSnapMiddle();
+    void toggleSnapDist();
+    void toggleSnapIntersection();
     RS_SnapMode getSnaps() const;
-    void disableSnaps() const;
-    void setSnapRestriction(RS2::SnapRestriction restriction) const;
-    void restrictNothing() const;
-    void restrictOrthogonal() const;
-    void restrictHorizontal() const;
-    void restrictVertical() const;
+    void disableSnaps();
+    void setSnapRestriction(RS2::SnapRestriction restriction);
+    void restrictNothing();
+    void restrictOrthogonal();
+    void restrictHorizontal();
+    void restrictVertical();
     RS2::SnapRestriction getSnapRestriction() const;
     void setGraphicView(RS_GraphicView* gview) override;
     void setRelativeZeroLock(bool on) const;
 private:
-    RS_GraphicView* m_view {nullptr};
+    RS_GraphicView* m_view{nullptr};
     QG_SnapToolBar* m_snapToolbar{nullptr};
+    RS_SnapMode m_savedSnapMode;
+    bool m_inTempSnapFreeMode{false};
 };
 
 #endif // LC_SNAPMANAGER_H

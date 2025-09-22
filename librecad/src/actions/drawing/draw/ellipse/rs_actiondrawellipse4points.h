@@ -36,7 +36,7 @@ struct RS_EllipseData;
 class RS_ActionDrawEllipse4Points:public LC_ActionDrawCircleBase {
     Q_OBJECT
 public:
-    RS_ActionDrawEllipse4Points(LC_ActionContext *actionContext);
+    explicit RS_ActionDrawEllipse4Points(LC_ActionContext *actionContext);
     ~RS_ActionDrawEllipse4Points() override;
     void init(int status) override;
     bool preparePreview();
@@ -46,7 +46,7 @@ protected:
  * Action States.
  */
     enum Status {
-        SetPoint1,   //  Setting the First Point.  */
+        SetPoint1  = InitialActionStatus,   //  Setting the First Point.  */
         SetPoint2,   //  Setting the Second Point.  */
         SetPoint3,   //  Setting the Third Point.  */
         SetPoint4   //  Setting the Last Point.  */

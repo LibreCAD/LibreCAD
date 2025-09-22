@@ -32,8 +32,7 @@ public:
         SetOffsetDirection
     };
 
-
-    LC_ActionModifyDuplicate(LC_ActionContext *actionContext);
+    explicit LC_ActionModifyDuplicate(LC_ActionContext *actionContext);
     ~LC_ActionModifyDuplicate() override;
 
     double getOffsetX() const {return m_offsetX;};
@@ -49,6 +48,7 @@ public:
     int getLayerMode() const{return m_layerMode;};
     void setLayerMode(int value){m_layerMode = value;};
 protected:
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     RS2::CursorType doGetMouseCursor(int status) override;
     RS_Vector doGetMouseSnapPoint(LC_MouseEvent *e) override;
     void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
@@ -63,6 +63,7 @@ protected:
     bool doCheckMayDrawPreview(LC_MouseEvent *event, int status) override;
     void doCreateEntitiesOnTrigger(RS_Entity *entity, QList<RS_Entity *> &list) override;
     void updateMouseButtonHints() override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 private:
     /**
      * entity for which duplicate will be created

@@ -30,6 +30,12 @@ LC_ActionSplineModifyBase::LC_ActionSplineModifyBase(const char* name, LC_Action
     :RS_PreviewActionInterface(name, actionContext, actionType) {
 }
 
+void LC_ActionSplineModifyBase::doInitWithContextEntity(RS_Entity* contextEntity,[[maybe_unused]] const RS_Vector& clickPos) {
+    if (mayModifySplineEntity(contextEntity)) {
+        setEntityToModify(contextEntity);
+    }
+}
+
 void LC_ActionSplineModifyBase::doTrigger() {
     RS_Entity* createdEntity = createModifiedSplineEntity(m_entityToModify, m_vertexPoint, m_directionFromStart);
     if (createdEntity != nullptr){

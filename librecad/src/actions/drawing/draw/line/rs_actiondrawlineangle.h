@@ -42,7 +42,6 @@ public:
     ~RS_ActionDrawLineAngle() override;
     void reset();
     void init(int status) override;
-    void preparePreview();
     QStringList getAvailableCommands() override;
     void setSnapPoint(int sp);
     int getSnapPoint() const;
@@ -58,7 +57,7 @@ protected:
  * Action States.
  */
     enum Status {
-        SetPos,       /**< Setting the position.  */
+        SetPos = InitialActionStatus,       /**< Setting the position.  */
         SetAngle,     /**< Setting angle in the command line. */
         SetLength     /**< Setting length in the command line. */
     };
@@ -66,9 +65,12 @@ protected:
         SNAP_START, SNAP_MIDDLE, SNAP_END
     };
     struct Points;
-    std::unique_ptr<Points> m_ActionData;
+    std::unique_ptr<Points> m_actionData;
     bool m_persistRelativeZero = false;
+    bool m_alternateDirection = false;
     bool m_orthoToAnglesBasis = false;
+
+    void preparePreview();
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
@@ -79,5 +81,7 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void doTrigger() override;
     void initFromSettings() override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 #endif

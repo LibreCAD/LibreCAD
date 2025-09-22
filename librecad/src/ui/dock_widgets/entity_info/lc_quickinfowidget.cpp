@@ -25,6 +25,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QListView>
 #include <QMenu>
 #include <QStandardItemModel>
+
+#include "lc_actioncontext.h"
+#include "qc_applicationwindow.h"
 #if defined(Q_OS_LINUX)
 #include <QThread>
 #endif
@@ -339,7 +342,8 @@ void LC_QuickInfoWidget::onViewContextMenu(QPoint pos){
         }
     }
 
-    contextMenu->addAction(tr("&Copy All"), this, &LC_QuickInfoWidget::onCopyAll);
+
+    contextMenu->addAction(QIcon(":/icons/copy.lci"), tr("&Copy All"), this, &LC_QuickInfoWidget::onCopyAll);
     const QString &anchor = ui->pteInfo->anchorAt(pos);
     if (!anchor.isEmpty()){
         // process anchor-specific commands first
@@ -357,43 +361,43 @@ void LC_QuickInfoWidget::onViewContextMenu(QPoint pos){
                 if (ok){
                     if (m_widgetMode == MODE_COORDINATE_COLLECTING){
                         // specific commands for anchors on collected points view
-                        QAction* toCmdAction = contextMenu->addAction(getCoordinateMenuName(tr("&To Cmd"), pointIndex));
+                        QAction* toCmdAction = contextMenu->addAction(QIcon(":/icons/draft.lci"), getCoordinateMenuName(tr("&To Cmd"), pointIndex));
                         connect(toCmdAction, &QAction::triggered, this,  [this, pointIndex]{ onToCmd(pointIndex); });
 
-                        QAction* relZeroAction = contextMenu->addAction(getCoordinateMenuName(tr("&Set Relative Zero"),pointIndex));
+                        QAction* relZeroAction = contextMenu->addAction(QIcon(":/icons/set_rel_zero.lci"),getCoordinateMenuName(tr("&Set Relative Zero"),pointIndex));
                         connect(relZeroAction, &QAction::triggered, this,  [this, pointIndex]{ onSetRelZero(pointIndex); });
                         contextMenu->addSeparator();
-                        QAction* removeAction = contextMenu->addAction(getCoordinateMenuName(tr("&Remove Coordinate"), pointIndex));
+                        QAction* removeAction = contextMenu->addAction(QIcon(":/icons/remove.lci"), getCoordinateMenuName(tr("&Remove Coordinate"), pointIndex));
                         connect(removeAction, &QAction::triggered, this,  [this, pointIndex]{ onRemoveCoordinate(pointIndex); });
 
-                        QAction* insertAction = contextMenu->addAction(getCoordinateMenuName(tr("&Insert Coordinates"), pointIndex));
+                        QAction* insertAction = contextMenu->addAction(QIcon(":/icons/append_node.lci"), getCoordinateMenuName(tr("&Insert Coordinates"), pointIndex));
                         connect(insertAction, &QAction::triggered, this,  [this, pointIndex]{ onInsertCoordinates(pointIndex); });
                     }
                     else{
                         // specific commands for anchors on entity info view
-                        QAction* toCmdAction = contextMenu->addAction(getCoordinateMenuName(tr("&To Cmd"), -1));
+                        QAction* toCmdAction = contextMenu->addAction(QIcon(":/icons/draft.lci"),getCoordinateMenuName(tr("&To Cmd"), -1));
                         connect(toCmdAction, &QAction::triggered, this,  [this, pointIndex]{ onToCmd(pointIndex); });
 
-                        QAction* relZeroAction = contextMenu->addAction(getCoordinateMenuName(tr("&Set Relative Zero"),-1));
+                        QAction* relZeroAction = contextMenu->addAction(QIcon(":/icons/set_rel_zero.lci"),getCoordinateMenuName(tr("&Set Relative Zero"),-1));
                         connect(relZeroAction, &QAction::triggered, this,  [this, pointIndex]{ onSetRelZero(pointIndex); });
                     }
                 }
             }
         }
         else if (anchor.startsWith("/val")){ // value-related actions
-            contextMenu->addAction(tr("&To Cmd"), this, &LC_QuickInfoWidget::onCopyAll);
+            contextMenu->addAction(QIcon(":/icons/draft.lci"), tr("&To Cmd"), this, &LC_QuickInfoWidget::onCopyAll);
         }
     }
     contextMenu->addSeparator();
     // generic actions
     contextMenu->addAction(tr("&Clear"), this, &LC_QuickInfoWidget::onClearAll);
-    contextMenu->addAction(tr("&Select Entity"), this, &LC_QuickInfoWidget::onPickEntity);
+    contextMenu->addAction(QIcon(":/icons/entity_properties_select.lci"), tr("&Select Entity"), this, &LC_QuickInfoWidget::onPickEntity);
     if (m_widgetMode == MODE_ENTITY_INFO){
         if (m_entityData->getEntityId() > 0){
-            contextMenu->addAction(tr("&Select in Drawing"), this, &LC_QuickInfoWidget::onSelectEntity);
-            contextMenu->addAction(tr("&Edit Properties"), this, &LC_QuickInfoWidget::onEditEntityProperties);
+            contextMenu->addAction(QIcon(":/icons/select_entity.lci"), tr("&Select in Drawing"), this, &LC_QuickInfoWidget::onSelectEntity);
+            contextMenu->addAction(QIcon(":/icons/properties.lci"), tr("&Edit Properties"), this, &LC_QuickInfoWidget::onEditEntityProperties);
         }
-        contextMenu->addAction(tr("&Collect Coordinates"), this, &LC_QuickInfoWidget::onPickCoordinates);
+        contextMenu->addAction(QIcon(":/icons/pick_coordinates.lci"), tr("&Collect Coordinates"), this, &LC_QuickInfoWidget::onPickCoordinates);
     }
 
     contextMenu->popup(ui->pteInfo->viewport()->mapToGlobal(pos));
@@ -714,7 +718,10 @@ void LC_QuickInfoWidget::onEditEntityProperties(){
                 m_document->endUndoCycle();
 
                 clone.release();
-                RS_DIALOGFACTORY->updateSelectionWidget(m_document->countSelected(), m_document->totalSelectedLength());
+
+                auto selectionInfo = m_document->getSelectionInfo();
+                LC_ActionContext* ctx =  QC_ApplicationWindow::getAppWindow().get()->getActionContext();
+                ctx->updateSelectionWidget(selectionInfo.count, selectionInfo.length);
             }
         }
         else{ // entity not found, cleanup

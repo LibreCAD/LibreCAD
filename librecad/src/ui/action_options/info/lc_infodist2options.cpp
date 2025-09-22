@@ -25,7 +25,7 @@
 #include "rs_actioninfodist2.h"
 
 LC_InfoDist2Options::LC_InfoDist2Options()
-    : LC_ActionOptionsWidget(nullptr)
+    : LC_ActionOptionsWidgetBase(RS2::ActionNone, "Info", "InfoDist2")
     , ui(new Ui::LC_InfoDist2Options){
     ui->setupUi(this);
     connect(ui->cbOnEntity, &QCheckBox::clicked, this, &LC_InfoDist2Options::onOnEntityClicked);
@@ -51,6 +51,7 @@ void LC_InfoDist2Options::doSetAction(RS_ActionInterface *a, bool update){
 QString LC_InfoDist2Options::getSettingsOptionNamePrefix(){
     return "InfoDist2";
 }
+
 
 void LC_InfoDist2Options::doSaveSettings(){
     save("NearestIsOnEntity", ui->cbOnEntity->isChecked());

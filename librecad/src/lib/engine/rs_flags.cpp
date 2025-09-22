@@ -62,3 +62,10 @@ bool RS_Flags::getFlag(unsigned f) const {
 	return flags&f;
 }
 
+bool RS_Flags::isSet(unsigned f) const {
+    return flags&f;
+}
+
+bool RS_Flags::isNotSet(unsigned f) const {
+    return !(flags&f);
+}

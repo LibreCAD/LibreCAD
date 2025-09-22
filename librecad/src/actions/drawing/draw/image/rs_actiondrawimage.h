@@ -62,7 +62,7 @@ protected:
      * Action States.
      */
     enum Status {
-        ShowDialog,        /**< Dialog. */
+        ShowDialog = InitialActionStatus,        /**< Dialog. */
         SetTargetPoint,    /**< Setting the reference point. */
         SetAngle,          /**< Setting angle in the command line. */
         SetFactor,          /**< Setting factor in the command line. */
@@ -85,5 +85,6 @@ protected:
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void updateMouseButtonHints() override;
     void doTrigger() override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angle) override;
 };
 #endif

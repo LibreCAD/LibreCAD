@@ -23,14 +23,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define LC_ACTIONDRAWCIRCLEBYARC_H
 
 #include "lc_abstractactionwithpreview.h"
-
+#include "lc_latecompletionrequestor.h"
 
 /**
  * Action draws circle with the same center and radius as selected arc.
  * Based on setting, original arc may remains in drawing (so both arc and circle will be present) or just be replaced by circle
  *
  */
-class LC_ActionDrawCircleByArc:public LC_AbstractActionWithPreview {
+class LC_ActionDrawCircleByArc:public LC_AbstractActionWithPreview{
     Q_OBJECT
 public:
     LC_ActionDrawCircleByArc(LC_ActionContext *actionContext);
@@ -40,18 +40,14 @@ public:
     void setReplaceArcByCircle(bool value);
     void setPenMode(int i) {m_penMode = i;};
     int getPenMode() const{return m_penMode;};
-
     double getRadiusShift() const{return m_radiusShift;};
     void setRadiusShift(double shift){m_radiusShift = shift;};
-
     void setLayerMode(int mode){m_layerMode = mode;};
     int getLayerMode() const{return m_layerMode;}
-
     void drawSnapper() override;
-
 protected:
     enum{
-        SetArc
+        SetArc = InitialActionStatus
     };
     LC_ActionOptionsWidget* createOptionsWidget() override;
     bool doCheckMayTrigger() override;
@@ -69,6 +65,8 @@ protected:
     void doPerformOriginalEntitiesDeletionOnInitTrigger(QList<RS_Entity *> &list) override;
     bool isSetActivePenAndLayerOnTrigger() override;
     void updateMouseButtonHints() override;
+
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 private:
     /** Chosen arc or ellipse arc entity */
     RS_Entity *m_entity = nullptr;

@@ -49,6 +49,7 @@ public:
     void setLengthY(double value);
     double getLengthY() const{return m_bevelY;};
     void setUcsAngleDegrees(double angle);
+    void setAngleRadians(double angleRad);
     double getUcsAngleDegrees() const;
     void setCornersMode(int value);
     int getCornersMode() const{return m_cornersDrawMode;};

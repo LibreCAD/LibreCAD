@@ -55,7 +55,7 @@ protected:
  * Action States.
  */
     enum Status {
-        ShowDialog,           /**< Showing the text dialog. */
+        ShowDialog = InitialActionStatus,           /**< Showing the text dialog. */
         SetPos,               /**< Setting the position. */
         SetSecPos,            /**< Setting the second point for aligned of fit text. */
         SetText               /**< Setting the text in the command line. */
@@ -76,7 +76,7 @@ protected:
     void updateMouseButtonHints() override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
-
     void doTrigger() override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) override;
 };
 #endif

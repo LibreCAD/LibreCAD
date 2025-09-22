@@ -37,6 +37,12 @@ LC_ActionSplineFromPolyline::LC_ActionSplineFromPolyline(LC_ActionContext *actio
     :RS_PreviewActionInterface("ActionSplineFromPolyline", actionContext, RS2::ActionDrawSplineFromPolyline) {
 }
 
+void LC_ActionSplineFromPolyline::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
+   if (isPolyline(contextEntity)) {
+       setEntityToModify(contextEntity);
+   }
+}
+
 void LC_ActionSplineFromPolyline::doTrigger() {
     if (m_document) {
         RS_Entity* createdEntity = createSplineForPolyline(m_entityToModify);
@@ -102,13 +108,17 @@ void LC_ActionSplineFromPolyline::onMouseMoveEvent(int status, LC_MouseEvent *e)
     }
 }
 
+void LC_ActionSplineFromPolyline::setEntityToModify(RS_Entity* polyline) {
+    m_entityToModify = dynamic_cast<RS_Polyline *>(polyline);
+    trigger();
+}
+
 void LC_ActionSplineFromPolyline::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetEntity: {
             auto polyline = catchEntityByEvent(e, RS2::EntityPolyline);
             if (polyline != nullptr) {
-                m_entityToModify = dynamic_cast<RS_Polyline *>(polyline);
-                trigger();
+                setEntityToModify(polyline);
             }
             break;
         }
@@ -205,7 +215,7 @@ void LC_ActionSplineFromPolyline::fillControlPointsListFromPolyline(const RS_Pol
     controlPoints.reserve(polyline->count() * (m_segmentMiddlePoints + 1) + 1);
     controlPoints.push_back(polyline->getStartpoint());
     for(RS_Entity* entity: lc::LC_ContainerTraverser{*polyline, RS2::ResolveAll}.entities()) {
-        if (!entity->isAtomic()){
+        if (!isAtomic(entity)){
             continue;
         }
         int rtti = entity->rtti();

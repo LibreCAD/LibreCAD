@@ -68,7 +68,7 @@ private:
     void createCADSidebar(int columns, int icon_size, bool flatButtons);
     LC_CADDockWidget *cadDockWidget(const QString &title, const char *name, const QList<QAction *> &actions, int columns, int iconSize, bool flatButtons);
     void addToBottom(QToolBar *toolbar) const;
-    QToolBar *createStatusBarToolbar(QSizePolicy tbPolicy, QWidget *widget, const QString& title, const char *name) const;
+    QToolBar *createStatusBarToolbar(QSizePolicy tbPolicy, QWidget* widget, const QString& title, const char* name, bool showToolTip) const;
     void addAction(QToolBar *toolbar, const char *actionName) const;
     void makeActionsInvisible(const std::vector<QString> &actionNames) const;
     static void setDockWidgetTitleType(QDockWidget *widget, bool verticalTitleBar);

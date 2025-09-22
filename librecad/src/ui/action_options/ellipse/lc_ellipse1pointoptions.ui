@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>514</width>
+    <width>660</width>
     <height>24</height>
    </rect>
   </property>
@@ -26,15 +26,35 @@
    <property name="bottomMargin">
     <number>1</number>
    </property>
-   <item row="0" column="2">
-    <widget class="QLabel" name="label_2">
+   <item row="0" column="12">
+    <widget class="QRadioButton" name="rbNeg">
+     <property name="toolTip">
+      <string>Clockwise</string>
+     </property>
      <property name="text">
-      <string>Minor Radius:</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/dirneg.lci</normaloff>:/icons/dirneg.lci</iconset>
      </property>
     </widget>
    </item>
-   <item row="0" column="6">
-    <widget class="QLineEdit" name="leAngle">
+   <item row="0" column="13">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="4">
+    <widget class="QLineEdit" name="leMinorRadius">
      <property name="minimumSize">
       <size>
        <width>30</width>
@@ -48,48 +68,7 @@
       </size>
      </property>
      <property name="toolTip">
-      <string>Value of angle for major radius</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="5">
-    <widget class="QCheckBox" name="cbAngle">
-     <property name="toolTip">
-      <string>If checked, angle for major radius may be specified</string>
-     </property>
-     <property name="text">
-      <string>Base Angle:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="8">
-    <widget class="QRadioButton" name="rbPos">
-     <property name="toolTip">
-      <string>Counterclockwise</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../../../res/icons/icons.qrc">
-       <normaloff>:/icons/dirpos.lci</normaloff>:/icons/dirpos.lci</iconset>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="4">
-    <widget class="Line" name="line">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="7">
-    <widget class="QCheckBox" name="cbFreeAngle">
-     <property name="toolTip">
-      <string>If checked, major radius angle is specified by mouse</string>
-     </property>
-     <property name="text">
-      <string>Free</string>
+      <string>Length of minor radius of ellipse</string>
      </property>
     </widget>
    </item>
@@ -112,28 +91,28 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
+   <item row="0" column="7">
+    <widget class="QCheckBox" name="cbAngle">
+     <property name="toolTip">
+      <string>If checked, angle for major radius may be specified</string>
+     </property>
      <property name="text">
-      <string>Major Radius:</string>
+      <string>Base Angle:</string>
      </property>
     </widget>
    </item>
    <item row="0" column="10">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+    <widget class="QCheckBox" name="cbFreeAngle">
+     <property name="toolTip">
+      <string>If checked, major radius angle is specified by mouse</string>
      </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>0</width>
-       <height>20</height>
-      </size>
+     <property name="text">
+      <string>Free</string>
      </property>
-    </spacer>
+    </widget>
    </item>
-   <item row="0" column="3">
-    <widget class="QLineEdit" name="leMinorRadius">
+   <item row="0" column="8">
+    <widget class="QLineEdit" name="leAngle">
      <property name="minimumSize">
       <size>
        <width>30</width>
@@ -147,28 +126,90 @@
       </size>
      </property>
      <property name="toolTip">
-      <string>Length of minor radius of ellipse</string>
+      <string>Value of angle for major radius</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="9">
-    <widget class="QRadioButton" name="rbNeg">
+   <item row="0" column="11">
+    <widget class="QRadioButton" name="rbPos">
      <property name="toolTip">
-      <string>Clockwise</string>
+      <string>Counterclockwise</string>
      </property>
      <property name="text">
       <string/>
      </property>
      <property name="icon">
       <iconset resource="../../../../res/icons/icons.qrc">
-       <normaloff>:/icons/dirneg.lci</normaloff>:/icons/dirneg.lci</iconset>
+       <normaloff>:/icons/dirpos.lci</normaloff>:/icons/dirpos.lci</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QToolButton" name="tbPickMajor">
+     <property name="toolTip">
+      <string>Pick major actions from drawing</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_distance.lci</normaloff>:/icons/interactive_pick_distance.lci</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Minor Radius:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="5">
+    <widget class="QToolButton" name="tbPickMinor">
+     <property name="toolTip">
+      <string>Pick minor radius from drawing</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_distance.lci</normaloff>:/icons/interactive_pick_distance.lci</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Major Radius:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="6">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="9">
+    <widget class="QToolButton" name="tbPickAngle">
+     <property name="toolTip">
+      <string>Pick angle from drawing</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_angle.lci</normaloff>:/icons/interactive_pick_angle.lci</iconset>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
  <resources>
-  <include location="../../../../res/icons/icons.qrc"/>
   <include location="../../../../res/icons/icons.qrc"/>
  </resources>
  <connections/>

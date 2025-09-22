@@ -640,7 +640,7 @@ const LC_CommandItem g_commandList[] = {
         {
                 {{"dimordrebase", QObject::tr("dimordrebase", "dimension - ordinate")}},
                 {{"dor", QObject::tr("dor", "dimension - ordinate")}},
-                RS2::ActionDimOrdinateRebase
+                RS2::ActionDimOrdRebase
             },
         // dimension horizontal
         {
@@ -685,7 +685,7 @@ const LC_CommandItem g_commandList[] = {
         {
             {{"dimregen", QObject::tr("dimregen", "dimension - regenerate")}},
             {{"dg", QObject::tr("dg", "dimension - regenerate")}},
-            RS2::ActionToolRegenerateDimensions
+            RS2::ActionDimRegenerate
         },
 
         /* MODIFY COMMANDS */

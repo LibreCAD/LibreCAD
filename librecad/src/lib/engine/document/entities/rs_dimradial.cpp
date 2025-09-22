@@ -35,8 +35,13 @@
 
 RS_DimRadialData::RS_DimRadialData():
 	definitionPoint(false),
-	leader(0.0)
-{}
+	leader(0.0) {
+}
+
+RS_DimRadialData::RS_DimRadialData(const RS_DimRadialData &other):
+   definitionPoint{other.definitionPoint},
+   leader{other.leader} {
+}
 
 /**
  * Constructor with initialisation.
@@ -65,10 +70,12 @@ RS_DimRadial::RS_DimRadial(RS_EntityContainer* parent, const RS_DimensionData& d
     : RS_Dimension(parent, d), m_dimRadialData(ed) {
 }
 
+RS_DimRadial::RS_DimRadial(const RS_DimRadial& other)
+    :RS_Dimension(other), m_dimRadialData{other.m_dimRadialData} {
+}
+
 RS_Entity* RS_DimRadial::clone() const {
-    auto* d = new RS_DimRadial(getParent(), getData(), getEData());
-	d->setOwner(isOwner());
-	d->detach();
+    auto* d = new RS_DimRadial(*this);
 	return d;
 }
 
@@ -122,11 +129,11 @@ void RS_DimRadial::doUpdateDim() {
 
         const double extended_line_length = line_length + doubleArrowSize + textWidth;
         const RS_Vector p3 = p1 + RS_Vector::polar(extended_line_length, line_angle);
-        createDimensionLine(p1b, p3, true, false, m_dimGenericData.autoText);
+        createDimensionLine(p1b, p3, true, false, true, false, m_dimGenericData.autoText);
     }
     else {
         const RS_Vector p3 = p1 + RS_Vector::polar(line_length, line_angle);
-        createDimensionLine(p1, p3, false, true, m_dimGenericData.autoText);
+        createDimensionLine(p1, p3, false, true, false, true, m_dimGenericData.autoText);
     }
 }
 

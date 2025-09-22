@@ -299,6 +299,7 @@ void RS_Snapper::finish() {
     m_finished = true;
     deleteSnapper();
     deleteInfoCursor();
+
 }
 
 void RS_Snapper::setSnapMode(const RS_SnapMode& snapMode) {

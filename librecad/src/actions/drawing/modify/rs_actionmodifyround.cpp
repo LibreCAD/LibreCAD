@@ -56,6 +56,7 @@ namespace {
         return atEndPoint(entity1, point) || atEndPoint(entity2, point);
     }
 }
+
 struct RS_ActionModifyRound::RoundActionData {
     RS_Vector coord1;
     RS_Vector coord2;
@@ -66,17 +67,25 @@ struct RS_ActionModifyRound::RoundActionData {
 // fixme - potentially, it's better to support more fine grained trim mode that will control which entities should be trimmed (first, second, both)?
 
 RS_ActionModifyRound::RS_ActionModifyRound(LC_ActionContext *actionContext)
-    :RS_PreviewActionInterface("Round Entities", actionContext, RS2::ActionModifyRound), m_actionData(std::make_unique<RoundActionData>()), m_lastStatus(SetEntity1){
+    :RS_PreviewActionInterface("Round Entities", actionContext, RS2::ActionModifyRound),
+    m_actionData(std::make_unique<RoundActionData>()), m_lastStatus(SetEntity1){
 }
 
 RS_ActionModifyRound::~RS_ActionModifyRound() = default;
 
 
 void RS_ActionModifyRound::init(int status){
-    RS_PreviewActionInterface::init(status);
-
     m_snapMode.clear();
     m_snapMode.restriction = RS2::RestrictNothing;
+    RS_PreviewActionInterface::init(status);
+}
+
+void RS_ActionModifyRound::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+     if (isAtomic(contextEntity)) {
+         m_entity1 = static_cast<RS_AtomicEntity*>(contextEntity);
+         m_actionData->coord1 = contextEntity->getNearestPointOnEntity(clickPos, true);
+         setStatus(SetEntity2);
+     }
 }
 
 void RS_ActionModifyRound::finish(bool updateTB){
@@ -89,19 +98,22 @@ void RS_ActionModifyRound::finish(bool updateTB){
     - by Melwyn Francis Carlo.
 */
 bool RS_ActionModifyRound::removeOldFillet(RS_Entity *e, const bool &isPolyline){
-    if (!isArc(e) || m_entity1 == nullptr || m_entity2 == nullptr)
+    if (!isArc(e) || m_entity1 == nullptr || m_entity2 == nullptr) {
         return false;
+    }
 
     auto isChained = [this](const RS_Vector &point){
         return atEndPoint(*m_entity1, *m_entity2, point);
     };
     std::vector<RS_Vector> endPoints = {e->getStartpoint(), e->getEndpoint()};
     bool chained = std::all_of(endPoints.begin(), endPoints.end(), isChained);
-    if (!chained)
+    if (!chained) {
         return false;
+    }
 
-    if (!isPolyline)
+    if (!isPolyline) {
         m_container->removeEntity(e);
+    }
 
     return true;
 }
@@ -113,53 +125,45 @@ void RS_ActionModifyRound::drawSnapper() {
 void RS_ActionModifyRound::doTrigger() {
     RS_DEBUG->print("RS_ActionModifyRound::trigger()");
 
-    if (m_entity1 && m_entity1->isAtomic() &&
-        m_entity2 && m_entity2->isAtomic()){
+    bool foundPolyline = false;
 
-        bool foundPolyline = false;
+    if ((m_entity1->getParent() != nullptr) && (m_entity2->getParent() != nullptr)) {
+        if (isPolyline(m_entity1->getParent()) &&
+            isPolyline(m_entity2->getParent()) &&
+            (m_entity1->getParent() == m_entity2->getParent())) {
+            foundPolyline = true;
 
-        if ((m_entity1->getParent() != nullptr) && (m_entity2->getParent() != nullptr)){
-            if (isPolyline(m_entity1->getParent()) &&
-                isPolyline(m_entity2->getParent()) &&
-                (m_entity1->getParent() == m_entity2->getParent())){
-                foundPolyline = true;
-
-                for (auto *e: m_entity1->getParent()->getEntityList()) {
-                    if ((e != m_entity1) && (e != m_entity2)){
-                        if (removeOldFillet(e, foundPolyline)){
-                            m_entity1->getParent()->removeEntity(e);
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if (!foundPolyline){
-                for (auto *e: m_container->getEntityList()) {
-                    if ((e != m_entity1) && (e != m_entity2)){
-                        if (removeOldFillet(e, foundPolyline))
-                            break;
+            for (auto* e : m_entity1->getParent()->getEntityList()) {
+                if ((e != m_entity1) && (e != m_entity2)) {
+                    if (removeOldFillet(e, foundPolyline)) {
+                        m_entity1->getParent()->removeEntity(e);
+                        break;
                     }
                 }
             }
         }
 
-        RS_Modification m(*m_container, m_viewport);
-        m.round(m_actionData->coord2,
-                m_actionData->coord1,
-                (RS_AtomicEntity *) m_entity1,
-                m_actionData->coord2,
-                (RS_AtomicEntity *) m_entity2,
-                m_actionData->data);
-
-        //coord = RS_Vector(false);
-        m_actionData->coord1 = RS_Vector(false);
-        m_entity1 = nullptr;
-        m_actionData->coord2 = RS_Vector(false);
-        m_entity2 = nullptr;
-        // fixme - decide to which state go after trigger - probably it's more convenient to say in SetEntity2?
-        setStatus(SetEntity1);
+        if (!foundPolyline) {
+            for (auto* e : m_container->getEntityList()) {
+                if ((e != m_entity1) && (e != m_entity2)) {
+                    if (removeOldFillet(e, foundPolyline))
+                        break;
+                }
+            }
+        }
     }
+
+    RS_Modification m(*m_container, m_viewport);
+    m.round(m_actionData->coord2, m_actionData->coord1, m_entity1,
+            m_actionData->coord2, m_entity2, m_actionData->data);
+
+    //coord = RS_Vector(false);
+    m_actionData->coord1 = RS_Vector(false);
+    m_entity1 = nullptr;
+    m_actionData->coord2 = RS_Vector(false);
+    m_entity2 = nullptr;
+    // fixme - decide to which state go after trigger - probably it's more convenient to say in SetEntity2?
+    setStatus(SetEntity1);
 }
 
 void RS_ActionModifyRound::onMouseMoveEvent(int status, LC_MouseEvent *e) {
@@ -243,9 +247,17 @@ void RS_ActionModifyRound::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     }
 }
 
+bool RS_ActionModifyRound::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "radius") {
+        setRadius(distance);
+        return true;
+    }
+    return false;
+}
+
 void RS_ActionModifyRound::previewEntityModifications(const RS_Entity *original, RS_Entity *modified, RS_Vector& roundPoint, int mode){
     bool decreased = modified->getLength() < original->getLength();
-    if (isLine(modified)){
+    if (isLine(modified)){ // fixme - support of polyline
         if (decreased){
             if (mode == LC_RoundResult::TRIM_START){
                 previewRefLine(modified->getStartpoint(), original->getStartpoint());
@@ -267,7 +279,7 @@ void RS_ActionModifyRound::previewEntityModifications(const RS_Entity *original,
             }
         }
     }
-    else if (this->isArc(modified)){
+    else if (isArc(modified)){
             auto* newArc = dynamic_cast<RS_Arc*>(modified);
             RS_ArcData arcData = newArc->getData();
             std::swap(arcData.angle1, arcData.angle2);
@@ -280,18 +292,16 @@ void RS_ActionModifyRound::onMouseLeftButtonRelease(int status, LC_MouseEvent *e
     RS_Entity *se = catchEntityByEvent(e, eType, RS2::ResolveAll);
     switch (status) {
         case SetEntity1: {
-            if (se && se->isAtomic() &&
-                RS_Information::isTrimmable(se)){
-                m_entity1 = se;
+            if (isAtomic(se) && RS_Information::isTrimmable(se)){
+                m_entity1 = static_cast<RS_AtomicEntity*>(se);
                 m_actionData->coord1 = se->getNearestPointOnEntity(mouse, true);
                 setStatus(SetEntity2);
             }
             break;
         }
         case SetEntity2: {
-            if (se && se->isAtomic() &&
-                RS_Information::isTrimmable(m_entity1, se)){
-                m_entity2 = se;
+            if (isAtomic(se) &&  RS_Information::isTrimmable(m_entity1, se)){
+                m_entity2 = static_cast<RS_AtomicEntity*>(se);
                 m_actionData->coord2 = mouse;/* se->getNearestPointOnEntity(mouse, true);*/
                 //setStatus(ChooseRounding);
                 trigger();

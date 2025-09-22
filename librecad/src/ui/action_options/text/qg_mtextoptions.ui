@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>391</width>
+    <width>499</width>
     <height>24</height>
    </rect>
   </property>
@@ -81,10 +81,10 @@
       <string>Text to insert</string>
      </property>
      <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+      <enum>Qt::ScrollBarAlwaysOff</enum>
      </property>
      <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+      <enum>Qt::ScrollBarAlwaysOff</enum>
      </property>
     </widget>
    </item>
@@ -112,9 +112,23 @@
     </widget>
    </item>
    <item>
+    <widget class="QToolButton" name="tbPickAngle">
+     <property name="toolTip">
+      <string>Pick angle from drawing</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_angle.lci</normaloff>:/icons/interactive_pick_angle.lci</iconset>
+     </property>
+    </widget>
+   </item>
+   <item>
     <spacer name="horizontalSpacer">
      <property name="orientation">
-      <enum>Qt::Orientation::Horizontal</enum>
+      <enum>Qt::Horizontal</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -127,7 +141,9 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../../../../res/icons/icons.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>teText</sender>

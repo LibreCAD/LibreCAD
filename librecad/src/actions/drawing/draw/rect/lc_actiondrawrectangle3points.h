@@ -48,8 +48,8 @@ public:
     void setCreateQuadrangle(bool value) {m_createQuadrangle = value;};
     bool isCreateQuadrangle() const {return m_createQuadrangle;};
 
-    double getFixedInnerAngle() const {return m_innerAngle;};
-    void setFixedInnerAngle(double value){m_innerAngle = value;};
+    double getFixedInnerAngle() const {return m_innerAngleDegrees;};
+    void setFixedInnerAngle(double value){m_innerAngleDegrees = value;};
 
     bool isInnerAngleFixed() const{return m_innerAngleIsFixed;};
     void setInnerAngleFixed(bool value){m_innerAngleIsFixed = value;};
@@ -65,7 +65,7 @@ protected:
     /**
      * inner angle of quadrangle
      */
-    double m_innerAngle = 0.0;
+    double m_innerAngleDegrees = 0.0;
     /**
      * flag that indicates that inner angle of quadrangle is fixed
      */
@@ -99,6 +99,8 @@ protected:
     void calculateCornersBySize(RS_Vector size);
     double getActualInnerAngle() const;
     void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 
 #endif //LIBRECAD_MASTER_LC_ACTIONDRAWLINERECTANGLEREL_H

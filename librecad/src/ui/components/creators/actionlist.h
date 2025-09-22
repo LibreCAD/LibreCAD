@@ -8,7 +8,7 @@ class ActionList : public QListWidget{
 public:
     ActionList(QWidget* parent);
     void addActionItem(QAction* action);
-    void fromActionList(const QList<QAction *>& a_list);
+    void fromActionList(const QList<QAction*>& a_list);
     void fromActionMap(QMap<QString, QAction*>& a_map);
 public slots:
     void activateAction(QListWidgetItem*);

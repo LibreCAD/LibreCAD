@@ -28,11 +28,13 @@
 
 #include<QWidget>
 
+#include "lc_latecompletionrequestor.h"
+
 namespace Ui {
     class Ui_SnapDistOptions;
 }
 
-class QG_SnapDistOptions : public QWidget{
+class QG_SnapDistOptions : public QWidget, public LC_LateCompletionRequestor{
     Q_OBJECT
 public:
     QG_SnapDistOptions(QWidget* parent = nullptr);
@@ -40,11 +42,13 @@ public:
     void useSnapDistanceValue( double* d);
     void doShow();
     double *getDistanceValue();
+    void onLateRequestCompleted(bool shouldBeSkipped) override;
 protected:
     double* m_dist;
 protected slots:
     void languageChange();
     void onDistEditingFinished();
+    void onPickDistanceClicked(bool clicked);
 private:
     void saveSettings();
     std::unique_ptr<Ui::Ui_SnapDistOptions> ui;

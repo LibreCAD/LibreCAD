@@ -54,6 +54,7 @@ public:
 
     RS_EntityContainer(RS_EntityContainer* parent=nullptr, bool owner=true);
     RS_EntityContainer(const RS_EntityContainer& other);
+    RS_EntityContainer(const RS_EntityContainer& other, bool copyChildren);
     RS_EntityContainer& operator = (const RS_EntityContainer& other);
     RS_EntityContainer(RS_EntityContainer&& other);
     RS_EntityContainer& operator = (RS_EntityContainer&& other);
@@ -106,6 +107,7 @@ public:
     virtual void appendEntity(RS_Entity* entity);
     virtual void prependEntity(RS_Entity* entity);
     virtual void moveEntity(int index, QList<RS_Entity *>& entList);
+    void adjustBordersIfNeeded(RS_Entity* entity);
     virtual void insertEntity(int index, RS_Entity* entity);
     virtual bool removeEntity(RS_Entity* entity);
 
@@ -124,6 +126,8 @@ public:
     virtual RS_Entity* entityAt(int index) const;
     virtual void setEntityAt(int index,RS_Entity* en);
     virtual int findEntity(RS_Entity const* const entity);
+    int findEntityIndex(RS_Entity const* const entity);
+    bool areNeighborsEntities(RS_Entity const *const  e1, RS_Entity const *const  e2);
     virtual void clear();
 
     //virtual unsigned long int count() {
@@ -164,7 +168,8 @@ public:
     virtual void adjustBorders(RS_Entity* entity);
     void calculateBorders() override;
     void forcedCalculateBorders();
-    void updateDimensions( bool autoText=true);
+    int updateDimensions( bool autoText=true);
+    int updateVisibleDimensions( bool autoText=true);
     virtual void updateInserts();
     virtual void updateSplines();
     void update() override;
@@ -226,6 +231,7 @@ public:
     void stretch(const RS_Vector& firstCorner,
                  const RS_Vector& secondCorner,
                  const RS_Vector& offset) override;
+    void calculateBordersIfNeeded();
     void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
     void moveSelectedRef(const RS_Vector& ref, const RS_Vector& offset) override;
     void revertDirection() override;
@@ -253,12 +259,10 @@ public:
     void push_back(RS_Entity* entity) {
         m_entities.push_back(entity);
     }
-    void pop_back()
-    {
+    void pop_back() {
         if (!isEmpty())
             m_entities.pop_back();
     }
-
 /**
  * @brief begin/end to support range based loop
  * @return iterator
@@ -277,13 +281,9 @@ public:
 //! \}
 
     const QList<RS_Entity*>& getEntityList();
-
     inline RS_Entity* unsafeEntityAt(int index) const {return m_entities.at(index);}
-
     void drawAsChild(RS_Painter *painter) override;
-
     RS_Entity *cloneProxy() const override;
-
 protected:
     /**
      * @brief getLoops for hatch, split closed loops into single simple loops. All returned containers are owned by
@@ -293,11 +293,8 @@ protected:
      */
     virtual std::vector<std::unique_ptr<RS_EntityContainer>> getLoops() const;
 
-
     /** sub container used only temporarily for iteration. */
     mutable RS_EntityContainer* subContainer = nullptr;
-
-
 private:
 /**
  * @brief ignoredSnap whether snapping is ignored
@@ -314,8 +311,6 @@ private:
     bool m_autoUpdateBorders = true;
     mutable int entIdx = 0;
     bool autoDelete = false;
-
-
 };
 
 #endif

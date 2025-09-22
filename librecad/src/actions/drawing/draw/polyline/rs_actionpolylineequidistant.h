@@ -50,7 +50,7 @@ protected:
  * Action States.
  */
     enum Status {
-        ChooseEntity   /**< Choosing the original polyline. */
+        ChooseEntity = InitialActionStatus  /**< Choosing the original polyline. */
     };
 
     RS_Polyline *m_originalEntity = nullptr;
@@ -66,8 +66,10 @@ protected:
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    void setPolylineToModify(LC_MouseEvent* e, RS_Entity* en);
     void updateMouseButtonHints() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void doTrigger() override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 #endif

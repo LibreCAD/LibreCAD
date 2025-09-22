@@ -85,5 +85,7 @@ protected:
     void doBack(LC_MouseEvent *pEvent, int status) override;
     RS_Vector doGetRelativeZeroAfterTrigger() override;
     void doAfterTrigger() override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 #endif // LC_ACTIONDRAWRECTANGLE1POINT_H

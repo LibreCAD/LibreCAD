@@ -41,7 +41,8 @@ void RS_ActionModifyDelete::doTrigger([[maybe_unused]] bool keepSelected) {
 
 
 void RS_ActionModifyDelete::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel(tr("Select to delete (Enter to complete)"), MOD_SHIFT_AND_CTRL(tr("Select contour"),tr("Delete immediately after selection")));
+    updateMouseWidgetTRCancel(tr("Select to delete (Enter to complete)"),
+        MOD_SHIFT_AND_CTRL(tr("Select contour"),tr("Delete immediately after selection")));
 }
 
 RS2::CursorType RS_ActionModifyDelete::doGetMouseCursorSelected([[maybe_unused]] int status){

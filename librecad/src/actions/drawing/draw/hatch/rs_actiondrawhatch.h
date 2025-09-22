@@ -48,7 +48,7 @@ protected:
      * Action States.
      */
     enum Status {
-        ShowDialog           /**< Showing the hatch dialog. */
+        ShowDialog = InitialActionStatus          /**< Showing the hatch dialog. */
     };
     std::unique_ptr<RS_HatchData> m_hatchData;
     bool m_bShowArea{true};

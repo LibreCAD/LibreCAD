@@ -44,16 +44,14 @@ RS_DimAngularData::RS_DimAngularData():
     definitionPoint1( false),
     definitionPoint2( false),
     definitionPoint3( false),
-    definitionPoint4( false)
-{
+    definitionPoint4( false){
 }
 
 RS_DimAngularData::RS_DimAngularData(const RS_DimAngularData &ed):
     definitionPoint1( ed.definitionPoint1),
     definitionPoint2( ed.definitionPoint2),
     definitionPoint3( ed.definitionPoint3),
-    definitionPoint4( ed.definitionPoint4)
-{
+    definitionPoint4( ed.definitionPoint4){
 }
 
 /**
@@ -69,8 +67,7 @@ RS_DimAngularData::RS_DimAngularData(const RS_Vector& _definitionPoint1,
     definitionPoint1( _definitionPoint1),
     definitionPoint2( _definitionPoint2),
     definitionPoint3( _definitionPoint3),
-    definitionPoint4( _definitionPoint4)
-{
+    definitionPoint4( _definitionPoint4){
 }
 
 /**
@@ -96,8 +93,7 @@ LC_DimAngularVars::LC_DimAngularVars(const double _dimscale,
     dimtxt( _dimtxt * _dimscale),
     dimgap( _dimgap * _dimscale),
     arrowSize( _arrowSize * _dimscale),
-    m_tickSize( _tickSize * _dimscale)
-{
+    m_tickSize( _tickSize * _dimscale){
 }
 
 LC_DimAngularVars::LC_DimAngularVars(const LC_DimAngularVars& av) :
@@ -106,8 +102,7 @@ LC_DimAngularVars::LC_DimAngularVars(const LC_DimAngularVars& av) :
     dimexe( av.dimexe),
     dimtxt( av.dimtxt),
     dimgap( av.dimgap),
-    arrowSize( av.arrowSize)
-{
+    arrowSize( av.arrowSize){
 }
 
 /**
@@ -121,20 +116,16 @@ RS_DimAngular::RS_DimAngular(RS_EntityContainer* parent,
                              const RS_DimensionData& d,
                              const RS_DimAngularData& ed) :
     RS_Dimension( parent, d),
-    m_dimAngularData( ed)
-{
+    m_dimAngularData( ed){
     calcDimension();
-    calculateBorders();
 }
 
-RS_Entity* RS_DimAngular::clone() const
-{
-    auto *d  = new RS_DimAngular(getParent(), getData(), getEData());
+RS_DimAngular::RS_DimAngular(const RS_DimAngular& other)
+    :RS_Dimension(other), m_dimAngularData{other.m_dimAngularData} {
+}
 
-    d->setOwner( isOwner());
-    d->init();
-    d->detach();
-
+RS_Entity* RS_DimAngular::clone() const{
+    auto *d  = new RS_DimAngular(*this);
     return d;
 }
 
@@ -142,8 +133,7 @@ RS_Entity* RS_DimAngular::clone() const
  * @return Automatically created label for the default
  * measurement of this dimension.
  */
-QString RS_DimAngular::getMeasuredLabel()
-{
+QString RS_DimAngular::getMeasuredLabel(){
     int dimaunit {getGraphicVariableInt( QStringLiteral( "$DIMAUNIT"), 0)};
     int dimadec {getGraphicVariableInt( QStringLiteral( "$DIMADEC"), 0)};
     int dimazin {getGraphicVariableInt( QStringLiteral( "$DIMAZIN"), 0)};
@@ -184,8 +174,7 @@ void RS_DimAngular::extensionLine(const RS_ConstructionLine& dimLine,
                                   const RS_Vector& dimPoint,
                                   const RS_Vector& dirStart,
                                   const RS_Vector& dirEnd,
-                                  const LC_DimAngularVars& av)
-{
+                                  const LC_DimAngularVars& av){
     double diffLine {RS_Vector::posInLine( dimLine.getStartpoint(), dimLine.getEndpoint(), dimPoint)};
     double diffCenter {RS_Vector::posInLine( dimLine.getStartpoint(), dimCenter, dimPoint)};
 
@@ -194,13 +183,13 @@ void RS_DimAngular::extensionLine(const RS_ConstructionLine& dimLine,
         return;
     }
     if( 0.0 > diffLine && 0.0 > diffCenter) {
-        addDimExtensionLine(dimLine.getStartpoint(),dimPoint - dirStart * av.exe());
+        addDimExtensionLine(dimLine.getStartpoint(),dimPoint - dirStart * av.exe(), true);
     }
     else if( 1.0 < diffLine && 0.0 < diffCenter) {
-        addDimExtensionLine(dimLine.getEndpoint(),dimPoint - dirEnd * av.exe());
+        addDimExtensionLine(dimLine.getEndpoint(),dimPoint - dirEnd * av.exe(), true);
     }
     else if( 0.0 > diffLine && 1.0 < diffCenter) {
-        addDimExtensionLine(dimCenter - dirStart * av.exo(),dimPoint + dirEnd * av.exe());
+        addDimExtensionLine(dimCenter - dirStart * av.exo(),dimPoint + dirEnd * av.exe(), true);
     }
 }
 
@@ -248,13 +237,13 @@ void RS_DimAngular::arrow(const RS_Vector& point,
 
         arrow = new RS_Solid(this, sd);
         arrow->shapeArrow(point, arrowAngle, av.arrow());
-        addDimComponentEntity(arrow, getPenExtensionLine());
+        addDimComponentEntity(arrow, getPenExtensionLine(true));
     }
     else {
         RS_Vector tickVector = RS_Vector::polar(scaledTickSize,
                                                 (dimAngleL1 + dimAngleL2) / 2.0);
 
-        addDimComponentLine(point - tickVector, point + tickVector, getPenExtensionLine());
+        addDimComponentLine(point - tickVector, point + tickVector, getPenExtensionLine(true));
     }
 }
 
@@ -270,11 +259,19 @@ void RS_DimAngular::doUpdateDim(){
         return;
     }
 
-    LC_DimAngularVars   av( getGeneralScale(),
+    double dimscale = getGeneralScale();
+    double dimgap = getDimensionLineGap() * dimscale;
+
+    bool drawFrameAroundText = std::signbit(dimgap);
+    if (drawFrameAroundText) {
+        dimgap = -dimgap;
+    }
+
+    LC_DimAngularVars   av( dimscale,
                             getExtensionLineOffset(),
                             getExtensionLineExtension(),
                             getTextHeight(),
-                            getDimensionLineGap(),
+                            dimgap,
                             getArrowSize(),
                             getTickSize());
 
@@ -325,17 +322,18 @@ void RS_DimAngular::doUpdateDim(){
     // move text away from dimension line:
     textPos += distV;
 
-    createDimText(textPos, av.txt(), textAngle);
+    auto text = createDimText(textPos, av.txt(), textAngle);
+    if (drawFrameAroundText) {
+        addBoundsAroundText(dimgap, text);
+    }
 }
 
-void RS_DimAngular::update()
-{
+void RS_DimAngular::update(){
     calcDimension();
     RS_Dimension::update();
 }
 
-void RS_DimAngular::move(const RS_Vector& offset)
-{
+void RS_DimAngular::move(const RS_Vector& offset){
     RS_Dimension::move( offset);
 
     m_dimAngularData.definitionPoint1.move( offset);
@@ -345,13 +343,11 @@ void RS_DimAngular::move(const RS_Vector& offset)
     update();
 }
 
-void RS_DimAngular::rotate(const RS_Vector& center, double angle)
-{
+void RS_DimAngular::rotate(const RS_Vector& center, double angle){
     rotate( center, RS_Vector( angle));
 }
 
-void RS_DimAngular::rotate(const RS_Vector& center, const RS_Vector& angleVector)
-{
+void RS_DimAngular::rotate(const RS_Vector& center, const RS_Vector& angleVector){
     RS_Dimension::rotate( center, angleVector);
 
     m_dimAngularData.definitionPoint1.rotate( center, angleVector);
@@ -361,8 +357,7 @@ void RS_DimAngular::rotate(const RS_Vector& center, const RS_Vector& angleVector
     update();
 }
 
-void RS_DimAngular::scale(const RS_Vector& center, const RS_Vector& factor)
-{
+void RS_DimAngular::scale(const RS_Vector& center, const RS_Vector& factor){
     RS_Dimension::scale( center, factor);
 
     m_dimAngularData.definitionPoint1.scale( center, factor);
@@ -372,8 +367,7 @@ void RS_DimAngular::scale(const RS_Vector& center, const RS_Vector& factor)
     update();
 }
 
-void RS_DimAngular::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2)
-{
+void RS_DimAngular::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2){
     RS_Dimension::mirror( axisPoint1, axisPoint2);
 
     m_dimAngularData.definitionPoint1.mirror( axisPoint1, axisPoint2);
@@ -389,8 +383,7 @@ void RS_DimAngular::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoi
  * From DXF reference the lines are P2-P1 and P-P3.
  * The dimension is drawn from line1 (P2-P1) to line2 (P-P3) in CCW direction.
  */
-void RS_DimAngular::calcDimension(void)
-{
+void RS_DimAngular::calcDimension(void){
     // get unit vectors for definition points
     dimDir1s = RS_Vector::polar( 1.0, RS_Math::correctAngle( m_dimAngularData.definitionPoint2.angleTo( m_dimAngularData.definitionPoint1)));
     dimDir1e = RS_Vector::polar( 1.0, RS_Math::correctAngle( m_dimAngularData.definitionPoint1.angleTo( m_dimAngularData.definitionPoint2)));

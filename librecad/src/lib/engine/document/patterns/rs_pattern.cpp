@@ -43,8 +43,7 @@
 RS_Pattern::RS_Pattern(const QString& fileName)
         : RS_EntityContainer(nullptr)
 		,fileName(fileName)
-		,loaded(false)
-{
+		,loaded(false){
 	RS_DEBUG->print("RS_Pattern::RS_Pattern() ");
 }
 
@@ -54,14 +53,14 @@ RS_Pattern::RS_Pattern(const QString& fileName)
  *
  * @author{Dongxu Li}
  */
-RS_Entity* RS_Pattern::clone() const
-{
+RS_Entity* RS_Pattern::clone() const{
     auto* cloned = new RS_Pattern(fileName);
     cloned->loaded = loaded;
     if (loaded) {
-            for(auto* entity: *this)
+        for (auto* entity : *this) {
             cloned->addEntity(isOwner() ? entity->clone() : entity);
         }
+    }
     return cloned;
 }
 
@@ -109,14 +108,14 @@ bool RS_Pattern::loadPattern() {
 	RS_Graphic gr;
 	RS_FileIO::instance()->fileImport(gr, path);
     for(const auto* e: gr){
-        if (e && (e->rtti()==RS2::EntityLine ||
-				e->rtti()==RS2::EntityArc||
-				e->rtti()==RS2::EntityEllipse
-                  )) {
+        if (e && (e->rtti() == RS2::EntityLine ||
+            e->rtti() == RS2::EntityArc ||
+            e->rtti() == RS2::EntityEllipse
+        )) {
             RS_Layer* l = e->getLayer();
             RS_Entity* cl = e->clone();
             cl->reparent(this);
-			if (l) {
+            if (l) {
                 cl->setLayer(l->getName());
             }
             addEntity(cl);

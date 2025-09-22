@@ -79,30 +79,38 @@ void LC_ActionSplineRemoveBetween::onMouseMove(RS_Vector mouse, int status, LC_M
     }
 }
 
+void LC_ActionSplineRemoveBetween::setEntityToModify(RS_Entity* entity) {
+    m_entityToModify = entity;
+    m_entityToModify->setSelected(true);
+    switch (m_entityToModify->rtti()){
+        case RS2::EntitySplinePoints:{
+            auto* sp = dynamic_cast<LC_SplinePoints *>(m_entityToModify);
+            m_splineIsClosed = sp->isClosed();
+            break;
+        }
+        case RS2::EntitySpline:{
+            auto* sp = dynamic_cast<RS_Spline*>(m_entityToModify);
+            m_splineIsClosed = sp->isClosed();
+            break;
+        }
+        default:
+            break;
+    }
+
+    redrawDrawing();
+    setStatus(SetBeforeControlPoint);
+}
+
+bool LC_ActionSplineRemoveBetween::mayModifySplineEntity(RS_Entity* e) {
+    return e != nullptr && g_enTypeList.contains(e->rtti());
+}
+
 void LC_ActionSplineRemoveBetween::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status){
         case SetEntity:{
             auto entity = catchEntityByEvent(e, g_enTypeList);
             if (entity != nullptr && mayModifySplineEntity(entity)){
-                m_entityToModify = entity;
-                m_entityToModify->setSelected(true);
-                switch (m_entityToModify->rtti()){
-                    case RS2::EntitySplinePoints:{
-                        auto* sp = dynamic_cast<LC_SplinePoints *>(m_entityToModify);
-                        m_splineIsClosed = sp->isClosed();
-                        break;
-                    }
-                    case RS2::EntitySpline:{
-                        auto* sp = dynamic_cast<RS_Spline*>(m_entityToModify);
-                        m_splineIsClosed = sp->isClosed();
-                        break;
-                    }
-                    default:
-                        break;
-                }
-
-                redrawDrawing();
-                setStatus(SetBeforeControlPoint);
+                setEntityToModify(entity);
             }
             break;
         }

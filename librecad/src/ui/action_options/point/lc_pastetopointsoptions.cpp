@@ -31,6 +31,7 @@ LC_PasteToPointsOptions::LC_PasteToPointsOptions()
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_PasteToPointsOptions::onAngleEditingFinished);
     connect(ui->leFactor, &QLineEdit::editingFinished, this, &LC_PasteToPointsOptions::onFactorEditingFinished);
     connect(ui->cbRemovePoint, &QCheckBox::clicked, this, &LC_PasteToPointsOptions::onRemovePointsClicked);
+    pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);
 }
 
 LC_PasteToPointsOptions::~LC_PasteToPointsOptions(){

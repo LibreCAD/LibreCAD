@@ -403,6 +403,15 @@ RS_Arc* RS_PreviewActionInterface::previewRefArc(const RS_Vector &center, const 
         return arc;
 }
 
+RS_Arc* RS_PreviewActionInterface::previewRefArc(bool reversed, const RS_Vector &center, const RS_Vector &startPoint, const RS_Vector &mouse){
+    double radius = center.distanceTo(startPoint);
+    double angle1 = center.angleTo(mouse);
+    double angle2 = center.angleTo(startPoint);
+    auto arc = new LC_RefArc(m_preview.get(), RS_ArcData(center, radius, angle1, angle2, reversed));
+    m_preview->addEntity(arc);
+    return arc;
+}
+
 void RS_PreviewActionInterface::previewSnapAngleMark(const RS_Vector &center, const RS_Vector &refPoint/*, const RS_Vector &refPoint2*/){
     double angle = center.angleTo(refPoint);
     previewSnapAngleMark(center, angle);
@@ -540,6 +549,11 @@ LC_ActionInfoMessageBuilder& RS_PreviewActionInterface::msg(const QString& name,
 
 LC_ActionInfoMessageBuilder& RS_PreviewActionInterface::msg(const QString& name) {
     m_msgBuilder->add(name);
+    return *m_msgBuilder;
+}
+
+LC_ActionInfoMessageBuilder& RS_PreviewActionInterface::msgStart() {
+    m_msgBuilder->cleanup();
     return *m_msgBuilder;
 }
 
@@ -744,6 +758,7 @@ LC_MouseEvent RS_PreviewActionInterface::toLCMouseMoveEvent(QMouseEvent *e)
     result.uiPosition = e->pos();
     result.isShift = isShift(e);
     result.isControl = isControl(e);
+    result.isAlt = isAlt(e);
     result.originalEvent = e;
     return result;
 }

@@ -45,6 +45,13 @@ LC_Rectangle1PointOptions::LC_Rectangle1PointOptions() :
     connect(ui->cbEdges, &QComboBox::currentIndexChanged, this, &LC_Rectangle1PointOptions::onEdgesIndexChanged);
     connect(ui->chkFixedBaseAngle, &QCheckBox::clicked, this, &LC_Rectangle1PointOptions::onBaseAngleFixedClicked);
     connect(ui->cbFreeAngle, &QCheckBox::clicked, this, &LC_Rectangle1PointOptions::onFreeAngleClicked);
+
+    pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);
+    pickDistanceSetup("width", ui->tbPickWidth, ui->leWidth);
+    pickDistanceSetup("height", ui->tbPickHeight, ui->leHeight);
+    pickDistanceSetup("radius", ui->tbPickRadius, ui->leRadius);
+    pickDistanceSetup("lengthY", ui->tbPickLenghtY, ui->leLenY);
+    pickDistanceSetup("lengthX", ui->tbPickLengthX, ui->leX);
 }
 
 LC_Rectangle1PointOptions::~LC_Rectangle1PointOptions(){
@@ -170,14 +177,19 @@ void LC_Rectangle1PointOptions::setCornersModeToActionAndView(int index){
     bool bevel = index == LC_AbstractActionDrawRectangle::CORNER_BEVEL;
 
     ui->lblRadius->setVisible(round);
+    ui->tbPickRadius->setVisible(round);
     ui->leRadius->setVisible(round);
+    ui->tbPickRadius->setVisible(round);
+
     ui->cbSnapRadiusCenter->setVisible(round);
     ui->cbInnerSize->setVisible(round);
 
     ui->lblLenY->setVisible(bevel);
     ui->lblX->setVisible(bevel);
     ui->leLenY->setVisible(bevel);
+    ui->tbPickLenghtY->setVisible(bevel);
     ui->leX->setVisible(bevel);
+    ui->tbPickLengthX->setVisible(bevel);
 
     ui->cbCorners->setCurrentIndex(index);
 
@@ -319,7 +331,9 @@ void LC_Rectangle1PointOptions::onBaseAngleFixedClicked(bool value){
 void LC_Rectangle1PointOptions::setBaseAngleFixedToActionAndView(bool value){
     ui->chkFixedBaseAngle->setChecked(value);
     m_action->setBaseAngleFixed(value);
-    ui->leAngle->setEnabled(value && !ui->cbFreeAngle->isChecked());
+    bool angleEnabled = value && !ui->cbFreeAngle->isChecked();
+    ui->leAngle->setEnabled(angleEnabled);
+    ui->tbPickAngle->setEnabled(angleEnabled);
     ui->cbFreeAngle->setEnabled(value);
 }
 
@@ -342,6 +356,7 @@ void LC_Rectangle1PointOptions::setFreeAngleToActionAndView(bool value){
    m_action->setBaseAngleFree(value);
    ui->cbFreeAngle->setChecked(value);
    ui->leAngle->setEnabled(!value);
+   ui->tbPickAngle->setEnabled(!value);
 }
 
 void LC_Rectangle1PointOptions::onEdgesIndexChanged(int index){

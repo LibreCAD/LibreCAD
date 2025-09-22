@@ -34,6 +34,7 @@ public:
     void setOffset(double offset);
     void init(int status) override;
 protected:
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     LC_ActionOptionsWidget *createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateMouseButtonHints() override;
@@ -44,7 +45,7 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 
     enum State{
-        SetEntity1,
+        SetEntity1 = InitialActionStatus,
         SetEntity2,
         SetOffset
     };
@@ -69,9 +70,10 @@ protected:
     int m_mainStatus = 0;
     void restoreMainStatus(){setStatus(m_mainStatus);}
     void prepareLine(LineInfo &info, RS_Entity* ent, bool alternate);
+    RS2::LineType getLineTypeForCenterLine() const;
+    void setupCenterlinePenLayer(RS_Line* line) const;
     void doTrigger() override;
-
-
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 
 #endif // LC_ACTIONDRAWMIDLINE_H

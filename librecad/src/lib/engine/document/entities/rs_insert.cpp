@@ -48,20 +48,19 @@ namespace {
 constexpr double MIN_Scale_Factor = 1.0e-6;
 
 // update the entity pen according to the blockPen
-RS_Pen updatePen(RS_Pen&& pen, const RS_Pen& blockPen)
-{
+RS_Pen updatePen(RS_Pen&& pen, const RS_Pen& blockPen) {
     // color from block (free floating):
-    if (pen.getColor()==RS_Color(RS2::FlagByBlock)) {
+    if (pen.getColor() == RS_Color(RS2::FlagByBlock)) {
         pen.setColor(blockPen.getColor());
     }
 
     // line width from block (free floating):
-    if (pen.getWidth()==RS2::WidthByBlock) {
+    if (pen.getWidth() == RS2::WidthByBlock) {
         pen.setWidth(blockPen.getWidth());
     }
 
     // line type from block (free floating):
-    if (pen.getLineType()==RS2::LineByBlock) {
+    if (pen.getLineType() == RS2::LineByBlock) {
         pen.setLineType(blockPen.getLineType());
     }
 
@@ -99,21 +98,20 @@ RS_InsertData::RS_InsertData(const RS_InsertData &other):
   ,updateMode(other.updateMode){
 }
 
-std::ostream& operator << (std::ostream& os,
-									 const RS_InsertData& d) {
-	   os << "(" << d.name.toLatin1().data() << ")";
-	   return os;
-   }
+std::ostream& operator <<(std::ostream& os,
+                          const RS_InsertData& d) {
+    os << "(" << d.name.toLatin1().data() << ")";
+    return os;
+}
+
 /**
  * @param parent The graphic this m_block belongs to.
  */
 RS_Insert::RS_Insert(RS_EntityContainer* parent,
                      const RS_InsertData& d)
-        : RS_EntityContainer(parent)
-       , m_data(d)
-{
-
-    if (m_data.updateMode!=RS2::NoUpdate) {
+    : RS_EntityContainer(parent)
+      , m_data(d) {
+    if (m_data.updateMode != RS2::NoUpdate) {
         RS_Insert::update();
         //calculateBorders();
     }
@@ -169,7 +167,10 @@ void RS_Insert::update() {
                 for (int r=0; r<m_data.rows; ++r) {
 //                i_en_counts++;
 //                RS_DEBUG->print("RS_Insert::update: row %d", r);
-
+                    // fixme - sand - this is quick fix for #2177 - yet it's necessary to check why undone entity is in block?
+                    if (e->isUndone()) {
+                        continue;
+                    }
                     if (e->rtti()==RS2::EntityInsert &&
                             m_data.updateMode!=RS2::PreviewUpdate) {
 

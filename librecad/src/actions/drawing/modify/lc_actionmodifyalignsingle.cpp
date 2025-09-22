@@ -21,6 +21,8 @@
  ******************************************************************************/
 #include "lc_actionmodifyalignsingle.h"
 
+#include <boost/numeric/ublas/functional.hpp>
+
 #include "lc_actioninfomessagebuilder.h"
 #include "lc_cursoroverlayinfo.h"
 #include "lc_graphicviewport.h"
@@ -40,6 +42,10 @@ void LC_ActionModifyAlignSingle::init(int status) {
     else {
         RS_PreviewActionInterface::init(status);
     }
+}
+
+void LC_ActionModifyAlignSingle::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
+    m_entityToAlign = contextEntity;
 }
 
 void LC_ActionModifyAlignSingle::doTrigger() {
@@ -65,6 +71,35 @@ void LC_ActionModifyAlignSingle::doTrigger() {
         }
     }
     drawPreview();
+}
+
+void LC_ActionModifyAlignSingle::previewAlign(RS_Entity* entity, double verticalRef, bool drawVertical,
+    double horizontalRef, bool drawHorizontal, const RS_Vector& alignMin, const RS_Vector& alignMax) {
+    RS_Vector offset;
+    if (entity != nullptr){
+        highlightHover(entity);
+        RS_Vector target = LC_Align::getReferencePoint(alignMin, alignMax, hAlign, vAlign);
+
+        RS_Vector entityRefPoint = LC_Align::getReferencePoint(entity->getMin(), entity->getMax(), hAlign, vAlign);
+        offset = target - entityRefPoint;
+
+        RS_Entity* clone =  LC_Align::createCloneMovedToOffset(entity, offset, false);
+        if (clone != nullptr){
+            previewEntity(clone);
+        }
+    }
+
+    if (isInfoCursorForModificationEnabled()){
+        QString message = prepareInfoCursorMessage(verticalRef, drawVertical, horizontalRef, drawHorizontal);
+
+        auto builder = msgStart().string(message);
+        if (entity != nullptr){
+            builder.string(tr("Offset:"))
+                   .relative(offset)
+                   .relativePolar(offset);
+        }
+        builder.toInfoCursorZone2(false);
+    }
 }
 
 void LC_ActionModifyAlignSingle::onMouseMoveEvent(int status, LC_MouseEvent *e) {
@@ -114,11 +149,14 @@ void LC_ActionModifyAlignSingle::onMouseMoveEvent(int status, LC_MouseEvent *e) 
                     QString msg = prepareInfoCursorMessage(verticalRef, drawVertical, horizontalRef, drawHorizontal);
                     appendInfoCursorZoneMessage(msg, 2, false);
                 }
+
+                if (m_entityToAlign != nullptr) {
+                    previewAlign(m_entityToAlign, verticalRef, drawVertical, horizontalRef, drawHorizontal, min, max);
+                }
             }
             break;
         }
         case SelectEntity:{
-
             double verticalRef;
             bool drawVertical  = LC_Align::getVerticalRefCoordinate(m_alignMin, m_alignMax, hAlign, verticalRef);
 
@@ -133,31 +171,7 @@ void LC_ActionModifyAlignSingle::onMouseMoveEvent(int status, LC_MouseEvent *e) 
             }
 
             RS_Entity* entity = catchAndDescribe(e);
-            RS_Vector offset;
-            if (entity != nullptr){
-                highlightHover(entity);
-                RS_Vector target = LC_Align::getReferencePoint(m_alignMin, m_alignMax, hAlign, vAlign);
-
-                RS_Vector entityRefPoint = LC_Align::getReferencePoint(entity->getMin(), entity->getMax(), hAlign, vAlign);
-                offset = target - entityRefPoint;
-
-                RS_Entity* clone =  LC_Align::createCloneMovedToOffset(entity, offset, false);
-                if (clone != nullptr){
-                    previewEntity(clone);
-                }
-            }
-
-            if (isInfoCursorForModificationEnabled()){
-                QString message = prepareInfoCursorMessage(verticalRef, drawVertical, horizontalRef, drawHorizontal);
-
-                auto builder = msg(message);
-                if (entity != nullptr){
-                    builder.string(tr("Offset:"))
-                           .relative(offset)
-                           .relativePolar(offset);
-                }
-                builder.toInfoCursorZone2(false);
-            }
+            previewAlign(entity, verticalRef, drawVertical, horizontalRef, drawHorizontal, m_alignMin, m_alignMax);
             break;
         }
     }
@@ -267,7 +281,6 @@ void LC_ActionModifyAlignSingle::onMouseLeftButtonRelease(int status, LC_MouseEv
                         m_baseAlignEntity = entity;
                         m_alignMin = entity->getMin();
                         m_alignMax = entity->getMax();
-                        setStatus(SelectEntity);
                     }
                     break;
                 }
@@ -285,6 +298,13 @@ void LC_ActionModifyAlignSingle::onMouseLeftButtonRelease(int status, LC_MouseEv
                     break;
                 default:
                     break;
+            }
+
+            if (m_entityToAlign != nullptr) {
+                trigger();
+            }
+            else {
+                setStatus(SelectEntity);
             }
             break;
         }

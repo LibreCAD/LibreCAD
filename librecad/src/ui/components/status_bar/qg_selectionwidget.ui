@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>240</width>
-    <height>32</height>
+    <width>239</width>
+    <height>38</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>112</width>
+    <width>145</width>
     <height>29</height>
    </size>
   </property>
@@ -33,40 +33,57 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
-    <number>1</number>
+    <number>6</number>
    </property>
    <property name="topMargin">
     <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>1</number>
+    <number>2</number>
    </property>
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <property name="horizontalSpacing">
-    <number>1</number>
-   </property>
    <property name="verticalSpacing">
-    <number>0</number>
+    <number>2</number>
    </property>
-   <item row="0" column="0">
+   <item row="0" column="0" rowspan="2">
+    <widget class="QToolButton" name="tbSelectionActions">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>22</width>
+       <height>22</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" rowspan="2">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
     <widget class="QLabel" name="lLabel">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="minimumSize">
       <size>
-       <width>46</width>
+       <width>50</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>120</width>
+       <width>16777215</width>
        <height>16777215</height>
       </size>
      </property>
@@ -84,23 +101,23 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
+   <item row="0" column="3">
     <widget class="QLabel" name="lLabelLength">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="minimumSize">
       <size>
-       <width>60</width>
+       <width>85</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>600</width>
+       <width>16777215</width>
        <height>16777215</height>
       </size>
      </property>
@@ -118,17 +135,30 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item row="0" column="4">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="2">
     <widget class="QLabel" name="lEntities">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="maximumSize">
       <size>
-       <width>120</width>
+       <width>16777215</width>
        <height>16777215</height>
       </size>
      </property>
@@ -152,17 +182,17 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
+   <item row="1" column="3">
     <widget class="QLabel" name="lTotalLength">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="maximumSize">
       <size>
-       <width>120</width>
+       <width>16777215</width>
        <height>16777215</height>
       </size>
      </property>

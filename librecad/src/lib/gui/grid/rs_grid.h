@@ -78,10 +78,12 @@ public:
 	QString getInfo() const;
 	bool isIsometric() const;
 	void setIsometric(bool b);
+    RS_Vector getGridWidth() const;
 	RS_Vector getMetaGridWidth() const;
 	RS_Vector const &getCellVector() const;
 	void loadSettings();
 	void drawGrid(RS_Painter *painter);
+    int getMetaGridEvery(){return m_metaGridEvery;}
 private:
 	//! copy ctor disabled
     RS_Grid(RS_Grid const&) = delete;
@@ -93,14 +95,16 @@ private:
     //! \}
 
     //! Graphic view this grid is connected to.
-    LC_GraphicViewport* viewport = nullptr;
-    QString gridInfoString = "";
-    RS_Vector metaGridWidth;
-    bool isometric = false;
+    LC_GraphicViewport* m_viewport = nullptr;
+    QString m_gridInfoString = "";
+    RS_Vector m_metaGridWidth;
+    RS_Vector m_gridWidth;
+    bool m_isometric = false;
     RS2::IsoGridViewType isoViewType = RS2::IsoLeft;
-    bool scaleGrid = true;
-    RS_Vector userGrid;
-    int minGridSpacing;
+    bool m_scaleGrid = true;
+    RS_Vector m_userGrid;
+    int m_minGridSpacing;
+    int m_metaGridEvery{10};
 	LC_GridSystem *gridSystem {nullptr};
     RS_Vector prepareGridWidth();
 };

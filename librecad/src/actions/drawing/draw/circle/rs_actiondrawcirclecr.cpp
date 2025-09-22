@@ -55,12 +55,12 @@ void RS_ActionDrawCircleCR::doTrigger() {
     setPenAndLayerToActive(circle);
 
     switch (getStatus()) {
-        case SetCenter: // FIXME _ SAND _ _ REVIEW!!!!!
-            // Issue #2188, cannot add out of an undocycle
-            //m_container->addEntity(circle);
+        case SetCenter:
             moveRelativeZero(circle->getCenter());
             break;
         case SetRadius:
+            break;
+        default:
             break;
     }
 
@@ -86,6 +86,14 @@ void RS_ActionDrawCircleCR::onMouseMoveEvent(int status, LC_MouseEvent *e) {
         default:
             break;
     }
+}
+
+bool RS_ActionDrawCircleCR::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "radius") {
+        setRadius(distance);
+        return true;
+    }
+    return false;
 }
 
 void RS_ActionDrawCircleCR::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {

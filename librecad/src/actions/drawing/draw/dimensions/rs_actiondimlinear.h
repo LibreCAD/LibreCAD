@@ -50,11 +50,10 @@ public:
     };
 
 public:
-    RS_ActionDimLinear(LC_ActionContext *actionContext,
-        double angle = 0.0, bool fixedAngle = false,
-        RS2::ActionType type = RS2::ActionDimLinear);
+    RS_ActionDimLinear(LC_ActionContext *actionContext, double angle = 0.0, bool fixedAngle = false,
+         RS2::ActionType type = RS2::ActionDimLinear);
     ~RS_ActionDimLinear() override;
-    void preparePreview() override;
+
     QStringList getAvailableCommands() override;
 //    void showOptions() override;
     double getUcsAngleDegrees() const;
@@ -74,10 +73,15 @@ protected:
     bool m_fixedAngle = false;
 /** Last status before entering text or angle. */
     Status m_lastStatus = SetExtPoint1;
+
+    void preparePreview(bool alternateMode) override;
+    void updateMouseButtonHintForExtPoint2() override;
+    bool checkMaySwitchDimDirection();
+    void updateMouseButtonHintForDefPoint() override;
     void reset() override;
     RS_Vector getExtensionPoint1() override;
     RS_Vector getExtensionPoint2() override;
-    double getDimAngle() override;
+    double getDimAngle(bool alternateMode) override;
     void setExtensionPoint1(RS_Vector p) override;
     void setExtensionPoint2(RS_Vector p) override;
     RS_Entity *createDim(RS_EntityContainer* parent) override;

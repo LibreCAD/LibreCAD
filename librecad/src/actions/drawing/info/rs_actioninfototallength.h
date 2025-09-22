@@ -44,7 +44,7 @@ protected:
      * Action States.
      */
     enum Status {
-        Acknowledge    /**< Acknowledge or cancel. */
+        Acknowledge = InitialActionStatus   /**< Acknowledge or cancel. */
     };
 
     void updateMouseButtonHintsForSelection() override;

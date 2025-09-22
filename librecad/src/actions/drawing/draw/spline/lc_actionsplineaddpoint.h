@@ -28,7 +28,7 @@
 class LC_ActionSplineAddPoint:public LC_ActionSplineModifyBase{
     Q_OBJECT
 public:
-    LC_ActionSplineAddPoint(LC_ActionContext *actionContext);
+    explicit LC_ActionSplineAddPoint(LC_ActionContext *actionContext);
     ~LC_ActionSplineAddPoint() override = default;
 protected:
     bool m_endpointIsSelected = false;
@@ -36,9 +36,11 @@ protected:
     void updateMouseButtonHints() override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMove(RS_Vector mouse, int status, LC_MouseEvent *e) override;
+    void setEntityToModify(RS_Entity* entity) override;
     void doCompleteTrigger() override;
     void doAfterTrigger() override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    bool mayModifySplineEntity(RS_Entity* pEntity) override;
 };
 
 #endif // LC_ACTIONSPLINEADDPOINTACTION_H

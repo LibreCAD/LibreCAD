@@ -37,6 +37,10 @@ LC_LineFromPointToLineOptions::LC_LineFromPointToLineOptions() :
     connect(ui->leLength, &QLineEdit::editingFinished, this, &LC_LineFromPointToLineOptions::onLengthEditingFinished);
     connect(ui->leOffset, &QLineEdit::editingFinished, this, &LC_LineFromPointToLineOptions::onEndOffsetEditingFinished);
     connect(ui->cbSnap, &QComboBox::currentIndexChanged,this, &LC_LineFromPointToLineOptions::onSnapModeIndexChanged);
+
+    pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);
+    pickDistanceSetup("length", ui->tbPickLength, ui->leLength);
+    pickDistanceSetup("offset", ui->tbPickOffset, ui->leOffset);
 }
 
 LC_LineFromPointToLineOptions::~LC_LineFromPointToLineOptions(){
@@ -70,7 +74,7 @@ void LC_LineFromPointToLineOptions::doSetAction(RS_ActionInterface *a, bool upda
         orthogonal = m_action->getOrthogonal();
         sizeMode = m_action->getSizeMode();
         snap = m_action->getLineSnapMode();
-        angle = fromDouble(m_action->getAngle());
+        angle = fromDouble(m_action->getAngleDegrees());
         length = fromDouble(m_action->getLength());
         offset = fromDouble(m_action->getEndOffset());
     }
@@ -135,7 +139,9 @@ void LC_LineFromPointToLineOptions::setSizeModelIndexToActionAndView(int index){
     ui->cbSizeMode->setCurrentIndex(index);
     bool intersectionMode = index == 0;
     ui->frmLength->setVisible(!intersectionMode);
+    ui->tbPickLength->setVisible(!intersectionMode && m_interactiveInputControlsVisible);
     ui->frmOffset->setVisible(intersectionMode);
+    ui->tbPickOffset->setVisible(intersectionMode && m_interactiveInputControlsVisible);
 }
 
 void LC_LineFromPointToLineOptions::setAngleToActionAndView(const QString& value){
@@ -146,7 +152,7 @@ void LC_LineFromPointToLineOptions::setAngleToActionAndView(const QString& value
         double correctedAngle = std::remainder(angleRad, M_PI);
         angle = RS_Math::rad2deg(std::abs(correctedAngle));
 
-        m_action->setAngle(angle);
+        m_action->setAngleDegrees(angle);
         ui->leAngle->setText(fromDouble(angle));
     }
 }
@@ -173,4 +179,5 @@ void LC_LineFromPointToLineOptions::setOrthogonalToActionAndView(bool value){
 
     ui->lblAngle->setEnabled(!value);
     ui->leAngle->setEnabled(!value);
+    ui->tbPickAngle->setEnabled(!value);
 }

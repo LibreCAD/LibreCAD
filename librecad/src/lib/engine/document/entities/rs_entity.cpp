@@ -73,54 +73,55 @@ struct RS_Entity::Impl {
  */
 RS_Entity::RS_Entity(RS_EntityContainer *parent)
     : parent{parent}
-    , m_pImpl{std::make_unique<Impl>()}
-{
-    init();
+    , m_pImpl{std::make_unique<Impl>()}{
+    init(true);
 }
+
+// RS_Entity::RS_Entity(RS_EntityContainer *parent, bool setPenToActive)
+//     : parent{parent}
+// , m_pImpl{std::make_unique<Impl>()}{
+//     init(setPenToActive);
+// }
 
 RS_Entity::RS_Entity(const RS_Entity& other):
     parent{other.parent}
+    , minV {other.minV}
+    , maxV {other.maxV}
+    , m_layer {other.m_layer}
     , updateEnabled {other.updateEnabled}
-{
-    init();
-    m_pImpl->fromOther(other.m_pImpl.get());
-    m_layer  = other.m_layer;
-    minV = other.minV;
-    maxV = other.maxV;
+    , m_pImpl{std::make_unique<Impl>(*other.m_pImpl)}{
+    init(false);
 }
 
-RS_Entity& RS_Entity::operator = (const RS_Entity& other)
-{
+RS_Entity& RS_Entity::operator = (const RS_Entity& other){
     parent = other.parent;
-    updateEnabled = other.updateEnabled;
-    init();
-    m_pImpl->fromOther(other.m_pImpl.get());
-    m_layer  = other.m_layer;
     minV  = other.minV;
     maxV  = other.maxV;
+    m_layer  = other.m_layer;
+    updateEnabled = other.updateEnabled;
+    m_pImpl->fromOther(other.m_pImpl.get());
+    initId();
     return *this;
 }
 
 RS_Entity::RS_Entity(RS_Entity&& other):
     parent{other.parent}
+    , minV {other.minV}
+    , maxV {other.maxV}
+    , m_layer {other.m_layer}
     , updateEnabled {other.updateEnabled}
-{
-    init();
-    m_pImpl = std::move(other.m_pImpl);
-    m_layer  = other.m_layer;
-    minV  = other.minV;
-    maxV  = other.maxV;
+    , m_pImpl{std::move(other.m_pImpl)}{
+    initId();
 }
 
-RS_Entity& RS_Entity::operator = (RS_Entity&& other)
-{
+RS_Entity& RS_Entity::operator = (RS_Entity&& other){
     parent = other.parent;
-    updateEnabled = other.updateEnabled;
-    init();
-    m_pImpl = std::move(other.m_pImpl);
-    m_layer  = other.m_layer;
     minV  = other.minV;
     maxV  = other.maxV;
+    m_layer  = other.m_layer;
+    updateEnabled = other.updateEnabled;
+    m_pImpl = std::move(other.m_pImpl);
+    initId();
     return *this;
 }
 
@@ -143,15 +144,17 @@ RS_Entity::~RS_Entity() = default;
 /**
  * Initialisation. Called from all constructors.
  */
-void RS_Entity::init() {
+void RS_Entity::init(bool setPenAndLayerToActive) {
     if (m_pImpl == nullptr) {
         m_pImpl = std::make_unique<Impl>();
     }
     resetBorders();
     setFlag(RS2::FlagVisible);
     updateEnabled = true;
-    setLayerToActive();
-    setPenToActive();
+    if (setPenAndLayerToActive) {
+        setLayerToActive();
+        setPenToActive();
+    }
     initId();
 }
 

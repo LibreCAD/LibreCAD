@@ -44,8 +44,7 @@ namespace {
  * @param point - a point
  * @return the shortest distance in between
  */
-double getLinePointDistance(const RS_Line& line, const RS_Vector& point)
-{
+double getLinePointDistance(const RS_Line& line, const RS_Vector& point){
     double distance = RS_MAXDOUBLE;
     line.getNearestPointOnEntity(point, true, &distance);
     return distance;
@@ -54,8 +53,7 @@ double getLinePointDistance(const RS_Line& line, const RS_Vector& point)
 /**
  * @brief whether a point is within a contour
  */
-bool isInternalPoint(const RS_Vector& point, const RS_VectorSolutions& contour)
-{
+bool isInternalPoint(const RS_Vector& point, const RS_VectorSolutions& contour){
     if (!point.valid)
         return false;
 
@@ -64,15 +62,15 @@ bool isInternalPoint(const RS_Vector& point, const RS_VectorSolutions& contour)
     // ignore invalid points
     std::copy_if(contour.begin(), contour.end(), std::back_inserter(sol), RS_Vector::isValid);
 
-    switch(sol.size()) {
-    case 0:
-        return false;
-    case 1:
-        return sol.front().distanceTo(point) < RS_TOLERANCE;
-    case 2:
-        return getLinePointDistance(RS_Line{nullptr, {sol.front(), sol.back()}}, point) < RS_TOLERANCE;
-    default:
-        break;
+    switch (sol.size()) {
+        case 0:
+            return false;
+        case 1:
+            return sol.front().distanceTo(point) < RS_TOLERANCE;
+        case 2:
+            return getLinePointDistance(RS_Line{nullptr, {sol.front(), sol.back()}}, point) < RS_TOLERANCE;
+        default:
+            break;
     }
 
     QPolygonF polygon;
@@ -82,8 +80,7 @@ bool isInternalPoint(const RS_Vector& point, const RS_VectorSolutions& contour)
 }
 
 RS_SolidData::RS_SolidData():
-    corner{{RS_Vector(false), RS_Vector(false), RS_Vector(false), RS_Vector(false)}}
-{
+    corner{{RS_Vector(false), RS_Vector(false), RS_Vector(false), RS_Vector(false)}}{
 }
 
 /**
@@ -92,8 +89,7 @@ RS_SolidData::RS_SolidData():
 RS_SolidData::RS_SolidData(const RS_Vector& corner1,
                            const RS_Vector& corner2,
                            const RS_Vector& corner3):
-    corner{{corner1, corner2, corner3, RS_Vector(false)}}
-{
+    corner{{corner1, corner2, corner3, RS_Vector(false)}}{
 }
 
 /**
@@ -103,13 +99,11 @@ RS_SolidData::RS_SolidData(const RS_Vector& corner1,
                            const RS_Vector& corner2,
                            const RS_Vector& corner3,
                            const RS_Vector& corner4):
-    corner{{corner1, corner2, corner3, corner4}}
-{
+    corner{{corner1, corner2, corner3, corner4}}{
 }
 
 std::ostream& operator << (std::ostream& os,
-                           const RS_SolidData& pd)
-{
+                           const RS_SolidData& pd){
     os << "(";
     for (int i = RS_SolidData::FirstCorner; i < RS_SolidData::MaxCorners; i++) {
         os << pd.corner[i];
@@ -125,14 +119,18 @@ std::ostream& operator << (std::ostream& os,
 RS_Solid::RS_Solid(RS_EntityContainer* parent,
                    const RS_SolidData& d) :
     RS_AtomicEntity(parent),
-    data(d)
-{
+    data(d){
     calculateBorders();
 }
 
-RS_Entity* RS_Solid::clone() const
-{
-    RS_Solid* s = new RS_Solid(*this);
+RS_Solid::RS_Solid(const RS_SolidData& d) :
+    RS_AtomicEntity(nullptr),
+    data(d) {
+    calculateBorders();
+}
+
+RS_Entity* RS_Solid::clone() const{
+    auto* s = new RS_Solid(*this);
     return s;
 }
 
@@ -143,8 +141,7 @@ RS_Vector RS_Solid::unsafeGetCorner(int num) const{
     return data.corner[num];
 }
 
-RS_Vector RS_Solid::getCorner(int num) const
-{
+RS_Vector RS_Solid::getCorner(int num) const{
     if (num >= RS_SolidData::FirstCorner && num < RS_SolidData::MaxCorners) {
         return data.corner[num];
     }
@@ -160,10 +157,7 @@ RS_Vector RS_Solid::getCorner(int num) const
  * @param angle Direction of the arrow.
  * @param arrowSize Size of arrow (length).
  */
-void RS_Solid::shapeArrow(const RS_Vector& point,
-                          double angle,
-                          double arrowSize)
-{
+void RS_Solid::shapeArrow(const RS_Vector& point,double angle, double arrowSize){
     double arrowSide {arrowSize / cos(0.165)};
     double cosv1 {cos( angle + 0.165) * arrowSide};
     double sinv1 {sin( angle + 0.165) * arrowSide};
@@ -178,8 +172,7 @@ void RS_Solid::shapeArrow(const RS_Vector& point,
     calculateBorders();
 }
 
-void RS_Solid::calculateBorders()
-{
+void RS_Solid::calculateBorders(){
     resetBorders();
 
     for (int i = RS_SolidData::FirstCorner; i < RS_SolidData::MaxCorners; ++i) {
@@ -190,8 +183,7 @@ void RS_Solid::calculateBorders()
     }
 }
 
-RS_Vector RS_Solid::getNearestEndpoint(const RS_Vector& coord, double* dist /*= nullptr*/)const
-{
+RS_Vector RS_Solid::getNearestEndpoint(const RS_Vector& coord, double* dist /*= nullptr*/)const{
     double minDist {RS_MAXDOUBLE};
     double curDist {0.0};
     RS_Vector ret;
@@ -211,8 +203,7 @@ RS_Vector RS_Solid::getNearestEndpoint(const RS_Vector& coord, double* dist /*= 
     return ret;
 }
 
-bool RS_Solid::isInCrossWindow(const RS_Vector& v1, const RS_Vector& v2) const
-{
+bool RS_Solid::isInCrossWindow(const RS_Vector& v1, const RS_Vector& v2) const{
     RS_Vector vBL;
     RS_Vector vTR;
     RS_VectorSolutions sol;
@@ -255,8 +246,7 @@ bool RS_Solid::isInCrossWindow(const RS_Vector& v1, const RS_Vector& v2) const
     }
 
     //Find crossing edge
-    if (getMax().x > vBL.x
-        && getMin().x < vBL.x) {    //left
+    if (getMax().x > vBL.x && getMin().x < vBL.x) {    //left
         RS_Line edge {vBL, {vBL.x, vTR.y}};
         for (auto const& line: border) {
             sol = RS_Information::getIntersection(&edge, &line, true);
@@ -265,8 +255,7 @@ bool RS_Solid::isInCrossWindow(const RS_Vector& v1, const RS_Vector& v2) const
             }
         }
     }
-    if (getMax().x > vTR.x
-        && getMin().x < vTR.x) {    //right
+    if (getMax().x > vTR.x && getMin().x < vTR.x) {    //right
         RS_Line edge {{vTR.x, vBL.y}, vTR};
         for (auto const& line: border) {
             sol = RS_Information::getIntersection(&edge, &line, true);
@@ -275,8 +264,7 @@ bool RS_Solid::isInCrossWindow(const RS_Vector& v1, const RS_Vector& v2) const
             }
         }
     }
-    if (getMax().y > vBL.y
-        && getMin().y < vBL.y) {    //bottom
+    if (getMax().y > vBL.y && getMin().y < vBL.y) {    //bottom
         RS_Line edge {vBL, {vTR.x, vBL.y}};
         for(auto const& line: border) {
             sol = RS_Information::getIntersection(&edge, &line, true);
@@ -285,8 +273,7 @@ bool RS_Solid::isInCrossWindow(const RS_Vector& v1, const RS_Vector& v2) const
             }
         }
     }
-    if(getMax().y > vTR.y
-       && getMin().y < vTR.y) { //top
+    if(getMax().y > vTR.y && getMin().y < vTR.y) { //top
         RS_Line edge {{vBL.x, vTR.y}, vTR};
         for(auto const& line: border) {
             sol = RS_Information::getIntersection(&edge, &line, true);
@@ -303,8 +290,7 @@ bool RS_Solid::isInCrossWindow(const RS_Vector& v1, const RS_Vector& v2) const
 *
 * @return true if positive o zero, false if negative.
 */
-bool RS_Solid::sign (const RS_Vector& v1, const RS_Vector& v2, const RS_Vector& v3) const
-{
+bool RS_Solid::sign (const RS_Vector& v1, const RS_Vector& v2, const RS_Vector& v3) const{
     return ! std::signbit(RS_Vector::crossP(v1 - v3, v2 - v3).z);
 }
 
@@ -314,8 +300,7 @@ bool RS_Solid::sign (const RS_Vector& v1, const RS_Vector& v2, const RS_Vector& 
 RS_Vector RS_Solid::getNearestPointOnEntity(const RS_Vector& coord,
                                             bool onEntity /*= true*/,
                                             double* dist /*= nullptr*/,
-                                            RS_Entity** entity /*= nullptr*/) const
-{
+                                            RS_Entity** entity /*= nullptr*/) const{
     //first check if point is inside solid
     if (isInternalPoint(coord, {data.corner[0], data.corner[1], data.corner[2]})) {
         // inside of the triangle: always inside of the solid, distance is zero

@@ -54,9 +54,9 @@ void RS_ActionOrder::doTrigger(bool keepSelected) {
     // fixme - sand - review SELECTION STATE
     RS_DEBUG->print("RS_ActionOrder::trigger()");
 
-    QList<RS_Entity *> entList;
-    for(auto e: m_selectedEntities){
-         entList.append(e);
+    QList<RS_Entity*> entList;
+    for (auto e : m_selectedEntities) {
+        entList.append(e);
     }
 
     if (targetEntity != nullptr) {
@@ -76,7 +76,8 @@ void RS_ActionOrder::doTrigger(bool keepSelected) {
                 break;
         }
         targetEntity = nullptr;
-    } else {
+    }
+    else {
         switch (m_actionType) {
             case RS2::ActionOrderBottom:
                 m_document->moveEntity(-1, entList);
@@ -89,10 +90,10 @@ void RS_ActionOrder::doTrigger(bool keepSelected) {
         }
     }
     // todo - sand - override mode with ctrl?
-    if (!keepSelected){
+    if (!keepSelected) {
         deselectAll();
     }
-    setStatus(getStatus()-1);
+    setStatus(getStatus() - 1);
 }
 
 void RS_ActionOrder::onMouseMoveEventSelected([[maybe_unused]]int status, LC_MouseEvent *e) {

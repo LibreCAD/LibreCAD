@@ -132,7 +132,7 @@ void QG_DlgHatch::updateEntity() {
 
 void QG_DlgHatch::showArea(){
     double area = m_entity->getTotalArea();
-    if (!RS_Math::equal(area, RS_MAXDOUBLE)) {
+    if (RS_Math::notEqual(area, RS_MAXDOUBLE)) {
         QString number = QString::number(m_entity->getTotalArea(), 'g', 10);
         leHatchArea->setText(number);
     } else {

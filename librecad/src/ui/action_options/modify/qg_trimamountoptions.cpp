@@ -37,6 +37,8 @@ QG_TrimAmountOptions::QG_TrimAmountOptions()
     connect(ui->leDist, &QLineEdit::editingFinished, this, &QG_TrimAmountOptions::onDistEditingFinished);
     connect(ui->cbSymmetric, &QCheckBox::toggled, this, &QG_TrimAmountOptions::onSymmetricToggled);
     connect(ui->cbTotalLength, &QCheckBox::toggled, this, &QG_TrimAmountOptions::onTotalLengthToggled);
+
+    pickDistanceSetup("length", ui->tbPickLength, ui->leDist);
  }
 
 /*

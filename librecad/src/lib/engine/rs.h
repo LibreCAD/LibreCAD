@@ -155,9 +155,9 @@ namespace RS2 {
         EntityDimDiametric, /**< Diametric Dimension */
         EntityDimAngular,   /**< Angular Dimension */
         EntityDimArc,       /**< Arc Dimension */
-        EntityDimLeader,    /**< Leader Dimension */
         EntityDimOrdinate,
         EntityTolerance,
+        EntityDimLeader,    /**< Leader Dimension */
         EntityHatch,        /**< Hatch */
         EntityImage,        /**< Image */
         EntitySpline,       /**< Spline */
@@ -173,7 +173,17 @@ namespace RS2 {
         EntityRefArc,
         EntityRefCircle,
         EntityRefEllipse,
+        EntityDimArrowBlock
     };
+
+
+    inline bool isDimensionalEntity(EntityType type)  {
+        return (type >= EntityDimAligned) && (type <= EntityDimLeader);
+    }
+
+    inline bool isTextEntity(EntityType type) {
+        return (type == EntityText) || (type == EntityMText);
+    }
 
 
     /**
@@ -361,12 +371,15 @@ namespace RS2 {
         ActionDimBaseline,
         ActionDimContinue,
         ActionDimOrdinate,
+        ActionDimStyleApply,
+        ActionDimModify,
 
         ActionModifyAttributes,
         ActionModifyDelete,
         ActionModifyDeleteQuick,
         ActionModifyDeleteFree,
         ActionModifyMove,
+        ActionModifyMoveAdjust,
         ActionModifyRotate,
         ActionModifyScale,
         ActionModifyMirror,
@@ -410,6 +423,7 @@ namespace RS2 {
         ActionLockRelativeZero,
         ActionUnlockRelativeZero,
 
+        ActionInfoPoint,
         ActionInfoInside,
         ActionInfoDistPoint2Point,
         ActionInfoDistEntity2Point,
@@ -439,6 +453,7 @@ namespace RS2 {
 
         ActionLayerEntityActivate,
         ActionLayerEntityToggleView,
+        ActionLayerEntityHideOthers,
         ActionLayerEntityTogglePrint,
         ActionLayerEntityToggleConstruction,
         ActionLayerEntityToggleLock,
@@ -464,7 +479,7 @@ namespace RS2 {
         ActionOptionsDrawingGrid,
         ActionOptionsDrawingUnits,
 
-        ActionToolRegenerateDimensions,
+        ActionDimRegenerate,
 
         ActionScriptOpenIDE,
         ActionScriptRun,
@@ -478,12 +493,22 @@ namespace RS2 {
 
         ActionUCSCreate,
         ActionUCSSetByDimOrdinate,
-        ActionDimOrdinateSelectSameOrigin,
-        ActionDimOrdinateRebase,
+        ActionDimOrdByOriginSelect,
+        ActionDimOrdRebase,
+        ActionGTDFCFrame,
 
+        ActionInteractivePickPoint,
+        ActionInteractivePickLength,
+        ActionInteractivePickAngle,
         /** Needed to loop through all actions */
         ActionLast
     };
+
+    inline bool isInteractiveInputAction(ActionType type) {
+        return type == ActionInteractivePickPoint ||
+               type == ActionInteractivePickLength ||
+               type == ActionInteractivePickAngle;
+    }
 
     /**
     * Entity ending. Used for returning which end of an entity is meant.
@@ -781,7 +806,8 @@ namespace RS2 {
         WidthByLayer = -1, /**< Line width defined by layer not entity. */
         WidthByBlock = -2, /**< Line width defined by block not entity. */
         WidthDefault = -3,  /**< Line width defaults to the predefined line width. */
-        WidthUnchanged = -4 /* utility type for not changed line width during editing*/
+        WidthByDIPs = -4,   /*  kLnWtByDIPs*/
+        WidthUnchanged = -10 /* utility type for not changed line width during editing*/
     };
 
 
@@ -790,6 +816,8 @@ namespace RS2 {
      */
     LineWidth intToLineWidth(int w);
     int lineWidthToInt(LineWidth lw);
+    LineWidth dxfInt2lineWidth(int i);
+    int lineWidth2dxfInt(LineWidth lw);
 
     /**
      * Enum of cursor types.

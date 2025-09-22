@@ -28,7 +28,10 @@
 #include "lc_graphicviewport.h"
 #include "lc_ucs.h"
 #include "rs_document.h"
+#include "rs_polyline.h"
 #include "rs_preview.h"
+
+class RS_Polyline;
 
 struct LC_ActionDimOrdinate::ActionData {
     ActionData() = default;
@@ -40,21 +43,47 @@ struct LC_ActionDimOrdinate::ActionData {
 };
 
 LC_ActionDimOrdinate::LC_ActionDimOrdinate(LC_ActionContext* context)
-    : RS_ActionDimension("DimOrdinate", context,  RS2::ActionDimOrdinate)
+    : RS_ActionDimension("DimOrdinate", context,  RS2::EntityDimRadial, RS2::ActionDimOrdinate)
     ,m_actionData{std::make_unique<ActionData>()}{
 }
 
 LC_ActionDimOrdinate::~LC_ActionDimOrdinate()  = default;
 
-void LC_ActionDimOrdinate::initFromGraphic(RS_Graphic* graphic) {
-    RS_ActionDimension::initFromGraphic(graphic);
+void LC_ActionDimOrdinate::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    RS_Vector pos;
+    auto entity = contextEntity;
+    if (isPolyline(entity)) {
+        auto polyline = static_cast<RS_Polyline*>(contextEntity);
+        entity = polyline->getNearestEntity(clickPos);
+    }
+    if (isLine(entity)) {
+        auto startPoint = entity->getStartpoint();
+        auto endPoint = entity->getEndpoint();
+        double distToStart = startPoint.distanceTo(clickPos);
+        double distToEnd = endPoint.distanceTo(clickPos);
+        if (distToEnd < distToStart) {
+            pos = endPoint;
+        }
+        else {
+            pos = startPoint;
+        }
+    }
+    else if (isArc(entity) || isCircle(entity) || isEllipse(entity)) {
+        pos = entity->getCenter();
+    }
+    else {
+        return;
+    }
+
+    m_actionData->m_wcsFeaturePoint = pos;
+    moveRelativeZero(pos);
+    setStatus(SetLeaderEnd);
 }
 
 void LC_ActionDimOrdinate::doTrigger() {
     LC_DimOrdinate* dim  = createDim(m_actionData->m_leaderEndPoint, m_actionData->ctrlPressed, m_document);
 
     setPenAndLayerToActive(dim);
-    dim->update();
     undoCycleAdd(dim);
 
     m_actionData->ctrlPressed = false;
@@ -137,7 +166,7 @@ bool LC_ActionDimOrdinate::doProcessCommand(int status, const QString& command) 
     return accept;
 }
 
-void LC_ActionDimOrdinate::onCoordinateEvent(int status, bool isZero, const RS_Vector& pos) {
+void LC_ActionDimOrdinate::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector& pos) {
     switch (status) {
         case SetFeaturePoint: {
             m_actionData->m_wcsFeaturePoint = pos;
@@ -168,11 +197,11 @@ void LC_ActionDimOrdinate::onMouseLeftButtonRelease(int status, LC_MouseEvent* e
     fireCoordinateEvent(snap);
 }
 
-void LC_ActionDimOrdinate::onMouseRightButtonRelease(int status, LC_MouseEvent* e) {
+void LC_ActionDimOrdinate::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent* e) {
     initPrevious(status);
 }
 
-QStringList LC_ActionDimOrdinate::doGetAvailableCommands(int status) {
+QStringList LC_ActionDimOrdinate::doGetAvailableCommands([[maybe_unused]]int status) {
     return {command("text")};
 }
 

@@ -23,18 +23,36 @@
 #ifndef LC_DIMSTYLESLIST_H
 #define LC_DIMSTYLESLIST_H
 
+#include <memory>
 #include <QList>
-#include "lc_dimstyle.h"
+#include "rs.h"
+
+class LC_DimStyle;
 
 class LC_DimStylesList{
 public:
     LC_DimStylesList();
-    LC_DimStyle* findByName(const QString& name);
+    virtual ~LC_DimStylesList();
+    LC_DimStyle* findByName(const QString& name) const;
+    LC_DimStyle* findByBaseNameAndType(const QString &name, RS2::EntityType dimType) const;
+    LC_DimStyle* resolveByBaseName(const QString& name, RS2::EntityType dimType) const;
+    LC_DimStyle* resolveByName(const QString& name, RS2::EntityType dimType) const;
     void addDimStyle(LC_DimStyle* style);
     void deleteDimStyle(QString &name);
-    int size(){return stylesList.size();}
+    int size() const {return m_stylesList.size();}
+    void clear();
+    void mergeStyles();
+    const QList<LC_DimStyle*>* getStylesList(){return &m_stylesList;}
+    LC_DimStyle* getFallbackDimStyleFromVars() const {return m_fallbackDimStyleFromVars.get();}
+    void replaceStyles(const QList<LC_DimStyle*>& list);
+    void setModified(bool m) {m_modified = m;}
+    bool isEmpty() {return m_stylesList.isEmpty();}
+    virtual bool isModified() const { return m_modified;}
 protected:
-    QList<LC_DimStyle*> stylesList;
+    /** Flag set if the layer list was modified and not yet saved. */
+    bool m_modified = false;
+    QList<LC_DimStyle*> m_stylesList;
+    std::unique_ptr<LC_DimStyle> m_fallbackDimStyleFromVars;
 };
 
 #endif // LC_DIMSTYLESLIST_H

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>180</width>
-    <height>180</height>
+    <width>152</width>
+    <height>120</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,13 +19,16 @@
   <property name="minimumSize">
    <size>
     <width>0</width>
-    <height>0</height>
+    <height>12</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Pen</string>
   </property>
-  <layout class="QGridLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -38,11 +41,14 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <property name="spacing">
-    <number>0</number>
-   </property>
-   <item row="0" column="0">
+   <item>
     <widget class="QGroupBox" name="bgPen">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>120</height>
+      </size>
+     </property>
      <property name="title">
       <string>Pen</string>
      </property>
@@ -96,7 +102,7 @@
        </widget>
       </item>
       <item row="3" column="0">
-       <spacer name="spacer8">
+       <spacer name="vsSpacerVertical">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
@@ -106,7 +112,7 @@
         <property name="sizeHint" stdset="0">
          <size>
           <width>21</width>
-          <height>1</height>
+          <height>0</height>
          </size>
         </property>
        </spacer>
@@ -132,50 +138,8 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <spacer name="spacer9">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Expanding</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>21</width>
-          <height>1</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
       <item row="0" column="2">
        <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>0</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="1" column="2">
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>0</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="2" column="2">
-       <spacer name="horizontalSpacer_3">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -195,11 +159,6 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>QG_LineTypeBox</class>
-   <extends>QWidget</extends>
-   <header>qg_linetypebox.h</header>
-  </customwidget>
-  <customwidget>
    <class>QG_ColorBox</class>
    <extends>QComboBox</extends>
    <header>../ui/components/comboboxes/qg_colorbox.h</header>
@@ -208,6 +167,11 @@
    <class>QG_WidthBox</class>
    <extends>QComboBox</extends>
    <header>../ui/components/comboboxes/qg_widthbox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QG_LineTypeBox</class>
+   <extends>QWidget</extends>
+   <header>qg_linetypebox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

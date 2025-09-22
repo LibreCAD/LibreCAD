@@ -427,3 +427,27 @@ void LC_ActionDrawRectangle2Points::setSecondPointSnapMode(int value){
     m_secondPointSnapMode = value;
     drawPreviewForLastPoint();
 }
+
+bool LC_ActionDrawRectangle2Points::doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) {
+    if (tag == "angle") {
+        setAngleRadians(angleRad);
+        return true;
+    }
+    return false;
+}
+
+bool LC_ActionDrawRectangle2Points::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "radius") {
+        setRadius(distance);
+        return true;
+    }
+    if (tag == "lengthX") {
+        setLengthX(distance);
+        return true;
+    }
+    if (tag == "lengthY") {
+        setLengthY(distance);
+        return true;
+    }
+    return false;
+}

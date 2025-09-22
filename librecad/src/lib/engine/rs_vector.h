@@ -196,6 +196,7 @@ public:
     const RS_Vector&  operator [] (const size_t i) const;
     RS_Vector&  operator [] (const size_t i);
     size_t getNumber() const;
+    bool isEmpty();
     size_t size() const;
     bool empty() const;
     void resize(size_t n);

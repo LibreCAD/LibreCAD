@@ -38,14 +38,12 @@
 #include "lc_documentsstorage.h"
 #include "lc_splinepoints.h"
 #include "lc_undosection.h"
-#include "qc_applicationwindow.h"
 #include "rs_actioninterface.h"
 #include "rs_arc.h"
 #include "rs_block.h"
 #include "rs_circle.h"
 #include "rs_debug.h"
 #include "rs_ellipse.h"
-#include "rs_eventhandler.h"
 #include "rs_graphicview.h"
 #include "rs_image.h"
 #include "rs_insert.h"
@@ -1215,7 +1213,7 @@ bool Doc_plugin_interface::getPoint(QPointF *point, const QString& message,
         QEventLoop ev;
         while (!a->isCompleted()) {
             ev.processEvents ();
-            if (!gView->getEventHandler()->hasAction())
+            if (!gView->hasAction())
                 break;
         }
         if (a->isCompleted() && !a->wasCanceled())
@@ -1240,7 +1238,7 @@ Plug_Entity *Doc_plugin_interface::getEnt(const QString& message){
         while (!a->isCompleted())
         {
             ev.processEvents ();
-            if (!gView->getEventHandler()->hasAction())
+            if (!gView->hasAction())
                 break;
         }
     }
@@ -1261,14 +1259,13 @@ bool Doc_plugin_interface::getSelect(QList<Plug_Entity *> *sel, const QString& m
         while (!a->isCompleted())
         {
             ev.processEvents ();
-            if (!gView->getEventHandler()->hasAction())
+            if (!gView->hasAction())
                 break;
         }
         // qDebug() << "getSelect: passed event loop";
     }
 //    check if a are cancelled by the user issue #349
-    RS_EventHandler* eh = gView->getEventHandler();
-    if (eh && eh->isValid(a.get()) ) {
+    if (gView->isCurrentActionRunning(a.get())) {
         a->getSelected(sel, this);
         status = true;
     }
@@ -1302,15 +1299,14 @@ bool Doc_plugin_interface::getSelectByType(QList<Plug_Entity *> *sel, enum DPI::
         while (!a->isCompleted())
         {
             ev.processEvents ();
-            if (!gView->getEventHandler()->hasAction()){
+            if (!gView->hasAction()){
                 break;
             }
 
         }
     }
     //check if a are cancelled by the user issue #349
-    RS_EventHandler* eh = gView->getEventHandler();
-    if (eh && eh->isValid(a.get()) ) {
+    if (gView->isCurrentActionRunning(a.get()) ) {
         a->getSelected(sel, this);
         status = true;
     }

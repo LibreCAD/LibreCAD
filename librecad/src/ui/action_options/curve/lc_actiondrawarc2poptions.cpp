@@ -38,26 +38,38 @@ LC_ActionDrawArc2POptions::LC_ActionDrawArc2POptions(int actionType)
     ui->lLength->setVisible(false);
     ui->lHeight->setVisible(false);
     ui->lAngle->setVisible(false);
+    ui->tbPickAngle->setVisible(false);
+    ui->tbPickDist->setVisible(m_interactiveInputControlsVisible);
 
     switch (actionType){
         case RS2::ActionDrawArc2PRadius: {
             updateTooltip(ui->lRadius);
             m_optionNamePrefix = "Arc2PRadius";
+            ui->tbPickDist->setToolTip(tr("Pick radius from drawing"));
+            pickDistanceSetup("radius", ui->tbPickDist, ui->leValue);
             break;
         }
         case RS2::ActionDrawArc2PHeight:{
             updateTooltip(ui->lHeight);
             m_optionNamePrefix = "Arc2PHeight";
+            ui->tbPickDist->setToolTip(tr("Pick height from drawing"));
+            pickDistanceSetup("height", ui->tbPickDist, ui->leValue);
             break;
         }
         case RS2::ActionDrawArc2PLength:{
             updateTooltip(ui->lLength);
             m_optionNamePrefix = "Arc2PLength";
+            ui->tbPickDist->setToolTip(tr("Pick length from drawing"));
+            pickDistanceSetup("length", ui->tbPickDist, ui->leValue);
             break;
         }
         case RS2::ActionDrawArc2PAngle:{
             updateTooltip(ui->lAngle);
             m_optionNamePrefix = "Arc2PAngle";
+            ui->tbPickDist->setToolTip(tr("Pick angle from drawing"));
+            ui->tbPickDist->setVisible(false);
+            ui->tbPickAngle->setVisible(true && m_interactiveInputControlsVisible);
+            pickAngleSetup("angle", ui->tbPickAngle, ui->leValue);
             break;
         }
         default:

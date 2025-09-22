@@ -27,8 +27,10 @@
 #ifndef RS_ACTIONMODIFYENTITY_H
 #define RS_ACTIONMODIFYENTITY_H
 
+#include "lc_latecompletionrequestor.h"
 #include "rs_previewactioninterface.h"
 
+class LC_EntityPropertiesEditor;
 class RS_Entity;
 
 /**
@@ -37,11 +39,21 @@ class RS_Entity;
  * @author Andrew Mustun
  */
 class RS_ActionModifyEntity : public RS_PreviewActionInterface {
-Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionModifyEntity(LC_ActionContext *actionContext,RS_Entity* entity);
+    RS_ActionModifyEntity(LC_ActionContext *actionContext);
+    ~RS_ActionModifyEntity() override;
     void init(int status) override;
+    void notifyFinished();
+    bool mayBeTerminatedExternally() override {return m_allowExternalTermination;};
 protected:
+    enum State {
+        ShowDialog = InitialActionStatus,
+        InEditing,
+        EditComplete
+    };
+
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
@@ -50,9 +62,15 @@ protected:
     void doTrigger() override;
     // display the entity as selected
     void setDisplaySelected(bool selected);
+    void completeEditing();
+    void onLateRequestCompleted(bool shouldBeSkipped) override;
 private:
     RS_Entity* m_entity = nullptr;
-    bool m_modifyCursor = true;
+    RS_Entity* m_clonedEntity = nullptr;
+    bool m_modifyCursor{true};
+    bool m_invokedForSingleEntity{false};
+    bool m_allowExternalTermination{true};
+    LC_EntityPropertiesEditor *m_propertiesEditor{nullptr};
 };
 
 #endif

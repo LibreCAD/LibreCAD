@@ -38,6 +38,8 @@ LC_LinePointsOptions::LC_LinePointsOptions() :
 
     connect(ui->cbAngle, &QCheckBox::clicked, this, &LC_LinePointsOptions::onAngleClicked);
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_LinePointsOptions::onAngleEditingFinished);
+    pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);
+    pickDistanceSetup("distance", ui->tbPickDistance, ui->leDistance);
 }
 
 LC_LinePointsOptions::~LC_LinePointsOptions(){
@@ -93,7 +95,7 @@ void LC_LinePointsOptions::doSetAction(RS_ActionInterface *a, bool update){
             fixedDistanceMode = m_action->isFixedDistanceMode();
             withinLine = m_action->isWithinLineMode();
             distance = fromDouble(m_action->getPointsDistance());
-            angle = fromDouble(m_action->getAngle());
+            angle = fromDouble(m_action->getAngleDegrees());
         }
     }
     else{
@@ -109,6 +111,8 @@ void LC_LinePointsOptions::doSetAction(RS_ActionInterface *a, bool update){
 
     ui->cbAngle->setVisible(showAllControls);
     ui->leAngle->setVisible(showAllControls);
+    ui->tbPickAngle->setVisible(showAllControls && m_interactiveInputControlsVisible);
+
     ui->line_2->setVisible(showAllControls);
     ui->cbFixedDistance->setVisible(showAllControls);
     ui->frmFixed->setVisible(showAllControls);
@@ -234,10 +238,10 @@ void LC_LinePointsOptions::setAngleToActionAndView(QString val, bool affectState
     double angle;
     if (toDouble(val, angle, 0.0, false)){
         if (affectState){
-            m_action->setAngleValue(angle);
+            m_action->setAngleValueDegrees(angle);
         }
         else{
-            m_action->setAngle(angle);
+            m_action->setAngleDegrees(angle);
         }
         ui->leAngle->setText(fromDouble(angle));
     }

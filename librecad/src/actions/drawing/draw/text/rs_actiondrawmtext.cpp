@@ -211,8 +211,21 @@ void RS_ActionDrawMText::setUcsAngleDegrees(double ucsRelAngleDegrees){
     m_textChanged = true;
 }
 
+void RS_ActionDrawMText::setUcsAngle(double ucsRelAngle){
+    m_mtextData->angle = toWorldAngleFromUCSBasis(ucsRelAngle);
+    m_textChanged = true;
+}
+
 double RS_ActionDrawMText::getUcsAngleDegrees(){
     return toUCSBasisAngleDegrees(m_mtextData->angle);
+}
+
+bool RS_ActionDrawMText::doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) {
+    if (tag == "angle") {
+        setUcsAngle(angleRad);
+        return true;
+    }
+    return false;
 }
 
 LC_ActionOptionsWidget* RS_ActionDrawMText::createOptionsWidget(){

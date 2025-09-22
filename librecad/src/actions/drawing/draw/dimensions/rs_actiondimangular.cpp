@@ -34,7 +34,7 @@
 #include "rs_preview.h"
 
 RS_ActionDimAngular::RS_ActionDimAngular(LC_ActionContext *actionContext) :
-    RS_ActionDimension( "Draw Angular Dimensions", actionContext,  RS2::ActionDimAngular){
+    RS_ActionDimension( "Draw Angular Dimensions", actionContext,  RS2::EntityDimAngular, RS2::ActionDimAngular){
     reset();
 }
 
@@ -47,6 +47,12 @@ void RS_ActionDimAngular::reset(){
                                         RS_Vector( false),
                                         RS_Vector( false));
     updateOptions();
+}
+
+void RS_ActionDimAngular::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    if (isLine(contextEntity)) {
+        setFirstLine(contextEntity, clickPos);
+    }
 }
 
 void RS_ActionDimAngular::doTrigger() {
@@ -109,15 +115,19 @@ void RS_ActionDimAngular::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     }
 }
 
+void RS_ActionDimAngular::setFirstLine(RS_Entity* en, const RS_Vector& pos) {
+    m_line1 = dynamic_cast<RS_Line *>(en);
+    m_click1 = m_line1->getNearestPointOnEntity(pos);
+    setStatus(SetLine2);
+}
+
 void RS_ActionDimAngular::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     const RS_Vector &pos = e->graphPoint;
     switch (status) {
         case SetLine1: {
             RS_Entity *en = catchEntityByEvent(e, RS2::EntityLine,RS2::ResolveAll);
             if (en != nullptr){
-                m_line1 = dynamic_cast<RS_Line *>(en);
-                m_click1 = m_line1->getNearestPointOnEntity(pos);
-                setStatus(SetLine2);
+                setFirstLine(en, pos);
             }
             break;
         }
@@ -232,7 +242,7 @@ void RS_ActionDimAngular::updateMouseButtonHints(){
 RS_LineData RS_ActionDimAngular::justify(RS_Line* line, const RS_Vector &click){
     RS_Vector vStartPoint( line->getStartpoint());
     RS_LineData lineData = line->getData();
-    if( ! RS_Math::equal( vStartPoint.angleTo(m_center), click.angleTo( m_center), RS_TOLERANCE_ANGLE)
+    if( RS_Math::notEqual( vStartPoint.angleTo(m_center), click.angleTo( m_center), RS_TOLERANCE_ANGLE)
         || vStartPoint.distanceTo( m_center) < click.distanceTo( m_center)) {
         lineData.reverse();
     }

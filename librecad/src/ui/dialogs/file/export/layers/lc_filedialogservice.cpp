@@ -24,6 +24,7 @@
 
 #include "lc_filedialogservice.h"
 
+#include <QApplication>
 #include <QCheckBox>
 #include <QDir>
 #include <QFileDialog>
@@ -199,7 +200,7 @@ LC_FileDialogService::FileDialogResult LC_FileDialogService::getFileDetails (Fil
             /* Confirm if the user wants to overwrite an existing file. */
             if (QFileInfo::exists(result.filePath)) {
                 int replaceFileResponse = QMessageBox::warning(
-                    nullptr,
+                    QApplication::activeWindow(),
                     fileDialogTitles.at(fileDialogMode),
                     QObject::tr(R"(File "%1" already exists. Do you want to replace it?)").arg(result.fileName),
                     QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Cancel

@@ -35,6 +35,7 @@ protected:
     void updateMouseButtonHintsForSelection() override;
     void doTrigger(bool keepSelected) override;
     bool isAllowTriggerOnEmptySelection() override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 
 #endif // LC_ACTIONDRAWBOUNDINGBOX_H

@@ -78,6 +78,7 @@ public:
     void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
 
     friend std::ostream& operator <<(std::ostream& os, const LC_Tolerance& d);
+    void setTextCode(const QString& textCode) {m_toleranceData.m_textCode = textCode;};
 protected:
     void doUpdate();
     QList<QStringList> getFields() const;
