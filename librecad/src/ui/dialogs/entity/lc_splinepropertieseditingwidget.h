@@ -20,18 +20,20 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
 #ifndef LC_SPLINEPROPERTIESEDITINGWIDGET_H
-
 #define LC_SPLINEPROPERTIESEDITINGWIDGET_H
+
+#include <memory>
 #include <QWidget>
 #include "lc_entitypropertieseditorwidget.h"
 
 class RS_Spline;
 class QTableWidgetItem;
-class RS_Spline;
+
 namespace Ui {
 class LC_SplinePropertiesEditingWidget;
 }
-class LC_SplinePropertiesEditingWidget : public LC_EntityPropertiesEditorWidget{
+
+class LC_SplinePropertiesEditingWidget : public LC_EntityPropertiesEditorWidget {
     Q_OBJECT
 public:
     explicit LC_SplinePropertiesEditingWidget(QWidget* parent = nullptr);
@@ -42,10 +44,14 @@ protected slots:
     void onDegreeIndexChanged(int index);
     void onControlPointChanged(QTableWidgetItem *item);
     void onKnotChanged(QTableWidgetItem *item);
+    void onAddControlPoint();
+    void onAddControlPointBefore();
+    void onRemoveControlPoint();
+    void showControlPointsContextMenu(const QPoint &pos);
 private:
     void updateUI();
-    Ui::LC_SplinePropertiesEditingWidget* ui;
+    std::unique_ptr<Ui::LC_SplinePropertiesEditingWidget> ui;
     RS_Spline* m_entity{nullptr};
 };
-#endif // LC_SPLINEPROPERTIESEDITINGWIDGET_H
 
+#endif // LC_SPLINEPROPERTIESEDITINGWIDGET_H
