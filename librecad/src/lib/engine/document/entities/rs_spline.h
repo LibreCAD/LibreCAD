@@ -1,4 +1,31 @@
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      #ifndef RS_SPLINE_H
+/****************************************************************************
+**
+** This file is part of the LibreCAD project, a 2D CAD program
+**
+** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
+** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
+**
+**
+** This file may be distributed and/or modified under the terms of the
+** GNU General Public License version 2 as published by the Free Software
+** Foundation and appearing in the file gpl-2.0.txt included in the
+** packaging of this file.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+**
+** This copyright notice MUST APPEAR in all copies of the script!
+**
+**********************************************************************/
+
+
+#ifndef RS_SPLINE_H
 #define RS_SPLINE_H
 
 #include "rs_entitycontainer.h"
@@ -22,7 +49,7 @@ struct RS_SplineData {
     /** Control points of the spline. */
     std::vector<RS_Vector> controlPoints;
     std::vector<double> knotslist;
-    /** Weights for NURBS (default 1.0 for B-spline). Size must match controlPoints. */
+    /** Weights for each control point (for rational splines). */
     std::vector<double> weights;
 };
 
@@ -61,9 +88,9 @@ public:
     /** @return Degree of this spline curve (1-3).*/
     int getDegree() const;
 
-    /** @return 0. */
-    int getNumberOfKnots() {
-        return 0;
+    /** @return Number of knots (control points count + degree + 1). */
+    int getNumberOfKnots() const {
+        return static_cast<int>(data.controlPoints.size() + data.degree + 1);
     }
 
     /** @return Number of control points. */
@@ -79,26 +106,6 @@ public:
   * Sets the closed flag of this spline.
   */
     void setClosed(bool c);
-
-    /** @return Copy of weights (empty = uniform 1.0). */
-    const std::vector<double>& getWeights() const;
-
-    /** Sets weights (must match control points count). */
-    void setWeights(const std::vector<double>& w);
-
-    /** Returns the effective weights, filling with 1.0 if needed. */
-    std::vector<double> getEffectiveWeights() const;
-
-    /** Returns the effective knot vector, generating if empty. */
-    std::vector<double> getKnotVector() const;
-
-    /** Sets the knot vector. */
-    void setKnotVector(const std::vector<double>& knots);
-
-    /** Sets the control points. */
-    void setControlPoints(const std::vector<RS_Vector>& cp);
-
-    const std::vector<RS_Vector>& getControlPoints() const;
 
     RS_VectorSolutions getRefPoints() const override;
     RS_Vector getNearestRef( const RS_Vector& coord, double* dist = nullptr) const override;
@@ -127,16 +134,17 @@ public:
                              const RS_Vector& coord,
                              double* dist = nullptr)const override;
 
-    /**
-     * Appends the given point and weight to the control points/weights.
-     * Weight defaults to 1.0 (B-spline).
-     */
     void addControlPoint(const RS_Vector& v, double w = 1.0);
-
-    /**
-     * Removes the last control point/weight.
-     */
+    void insertControlPoint(size_t index, const RS_Vector& v, double w = 1.0);
     void removeLastControlPoint();
+    void removeControlPoint(size_t index);
+    void setControlPoint(size_t index, const RS_Vector& v);
+    double getWeight(size_t index) const;
+    void setWeight(size_t index, double w);
+    void setKnot(size_t index, double k);
+    void setWeights(const std::vector<double>& weights);
+    const std::vector<double>& getKnotVector() const;
+    void setKnotVector(const std::vector<double>& knots);
 
     void move(const RS_Vector& offset) override;
     void rotate(const RS_Vector& center, double angle) override;
@@ -149,18 +157,20 @@ public:
     void revertDirection() override;
 
     void draw(RS_Painter* painter) override;
+    const std::vector<RS_Vector>& getControlPoints() const;
+    const std::vector<double>& getWeights() const;
     friend std::ostream& operator << (std::ostream& os, const RS_Spline& l);
     void calculateBorders() override;
     void fillStrokePoints(int splineSegments, std::vector<RS_Vector>& points);
+    std::vector<double> knotu(size_t num, size_t order) const;
+    std::vector<double> knot(size_t num, size_t order) const;
     friend class RS_FilterDXFRW;
 private:
-    std::vector<double> knot(size_t num, size_t order) const;
     void rbspline(size_t npts, size_t k, size_t p1,
                   const std::vector<RS_Vector>& b,
                   const std::vector<double>& h,
                   std::vector<RS_Vector>& p) const;
 
-    std::vector<double> knotu(size_t num, size_t order) const;
     void rbsplinu(size_t npts, size_t k, size_t p1,
                   const std::vector<RS_Vector>& b,
                   const std::vector<double>& h,
@@ -178,4 +188,4 @@ protected:
     RS_SplineData data;
 };
 
-#endif // RS_SPLINE_H
+#endif
