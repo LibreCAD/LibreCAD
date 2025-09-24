@@ -19,7 +19,10 @@
   <property name="accessibleDescription">
    <string>Edit properties of a spline entity, including degree, closed state, control points, and knot vector</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="spacing">
+    <number>5</number>
+   </property>
    <property name="leftMargin">
     <number>5</number>
    </property>
@@ -32,11 +35,48 @@
    <property name="bottomMargin">
     <number>5</number>
    </property>
-   <property name="spacing">
-    <number>5</number>
-   </property>
-   <item row="0" column="0">
+   <item>
+    <widget class="QGroupBox" name="groupBoxLayer">
+     <property name="title">
+      <string>Layer</string>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>150</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayoutLayer">
+      <item>
+       <widget class="QComboBox" name="cbLayer">
+        <property name="toolTip">
+         <string>Select the layer for the spline</string>
+        </property>
+        <property name="accessibleName">
+         <string>Layer ComboBox</string>
+        </property>
+        <property name="accessibleDescription">
+         <string>Choose the layer to which the spline belongs</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QGroupBox" name="groupBoxGeometry">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>1</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="title">
       <string>Geometry</string>
      </property>

@@ -79,6 +79,14 @@ RS_Entity* RS_Spline::clone() const{
     return l;
 }
 
+RS_SplineData& RS_Spline::getData() {
+    return data;
+}
+
+const RS_SplineData& RS_Spline::getData() const {
+    return data;
+}
+
 void RS_Spline::calculateBorders() {
     /*minV = RS_Vector::minimum(data.startpoint, data.endpoint);
     maxV = RS_Vector::maximum(data.startpoint, data.endpoint);
@@ -114,15 +122,6 @@ void RS_Spline::setDegree(int degree) {
 /** @return Degree of this spline curve (1-3).*/
 int RS_Spline::getDegree() const{
     return data.degree;
-}
-
-/** @return spline data */
-const RS_SplineData& RS_Spline::getData() const {
-    return data;
-}
-
-RS_SplineData& RS_Spline::getData(){
-    return data;
 }
 
 size_t RS_Spline::getNumberOfControlPoints() const {
@@ -164,9 +163,6 @@ void RS_Spline::setClosed(bool c) {
         data.knotslist.erase(data.knotslist.begin() + (data.knotslist.size() - data.degree), data.knotslist.end());
     }
     data.closed = c;
-    if (!data.knotslist.empty()) {
-        data.knotslist.clear();
-    }
     // Add wrapping for closed spline if needed
     if (data.closed && data.degree >= 2 && data.controlPoints.size() >= size_t(data.degree)) {
         std::vector<RS_Vector> wrappedPoints{data.controlPoints.cbegin(), data.controlPoints.cbegin() + data.degree};
