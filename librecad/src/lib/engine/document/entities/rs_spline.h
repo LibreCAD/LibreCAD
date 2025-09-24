@@ -75,9 +75,8 @@ public:
     }
 
     /** @return Copy of data that defines the spline. */
-    const RS_SplineData& getData() const;
-
     RS_SplineData& getData();
+    const RS_SplineData& getData() const;
 
     /** Sets the splines degree (1-3). */
     void setDegree(int degree);
