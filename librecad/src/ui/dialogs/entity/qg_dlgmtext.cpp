@@ -24,11 +24,13 @@
 **
 **********************************************************************/
 
-#include "qg_dlgmtext.h"
 
 #include <QFileDialog>
 
+#include "qg_dlgmtext.h"
+#include "rs_dialogfactory.h"
 #include "rs_font.h"
+#include "rs_fontlist.h"
 #include "rs_graphic.h"
 #include "rs_settings.h"
 #include "rs_system.h"
@@ -180,18 +182,7 @@ void QG_DlgMText::setEntity(RS_MText* t, bool isNew) {
             //default font depending on locale
             //default font depending on locale (RLZ-> check this: QLocale::system().name() returns "fr_FR")
             QByteArray iso = RS_System::localeToISO(QLocale::system().name().toLocal8Bit());
-//        QByteArray iso = RS_System::localeToISO( QTextCodec::locale() );
-            if (iso == "ISO8859-1") {
-                font = LC_GET_STR("TextFont", "normallatin1");
-            } else if (iso == "ISO8859-2") {
-                font = LC_GET_STR("TextFont", "normallatin2");
-            } else if (iso == "ISO8859-7") {
-                font = LC_GET_STR("TextFont", "greekc");
-            } else if (iso == "KOI8-U" || iso == "KOI8-R") {
-                font = LC_GET_STR("TextFont", "cyrillic_ii");
-            } else {
-                font = LC_GET_STR("TextFont", "standard");
-            }
+            font = LC_GET_STR("TextFont", RS_FontList::getDefaultFont());
             height = LC_GET_STR("TextHeight", "1.0");
             def = LC_GET_STR("TextDefault", "1");
             alignment = LC_GET_STR("TextAlignment", "1");
@@ -383,9 +374,16 @@ int QG_DlgMText::getAlignment() {
 }
 
 void QG_DlgMText::setFont(const QString& f) {
-    cbFont->setCurrentIndex( cbFont->findText(f) );
-    m_font = cbFont->getFont();
-    defaultChanged(false);
+    int index = cbFont->findText(f);
+
+    // Issue #2069: default to the last font, likely unicode fonts
+    if (index == -1)
+        index = cbFont->findText("unicode");
+    if (index >= 0) {
+        cbFont->setCurrentIndex(index);
+        m_font = cbFont->getFont();
+        defaultChanged(false);
+    }
 }
 
 void QG_DlgMText::defaultChanged(bool) {

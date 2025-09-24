@@ -127,7 +127,8 @@ protected:
     bool isNonZeroLine(const RS_Vector &possiblePoint) const;
     RS_Vector getPossibleEndPointForAngle(const RS_Vector &snap);
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-
     bool isAllowDirectionCommands() override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 #endif // LC_ACTIONDRAWLINEPOINTS_H

@@ -29,7 +29,10 @@
 #include "rs_graphic.h"
 
 #include "dxf_format.h"
+#include "lc_containertraverser.h"
+#include "lc_dimstyletovariablesmapper.h"
 #include "lc_defaults.h"
+#include "lc_dimarrowregistry.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
@@ -38,6 +41,7 @@
 #include "rs_settings.h"
 #include "rs_units.h"
 #include "lc_dimstyleslist.h"
+#include "rs_dimension.h"
 
 namespace {
 // default paper size A4: 210x297 mm
@@ -95,7 +99,7 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
         marginBottom(0.0),
         pagesNumH(1),
         pagesNumV(1)
-        , autosaveFilename{ "Unnamed"} {
+        , autosaveFilename{ "Unnamed"}{
 
     LC_GROUP_GUARD("Defaults");
     {
@@ -151,6 +155,26 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
  */
 RS_Graphic::~RS_Graphic() = default;
 
+void RS_Graphic::onLoadingCompleted() {
+    auto fallBackDimStyleFromVars = dimstyleList.getFallbackDimStyleFromVars();
+    fallBackDimStyleFromVars->fillByDefaults(); // cleanup (is it redundant?)
+    LC_DimStyleToVariablesMapper dimStyleToVariablesMapper;
+    dimStyleToVariablesMapper.fromDictionary(fallBackDimStyleFromVars, getVariableDictObjectRef(), getUnit());
+
+    if (dimstyleList.isEmpty()) { // add content of vars to dimstyle list, to ensure that we have at least one style there
+        dimstyleList.addDimStyle(fallBackDimStyleFromVars->getCopy());
+    }
+    else {
+        // some programs (like AutoCAD) may store in DXF not all fields for the dim style definition, but only
+        // modified ones.
+        // For example, for dimension specific styles (like linear, ordinal, etc) only variables with values that
+        // are different to values in the base style is store.
+        // Therefore, for dimension type-specific styles, we perform a merge of non-set variables with values
+        // from base style.
+        dimstyleList.mergeStyles();
+    }
+    updateDimensions(true);
+}
 
 /**
  * Counts the m_entities on the given layer.
@@ -231,59 +255,80 @@ void RS_Graphic::newDoc() {
 }
 
 void RS_Graphic::clearVariables() {
-    variableDict.clear();
+    m_variableDict.clear();
+}
+
+QString RS_Graphic::getCustomProperty(const QString &key, const QString& defaultValue) {
+   return m_customVariablesDict.getString(key, defaultValue);
+}
+
+void RS_Graphic::addCustomProperty(const QString &key, const QString& value) {
+    m_customVariablesDict.add(key, value, 1);
+    setModified(true);
+}
+
+void RS_Graphic::removeCustomProperty(const QString &key) {
+    m_customVariablesDict.remove(key);
+}
+
+bool RS_Graphic::hasCustomProperty(const QString& key) {
+    return m_customVariablesDict.has(key);
+}
+
+const QHash<QString, RS_Variable> & RS_Graphic::getCustomProperties() const {
+    return m_customVariablesDict.getVariableDict();
 }
 
 int RS_Graphic::countVariables() const{
-    return variableDict.count();
+    return m_variableDict.count();
 }
 
 void RS_Graphic::addVariable(const QString& key, const RS_Vector& value, int code) {
-    variableDict.add(key, value, code);
+    m_variableDict.add(key, value, code);
 }
 
 void RS_Graphic::addVariable(const QString& key, const QString& value, int code) {
-    variableDict.add(key, value, code);
+    m_variableDict.add(key, value, code);
 }
 
 void RS_Graphic::addVariable(const QString& key, int value, int code) {
-    variableDict.add(key, value, code);
+    m_variableDict.add(key, value, code);
 }
 
 void RS_Graphic::addVariable(const QString& key, bool value, int code) {
-    variableDict.add(key, value, code);
+    m_variableDict.add(key, value, code);
 }
 
 void RS_Graphic::addVariable(const QString& key, double value, int code) {
-    variableDict.add(key, value, code);
+    m_variableDict.add(key, value, code);
 }
 
 void RS_Graphic::removeVariable(const QString& key) {
-    variableDict.remove(key);
+    m_variableDict.remove(key);
 }
 
 RS_Vector RS_Graphic::getVariableVector(const QString& key, const RS_Vector& def) const {
-    return variableDict.getVector(key, def);
+    return m_variableDict.getVector(key, def);
 }
 
 QString RS_Graphic::getVariableString(const QString& key, const QString& def) const {
-    return variableDict.getString(key, def);
+    return m_variableDict.getString(key, def);
 }
 
 int RS_Graphic::getVariableInt(const QString& key, int def) const {
-    return variableDict.getInt(key, def);
+    return m_variableDict.getInt(key, def);
 }
 
 bool RS_Graphic::getVariableBool(const QString& key, bool def) const {
-    return variableDict.getInt(key, def ? 1 : 0) != 0;
+    return m_variableDict.getInt(key, def ? 1 : 0) != 0;
 }
 
 double RS_Graphic::getVariableDouble(const QString& key, double def) const {
-    return variableDict.getDouble(key, def);
+    return m_variableDict.getDouble(key, def);
 }
 
 QHash<QString, RS_Variable>& RS_Graphic::getVariableDict() {
-    return variableDict.getVariableDict();
+    return m_variableDict.getVariableDict();
 }
 
 //
@@ -437,11 +482,21 @@ RS2::LinearFormat RS_Graphic::getLinearFormat() const{
     return convertLinearFormatDXF2LC(lunits);
 }
 
+void RS_Graphic::replaceCustomVars(const QHash<QString, QString>& vars) {
+    m_customVariablesDict.clear();
+    QHashIterator<QString,QString> customVar(vars);
+    while (customVar.hasNext()) {
+        customVar.next();
+        m_customVariablesDict.add(customVar.key(), customVar.value(), 1);
+    }
+    setModified(true);
+}
+
 /**
  * @return The linear format type used by the variable "$LUNITS" & "$DIMLUNIT".
  */
 // fixme - sand - move to generic utils!
-RS2::LinearFormat RS_Graphic::convertLinearFormatDXF2LC(int f) const{
+RS2::LinearFormat RS_Graphic::convertLinearFormatDXF2LC(int f){
     switch (f) {
         case 1:
             return RS2::Scientific;
@@ -805,6 +860,7 @@ bool RS_Graphic::isModified() const{
            || blockList.isModified()
            || namedViewsList.isModified()
            || ucsList.isModified()
+           || dimstyleList.isModified()
         ;}
 
 /**
@@ -817,6 +873,7 @@ void RS_Graphic::setModified(bool m) {
         blockList.setModified(m);
         namedViewsList.setModified(m);
         ucsList.setModified(m);
+        dimstyleList.setModified(m);
     }
     if (m_modificationListener != nullptr) {
         m_modificationListener->graphicModified(this, m);
@@ -848,5 +905,101 @@ void RS_Graphic::setAutosaveFileName(const QString &fileName) {
 void RS_Graphic::fireUndoStateChanged(bool undoAvailable, bool redoAvailable) const{
     if (m_modificationListener != nullptr) {
         m_modificationListener->undoStateChanged(this, undoAvailable, redoAvailable);
+    }
+}
+
+
+LC_DimStyle* RS_Graphic::getDimStyleByName(const QString& name, RS2::EntityType dimType) const {
+    return dimstyleList.resolveByName(name, dimType);
+}
+
+LC_DimStyle* RS_Graphic::getFallBackDimStyleFromVars() const {
+    return dimstyleList.getFallbackDimStyleFromVars();
+}
+
+QString RS_Graphic::getDefaultDimStyleName() const{
+    return getVariableString("$DIMSTYLE", "Standard");
+}
+
+void RS_Graphic::setDefaultDimStyleName(QString name) {
+    addVariable("$DIMSTYLE", name, 2);
+}
+
+LC_DimStyle* RS_Graphic::getEffectiveDimStyle(const QString &styleName, RS2::EntityType dimType, LC_DimStyle* styleOverride) const{
+  auto globalDimStyle = getResolvedDimStyle(styleName, dimType);
+    LC_DimStyle* resolvedDimStyle = nullptr;
+    if (styleOverride == nullptr) {
+        resolvedDimStyle = globalDimStyle;
+    }
+    else {
+        // NOTE: If there is style override, the returned instance SHOULD BE DELETED by caller code!!!
+        // that's pretty ugly, yet avoid to eliminate additinal copy operation for most cases, as
+        // it's expected that style override is less commonly used feature comparing to just setting
+        // existing styles to the dimension entity
+        auto styleOverrideCopy = styleOverride->getCopy();
+        styleOverrideCopy->mergeWith(globalDimStyle, LC_DimStyle::ModificationAware::UNSET, LC_DimStyle::ModificationAware::UNSET);
+        resolvedDimStyle = styleOverrideCopy;
+    }
+    return resolvedDimStyle;
+}
+
+LC_DimStyle* RS_Graphic::getResolvedDimStyle(const QString &dimStyleName, RS2::EntityType dimType) const {
+    LC_DimStyle* result = nullptr;
+    if (dimStyleName != nullptr && !dimStyleName.isEmpty()) { // try to get style by explicit name, if any
+        result = getDimStyleByName(dimStyleName, dimType);
+        if (result != nullptr) {
+            return result;
+        }
+    }
+
+    // try to find a style that is set as default
+    QString defaultStyleName = getDefaultDimStyleName();
+    if (defaultStyleName != nullptr && !defaultStyleName.isEmpty()) {
+        result =  getDimStyleByName(defaultStyleName, dimType);
+        if (result != nullptr) {
+            return result;
+        }
+    }
+    // nothing found, get default dim style from vars
+    return getFallBackDimStyleFromVars();
+}
+
+void RS_Graphic::updateFallbackDimStyle(LC_DimStyle* style) {
+    if (style != nullptr) {
+        LC_DimStyle* fallBackStyle = getFallBackDimStyleFromVars();
+        style->copyTo(fallBackStyle);
+
+        LC_DimStyleToVariablesMapper mapper;
+        mapper.toDictionary(fallBackStyle, getVariableDictObjectRef());
+    }
+}
+
+void RS_Graphic::replaceDimStylesList(const QString& defaultStyleName, const QList<LC_DimStyle*>& styles) {
+    setDefaultDimStyleName(defaultStyleName);
+    dimstyleList.replaceStyles(styles);
+    LC_DimArrowRegistry::insertStandardArrowBlocks(this, styles);
+}
+
+void RS_Graphic::prepareForSave() {
+    // fixme - sand - check what if dimension
+    auto entities = lc::LC_ContainerTraverser{*this, RS2::ResolveNone}.entities();
+    for (const auto e: entities) {
+        if (e->isUndone()) {
+            continue;
+        }
+        QList<LC_DimStyle*> dimStyleOverrides;
+        RS2::EntityType rtti = e->rtti();
+        if (RS2::isDimensionalEntity(rtti)) {
+             auto dim = dynamic_cast<RS_Dimension*>(e);
+             if (dim != nullptr) {
+                 LC_DimStyle* override = dim->getDimStyleOverride();
+                 if (override != nullptr) {
+                     dimStyleOverrides.append(override);
+                 }
+             }
+        }
+        if (!dimStyleOverrides.isEmpty()) {
+            LC_DimArrowRegistry::insertStandardArrowBlocks(this, dimStyleOverrides);
+        }
     }
 }

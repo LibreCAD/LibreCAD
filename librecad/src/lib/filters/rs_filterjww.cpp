@@ -730,7 +730,7 @@ RS_DimensionData RS_FilterJWW::convDimensionData(
                                                         valign, halign,
                                                         lss,
                                                         data.lineSpacingFactor,
-                                                        t, sty, data.angle, 0.0, true);
+                                                        t, sty, data.angle, 0.0, true, nullptr, false, false);
 }
 
 
@@ -889,7 +889,7 @@ void RS_FilterJWW::addDimAngular3P(const DL_DimensionData& data,
 void RS_FilterJWW::addLeader(const DL_LeaderData& data) {
         RS_DEBUG->print("RS_FilterJWW::addDimLeader");
         //RS_DEBUG->print("RS_FilterJWW::addPolyline()");
-        RS_LeaderData d(data.arrowHeadFlag==1);
+        RS_LeaderData d(data.arrowHeadFlag==1, "");
         leader = new RS_Leader(currentContainer, d);
         setEntityAttributes(leader, attributes);
 
@@ -1711,7 +1711,7 @@ void RS_FilterJWW::writePolyline(DL_WriterA& dw,
 		RS_AtomicEntity* ae = nullptr;
         lc::LC_ContainerTraverser traverser{*l, RS2::ResolveNone};
         RS_Entity* lastEntity = traverser.last();
-        for (RS_Entity* v=traverser.first(); v != nullptr; v = traverser.next()) {
+        for (RS_Entity* v=traverser.first(); v != nullptr; v = nextEntity) {
 
             nextEntity = traverser.next();
 

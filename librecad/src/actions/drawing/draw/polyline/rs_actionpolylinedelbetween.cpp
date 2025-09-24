@@ -26,6 +26,7 @@
 
 #include "rs_actionpolylinedelbetween.h"
 
+#include "lc_actioncontext.h"
 #include "rs_debug.h"
 #include "rs_modification.h"
 #include "rs_polyline.h"
@@ -35,15 +36,14 @@ RS_ActionPolylineDelBetween::RS_ActionPolylineDelBetween(LC_ActionContext *actio
     :LC_ActionPolylineDeleteBase("Delete between two nodes", actionContext, RS2::ActionPolylineDelBetween){
 }
 
-RS_ActionPolylineDelBetween::~RS_ActionPolylineDelBetween()=default;
+RS_ActionPolylineDelBetween::~RS_ActionPolylineDelBetween() = default;
 
-void RS_ActionPolylineDelBetween::init(int status){
-    RS_PreviewActionInterface::init(status);
-    if (status == SetPolyline){
-        m_polylineToModify = nullptr;
-        m_vertexToDelete = RS_Vector(false);
-        m_vertexToDelete2 = RS_Vector(false);
-    }
+void RS_ActionPolylineDelBetween::doInitialInit() {
+    m_polylineToModify = nullptr;
+}
+
+void RS_ActionPolylineDelBetween::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
+    setPolylineToModify(contextEntity);
 }
 
 void RS_ActionPolylineDelBetween::drawSnapper() {
@@ -111,20 +111,24 @@ void RS_ActionPolylineDelBetween::onMouseMoveEvent(int status, LC_MouseEvent *e)
     }
 }
 
+void RS_ActionPolylineDelBetween::setPolylineToModify(RS_Entity* en) {
+    if (en == nullptr){
+        commandMessage(tr("No Entity found."));
+    } else if (!isPolyline(en)){
+        commandMessage(tr("Entity must be a polyline."));
+    } else {
+        m_polylineToModify = dynamic_cast<RS_Polyline *>(en);
+        m_polylineToModify->setSelected(true);
+        setStatus(SetVertex1);
+        redraw();
+    }
+}
+
 void RS_ActionPolylineDelBetween::onMouseLeftButtonRelease(int status, LC_MouseEvent *e){
     switch (status) {
         case SetPolyline:{
             auto en = catchEntityByEvent(e);
-            if (en == nullptr){
-                commandMessage(tr("No Entity found."));
-            } else if (!isPolyline(en)){
-                commandMessage(tr("Entity must be a polyline."));
-            } else {
-                m_polylineToModify = dynamic_cast<RS_Polyline *>(en);
-                m_polylineToModify->setSelected(true);
-                setStatus(SetVertex1);
-                redraw();
-            }
+            setPolylineToModify(en);
             break;
         }
         case SetVertex1:{
@@ -149,8 +153,7 @@ void RS_ActionPolylineDelBetween::onMouseLeftButtonRelease(int status, LC_MouseE
             }
             break;
         }
-        case SetVertex2:
-        {
+        case SetVertex2:{
             if (m_polylineToModify == nullptr){
                 commandMessage(tr("No polyline found.")); // fixme - really needed?
             } else{

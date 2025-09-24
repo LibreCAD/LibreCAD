@@ -34,6 +34,7 @@ QG_PolylineEquidistantOptions::QG_PolylineEquidistantOptions()
     ui->setupUi(this);
     connect(ui->leDist, &QLineEdit::editingFinished, this, &QG_PolylineEquidistantOptions::onDistEditingFinished);
     connect(ui->sbNumber, &QSpinBox::valueChanged, this, &QG_PolylineEquidistantOptions::onNumberValueChanged);
+    pickDistanceSetup("spacing", ui->tbPickSpacing, ui->leDist);
 }
 
 /*

@@ -26,6 +26,7 @@
 
 #include "rs_actioninfodist.h"
 
+#include "lc_actioncontext.h"
 #include "lc_actioninfomessagebuilder.h"
 #include "lc_cursoroverlayinfo.h"
 #include "rs_debug.h"

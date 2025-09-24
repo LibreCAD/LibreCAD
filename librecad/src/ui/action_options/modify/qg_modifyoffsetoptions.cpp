@@ -44,6 +44,7 @@ QG_ModifyOffsetOptions::QG_ModifyOffsetOptions()
     connect(ui->leDist, &QLineEdit::editingFinished, this, &QG_ModifyOffsetOptions::onDistEditingFinished);
     connect(ui->sbNumberOfCopies, &QSpinBox::valueChanged, this, &QG_ModifyOffsetOptions::onNumberOfCopiesValueChanged);
     connect(ui->cbFixedDistance, &QCheckBox::clicked, this, &QG_ModifyOffsetOptions::onFixedDistanceClicked);
+    pickDistanceSetup("distance", ui->tbPickDistance, ui->leDist);
 }
 
 /*
@@ -119,6 +120,7 @@ void QG_ModifyOffsetOptions::onFixedDistanceClicked(bool val) {
 void QG_ModifyOffsetOptions::setDistanceFixedToActionAndView(bool val) {
     m_action->setDistanceFixed(val);
     ui->leDist->setEnabled(val);
+    ui->tbPickDistance->setEnabled(val);
     ui->cbFixedDistance->setChecked(val);
 }
 

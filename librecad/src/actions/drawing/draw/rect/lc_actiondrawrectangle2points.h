@@ -70,6 +70,8 @@ protected:
     int doGetStatusForInitialSnapToRelativeZero() override;
     void doInitialSnapToRelativeZero(RS_Vector vector) override;
     void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 
 #endif // LC_ACTIONDRAWRECTANGLE2POINTS_H

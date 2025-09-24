@@ -70,6 +70,7 @@ public:
 	  *\author: Dongxu Li
       **/
 	void updateUndoState() const;
+    void collectUndoState(bool &undoAvailable, bool &redoAvailable) const;
     friend std::ostream& operator << (std::ostream& os, RS_Undo& a);
     static bool test();
 protected:

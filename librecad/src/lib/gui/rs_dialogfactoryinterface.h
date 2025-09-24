@@ -346,21 +346,6 @@ public:
 
 
 
-
-
-//    virtual void updateArcTangentialOptions(double d, bool byRadius)=0;
-
-    /**
-     * This virtual method must be overwritten if the graphic view has
-     * a component that is interested in the current number of selected
-         * entities.
-     * The implementation will be called every time the selection
-     * changes.
-     *
-     * @param num Number of selected entities
-     */
-    virtual void updateSelectionWidget([[maybe_unused]]int num, [[maybe_unused]]double length){};
-
     virtual void displayBlockName([[maybe_unused]]const QString& blockName, [[maybe_unused]]const bool& display){};
 
     /**

@@ -97,7 +97,7 @@ namespace DRW {
 *  Base class for entities
 *  @author Rallaz
 */
-class DRW_Entity {
+class DRW_Entity: public DRW_ParseableEntity{
     SETENTFRIENDS
 public:
     //initializes default values
@@ -117,7 +117,7 @@ public:
 
 protected:
     //parses dxf pair to read entity
-    virtual bool parseCode(int code, dxfReader *reader);
+    bool parseCode(int code, dxfReader *reader) override;
     //calculates extrusion axis (normal vector)
     void calculateAxis(DRW_Coord extPoint);
     //apply extrusion to @extPoint and return data in @point
@@ -988,7 +988,7 @@ public:
 
 protected:
     bool parseCode(int code, dxfReader *reader) override;
-     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
     duint32 ref;               /*!< Hard reference to imagedef object, code 340 */
@@ -1051,10 +1051,12 @@ public:
         circlePoint = d.circlePoint;
         length = d.length;
         hdir = d.hdir;
+        flipArrow1 = d.flipArrow1;
+        flipArrow2 = d.flipArrow2;
     }
     virtual ~DRW_Dimension() {}
 
-     void applyExtrusion() override {}
+    void applyExtrusion() override {}
 
 protected:
     bool parseCode(int code, dxfReader *reader) override;
@@ -1086,6 +1088,12 @@ public:
 //    int getType(){ return type;}                      /*!< Dimension type, code 70 */
     double getHDir() const {return hdir;}
     void setHDir(const double h) {hdir = h;}
+
+    void setFlipArrow1(bool v){flipArrow1 = v;}
+    void setFlipArrow2(bool v){flipArrow2 = v;}
+
+    bool getFlipArrow1() const {return flipArrow1;}
+    bool getFlipArrow2() const {return flipArrow2;}
 
 protected:
     DRW_Coord getPt2() const {return clonePoint;}
@@ -1129,9 +1137,47 @@ private:
     DRW_Coord arcPoint;        /*!< Point defining dimension arc, x coordinate, code 16, 26 & 36 (OCS) */
     double length;             /*!< Leader length, code 40 */
 
+    bool flipArrow1 {false}; // force flip flag for arrow 1. Supported by dim override only, code 74 (if value is 1 - flip, 0 - no)
+    bool flipArrow2 {false}; // force flip flag for arrow 2. Supported by dim override only, code 75 (if value is 1 - flip, 0 - no)
+
 protected:
     dwgHandle dimStyleH;
     dwgHandle blockH;
+};
+
+class   DRW_ArcDimension: public DRW_Dimension {
+    SETENTFRIENDS
+public:
+    ~DRW_ArcDimension() override = default;
+private:
+    // DRW_Coord def3;            /*!< Definition point 3, code 14, 24 & 34 (WCS) */
+    // DRW_Coord def4;            /*!< Definition point 3, code 14, 24 & 34 (WCS) */
+
+    // std::string name;          /*!< Name of the block that contains the entities, code 2 */
+    // DRW_Coord defPoint;        /*!<  definition point, code 10, 20 & 30 (WCS) */
+    // DRW_Coord textPoint;       /*!< Middle point of text, code 11, 21 & 31 (OCS) */
+    // UTF8STRING text;           /*!< Dimension text explicitly entered by the user, code 1 */
+    // UTF8STRING style;          /*!< Dimension style, code 3 */
+    // int align;                 /*!< attachment point, code 71 */
+    // int linesty;               /*!< Dimension text line spacing style, code 72, default 1 */
+    // double linefactor;         /*!< Dimension text line spacing factor, code 41, default 1? (value range 0.25 to 4.00*/
+    // double rot;                /*!< rotation angle of the dimension text, code 53 */
+    // DRW_Coord extPoint;        /*!<  extrusion normal vector, code 210, 220 & 230 */
+
+    // double     hdir;               /*!< horizontal direction for the dimension, code 51, default ? */
+    // DRW_Coord clonePoint;      /*!< Insertion point for clones (Baseline & Continue), code 12, 22 & 32 (OCS) */
+    // DRW_Coord def1;            /*!< Definition point 1for linear & angular, code 13, 23 & 33 (WCS) */
+    // DRW_Coord def2;            /*!< Definition point 2, code 14, 24 & 34 (WCS) */
+    // double angle;              /*!< Angle of rotated, horizontal, or vertical dimensions, code 50 */
+    // double oblique;            /*!< oblique angle, code 52 */
+
+    // DRW_Coord circlePoint;     /*!< Definition point for diameter, radius & angular dims code 15, 25 & 35 (WCS) */
+    // DRW_Coord arcPoint;        /*!< Point defining dimension arc, x coordinate, code 16, 26 & 36 (OCS) */
+    // double length;             /*!< Leader length, code 40 */
+protected:
+    bool parseCode(int code, dxfReader *reader) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *sBuf, duint32 bs = 0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer* buf, duint32 bs=0) override;
 };
 
 

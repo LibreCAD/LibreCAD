@@ -41,7 +41,8 @@ protected:
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void updateMouseButtonHints() override;
     void doTrigger() override;
- private:
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
+private:
     RS_Entity *m_entity = nullptr;
 };
 

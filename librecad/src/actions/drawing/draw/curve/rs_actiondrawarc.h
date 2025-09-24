@@ -49,7 +49,7 @@ protected:
  * Action States.
  */
     enum Status {
-        SetCenter,       /**< Setting the center point. */
+        SetCenter = InitialActionStatus,       /**< Setting the center point. */
         SetRadius,       /**< Setting the radius. */
         SetAngle1,       /**< Setting the startpoint.  */
         SetAngle2,       /**< Setting the endpoint. */

@@ -36,6 +36,7 @@ QG_TextOptions::QG_TextOptions()
     ui->setupUi(this);
     connect(ui->leAngle, &QLineEdit::textChanged, this, &QG_TextOptions::onAngleChanged);
     connect(ui->leText, &QLineEdit::textChanged, this, &QG_TextOptions::onTextChanged);
+    pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);
 }
 
 /*

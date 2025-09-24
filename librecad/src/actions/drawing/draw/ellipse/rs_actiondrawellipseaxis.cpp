@@ -98,7 +98,6 @@ void RS_ActionDrawEllipseAxis::doTrigger() {
     }
 
     undoCycleAdd(ellipse);
-
     setStatus(SetCenter);
 
     RS_DEBUG->print("RS_ActionDrawEllipseAxis::trigger():entity added: %lu", ellipse->getId());
@@ -177,7 +176,8 @@ void RS_ActionDrawEllipseAxis::onMouseMoveEvent([[maybe_unused]]int status, LC_M
                 v.y /= m_actionData->ratio;
                 m_actionData->angle2 = v.angle(); // + m_vMajorP.angle();
 
-                auto ellipse = previewToCreateEllipse({m_actionData->center, m_actionData->m_vMajorP, m_actionData->ratio, m_actionData->angle1, m_actionData->angle2, m_actionData->reversed});
+                auto ellipse = previewToCreateEllipse({m_actionData->center, m_actionData->m_vMajorP,
+                    m_actionData->ratio, m_actionData->angle1, m_actionData->angle2, m_actionData->reversed});
 
                 if (m_showRefEntitiesOnPreview) {
                     previewRefLine(m_actionData->center, mouse);

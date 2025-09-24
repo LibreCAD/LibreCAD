@@ -28,7 +28,9 @@
 #ifndef RS_DIMENSION_H
 #define RS_DIMENSION_H
 
+#include "lc_dimstyle.h"
 #include "rs_entitycontainer.h"
+#include "rs_hatch.h"
 #include "rs_mtext.h"
 
 struct RS_ArcData;
@@ -44,6 +46,7 @@ struct RS_DimensionData : public RS_Flags {
 	 * Default constructor
      */
 	RS_DimensionData();
+    RS_DimensionData(const RS_DimensionData& other);
 
     /**
      * Constructor with initialisation.
@@ -71,7 +74,10 @@ struct RS_DimensionData : public RS_Flags {
                      QString style,
                      double angle,
                      double hdir,
-                     bool autoTextLocation);
+                     bool autoTextLocation,
+                     LC_DimStyle* dimStyleOverride,
+                     bool flipArr1,
+                     bool flipArr2);
 
     /** Definition point */
     RS_Vector definitionPoint;
@@ -99,8 +105,11 @@ struct RS_DimensionData : public RS_Flags {
      * direction of horizontal coordinate axis
      */
     double horizontalAxisDirection = 0.0;
-
     bool autoText = true;
+    std::unique_ptr<LC_DimStyle> m_dimStyleOverride;
+
+    bool flipArrow1{false};
+    bool flipArrow2{false};
 };
 
 std::ostream& operator << (std::ostream& os,
@@ -114,6 +123,7 @@ std::ostream& operator << (std::ostream& os,
 class RS_Dimension : public RS_EntityContainer {
 public:
     RS_Dimension(RS_EntityContainer* parent,const RS_DimensionData& d);
+    RS_Dimension(const RS_Dimension& entity);
 
     RS_Vector getNearestRef( const RS_Vector& coord, double* dist = nullptr) const override;
     RS_Vector getNearestSelectedRef( const RS_Vector& coord, double* dist = nullptr) const override;
@@ -134,6 +144,9 @@ public:
      * to update the subentities which make up the dimension entity.
      */
     void update() override;
+    LC_DimStyle* getGlobalDimStyle();
+    LC_DimStyle* getEffectiveDimStyle();
+    void resolveEffectiveDimStyleAndUpdateDim();
     void updateDim(bool autoText=false);
 
     RS_Vector getDefinitionPoint() {return m_dimGenericData.definitionPoint;}
@@ -143,12 +156,18 @@ public:
     RS_MTextData::MTextLineSpacingStyle getLineSpacingStyle() {return m_dimGenericData.lineSpacingStyle;}
     double getLineSpacingFactor() {return m_dimGenericData.lineSpacingFactor;}
     QString getText() {return m_dimGenericData.text;}
-    QString getStyle() {return m_dimGenericData.style;}
+    QString getStyle() const {return m_dimGenericData.style;}
     double getAngle() {return m_dimGenericData.angle;}
     double getHDir() const{return m_dimGenericData.horizontalAxisDirection;}
     double hasUserDefinedTextLocation(){return !m_dimGenericData.autoText;}
     void setHDir(double hdir) {m_dimGenericData.horizontalAxisDirection = hdir;}
     void setDefinitionPoint(RS_Vector defPoint) {m_dimGenericData.definitionPoint = defPoint;}
+    void setStyle(const QString& style){m_dimGenericData.style = style;}
+    bool isFlipArrow1() const {return m_dimGenericData.flipArrow1;}
+    bool isFlipArrow2() const {return m_dimGenericData.flipArrow2;}
+
+    void setFlipArrow1(bool val){m_dimGenericData.flipArrow1 = val;}
+    void setFlipArrow2(bool val){m_dimGenericData.flipArrow2 = val;}
 
     double getGeneralFactor();
     double getGeneralScale();
@@ -157,17 +176,21 @@ public:
     double getExtensionLineExtension();
     double getExtensionLineOffset();
     double getDimensionLineGap();
+    double getVerticalDistanceToDimLine();
     double getTextHeight();
     bool getInsideHorizontalText();
     bool getFixedLengthOn();
     double getFixedLength();
     RS2::LineWidth getExtensionLineWidth();
+    RS2::LineType getExtensionLineTypeFirst();
+    RS2::LineType getExtensionLineTypeSecond();
     RS2::LineWidth getDimensionLineWidth();
+    RS2::LineType getDimensionLineType();
     RS_Color getDimensionLineColor();
     RS_Color getExtensionLineColor();
     RS_Color getTextColor();
     QString getTextStyle();
-    int getDimLinearFormat();
+    RS2::LinearFormat getDimLinearFormat();
     int getDimDecimalPlaces();
     int getDimTrailingZerosSuppressionMode();
     int getDimDecimalFormatSeparatorChar();
@@ -181,34 +204,57 @@ public:
     void scale(const RS_Vector& center, const RS_Vector& factor) override;
     void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
     RS_Entity& shear([[maybe_unused]] double k) override { return *this; } // TODO
+
+    LC_DimStyle* getDimStyleOverride() const {
+        return m_dimGenericData.m_dimStyleOverride.get();
+    }
+
+    void setDimStyleOverride(LC_DimStyle* dimStyleOverride) {
+        if (dimStyleOverride == nullptr) {
+            m_dimGenericData.m_dimStyleOverride.reset(nullptr);
+        }
+        else {
+            m_dimGenericData.m_dimStyleOverride.reset(dimStyleOverride->getCopy());
+        }
+    }
+
 private:
     static RS_VectorSolutions getIntersectionsLineContainer(const RS_Line* l, const RS_EntityContainer* c,
                                                             bool infiniteLine = false);
-    void createHorizontalTextDimensionLine(const RS_Vector& p1, const RS_Vector& p2, bool arrow1 = true,
-                                                 bool arrow2 = true, bool autoText = false);
-    void createAlignedTextDimensionLine(const RS_Vector& p1, const RS_Vector& p2, bool arrow1 = true,
-                                              bool arrow2 = true, bool autoText = false);
+    void createHorizontalTextDimensionLine(const RS_Vector& p1, const RS_Vector& p2, bool showArrow1,
+                                                 bool showArrow2,
+                                                 bool showLine1, bool showLine2,
+                                                 bool autoText = false);
+    RS_VectorSolutions* determineTextAreaBounds(RS_MText* text, double dimGap);
+    void createAlignedTextDimensionLine(const RS_Vector& p1, const RS_Vector& p2, bool showArrow1,
+                                        bool showArrow2,
+                                        bool showLine1, bool showLine2,
+                                        bool autoText = false);
 protected:
     /** Data common to all dimension entities. */
     RS_DimensionData m_dimGenericData;
+    // dim style used during updateDim()
+    LC_DimStyle* m_dimStyleTransient = nullptr;
 
     virtual void doUpdateDim() = 0;
 
     RS_Pen getPenForText();
-    RS_Pen getPenExtensionLine();
+    RS_Pen getPenExtensionLine(bool first);
     RS_Pen getPenDimensionLine();
     RS_MText* createDimText(RS_Vector textPos, double textHeight, double textAngle);
     void addDimComponentEntity(RS_Entity* en, const RS_Pen &pen);
     RS_MText* addDimText(RS_MTextData &textData);
     RS_MTextData createDimTextData(RS_Vector textPos, double textHeight, double textAngle);
-    RS_Line* addDimExtensionLine(RS_Vector start, RS_Vector end);
+    RS_Line* addDimExtensionLine(RS_Vector start, RS_Vector end, bool first);
     RS_Line* addDimDimensionLine(RS_Vector start, RS_Vector end);
     RS_Line* addDimComponentLine(RS_Vector start, RS_Vector end, const RS_Pen& pen);
     RS_Arc* addDimArc(RS_ArcData& arcData);
+    void addBoundsAroundText(double dimgap, RS_MText* text);
+    void addArrow(RS_Entity* arrow, RS_Pen &dimensionPen);
     QString createLinearMeasuredLabel(double dist);
     double prepareLabelLinearDistance(double distance);
     void createDimensionLine(const RS_Vector& dimLineStart, const RS_Vector& dimLineEnd,
-              bool arrow1=true, bool arrow2=true, bool autoText=false);
+              bool showArrow1=true, bool showArrow2=true, bool showLine1 = false, bool showLine2 = false, bool autoText=false);
 };
 
 #endif

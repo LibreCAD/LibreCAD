@@ -70,6 +70,8 @@ void RS_ActionPrintPreview::init(int status) {
 
 void RS_ActionPrintPreview::invokeSettingsDialog(){
     if (m_graphic) {
+        // fixme - sand - Actually, relevant settings there is just page setup and whole drawing options are ovekill.
+        // fixme - sand - rework this with proper layouts support!!!
         RS_DIALOGFACTORY->requestOptionsDrawingDialog(*m_graphic);
         updateCoordinateWidgetFormat();
         updateOptionsUI(QG_PrintPreviewOptions::MODE_UPDATE_ORIENTATION);
@@ -264,13 +266,13 @@ void RS_ActionPrintPreview::zoomToPage(){
 
 void RS_ActionPrintPreview::fit() {
     if (m_graphic) {
-        RS_Vector paperSize=RS_Units::convert(m_graphic->getPaperSize(),
-                                              RS2::Millimeter, getUnit());
+        RS_Vector paperSize=RS_Units::convert(m_graphic->getPaperSize(), getUnit(), RS2::Millimeter);
 
-        if(std::abs(paperSize.x)<10.|| std::abs(paperSize.y)<10.)
+        if(std::abs(paperSize.x) < 10.|| std::abs(paperSize.y) < 10.) {
             printWarning("Warning:: Paper size less than 10mm."
                          " Paper is too small for fitting to page\n"
                          "Please set paper size by Menu: Options->Current Drawing Preferences->Paper");
+        }
         //        double f0=graphic->getPaperScale();
         if (!m_graphic->fitToPage()) {
             commandMessage(tr("RS_ActionPrintPreview::fit(): Invalid paper size"));

@@ -23,7 +23,10 @@
 #ifndef LC_ACTIONOPTIONSWIDGETBASE_H
 #define LC_ACTIONOPTIONSWIDGETBASE_H
 
+#include "lc_actioncontext.h"
 #include "lc_actionoptionswidget.h"
+
+class RS_PreviewActionInterface;
 
 class LC_ActionOptionsWidgetBase:public LC_ActionOptionsWidget{
 public:

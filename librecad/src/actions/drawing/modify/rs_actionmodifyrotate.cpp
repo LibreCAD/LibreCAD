@@ -255,6 +255,18 @@ void RS_ActionModifyRotate::onMouseMoveEventSelected(int status, LC_MouseEvent *
     }
 }
 
+bool RS_ActionModifyRotate::doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) {
+    if (tag == "angle") {
+        setAngle(angleRad);
+        return true;
+    }
+    if (tag == "angle2") {
+        setRefPointAngle(angleRad);
+        return true;
+    }
+    return false;
+}
+
 void RS_ActionModifyRotate::previewRotationCircleAndPoints(const RS_Vector &center, const RS_Vector &refPoint, double angle) {
     if (m_showRefEntitiesOnPreview) {
         double radius = center.distanceTo(refPoint);
@@ -538,8 +550,8 @@ double RS_ActionModifyRotate::getAngle() const{
     return adjustRelativeAngleSignByBasis(m_rotateData->angle);
 }
 
-void RS_ActionModifyRotate::setAngle(double angle) {
-    m_rotateData->angle = adjustRelativeAngleSignByBasis(angle);
+void RS_ActionModifyRotate::setAngle(double angleRad) {
+    m_rotateData->angle = adjustRelativeAngleSignByBasis(angleRad);
 }
 
 double RS_ActionModifyRotate::getRefPointAngle() {

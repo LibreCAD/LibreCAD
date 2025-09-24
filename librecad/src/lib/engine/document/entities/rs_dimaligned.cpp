@@ -51,6 +51,11 @@ RS_DimAlignedData::RS_DimAlignedData(const RS_Vector& _extensionPoint1,
     ,extensionPoint2(_extensionPoint2){
 }
 
+RS_DimAlignedData::RS_DimAlignedData(const RS_DimAlignedData& other) :
+    extensionPoint1{other.extensionPoint1},
+    extensionPoint2{other.extensionPoint2} {
+}
+
 std::ostream& operator << (std::ostream& os,const RS_DimAlignedData& dd) {
     os << "(" << dd.extensionPoint1 << "/" << dd.extensionPoint1 << ")";
     return os;
@@ -67,14 +72,14 @@ RS_DimAligned::RS_DimAligned(RS_EntityContainer* parent,
                              const RS_DimensionData& d,
                              const RS_DimAlignedData& ed)
     : RS_Dimension(parent, d), m_dimAlignedData(ed) {
-    updateDimensions();
-    RS_DimAligned::updateDim();
-    calculateBorders();
+}
+
+RS_DimAligned::RS_DimAligned(const RS_DimAligned& other)
+    :RS_Dimension(other), m_dimAlignedData(other.m_dimAlignedData){
 }
 
 RS_Entity* RS_DimAligned::clone() const{
-    auto d = new RS_DimAligned(getParent(), getData(), getEData());
-	d->setOwner(isOwner());
+    auto d = new RS_DimAligned(*this);
 	return d;
 }
 
@@ -147,11 +152,25 @@ void RS_DimAligned::doUpdateDim() {
     auto dimLineEnd = m_dimAlignedData.extensionPoint2 + extensionLineLengthVector;
 
     // Extension lines
-    addDimExtensionLine(m_dimAlignedData.extensionPoint1 + extLineOffsetVector, dimLineStart + extLineExtensionVector);
-    addDimExtensionLine(m_dimAlignedData.extensionPoint2 + extLineOffsetVector, dimLineEnd + extLineExtensionVector);
+    auto extensionLineStyle = m_dimStyleTransient->extensionLine();
+    bool showExtLine1 = extensionLineStyle->suppressFirstLine() == LC_DimStyle::ExtensionLine::DONT_SUPPRESS;
+    if (showExtLine1) {
+        addDimExtensionLine(m_dimAlignedData.extensionPoint1 + extLineOffsetVector, dimLineStart + extLineExtensionVector, true);
+    }
+    bool showExtLine2 = extensionLineStyle->suppressSecondLine() == LC_DimStyle::ExtensionLine::DONT_SUPPRESS;
+    if (showExtLine2) {
+        addDimExtensionLine(m_dimAlignedData.extensionPoint2 + extLineOffsetVector, dimLineEnd + extLineExtensionVector, false);
+    }
 
     // Dimension line:
-    createDimensionLine(dimLineStart,dimLineEnd,true, true, m_dimGenericData.autoText);
+    auto dimLineStyle = m_dimStyleTransient->dimensionLine();
+
+    bool showDimLine1 = dimLineStyle->suppressFirstLine() == LC_DimStyle::DimensionLine::DONT_SUPPRESS;
+    bool showArrow1 = showExtLine1 && showDimLine1;
+    bool showDimLine2 = dimLineStyle->suppressSecondLine() == LC_DimStyle::DimensionLine::DONT_SUPPRESS;
+    bool showArrow2 = showExtLine2 && showDimLine2;
+
+    createDimensionLine(dimLineStart,dimLineEnd,showArrow1, showArrow2, showDimLine1, showDimLine2, m_dimGenericData.autoText);
 }
 
 void RS_DimAligned::getDimPoints(RS_Vector& dimP1, RS_Vector& dimP2){
@@ -161,7 +180,6 @@ void RS_DimAligned::getDimPoints(RS_Vector& dimP1, RS_Vector& dimP2){
     dimP1 = m_dimAlignedData.extensionPoint1 + e1*extLength;
     dimP2 = m_dimAlignedData.extensionPoint2 + e1*extLength;
 }
-
 
 double RS_DimAligned::getDistanceToPoint(const RS_Vector& coord,
                           RS_Entity** entity,

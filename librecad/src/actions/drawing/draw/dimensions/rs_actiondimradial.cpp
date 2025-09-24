@@ -28,7 +28,7 @@
 // todo - think about multiple adding dimensions to already selected circles
 
 RS_ActionDimRadial::RS_ActionDimRadial(LC_ActionContext *actionContext)
-    :LC_ActionCircleDimBase("Draw Radial Dimensions",actionContext, RS2::ActionDimRadial)
+    :LC_ActionCircleDimBase("Draw Radial Dimensions",actionContext, RS2::EntityDimRadial, RS2::ActionDimRadial)
     , m_edata{ std::make_unique<RS_DimRadialData>()}{
     reset();
 }

@@ -28,13 +28,14 @@
 class LC_ActionSplineRemoveBetween:public LC_ActionSplineModifyBase{
     Q_OBJECT
 public:
-    LC_ActionSplineRemoveBetween(LC_ActionContext *actionContext);
+    explicit LC_ActionSplineRemoveBetween(LC_ActionContext *actionContext);
     ~LC_ActionSplineRemoveBetween() override = default;
 protected:
     bool m_splineIsClosed = false;
     RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool startDirection) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMove(RS_Vector mouse, int status, LC_MouseEvent *e) override;
+    void setEntityToModify(RS_Entity* entity) override;
     void updateMouseButtonHints() override;
     void collectPointsThatRemainsAfterDeletion(
         const RS_Vector &controlPoint, unsigned int splinePointsCount, bool deleteNotFoundPoints, std::vector<RS_Vector> &pointsVector,
@@ -43,6 +44,7 @@ protected:
     bool isValidSplineData(unsigned long long int size, bool closed, int degree);
     void doOnEntityNotCreated() override;
     void doCompleteTrigger() override;
+    bool mayModifySplineEntity(RS_Entity* pEntity) override;
 };
 
 #endif // LC_ACTIONSPLINEREMOVEBETWEEN_H

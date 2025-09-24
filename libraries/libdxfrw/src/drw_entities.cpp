@@ -70,10 +70,10 @@ void DRW_Entity::extrudePoint(DRW_Coord extPoint, DRW_Coord *point){
 bool DRW_Entity::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 5:
-        handle = reader->getHandleString();
+        handle = reader->getHandleId();
         break;
     case 330:
-        parentHandle = reader->getHandleString();
+        parentHandle = reader->getHandleId();
         break;
     case 8:
         layer = reader->getUtf8String();
@@ -165,7 +165,7 @@ bool DRW_Entity::parseDxfGroups(int code, dxfReader *reader){
 //            curr.code = code;
             //RLZ code == 330 || code == 360 OR nc == 330 || nc == 360 ?
             if (code == 330 || code == 360)
-                curr.addInt(code, reader->getHandleString());//RLZ code or nc
+                curr.addInt(code, reader->getHandleId());//RLZ code or nc
             else {
                 switch (reader->type) {
                 case dxfReader::STRING:
@@ -1121,7 +1121,7 @@ bool DRW_Insert::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
 }
 
-void DRW_Entity::init(DRW_Entity const& rhs) {
+void DRW_Entity::init([[maybe_unused]]DRW_Entity const& rhs) {
 }
 
 bool DRW_Tolerance::parseCode(int code, dxfReader* reader) {
@@ -1162,9 +1162,10 @@ bool DRW_Tolerance::parseCode(int code, dxfReader* reader) {
         default:
             return DRW_Entity::parseCode(code, reader);
     }
+    return true;
 }
 
-bool DRW_Tolerance::parseDwg(DRW::Version v, dwgBuffer* buf, duint32 bs) {
+bool DRW_Tolerance::parseDwg([[maybe_unused]]DRW::Version v, [[maybe_unused]]dwgBuffer* buf,[[maybe_unused]] duint32 bs) {
     DRW_DBG("PARSING TOLERANCE FROM DWG IS NOT SUPPORTED!!!");
     return true;
 }
@@ -2271,7 +2272,7 @@ bool DRW_Image::parseCode(int code, dxfReader *reader){
         sizev = reader->getDouble();
         break;
     case 340:
-        ref = reader->getHandleString();
+        ref = reader->getHandleId();
         break;
     case 280:
         clip = reader->getInt32();
@@ -2369,6 +2370,12 @@ bool DRW_Dimension::parseCode(int code, dxfReader *reader){
     case 72:
         linesty = reader->getInt32();
         break;
+    case 74:
+        flipArrow1  = reader->getBool();
+        break;
+    case 75:
+        flipArrow2  = reader->getBool();
+        break;
     case 10:
         defPoint.x = reader->getDouble();
         break;
@@ -2455,6 +2462,25 @@ bool DRW_Dimension::parseCode(int code, dxfReader *reader){
     }
 
     return true;
+}
+
+bool DRW_ArcDimension::parseCode(int code, dxfReader* reader) {
+    switch (code) {
+        default:
+            DRW_DBG(code);
+            return DRW_Dimension::parseCode(code, reader);
+    }
+}
+
+
+bool DRW_ArcDimension::parseDwg(DRW::Version version, dwgBuffer* buf, dwgBuffer* sBuf, duint32 bs) {
+    // fixme - DRW_ArcDimension not implemented
+    return DRW_Dimension::parseDwg(version, buf, sBuf, bs);
+}
+
+bool DRW_ArcDimension::parseDwg(DRW::Version version, dwgBuffer* buf, duint32 bs) {
+    // fixme - DRW_ArcDimension not implemented
+    return DRW_Dimension::parseDwg(version, buf, bs);
 }
 
 bool DRW_Dimension::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs)
@@ -2793,7 +2819,7 @@ bool DRW_Leader::parseCode(int code, dxfReader *reader){
             vertexpoint->z = reader->getDouble();
         break;
     case 340:
-        annotHandle = reader->getHandleString();
+        annotHandle = reader->getHandleId();
         break;
     case 210:
         extrusionPoint.x = reader->getDouble();

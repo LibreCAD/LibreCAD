@@ -34,10 +34,11 @@
  */
 QG_CircleOptions::QG_CircleOptions()
     : LC_ActionOptionsWidgetBase(RS2::ActionNone, "Draw", "Circle")
-    , ui(std::make_unique<Ui::Ui_CircleOptions>())
-{
+    , ui(std::make_unique<Ui::Ui_CircleOptions>()){
 	ui->setupUi(this);
     connect(ui->leRadius, &QLineEdit::editingFinished, this, &QG_CircleOptions::onRadiusEditingFinished);
+
+    pickDistanceSetup("radius", ui->tbPickRadius, ui->leRadius);
 }
 
 /*
@@ -57,14 +58,12 @@ bool QG_CircleOptions::checkActionRttiValid(RS2::ActionType actionType){
     return  actionType ==RS2::ActionDrawCircleCR ||  actionType ==RS2::ActionDrawCircle2PR;
 }
 
-void QG_CircleOptions::doSaveSettings(){
-	  save("Radius", ui->leRadius->text());
+void QG_CircleOptions::doSaveSettings() {
+    save("Radius", ui->leRadius->text());
 }
 
 void QG_CircleOptions::doSetAction(RS_ActionInterface *a, bool update){
-
     m_action = dynamic_cast<RS_ActionDrawCircleCR *>(a);
-
     QString radius;
     if (update){
         radius = fromDouble(m_action->getRadius());

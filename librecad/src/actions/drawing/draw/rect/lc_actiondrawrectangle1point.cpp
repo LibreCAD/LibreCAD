@@ -516,6 +516,38 @@ void LC_ActionDrawRectangle1Point::setSizeInner(bool value){
     drawPreviewForLastPoint();
 }
 
+bool LC_ActionDrawRectangle1Point::doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) {
+    if (tag == "angle") {
+        setAngleRadians(angleRad);
+        return true;
+    }
+    return false;
+}
+
+bool LC_ActionDrawRectangle1Point::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "width") {
+        setWidth(distance);
+        return true;
+    }
+    if (tag == "height") {
+        setHeight(distance);
+        return true;
+    }
+    if (tag == "radius") {
+        setRadius(distance);
+        return true;
+    }
+    if (tag == "lengthX") {
+        setLengthX(distance);
+        return true;
+    }
+    if (tag == "lengthY") {
+        setLengthY(distance);
+        return true;
+    }
+    return false;
+}
+
 LC_ActionOptionsWidget* LC_ActionDrawRectangle1Point::createOptionsWidget(){
     return new LC_Rectangle1PointOptions();
 }

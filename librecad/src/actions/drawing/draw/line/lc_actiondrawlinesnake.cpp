@@ -167,6 +167,14 @@ void LC_ActionDrawLineSnake::createEntities(RS_Vector &potentialEndPoint, QList<
     entitiesList << line;
 }
 
+bool LC_ActionDrawLineSnake::doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) {
+    if (tag == "angle") {
+        setAngleDegrees(RS_Math::rad2deg(angleRad));
+        return true;
+    }
+    return false;
+}
+
 bool LC_ActionDrawLineSnake::isStartPointValid() const{
     return m_actionData->data.startpoint.valid;
 }
@@ -251,7 +259,7 @@ void LC_ActionDrawLineSnake::onCoordinateEvent(int status, [[maybe_unused]]bool 
         }
         case SetAngle: {
             if (isZero){
-                setAngleValue(0);
+                setAngleValueDegrees(0);
                 // ask for distance after angle entering
                 setStatus(SetDistance);
             }

@@ -53,7 +53,7 @@ void LC_ActionModifyAlign::doTrigger([[maybe_unused]]bool keepSelected) {
     QList<RS_Entity *> entitiesToCreate;
     createAlignedEntities(entitiesToCreate, m_alignMin, m_alignMax, false);
     if (!entitiesToCreate.isEmpty()) {
-        if (m_document) {
+        if (m_document != nullptr) {
             undoCycleStart();
 
             for (auto e: entitiesToCreate) {
@@ -161,8 +161,9 @@ void LC_ActionModifyAlign::onMouseMoveEventSelected([[maybe_unused]]int status, 
                 ref.append(formatLinear(horizontalRef));
             }
 
-            auto builder = msg(message).
-                string(ref);
+            auto builder = msgStart()
+                .string(message)
+                .string(ref);
             if (groupOffset.valid) {
                 builder.string(tr("Offset:"))
                        .relative(groupOffset)

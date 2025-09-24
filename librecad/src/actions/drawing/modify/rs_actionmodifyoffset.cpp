@@ -96,6 +96,14 @@ void RS_ActionModifyOffset::onMouseMoveEventSelected(int status, LC_MouseEvent *
     }
 }
 
+bool RS_ActionModifyOffset::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "distance") {
+        setDistance(distance);
+        return true;
+    }
+    return false;
+}
+
 void RS_ActionModifyOffset::onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *e) {
     switch (status){
         case SetReferencePoint:{

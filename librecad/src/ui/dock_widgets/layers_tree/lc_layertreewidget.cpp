@@ -177,14 +177,15 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     QToolButton *but;
     // show all layer:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/visible.lci"));
+    // but->setIcon(QIcon(":/icons/visible.lci"));
+    but->setIcon(QIcon(":/icons/visible_all.lci"));
     but->setToolTip(tr("Show all layers"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::showAllLayers);
     layButtons->addWidget(but);
 
     // hide all layer:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":/icons/not_visible.lci"));
+    but->setIcon(QIcon(":/icons/not_visible_all.lci"));
     but->setToolTip(tr("Hide all layers"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::hideAllLayers);
     layButtons->addWidget(but);
@@ -623,15 +624,19 @@ void LC_LayerTreeWidget::onCustomContextMenu(const QPoint &point){
 
     if (m_actionHandler){
         auto *contextMenu = new QMenu(this);
-        auto *caption = new QLabel(tr("Layer Menu"), this);
+        /*auto *caption = new QLabel(tr("Layer Menu"), this);
         QPalette palette;
         palette.setColor(caption->backgroundRole(), RS_Color(0, 0, 0));
         palette.setColor(caption->foregroundRole(), RS_Color(255, 255, 255));
         caption->setPalette(palette);
-        caption->setAlignment(Qt::AlignCenter);
-
+        caption->setAlignment(Qt::AlignCenter);*/
 
         // Actions for all layers:
+
+        using ActionMemberFunc = void (LC_LayerTreeWidget::*)();
+        const auto addActionFunc = [this, &contextMenu](const QString& iconName, const QString& name, ActionMemberFunc func) {
+            contextMenu->addAction(QIcon(":/icons/" + iconName + ".lci"), name, this, func);
+        };
 
         QModelIndex index = m_layerTreeView->indexAt(point);
 
@@ -643,21 +648,21 @@ void LC_LayerTreeWidget::onCustomContextMenu(const QPoint &point){
             contextMenu->setTitle(title);
 
             if (isVirtual){
-                contextMenu->addAction(tr("&Add Child Layer"), this, &LC_LayerTreeWidget::addChildLayerForSelectedItem);
-                contextMenu->addAction(tr("&Rename"), this, &LC_LayerTreeWidget::renameVirtualLayer);
-                contextMenu->addAction(tr("&Remove Layers (Sub-Tree)"), this, &LC_LayerTreeWidget::removeLayersForSelectedItem);
+                addActionFunc("add", tr("&Add Child Layer"), &LC_LayerTreeWidget::addChildLayerForSelectedItem);
+                addActionFunc("rename_active_block", tr("&Rename"), &LC_LayerTreeWidget::renameVirtualLayer);
+                addActionFunc("remove", tr("&Remove Layers (Sub-Tree)"),  &LC_LayerTreeWidget::removeLayersForSelectedItem);
                 contextMenu->addSeparator();
-                contextMenu->addAction(tr("&Copy Structure (Sub-Tree)"), this, &LC_LayerTreeWidget::createLayerCopy);
-                contextMenu->addAction(tr("&Duplicate Content (Sub-Tree)"), this, &LC_LayerTreeWidget::createLayerDuplicate);
+                addActionFunc("copy", tr("&Copy Structure (Sub-Tree)"), &LC_LayerTreeWidget::createLayerCopy);
+                addActionFunc("paste", tr("&Duplicate Content (Sub-Tree)"), &LC_LayerTreeWidget::createLayerDuplicate);
                 // TODO - should we take care of virtual layer's visibility somehow?
-                contextMenu->addAction(tr("&Select Entities (Sub-Tree)"), this, &LC_LayerTreeWidget::selectLayersEntities);
+                addActionFunc("deselect_layer", tr("&Select Entities (Sub-Tree)"), &LC_LayerTreeWidget::selectLayersEntities);
             } else {
 
                 bool NON_ZERO_LAYER = !layerItem->isZero();
 
-                contextMenu->addAction(tr("&Edit Layer &Attributes"), this, &LC_LayerTreeWidget::editSelectedLayer);
+                addActionFunc("rename_active_block", tr("&Edit Layer &Attributes"), &LC_LayerTreeWidget::editSelectedLayer);
                 if (NON_ZERO_LAYER){
-                    contextMenu->addAction(tr("&Remove Layer"), this, &LC_LayerTreeWidget::removeLayersForSelectedItem);
+                    addActionFunc("remove", tr("&Remove Layer"), &LC_LayerTreeWidget::removeLayersForSelectedItem);
                 }
                 contextMenu->addSeparator();
 
@@ -666,21 +671,21 @@ void LC_LayerTreeWidget::onCustomContextMenu(const QPoint &point){
                         bool hasItems = false;
 
                         if (!layerItem->hasChildOfType(LC_LayerTreeItem::DIMENSIONAL)){
-                            contextMenu->addAction(tr("&Add Dimensions Sub-Layer"), this, &LC_LayerTreeWidget::addDimensionalLayerForSelectedItem);
+                            addActionFunc("dim_horizontal", tr("&Add Dimensions Sub-Layer"), &LC_LayerTreeWidget::addDimensionalLayerForSelectedItem);
                             hasItems = true;
                         }
                         if (!layerItem->hasChildOfType(LC_LayerTreeItem::INFORMATIONAL)){
-                            contextMenu->addAction(tr("&Add Info Sub-Layer"), this, &LC_LayerTreeWidget::addInformationalLayerForSelectedItem);
+                            addActionFunc("mtext", tr("&Add Info Sub-Layer"), &LC_LayerTreeWidget::addInformationalLayerForSelectedItem);
                             hasItems = true;
                         }
                         if (!layerItem->hasChildOfType(LC_LayerTreeItem::ALTERNATE_POSITION)){
-                            contextMenu->addAction(tr("&Add Alternative View Sub-Layer"), this,
+                             addActionFunc("rotate", tr("&Add Alternative View Sub-Layer"),
                                                    &LC_LayerTreeWidget::addAddAlternativePositionLayerForSelectedItem);
                             hasItems = true;
                         }
                         if (!m_flatListMode){
                             if (layerItem->childCount() > 0){
-                                contextMenu->addAction(tr("&Remove Sub-layers"), this, &LC_LayerTreeWidget::removeChildLayersForSelected);
+                                addActionFunc("remove", tr("&Remove Sub-layers"), &LC_LayerTreeWidget::removeChildLayersForSelected);
                                 hasItems = true;
                             }
                         }
@@ -710,44 +715,44 @@ void LC_LayerTreeWidget::onCustomContextMenu(const QPoint &point){
                 }
 
                 if (layerItem->isVisible() && !layerItem->isLocked()){
-                    contextMenu->addAction(tr("&Select Layer's Entities"), this, &LC_LayerTreeWidget::selectLayersEntities);
+                    addActionFunc("deselect_layer",tr("&Select Layer's Entities"), &LC_LayerTreeWidget::selectLayersEntities);
                 }
                 contextMenu->addSeparator();
-                contextMenu->addAction(tr("&Create Layer Copy"), this, &LC_LayerTreeWidget::createLayerCopy);
-                contextMenu->addAction(tr("&Duplicate Layer With Content"), this, &LC_LayerTreeWidget::createLayerDuplicate);
+                addActionFunc("copy", tr("&Create Layer Copy"), &LC_LayerTreeWidget::createLayerCopy);
+                addActionFunc("paste", tr("&Duplicate Layer With Content"),  &LC_LayerTreeWidget::createLayerDuplicate);
 
                 contextMenu->addSeparator();
                 if (!layerItem->isLocked()){
-                    contextMenu->addAction(tr("Move Selection to Layer"), this, &LC_LayerTreeWidget::moveSelectionToLayer);
-                    contextMenu->addAction(tr("Duplicate Selection to Layer"), this, &LC_LayerTreeWidget::duplicateSelectionToLayer);
+                    addActionFunc("move_copy", tr("Move Selection to Layer"),  &LC_LayerTreeWidget::moveSelectionToLayer);
+                    addActionFunc("duplicate", tr("Duplicate Selection to Layer"),  &LC_LayerTreeWidget::duplicateSelectionToLayer);
                     contextMenu->addSeparator();
                 }
             }
             contextMenu->addSeparator();
         } else {
             // click is not on item
-            contextMenu->addAction(tr("&Add Layer"), this, &LC_LayerTreeWidget::addLayer);
+            addActionFunc("add", tr("&Add Layer"), &LC_LayerTreeWidget::addLayer);
         }
-        contextMenu->addAction(tr("&Freeze Others Layers"), this, &LC_LayerTreeWidget::hideOtherThanSelectedLayers);
-        contextMenu->addAction(tr("&Defreeze All Layers"), this, &LC_LayerTreeWidget::showAllLayers);
-        contextMenu->addAction(tr("&Freeze All Layers"), this, &LC_LayerTreeWidget::hideAllLayers);
-        contextMenu->addAction(tr("&Unlock All Layers"), this, &LC_LayerTreeWidget::unlockAllLayers);
-        contextMenu->addAction(tr("&Lock All Layers"), this, &LC_LayerTreeWidget::lockAllLayers);
-        contextMenu->addAction(tr("Enable &Printing All Layers"), this, &LC_LayerTreeWidget::printAllLayers);
-        contextMenu->addAction(tr("&Disable Printing All Layers"), this, &LC_LayerTreeWidget::noPrintAllLayers);
+        addActionFunc("visible", tr("&Freeze Others Layers"), &LC_LayerTreeWidget::hideOtherThanSelectedLayers);
+        addActionFunc("visible_all",   tr("&Defreeze All Layers"),  &LC_LayerTreeWidget::showAllLayers);
+        addActionFunc("not_visible_all",tr("&Freeze All Layers"), &LC_LayerTreeWidget::hideAllLayers);
+        addActionFunc("unlocked", tr("&Unlock All Layers"), &LC_LayerTreeWidget::unlockAllLayers);
+        addActionFunc("locked", tr("&Lock All Layers"), &LC_LayerTreeWidget::lockAllLayers);
+        addActionFunc("print", tr("Enable &Printing All Layers"),  &LC_LayerTreeWidget::printAllLayers);
+        addActionFunc("noprint", tr("&Disable Printing All Layers"), &LC_LayerTreeWidget::noPrintAllLayers);
         contextMenu->addSeparator();
         if (index.isValid()) {
-            contextMenu->addAction(tr("&Export Single Layer"), this,&LC_LayerTreeWidget::exportSelectedLayer);
+            addActionFunc("layer_export_single",tr("&Export Single Layer"), &LC_LayerTreeWidget::exportSelectedLayer);
             if (!m_flatListMode){
                 LC_LayerTreeItem *layerItem = m_layerTreeModel->getItemForIndex(index);
                 if (layerItem->childCount() > 0){
-                    contextMenu->addAction(tr("&Export Layer Sub-Tree"), this,&LC_LayerTreeWidget::exportLayerSubTree);
+                    addActionFunc("layer_export_selected", tr("&Export Layer Sub-Tree"), &LC_LayerTreeWidget::exportLayerSubTree);
                 }
             }
         }
-        contextMenu->addAction(tr("Export &Visible Layer(s)"), this, &LC_LayerTreeWidget::exportVisibleLayers);
+        addActionFunc("layer_export_visible", tr("Export &Visible Layer(s)"),  &LC_LayerTreeWidget::exportVisibleLayers);
         contextMenu->addSeparator();
-        contextMenu->addAction(tr("&Find And Remove Empty Layers"), this, &LC_LayerTreeWidget::removeEmptyLayers);
+        addActionFunc("close_all", tr("&Find And Remove Empty Layers"), &LC_LayerTreeWidget::removeEmptyLayers);
         contextMenu->exec(QCursor::pos());
         delete contextMenu;
     }
@@ -1553,7 +1558,9 @@ void LC_LayerTreeWidget::doSelectLayersEntities(QList<RS_Layer *> &layers){
 
     redrawView();
 
-    RS_DIALOGFACTORY->updateSelectionWidget(m_document->countSelected(), m_document->totalSelectedLength());
+    auto selectionInfo = m_document->getSelectionInfo();
+    LC_ActionContext* ctx =  QC_ApplicationWindow::getAppWindow().get()->getActionContext();
+    ctx->updateSelectionWidget(selectionInfo.count, selectionInfo.length);
 }
 
 /**
@@ -1939,7 +1946,7 @@ void LC_LayerTreeWidget::setGraphicView(RS_GraphicView *gview){
     }
     else {
         auto doc = gview->getContainer()->getDocument();
-        setLayerList(doc->getLayerList());
+        setLayerList(gview->getGraphic(true)->getLayerList());
         m_document = doc;
     }
 }

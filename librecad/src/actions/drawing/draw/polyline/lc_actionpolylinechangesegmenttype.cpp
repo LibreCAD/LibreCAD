@@ -21,6 +21,8 @@
  ******************************************************************************/
 
 #include "lc_actionpolylinechangesegmenttype.h"
+
+#include "lc_actioncontext.h"
 #include "lc_containertraverser.h"
 
 #include "rs_arc.h"
@@ -31,7 +33,16 @@ LC_ActionPolylineChangeSegmentType::LC_ActionPolylineChangeSegmentType(LC_Action
     :RS_PreviewActionInterface("PolylineChangeSegment",actionContext, RS2::ActionPolylineChangeSegmentType) {
 }
 
-LC_ActionPolylineChangeSegmentType::~LC_ActionPolylineChangeSegmentType() {
+LC_ActionPolylineChangeSegmentType::~LC_ActionPolylineChangeSegmentType() = default;
+
+void LC_ActionPolylineChangeSegmentType::doInitialInit() {
+    m_polyline = nullptr;
+    m_arcPoint = RS_Vector();
+    m_polylineSegment = nullptr;
+}
+
+void LC_ActionPolylineChangeSegmentType::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& pos) {
+    setPolylineToModify(contextEntity);
 }
 
 void LC_ActionPolylineChangeSegmentType::doTrigger() {
@@ -66,7 +77,7 @@ void LC_ActionPolylineChangeSegmentType::onMouseMoveEvent(int status, LC_MouseEv
         case SetSegment:{
             auto entity = catchAndDescribe(e, RS2::ResolveAllButTextImage);
             bool segmentFound = false;
-            if (entity != nullptr && entity->isAtomic()){
+            if (isAtomic(entity)){
                 if (m_polyline == entity->getParent()){
                     int rtti = entity->rtti();
                     switch (rtti){
@@ -113,7 +124,7 @@ void LC_ActionPolylineChangeSegmentType::onMouseMoveEvent(int status, LC_MouseEv
     }
 }
 
-RS_Polyline* LC_ActionPolylineChangeSegmentType::createModifiedPolyline() {
+RS_Polyline* LC_ActionPolylineChangeSegmentType::createModifiedPolyline() const {
     auto* result = new RS_Polyline(m_container);
 
     for(RS_Entity* entity: lc::LC_ContainerTraverser{*m_polyline, RS2::ResolveAll}.entities()) {
@@ -157,19 +168,23 @@ RS_Polyline* LC_ActionPolylineChangeSegmentType::createModifiedPolyline() {
     return result;
 }
 
+void LC_ActionPolylineChangeSegmentType::setPolylineToModify(RS_Entity* entity) {
+    if (isPolyline(entity)){
+        m_polyline = static_cast<RS_Polyline *>(entity);
+        setStatus(SetSegment);
+    }
+}
+
 void LC_ActionPolylineChangeSegmentType::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status){
         case SetEntity: {
             auto entity = catchEntityByEvent(e, RS2::EntityPolyline);
-            if (entity != nullptr){
-                m_polyline = static_cast<RS_Polyline *>(entity);
-                setStatus(SetSegment);
-            }
+            setPolylineToModify(entity);
             break;
         }
         case SetSegment:{
             auto entity = catchEntityByEvent(e, RS2::ResolveAllButTextImage);
-            if (entity != nullptr && entity->isAtomic()){
+            if (isAtomic(entity)){
                 if (m_polyline == entity->getParent()){
                     int rtti = entity->rtti();
                     switch (rtti){

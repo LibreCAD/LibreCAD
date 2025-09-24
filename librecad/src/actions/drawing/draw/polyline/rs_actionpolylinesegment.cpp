@@ -50,6 +50,11 @@ void RS_ActionPolylineSegment::drawSnapper() {
     // disable snapper for this action
 }
 
+void RS_ActionPolylineSegment::doInitWithContextEntity(RS_Entity* contextEntity,[[maybe_unused]] const RS_Vector& clickPos) {
+    m_targetEntity = contextEntity;
+    m_initWithTarget = true;
+}
+
 void RS_ActionPolylineSegment::init(int status){
     RS_PreviewActionInterface::init(status);
     if (m_initWithTarget){
@@ -96,49 +101,59 @@ void RS_ActionPolylineSegment::init(int status){
  * @author Rallaz
  */
 RS_Vector RS_ActionPolylineSegment::appendPol(RS_Polyline *current, RS_Polyline *toAdd, bool reversed) {
-
     QList<RS_Entity *> entities;
 
     for (auto v: *toAdd) {
-        if (reversed)
+        if (reversed) {
             entities.prepend(v);
-        else
+        }
+        else {
             entities.append(v);
+        }
     }
 //bad polyline without vertex
-    if (entities.isEmpty())
+    if (entities.isEmpty()) {
         return RS_Vector(false);
+    }
 
     double bulge = 0.0;
     RS_Entity *e = entities.takeFirst();
 
 //First polyline vertex
     if (isArc(e)) {
-        if (reversed)
+        if (reversed) {
             current->setNextBulge(static_cast<RS_Arc*>(e)->getBulge() * -1);
-        else
+        }
+        else {
             current->setNextBulge(static_cast<RS_Arc*>(e)->getBulge());
+        }
     }
 
     while (!entities.isEmpty()) {
         e = entities.takeFirst();
         if (isArc(e)) {
-            if (reversed)
+            if (reversed) {
                 bulge = static_cast<RS_Arc*>(e)->getBulge() * -1;
-            else
+            }
+            else {
                 bulge = static_cast<RS_Arc*>(e)->getBulge();
+            }
         } else {
             bulge = 0.0;
         }
-        if (reversed)
+        if (reversed) {
             current->addVertex(e->getEndpoint(), bulge, false);
-        else
+        }
+        else {
             current->addVertex(e->getStartpoint(), bulge, false);
+        }
     }
-    if (reversed)
+    if (reversed) {
         return e->getStartpoint();
-    else
+    }
+    else {
         return e->getEndpoint();
+    }
 }
 
 /**
@@ -166,14 +181,19 @@ RS_Polyline* RS_ActionPolylineSegment::convertPolyline(RS_EntityContainer* cnt, 
 //get list with useful entities
 
     for (RS_Entity *e1: *m_container) {
-        if (useSelected && !e1->isSelected()) continue;
-        if (e1->isLocked() || !e1->isVisible() || e1 == selectedEntity) continue;
-        if (isLine(e1) || isArc(e1)
-            || e1->rtti() == RS2::EntityPolyline){
-            if (selectedEntity->rtti() == RS2::EntityPolyline && static_cast<RS_Polyline*>(selectedEntity)->isClosed())
+        if (useSelected && !e1->isSelected()) {
+            continue;
+        }
+        if (e1->isLocked() || !e1->isVisible() || e1 == selectedEntity) {
+            continue;
+        }
+        if (isLine(e1) || isArc(e1) || e1->rtti() == RS2::EntityPolyline){ // fixme - support of polyline
+            if (selectedEntity->rtti() == RS2::EntityPolyline && static_cast<RS_Polyline*>(selectedEntity)->isClosed()) {
                 continue;
-            if (e1 == selectedEntity)
+            }
+            if (e1 == selectedEntity) {
                 continue;
+            }
             remaining.append(e1);
         }
     }
@@ -221,8 +241,9 @@ RS_Polyline* RS_ActionPolylineSegment::convertPolyline(RS_EntityContainer* cnt, 
 
         bool revert = false;
         double bulge = 0.0;
-        if (end.distanceTo(start) < 1.0e-4)
+        if (end.distanceTo(start) < 1.0e-4) {
             closed = true;
+        }
 
         newPolyline = new RS_Polyline(cnt, RS_PolylineData(RS_Vector(false), RS_Vector(false), closed));
         if (!createOnly){
@@ -247,23 +268,29 @@ RS_Polyline* RS_ActionPolylineSegment::convertPolyline(RS_EntityContainer* cnt, 
                 end = e2->getStartpoint();
             }
             if (e2->rtti() == RS2::EntityArc){
-                if (revert)
+                if (revert) {
                     bulge = static_cast<RS_Arc*>(e2)->getBulge() * -1;
-                else
+                }
+                else {
                     bulge = static_cast<RS_Arc*>(e2)->getBulge();
-            } else
+                }
+            } else {
                 bulge = 0.0;
+            }
             if (e2->rtti() == RS2::EntityPolyline){
                 newPolyline->addVertex(start, bulge);
                 end = appendPol(newPolyline, static_cast<RS_Polyline*>(e2), revert);
-            } else
+            } else {
                 newPolyline->addVertex(start, bulge);
+            }
         }
 
-        if (closed)
+        if (closed) {
             newPolyline->setClosed(true);
-        else
+        }
+        else {
             newPolyline->addVertex(end, bulge);
+        }
 
         newPolyline->endPolyline();
         cnt->addEntity(newPolyline);

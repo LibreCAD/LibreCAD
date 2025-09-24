@@ -32,6 +32,8 @@ LC_CircleByArcOptions::LC_CircleByArcOptions() :
     connect(ui->cbPen, &QComboBox::currentIndexChanged, this, &LC_CircleByArcOptions::onPenModeIndexChanged);
     connect(ui->cbLayer, &QComboBox::currentIndexChanged, this, &LC_CircleByArcOptions::onLayerModeIndexChanged);
     connect(ui->leRadiusShift, &QLineEdit::editingFinished, this, &LC_CircleByArcOptions::onRadiusShiftEditingFinished);
+
+    pickDistanceSetup("radiusShift", ui->tbPickRadius, ui->leRadiusShift);
 }
 
 LC_CircleByArcOptions::~LC_CircleByArcOptions(){
@@ -98,6 +100,7 @@ void LC_CircleByArcOptions::setReplaceArcToActionAndView(bool value){
 
     ui->leRadiusShift->setEnabled(!value);
     ui->lblRadiusShift->setEnabled(!value);
+    ui->tbPickRadius->setEnabled(!value);
 }
 
 void LC_CircleByArcOptions::setPenModeToActionAndView(int mode){

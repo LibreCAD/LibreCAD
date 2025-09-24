@@ -44,7 +44,7 @@ public:
     QStringList getAvailableCommands() override;
 protected:
     enum Status {
-        SetLine1,      ///< Choose 1st line
+        SetLine1 = InitialActionStatus,      ///< Choose 1st line
         SetLine2,      ///< Choose 2nd line
         SetPos,        ///< Choose position
         SetText        ///< Setting text label in console
@@ -58,7 +58,7 @@ protected:
     Status      m_lastStatus = SetLine1;                     ///< Last status before entering text
     std::vector<double> m_angles;                 ///< Array to sort line angles
     int         m_quadrantOffset {0};             ///< Offset on starting determineQuadrant
-
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     void reset() override;
     RS_LineData justify( RS_Line* line, const RS_Vector &click);
     void lineOrder(const RS_Vector &dimPos, RS_LineData& ld1, RS_LineData& ld2);
@@ -66,6 +66,7 @@ protected:
     bool setData(const RS_Vector& dimPos, const bool calcCenter = false);
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    void setFirstLine(RS_Entity* en, const RS_Vector& pos);
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;

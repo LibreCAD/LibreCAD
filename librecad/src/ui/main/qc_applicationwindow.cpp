@@ -70,6 +70,7 @@
 #include "lc_ucsstatewidget.h"
 #include "lc_workspacesinvoker.h"
 #include "qc_applicationwindow.h"
+
 #include "qc_dialogfactory.h"
 #include "qc_mdiwindow.h"
 #include "qg_actionhandler.h"
@@ -270,6 +271,12 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow *w, bool activateNext) {
         parentWindow->removeChildWindow(w);
     }
 
+    auto graphic = w->getDocument()->getGraphic();
+    if (graphic != nullptr) {
+        auto view = w->getGraphicView();
+        graphic->removeLayerListListener(view);
+    }
+
     for (auto &&child : std::as_const(w->getChildWindows())) {// block editors and print previews; just force these closed
         doClose(child, false); // they belong to the document (changes already saved there)
     }
@@ -376,7 +383,7 @@ void QC_ApplicationWindow::enableFileActions(const QC_MDIWindow *w) {
         },hasWindow && m_windowList.count() > 1);
 }
 
-LC_ActionContext* QC_ApplicationWindow::getActionContext() {
+LC_ActionContext* QC_ApplicationWindow::getActionContext() const {
     return m_actionContext;
 }
 
@@ -508,8 +515,10 @@ void QC_ApplicationWindow::slotKillAllActions() {
             auto doc = gv->getContainer();
             if (doc != nullptr) {
                 const RS_EntityContainer::LC_SelectionInfo &selectionInfo = doc->getSelectionInfo();
-                m_selectionWidget->setNumber((int)selectionInfo.count);
-                m_selectionWidget->setTotalLength(selectionInfo.length);
+
+                m_actionContext->updateSelectionWidget((int)selectionInfo.count, selectionInfo.length);
+                // m_selectionWidget->setNumber((int)selectionInfo.count);
+                // m_selectionWidget->setTotalLength(selectionInfo.length);
             }
         }
     }
@@ -558,21 +567,25 @@ void QC_ApplicationWindow::slotFocus() {
     setFocus();
 }
 
+void QC_ApplicationWindow::disableUIForAbsentDrawing() {
+    enableWidgets(false);
+    enableWidgetList(false, {
+                         m_layerTreeWidget,
+                         m_layerWidget,
+                         m_commandWidget
+                     });
+    m_snapToolBar->getSnapOptionsHolder()->hideSnapOptions();
+    m_coordinateWidget->clearContent();
+    m_relativeZeroCoordinatesWidget->clearContent();
+}
+
 /**
  * Called when a document window was activated.
  */
 void QC_ApplicationWindow::doWindowActivated(QMdiSubWindow *w, bool forced) {
 
     if (w == nullptr) { // when it may occur???
-        enableWidgets(false);
-        enableWidgetList(false, {
-            m_layerTreeWidget,
-            m_layerWidget,
-            m_commandWidget
-        });
-        m_snapToolBar->getSnapOptionsHolder()->hideSnapOptions();
-        m_coordinateWidget->clearContent();
-        m_relativeZeroCoordinatesWidget->clearContent();
+        disableUIForAbsentDrawing();
         // todo - check which other widgets in status bar or so should be cleared if no files..
         emit windowsChanged(false);
         activeMDIWindowChanged(nullptr);
@@ -683,6 +696,13 @@ void QC_ApplicationWindow::slotWorkspacesMenuAboutToShow() {
     m_menuFactory->onWorkspaceMenuAboutToShow(m_windowList);
 }
 
+QMenu* QC_ApplicationWindow::createGraphicViewContentMenu(QMouseEvent* event, QG_GraphicView* view, RS_Entity* entity, const RS_Vector& pos) {
+    QStringList actions;
+    bool mayInvokeDefaultMenu = m_creatorInvoker->getMenuActionsForMouseEvent(event, entity, actions);
+    return m_menuFactory->createGraphicViewPopupMenu(view, entity, pos, actions, mayInvokeDefaultMenu);
+}
+
+
 /**
  * Called when the user selects a document window from the
  * window list.
@@ -706,14 +726,6 @@ void QC_ApplicationWindow::slotPenChanged(const RS_Pen& pen) {
     }
 }
 
-/**
- * Creates a new MDI window with the given document or a new
- *  document if 'doc' is nullptr.
- */
-
-void QC_ApplicationWindow::setupCustomMenu(QG_GraphicView* view) {
-    m_creatorInvoker->setupCustomMenuForNewGraphicsView(view);
-}
 
 QC_MDIWindow *QC_ApplicationWindow::createNewDrawingWindow(RS_Document *doc, const QString& expectedFileName) {
     static int id = 0;
@@ -771,7 +783,6 @@ QG_GraphicView* QC_ApplicationWindow::setupNewGraphicView(const QC_MDIWindow* w)
     connect(view, &QG_GraphicView::gridStatusChanged, this, &QC_ApplicationWindow::updateGridStatus);
     connect(view, &RS_GraphicView::currentActionChanged, this, &QC_ApplicationWindow::onViewCurrentActionChanged);
 
-    setupCustomMenu(view);
     return view;
 }
 
@@ -785,7 +796,8 @@ bool QC_ApplicationWindow::newDrawingFromTemplate(const QString &fileName, QC_MD
     w = createNewDrawingWindow(nullptr, "");
     qApp->processEvents(QEventLoop::AllEvents, 1000);
 
-    if (fileName.isEmpty()) {
+    bool noFile = fileName.isEmpty();
+    if (noFile) {
         ret = true;
     } else {
         // loads the template file in the new view:
@@ -797,7 +809,7 @@ bool QC_ApplicationWindow::newDrawingFromTemplate(const QString &fileName, QC_MD
         doActivate(w);
         doArrangeWindows(RS2::CurrentMode);
         autoZoomAfterLoad(w->getGraphicView());
-        if (!fileName.isEmpty()) {
+        if (!noFile) {
             QString message = tr("New document from template: ") + fileName;
             notificationMessage(message, 2000);
         }
@@ -806,6 +818,10 @@ bool QC_ApplicationWindow::newDrawingFromTemplate(const QString &fileName, QC_MD
         }
         auto graphic = w->getGraphic();
         if (graphic != nullptr) {
+            if (noFile) {
+                // indicate that loading is completed so we could update default dim style from vars
+                graphic->onLoadingCompleted();
+            }
             emit(gridChanged(graphic->isGridOn()));
         }
     }
@@ -954,7 +970,7 @@ void QC_ApplicationWindow::updateWidgetsAsDocumentLoaded(const QC_MDIWindow *w){
 }
 
 void QC_ApplicationWindow::autoZoomAfterLoad(QG_GraphicView *graphicView){
-    if (LC_GET_ONE_BOOL("CADPreferences", "AutoZoomDrawing")) {
+    if (LC_GET_ONE_BOOL("CADPreferences", "AutoZoomDrawing", true)) {
         graphicView->zoomAuto(false);
     }
 }
@@ -1026,7 +1042,8 @@ void QC_ApplicationWindow::openFile(const QString &fileName, RS2::FormatType typ
 
 void QC_ApplicationWindow::changeDrawingOptions(int tabToShow){
     auto graphicView = getCurrentGraphicView();
-    RS_Graphic* graphic = graphicView->getGraphic();
+    RS_Graphic* graphic = graphicView->getGraphic(true);
+
     int dialogResult = m_dlgHelpr->requestOptionsDrawingDialog(*graphic, tabToShow);
     if (dialogResult == QDialog::Accepted) {
         updateCoordinateWidgetFormat();
@@ -1034,6 +1051,7 @@ void QC_ApplicationWindow::changeDrawingOptions(int tabToShow){
         m_anglesBasisWidget->update(graphic);
         graphicView->loadSettings();
         graphic->update();
+        graphicView->redraw();
         graphicView->repaint();
         // fixme - sand - emit signal?
     } else {
@@ -1491,6 +1509,7 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
         m_infoCursorSettingsManager->loadFromSettings();
         rebuildMenuIfNecessary();
     }
+    fireCurrentActionIconChanged(nullptr);
 }
 
 void QC_ApplicationWindow::slotImportBlock() {
@@ -1547,19 +1566,37 @@ bool QC_ApplicationWindow::tryCloseAllBeforeExist() {
  * which means it's impossible to enter a command.
  */
 void QC_ApplicationWindow::keyPressEvent(QKeyEvent *e) {
-    switch (e->key()) {
-        case Qt::Key_Escape:
-            slotKillAllActions();
-            // fall-through
+    int key = e->key();
+    switch (key) {
+        case Qt::Key_Escape: {
+            bool doDefaultProcessing = true;
+            RS_GraphicView *graphicView = getCurrentGraphicView();
+            if (graphicView != nullptr) {
+                auto currentAction = m_actionHandler->getCurrentAction();
+                RS2::ActionType actionType = currentAction->rtti();
+                if (RS2::isInteractiveInputAction(actionType)) {
+                    graphicView->keyPressEvent(e);
+                    e->accept();
+                    doDefaultProcessing = false;
+                }
+            }
+            if (doDefaultProcessing){
+                slotKillAllActions();
+                e->accept();
+            }
+            break;
+        }
+
         case Qt::Key_Return:
         case Qt::Key_Enter:
+            // slotKillAllActions();
             onEnterKey();
             e->accept();
             break;
 
         case Qt::Key_Plus:
         case Qt::Key_Equal:
-            m_actionHandler-> setCurrentAction(RS2::ActionZoomIn);
+            m_actionHandler->setCurrentAction(RS2::ActionZoomIn);
             e->accept();
             break;
 
@@ -1567,16 +1604,29 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent *e) {
             m_actionHandler->setCurrentAction(RS2::ActionZoomOut);
             e->accept();
             break;
-
+        case Qt::Key_Shift:
+        case Qt::Key_Control:
+        case Qt::Key_Left:
+        case Qt::Key_Right:
+        case Qt::Key_Up:
+        case Qt::Key_Down: {
+            RS_GraphicView* graphicView = getCurrentGraphicView();
+            if (graphicView) {
+                QWidget* focusWidget = QApplication::focusWidget();
+                bool focuseNotInLineEdit = dynamic_cast<QLineEdit*>(focusWidget) == nullptr;
+                if (focuseNotInLineEdit || true) {
+                    graphicView->keyPressEvent(e);
+                    if (!e->isAccepted()) {
+                        if (key == Qt::Key_Shift || key == Qt::Key_Control) {
+                            e->accept();
+                        }
+                    }
+                }
+            }
+            [[fallthrough]];
+        }
         default:
             e->ignore();
-// fixme - sand  - temporary test code, check regressions and move to method
-// fixme me - add proper support for keyboard in view (scroll, zoom) and actions (default action - move by keyboards)
-// fixme - as well as focusing options widget if there is action
-//            RS_GraphicView* graphicView = getGraphicView();
-//            if (graphicView) {
-//                graphicView->keyPressEvent(e);
-//            }
             // fixme - tmp-end
             RS_DEBUG->print("QC_ApplicationWindow::KeyPressEvent: IGNORED");
             break;
@@ -1599,26 +1649,27 @@ void QC_ApplicationWindow::relayAction(QAction *q_action) {
         qWarning("relayAction: graphicView is nullptr");
         return;
     }
-    // fixme - ugly fix for #2012. Actually, if some action does not invoke setCurrentAction(*) - it should not set current qaction..
-    // probably there could be the list of ignored actions in the future
-    bool setAsCurrentActionInView = true;
-    if (getAction("LockRelativeZero") == q_action) {
-        // other actions may be added later
-        setAsCurrentActionInView = false;
-    }
-    if (setAsCurrentActionInView) {
-        QG_GraphicView* graphicView = dynamic_cast<QG_GraphicView*>(view);
-        graphicView->setCurrentQAction(q_action);
-    }
 
-    fireCurrentActionIconChanged(q_action);
     if (q_action != nullptr) {
+        bool setAsCurrentActionInView = true;
+        auto property = q_action->property("_SetAsCurrentActionInView");
+        if (property.isValid()) {
+            setAsCurrentActionInView = property.toBool();
+        }
+
+        if (setAsCurrentActionInView) {
+            auto* graphicView = dynamic_cast<QG_GraphicView*>(view);
+            graphicView->setCurrentQAction(q_action);
+        }
+
         const QString commands(q_action->data().toString());
         if (!commands.isEmpty()) {
             const QString title(q_action->text().remove("&"));
             m_commandWidget->appendHistory(title + " : " + commands);
         }
     }
+
+    fireCurrentActionIconChanged(q_action);
 }
 
 /**
@@ -1669,9 +1720,8 @@ bool QC_ApplicationWindow::eventFilter(QObject *obj, QEvent *event) {
     return QObject::eventFilter(obj, event);
 }
 
-void QC_ApplicationWindow::onViewCurrentActionChanged(const RS_ActionInterface* action){
-    if (action != nullptr) {
-        RS2::ActionType actionType = action->rtti();
+void QC_ApplicationWindow::onViewCurrentActionChanged(RS2::ActionType actionType){
+   if (actionType  != RS2::ActionNone) {
         auto qAction = m_actionGroupManager->getActionByType(actionType);
         relayAction(qAction);
     }
@@ -1790,6 +1840,10 @@ void QC_ApplicationWindow::showBlockActivated(const RS_Block *block) const {
 
 QAction *QC_ApplicationWindow::getAction(const QString &actionName) const {
     return m_actionGroupManager->getActionByName(actionName);
+}
+
+LC_ActionGroup* QC_ApplicationWindow::getActionGroup(const QString &groupName) const {
+    return m_actionGroupManager->getActionGroup(groupName);
 }
 
 // todo - think later about staying with signal-slot approach... current one is too explicit

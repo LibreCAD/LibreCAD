@@ -42,6 +42,7 @@ QG_MoveRotateOptions::QG_MoveRotateOptions()
     connect(ui->cbSameAngleForCopies, &QCheckBox::clicked, this, &QG_MoveRotateOptions::cbSameAngleForCopiesClicked);
     connect(ui->cbFreeAngle, &QCheckBox::clicked, this, &QG_MoveRotateOptions::cbFreeAngleForClicked);
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &QG_MoveRotateOptions::onAngleEditingFinished);
+    pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);
 }
 
 /*
@@ -151,6 +152,7 @@ void QG_MoveRotateOptions::setKeepOriginalsToActionAndView(bool val) {
 
 void QG_MoveRotateOptions::setFreeAngleToModelAndView(bool val) {
     ui->leAngle->setEnabled(!val);
+    ui->tbPickAngle->setEnabled(!val);
     ui->cbFreeAngle->setChecked(val);
     m_action->setAngleIsFree(val);
 }

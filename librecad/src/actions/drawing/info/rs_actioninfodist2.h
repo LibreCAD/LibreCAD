@@ -49,7 +49,7 @@ protected:
    * Action States.
    */
     enum Status {
-        SetEntity,    /**< Setting the entity. */
+        SetEntity = InitialActionStatus,    /**< Setting the entity. */
         SetPoint      /**< Setting the point of the distance. */
     };
 
@@ -63,6 +63,8 @@ protected:
     bool m_nearestPointShouldBeOnEntity = true;
     RS_Vector m_savedRelZero = RS_Vector{false};
     RS_Vector m_entityNearestPoint = RS_Vector{false};
+
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
 
     RS_Entity *doCatchEntity(LC_MouseEvent *e, bool preview);
     void restoreRelZero();

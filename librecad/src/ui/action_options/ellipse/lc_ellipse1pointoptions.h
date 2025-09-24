@@ -45,10 +45,10 @@ protected slots:
     void onFreeAngleClicked(bool val);
     void onDirectionChanged(bool val);
 protected:
-    void doSaveSettings() override;
-    void doSetAction(RS_ActionInterface *a, bool update) override;
     LC_ActionDrawEllipse1Point* m_action = nullptr;
     Ui::LC_Ellipse1PointOptions *ui;
+    void doSaveSettings() override;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
     void setMajorRadiusToActionAndView(QString val);
     void setMinorRadiusToActionAndView(QString val);
     void setAngleToActionAndView(QString val);

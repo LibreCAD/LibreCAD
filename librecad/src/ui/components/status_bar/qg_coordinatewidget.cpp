@@ -71,7 +71,7 @@ void QG_CoordinateWidget::setGraphicView(RS_GraphicView *gv) {
     m_graphicView = gv;
     if (gv != nullptr){
         m_viewport = gv->getViewPort();
-        m_graphic = gv->getGraphic();
+        m_graphic = gv->getGraphic(true);
         if (m_graphic != nullptr) {
             setCoordinates(0.0, 0.0, 0.0, 0.0, true);
         }

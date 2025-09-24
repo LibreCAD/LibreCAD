@@ -34,8 +34,7 @@
 class RS_ActionDrawEllipseAxis : public LC_ActionDrawCircleBase {
     Q_OBJECT
 public:
-    RS_ActionDrawEllipseAxis(LC_ActionContext *actionContext,
-                             bool isArc);
+    RS_ActionDrawEllipseAxis(LC_ActionContext *actionContext, bool isArc);
     ~RS_ActionDrawEllipseAxis() override;
     void init(int status) override;
     bool isReversed() const override;
@@ -45,7 +44,7 @@ protected:
      * Action States.
      */
     enum Status {
-        SetCenter,   /**< Setting the center.  */
+        SetCenter  = InitialActionStatus,   /**< Setting the center.  */
         SetMajor,    /**< Setting endpoint of major axis. */
         SetMinor,    /**< Setting minor/major ratio. */
         SetAngle1,   /**< Setting start angle. */

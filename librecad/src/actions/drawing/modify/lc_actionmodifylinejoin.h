@@ -33,7 +33,7 @@ class LC_ActionModifyLineJoin :public LC_AbstractActionWithPreview {
 public:
     // states for the action
     enum{
-        SetLine1, // selecting line 1
+        SetLine1 = InitialActionStatus, // selecting line 1
         SetLine2, // selecting line 2
         ResolveFirstLineTrim // resolving trim for line 1 after intersection
     };
@@ -68,19 +68,7 @@ public:
 
     void drawSnapper() override;;
 protected:
-    LC_ActionOptionsWidget* createOptionsWidget() override;
-    void doBack(LC_MouseEvent *pEvent, int status) override;
-    void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
-    RS2::CursorType doGetMouseCursor(int status) override;
 
-    void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;
-    void doAfterTrigger() override;
-    void performTriggerDeletions() override;
-    bool doCheckMayTrigger() override;
-    void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
-    bool isSetActivePenAndLayerOnTrigger() override;
-    void updateMouseButtonHints() override;
-private:
     /**
      * Utility structure that describes how the intersection point and snap point are located relative to the line
      */
@@ -184,6 +172,7 @@ private:
 
     RS_Vector m_line1ClickPosition = RS_Vector(false);
 
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     LC_LineJoinData* createLineJoinData(RS_Line* secondLine, RS_Vector &snapPoint);
     LC_PointsDisposition determine3PointsDisposition(RS_Vector start, RS_Vector end, const RS_Vector intersection, const RS_Vector &snapPoint) const;
     RS_Vector getMajorPointFromLine(int edgeMode, const RS_Vector &lineStart, const RS_Vector &lineEnd, const LC_ActionModifyLineJoin::LC_PointsDisposition &lineDisposition) const;
@@ -195,6 +184,19 @@ private:
 
     void applyAttributes(RS_Entity *entity, bool forLine1);
     RS_Line *catchLine(LC_MouseEvent *e, bool forPreview);
+    LC_ActionOptionsWidget* createOptionsWidget() override;
+    void doBack(LC_MouseEvent *pEvent, int status) override;
+    void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    RS2::CursorType doGetMouseCursor(int status) override;
+
+    void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    void doAfterTrigger() override;
+    void performTriggerDeletions() override;
+    bool doCheckMayTrigger() override;
+    void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
+    bool isSetActivePenAndLayerOnTrigger() override;
+    void updateMouseButtonHints() override;
+
 };
 
 #endif // LC_ACTIONMODIFYLINEJOIN_H

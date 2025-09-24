@@ -40,47 +40,63 @@ struct RS_ActionDrawEllipseInscribe::Points {
  * Constructor.
  *
  */
-RS_ActionDrawEllipseInscribe::RS_ActionDrawEllipseInscribe(LC_ActionContext *actionContext)
-        :LC_ActionDrawCircleBase("Draw ellipse inscribed",actionContext, RS2::ActionDrawEllipseInscribe)
-    , m_actionData(std::make_unique<Points>()){
+RS_ActionDrawEllipseInscribe::RS_ActionDrawEllipseInscribe(LC_ActionContext* actionContext)
+    : LC_ActionDrawCircleBase("Draw ellipse inscribed", actionContext, RS2::ActionDrawEllipseInscribe)
+      , m_actionData(std::make_unique<Points>()) {
 }
 
 RS_ActionDrawEllipseInscribe::~RS_ActionDrawEllipseInscribe() = default;
 
-void RS_ActionDrawEllipseInscribe::clearLines(bool checkStatus){
+void RS_ActionDrawEllipseInscribe::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
+    auto entityParent = contextEntity->getParent();
+    if (entityParent != nullptr) {
+        if (entityParent->ignoredOnModification()) {
+            return;
+        }
+    }
+    if (isLine(contextEntity)) { // fixme- support of polyline
+        m_actionData->lines.push_back(static_cast<RS_Line*>(contextEntity));
+        setStatus(SetLine2);
+    }
+}
+
+void RS_ActionDrawEllipseInscribe::clearLines(bool checkStatus) {
     while (m_actionData->lines.size()) {
-        if (checkStatus && (int) m_actionData->lines.size() <= getStatus())
+        if (checkStatus && (int)m_actionData->lines.size() <= getStatus()) {
             break;
+        }
         m_actionData->lines.back()->setHighlighted(false);
         m_actionData->lines.pop_back();
     }
     redrawDrawing();
 }
 
-void RS_ActionDrawEllipseInscribe::init(int status){
+void RS_ActionDrawEllipseInscribe::init(int status) {
     LC_ActionDrawCircleBase::init(status);
-    if (status >= 0){
+    if (status >= 0) {
         RS_Snapper::suspend();
     }
     clearLines(true);
 }
 
-void RS_ActionDrawEllipseInscribe::finish(bool updateTB){
+void RS_ActionDrawEllipseInscribe::finish(bool updateTB) {
     clearLines(false);
     LC_ActionDrawCircleBase::finish(updateTB);
 }
 
 void RS_ActionDrawEllipseInscribe::doTrigger() {
-    auto *ellipse = new RS_Ellipse(m_container, m_actionData->eData);
+    auto* ellipse = new RS_Ellipse(m_container, m_actionData->eData);
 
-    if (m_moveRelPointAtCenterAfterTrigger){
+    if (m_moveRelPointAtCenterAfterTrigger) {
         moveRelativeZero(ellipse->getCenter());
     }
 
     undoCycleAdd(ellipse);
 
-    for (RS_Line *const p: m_actionData->lines) {
-        if (!p) continue;
+    for (RS_Line* const p : m_actionData->lines) {
+        if (p == nullptr) {
+            continue;
+        }
         p->setHighlighted(false);
     }
 
@@ -94,58 +110,60 @@ void RS_ActionDrawEllipseInscribe::drawSnapper() {
     // disable snapper
 }
 
-void RS_ActionDrawEllipseInscribe::onMouseMoveEvent(int status, LC_MouseEvent *e) {
-    for(RS_AtomicEntity* const pc: m_actionData->lines) { // highlight already selected
+void RS_ActionDrawEllipseInscribe::onMouseMoveEvent(int status, LC_MouseEvent* e) {
+    for (RS_AtomicEntity* const pc : m_actionData->lines) { // highlight already selected
         highlightSelected(pc);
     }
 
-    RS_Entity *en = catchModifiableAndDescribe(e, RS2::EntityLine);
-   // bool shouldIgnore = false;
-    if (en != nullptr){
-        auto *line = dynamic_cast<RS_Line *>(en);
+    RS_Entity* en = catchModifiableAndDescribe(e, RS2::EntityLine);
+    // bool shouldIgnore = false;
+    if (en != nullptr) {
+        auto* line = dynamic_cast<RS_Line*>(en);
         bool uniqueLine = true;
         for (int i = 0; i < getStatus(); ++i) { //do not pull in the same line again
-            if (en->getId() == m_actionData->lines[i]->getId()){
+            if (en->getId() == m_actionData->lines[i]->getId()) {
                 uniqueLine = false;
                 break;
             };
         }
-        if (uniqueLine){
+        if (uniqueLine) {
             switch (status) {
                 case SetLine1: {
                     highlightHover(line);
                     break;
                 }
                 case SetLine2: {
-                    if (line != m_actionData->lines[SetLine1]){
+                    if (line != m_actionData->lines[SetLine1]) {
                         highlightHover(line);
                     }
                     break;
                 }
                 case SetLine3: {
-                    if (line != m_actionData->lines[SetLine1] && line != m_actionData->lines[SetLine2]){
+                    if (line != m_actionData->lines[SetLine1] && line != m_actionData->lines[SetLine2]) {
                         highlightHover(line);
                     }
                     break;
                 }
                 case SetLine4: {
-                    if (line != m_actionData->lines[SetLine1] && line != m_actionData->lines[SetLine2] && line != m_actionData->lines[SetLine3]){
-//                        clearLines(true);
+                    if (line != m_actionData->lines[SetLine1] && line != m_actionData->lines[SetLine2] && line !=
+                        m_actionData->lines[SetLine3]) {
+                        //                        clearLines(true);
                         std::vector<RS_Vector> tangent;
                         tangent.reserve(4);
-                        if (preparePreview(line, tangent)){
+                        if (preparePreview(line, tangent)) {
                             highlightHover(line);
                             auto ellipse = previewToCreateEllipse(m_actionData->eData);
                             if (m_showRefEntitiesOnPreview) {
                                 RS_Vector ellipseCenter = ellipse->getCenter();
 
-                                for (const auto &i: tangent) {
+                                for (const auto& i : tangent) {
                                     previewRefPoint(ellipseCenter + i);
                                 }
 
                                 previewRefPoint(ellipseCenter);
                             }
-                        } else {
+                        }
+                        else {
                             // nothing, can't build the ellipse
                         }
                     }
@@ -158,33 +176,37 @@ void RS_ActionDrawEllipseInscribe::onMouseMoveEvent(int status, LC_MouseEvent *e
     }
 }
 
-bool RS_ActionDrawEllipseInscribe::preparePreview(RS_Line* fourthLineCandidate, std::vector<RS_Vector> &tangent){
+bool RS_ActionDrawEllipseInscribe::preparePreview(RS_Line* fourthLineCandidate, std::vector<RS_Vector>& tangent) {
     m_actionData->valid = false;
     m_actionData->lines.push_back(fourthLineCandidate);
     RS_Ellipse e{m_preview.get(), RS_EllipseData()};
     m_actionData->valid = e.createInscribeQuadrilateral(m_actionData->lines, tangent);
-    if (m_actionData->valid){
+    if (m_actionData->valid) {
         m_actionData->eData = e.getData();
-//    } else if (RS_DIALOGFACTORY){
-//        RS_DIALOGFACTORY->commandMessage(tr("Can not determine uniquely an ellipse"));
+        //    } else if (RS_DIALOGFACTORY){
+        //        RS_DIALOGFACTORY->commandMessage(tr("Can not determine uniquely an ellipse"));
     }
     m_actionData->lines.pop_back();
     return m_actionData->valid;
 }
 
-void RS_ActionDrawEllipseInscribe::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
-    RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine);
+void RS_ActionDrawEllipseInscribe::onMouseLeftButtonRelease(int status, LC_MouseEvent* e) {
+    RS_Entity* en = catchModifiableEntity(e, RS2::EntityLine);
 
-    if (en != nullptr){
+    if (en != nullptr) {
         for (int i = 0; i < getStatus(); ++i) {
-            if (en->getId() == m_actionData->lines[i]->getId()) return; //do not pull in the same line again
+            if (en->getId() == m_actionData->lines[i]->getId()){
+                return; //do not pull in the same line again
+            }
         }
-        if (en->getParent()){
-            if (en->getParent()->ignoredOnModification()) return;
+        if (en->getParent()) {
+            if (en->getParent()->ignoredOnModification()) {
+                return;
+            }
         }
         clearLines(true);
 
-        auto *line = dynamic_cast<RS_Line *>(en);
+        auto* line = dynamic_cast<RS_Line*>(en);
         switch (status) {
             case SetLine1:
             case SetLine2:
@@ -196,11 +218,12 @@ void RS_ActionDrawEllipseInscribe::onMouseLeftButtonRelease(int status, LC_Mouse
             case SetLine4: {
                 std::vector<RS_Vector> tangent;
                 tangent.reserve(4);
-                if (preparePreview(line, tangent)){
+                if (preparePreview(line, tangent)) {
                     m_actionData->lines.push_back(line);
                     trigger();
-                } else {
-                        commandMessage(tr("Can not determine uniquely an ellipse"));
+                }
+                else {
+                    commandMessage(tr("Can not determine uniquely an ellipse"));
                 }
                 break;
             }
@@ -210,9 +233,9 @@ void RS_ActionDrawEllipseInscribe::onMouseLeftButtonRelease(int status, LC_Mouse
     }
 }
 
-void RS_ActionDrawEllipseInscribe::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
+void RS_ActionDrawEllipseInscribe::onMouseRightButtonRelease(int status, [[maybe_unused]] LC_MouseEvent* e) {
     // Return to last status:
-    if (status > 0){
+    if (status > 0) {
         clearLines(true);
         m_actionData->lines.pop_back();
         deletePreview();
@@ -278,7 +301,7 @@ QStringList RS_ActionDrawEllipseInscribe::getAvailableCommands() {
     return {};
 }
 
-void RS_ActionDrawEllipseInscribe::updateMouseButtonHints(){
+void RS_ActionDrawEllipseInscribe::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetLine1:
             updateMouseWidgetTRCancel(tr("Specify the first line"));
@@ -298,6 +321,6 @@ void RS_ActionDrawEllipseInscribe::updateMouseButtonHints(){
     }
 }
 
-RS2::CursorType RS_ActionDrawEllipseInscribe::doGetMouseCursor([[maybe_unused]] int status){
+RS2::CursorType RS_ActionDrawEllipseInscribe::doGetMouseCursor([[maybe_unused]] int status) {
     return RS2::SelectCursor;
 }

@@ -598,6 +598,22 @@ bool LC_ActionDrawLinePoints::isAllowDirectionCommands() {
     return m_actionType == RS2::ActionDrawLinePoints;
 }
 
+bool LC_ActionDrawLinePoints::doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) {
+    if (tag == "angle") {
+        setAngleDegrees(RS_Math::rad2deg(angleRad));
+        return true;
+    }
+    return false;
+}
+
+bool LC_ActionDrawLinePoints::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "distance") {
+        setPointsDistance(distance);
+        return true;
+    }
+    return false;
+}
+
 /**
  * options for the action
  */

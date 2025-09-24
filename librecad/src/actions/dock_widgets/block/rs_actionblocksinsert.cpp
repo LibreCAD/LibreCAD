@@ -122,6 +122,26 @@ void RS_ActionBlocksInsert::onMouseMoveEvent(int status, LC_MouseEvent *e){
     }
 }
 
+bool RS_ActionBlocksInsert::doUpdateAngleByInteractiveInput(const QString& tag, double angle) {
+    if (tag == "angle") {
+        setAngle(angle);
+        return true;
+    }
+    return false;
+}
+
+bool RS_ActionBlocksInsert::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "spacingX") {
+        setColumnSpacing(distance);
+        return true;
+    }
+    if (tag == "spacingY") {
+        setRowSpacing(distance);
+        return true;
+    }
+    return false;
+}
+
 void RS_ActionBlocksInsert::onMouseLeftButtonRelease([[maybe_unused]] int status, LC_MouseEvent *e){
     fireCoordinateEvent(e->snapPoint);
 }

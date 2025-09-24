@@ -27,6 +27,8 @@
 
 #include "lc_actioncircledimbase.h"
 #include "lc_actiondrawdimbaseline.h"
+#include "lc_dimstyleitem.h"
+#include "lc_dimstyleslistmodel.h"
 #include "lc_linemath.h"
 #include "rs_actiondimension.h"
 #include "rs_actiondimlinear.h"
@@ -36,10 +38,15 @@
  *  Constructs a QG_DimOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_DimOptions::QG_DimOptions()
+QG_DimOptions::QG_DimOptions(RS_Graphic *graphic)
     :LC_ActionOptionsWidgetBase(RS2::ActionNone, "Draw", "Dim"),
     ui(std::make_unique<Ui::Ui_DimOptions>()){
     ui->setupUi(this);
+
+    initStylesCombobox(graphic);
+
+    connect(ui->cbStyle, &QComboBox::currentIndexChanged, this, &QG_DimOptions::onDimStyleChanged);
+
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &QG_DimOptions::onAngleEditingFinished);
     connect(ui->bHor, &QToolButton::toggled, this, &QG_DimOptions::onHorClicked);
     connect(ui->bVer, &QToolButton::toggled, this, &QG_DimOptions::onVerClicked);
@@ -221,9 +228,14 @@ void QG_DimOptions::updateAngle(const QString & a) {
         dimLinearAction->setUcsAngleDegrees(ucsBasisAngleDegrees);
 
         bool checkVert = !LC_LineMath::isMeaningfulAngle(90-ucsBasisAngleDegrees);
+        ui->bVer->blockSignals(true);
         ui->bVer->setChecked(checkVert);
+        ui->bVer->blockSignals(false);
+
         bool checkHor = !LC_LineMath::isMeaningfulAngle(ucsBasisAngleDegrees);
+        ui->bHor->blockSignals(true);
         ui->bHor->setChecked(checkHor);
+        ui->bHor->blockSignals(false);
     }
 }
 
@@ -300,4 +312,24 @@ void QG_DimOptions::updateUI(int mode) {
         default:
             break;
     }
+}
+
+void QG_DimOptions::onDimStyleChanged(int index) {
+    if (m_action != nullptr) {
+        auto styleItem = m_dimItemsListModel->getItemAtRow(index);
+        if (styleItem != nullptr) {
+            m_action->setDimStyleName(styleItem->dimStyle()->getName());
+        }
+    }
+}
+
+void QG_DimOptions::initStylesCombobox(RS_Graphic *g) {
+    RS2::EntityType dimType = RS2::EntityUnknown; // fixme - sand - SET TYPE PROPERLY!!
+    m_dimItemsListModel = new LC_StylesListModel(this,g, dimType);
+    m_dimItemsListModel->sort(0, Qt::SortOrder::AscendingOrder);
+
+    auto combobox = ui->cbStyle;
+    combobox->setModel(m_dimItemsListModel);
+    int initialIndex = m_dimItemsListModel->getActiveStyleItemIndex();
+    combobox->setCurrentIndex(initialIndex);
 }

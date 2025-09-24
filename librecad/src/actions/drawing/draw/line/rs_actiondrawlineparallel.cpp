@@ -26,9 +26,18 @@
 
 #include "rs_actiondrawlineparallel.h"
 
+#include "lc_actioncontext.h"
 #include "qg_lineparalleloptions.h"
 #include "rs_creation.h"
 #include "rs_debug.h"
+#include "rs_graphicview.h"
+
+namespace {
+    //this holds a list of entity types which supports tangent
+    const auto g_supportedEntityTypes = EntityTypeList{
+            {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine/*, RS2::EntityParabola, RS2::EntitySplinePoints*/}
+    };
+}
 
 RS_ActionDrawLineParallel::RS_ActionDrawLineParallel(LC_ActionContext *actionContext, RS2::ActionType actionType)
 	:RS_PreviewActionInterface("Draw Parallels", actionContext, actionType)
@@ -40,6 +49,13 @@ RS_ActionDrawLineParallel::RS_ActionDrawLineParallel(LC_ActionContext *actionCon
 }
 
 RS_ActionDrawLineParallel::~RS_ActionDrawLineParallel() = default;
+
+void RS_ActionDrawLineParallel::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
+    auto entity = contextEntity;
+    if (isPolyline(entity)) {
+      // fixme - sand - investigate whether we can create parallel to polyline segment (arc or line)
+    }
+}
 
 double RS_ActionDrawLineParallel::getDistance() const{
     return m_distance;
@@ -57,6 +73,14 @@ void RS_ActionDrawLineParallel::setNumber(int n){
     m_numberToCreate = n;
 }
 
+bool RS_ActionDrawLineParallel::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "distance") {
+        setDistance(distance);
+        return true;
+    }
+    return false;
+}
+
 void RS_ActionDrawLineParallel::doTrigger() {
     RS_Creation creation(m_container, m_viewport);
     RS_Entity *e = creation.createParallel(*m_coord,m_distance, m_numberToCreate,m_entity);
@@ -71,7 +95,7 @@ void RS_ActionDrawLineParallel::onMouseMoveEvent([[maybe_unused]]int status, LC_
 
     m_entity = catchAndDescribe(e, RS2::ResolveAll);
 
-    switch (getStatus()) {
+    switch (status) {
         case SetEntity: {
             if (m_entity != nullptr){
                 RS_Creation creation(m_preview.get(), nullptr, false);

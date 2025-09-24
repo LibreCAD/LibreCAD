@@ -47,6 +47,9 @@ QG_PolylineOptions::QG_PolylineOptions()
     connect(ui->tbTanAngle, &QToolButton::clicked, this, &QG_PolylineOptions::tbTanAngleClicked);
     connect(ui->tbArcAngle, &QToolButton::clicked, this, &QG_PolylineOptions::tbArcAngleClicked);
 
+    pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);
+    pickDistanceSetup("radius", ui->tbPickRadius, ui->leRadius);
+
     // hide for now, probably it will be removed later
     ui->cbMode->setVisible(false);
 }
@@ -95,7 +98,7 @@ void QG_PolylineOptions::doSetAction(RS_ActionInterface *a, bool update){
         reversed = loadBool("Reversed", false);
 
         m_action->setRadius(radius.toDouble());
-        m_action->setAngle(angle.toDouble());
+        m_action->setAngleDegrees(angle.toDouble());
         m_action->setMode((RS_ActionDrawPolyline::SegmentMode) mode);
         m_action->setReversed(reversed);
     }
@@ -127,7 +130,7 @@ void QG_PolylineOptions::setAngleToActionAndView(const QString& strVal){
         if (angle > 359.999){
             angle = 359.999;
         }
-        m_action->setAngle(angle);
+        m_action->setAngleDegrees(angle);
         ui->leAngle->setText(fromDouble(angle));
     }
 }
@@ -166,37 +169,98 @@ void QG_PolylineOptions::setModeToActionAndView(int m){
     switch (segmentMode) {
         case RS_ActionDrawPolyline::Line:{
             ui->tbLine->setChecked(true);
-            for (QWidget *p: wLists{ui->leRadius, ui->leAngle, ui->lRadius, ui->lAngle, ui->buttonGroup1, ui->rbPos, ui->rbNeg})
+            for (QWidget* p : wLists{
+                     ui->leRadius,
+                     ui->tbPickRadius,
+                     ui->leAngle,
+                     ui->tbPickAngle,
+                     ui->lRadius,
+                     ui->lAngle,
+                     ui->buttonGroup1,
+                     ui->rbPos,
+                     ui->rbNeg
+                 }) {
                 p->hide();
+            }
             break;
         }
         case RS_ActionDrawPolyline::Tangential:{
             ui->tbTangental->setChecked(true);
-            for (QWidget *p: wLists{ui->leRadius, ui->leAngle, ui->lRadius, ui->lAngle, ui->buttonGroup1, ui->rbPos, ui->rbNeg})
+            for (QWidget* p : wLists{
+                     ui->leRadius,
+                     ui->tbPickRadius,
+                     ui->leAngle,
+                     ui->tbPickAngle,
+                     ui->lRadius,
+                     ui->lAngle,
+                     ui->buttonGroup1,
+                     ui->rbPos,
+                     ui->rbNeg
+                 }) {
                 p->hide();
+            }
             break;
         }
         case RS_ActionDrawPolyline::TanRad: {
-            for (QWidget *p: wLists{ui->leAngle, ui->lAngle, ui->buttonGroup1, ui->rbPos, ui->rbNeg})
+            for (QWidget* p : wLists{
+                     ui->leAngle,
+                     ui->tbPickAngle,
+                     ui->lAngle,
+                     ui->buttonGroup1,
+                     ui->rbPos,
+                     ui->rbNeg
+                 }) {
                 p->hide();
-            for (QWidget *p: wLists{ui->leRadius, ui->lRadius})
+            }
+            for (QWidget* p : wLists{
+                     ui->leRadius,
+                     ui->tbPickRadius,
+                     ui->lRadius
+                 }) {
                 p->show();
+            }
             ui->tbTanRadius->setChecked(true);
             break;
         }
         case RS_ActionDrawPolyline::TanAng: {
-            for (QWidget *p: wLists{ui->leRadius, ui->lRadius, ui->buttonGroup1, ui->rbPos, ui->rbNeg})
+            for (QWidget* p : wLists{
+                     ui->leRadius,
+                     ui->tbPickRadius,
+                     ui->lRadius,
+                     ui->buttonGroup1,
+                     ui->rbPos,
+                     ui->rbNeg
+                 }) {
                 p->hide();
-            for (QWidget *p: wLists{ui->leAngle, ui->lAngle})
+            }
+            for (QWidget* p : wLists{
+                     ui->leAngle,
+                     ui->tbPickAngle,
+                     ui->lAngle
+                 }) {
                 p->show();
+            }
             ui->tbTanAngle->setChecked(true);
             break;
         }
         case RS_ActionDrawPolyline::Ang: {
-            for (QWidget *p: wLists{ui->leRadius, ui->lRadius})
+            for (QWidget* p : wLists{
+                     ui->leRadius,
+                     ui->tbPickRadius,
+                     ui->lRadius
+                 }) {
                 p->hide();
-            for (QWidget *p: wLists{ui->leAngle, ui->lAngle, ui->buttonGroup1, ui->rbPos, ui->rbNeg})
+            }
+            for (QWidget* p : wLists{
+                     ui->leAngle,
+                     ui->tbPickAngle,
+                     ui->lAngle,
+                     ui->buttonGroup1,
+                     ui->rbPos,
+                     ui->rbNeg
+                 }) {
                 p->show();
+            }
             ui->tbArcAngle->setChecked(true);
             break;
         }

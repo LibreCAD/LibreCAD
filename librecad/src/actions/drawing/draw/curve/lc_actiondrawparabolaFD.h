@@ -45,7 +45,7 @@ protected:
      * Action States.
      */
     enum Status {
-        SetFocus = 0,   //  Setting the Focus.  */
+        SetFocus = InitialActionStatus,   //  Setting the Focus.  */
         SetDirectrix,   //  Setting the Directrix.  */
         SetStartPoint,  //  Setting the Start Point.  */
         SetEndPoint     //  Setting the End Point.  */

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>747</width>
+    <width>750</width>
     <height>22</height>
    </rect>
   </property>
@@ -251,6 +251,20 @@
     </widget>
    </item>
    <item>
+    <widget class="QToolButton" name="tbPickRadius">
+     <property name="toolTip">
+      <string>Pick radius form drawing</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_distance.lci</normaloff>:/icons/interactive_pick_distance.lci</iconset>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QLabel" name="lAngle">
      <property name="text">
       <string>Angle:</string>
@@ -279,6 +293,20 @@
      </property>
      <property name="toolTip">
       <string>Angle of arc</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QToolButton" name="tbPickAngle">
+     <property name="toolTip">
+      <string>Pick angle from drawing</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_angle.lci</normaloff>:/icons/interactive_pick_angle.lci</iconset>
      </property>
     </widget>
    </item>
@@ -354,7 +382,6 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../../../../res/icons/icons.qrc"/>
   <include location="../../../../res/icons/icons.qrc"/>
  </resources>
  <connections>

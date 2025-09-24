@@ -30,9 +30,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * @author Dongxu Li
  */
 class LC_ActionDrawCircle2PR:public RS_ActionDrawCircleCR {
-Q_OBJECT
+    Q_OBJECT
 public:
-    LC_ActionDrawCircle2PR(LC_ActionContext *actionContext);
+    explicit LC_ActionDrawCircle2PR(LC_ActionContext *actionContext);
     ~LC_ActionDrawCircle2PR() override;
     void init(int status) override;
     QStringList getAvailableCommands() override;
@@ -41,7 +41,7 @@ protected:
  * Action States.
  */
     enum Status {
-        SetPoint1,       /**< Setting the 1st point. */
+        SetPoint1 = InitialActionStatus,       /**< Setting the 1st point. */
         SetPoint2,       /**< Setting the 2nd point. */
         SelectCenter        /**< select center out of two possibilities. */
     };
@@ -55,9 +55,7 @@ protected:
     bool doProcessCommand(int status, const QString &command)  override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
-
     void doTrigger() override;
-
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
 };
 #endif

@@ -33,8 +33,7 @@
 #include "rs_solid.h"
 #include "rs_units.h"
 
-namespace
-{
+namespace{
     // trunc a floating point to multiplier of the giving unitLength
     void truncF(double& length, double unitLength) {
         length -= std::fmod(length, unitLength);
@@ -47,13 +46,12 @@ namespace
     }
 }
 
-LC_DimArcData::LC_DimArcData(const LC_DimArcData& input_dimArcData)
-    :
-    radius(input_dimArcData.radius),
-    arcLength(input_dimArcData.arcLength),
-    centre(input_dimArcData.centre),
-    endAngle(input_dimArcData.endAngle),
-    startAngle(input_dimArcData.startAngle) {
+LC_DimArcData::LC_DimArcData(const LC_DimArcData& other)
+    :radius(other.radius),
+    arcLength(other.arcLength),
+    centre(other.centre),
+    endAngle(other.endAngle),
+    startAngle(other.startAngle) {
 }
 
 LC_DimArcData::LC_DimArcData(double input_radius,
@@ -61,31 +59,27 @@ LC_DimArcData::LC_DimArcData(double input_radius,
                              const RS_Vector& input_centre,
                              const RS_Vector& input_endAngle,
                              const RS_Vector& input_startAngle)
-    :
-    radius(input_radius),
+    :radius(input_radius),
     arcLength(input_arcLength),
     centre(input_centre),
     endAngle(input_endAngle),
     startAngle(input_startAngle) {
 }
 
+LC_DimArc::LC_DimArc(const LC_DimArc& other): RS_Dimension(other), m_dimArcData{other.m_dimArcData} {
+}
+
 LC_DimArc::LC_DimArc(RS_EntityContainer* parent,
                      const RS_DimensionData& input_commonDimData,
                      const LC_DimArcData& input_dimArcData)
-    :
-    RS_Dimension(parent, input_commonDimData),
+    :RS_Dimension(parent, input_commonDimData),
     m_dimArcData(input_dimArcData) {
     LC_DimArc::update();
 }
 
 RS_Entity* LC_DimArc::clone() const {
-    LC_DimArc* cloned_dimArc_entity{new LC_DimArc(*this)};
-
-    cloned_dimArc_entity->setOwner(isOwner());
-    cloned_dimArc_entity->detach();
-    cloned_dimArc_entity->update();
-
-    return cloned_dimArc_entity;
+    LC_DimArc* clone = new LC_DimArc(*this);
+    return clone;
 }
 
 QString LC_DimArc::getMeasuredLabel() {

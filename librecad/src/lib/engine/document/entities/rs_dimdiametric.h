@@ -45,6 +45,8 @@ struct RS_DimDiametricData {
      * @param leader Leader length.
      */
     RS_DimDiametricData(const RS_Vector &definitionPoint,double leader);
+
+    RS_DimDiametricData(const RS_DimDiametricData & other);
     /** Definition point. */
     RS_Vector definitionPoint;
     /** Leader length. */
@@ -63,6 +65,8 @@ public:
     RS_DimDiametric(RS_EntityContainer* parent,
                  const RS_DimensionData& d,
                  const RS_DimDiametricData& ed);
+
+    RS_DimDiametric(const RS_DimDiametric& other);
 
 	RS_Entity* clone() const override;
 

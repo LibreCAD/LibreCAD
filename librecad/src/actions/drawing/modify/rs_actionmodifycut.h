@@ -47,18 +47,20 @@ protected:
  * Action States.
  */
     enum Status {
-        ChooseCutEntity,      /**< Choosing the entity to cut in two. */
+        ChooseCutEntity = InitialActionStatus,      /**< Choosing the entity to cut in two. */
         SetCutCoord        /**< Choosing the cutting point. */
     };
     RS_Entity* m_cutEntity = nullptr;
     std::unique_ptr<RS_Vector> m_cutCoord;
 
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void updateMouseButtonHints() override;
     void doTrigger() override;
+
 };
 
 #endif

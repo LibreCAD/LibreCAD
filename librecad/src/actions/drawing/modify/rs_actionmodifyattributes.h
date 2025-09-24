@@ -39,6 +39,7 @@ class   RS_ActionModifyAttributes : public LC_ActionPreSelectionAwareBase {
     Q_OBJECT
 public:
     RS_ActionModifyAttributes(LC_ActionContext *actionContext);
+    bool mayBeTerminatedExternally() override {return !m_dialogVisible;}
 protected:
     /**
     * Action States.
@@ -46,7 +47,10 @@ protected:
     enum Status {
         Acknowledge    /**< Acknowledge or cancel. */
     };
+
+    bool m_dialogVisible {false};
     void updateMouseButtonHintsForSelection() override;
     void doTrigger(bool keepSelected) override;
+
 };
 #endif

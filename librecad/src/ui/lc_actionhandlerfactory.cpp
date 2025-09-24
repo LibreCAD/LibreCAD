@@ -27,6 +27,7 @@
 #include "lc_actiondimarc.h"
 #include "lc_actiondimordinate.h"
 #include "lc_actiondimordinaterebase.h"
+#include "lc_actiondimstyleapply.h"
 #include "lc_actiondrawarc2pointsangle.h"
 #include "lc_actiondrawarc2pointsheight.h"
 #include "lc_actiondrawarc2pointslength.h"
@@ -37,6 +38,7 @@
 #include "lc_actiondrawcross.h"
 #include "lc_actiondrawdimbaseline.h"
 #include "lc_actiondrawellipse1point.h"
+#include "lc_actiondrawgdtfeaturecontrolframe.h"
 #include "lc_actiondrawlineanglerel.h"
 #include "lc_actiondrawlinefrompointtoline.h"
 #include "lc_actiondrawlinepoints.h"
@@ -58,7 +60,11 @@
 #include "lc_actionfileexportmakercam.h"
 #include "lc_actioninfo3pointsangle.h"
 #include "lc_actioninfopickcoordinates.h"
+#include "lc_actioninfopoint.h"
 #include "lc_actioninfoproperties.h"
+#include "lc_actioninteractivepickangle.h"
+#include "lc_actioninteractivepickdistance.h"
+#include "lc_actioninteractivepickposition.h"
 #include "lc_actionlayerscmd.h"
 #include "lc_actionlayersexport.h"
 #include "lc_actionlayerstoggleconstruction.h"
@@ -69,6 +75,7 @@
 #include "lc_actionmodifyduplicate.h"
 #include "lc_actionmodifylinegap.h"
 #include "lc_actionmodifylinejoin.h"
+#include "lc_actionmodifymoveadjust.h"
 #include "lc_actionpastetopoints.h"
 #include "lc_actionpenapply.h"
 #include "lc_actionpenpick.h"
@@ -86,6 +93,7 @@
 #include "lc_actionsplineremovebetween.h"
 #include "lc_actionucsbydimordinate.h"
 #include "lc_actionucscreate.h"
+#include "pick/lc_actioninteractivepickposition.h"
 #include "rs_actionblocksadd.h"
 #include "rs_actionblocksattributes.h"
 #include "rs_actionblockscreate.h"
@@ -242,7 +250,10 @@ namespace InnerFactory{
                     auto document = ctx->getEntityContainer();
                     RS_Selection s(static_cast<RS_EntityContainer&>(*document), view->getViewPort());
                     s.selectAll(false);
-                    RS_DIALOGFACTORY->updateSelectionWidget(document->countSelected(), document->totalSelectedLength());
+
+                    auto selectionInfo = document->getSelectionInfo();
+                    ctx->updateSelectionWidget(selectionInfo.count, selectionInfo.length);
+                    // RS_DIALOGFACTORY->updateSelectionWidget(document->countSelected(), document->totalSelectedLength());
                 }
                 return nullptr;
             }
@@ -297,7 +308,6 @@ namespace InnerFactory{
                 break;
             }
             case RS2::ActionSelectContour: {
-                view->killSelectActions();
                 return new RS_ActionSelectContour(ctx);
             }
             case RS2::ActionSelectAll: {
@@ -307,33 +317,27 @@ namespace InnerFactory{
                 return new RS_ActionSelectAll(ctx, false);
             }
             case RS2::ActionSelectWindow: {
-                view->killSelectActions();
                 return new RS_ActionSelectWindow(view->getTypeToSelect(), ctx, true);
             }
             case RS2::ActionSelectPoints: {
-                view->killSelectActions();
                 return new LC_ActionSelectPoints(ctx);
             }
             case RS2::ActionDeselectWindow: {
-                view->killSelectActions();
                 return new RS_ActionSelectWindow(ctx, false);
             }
             case RS2::ActionSelectInvert: {
                 return new RS_ActionSelectInvert(ctx);
             }
             case RS2::ActionSelectIntersected: {
-                view->killSelectActions();
                 return new RS_ActionSelectIntersected(ctx, true);
             }
             case RS2::ActionDeselectIntersected: {
-                view->killSelectActions();
                 return new RS_ActionSelectIntersected(ctx, false);
             }
             case RS2::ActionSelectLayer: {
-                view->killSelectActions();
                 return new RS_ActionSelectLayer(ctx);
             }
-            case RS2::ActionToolRegenerateDimensions: {
+            case RS2::ActionDimRegenerate: {
                 return new RS_ActionToolRegenerateDimensions(ctx);
             }
             case RS2::ActionZoomIn: {
@@ -348,7 +352,7 @@ namespace InnerFactory{
             case RS2::ActionZoomWindow: {
                 return new RS_ActionZoomWindow(ctx);
             }
-            case RS2::ActionZoomPan: {
+            case RS2::ActionZoomPan:{
                 return new RS_ActionZoomPan(ctx);
             }
             case RS2::ActionZoomPrevious: {
@@ -648,6 +652,9 @@ namespace InnerFactory{
             case RS2::ActionDimOrdinate: {
                 return new LC_ActionDimOrdinate(ctx);
             }
+            case RS2::ActionGTDFCFrame: {
+                return new LC_ActionDrawGDTFeatureControlFrame(ctx);
+            }
             case RS2::ActionDimLinearHor: {
                 return new RS_ActionDimLinear(ctx, 0.0, true, RS2::ActionDimLinearHor);
             }
@@ -674,6 +681,9 @@ namespace InnerFactory{
             }
             case RS2::ActionDimContinue: {
                 return new LC_ActionDrawDimBaseline(ctx, RS2::ActionDimContinue);
+            }
+            case RS2::ActionDimStyleApply: {
+                return new LC_ActionDimStyleApply(ctx);
             }
             case RS2::ActionModifyLineJoin: {
                 return new LC_ActionModifyLineJoin(ctx);
@@ -720,7 +730,7 @@ namespace InnerFactory{
                 return new RS_ActionModifyRotate2(ctx);
             }
             case RS2::ActionModifyEntity: {
-                return new RS_ActionModifyEntity(ctx, static_cast<RS_Entity*>(data));
+                return new RS_ActionModifyEntity(ctx);
             }
             case RS2::ActionModifyTrim: {
                 return new RS_ActionModifyTrim(ctx, false);
@@ -793,6 +803,9 @@ namespace InnerFactory{
             }
             case RS2::ActionInfoDistPoint2Entity: {
                 return new RS_ActionInfoDist2(ctx, true);
+            }
+            case RS2::ActionInfoPoint: {
+                return new LC_ActionInfoPoint(ctx);
             }
             case RS2::ActionInfoAngle: {
                 return new RS_ActionInfoAngle(ctx);
@@ -946,14 +959,32 @@ namespace InnerFactory{
                 [[fallthrough]];
             case RS2::ActionLayerEntityTogglePrint:
                 [[fallthrough]];
+            case RS2::ActionLayerEntityHideOthers:
+                [[fallthrough]];
             case RS2::ActionLayerEntityToggleLock: {
                 return new LC_ActionLayerToggle(ctx, actionType);
             }
-            case RS2::ActionDimOrdinateSelectSameOrigin: {
+            case RS2::ActionDimOrdByOriginSelect: {
                 return new LC_ActionSelectDimOrdinateSameOrigin(ctx);
             }
-            case RS2::ActionDimOrdinateRebase: {
+            case RS2::ActionDimOrdRebase: {
                 return new LC_ActionDimOrdinateRebase(ctx);
+            }
+            case RS2::ActionInteractivePickPoint: {
+                return new LC_ActionInteractivePickPosition(ctx);
+            }
+            case RS2::ActionInteractivePickLength: {
+                return new LC_ActionInteractivePickDistance(ctx);
+            }
+            case RS2::ActionInteractivePickAngle: {
+                return new LC_ActionInteractivePickAngle(ctx);
+            }
+            case RS2::ActionModifyMoveAdjust: {
+                if (data != nullptr) {
+                    LC_ActionModifyMoveAdjust::MovementInfo* movementInfo = static_cast<LC_ActionModifyMoveAdjust::MovementInfo*>(data);
+                    return new LC_ActionModifyMoveAdjust(ctx, *movementInfo);
+                }
+                break;
             }
             default:
                 RS_DEBUG->print(RS_Debug::D_WARNING,

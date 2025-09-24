@@ -90,6 +90,7 @@ protected:
     virtual void preparePolygonInfo([[maybe_unused]]PolygonInfo &polygonInfo, [[maybe_unused]]const RS_Vector &snap){};
     RS_Polyline *createShapePolyline(PolygonInfo &polygonInfo, bool preview);
     void doTrigger() override;
+    bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
 };
 
 #endif // LC_ACTIONDRAWLINEPOLYGONBASE_H

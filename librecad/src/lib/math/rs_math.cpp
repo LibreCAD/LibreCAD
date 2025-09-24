@@ -70,8 +70,7 @@ int RS_Math::round(double v) {
     return int(std::lrint(v));
 }
 
-double RS_Math::round(double v, double precision)
-{
+double RS_Math::round(double v, double precision){
     return std::abs(precision) > RS_TOLERANCE2 ? precision * std::llround(v / precision) : v;
 }
 
@@ -102,9 +101,12 @@ RS_Vector RS_Math::pow(const RS_Vector& vp, int y) {
 /**
  * Save equal function for real types
  */
-bool RS_Math::equal(double d1, double d2, double tolerance)
-{
+bool RS_Math::equal(double d1, double d2, double tolerance){
     return std::abs(d1 - d2) <= std::max({2. * ulp(d1), 2. * ulp(d2), tolerance});
+}
+
+bool RS_Math::notEqual(double d1, double d2, double tolerance){
+    return std::abs(d1 - d2) > std::max({2. * ulp(d1), 2. * ulp(d2), tolerance});
 }
 
 /**
@@ -137,8 +139,6 @@ double RS_Math::gra2deg(double a){
     return deg;
 }
 
-
-
 /**
  * Finds greatest common divider using Euclid's algorithm.
  */
@@ -150,10 +150,13 @@ bool RS_Math::isAngleBetween(double a,
                              double a1, double a2,
                              bool reversed) {
 
-    if (reversed)
+    if (reversed) {
         std::swap(a1,a2);
-    if(getAngleDifferenceU(a2, a1 ) < RS_TOLERANCE_ANGLE)
+    }
+
+    if(getAngleDifferenceU(a2, a1 ) < RS_TOLERANCE_ANGLE) {
         return true;
+    }
     const double tol=0.5*RS_TOLERANCE_ANGLE;
     const double diff0=correctAngle(a2 -a1) + tol;
 
@@ -173,8 +176,9 @@ double RS_Math::correctAngle(double a) {
  * @return 0 if angles are the same or not periodic, number of periods if angles are periodic
  */
 int RS_Math::getPeriodsCount(double a1, double a2, bool reversed){
-    if (reversed)
+    if (reversed) {
         std::swap(a1,a2);
+    }
    double dif = std::abs(a2-a1) + g_twoPi;
    double remainder = std::remainder(dif, g_twoPi);
    int result = 0;
@@ -198,22 +202,27 @@ double RS_Math::correctAngle0ToPi(double a) {
     return std::abs(std::remainder(a, g_twoPi));
 }
 
+void RS_Math::calculateAngles(double &angle, double& complementary, double& supplementary, double& alt) {
+    angle = correctAngle0ToPi(angle);
+    complementary = M_PI_2 - angle;
+    supplementary = M_PI - angle;
+    alt =  M_PI + supplementary;
+}
 
 /**
  * @return The angle that needs to be added to a1 to reach a2.
  *         Always positive and less than 2*pi.
  */
 double RS_Math::getAngleDifference(double a1, double a2, bool reversed) {
-    if (reversed)
+    if (reversed) {
         std::swap(a1,a2);
+    }
     return correctAngle(a2 - a1);
 }
 
-double RS_Math::getAngleDifferenceU(double a1, double a2)
-{
+double RS_Math::getAngleDifferenceU(double a1, double a2){
     return correctAngle0ToPi(a1 - a2);
 }
-
 
 /**
 * Makes a text constructed with the given angle readable. Used
@@ -256,10 +265,12 @@ double RS_Math::makeAngleReadable(double angle, bool readable,
  */
 bool RS_Math::isAngleReadable(double angle) {
     const double tolerance=0.001;
-    if (angle>M_PI_2)
+    if (angle>M_PI_2) {
         return std::abs(std::remainder(angle, g_twoPi)) < (M_PI_2 - tolerance);
-    else
+    }
+    else {
         return std::abs(std::remainder(angle, g_twoPi)) < (M_PI_2 + tolerance);
+    }
 }
 
 /**
@@ -269,8 +280,6 @@ bool RS_Math::isAngleReadable(double angle) {
 bool RS_Math::isSameDirection(double dir1, double dir2, double tol) {
     return getAngleDifferenceU(dir1, dir2) < tol;
 }
-
-
 
 /**
  * Evaluates a mathematical expression and returns the result.
@@ -294,8 +303,9 @@ double RS_Math::eval(const QString& expr, double def) {
  * provided regex match, named group, conversion factor, and default value.
  */
 double RS_Math::convert_unit(const QRegularExpressionMatch& match, const QString& name, double factor, double defval) {
-    if (!match.captured(name).isNull())
+    if (!match.captured(name).isNull()) {
         LC_ERR <<"name="<<name<<": "<<  match.captured(name);
+    }
     QString input = (!match.captured(name).isNull()) ? match.captured(name) : QString::number(defval, 'g', 16);
     return input.toDouble() * factor;
 }
@@ -342,8 +352,9 @@ QString RS_Math::derationalize(const QString& expr) {
  */
 double RS_Math::eval(const QString& expr, bool* ok) {
     bool okTmp = false;
-    if(ok == nullptr)
+    if(ok == nullptr) {
         ok=&okTmp;
+    }
     double ret = 0.;
     if (expr.isEmpty()) {
         *ok = false;
@@ -377,7 +388,6 @@ double RS_Math::eval(const QString& expr, bool* ok) {
 
     return ret;
 }
-
 
 /**
  * Converts a double into a string which is as short as possible
@@ -436,8 +446,6 @@ QString RS_Math::doubleToString(double value, int prec) {
     return valStr;
 }
 
-
-
 /**
  * Performs some testing for the math class.
  */
@@ -467,11 +475,13 @@ void RS_Math::test() {
                    <<eqns[i].back()<<") = 0"<<std::endl;
             auto sol = quadraticSolver(eqns[i]);
             assert(sol.size()==roots[i].size());
-            if (sol.front() > sol.back())
+            if (sol.front() > sol.back()) {
                 std::swap(sol[0], sol[1]);
+            }
             auto expected=roots[i];
-            if (expected.front() > expected.back())
+            if (expected.front() > expected.back()) {
                 std::swap(expected[0], expected[1]);
+            }
             for (size_t j=0; j < sol.size(); j++) {
                 double x0 = sol[j];
                 double x1 = expected[j];
@@ -620,7 +630,15 @@ std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
             LC_ERR<<__FILE__<<" : "<<__func__<<" : line"<<__LINE__<<" :cubicSolver()::Error cubicSolver("<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<")\n";
             return {};
         }
-        double u= std::signbit(q) ? std::cbrt(r[0]): std::cbrt(r[1]);
+
+        double u;
+        if (r.size() < 2) { // this check is needed, since in some conditions r[] may contain only one element and so the crash.. :(
+            u = std::cbrt(r[0]);
+        }
+        else {
+            u = std::signbit(q) ? std::cbrt(r[0]) : std::cbrt(r[1]);
+        }
+
         //u=(q<=0)?pow(-0.5*q+sqrt(discriminant),1./3):-pow(0.5*q+sqrt(discriminant),1./3);
         double v=(-1./3)*p/u;
         //std::cout<<"u="<<u<<"\tv="<<v<<std::endl;

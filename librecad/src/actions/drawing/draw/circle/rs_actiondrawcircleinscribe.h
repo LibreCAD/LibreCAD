@@ -46,7 +46,7 @@ protected:
  * Action States.
  */
     enum Status {
-        SetLine1,   //  Setting the First Line.  */
+        SetLine1  = InitialActionStatus,   //  Setting the First Line.  */
         SetLine2,   //  Setting the Second Line.  */
         SetLine3   //  Setting the Third Line.  */
     };
@@ -54,7 +54,7 @@ protected:
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
     bool m_valid = false;
-
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     bool preparePreview(RS_Line *en);
     /**
 	 * @brief clearLines unset highlighten lines, and clear the vector "lines"
@@ -65,6 +65,7 @@ protected:
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    void setLine1(RS_Line* line);
     void updateMouseButtonHints() override;
     void doTrigger() override;
 };

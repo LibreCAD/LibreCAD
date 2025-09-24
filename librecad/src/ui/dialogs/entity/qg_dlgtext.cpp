@@ -23,14 +23,16 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include "qg_dlgtext.h"
 
 #include <QTextStream>
 #include <QFileDialog>
-#include "rs_system.h"
-#include "rs_settings.h"
+
+#include "qg_dlgtext.h"
+#include "rs_fontlist.h"
 #include "rs_graphic.h"
 #include "rs_math.h"
+#include "rs_settings.h"
+#include "rs_system.h"
 #include "rs_text.h"
 
 /*
@@ -65,7 +67,7 @@ void QG_DlgText::languageChange(){
 
 void QG_DlgText::init() {
     cbFont->init();
-    font=nullptr;
+    m_font=nullptr;
     entity = nullptr;
     m_isNew = false;
     leOblique->setDisabled(true);
@@ -159,7 +161,7 @@ void QG_DlgText::setEntity(RS_Text* t, bool isNew) {
     entity = t;
     this->m_isNew = isNew;
 
-    QString fon;
+    QString font;
     QString height;
     QString def;
     QString alignment;
@@ -178,18 +180,7 @@ void QG_DlgText::setEntity(RS_Text* t, bool isNew) {
             //default font depending on locale
             //default font depending on locale (RLZ-> check this: QLocale::system().name() returns "fr_FR")
             QByteArray iso = RS_System::localeToISO(QLocale::system().name().toLocal8Bit());
-//        QByteArray iso = RS_System::localeToISO( QTextCodec::locale() );
-            if (iso == "ISO8859-1") {
-                fon = LC_GET_STR("TextFont", "normallatin1");
-            } else if (iso == "ISO8859-2") {
-                fon = LC_GET_STR("TextFont", "normallatin2");
-            } else if (iso == "ISO8859-7") {
-                fon = LC_GET_STR("TextFont", "greekc");
-            } else if (iso == "KOI8-U" || iso == "KOI8-R") {
-                fon = LC_GET_STR("TextFont", "cyrillic_ii");
-            } else {
-                fon = LC_GET_STR("TextFont", "standard");
-            }
+            font = LC_GET_STR("TextFont", RS_FontList::getDefaultFont());
             height = LC_GET_STR("TextHeight", "1.0");
             def = LC_GET_STR("TextDefault", "1");
             alignment = LC_GET_STR("TextAlignmentT", "7");
@@ -198,8 +189,8 @@ void QG_DlgText::setEntity(RS_Text* t, bool isNew) {
             angle = LC_GET_STR("TextAngle", "0");
         }
     } else {
-        fon = entity->getStyle();
-        setFont(fon);
+        font = entity->getStyle();
+        setFont(font);
         height = QString("%1").arg(entity->getHeight());
         widthRelation = QString("%1").arg(entity->getWidthRel());
         alignment = QString("%1").arg(entity->getAlignment());
@@ -221,7 +212,7 @@ void QG_DlgText::setEntity(RS_Text* t, bool isNew) {
         wPen->setPen(entity, lay, tr("Pen"));
     }
 
-    setFont(fon);
+    setFont(font);
     leHeight->setText(height);
     setAlignment(alignment.toInt());
 //    setwidthRel(widthRelation.toDouble());
@@ -426,8 +417,15 @@ int QG_DlgText::getAlignment() {
 }
 
 void QG_DlgText::setFont(const QString& f) {
-    cbFont->setCurrentIndex( cbFont->findText(f) );
-    font = cbFont->getFont();
+    int index = cbFont->findText(f);
+
+    // Issue #2069: default to unicode fonts
+    if (index == -1)
+        index = cbFont->findText("unicode");
+    if (index >= 0) {
+        cbFont->setCurrentIndex(index);
+        m_font = cbFont->getFont();
+    }
 //    defaultChanged(false);
 }
 

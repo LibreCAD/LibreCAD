@@ -22,6 +22,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "lc_actionoptionswidget.h"
 
+#include <QLineEdit>
+#include <QToolButton>
+
+#include "lc_actioncontext.h"
 #include "lc_convert.h"
 #include "lc_linemath.h"
 #include "rs_actioninterface.h"
@@ -29,9 +33,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_math.h"
 #include "rs_settings.h"
 
+class LC_LateCompletionRequestor;
+
 LC_ActionOptionsWidget::LC_ActionOptionsWidget(QWidget *parent, Qt::WindowFlags fl) :
-    QWidget(parent, fl)
-{}
+    QWidget(parent, fl) {
+    m_interactiveInputControlsAutoRaise = LC_GET_ONE_BOOL("Widgets", "PickValueButtonsFlatIcons", true);
+    m_interactiveInputControlsVisible = LC_GET_ONE_BOOL("Defaults", "InteractiveInputEnabled", true);
+}
 
 LC_ActionOptionsWidget::~LC_ActionOptionsWidget() = default;
 
@@ -57,6 +65,8 @@ void LC_ActionOptionsWidget::setAction(RS_ActionInterface *a, bool update){
         if (checkActionRttiValid(actionType)){
             // that should be ok for the most of the actions as most probably they will rely on the same group
             LC_GROUP(getSettingsGroupName());
+            m_actionContext = a->getActionContext();
+            m_laterCompletionRequestor = dynamic_cast<LC_LateCompletionRequestor*>(a);
             doSetAction(a, update);
             LC_GROUP_END();
         }
@@ -64,7 +74,12 @@ void LC_ActionOptionsWidget::setAction(RS_ActionInterface *a, bool update){
             RS_DEBUG->print(RS_Debug::D_ERROR, typeid(*this).name(), "::setAction: wrong action type");
         }
     }
+    else {
+        m_laterCompletionRequestor = nullptr;
+        m_actionContext = nullptr;
+    }
 }
+
 /**
  * Extension point for specific widgets to check that action type is valid
  * @param actionType rtti type of action
@@ -171,4 +186,68 @@ void LC_ActionOptionsWidget::save(QString name, int value){
 void LC_ActionOptionsWidget::save(QString name, bool value){
     QString key = getSettingsOptionNamePrefix() + name;
     LC_SET(key, value ? 1 : 0);
+}
+
+void LC_ActionOptionsWidget::connectInteractiveInputButton(QToolButton* button,
+                                                           LC_ActionContext::InteractiveInputInfo::InputType
+                                                           inputType, QString tag) {
+    if (m_interactiveInputControlsVisible) {
+        button->setVisible(true);
+        button->setProperty("_interactiveInputButton", inputType);
+        button->setProperty("_interactiveInputTag", tag);
+        button->connect(button, &QToolButton::clicked, this, &LC_ActionOptionsWidget::onInteractiveInputButtonClicked);
+        button->setAutoRaise(m_interactiveInputControlsAutoRaise);
+    }
+    else {
+        button->setVisible(false);
+    }
+}
+
+void LC_ActionOptionsWidget::requestFocusForTag(const QString& tag) {
+    auto widgets = findChildren<QWidget*>();
+    for (auto le:widgets) {
+        auto tagProperty = le->property("_tagHolder");
+        if (tagProperty.isValid() && !tagProperty.isNull()) {
+            QString editTag = tagProperty.toString();
+            if (tag == editTag) {
+                le->setFocus();
+                break;
+            }
+        }
+    }
+}
+
+void LC_ActionOptionsWidget::pickDistanceSetup(QString tag, QToolButton* button, QLineEdit* lineedit) {
+    connectInteractiveInputButton(button, LC_ActionContext::InteractiveInputInfo::DISTANCE, tag);
+    lineedit->setProperty("_tagHolder", tag);
+}
+
+void LC_ActionOptionsWidget::pickAngleSetup(QString tag, QToolButton* button, QLineEdit* lineedit) {
+    connectInteractiveInputButton(button, LC_ActionContext::InteractiveInputInfo::ANGLE, tag);
+    lineedit->setProperty("_tagHolder", tag);
+}
+
+void LC_ActionOptionsWidget::onInteractiveInputButtonClicked([[maybe_unused]]bool checked) {
+    auto senderButton = dynamic_cast<QToolButton*>(sender());
+    if (senderButton != nullptr) {
+        auto property = senderButton->property ("_interactiveInputButton");
+        if (property.isValid()) {
+            auto inputType = static_cast<LC_ActionContext::InteractiveInputInfo::InputType>(property.toInt());
+            auto tagProperty = senderButton->property ("_interactiveInputTag");
+            QString tag = tagProperty.toString();
+            switch (inputType) {
+                case LC_ActionContext::InteractiveInputInfo::DISTANCE:
+                case LC_ActionContext::InteractiveInputInfo::ANGLE: {
+                    m_actionContext->interactiveInputStart(inputType, m_laterCompletionRequestor, tag);
+                    break;
+                }
+                case LC_ActionContext::InteractiveInputInfo::POINT: {
+                    // NOTE: point is not supported. Potentially, this is developer's error....
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+    }
 }

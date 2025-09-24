@@ -47,7 +47,7 @@ protected:
      * Action States.
      */
     enum Status {
-        ChooseEntity,   /**< Choosing existing polyline to trim. */
+        ChooseEntity = InitialActionStatus,   /**< Choosing existing polyline to trim. */
         SetSegment1,    /**< Setting first segment. */
         SetSegment2       /**< Setting second segment. */
     };
@@ -55,10 +55,12 @@ protected:
     RS_AtomicEntity *m_segment1 = nullptr;
     RS_AtomicEntity *m_segment2 = nullptr;
 
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    void setPolylineToModify(RS_Entity* en);
     void updateMouseButtonHints() override;
     void doTrigger() override;
 };

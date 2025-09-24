@@ -69,15 +69,19 @@ void LC_ActionRemoveSplinePoints::onMouseMove(RS_Vector mouse, int status, LC_Mo
     }
 }
 
+void LC_ActionRemoveSplinePoints::setEntityToModify(RS_Entity* entity) {
+    m_entityToModify = entity;
+    m_entityToModify->setSelected(true);
+    redrawDrawing();
+    setStatus(SetControlPoint);
+}
+
 void LC_ActionRemoveSplinePoints::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status){
         case SetEntity:{
             auto entity = catchEntityByEvent(e, g_enTypeList);
             if (entity != nullptr && mayModifySplineEntity(entity)){
-                m_entityToModify = entity;
-                m_entityToModify->setSelected(true);
-                redrawDrawing();
-                setStatus(SetControlPoint);
+                setEntityToModify(entity);
             }
             break;
         }

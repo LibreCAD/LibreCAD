@@ -138,7 +138,6 @@ void RS_ActionDefault::keyPressEvent(QKeyEvent *e){
         default:
             e->ignore();
     }
-
 }
 
 void RS_ActionDefault::keyReleaseEvent(QKeyEvent *e){
@@ -190,13 +189,14 @@ void RS_ActionDefault::highlightHoveredEntities(LC_MouseEvent *event){
         return;
     }
 
-    const double hoverToleranceFactor = (entity->rtti() == RS2::EntityEllipse)
+    auto entityType = entity->rtti();
+    const double hoverToleranceFactor = (entityType == RS2::EntityEllipse)
                                         ? hoverToleranceFactor1
                                         : hoverToleranceFactor2;
 
     const double hoverTolerance{hoverToleranceFactor / m_viewport->getFactor().magnitude()};
 
-    double hoverTolerance_adjusted = ((entity->rtti() != RS2::EntityEllipse) && (hoverTolerance < minimumHoverTolerance))
+    double hoverTolerance_adjusted = ((entityType != RS2::EntityEllipse) && (hoverTolerance < minimumHoverTolerance))
                                      ? minimumHoverTolerance
                                      : hoverTolerance;
 
@@ -204,13 +204,14 @@ void RS_ActionDefault::highlightHoveredEntities(LC_MouseEvent *event){
     hoverTolerance_adjusted = std::min(hoverTolerance_adjusted, screenTolerance);
     bool isPointOnEntity = false;
     RS_Vector currentMousePosition = event->graphPoint;
-    if (((entity->rtti() >= RS2::EntityDimAligned) && (entity->rtti() <= RS2::EntityDimLeader))
-        || (entity->rtti() == RS2::EntityText) || (entity->rtti() == RS2::EntityMText)){
+    if (RS2::isDimensionalEntity(entityType) || RS2::isTextEntity(entityType)){
         double nearestDistanceTo_pointOnEntity = 0.;
 
         entity->getNearestPointOnEntity(currentMousePosition, true, &nearestDistanceTo_pointOnEntity);
 
-        if (nearestDistanceTo_pointOnEntity <= hoverTolerance_adjusted) isPointOnEntity = true;
+        if (nearestDistanceTo_pointOnEntity <= hoverTolerance_adjusted) {
+            isPointOnEntity = true;
+        }
     } else {
         isPointOnEntity = entity->isPointOnEntity(currentMousePosition, hoverTolerance_adjusted);
     }
@@ -640,8 +641,11 @@ void RS_ActionDefault::onMouseLeftButtonPress(int status, LC_MouseEvent *e) {
                 m_actionData->v1 = RS_Vector{e->uiPosition};
                 setStatus(Panning);
             } else {
-                m_actionData->v1 = e->graphPoint;
-                setStatus(Dragging);
+                // dragging should be without modifiers to let custom menu invocation
+                if (e->originalEvent->modifiers() == Qt::NoModifier) {
+                    m_actionData->v1 = e->graphPoint;
+                    setStatus(Dragging);
+                }
             }
             break;
         }
@@ -825,6 +829,7 @@ void RS_ActionDefault::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     RS_DEBUG->print("RS_ActionDefault::mouseReleaseEvent()");
     m_actionData->v2 = e->graphPoint;
     switch (status) {
+        case Neutral:
         case Dragging: {
             // select single entity:
             RS_Entity *en = catchEntityByEvent(e);
@@ -952,7 +957,7 @@ void RS_ActionDefault::updateMouseButtonHints(){
             break;
         }
         case Neutral: {
-            updateMouseWidget(tr("Zoom, pan or select entity"), "", MOD_SHIFT_AND_CTRL(tr("Scroll Horizontally / Select Contour"), tr("Scroll Vertically / Select Child entities")));
+            updateMouseWidget(tr("Zoom, pan or select entity"), "", MOD_SHIFT_AND_CTRL(tr("Scroll Horizontally / Select Contour"), tr("Pan / Scroll Vertically / Select Child entities")));
             commandPrompt("");
             break;
         }

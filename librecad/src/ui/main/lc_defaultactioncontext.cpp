@@ -58,6 +58,7 @@ void LC_DefaultActionContext::updateSelectionWidget(int countSelected, double se
         m_selectionWidget->setNumber(countSelected);
         m_selectionWidget->setTotalLength(selectedLength);
     }
+    m_selectionCount = countSelected;
 }
 
 void LC_DefaultActionContext::updateMouseWidget(const QString &left, const QString &right, const LC_ModifiersInfo &modifiers){
@@ -109,4 +110,8 @@ void LC_DefaultActionContext::setCurrentAction(RS2::ActionType action, void* dat
 
 RS_ActionInterface* LC_DefaultActionContext::getCurrentAction() {
     return m_actionHandler->getCurrentAction();
+}
+
+void LC_DefaultActionContext::deleteActionHandler() {
+    delete m_actionHandler;
 }

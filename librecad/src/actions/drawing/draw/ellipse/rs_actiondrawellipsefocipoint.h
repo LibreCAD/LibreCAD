@@ -42,7 +42,7 @@ protected:
  * Action States.
  */
     enum Status {
-        SetFocus1,   //  Setting the first focus.  */
+        SetFocus1  = InitialActionStatus,   //  Setting the first focus.  */
         SetFocus2,    //  Setting the second focus. */
         SetPoint    //  Setting a point on ellipse
     };

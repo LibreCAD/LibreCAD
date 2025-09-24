@@ -41,9 +41,9 @@ void RS_ActionOptionsDrawing::init(int status) {
 
 void RS_ActionOptionsDrawing::trigger(){
     if (m_graphic != nullptr) {
-        m_graphicView->setForcedActionKillAllowed(false);
+        m_dialogVisible = true;
         QC_ApplicationWindow::getAppWindow()->changeDrawingOptions(m_tabToShow);
-        m_graphicView->setForcedActionKillAllowed(true);
+        m_dialogVisible = false;
     }
     finish(false);
 }

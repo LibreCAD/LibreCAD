@@ -623,7 +623,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
             directions.emplace_back(0., -1.);
         }
     }
-    for(const auto [cosTheta, sinTheta]: directions) {
+    for(const auto &[cosTheta, sinTheta]: directions) {
         //I don't understand the reason yet, but I can do without checking whether sine/cosine are valid
         //if (std::abs(s) > 1. ) continue;
         double const d2=twoa2b2+(twoax-2.*cosTheta*twoa2b2)*cosTheta+twoby*sinTheta;

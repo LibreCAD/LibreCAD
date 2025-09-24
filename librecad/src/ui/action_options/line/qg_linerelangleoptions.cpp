@@ -53,6 +53,9 @@ QG_LineRelAngleOptions::QG_LineRelAngleOptions()
     ui->setupUi(this);
     connect(ui->leLength, &QLineEdit::editingFinished, this, &QG_LineRelAngleOptions::onLengthEditingFinished);
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &QG_LineRelAngleOptions::onAngleEditingFinished);
+
+    pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);
+    pickDistanceSetup("distance", ui->tbPickLength, ui->leLength);
 }
 
 /*
@@ -86,6 +89,7 @@ void QG_LineRelAngleOptions::doSetAction(RS_ActionInterface* a, bool update) {
 
     ui->lAngle->setVisible(!fixedAngle);
     ui->leAngle->setVisible(!fixedAngle);
+    ui->tbPickAngle->setVisible(!fixedAngle && m_interactiveInputControlsVisible);
 
     QString angle;
     QString length;

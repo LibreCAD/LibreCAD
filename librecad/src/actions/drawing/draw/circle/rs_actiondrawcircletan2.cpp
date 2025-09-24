@@ -56,9 +56,15 @@ void RS_ActionDrawCircleTan2::init(int status){
     if (status >= 0){
         RS_PreviewActionInterface::suspend();
     }
+}
 
-    if (status == SetCircle1){
-        m_actionData->circles.clear();
+void RS_ActionDrawCircleTan2::doInitialInit() {
+    m_actionData->circles.clear();
+}
+
+void RS_ActionDrawCircleTan2::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
+    if (g_enTypeList.contains(contextEntity->rtti())) {
+        setCircleOne(contextEntity);
     }
 }
 
@@ -93,6 +99,14 @@ void RS_ActionDrawCircleTan2::doTrigger() {
     RS_DEBUG->print("RS_ActionDrawCircleTan2::trigger(): entity added: %lu", circle->getId());
 }
 
+bool RS_ActionDrawCircleTan2::doUpdateDistanceByInteractiveInput(const QString& tag, double distance) {
+    if (tag == "radius") {
+        setRadius(distance);
+        return true;
+    }
+    return false;
+}
+
 void RS_ActionDrawCircleTan2::drawSnapper() {
     // disable snapper for action
 }
@@ -103,14 +117,14 @@ void RS_ActionDrawCircleTan2::onMouseMoveEvent([[maybe_unused]]int status, LC_Mo
     }
     switch (getStatus()) {
         case SetCircle1: {
-            auto *c = catchCircle(e, true);
+            auto *c = catchTangentEntity(e, true);
             if (c != nullptr){
                 highlightHover(c);
             }
             break;
         }
         case SetCircle2: {
-            auto *c = catchCircle(e, true);
+            auto *c = catchTangentEntity(e, true);
             if (c != nullptr){
                 if (getCenters(c)){
                     highlightHover(c);
@@ -128,7 +142,7 @@ void RS_ActionDrawCircleTan2::onMouseMoveEvent([[maybe_unused]]int status, LC_Mo
                 if (m_showRefEntitiesOnPreview) {
                     for (RS_AtomicEntity *const pc: m_actionData->circles) { // highlight already selected // fixme - test and review, which cicle center is used
                         RS_Vector candidateCircleCenter = m_actionData->cData.center;
-                        if (isLine(pc)) {
+                        if (isLine(pc)) { // fixme - support of polyline
                             previewRefPoint(pc->getNearestPointOnEntity(candidateCircleCenter, false));
                         } else {
                             previewRefPoint(getTangentPoint(candidateCircleCenter, m_actionData->cData.radius, pc));
@@ -175,7 +189,7 @@ bool RS_ActionDrawCircleTan2::preparePreview(){
     return m_actionData->valid;
 }
 
-RS_Entity *RS_ActionDrawCircleTan2::catchCircle(LC_MouseEvent *e, bool forPreview){
+RS_Entity *RS_ActionDrawCircleTan2::catchTangentEntity(LC_MouseEvent *e, bool forPreview){
     RS_Entity* en;
     // fixme - sand - check whether snap is used for entity selection?  Ensure free snap?
     if (forPreview) {
@@ -184,32 +198,38 @@ RS_Entity *RS_ActionDrawCircleTan2::catchCircle(LC_MouseEvent *e, bool forPrevie
     else{
         en = catchModifiableEntity(e, g_enTypeList);
     }
-    if (!en){
+    if (en == nullptr){
         return nullptr;
     }
     if (!en->isVisible()) {
         return nullptr;
     }
     for (int i = 0; i < getStatus(); i++) {
-        if (en->getId() == m_actionData->circles[i]->getId()) return nullptr; //do not pull in the same line again
+        if (en->getId() == m_actionData->circles[i]->getId()){
+            return nullptr; //do not pull in the same line again
+        }
     }
 
     return en;
 }
 
+void RS_ActionDrawCircleTan2::setCircleOne(RS_Entity* en) {
+    m_actionData->circles.resize(SetCircle1); // todo - what for? Why not have fixes size
+    m_actionData->circles.push_back(dynamic_cast<RS_AtomicEntity *>(en));
+    setStatus(SetCircle2);
+}
+
 void RS_ActionDrawCircleTan2::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
         case SetCircle1: {
-            RS_Entity *en = catchCircle(e,false);
+            RS_Entity *en = catchTangentEntity(e,false);
             if (en != nullptr){
-                m_actionData->circles.resize(SetCircle1); // todo - what for? Why not have fixes size
-                m_actionData->circles.push_back(dynamic_cast<RS_AtomicEntity *>(en));
-                setStatus(SetCircle2);
+                setCircleOne(en);
             }
             break;
         }
         case SetCircle2: {
-            RS_Entity *en = catchCircle(e, false);
+            RS_Entity *en = catchTangentEntity(e, false);
             if (en != nullptr){
                 m_actionData->circles.resize(getStatus());
                 bool hasCenters = getCenters(en);

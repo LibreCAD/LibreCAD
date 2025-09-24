@@ -70,7 +70,7 @@ private:
     RS_GraphicView *view {nullptr};
     RS_Document* document {nullptr};
     LC_DefaultActionContext* m_actionContext{nullptr};
-    LC_SnapManager* m_snapManager;
+    LC_SnapManager* m_snapManager {nullptr};
 };
 
 #endif

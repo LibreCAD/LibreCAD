@@ -37,7 +37,7 @@ dwgReader::~dwgReader() {
     mapCleanUp(dimstylemap);
     mapCleanUp(vportmap);
     mapCleanUp(classesmap);
-    mapCleanUp(blockRecordmap);
+    // mapCleanUp(blockRecordmap);
     mapCleanUp(appIdmap);
 }
 
@@ -74,8 +74,8 @@ std::string dwgReader::findTableName(DRW::TTYPE table, dint32 handle){
     case DRW::BLOCK_RECORD:{ //use DRW_Block because name are more correct
 //        auto bk_it = blockmap.find(handle);
 //        if (bk_it != blockmap.end())
-        auto bk_it = blockRecordmap.find(handle);
-        if (bk_it != blockRecordmap.end())
+        auto bk_it = parsingContext.blockRecordMap.find(handle);
+        if (bk_it !=  parsingContext.blockRecordMap.end())
             name = (bk_it->second)->name;
         break;}
 /*    case DRW::VPORT:{
@@ -534,7 +534,7 @@ bool dwgReader::readDwgTables(DRW_Header& hdr, dwgBuffer *dbuf) {
                 dbuf->getBytes(tmpByteStr.data(), size);
                 dwgBuffer buff(tmpByteStr.data(), size, &decoder);
                 ret2 = br->parseDwg(version, &buff, bs);
-                blockRecordmap[br->handle] = br;
+                parsingContext.blockRecordMap[br->handle] = br;
                 if(ret)
                     ret = ret2;
             }
@@ -715,7 +715,7 @@ bool dwgReader::readDwgBlocks(DRW_Interface& intfa, dwgBuffer *dbuf){
     duint32 bs =0;
     DRW_DBG("\nobject map total size= "); DRW_DBG(ObjectMap.size());
 
-    for (auto it=blockRecordmap.begin(); it != blockRecordmap.end(); ++it){
+    for (auto it=parsingContext.blockRecordMap.begin(); it != parsingContext.blockRecordMap.end(); ++it){
         DRW_Block_Record* bkr= it->second;
         DRW_DBG("\nParsing Block, record handle= "); DRW_DBGH(it->first); DRW_DBG(" Name= "); DRW_DBG(bkr->name); DRW_DBG("\n");
         DRW_DBG("\nFinding Block, handle= "); DRW_DBGH(bkr->block); DRW_DBG("\n");
@@ -1291,4 +1291,3 @@ int unkData=0;
     }
     return buf->isGood();
 }
-

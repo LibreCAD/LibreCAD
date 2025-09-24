@@ -73,7 +73,7 @@ protected:
     bool m_isNew;
     bool m_saveSettings;
     RS_Text* entity;
-    RS_Font* font;
+    RS_Font* m_font;
 
     void setEntity(RS_Text* t, bool isNew );
     void init();

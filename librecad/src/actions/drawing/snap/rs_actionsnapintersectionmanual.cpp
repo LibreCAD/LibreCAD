@@ -48,12 +48,9 @@ void RS_ActionSnapIntersectionManual::init(int status){
 }
 
 void RS_ActionSnapIntersectionManual::trigger(){
-
     RS_DEBUG->print("RS_ActionSnapIntersectionManual::trigger()");
 
-    if (m_entity2 && m_entity2->isAtomic() &&
-        m_entity1 && m_entity1->isAtomic()){
-
+    if (isAtomic(m_entity2) && isAtomic(m_entity1)){
         RS_VectorSolutions sol =
             RS_Information::getIntersection(m_entity1, m_entity2, false);
 
@@ -116,7 +113,7 @@ void RS_ActionSnapIntersectionManual::onMouseLeftButtonRelease(int status, LC_Mo
     switch (status) {
         case ChooseEntity1:
             m_entity1 = se;
-            if (m_entity1 && m_entity1->isAtomic()){
+            if (isAtomic(m_entity1)){
                 setStatus(ChooseEntity2);
             }
             break;
@@ -124,7 +121,7 @@ void RS_ActionSnapIntersectionManual::onMouseLeftButtonRelease(int status, LC_Mo
         case ChooseEntity2:
             m_entity2 = se;
             *m_coord = mouse;
-            if (m_entity2 && m_entity2->isAtomic() && m_coord->valid){
+            if (isAtomic(m_entity2) && m_coord->valid){
                 trigger();
             }
             break;

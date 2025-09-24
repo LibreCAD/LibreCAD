@@ -27,6 +27,7 @@
 #include "rs_actionmodifyrevertdirection.h"
 
 #include "rs_debug.h"
+#include "rs_ellipse.h"
 #include "rs_entity.h"
 #include "rs_modification.h"
 
@@ -62,6 +63,10 @@ bool RS_ActionModifyRevertDirection::isEntityAllowedToSelect(RS_Entity *ent) con
             case  RS2::EntityArc:
             case  RS2::EntitySplinePoints:
                 return true;
+            case RS2::EntityEllipse: {
+                auto ellipse = static_cast<RS_Ellipse*>(ent);
+                return ellipse->isEllipticArc();
+            }
             default:
                 return false;
         }

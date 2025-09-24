@@ -213,15 +213,15 @@ void LC_AbstractActionDrawLine::setSetYDirectionState(){
 /**
  * Sets angle value and switch to SetDistance state
  */
-void LC_AbstractActionDrawLine::setAngleValue(double value){
-    doSetAngle(value);
+void LC_AbstractActionDrawLine::setAngleValueDegrees(double value){
+    doSetAngleDegrees(value);
     if (getStatus() == SetAngle){
         setStatusForValidStartPoint(SetDistance);
     }
     updateOptions();
 }
 
-void LC_AbstractActionDrawLine::doSetAngle(double value) {
+void LC_AbstractActionDrawLine::doSetAngleDegrees(double value) {
     m_angleDegrees = value;
 }
 
@@ -234,7 +234,7 @@ void LC_AbstractActionDrawLine::setStatusForValidStartPoint(int newStatus){
     }
 }
 
-double LC_AbstractActionDrawLine::getAngle() const{
+double LC_AbstractActionDrawLine::getAngleDegrees() const{
     return m_angleDegrees;
 }
 
@@ -243,7 +243,7 @@ bool LC_AbstractActionDrawLine::processAngleValueInput(const QString &c){
     double value = RS_Math::eval(c, &ok);
     if (ok){
         value = LC_LineMath::getMeaningfulAngle(value);
-        setAngleValue(value);
+        setAngleValueDegrees(value);
         // ask for distance after angle entering
         setStatus(SetDistance);
     }

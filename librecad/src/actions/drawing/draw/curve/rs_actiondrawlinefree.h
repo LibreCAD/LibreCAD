@@ -47,7 +47,7 @@ protected:
      * Action States.
      */
     enum Status {
-        SetStartpoint,   /**< Setting the startpoint.  */
+        SetStartpoint = InitialActionStatus,   /**< Setting the startpoint.  */
         Dragging      /**< Setting the endpoint. */
     };
     QPointF m_oldMousePosition = QPointF(-100,-100);

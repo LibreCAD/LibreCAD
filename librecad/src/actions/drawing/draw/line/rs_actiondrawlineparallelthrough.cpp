@@ -29,7 +29,15 @@
 #include "qg_lineparallelthroughoptions.h"
 #include "rs_creation.h"
 #include "rs_debug.h"
+#include "rs_polyline.h"
 // fixme - sand - consider relaxing existing restrictions, if any - and use no-restrictions mode for this action.
+
+namespace {
+    //this holds a list of entity types which supports tangent
+    const auto g_supportedEntityTypes = EntityTypeList{
+                {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine/*, RS2::EntityParabola, RS2::EntitySplinePoints*/}
+    };
+}
 
 RS_ActionDrawLineParallelThrough::RS_ActionDrawLineParallelThrough(LC_ActionContext *actionContext)
 		:RS_PreviewActionInterface("Draw Parallels", actionContext,RS2::ActionDrawLineParallelThrough)
@@ -47,12 +55,25 @@ void RS_ActionDrawLineParallelThrough::finish(bool updateTB){
     RS_PreviewActionInterface::finish(updateTB);
 }
 
+void RS_ActionDrawLineParallelThrough::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    auto entity = contextEntity;
+    if (isPolyline(contextEntity)) {
+        auto polyline = static_cast<RS_Polyline*>(contextEntity);
+        entity = polyline->getNearestEntity(clickPos);
+    }
+    RS2::EntityType rtti = entity->rtti();
+    if (g_supportedEntityTypes.contains(rtti)) {
+        m_entity = entity;
+        setStatus(SetPos);
+    }
+}
+
 void RS_ActionDrawLineParallelThrough::doTrigger() {
-    if (m_entity){
+    if (m_entity != nullptr){
         RS_Creation creation(m_container, m_viewport);
         RS_Entity *e = creation.createParallelThrough(*m_coord,m_numberToCreate,m_entity, m_symmetric);
 
-        if (!e){
+        if (e == nullptr){
             RS_DEBUG->print("RS_ActionDrawLineParallelThrough::trigger: No parallels added\n");
         }
     }
@@ -62,8 +83,9 @@ void RS_ActionDrawLineParallelThrough::onMouseMoveEvent([[maybe_unused]]int stat
     const RS_Vector &snap = e->snapPoint;
     switch (status) {
         case SetEntity: {
-            m_entity = catchAndDescribe(e, RS2::ResolveAll);
-            if (m_entity != nullptr){
+            auto entity = catchAndDescribe(e, RS2::ResolveAll);
+            if (entity != nullptr && g_supportedEntityTypes.contains(entity->rtti())){
+                m_entity = entity;
                 highlightHover(m_entity);
                 if (m_showRefEntitiesOnPreview) {
                     RS_Vector nearest = m_entity->getNearestPointOnEntity(*m_coord, false);
@@ -91,7 +113,7 @@ void RS_ActionDrawLineParallelThrough::onMouseMoveEvent([[maybe_unused]]int stat
                     previewRefPoint(nearest);
                     previewRefLine(nearest, *m_coord);
 
-                    if (m_symmetric && isLine(m_entity)){
+                    if (m_symmetric && isLine(m_entity)){ // fixme - support of polyline
                         RS_Vector otherPoint = *m_coord;
                         otherPoint.mirror(m_entity->getStartpoint(), m_entity->getEndpoint());
                         previewRefPoint(otherPoint);
@@ -108,12 +130,14 @@ void RS_ActionDrawLineParallelThrough::onMouseMoveEvent([[maybe_unused]]int stat
 
 void RS_ActionDrawLineParallelThrough::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     switch (status) {
-        case SetEntity:
-            m_entity = catchEntityByEvent(e, RS2::ResolveAll);
-            if (m_entity){
+        case SetEntity: {
+            auto entity = catchEntityByEvent(e, RS2::ResolveAll);
+            if (entity != nullptr && g_supportedEntityTypes.contains(entity->rtti())){
+                m_entity = entity;
                 setStatus(SetPos);
             }
             break;
+        }
         case SetPos: {
             fireCoordinateEventForSnap(e);
             break;
@@ -125,7 +149,7 @@ void RS_ActionDrawLineParallelThrough::onMouseLeftButtonRelease(int status, LC_M
 
 void RS_ActionDrawLineParallelThrough::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
     deletePreview();
-    if (m_entity){
+    if (m_entity != nullptr){
         m_entity = nullptr;
     }
     initPrevious(status);
@@ -200,7 +224,6 @@ bool RS_ActionDrawLineParallelThrough::doProcessCommand(int status, const QStrin
 
 QStringList RS_ActionDrawLineParallelThrough::getAvailableCommands(){
     QStringList cmd;
-
     switch (getStatus()) {
         case SetEntity:
             cmd += command("number");

@@ -42,6 +42,7 @@ public:
     RS_ActionDrawLineTangent1(LC_ActionContext *actionContext);
     ~RS_ActionDrawLineTangent1() override;
 protected:
+    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
@@ -51,20 +52,18 @@ protected:
     void doTrigger() override;
 private:
     enum Status {
-        SetPoint,     /**< Choose the startpoint. */
+        SetPoint = InitialActionStatus,     /**< Choose the startpoint. */
         SetCircle      /**< Choose the circle / arc. */
     };
+
+    bool m_setCircleFirst = false;
 
     /** Closest tangent. */
     std::unique_ptr<RS_Line> m_tangent; // fixme sand - files - remove and rework to data.
     /** Chosen startpoint */
     std::unique_ptr<RS_Vector> m_point;
+    RS_Entity* m_entity;
 
-    //list of entity types supported by current action
-    const EntityTypeList m_circleType = EntityTypeList{ RS2::EntityArc,
-                                                      RS2::EntityCircle,
-                                                      RS2::EntityEllipse,
-                                                      RS2::EntityParabola,
-                                                      RS2::EntitySplinePoints };
+
 };
 #endif

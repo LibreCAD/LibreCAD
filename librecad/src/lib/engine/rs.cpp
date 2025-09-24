@@ -95,3 +95,126 @@ int RS2::lineWidthToInt(LineWidth lw){
     auto it = g_lineWidth2int.find(lw);
     return (it != g_lineWidth2int.cend()) ? it->second : -2;
 }
+
+RS2::LineWidth RS2::dxfInt2lineWidth(int i){
+    if (i<0) {
+        if (i==-1)
+            return WidthByLayer;
+        else if (i==-2)
+            return WidthByBlock;
+        else if (i==-3)
+            return WidthDefault;
+    } else if (i<3) {
+        return Width00;
+    } else if (i<7) {
+        return Width01;
+    } else if (i<11) {
+        return Width02;
+    } else if (i<14) {
+        return Width03;
+    } else if (i<16) {
+        return Width04;
+    } else if (i<19) {
+        return Width05;
+    } else if (i<22) {
+        return Width06;
+    } else if (i<27) {
+        return Width07;
+    } else if (i<32) {
+        return Width08;
+    } else if (i<37) {
+        return Width09;
+    } else if (i<45) {
+        return Width10;
+    } else if (i<52) {
+        return Width11;
+    } else if (i<57) {
+        return Width12;
+    } else if (i<65) {
+        return Width13;
+    } else if (i<75) {
+        return Width14;
+    } else if (i<85) {
+        return Width15;
+    } else if (i<95) {
+        return Width16;
+    } else if (i<103) {
+        return Width17;
+    } else if (i<112) {
+        return Width18;
+    } else if (i<130) {
+        return Width19;
+    } else if (i<149) {
+        return Width20;
+    } else if (i<180) {
+        return Width21;
+    } else if (i<205) {
+        return Width22;
+    } else {
+        return Width23;
+    }
+    //default by default
+    return WidthDefault;
+}
+
+int RS2::lineWidth2dxfInt(LineWidth lw){
+    switch (lw){
+        case WidthByLayer:
+            return -1;
+        case WidthByBlock:
+            return -2;
+        case WidthDefault:
+            return -3;
+        case Width00:
+            return 0;
+        case Width01:
+            return 5;
+        case Width02:
+            return 9;
+        case Width03:
+            return 13;
+        case Width04:
+            return 15;
+        case Width05:
+            return 18;
+        case Width06:
+            return 20;
+        case Width07:
+            return 25;
+        case Width08:
+            return 30;
+        case Width09:
+            return 35;
+        case Width10:
+            return 40;
+        case Width11:
+            return 50;
+        case Width12:
+            return 53;
+        case Width13:
+            return 60;
+        case Width14:
+            return 70;
+        case Width15:
+            return 80;
+        case Width16:
+            return 90;
+        case Width17:
+            return 100;
+        case Width18:
+            return 106;
+        case Width19:
+            return 120;
+        case Width20:
+            return 140;
+        case Width21:
+            return 158;
+        case Width22:
+            return 200;
+        case Width23:
+            return 211;
+        default:
+            break;
+    }
+    return -3;
+}

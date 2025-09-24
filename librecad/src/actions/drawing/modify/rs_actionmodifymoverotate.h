@@ -44,7 +44,7 @@ public:
     RS_ActionModifyMoveRotate(LC_ActionContext *actionContext);
     ~RS_ActionModifyMoveRotate() override;
     QStringList getAvailableCommands() override;
-    void setAngle(double a);
+    void setAngle(double angleRad);
     double getAngle() const;
     void setUseSameAngleForCopies(bool b);
     bool isUseSameAngleForCopies();
@@ -78,5 +78,6 @@ protected:
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void doTrigger(bool keepSelected) override;
     void onMouseMoveEventSelected(int status, LC_MouseEvent *e) override;
+    bool doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) override;
 };
 #endif
