@@ -156,27 +156,41 @@ void RS_Spline::setClosed(bool c) {
     if (data.closed == c)
         return;
 
+    size_t n = data.controlPoints.size();
+    if (isClosed() && hasWrappedControlPoints()) {
+        n -= data.degree; // Get unwrapped count
+    }
+
+    // Validate sufficient control points
+    if (n < static_cast<size_t>(data.degree + 1) && !c) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::setClosed: Not enough control points for open spline");
+        return;
+    }
+    if (n < 3 && c) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::setClosed: Not enough control points for closed spline");
+        return;
+    }
+
     // Remove existing wrapping if switching from closed to open
     if (data.closed && hasWrappedControlPoints()) {
-        data.controlPoints.erase(data.controlPoints.begin() + (data.controlPoints.size() - data.degree), data.controlPoints.end());
-        data.weights.erase(data.weights.begin() + (data.weights.size() - data.degree), data.weights.end());
-        data.knotslist.erase(data.knotslist.begin() + (data.knotslist.size() - data.degree), data.knotslist.end());
+        data.controlPoints.resize(n); // Remove last degree control points
+        data.weights.resize(n); // Remove last degree weights
+        data.knotslist = knot(n, data.degree + 1); // Regenerate open knot vector
     }
+
     data.closed = c;
+
     // Add wrapping for closed spline if needed
-    if (data.closed && data.degree >= 2 && data.controlPoints.size() >= size_t(data.degree)) {
+    if (data.closed && n >= 3) {
+        // Add wrapped control points and weights
         std::vector<RS_Vector> wrappedPoints{data.controlPoints.cbegin(), data.controlPoints.cbegin() + data.degree};
-        data.controlPoints.insert(data.controlPoints.end(), wrappedPoints.cbegin(), wrappedPoints.cend());
+        data.controlPoints.insert(data.controlPoints.end(), wrappedPoints.begin(), wrappedPoints.end());
         std::vector<double> wrappedWeights{data.weights.cbegin(), data.weights.cbegin() + data.degree};
-        data.weights.insert(data.weights.end(), wrappedWeights.cbegin(), wrappedWeights.cend());
-        if (!data.knotslist.empty()) {
-            double last = data.knotslist.back();
-            double delta = (data.knotslist.size() > 1) ? (last - data.knotslist[data.knotslist.size() - 2]) : 1.0;
-            for (int i = 0; i < data.degree; ++i) {
-                data.knotslist.push_back(last + (i + 1) * delta);
-            }
-        }
+        data.weights.insert(data.weights.end(), wrappedWeights.begin(), wrappedWeights.end());
+        // Regenerate closed knot vector
+        data.knotslist = knotu(n, data.degree + 1);
     }
+
     update();
 }
 
