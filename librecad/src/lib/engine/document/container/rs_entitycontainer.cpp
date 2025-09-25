@@ -173,12 +173,11 @@ RS_EntityContainer& RS_EntityContainer::operator = (RS_EntityContainer&& other){
  */
 RS_EntityContainer::~RS_EntityContainer() {
     if (autoDelete) {
-        while (!m_entities.isEmpty()) {
-            auto e = m_entities.takeFirst();
-            delete e;
-        }
-    } else
+        while (!m_entities.isEmpty())
+            delete m_entities.takeFirst();
+    } else {
         m_entities.clear();
+    }
 }
 
 RS_Entity *RS_EntityContainer::clone() const {
