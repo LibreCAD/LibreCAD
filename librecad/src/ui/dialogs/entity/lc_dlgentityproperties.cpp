@@ -21,10 +21,9 @@
  * ********************************************************************************
  */
 
-#include "lc_dlgentityproperties.h"
-
 #include <QToolButton>
 
+#include "lc_dlgentityproperties.h"
 #include "lc_arcpropertieseditingwidget.h"
 #include "lc_circlepropertieseditingwidget.h"
 #include "lc_dlgdimension.h"
@@ -38,6 +37,7 @@
 #include "lc_polylinepropertieseditingwidget.h"
 #include "lc_splinepointspropertieseditingwidget.h"
 #include "lc_splinepropertieseditingwidget.h"
+#include "rs_layer.h"
 #include "rs_settings.h"
 #include "ui_lc_dlgentityproperties.h"
 
