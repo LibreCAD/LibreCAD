@@ -18,13 +18,15 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#include "lc_splinepropertieseditingwidget.h"
-#include "ui_lc_splinepropertieseditingwidget.h"
-#include "rs_spline.h"
-#include <QTableWidgetItem>
-#include <QMenu>
 #include <QAction>
+#include <QMenu>
 #include <QMessageBox>
+#include <QSignalBlocker>
+#include <QTableWidgetItem>
+
+#include "lc_splinepropertieseditingwidget.h"
+#include "rs_spline.h"
+#include "ui_lc_splinepropertieseditingwidget.h"
 
 LC_SplinePropertiesEditingWidget::LC_SplinePropertiesEditingWidget(QWidget *parent) :
     LC_EntityPropertiesEditorWidget(parent),
@@ -137,11 +139,13 @@ void LC_SplinePropertiesEditingWidget::onDegreeIndexChanged(int index) {
 }
 
 void LC_SplinePropertiesEditingWidget::onControlPointChanged(QTableWidgetItem *item) {
-    if (!m_entity || !item) return;
+    if (nullptr == m_entity || nullptr == item)
+        return;
 
     int row = item->row();
     int col = item->column();
 
+    // Ignore index column (non-editable)
     if (col == 0 || row < 0 || static_cast<size_t>(row) >= m_entity->getNumberOfControlPoints()) return;
 
     bool ok;
@@ -168,6 +172,19 @@ void LC_SplinePropertiesEditingWidget::onControlPointChanged(QTableWidgetItem *i
             m_entity->setWeight(static_cast<size_t>(row), val);
         }
         m_entity->update();
+        // Validate knot vector size after change (though editing doesn't change size)
+        size_t expected_knots = m_entity->getNumberOfKnots();
+        if (m_entity->getKnotVector().size() != expected_knots) {
+            std::vector<double> new_knots(expected_knots);
+            double min_u = 0.0;
+            double max_u = 1.0;
+            for (size_t i = 0; i < expected_knots; ++i) {
+                new_knots[i] = min_u + (max_u - min_u) * static_cast<double>(i) / static_cast<double>(expected_knots - 1);
+            }
+            m_entity->setKnotVector(new_knots);
+            m_entity->update();
+            QMessageBox::information(this, "Knot Vector Adjusted", "Knot vector size mismatch detected. Regenerated uniform knot vector.");
+        }
     } catch (const std::exception& e) {
         if (col == 1) {
             item->setText(QString::number(m_entity->getControlPoints()[row].x));
@@ -181,12 +198,15 @@ void LC_SplinePropertiesEditingWidget::onControlPointChanged(QTableWidgetItem *i
 }
 
 void LC_SplinePropertiesEditingWidget::onKnotChanged(QTableWidgetItem *item) {
-    if (!m_entity || !item) return;
+    if (nullptr == m_entity || nullptr == item)
+        return;
 
     int row = item->row();
     int col = item->column();
 
-    if (col != 1 || row < 0) return;
+    // Ignore index column
+    if (col != 1 || row < 0)
+        return;
 
     bool ok;
     double val = item->text().toDouble(&ok);
@@ -200,8 +220,21 @@ void LC_SplinePropertiesEditingWidget::onKnotChanged(QTableWidgetItem *item) {
         std::vector<double> knots = m_entity->getKnotVector();
         if (static_cast<size_t>(row) >= knots.size()) return;
         knots[row] = val;
-        m_entity->setKnotVector(knots);
-        m_entity->update();
+        // Validate the knot vector is non-decreasing
+        bool valid = true;
+        for (size_t i = 1; i < knots.size(); ++i) {
+            if (knots[i] < knots[i-1]) {
+                valid = false;
+                break;
+            }
+        }
+        if (valid) {
+            m_entity->setKnotVector(knots);
+            m_entity->update();
+        } else {
+            item->setText(QString::number(m_entity->getKnotVector()[row]));
+            QMessageBox::warning(this, "Invalid Knot", "Knot vector must be non-decreasing");
+        }
     } catch (const std::invalid_argument& e) {
         item->setText(QString::number(m_entity->getKnotVector()[row]));
         QMessageBox::warning(this, "Invalid Knot", e.what());
@@ -209,14 +242,30 @@ void LC_SplinePropertiesEditingWidget::onKnotChanged(QTableWidgetItem *item) {
 }
 
 void LC_SplinePropertiesEditingWidget::onAddControlPoint() {
-    if (!m_entity) return;
+    if (nullptr == m_entity)
+        return;
 
     int row = ui->tableControlPoints->currentRow();
     size_t insertIndex = (row >= 0) ? static_cast<size_t>(row + 1) : m_entity->getNumberOfControlPoints();
 
+    // Get old knot vector
+    std::vector<double> old_knots = m_entity->getKnotVector();
+    bool was_custom = !m_entity->getData().knotslist.empty();
+
     try {
         m_entity->insertControlPoint(insertIndex, RS_Vector(0.0, 0.0), 1.0);
         m_entity->update();
+        if (was_custom) {
+            size_t new_size = m_entity->getNumberOfKnots();
+            std::vector<double> new_knots(new_size);
+            double min_u = old_knots.front();
+            double max_u = old_knots.back();
+            for (size_t i = 0; i < new_size; ++i) {
+                new_knots[i] = min_u + (max_u - min_u) * static_cast<double>(i) / static_cast<double>(new_size - 1);
+            }
+            m_entity->setKnotVector(new_knots);
+            m_entity->update();
+        }
         updateUI();
     } catch (const std::exception& e) {
         QMessageBox::warning(this, "Error", e.what());
@@ -224,16 +273,33 @@ void LC_SplinePropertiesEditingWidget::onAddControlPoint() {
 }
 
 void LC_SplinePropertiesEditingWidget::onAddControlPointBefore() {
-    if (!m_entity) return;
+    if (nullptr == m_entity)
+        return;
 
     int row = ui->tableControlPoints->currentRow();
-    if (row < 0) return;
+    if (row < 0)
+        return;
+
+    // Get old knot vector
+    std::vector<double> old_knots = m_entity->getKnotVector();
+    bool was_custom = !m_entity->getData().knotslist.empty();
 
     try {
         RS_Vector cp = m_entity->getControlPoints()[row];
         double w = m_entity->getWeight(row);
         m_entity->insertControlPoint(static_cast<size_t>(row), cp, w);
         m_entity->update();
+        if (was_custom) {
+            size_t new_size = m_entity->getNumberOfKnots();
+            std::vector<double> new_knots(new_size);
+            double min_u = old_knots.front();
+            double max_u = old_knots.back();
+            for (size_t i = 0; i < new_size; ++i) {
+                new_knots[i] = min_u + (max_u - min_u) * static_cast<double>(i) / static_cast<double>(new_size - 1);
+            }
+            m_entity->setKnotVector(new_knots);
+            m_entity->update();
+        }
         updateUI();
     } catch (const std::exception& e) {
         QMessageBox::warning(this, "Error", e.what());
@@ -241,16 +307,32 @@ void LC_SplinePropertiesEditingWidget::onAddControlPointBefore() {
 }
 
 void LC_SplinePropertiesEditingWidget::onAddControlPointAfter() {
-    if (!m_entity) return;
-
+    if (nullptr == m_entity)
+        return;
     int row = ui->tableControlPoints->currentRow();
-    if (row < 0) return;
+    if (row < 0)
+        return;
+
+    // Get old knot vector
+    std::vector<double> old_knots = m_entity->getKnotVector();
+    bool was_custom = !m_entity->getData().knotslist.empty();
 
     try {
         RS_Vector cp = m_entity->getControlPoints()[row];
         double w = m_entity->getWeight(row);
         m_entity->insertControlPoint(static_cast<size_t>(row + 1), cp, w);
         m_entity->update();
+        if (was_custom) {
+            size_t new_size = m_entity->getNumberOfKnots();
+            std::vector<double> new_knots(new_size);
+            double min_u = old_knots.front();
+            double max_u = old_knots.back();
+            for (size_t i = 0; i < new_size; ++i) {
+                new_knots[i] = min_u + (max_u - min_u) * static_cast<double>(i) / static_cast<double>(new_size - 1);
+            }
+            m_entity->setKnotVector(new_knots);
+            m_entity->update();
+        }
         updateUI();
     } catch (const std::exception& e) {
         QMessageBox::warning(this, "Error", e.what());
@@ -258,19 +340,36 @@ void LC_SplinePropertiesEditingWidget::onAddControlPointAfter() {
 }
 
 void LC_SplinePropertiesEditingWidget::onRemoveControlPoint() {
-    if (!m_entity) return;
+    if (nullptr == m_entity)
+        return;
 
     int row = ui->tableControlPoints->currentRow();
-    if (row < 0) return;
+    if (row < 0)
+        return;
 
     if (m_entity->getNumberOfControlPoints() <= (m_entity->isClosed() ? 3 : static_cast<size_t>(m_entity->getDegree()) + 1)) {
         QMessageBox::warning(this, "Cannot Remove", "Cannot remove control point: minimum number required.");
         return;
     }
 
+    // Get old knot vector
+    std::vector<double> old_knots = m_entity->getKnotVector();
+    bool was_custom = !m_entity->getData().knotslist.empty();
+
     try {
         m_entity->removeControlPoint(static_cast<size_t>(row));
         m_entity->update();
+        if (was_custom) {
+            size_t new_size = m_entity->getNumberOfKnots();
+            std::vector<double> new_knots(new_size);
+            double min_u = old_knots.front();
+            double max_u = old_knots.back();
+            for (size_t i = 0; i < new_size; ++i) {
+                new_knots[i] = min_u + (max_u - min_u) * static_cast<double>(i) / static_cast<double>(new_size - 1);
+            }
+            m_entity->setKnotVector(new_knots);
+            m_entity->update();
+        }
         updateUI();
     } catch (const std::exception& e) {
         QMessageBox::warning(this, "Error", e.what());
@@ -278,12 +377,13 @@ void LC_SplinePropertiesEditingWidget::onRemoveControlPoint() {
 }
 
 void LC_SplinePropertiesEditingWidget::showControlPointsContextMenu(const QPoint &pos) {
-    if (!m_entity) return;
+    if (nullptr == m_entity)
+        return;
 
     QModelIndex index = ui->tableControlPoints->indexAt(pos);
-    if (!index.isValid()) return;
+    if (!index.isValid())
+        return;
 
-    int row = index.row();
     ui->tableControlPoints->setCurrentIndex(index);
 
     QMenu menu(this);
