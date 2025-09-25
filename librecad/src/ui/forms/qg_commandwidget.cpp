@@ -32,6 +32,7 @@
 #include <QKeyEvent>
 #include <QFileDialog>
 #include <QSettings>
+#include <QShortcut>
 
 #include "lc_application.h"
 #include "qc_applicationwindow.h"
@@ -53,6 +54,7 @@ QG_CommandWidget::QG_CommandWidget(QWidget* parent, const char* name, Qt::Window
 {
     setObjectName(name);
     setupUi(this);
+    m_globalShortcut = new QShortcut(QKeySequence(Qt::SHIFT + Qt::Key_Space), this, SLOT(setFocus()));
     connect(leCommand, SIGNAL(command(QString)), this, SLOT(handleCommand(QString)));
     connect(leCommand, SIGNAL(escape()), this, SLOT(escape()));
     connect(leCommand, SIGNAL(focusOut()), this, SLOT(setNormalMode()));
@@ -104,6 +106,9 @@ QG_CommandWidget::~QG_CommandWidget()
     QSettings settings;
     auto action = findChild<QAction*>("keycode_action");
     settings.setValue("Widgets/KeycodeMode", action->isChecked());
+    if (m_globalShortcut) {
+        delete m_globalShortcut;
+    }
 }
 
 /*
