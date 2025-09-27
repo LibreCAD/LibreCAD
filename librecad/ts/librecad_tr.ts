@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="tr">
+<TS version="2.1" language="tr_TR">
 <context>
     <name>ColorWizard</name>
     <message>
@@ -43,7 +43,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="41"/>
         <source>Start point may set in distance or point state only</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıç noktası yalnızca mesafe veya nokta durumunda ayarlanabilir</translation>
     </message>
 </context>
 <context>
@@ -51,79 +51,81 @@
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="166"/>
         <source>To be created:</source>
-        <translation type="unfinished"></translation>
+        <translation>Oluşturulacak:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="166"/>
         <source>Rectangle</source>
-        <translation type="unfinished">Dikdörtgen</translation>
+        <translation>Dikdörtgen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="167"/>
         <source>Width:</source>
-        <translation type="unfinished">Genişlik:</translation>
+        <translation>Genişlik:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="168"/>
         <source>Height:</source>
-        <translation type="unfinished">Yükseklik:</translation>
+        <translation>Yükseklik:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="169"/>
         <source>Center:</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkez:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="198"/>
         <source>Invalid Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçersiz Açı</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="209"/>
         <source>Invalid radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçersiz yarıçap</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="354"/>
         <source>Invalid value</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçersiz değer</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="410"/>
         <source>Specify insertion point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekleme noktasını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="413"/>
         <source>Specify angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="416"/>
         <source>Specify size (width, height)</source>
-        <translation type="unfinished"></translation>
+        <translation>Boyutu belirtin (genişlik, yükseklik)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="419"/>
         <source>Specify corners type
 [str|round|bevels]</source>
-        <translation type="unfinished"></translation>
+        <translation>Köşe türünü belirtin
+[düz|yuvarlak|pahlı]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="422"/>
         <source>Specify corner bevel length (x,y)</source>
-        <translation type="unfinished"></translation>
+        <translation>Köşe eğim uzunluğunu belirtin (x,y)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="425"/>
         <source>Specify corner radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Köşe yarıçapını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="428"/>
         <source>Specify edges mode
 [both|hor|vert]</source>
-        <translation type="unfinished"></translation>
+        <translation>Kenar modunu belirtin
+[her ikisi|yatay|dikey]</translation>
     </message>
 </context>
 <context>
@@ -131,12 +133,12 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="731"/>
         <source> is not divided as it is locked.</source>
-        <translation type="unfinished"></translation>
+        <translation> kilitli olduğu için bölünmez.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="739"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation type="unfinished"></translation>
+        <translation> çoklu çizginin bir parçası olduğu için bölünmez. Önce çoklu çizgiyi genişletin.</translation>
     </message>
 </context>
 <context>
@@ -144,32 +146,32 @@
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="116"/>
         <source>Not a circle or arc entity</source>
-        <translation type="unfinished">Bir çember ya da yay değil</translation>
+        <translation>Daire veya yay nesnesi değil</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="193"/>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Geçerli bir ifade değil</translation>
+        <translation>Geçerli bir ifade değil</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="216"/>
         <source>Select arc or circle entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Yay veya daire nesnesini seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="216"/>
         <source>Free angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Serbest açı</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="219"/>
         <source>Specify dimension line position or enter angle:</source>
-        <translation type="unfinished">Ölçüm noktasını ve ölçü çizgisinin açısını belirtin:</translation>
+        <translation>Ölçüm çizgisinin konumunu belirtin veya açıyı girin:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="222"/>
         <source>Enter dimension text:</source>
-        <translation type="unfinished">Ölçü metnini girin:</translation>
+        <translation>Ölçü metnini girin:</translation>
     </message>
 </context>
 <context>
@@ -177,12 +179,12 @@
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="189"/>
         <source>Select arc entity</source>
-        <translation>Yay varlığı seçin</translation>
+        <translation>Yay öğesini seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="192"/>
         <source>Specify dimension arc location</source>
-        <translation>Boyutlu yay konumu belirt</translation>
+        <translation>Yay konumu ölçüsünü belirtin</translation>
     </message>
 </context>
 <context>
@@ -190,32 +192,32 @@
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="312"/>
         <source>Specify first extension line origin</source>
-        <translation type="unfinished">İlk ölçüm noktasını belirtin</translation>
+        <translation>İlk uzatma çizgisinin orijinini belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="302"/>
         <source>Specify second extension line origin</source>
-        <translation type="unfinished">İkinci ölçüm noktasını belirtin</translation>
+        <translation>İkinci uzatma çizgisinin orijinini belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="306"/>
         <source>Specify dimension line location</source>
-        <translation type="unfinished">Ölçü çizgisinin yerini belirtin</translation>
+        <translation>Ölçü çizgisinin yerini belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="306"/>
         <source>Snap to Adjacent Dim</source>
-        <translation type="unfinished"></translation>
+        <translation>Komşu Ölçüye Tuttur</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="321"/>
         <source>Enter dimension text:</source>
-        <translation type="unfinished">Ölçü metnini girin:</translation>
+        <translation>Ölçü metnini girin:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="324"/>
         <source>Enter dimension line angle:</source>
-        <translation type="unfinished">Ölçü çzgisinin açısı:</translation>
+        <translation>Ölçü çizgisinin açısını girin:</translation>
     </message>
 </context>
 <context>
@@ -223,7 +225,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="212"/>
         <source>Specify first point</source>
-        <translation type="unfinished">İlk noktayı belirt</translation>
+        <translation>İlk noktayı belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="216"/>
@@ -277,12 +279,12 @@
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="64"/>
         <source>Height:</source>
-        <translation type="unfinished">Yükseklik:</translation>
+        <translation>Yükseklik:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="127"/>
         <source>Counterclockwise</source>
-        <translation type="unfinished">Saatyönününtersi</translation>
+        <translation>SaatYönününTersi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="144"/>
@@ -297,12 +299,12 @@
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="95"/>
         <source>Radius:</source>
-        <translation type="unfinished">Yarıçap:</translation>
+        <translation>Yarıçap:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="44"/>
         <source>Clockwise</source>
-        <translation type="unfinished">Saat Yönü</translation>
+        <translation>Saat Yönü</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="105"/>
@@ -312,7 +314,7 @@
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="108"/>
         <source>Angle:</source>
-        <translation type="unfinished">Açı:</translation>
+        <translation>Açı:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="71"/>
@@ -322,7 +324,7 @@
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="74"/>
         <source>Length:</source>
-        <translation type="unfinished">Uzunluk:</translation>
+        <translation>Uzunluk:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.cpp" line="48"/>
@@ -373,7 +375,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="148"/>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Geçerli bir ifade değil</translation>
+        <translation>Geçerli bir ifade değil</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="186"/>
@@ -475,7 +477,7 @@ noktalar arasındaki mesafe=%2 çap=%3 den daha büyük</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="230"/>
         <source>Specify first point</source>
-        <translation>İlk noktayı belirt</translation>
+        <translation>İlk noktayı belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="233"/>
@@ -519,7 +521,7 @@ noktalar arasındaki mesafe=%2 çap=%3 den daha büyük</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="420"/>
         <source>Specify second extension line origin</source>
-        <translation type="unfinished">İkinci ölçüm noktasını belirtin</translation>
+        <translation>İkinci uzatma çizgisinin orijinini belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="420"/>
@@ -529,7 +531,7 @@ noktalar arasındaki mesafe=%2 çap=%3 den daha büyük</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="423"/>
         <source>Specify dimension line location</source>
-        <translation type="unfinished">Ölçü çizgisinin yerini belirtin</translation>
+        <translation>Ölçü çizgisinin yerini belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="423"/>
@@ -539,7 +541,7 @@ noktalar arasındaki mesafe=%2 çap=%3 den daha büyük</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="426"/>
         <source>Enter dimension text:</source>
-        <translation type="unfinished">Ölçü metnini girin:</translation>
+        <translation>Ölçü metnini girin:</translation>
     </message>
 </context>
 <context>
@@ -547,7 +549,7 @@ noktalar arasındaki mesafe=%2 çap=%3 den daha büyük</translation>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="269"/>
         <source>Specify ellipse center</source>
-        <translation type="unfinished">Elipsin merkezini belirtin</translation>
+        <translation>Elipsin merkezini belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="273"/>
@@ -569,7 +571,7 @@ noktalar arasındaki mesafe=%2 çap=%3 den daha büyük</translation>
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="328"/>
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="339"/>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Geçerli bir ifade değil</translation>
+        <translation>Geçerli bir ifade değil</translation>
     </message>
 </context>
 <context>
@@ -644,14 +646,14 @@ or[x|y|p|number|edges]</source>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534"/>
         <source>X</source>
-        <translation type="unfinished">X</translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534"/>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542"/>
         <source>Back</source>
-        <translation type="unfinished">Geri</translation>
+        <translation>Geri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534"/>
@@ -663,7 +665,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
         <source>Y</source>
-        <translation type="unfinished">Y</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542"/>
@@ -682,7 +684,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon4.cpp" line="33"/>
         <source>Specify second corner</source>
-        <translation type="unfinished">İkinci köşeyi belirtin</translation>
+        <translation>İkinci köşeyi belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon4.cpp" line="36"/>
@@ -692,7 +694,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon4.cpp" line="42"/>
         <source>Specify first corner</source>
-        <translation type="unfinished">İlk köşeyi belirtin</translation>
+        <translation>İlk köşeyi belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon4.cpp" line="45"/>
@@ -705,7 +707,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="196"/>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished">Sayı geçersiz. 1..9999 deneyin</translation>
+        <translation>Sayı geçersiz. 1..9999 deneyin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="208"/>
@@ -715,12 +717,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="218"/>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Geçerli bir ifade değil</translation>
+        <translation>Geçerli bir ifade değil</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="250"/>
         <source>Enter number:</source>
-        <translation type="unfinished">Paralel sayısı:</translation>
+        <translation>Sayı girin:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="253"/>
@@ -730,7 +732,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="261"/>
         <source>Specify center</source>
-        <translation type="unfinished">Merkezi belirtin</translation>
+        <translation>Merkezi belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="280"/>
@@ -750,7 +752,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="283"/>
         <source>Radius:</source>
-        <translation type="unfinished">Yarıçap:</translation>
+        <translation>Yarıçap:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="284"/>
@@ -776,7 +778,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="468"/>
         <source>Specify first point</source>
-        <translation type="unfinished">İlk noktayı belirt</translation>
+        <translation>İlk noktayı belirt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="477"/>
@@ -793,23 +795,23 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="134"/>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="491"/>
         <source>X</source>
-        <translation type="unfinished">X</translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="117"/>
         <source>Point</source>
-        <translation type="unfinished">Nokta</translation>
+        <translation>Nokta</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="121"/>
         <source>Angle</source>
-        <translation type="unfinished">Açı</translation>
+        <translation>Açı</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="128"/>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="495"/>
         <source>Y</source>
-        <translation type="unfinished">Y</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="153"/>
@@ -834,12 +836,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="577"/>
         <source>Cannot undo: Begin of history reached</source>
-        <translation type="unfinished">Geri alınamıyor: Geçmişin başlangıcına ulaşıldı</translation>
+        <translation>Geri alınamıyor: Geçmişin başlangıcına ulaşıldı</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="614"/>
         <source>Cannot redo: End of history reached</source>
-        <translation type="unfinished">İleri al yapılamıyor: Geçmişin sonuna ulaşıldı</translation>
+        <translation>İleri alınamıyor: Geçmişin sonuna ulaşıldı</translation>
     </message>
 </context>
 <context>
@@ -847,17 +849,17 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="262"/>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Geçerli bir ifade değil</translation>
+        <translation>Geçerli bir ifade değil</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="282"/>
         <source>Select first entity</source>
-        <translation type="unfinished">İlk varlığı seçin</translation>
+        <translation>İlk öğeyi seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="286"/>
         <source>Select second entity</source>
-        <translation type="unfinished">İkinci varlığı seçin</translation>
+        <translation>İkinci öğeyi seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="286"/>
@@ -942,17 +944,17 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="258"/>
         <source>Specify first point</source>
-        <translation type="unfinished">İlk noktayı belirt</translation>
+        <translation>İlk noktayı belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="262"/>
         <source>Specify second point</source>
-        <translation type="unfinished">İkinci noktayı belirtin</translation>
+        <translation>İkinci noktayı belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="266"/>
         <source>Specify third point</source>
-        <translation type="unfinished">Üçüncü noktayı belirtin</translation>
+        <translation>Üçüncü noktayı belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="270"/>
@@ -1018,7 +1020,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="280"/>
         <source>Specify second point</source>
-        <translation type="unfinished">İkinci noktayı belirtin</translation>
+        <translation>İkinci noktayı belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="280"/>
@@ -1072,12 +1074,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="598"/>
         <source>Specify second point</source>
-        <translation type="unfinished">İkinci noktayı belirtin</translation>
+        <translation>İkinci noktayı belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="601"/>
         <source>Specify third point</source>
-        <translation type="unfinished">Üçüncü noktayı belirtin</translation>
+        <translation>Üçüncü noktayı belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="604"/>
@@ -1095,17 +1097,17 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="212"/>
         <source>Line</source>
-        <translation type="unfinished">Çizgi</translation>
+        <translation>Çizgi</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="222"/>
         <source>Arc</source>
-        <translation type="unfinished">Yay</translation>
+        <translation>Yay</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="232"/>
         <source>Circle</source>
-        <translation type="unfinished">Çember</translation>
+        <translation>Çember</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="596"/>
@@ -1144,7 +1146,7 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="265"/>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="286"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Geri alınamıyor: Henüz yeterli sayıda varlık tanımlanmadı.</translation>
+        <translation>Geri alınamıyor: Henüz yeterli sayıda öğe tanımlanmadı.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="302"/>
@@ -3025,13 +3027,13 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="189"/>
         <source>Distance:</source>
-        <translation type="unfinished">Mesafe:</translation>
+        <translation>Mesafe:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="190"/>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="205"/>
         <source>Angle:</source>
-        <translation type="unfinished">Açı:</translation>
+        <translation>Açı:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="191"/>
