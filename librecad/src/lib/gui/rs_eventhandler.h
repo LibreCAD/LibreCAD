@@ -29,6 +29,7 @@
 #define RS_EVENTHANDLER_H
 
 #include <memory>
+#include <map>
 #include <QObject>
 
 #include "rs.h"
@@ -38,6 +39,8 @@ class RS_ActionInterface;
 class QAction;
 class QMouseEvent;
 class QKeyEvent;
+class QString;
+
 class RS_CommandEvent;
 class RS_Vector;
 
@@ -53,7 +56,7 @@ class RS_EventHandler : public QObject
     Q_OBJECT
 
 public:
-    RS_EventHandler(QObject* parent = 0);
+    RS_EventHandler(QObject* parent = nullptr);
     ~RS_EventHandler();
 
     void setQAction(QAction* action);
@@ -98,6 +101,7 @@ private:
 	QAction* q_action{nullptr};
     std::shared_ptr<RS_ActionInterface> defaultAction{nullptr};
     QList<std::shared_ptr<RS_ActionInterface>> currentActions;
+    std::map<QString, QAction*> m_toQAction;
 	bool coordinateInputEnabled{true};
     RS_Vector relative_zero;
 
