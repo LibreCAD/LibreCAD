@@ -174,14 +174,13 @@ void RS_EventHandler::mouseReleaseEvent(QMouseEvent* e) {
         RS_DEBUG->print("call action %s",
                         currentActions.last()->getName().toLatin1().data());
 
-        currentActions.last()->mouseReleaseEvent(e);
+	std::shared_ptr<RS_ActionInterface> current = currentActions.last();
+        current->mouseReleaseEvent(e);
 
         // action may be completed by click. Check this and if it so, uncheck the action
-        if (currentActions.last()->getStatus() < 0){
-            if (!hasAction() && q_action){
-                q_action->setChecked(false);
-                q_action = nullptr;
-            }
+        if (current->getStatus() < 0 && q_action != nullptr){
+	    q_action->setChecked(false);
+            q_action = nullptr;
         }
         // Clean up actions - one might be finished now
         cleanUp();
