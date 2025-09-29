@@ -169,7 +169,6 @@ void RS_EventHandler::mouseReleaseEvent(QMouseEvent* e) {
         LC_LOG<< "call action "<< current->getName();
 
         current->mouseReleaseEvent(e);
-        current->mouseReleaseEvent(e);
 
         // action may be completed by click. Check this and if it so, uncheck the action
         if (current->getStatus() < 0){
@@ -178,6 +177,7 @@ void RS_EventHandler::mouseReleaseEvent(QMouseEvent* e) {
                 m_toQAction.erase(current->getName());
 	    }
 	}
+
 
         // Clean up actions - one might be finished now
         cleanUp();
