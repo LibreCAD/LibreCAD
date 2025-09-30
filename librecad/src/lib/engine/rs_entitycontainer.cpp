@@ -1578,7 +1578,7 @@ bool RS_EntityContainer::optimizeContours() {
     RS_DEBUG->print("RS_EntityContainer::optimizeContours");
 
     RS_EntityContainer tmp(nullptr, false);
-    tmp.setAutoUpdateBorders(false);
+    tmp.setAutoUpdateBorders(true);
     bool closed = true;
 
     /** accept all full circles **/
@@ -1604,7 +1604,7 @@ bool RS_EntityContainer::optimizeContours() {
             //directly detect circles, bug#3443277
             {
                 RS_Entity* cl = e1->clone();
-                cl->setVisible(origVis[e1]);
+		origVis[cl] = origVis[e1];
                 tmp.addEntity(cl);
                 enList<<e1;
             }
@@ -1623,11 +1623,11 @@ bool RS_EntityContainer::optimizeContours() {
     const auto errMsg = QObject::tr("Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)");
     RS_Entity* current(nullptr);
     if(count()>0) {
-        RS_Entity* orig = entityAt(0);
+        RS_Entity* orig = entities.takeFirst();
         current=orig->clone();
+	origVis[current] = origVis[orig];
         current->setVisible(origVis[orig]);
         tmp.addEntity(current);
-        removeEntity(orig);
     }else {
         if(tmp.count()==0) return false;
     }
@@ -1646,7 +1646,7 @@ bool RS_EntityContainer::optimizeContours() {
             if(vpEnd.distanceTo(vpStart) < contourTolerance) {
                 RS_Entity* e2=entityAt(0);
                 RS_Entity* cl = e2->clone();
-                cl->setVisible(origVis[e2]);
+		origVis[cl] = origVis[e2];
                 tmp.addEntity(cl);
                 vpStart=cl->getStartpoint();
                 vpEnd=cl->getEndpoint();
@@ -1668,7 +1668,7 @@ bool RS_EntityContainer::optimizeContours() {
             break;
         }
         RS_Entity* eTmp = next->clone();
-        eTmp->setVisible(origVis[next]);
+	origVis[eTmp] = origVis[next];
         if(vpEnd.distanceTo(eTmp->getStartpoint()) > vpEnd.distanceTo(eTmp->getEndpoint()))
             eTmp->revertDirection();
         vpEnd=eTmp->getEndpoint();
@@ -1682,10 +1682,15 @@ bool RS_EntityContainer::optimizeContours() {
         RS_DEBUG->print("RS_EntityContainer::optimizeContours: hatch failed due to a gap");
         closed=false;
     }
+    if (count() > 0) {
+	    LC_ERR<<__func__<<"(): line "<<__LINE__<<": possible open contour";
+	    clear();
+    }
 
     // add new sorted entities:
     for(auto en: tmp){
         addEntity(en);
+	en->setVisible(origVis[en]);
         en->reparent(this);
     }
 
