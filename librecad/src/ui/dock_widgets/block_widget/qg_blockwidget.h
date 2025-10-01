@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -29,6 +29,7 @@
 
 #include <QAbstractTableModel>
 #include <QIcon>
+#include <QSortFilterProxyModel>
 
 #include "lc_graphicviewawarewidget.h"
 #include "rs_blocklistlistener.h"
@@ -56,7 +57,7 @@ public:
     };
     QG_BlockModel(QObject * parent = nullptr);
     Qt::ItemFlags flags ( const QModelIndex & /*index*/ ) const override {
-            return Qt::ItemIsSelectable|Qt::ItemIsEnabled;}
+        return Qt::ItemIsSelectable|Qt::ItemIsEnabled;}
     int columnCount(const QModelIndex &/*parent*/) const  override {
         return static_cast<int>(LAST);
     }
@@ -79,7 +80,7 @@ private:
 
 
 /**
- * This is the Qt implementation of a widget which can view a 
+ * This is the Qt implementation of a widget which can view a
  * block list.
  */
 class QG_BlockWidget: public LC_GraphicViewAwareWidget, public RS_BlockListListener {
@@ -117,14 +118,15 @@ protected:
     void setBlockList(RS_BlockList* blockList);
     void addToolbarButton(LC_FlexLayout* layButtons, RS2::ActionType actionType);
 private:
+    void restoreSelections() const;
     RS_BlockList* m_blockList = nullptr;
     QLineEdit* m_matchBlockName = nullptr;
     QTableView* m_blockView = nullptr;
     QG_BlockModel *m_blockModel = nullptr;
+    QSortFilterProxyModel* m_proxyModel = nullptr;
     RS_Block* m_lastBlock = nullptr;
     QG_ActionHandler* m_actionHandler = nullptr;
     LC_ActionGroupManager* m_actionGroupManager{nullptr};
-    void restoreSelections() const;
 };
 
 #endif

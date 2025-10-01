@@ -16,12 +16,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -36,6 +36,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QContextMenuEvent>
+#include <QSortFilterProxyModel>
 
 #include "lc_flexlayout.h"
 #include "qg_actionhandler.h"
@@ -51,7 +52,7 @@
 
 QG_BlockModel::QG_BlockModel(QObject * parent) : QAbstractTableModel(parent) {
     m_iconBlockVisible = QIcon(":/icons/visible.lci");
-//    blockHidden = QIcon(":/icons/invisible.svg");
+    //    blockHidden = QIcon(":/icons/invisible.svg");
     m_iconBlockHidden = QIcon(":/icons/not_visible.lci");
 }
 
@@ -70,7 +71,7 @@ QModelIndex QG_BlockModel::index ( int row, int column, const QModelIndex & /*pa
 }
 
 bool blockLessThan(const RS_Block *s1, const RS_Block *s2) {
-     return s1->getName() < s2->getName();
+    return s1->getName() < s2->getName();
 }
 
 void QG_BlockModel::setBlockList(RS_BlockList* bl) {
@@ -131,24 +132,30 @@ QVariant QG_BlockModel::data ( const QModelIndex & index, int role ) const {
             return font;
         }
     }
-//Other roles:
+    //Other roles:
     return QVariant();
 }
 
- /**
+/**
  * Constructor.
  */
 QG_BlockWidget::QG_BlockWidget(LC_ActionGroupManager* agm,QG_ActionHandler* ah, QWidget* parent,
                                const char* name, Qt::WindowFlags f)
-        : LC_GraphicViewAwareWidget(parent, name, f) {
+    : LC_GraphicViewAwareWidget(parent, name, f) {
     m_actionGroupManager = agm;
     m_actionHandler = ah;
     m_blockList = nullptr;
     m_lastBlock = nullptr;
 
     m_blockModel = new QG_BlockModel(this);
+
+    m_proxyModel = new QSortFilterProxyModel(this);
+    m_proxyModel->setSourceModel(m_blockModel);
+    m_proxyModel->setFilterKeyColumn(QG_BlockModel::NAME);  // Filter only on the NAME column
+    m_proxyModel->setDynamicSortFilter(false);  // Disable automatic sorting (source model is already sorted)
+
     m_blockView = new QTableView(this);
-    m_blockView->setModel (m_blockModel);
+    m_blockView->setModel (m_proxyModel);
     m_blockView->setShowGrid (false);
     m_blockView->setSelectionMode(QAbstractItemView::ExtendedSelection);
     m_blockView->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -238,14 +245,21 @@ void QG_BlockWidget::update() {
 
 void QG_BlockWidget::restoreSelections() const {
     QItemSelectionModel* selectionModel = m_blockView->selectionModel();
+    selectionModel->clearSelection();  // Clear first to avoid duplicates
 
-    for (auto block: *m_blockList) {
-        if (block == nullptr || !block->isVisibleInBlockList() || !block->isSelectedInBlockList())
+    for (auto block : *m_blockList) {
+        if (block == nullptr || !block->isSelectedInBlockList()) {
             continue;
-
-        QModelIndex idx = m_blockModel->getIndex(block);
-        QItemSelection selection(idx, idx);
-        selectionModel->select(selection, QItemSelectionModel::Select);
+        }
+        QModelIndex sourceIdx = m_blockModel->getIndex(block);
+        if (!sourceIdx.isValid()) {
+            continue;
+        }
+        QModelIndex proxyIdx = m_proxyModel->mapFromSource(sourceIdx);
+        if (proxyIdx.isValid()) {
+            QItemSelection selection(proxyIdx, proxyIdx);
+            selectionModel->select(selection, QItemSelectionModel::Select);
+        }
     }
 }
 
@@ -257,26 +271,34 @@ void QG_BlockWidget::restoreSelections() const {
 void QG_BlockWidget::activateBlock(RS_Block* block) {
     RS_DEBUG->print("QG_BlockWidget::activateBlock()");
 
-    if (block==nullptr || m_blockList==nullptr) {
+    if (block == nullptr || m_blockList == nullptr || m_proxyModel == nullptr) {
         return;
     }
 
     m_lastBlock = m_blockList->getActive();
     m_blockList->activate(block);
     int yPos = m_blockView->verticalScrollBar()->value();
-    QModelIndex idx = m_blockModel->getIndex (block);
+    QModelIndex sourceIdx = m_blockModel->getIndex(block);
+    if (!sourceIdx.isValid()) {
+        return;
+    }
+    QModelIndex proxyIdx = m_proxyModel->mapFromSource(sourceIdx);
 
     // remember selected status of the block
     bool selected = block->isSelectedInBlockList();
 
-    m_blockView->setCurrentIndex ( idx );
+    if (proxyIdx.isValid()) {
+        m_blockView->setCurrentIndex(proxyIdx);
+    }
     m_blockModel->setActiveBlock(block);
     m_blockView->viewport()->update();
 
     // restore selected status of the block
     QItemSelectionModel::SelectionFlag selFlag = selected ? QItemSelectionModel::Select : QItemSelectionModel::Deselect;
     block->selectedInBlockList(selected);
-    m_blockView->selectionModel()->select(QItemSelection(idx, idx), selFlag);
+    if (proxyIdx.isValid()) {
+        m_blockView->selectionModel()->select(QItemSelection(proxyIdx, proxyIdx), selFlag);
+    }
     m_blockView->verticalScrollBar()->setValue(yPos);
 }
 
@@ -284,14 +306,21 @@ void QG_BlockWidget::activateBlock(RS_Block* block) {
  * Called when the user activates (highlights) a block.
  */
 void QG_BlockWidget::slotActivated(const QModelIndex &blockIdx) {
-    if (!blockIdx.isValid() || m_blockList==nullptr)
+    if (!blockIdx.isValid() || m_blockList == nullptr || m_proxyModel == nullptr) {
         return;
+    }
 
-    RS_Block * block = m_blockModel->getBlock( blockIdx.row() );
-    if (block == nullptr)
+    QModelIndex sourceIdx = m_proxyModel->mapToSource(blockIdx);
+    if (!sourceIdx.isValid()) {
         return;
+    }
 
-    if (blockIdx.column() == QG_BlockModel::VISIBLE) {
+    RS_Block* block = m_blockModel->getBlock(sourceIdx.row());
+    if (block == nullptr) {
+        return;
+    }
+
+    if (sourceIdx.column() == QG_BlockModel::VISIBLE) {
         RS_Block* b = m_blockList->getActive();
         m_blockList->activate(block);
         m_actionHandler->setCurrentAction(RS2::ActionBlocksToggleView);
@@ -299,7 +328,7 @@ void QG_BlockWidget::slotActivated(const QModelIndex &blockIdx) {
         return;
     }
 
-    if (blockIdx.column() == QG_BlockModel::NAME) {
+    if (sourceIdx.column() == QG_BlockModel::NAME) {
         m_lastBlock = m_blockList->getActive();
         activateBlock(block);
     }
@@ -312,21 +341,29 @@ void QG_BlockWidget::slotActivated(const QModelIndex &blockIdx) {
 void QG_BlockWidget::slotSelectionChanged(
     const QItemSelection &selected,
     const QItemSelection &deselected) const {
-    QItemSelectionModel *selectionModel {m_blockView->selectionModel()};
+    if (m_proxyModel == nullptr) {
+        return;
+    }
 
-    foreach (QModelIndex index, selected.indexes()) {
-        auto block = m_blockModel->getBlock(index.row());
-        if (block != nullptr) {
-            block->selectedInBlockList(true);
-            selectionModel->select(QItemSelection(index, index), QItemSelectionModel::Select);
+    // Handle selected
+    foreach (QModelIndex proxyIdx, selected.indexes()) {
+        QModelIndex sourceIdx = m_proxyModel->mapToSource(proxyIdx);
+        if (sourceIdx.isValid()) {
+            RS_Block* block = m_blockModel->getBlock(sourceIdx.row());
+            if (block != nullptr) {
+                block->selectedInBlockList(true);
+            }
         }
     }
 
-    foreach (QModelIndex index, deselected.indexes()) {
-        auto block = m_blockModel->getBlock(index.row());
-        if (block != nullptr && block->isVisibleInBlockList()) {
-            block->selectedInBlockList(false);
-            selectionModel->select(QItemSelection(index, index), QItemSelectionModel::Deselect);
+    // Handle deselected
+    foreach (QModelIndex proxyIdx, deselected.indexes()) {
+        QModelIndex sourceIdx = m_proxyModel->mapToSource(proxyIdx);
+        if (sourceIdx.isValid()) {
+            RS_Block* block = m_blockModel->getBlock(sourceIdx.row());
+            if (block != nullptr) {
+                block->selectedInBlockList(false);
+            }
         }
     }
 }
@@ -393,25 +430,23 @@ void QG_BlockWidget::blockAdded(RS_Block*) {
  * Called when reg-expression matchBlockName->text changed
  */
 void QG_BlockWidget::slotUpdateBlockList() const {
-    if (m_blockList == nullptr) {
+    if (m_blockList == nullptr || m_proxyModel == nullptr) {
         return;
     }
 
-    QRegularExpression rx{ QRegularExpression::wildcardToRegularExpression(m_matchBlockName->text())};
-
-    for (int i = 0; i < m_blockList->count(); i++) {
-        RS_Block* block = m_blockModel->getBlock(i);
-        if (!block) continue;
-        if (block->getName().indexOf(rx) == 0) {
-            m_blockView->showRow(i);
-            m_blockModel->getBlock(i)->visibleInBlockList(true);
-        } else {
-            m_blockView->hideRow(i);
-            m_blockModel->getBlock(i)->visibleInBlockList(false);
+    QString input = m_matchBlockName->text();
+    if (input.isEmpty()) {
+        m_proxyModel->setFilterRegularExpression(QRegularExpression(""));  // Clear filter to show all
+    } else {
+        bool hasPattern = input.contains('*') || input.contains('?');
+        if (!hasPattern) {
+            input = "*" + input + "*";  // Wrap for "contains" matching
         }
+        QRegularExpression rx(QRegularExpression::wildcardToRegularExpression(input), QRegularExpression::CaseInsensitiveOption);
+        m_proxyModel->setFilterRegularExpression(rx);
     }
 
-    restoreSelections();
+    restoreSelections();  // Restore after filter change
 }
 
 void QG_BlockWidget::updateWidgetSettings() const {
@@ -455,3 +490,4 @@ void QG_BlockWidget::setBlockList(RS_BlockList* blockList) {
     }
     update();
 }
+// EOF
