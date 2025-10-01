@@ -683,6 +683,9 @@ void LC_Loops::getAllLoops(std::vector<const RS_EntityContainer*>& loops) const 
  * @brief Gets the bounding box from the outer loop.
  */
 LC_Rect LC_Loops::getBoundingBox() const {
+    if (m_loop == nullptr)
+        return {};
+    m_loop->calculateBorders();
     return {m_loop->getMin(), m_loop->getMax()};
 }
 
