@@ -291,7 +291,13 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
     if (coordinateInputEnabled) {
         if (!e->isAccepted()) {
 
-            if(hasAction()){
+                // send command event directly to current action:
+                if (hasAction()) {
+                    LC_LOG<<"RS_EventHandler::commandEvent(RS_CommandEvent* e): sending cmd("<<qPrintable(e->getCommand()) <<") to action: "<<currentActions.last()->rtti();
+                    currentActions.last()->commandEvent(e);
+                }
+
+            if(hasAction() && !e->isAccepted()){
                 // handle quick shortcuts for absolute/current origins:
                 if (cmd.length() == 1) {
                     RS_Vector at = relative_zero;
@@ -393,19 +399,12 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                     }
                 }
 
-                // send command event directly to current action:
-                if (!e->isAccepted()) {
-//                    std::cout<<"RS_EventHandler::commandEvent(RS_CommandEvent* e): sending cmd("<<qPrintable(e->getCommand()) <<") to action: "<<currentActions.last()->rtti()<<std::endl;
-                    currentActions.last()->commandEvent(e);
-                }
             }else{
             //send the command to default action
                 if (defaultAction) {
                     defaultAction->commandEvent(e);
                 }
             }
-            // do not accept command here. Actions themselves should be responsible to accept commands
-//            e->accept();
         }
     }
 
