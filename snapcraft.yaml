@@ -4,33 +4,24 @@ grade: stable
 base: core22
 confinement: strict
 license: GPL-2.0
-summary: "librecad: is a 2D open source CAD"
+summary: "LibreCAD: 2D open source CAD"
 compression: lzo
 description: |
-  LibreCAD is a cross-platform 2D CAD program written in C++17. It can read DXF/DWG files
-  and can write DXF/PDF/SVG files. It supports point/line/circle/ellipse/parabola/spline
-  primitives. The user interface is highly customizable, and has dozens of translations.
-  Code repository:
-  https://www.github.com/LibreCAD/LibreCAD
+  LibreCAD is a cross-platform 2D CAD program written in C++17. It reads DXF/DWG files and writes DXF/PDF/SVG. Supports point/line/circle/ellipse/parabola/spline primitives. UI is customizable with dozens of translations.
+  Repo: https://github.com/LibreCAD/LibreCAD
+
 environment:
   LD_LIBRARY_PATH: $SNAP/usr/local/lib/:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/:$SNAP/usr/lib64/:$LD_LIBRARY_PATH
+  QT_SELECT: qt5
 
 apps:
   librecad:
     command: usr/bin/librecad
-    plugs:
-      - home
-      - desktop
-      - desktop-legacy
-      - opengl
-      - wayland
-      - unity7
-      - x11
+    plugs: [home, desktop, desktop-legacy, opengl, wayland, unity7, x11]
     desktop: usr/share/applications/org.librecad.librecad.desktop
     common-id: org.librecad.librecad.desktop
-    extensions:
-      - kde-neon #kde-neon-6
-      
+    extensions: [kde-neon]
+
 plugs:
   desktop:
     mount-host-font-cache: false
@@ -54,74 +45,48 @@ plugs:
 
 parts:
   librecad:
-    plugin: cmake #qmake
-    #qmake-parameters:
-    #  - "QMAKE_CFLAGS+=-march=x86_64"
-    #  - "QMAKE_CXXFLAGS+=-march=x86-64"
-    build-environment:
-      - QT_SELECT: qt5 #qt6
-    source: .
+    plugin: qmake
+    source: https://github.com/LibreCAD/LibreCAD.git
+    source-type: git
+    source-branch: 2.2.1
+    qmake-parameters: ["QMAKE_CFLAGS+=-march=x86-64", "QMAKE_CXXFLAGS+=-march=x86-64"]
+    build-environment: [{QT_SELECT: qt5}]
     build-packages:
       - build-essential
-      - qtbase5-dev #qt6-base-dev
-      - qttools5-dev #qt6-tools-dev
-      #- qttools5-dev-tools #qt6-tools-dev-tools
+      - qtbase5-dev
+      - qttools5-dev
       - librsvg2-bin
-      - libqt5waylandclient5-dev #qt6-wayland-dev
+      - libqt5waylandclient5-dev
       - libfreetype6-dev
       - libicu-dev
-      - libqt5opengl5-dev #libqt6opengl6-dev
-      #- libcairo2-dev
-      #- libpango-1.0-0
-      #- libpango1.0-dev
+      - libqt5opengl5-dev
       - libboost-dev
-      - libgl1-mesa-dev # avoid openGL fatal error: GL/gl.h: No such file or directory
-      - libqt5svg5-dev #libqt6svg6-dev
-      #- libgtest-dev
-      #- libcurl4-gnutls-dev
-      #- libgtk-3-dev
-      - qt3d5-dev
+      - libgl1-mesa-dev
+      - libqt5svg5-dev
       - rsync
-      
     override-build: |
-      # craftctl default
-      export QT_SELECT=qt5
-      cmake ../../..
-      #/snap/kf5-5-113-qt-5-15-11-core22-sdk/current/usr/lib/qt5/bin/qmake -r 'QMAKE_CFLAGS+=-isystem $CRAFT_STAGE/usr/include' 'QMAKE_CXXFLAGS+=-isystem $CRAFT_STAGE/usr/include' 'QMAKE_LFLAGS+=-L$CRAFT_STAGE/lib -L$CRAFT_STAGE/usr/lib -L$CRAFT_STAGE/usr/lib/x86_64-linux-gnu'
+      craftctl default
       make -r -j$(nproc)
-
     stage-packages:
       - libfreetype6
-      - libqt5gui5 #libqt6gui6
-      - libqt5pdf5 #libqt6gui6
-      - libqt5svg5 #libqt6gui6
-      - libqt5printsupport5 #libqt6printsupport6
+      - libqt5gui5
+      - libqt5pdf5
+      - libqt5svg5
+      - libqt5printsupport5
       - libqt5waylandclient5
-
-    stage:
-      - -usr/share/pkgconfig
-
+    stage: [-usr/share/pkgconfig]
     override-stage: |
-      ls
-      export SRC_DIR=../parts/librecad/build/
-      echo $CRAFT_STAGE
-      mkdir -p $CRAFT_STAGE/usr/bin
-      mkdir -p $CRAFT_STAGE/usr/share/icons
-      mkdir -p $CRAFT_STAGE/usr/share/librecad/resources/qm
-      mkdir -p $CRAFT_STAGE/usr/share/applications
-      mkdir -p usr/bin
-      mkdir -p usr/share/librecad
+      export SRC_DIR=$CRAFT_PART_BUILD/unix
+      mkdir -p $CRAFT_STAGE/usr/{bin,share/{icons,librecad/resources/qm,applications}}
       cp -a $SRC_DIR/librecad $CRAFT_STAGE/usr/bin/
-      #cp -a $SRC_DIR/ttf2lff $CRAFT_STAGE/usr/bin/
-      cp -a $SRC_DIR/*.qm $CRAFT_STAGE/usr/share/librecad/resources/qm
-      rsync -vaut ../librecad/support/* $CRAFT_STAGE/usr/share/librecad/resources/
-      export DESKTOP_DIR=../parts/librecad/src/desktop
-      find ../CI -type f -name librecad.svg -exec cp -av '{}' $CRAFT_STAGE/usr/share/icons/ ';'
+      cp -a $CRAFT_PART_SRC/librecad/res/*.qm $CRAFT_STAGE/usr/share/librecad/resources/qm/
+      rsync -vaut $CRAFT_PART_SRC/librecad/support/* $CRAFT_STAGE/usr/share/librecad/resources/
+      find $CRAFT_PART_SRC -type f -name librecad.svg -exec cp -av '{}' $CRAFT_STAGE/usr/share/icons/ ';'
+      export DESKTOP_DIR=$CRAFT_PART_SRC/desktop
       cp -a $DESKTOP_DIR/*.desktop $CRAFT_STAGE/usr/share/applications/org.librecad.librecad.desktop
-      sed -i'' -e 's:^\s*Icon=.*$:Icon=/usr/share/icons/librecad.svg:' $CRAFT_STAGE/usr/share/applications/org.librecad.librecad.desktop
-      cp -a $DESKTOP_DIR/org.librecad.*.xml $CRAFT_STAGE/usr/share/applications/org.librecad.librecad.xml
+      sed -i 's:^\s*Icon=.*$:Icon=/usr/share/icons/librecad.svg:' $CRAFT_STAGE/usr/share/applications/org.librecad.librecad.desktop
+      cp -a $DESKTOP_DIR/org.librecad.*.xml $CRAFT_STAGE/usr/share/applications/
       craftctl default
-
     override-prime: |
-      rsync -av ../stage/* ./
+      rsync -av $CRAFT_STAGE/* ./
       craftctl default
