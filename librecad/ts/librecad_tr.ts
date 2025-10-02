@@ -133,7 +133,7 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="731"/>
         <source> is not divided as it is locked.</source>
-        <translation> kilitli olduğu için bölünmez.</translation>
+        <translation> kilitlendiği için bölünmez.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="739"/>
@@ -11449,27 +11449,27 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="37"/>
         <source>Create vew for current zoom and offset of drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimin mevcut yakınlaştırma ve ofseti için görünüm oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="54"/>
         <source>Restores selected view</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen görünümü geri yükler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="68"/>
         <source>Update selected view by current zoom/position</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili görünümü mevcut yakınlaştırma/konuma göre güncelle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="82"/>
         <source>Edit selected view name</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen görünüm adını düzenle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="96"/>
         <source>Removes selected view</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen görünümü kaldırır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="99"/>
@@ -11479,139 +11479,142 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="136"/>
         <source>Filtering views by name</source>
-        <translation type="unfinished"></translation>
+        <translation>Görünümleri ada göre filtreleme</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="139"/>
         <source>Filter...</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtre...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="151"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="247"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="271"/>
         <source>Delete View</source>
-        <translation type="unfinished"></translation>
+        <translation>Görünümü Sil</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="248"/>
         <source>Are you sure to delete ALL views?
  Warning: this action can NOT be undone!</source>
-        <translation type="unfinished"></translation>
+        <translation>TÜM görünümleri silmek istediğinizden emin misiniz?
+ Uyarı: Bu işlem geri alınamaz!</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="272"/>
         <source>Are you sure to delete view
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
-        <translation type="unfinished"></translation>
+        <translation>“%1” görünümünü silmek istediğinizden emin misiniz?
+ Uyarı: Bu işlem geri alınamaz!</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="302"/>
         <source>Delete Views</source>
-        <translation type="unfinished"></translation>
+        <translation>Görünümleri Sil</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="302"/>
         <source>Are you sure to delete views %1?
 Warning: this action can NOT be undone!</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 görünümünü silmek istediğinizden emin misiniz?
+Uyarı: Bu işlem geri alınamaz!</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="332"/>
         <source>New View</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni Görünüm</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="333"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="366"/>
         <source>View name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Adı görüntüle:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="338"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="349"/>
         <source>View Creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Oluşturma Görüntüle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="338"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="371"/>
         <source>Empty name of View is not allowed</source>
-        <translation type="unfinished"></translation>
+        <translation>Boş View adı kullanılamaz</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="349"/>
         <source>View with provided name already exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilen adla görüntüleme zaten mevcut</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="365"/>
         <source>Rename View</source>
-        <translation type="unfinished"></translation>
+        <translation>Görünümü Yeniden Adlandır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="371"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="378"/>
         <source>View Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Görüntüle Yeniden Adlandır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="378"/>
         <source>View with provided name already exists, select another one</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilen adla bir görünüm zaten var, başka bir ad seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="455"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="462"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="476"/>
         <source>&amp;Add View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Görünüm Ekle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="458"/>
         <source>R&amp;emove Selected Views</source>
-        <translation type="unfinished"></translation>
+        <translation>S&amp;eçili Görünümleri Kaldır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="465"/>
         <source>&amp;Restore View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Görünümü Geri Yükle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="466"/>
         <source>Re&amp;name View</source>
-        <translation type="unfinished"></translation>
+        <translation>Ye&amp;niden adlandırma Görünüm</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="467"/>
         <source>&amp;Update View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Görünümü Güncelle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="468"/>
         <source>R&amp;emove View</source>
-        <translation type="unfinished"></translation>
+        <translation>Görüntül&amp;emeyi kaldır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="470"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="482"/>
         <source>Remove A&amp;ll Views</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm Görünümleri Ka&amp;ldır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="595"/>
         <source>Restore View</source>
-        <translation type="unfinished"></translation>
+        <translation>Görünümü Geri Yükle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="595"/>
         <source>Paper space view is not fully supported yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kağıt alanı görünümü henüz tam olarak desteklenmemektedir.</translation>
     </message>
 </context>
 <context>
@@ -11619,20 +11622,20 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="394"/>
         <source>Name: </source>
-        <translation type="unfinished"></translation>
+        <translation>Adı: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="293"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="342"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="367"/>
         <source>&lt;No name&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;İsim yok&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="311"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="323"/>
         <source>Ortho</source>
-        <translation type="unfinished"></translation>
+        <translation>Ortodonti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="313"/>
@@ -11653,78 +11656,78 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="380"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="384"/>
         <source>WCS</source>
-        <translation type="unfinished"></translation>
+        <translation>WCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="388"/>
         <source>UCS</source>
-        <translation type="unfinished"></translation>
+        <translation>UCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="395"/>
         <source>Center X: </source>
-        <translation type="unfinished"></translation>
+        <translation>Merkez X: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="396"/>
         <source>Center Y: </source>
-        <translation type="unfinished"></translation>
+        <translation>Merkez Y: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="397"/>
         <source>Width: </source>
-        <translation type="unfinished"></translation>
+        <translation>Genişlik: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="398"/>
         <source>Height: </source>
-        <translation type="unfinished"></translation>
+        <translation>Yükseklik: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="401"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="408"/>
         <source>UCS: </source>
-        <translation type="unfinished"></translation>
+        <translation>UCS: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="409"/>
         <source>UCS Name: </source>
-        <translation type="unfinished"></translation>
+        <translation>UCS Adı: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="410"/>
         <source>Grid View: </source>
-        <translation type="unfinished"></translation>
+        <translation>Izgara Görünümü: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="411"/>
         <source>UCS Origin X: </source>
-        <translation type="unfinished"></translation>
+        <translation>UCS Origin X: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="412"/>
         <source>UCS Origin Y: </source>
-        <translation type="unfinished"></translation>
+        <translation>UCS Kökeni Y: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="413"/>
         <source>UCS Angle: </source>
-        <translation type="unfinished"></translation>
+        <translation>UCS Açısı: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="416"/>
         <source>In Paperspace: </source>
-        <translation type="unfinished"></translation>
+        <translation>Paperspace&apos;te: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="416"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Evet</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="416"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Hayır</translation>
     </message>
 </context>
 <context>
@@ -11738,7 +11741,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/components/containers/lc_optionswidgetsholder.cpp" line="36"/>
         <location filename="../src/ui/components/containers/lc_optionswidgetsholder.cpp" line="116"/>
         <source>Current Action:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut Eylem:</translation>
     </message>
     <message>
         <location filename="../src/ui/components/containers/lc_optionswidgetsholder.cpp" line="36"/>
@@ -11773,7 +11776,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_parabolapropertieseditingwidget.cpp" line="89"/>
         <source>Parabola control points cannot be collinear</source>
-        <translation type="unfinished"></translation>
+        <translation>Parabol kontrol noktaları aynı doğru üzerinde olamaz.</translation>
     </message>
 </context>
 <context>
@@ -11791,17 +11794,17 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/point/lc_pastetopointsoptions.ui" line="120"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden açı seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_pastetopointsoptions.ui" line="78"/>
         <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilirse, ekleme noktası olarak kullanılan nokta nesnesi yapıştırma işleminden sonra silinir. Aksi takdirde, nesne kalır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_pastetopointsoptions.ui" line="81"/>
         <source>Remove point</source>
-        <translation type="unfinished"></translation>
+        <translation>Noktayı kaldır</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_pastetopointsoptions.ui" line="64"/>
@@ -11811,12 +11814,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/point/lc_pastetopointsoptions.ui" line="113"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Yapıştırılan nesneler için ölçek faktörü</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_pastetopointsoptions.ui" line="50"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Yapıştırılan nesneler için dönme açısı</translation>
     </message>
 </context>
 <context>
@@ -11829,12 +11832,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="50"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Yapıştırılan nesneler için dönme açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="85"/>
         <source>Spacing between entities insertion points in rows. </source>
-        <translation type="unfinished"></translation>
+        <translation>Satırlardaki varlık ekleme noktaları arasındaki boşluk. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="92"/>
@@ -11844,7 +11847,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="131"/>
         <source>Pick array spacing by X from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden X ile dizi aralığını seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="200"/>
@@ -11854,37 +11857,37 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="294"/>
         <source>Pick array angle from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden dizi açısını seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="124"/>
         <source>Rotation angle for array.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dizi için dönme açısı.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="158"/>
         <source>Array rows number.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dizi satır sayısı.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="207"/>
         <source>Pick array spacing by Y from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden Y&apos;ye göre dizi aralığını seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="221"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden açı seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="267"/>
         <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, her bir yapıştırma ve tüm dizi için aynı dönme açısı kullanılır. Aksi takdirde, farklı açılar kullanılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="270"/>
         <source>Same Angles</source>
-        <translation type="unfinished"></translation>
+        <translation>Aynı Açılar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="99"/>
@@ -11894,32 +11897,32 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="277"/>
         <source>Array columns number.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dizi sütunlarının sayısı.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="57"/>
         <source>If checked, arrays of copies will be created on paste.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, yapıştırma sırasında kopyaların dizileri oluşturulur.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="60"/>
         <source>Array</source>
-        <translation type="unfinished"></translation>
+        <translation>Dizi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="235"/>
         <source>Array Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dizi Açısı:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="193"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Yapıştırılan nesneler için ölçek faktörü</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="260"/>
         <source>Spacing between insertion points of entities in columns.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sütunlardaki varlıkların ekleme noktaları arasındaki boşluk.</translation>
     </message>
 </context>
 <context>
@@ -12283,17 +12286,17 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="227"/>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Adı:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="228"/>
         <source>Line Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi Türü:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="229"/>
         <source>Line Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi Genişliği:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="232"/>
@@ -12307,184 +12310,184 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="20"/>
         <source>Pen Palette Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalem Paleti Ayarları</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="208"/>
         <source>Columns to display</source>
-        <translation type="unfinished"></translation>
+        <translation>Görüntülenecek sütunlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="214"/>
         <source>Line Type Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi Türü Adı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="221"/>
         <source>Color Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Renk Adı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="228"/>
         <source>Line Type Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi Türü Simgesi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="235"/>
         <source>Color Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Renk Simgesi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="242"/>
         <source>Line Width Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi Genişliği Simgesi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="249"/>
         <source>Line Width Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi Genişliği Adı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="26"/>
         <source>Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Renkler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="32"/>
         <source>Background color for pen element currently edited in pen&apos;s table</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalem tablosunda şu anda düzenlenmekte olan kalem öğesinin arka plan rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="55"/>
         <source>Color of grid for pens list</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalem listesi için ızgara rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="65"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="86"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="134"/>
         <source>Click to select color</source>
-        <translation type="unfinished"></translation>
+        <translation>Rengi seçmek için tıklayın</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="79"/>
         <source>Active Pen Background:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktif Kalem Arka Planı:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="100"/>
         <source>If set, bold font is used for all elements of active pen item (otherwise, only for name)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarlandığında, etkin kalem öğesinin tüm öğeleri için kalın yazı tipi kullanılır (aksi takdirde, yalnızca ad için kullanılır)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="103"/>
         <source>Entire table row is bold for active pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin kalem için tüm tablo satırı kalın olarak gösterilir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="110"/>
         <source>Grid Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgara Rengi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="117"/>
         <source>Matched Item Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Eşleşen Ürün Rengi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="124"/>
         <source>Color of pen item that is matched by filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtre ile eşleşen kalem öğesinin rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="318"/>
         <source>If set, filter will igore the case of pen&apos;s name</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarlandığında, filtre kalemin adının büyük/küçük harfini dikkate almayacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="321"/>
         <source>Case-insensitive pens filtering</source>
-        <translation type="unfinished"></translation>
+        <translation>Büyük/küçük harf duyarlı olmayan kalemler filtreleme</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="151"/>
         <source>Controls whether tooltip will be shown for table item or not</source>
-        <translation type="unfinished"></translation>
+        <translation>Tablo öğesi için araç ipucunun gösterilip gösterilmeyeceğini kontrol eder.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="154"/>
         <source>Show tooltip for table items</source>
-        <translation type="unfinished"></translation>
+        <translation>Tablo öğeleri için araç ipucunu göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="259"/>
         <source>Show colorn name as</source>
-        <translation type="unfinished"></translation>
+        <translation>Renk adını göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="265"/>
         <source>Hexadecimal value of color</source>
-        <translation type="unfinished"></translation>
+        <translation>Rengin onaltılık değeri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="268"/>
         <source>HEX</source>
-        <translation type="unfinished"></translation>
+        <translation>HEX</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="275"/>
         <source>Red, Green, Blue components of color</source>
-        <translation type="unfinished"></translation>
+        <translation>Rengin kırmızı, yeşil ve mavi bileşenleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="278"/>
         <source>RGB</source>
-        <translation type="unfinished"></translation>
+        <translation>RGB</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="285"/>
         <source>Natural name of color or HEX value of it</source>
-        <translation type="unfinished"></translation>
+        <translation>Rengin doğal adı veya HEX değeri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="288"/>
         <source>Natural name where possible</source>
-        <translation type="unfinished"></translation>
+        <translation>Mümkün olduğunda doğal isim</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="298"/>
         <source>If selected, additional messages will be show as part of pen related operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilirse, kalemle ilgili işlemlerin bir parçası olarak ek mesajlar gösterilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="301"/>
         <source>Show info message if no entities may be selected by pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalemle hiçbir varlık seçilemiyorsa bilgi mesajı göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="176"/>
         <source>On double click on table item</source>
-        <translation type="unfinished"></translation>
+        <translation>Tablo öğesine çift tıklayın</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="183"/>
         <source>Defines how the program to react on double click on pen item in table</source>
-        <translation type="unfinished"></translation>
+        <translation>Tablodaki kalem öğesine çift tıklandığında programın nasıl tepki vereceğini tanımlar.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="51"/>
         <source>Do nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiçbir şey yapma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="52"/>
         <source>Select entities by attributes pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Özelliklere göre varlıkları seç pen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="53"/>
         <source>Select entities by drawing pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalemi kullanarak varlıkları seçin</translation>
     </message>
 </context>
 <context>
@@ -12492,118 +12495,118 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="20"/>
         <source>Pen Palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalem Paleti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="46"/>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlık Çizim Kalemi ile Doldurma Kalemi Düzenleyici</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="63"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlık Özniteliklerine Göre Doldurma Kalemi Düzenleyicisi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="80"/>
         <source>Select Entities By Drawing Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizim Kalemi ile Varlıkları Seçme</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="97"/>
         <source>Select Entities By Pen Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalem Özelliklerine Göre Varlıkları Seç</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="117"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="120"/>
         <source>Save</source>
-        <translation type="unfinished">Kaydet</translation>
+        <translation>KaydetKaydet</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="134"/>
         <source>Apply Pen To Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçime Kalem Uygula</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="151"/>
         <source>Fill Editor Pen by Current Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut Kalemle Editör Kalemini Doldur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="168"/>
         <source>Apply Editor Pen As Current Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Editör Kalemini Geçerli Kalem Olarak Uygula</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="171"/>
         <source>to current</source>
-        <translation type="unfinished"></translation>
+        <translation>mevcut</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="185"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktif Katman Kalemi ile Mevcut Kalemi Güncelle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="202"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktif Katmandan Kalemle Doldurma Editörü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
         <source>Pick from Active Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktif Katmandan Seç</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="219"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Apply Editor Pen to Active Layer Pen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply To Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Katmana Uygula</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="236"/>
         <source>Remove Selected Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili Kalemi Kaldır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="239"/>
         <source>Delete Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalemi Sil</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="336"/>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tür:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="343"/>
         <source>Line type</source>
-        <translation type="unfinished">Çizgi tipi</translation>
+        <translation>Çizgi tipiÇizgi türü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="362"/>
         <source>Width:</source>
-        <translation type="unfinished">Genişlik:</translation>
+        <translation>Genişlik:Genişlik:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="369"/>
         <source>Width of line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi genişliği</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="399"/>
         <source>Pen Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Takma Ad:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="433"/>
         <source>Name of pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalemin adı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="452"/>
@@ -12613,79 +12616,79 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="484"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="515"/>
         <source>Filtering pens by name</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalemleri isme göre filtreleme</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="518"/>
         <source>Filter...</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtre...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="547"/>
         <source>If checked, matched pens are highlighted, otherwise non-matching pens are hidden.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, eşleşen kalemler vurgulanır, aksi takdirde eşleşmeyen kalemler gizlenir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="550"/>
         <source>Highlight Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Vurgu Modu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="278"/>
         <source>&amp;Apply Pen To Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Seçime Kalem Uygula</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="279"/>
         <source>&amp;Set As Current Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Geçerli Kalem Olarak Ayarla</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="280"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Aktif Katmana Kalem Uygula</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="281"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Select Entities With Attributes Pen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="282"/>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Çizim Kalemi ile Varlıkları Seç</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="285"/>
         <source>&amp;Edit Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Düzenle Kalem</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="286"/>
         <source>&amp;Remove Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kalemi Kaldır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="289"/>
         <source>&amp;Remove Pens</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kalemleri Kaldır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="404"/>
         <source>Pen palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalem paleti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="405"/>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
 Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -12711,7 +12714,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_pointpropertieseditingwidget.ui" line="63"/>
         <source>Position of point by Y coordinate</source>
-        <translation type="unfinished"></translation>
+        <translation>Y koordinatı ile noktanın konumu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_pointpropertieseditingwidget.ui" line="70"/>
@@ -12726,12 +12729,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_pointpropertieseditingwidget.ui" line="96"/>
         <source>Position of point by X coordinate</source>
-        <translation type="unfinished"></translation>
+        <translation>X koordinatı ile noktanın konumu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_pointpropertieseditingwidget.ui" line="103"/>
         <source>Pick position from the drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden konumu seçin</translation>
     </message>
 </context>
 <context>
@@ -12744,32 +12747,32 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_pointslatticeoptions.ui" line="32"/>
         <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kafes Y yönüne göre nokta sayısı (kafes sıralarının sayısı)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_pointslatticeoptions.ui" line="42"/>
         <source>Rows Count:</source>
-        <translation type="unfinished"></translation>
+        <translation>Satır Sayısı:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_pointslatticeoptions.ui" line="49"/>
         <source>Columns Count:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sütun Sayısı:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_pointslatticeoptions.ui" line="56"/>
         <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="unfinished"></translation>
+        <translation>X kafes yönüne göre puan sayısı (kafes sütunlarının sayısı)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_pointslatticeoptions.ui" line="66"/>
         <source>If selected, last point of lattice will be adjusted accoriding to position of first point, so lattice will be rect or quadrangle</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilirse, kafesin son noktası ilk noktanın konumuna göre ayarlanacak, böylece kafes dikdörtgen veya dörtgen olacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_pointslatticeoptions.ui" line="69"/>
         <source>Adjust last point to first</source>
-        <translation type="unfinished"></translation>
+        <translation>Son noktayı ilk noktaya ayarla</translation>
     </message>
 </context>
 <context>
@@ -12787,7 +12790,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_polylinepropertieseditingwidget.ui" line="69"/>
         <source>Defines whether polyline is closed contour</source>
-        <translation type="unfinished"></translation>
+        <translation>Çoklu çizginin kapalı kontur olup olmadığını tanımlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_polylinepropertieseditingwidget.ui" line="72"/>
@@ -12800,12 +12803,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/components/status_bar/lc_qtstatusbarmanager.cpp" line="40"/>
         <source> SHIFT Key: </source>
-        <translation type="unfinished"></translation>
+        <translation> SHIFT Tuşu: </translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_qtstatusbarmanager.cpp" line="44"/>
         <source> CTRL Key: </source>
-        <translation type="unfinished"></translation>
+        <translation> CTRL Tuşu: </translation>
     </message>
 </context>
 <context>
@@ -12814,61 +12817,61 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="239"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="381"/>
         <source>SOLID</source>
-        <translation type="unfinished"></translation>
+        <translation>KATİ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="242"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="384"/>
         <source>CONSTRUCTION</source>
-        <translation type="unfinished"></translation>
+        <translation>İNŞAAT</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="245"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="387"/>
         <source>UNKNOWN</source>
-        <translation type="unfinished"></translation>
+        <translation>BİLİNMEYEN</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="528"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="546"/>
         <source>LINE</source>
-        <translation type="unfinished"></translation>
+        <translation>LINE</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="588"/>
         <source>CIRCLE</source>
-        <translation type="unfinished"></translation>
+        <translation>DAİRE</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="613"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="640"/>
         <source>ARC</source>
-        <translation type="unfinished"></translation>
+        <translation>ARC</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="692"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="715"/>
         <source>ELLIPSE ARC</source>
-        <translation type="unfinished"></translation>
+        <translation>ELLIPSE ARC</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="709"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="715"/>
         <source>ELLIPSE</source>
-        <translation type="unfinished"></translation>
+        <translation>ELLIPSE</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="761"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="767"/>
         <source>POINT</source>
-        <translation type="unfinished"></translation>
+        <translation>POINT</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="773"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="786"/>
         <source>POLYLINE</source>
-        <translation type="unfinished"></translation>
+        <translation>POLYLINE</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="636"/>
@@ -12886,7 +12889,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1303"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1314"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Evet</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="636"/>
@@ -12904,19 +12907,19 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1303"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1314"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Hayır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="846"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="867"/>
         <source>INSERT</source>
-        <translation type="unfinished"></translation>
+        <translation>EKLE</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="882"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="911"/>
         <source>TEXT</source>
-        <translation type="unfinished"></translation>
+        <translation>METİN</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="940"/>
@@ -12928,7 +12931,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="942"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="959"/>
         <source>Centered</source>
-        <translation type="unfinished"></translation>
+        <translation>Ortalanmış</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="944"/>
@@ -12954,19 +12957,19 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="411"/>
         <source>Set Relative Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Göreceli Sıfırı Ayarla</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="421"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="423"/>
         <source>To Cmd</source>
-        <translation type="unfinished"></translation>
+        <translation>Cmd&apos;ye</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="100"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="499"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Kimlik</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="501"/>
@@ -12976,45 +12979,45 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="506"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Renk</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="511"/>
         <source>Line Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi Türü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="516"/>
         <source>Line Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi Genişliği</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="518"/>
         <source>Min</source>
-        <translation type="unfinished"></translation>
+        <translation>Min</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="519"/>
         <source>Max</source>
-        <translation type="unfinished"></translation>
+        <translation>Maksimum</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="536"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="557"/>
         <source>From</source>
-        <translation type="unfinished"></translation>
+        <translation>Şuradan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="537"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="558"/>
         <source>To</source>
-        <translation type="unfinished"></translation>
+        <translation>Kime</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="539"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="562"/>
         <source>Delta</source>
-        <translation type="unfinished"></translation>
+        <translation>Delta</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="540"/>
@@ -13080,7 +13083,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="627"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="661"/>
         <source>Diameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Çap</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="583"/>
@@ -13091,7 +13094,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="738"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="817"/>
         <source>Circumference</source>
-        <translation type="unfinished"></translation>
+        <translation>Çevresi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="584"/>
@@ -13100,13 +13103,13 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="751"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1274"/>
         <source>Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Alan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="629"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="663"/>
         <source>Chord Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Akor Uzunluğu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="630"/>
@@ -13115,7 +13118,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="730"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="818"/>
         <source>Angle Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı Uzunluğu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="631"/>
@@ -13135,7 +13138,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1325"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1344"/>
         <source>Start Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıç Açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="633"/>
@@ -13155,38 +13158,38 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1326"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1345"/>
         <source>End Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Son Açı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="635"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="666"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="811"/>
         <source>Bulge</source>
-        <translation type="unfinished"></translation>
+        <translation>Çıkıntı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="685"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="725"/>
         <source>Minor Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Küçük Yarıçap</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="686"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="726"/>
         <source>Major Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Büyük Yarıçap</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="687"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="737"/>
         <source>Ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Oran</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="763"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="768"/>
         <source>Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozisyon</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="777"/>
@@ -13202,18 +13205,18 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="776"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="799"/>
         <source>Segments</source>
-        <translation type="unfinished"></translation>
+        <translation>Segmentler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="800"/>
         <source>Vertex - 0:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertex - 0:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="822"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="835"/>
         <source>Vertex - </source>
-        <translation type="unfinished"></translation>
+        <translation>Vertex - </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="842"/>
@@ -13236,49 +13239,49 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1129"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1153"/>
         <source>Insertion Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekleme Noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="852"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="873"/>
         <source>Scale X</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçek X</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="853"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="874"/>
         <source>Scale Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçek Y</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="854"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="875"/>
         <source>Cols</source>
-        <translation type="unfinished"></translation>
+        <translation>Cols</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="855"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="876"/>
         <source>Spacing X</source>
-        <translation type="unfinished"></translation>
+        <translation>Aralık X</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="856"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="877"/>
         <source>Rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Satırlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="857"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="878"/>
         <source>Spacing Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Aralık Y</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="885"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="914"/>
         <source>Second Point</source>
-        <translation type="unfinished"></translation>
+        <translation>İkinci Nokta</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="889"/>
@@ -13294,33 +13297,34 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="887"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="917"/>
         <source>Width/Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Genişlik/Yükseklik</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="83"/>
         <source>To be created: </source>
-        <translation type="unfinished"></translation>
+        <translation>Oluşturulacak: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="87"/>
         <source>Captured: </source>
-        <translation type="unfinished"></translation>
+        <translation>Yakalandı: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="109"/>
         <source>
 Layer: </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Katman: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="541"/>
         <source>Angle 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="556"/>
         <source>Angle2</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı2</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="636"/>
@@ -13356,7 +13360,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1050"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1083"/>
         <source>HAlign</source>
-        <translation type="unfinished"></translation>
+        <translation>HAlign</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="900"/>
@@ -13364,13 +13368,13 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1051"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1084"/>
         <source>VAlign</source>
-        <translation type="unfinished"></translation>
+        <translation>VAlign</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="901"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="929"/>
         <source>Generation</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesil</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="967"/>
@@ -13380,7 +13384,7 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="981"/>
         <source>Baseline</source>
-        <translation type="unfinished"></translation>
+        <translation>Temel</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="983"/>
@@ -13397,23 +13401,23 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1019"/>
         <source>Normal text</source>
-        <translation type="unfinished"></translation>
+        <translation>Normal metin</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1021"/>
         <source>Mirrored in X</source>
-        <translation type="unfinished"></translation>
+        <translation>X&apos;te yansıtılmış</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1023"/>
         <source>Mirrored in Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y&apos;de yansıtılmış</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1030"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1064"/>
         <source>MTEXT</source>
-        <translation type="unfinished"></translation>
+        <translation>MTEXT</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1038"/>
@@ -13421,7 +13425,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1137"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1159"/>
         <source>Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Genişlik</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1039"/>
@@ -13433,55 +13437,55 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1052"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1085"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Yön</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1053"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1086"/>
         <source>Line Spacing Factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Satır Aralığı Faktörü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1054"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1087"/>
         <source>Line Spacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Satır Aralığı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1098"/>
         <source>By Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Tarzına göre</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1100"/>
         <source>Left To Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Soldan sağa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1102"/>
         <source>Right To Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Sağdan sola</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1104"/>
         <source>Top To Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Yukarıdan Aşağıya</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1117"/>
         <source>At Least</source>
-        <translation type="unfinished"></translation>
+        <translation>En azından</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1119"/>
         <source>Exact</source>
-        <translation type="unfinished"></translation>
+        <translation>Tam</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1126"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1149"/>
         <source>IMAGE</source>
-        <translation type="unfinished"></translation>
+        <translation>GÖRÜNTÜ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1128"/>
@@ -13493,13 +13497,13 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1135"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1157"/>
         <source>Size (X) px</source>
-        <translation type="unfinished"></translation>
+        <translation>Boyut (X) px</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1136"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1158"/>
         <source>Size (Y) px</source>
-        <translation type="unfinished"></translation>
+        <translation>Boyut (Y) px</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1139"/>
@@ -13511,13 +13515,13 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1165"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1181"/>
         <source>SPLINE</source>
-        <translation type="unfinished"></translation>
+        <translation>SPLINE</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1167"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1184"/>
         <source>Degree</source>
-        <translation type="unfinished"></translation>
+        <translation>Derece</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1168"/>
@@ -13529,76 +13533,76 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1196"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1218"/>
         <source>SPLINEPOINTS</source>
-        <translation type="unfinished"></translation>
+        <translation>SPLINEPOINTS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1198"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1221"/>
         <source>Use Control Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol Noktalarını Kullanma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1406"/>
         <source>[Override]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Geçersiz kıl]</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1444"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1456"/>
         <source>Feature Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Özellik Noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1190"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1225"/>
         <source>Control Point </source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol Noktası </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1230"/>
         <source>Spline Point </source>
-        <translation type="unfinished"></translation>
+        <translation>Spline Noktası </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1237"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1253"/>
         <source>PARABOLA</source>
-        <translation type="unfinished"></translation>
+        <translation>PARABOL</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1239"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1255"/>
         <source>Focus</source>
-        <translation type="unfinished"></translation>
+        <translation>Odaklanma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1240"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1256"/>
         <source>Vertex</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertex</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1241"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1257"/>
         <source>Axis Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksen Açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1260"/>
         <source>Control Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol Noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1268"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1284"/>
         <source>HATCH</source>
-        <translation type="unfinished"></translation>
+        <translation>HATCH</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1269"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1287"/>
         <source>Solid</source>
-        <translation type="unfinished"></translation>
+        <translation>Katı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1270"/>
@@ -13612,7 +13616,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1271"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1294"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçek</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1203"/>
@@ -13622,43 +13626,43 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1296"/>
         <source>Total Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Toplam Alan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1301"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1312"/>
         <source>DIMLEADER</source>
-        <translation type="unfinished"></translation>
+        <translation>DIMLEADER</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1303"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1314"/>
         <source>Arrow Head</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok Başı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1318"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1336"/>
         <source>DIMARC</source>
-        <translation type="unfinished"></translation>
+        <translation>DIMARC</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1323"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1341"/>
         <source>Arc Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Yay Uzunluğu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1353"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1365"/>
         <source>DIMANGULAR</source>
-        <translation type="unfinished"></translation>
+        <translation>DIMANGULAR</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1372"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1379"/>
         <source>DIMDIAMETRIC</source>
-        <translation type="unfinished"></translation>
+        <translation>DİMİDIAMETRİK</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1374"/>
@@ -13670,19 +13674,19 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1464"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1479"/>
         <source>Definition Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Tanım Noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1386"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1397"/>
         <source>DIMRADIAL</source>
-        <translation type="unfinished"></translation>
+        <translation>DIMRADIAL</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1412"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1428"/>
         <source>DIMLINEAR</source>
-        <translation type="unfinished"></translation>
+        <translation>DİMİNEER</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1415"/>
@@ -13690,7 +13694,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1465"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1480"/>
         <source>Extension Point 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma Noktası 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1416"/>
@@ -13698,48 +13702,48 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1466"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1481"/>
         <source>Extension Point 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma Noktası 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1446"/>
         <source>Text Middle Point </source>
-        <translation type="unfinished"></translation>
+        <translation>Metin Ortası Noktası </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1419"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1435"/>
         <source>Oblique</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğik</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1439"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1451"/>
         <source>DIMORDINATE</source>
-        <translation type="unfinished"></translation>
+        <translation>DIMORDINATE</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1441"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1455"/>
         <source>Ordinate</source>
-        <translation type="unfinished"></translation>
+        <translation>Eşyaks</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1442"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1453"/>
         <source>Origin Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıç Noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1443"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1454"/>
         <source>Horizontal Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Yatay Yön</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1445"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1457"/>
         <source>Leader End Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Lider Son Nokta</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1417"/>
@@ -13748,13 +13752,13 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1467"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1482"/>
         <source>Text Middle Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin Ortası Noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1462"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1476"/>
         <source>DIMALIGNED</source>
-        <translation type="unfinished"></translation>
+        <translation>DIMALIGNED</translation>
     </message>
 </context>
 <context>
@@ -13762,39 +13766,39 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="216"/>
         <source>Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Sıfır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="227"/>
         <source>Relative Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Göreceli Sıfır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="232"/>
         <source>First point</source>
-        <translation type="unfinished"></translation>
+        <translation>İlk nokta</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="234"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="251"/>
         <source>Set Relative Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Göreceli Sıfırı Ayarla</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="236"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="253"/>
         <source>To Cmd</source>
-        <translation type="unfinished"></translation>
+        <translation>Cmd&apos;ye</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="271"/>
         <source>Points Path Distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Puan Yolu Mesafesi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="275"/>
         <source>No data - select coordinates first...</source>
-        <translation type="unfinished"></translation>
+        <translation>Veri yok - önce koordinatları seçin...</translation>
     </message>
 </context>
 <context>
@@ -13807,7 +13811,7 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="58"/>
         <source>Select entity for properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Özellikler için varlık seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="61"/>
@@ -13823,17 +13827,17 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="72"/>
         <source>Select current entity in drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimde mevcut nesneyi seç</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="86"/>
         <source>Properties Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Özellikler Düzenle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="100"/>
         <source>Copy to Clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Panoya Kopyala</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="117"/>
@@ -13843,42 +13847,42 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="131"/>
         <source>Collect Coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatları Topla</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="148"/>
         <source>Coordinates:</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatlar:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="167"/>
         <source>Mode to display collected coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Toplanan koordinatları görüntüleme modu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="171"/>
         <source>Absolute</source>
-        <translation type="unfinished"></translation>
+        <translation>Mutlak</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="176"/>
         <source>Relative</source>
-        <translation type="unfinished"></translation>
+        <translation>Göreceli</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="181"/>
         <source>Delta to First</source>
-        <translation type="unfinished"></translation>
+        <translation>Delta&apos;dan First&apos;e</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="186"/>
         <source>Delta to Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>Öncekiye Delta</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="217"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="241"/>
@@ -13887,65 +13891,65 @@ Layer: </source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="346"/>
         <source>&amp;Copy All</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tümünü Kopyala</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="364"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="378"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="388"/>
         <source>&amp;To Cmd</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Cmd&apos;ye</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="367"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="381"/>
         <source>&amp;Set Relative Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Göreceli Sıfırı Ayarla</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="370"/>
         <source>&amp;Remove Coordinate</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatı Kaldır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="373"/>
         <source>&amp;Insert Coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Koordinatları Ekle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="393"/>
         <source>&amp;Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Temizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="394"/>
         <source>&amp;Select Entity</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Varlığı Seç</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="397"/>
         <source>&amp;Select in Drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Çizimde Seç</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="398"/>
         <source>&amp;Edit Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Özellikleri Düzenle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="400"/>
         <source>&amp;Collect Coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Koordinatları Topla</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="789"/>
         <source>No data - select entity of coordinates first...</source>
-        <translation type="unfinished"></translation>
+        <translation>Veri yok - önce koordinatların varlığını seçin...</translation>
     </message>
 </context>
 <context>
@@ -13953,87 +13957,87 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Dialog</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="30"/>
         <source>Collected Coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Toplanan Koordinatlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="36"/>
         <source>If selected, the distance and angle between adjacent points will be shown together with coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçildiğinde, bitişik noktalar arasındaki mesafe ve açı koordinatlarla birlikte gösterilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="39"/>
         <source>Display distance and angle to point in addition to coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatlara ek olarak mesafe ve açıları da göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="46"/>
         <source>If selected, all points collected will be connected by path that shows how they will be selected during point preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçildiğinde, toplanan tüm noktalar, nokta önizlemesi sırasında nasıl seçileceklerini gösteren bir yol ile birbirine bağlanacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="49"/>
         <source>Draw points path on preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Önizlemede nokta yolu çiz</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="75"/>
         <source>Entity Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlık Bilgisi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be show in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="84"/>
         <source>Include polyline child entities information to vertexes</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertexlere poligon alt varlık bilgilerini ekle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="91"/>
         <source>If selected, coordinates of boundary box area for the entity will be also shown</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilirse, varlığın sınır kutusu alanının koordinatları da gösterilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="94"/>
         <source>Display entity boundaries (Min, Max) coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlık sınırlarını (Min, Maks) koordinatlarını göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="104"/>
         <source>Entity Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlık Seçimi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="116"/>
         <source>Entity under cursor will be examined only if CTRL is pressed and no active action</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL tuşu basılıyken ve aktif bir eylem yokken imlecin altındaki nesne incelenecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="119"/>
         <source>Select entity under cursor if not active action and CTRL is pressed</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin eylem değilse ve CTRL tuşu basılıysa imlecin altındaki nesneyi seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="126"/>
         <source>If selected, entities under mouse cursor will be examined for theif settings, if there is no active action</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçildiğinde, fare imlecinin altındaki varlıklar, aktif bir eylem yoksa, if ayarları açısından incelenecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="129"/>
         <source>Always select entity under cursor if no active action</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin eylem yoksa her zaman imlecin altındaki varlığı seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="43"/>
         <source>Points highlight pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Puan vurgulama kalemi</translation>
     </message>
 </context>
 <context>
@@ -14046,32 +14050,32 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="381"/>
         <source>Edges:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kenarlar:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="388"/>
         <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, tutturma noktasının köşelerin yarıçapı kadar kaydırılması gerektiğini belirtir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="391"/>
         <source>Snap shift</source>
-        <translation type="unfinished"></translation>
+        <translation>Hızlı vites değiştirme</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="229"/>
         <source>Length of bevel corner for Y direction. </source>
-        <translation type="unfinished"></translation>
+        <translation>Y yönü için eğimli köşe uzunluğu. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="195"/>
         <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikdörtgenin hangi kenarlarının çizileceğini tanımlar (böylece dikdörtgen yerine sadece iki paralel çizgi oluşturmak mümkündür).</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="199"/>
         <source>Both</source>
-        <translation type="unfinished"></translation>
+        <translation>Her ikisi de</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="204"/>
@@ -14086,57 +14090,57 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="339"/>
         <source>Width of rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikdörtgenin genişliği</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="236"/>
         <source>Controls how corners of rectangle should be drawn.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikdörtgenin köşelerinin nasıl çizileceğini kontrol eder.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="240"/>
         <source>Straight</source>
-        <translation type="unfinished"></translation>
+        <translation>Düz</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="245"/>
         <source>Round</source>
-        <translation type="unfinished"></translation>
+        <translation>Yuvarlak</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="250"/>
         <source>Bevel</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğim</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="307"/>
         <source>If checked, rectangle will be rotated on specified angle.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, dikdörtgen belirtilen açıda döndürülür.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="310"/>
         <source>Base Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Taban Açısı:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="258"/>
         <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, belirtilen dikdörtgenin yüksekliği ve genişliği, köşeleri yuvarlatmak için yayların merkezleri arasındaki mesafeyi tanımlar. Aksi takdirde, bu değerler dikdörtgenin dış boyutunu tanımlar.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="261"/>
         <source>Size inner</source>
-        <translation type="unfinished"></translation>
+        <translation>İç boyut</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="32"/>
         <source>Length Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzunluk Y:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="46"/>
         <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, dikdörtgen tek tek segmentler yerine çoklu çizgi olarak oluşturulur.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="49"/>
@@ -14146,7 +14150,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="419"/>
         <source>Snap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çıt:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="412"/>
@@ -14161,32 +14165,32 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="146"/>
         <source>Length of bevel corner for X direction. </source>
-        <translation type="unfinished"></translation>
+        <translation>X yönü için eğimli köşe uzunluğu. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="56"/>
         <source>Length X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzunluk X:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="75"/>
         <source>Height of rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikdörtgenin yüksekliği</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="438"/>
         <source>Radius of rounded corners.</source>
-        <translation type="unfinished"></translation>
+        <translation>Yuvarlatılmış köşelerin yarıçapı.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="82"/>
         <source>Point of rectangle wich will be placed to insertion point.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekleme noktasına yerleştirilecek dikdörtgenin noktası.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="86"/>
         <source>Top-left</source>
-        <translation type="unfinished"></translation>
+        <translation>Sol üst</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="91"/>
@@ -14196,7 +14200,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="96"/>
         <source>Top-right</source>
-        <translation type="unfinished"></translation>
+        <translation>Sağ üst</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="101"/>
@@ -14216,7 +14220,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="116"/>
         <source>Bottom-left</source>
-        <translation type="unfinished"></translation>
+        <translation>Sol alt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="121"/>
@@ -14226,32 +14230,32 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="126"/>
         <source>Bottom-right</source>
-        <translation type="unfinished"></translation>
+        <translation>Sağ alt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="160"/>
         <source>Pick rotation angle from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden dönüş açısını seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="181"/>
         <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden yuvarlatılmış köşelerin yarıçapını seçin.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="300"/>
         <source>Rotation angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Dönme açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="346"/>
         <source>Pick height of rectangle from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden dikdörtgenin yüksekliğini seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="360"/>
         <source>Pick width of rectangle from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden dikdörtgenin genişliğini seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="374"/>
@@ -14261,27 +14265,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="405"/>
         <source>Corners:</source>
-        <translation type="unfinished"></translation>
+        <translation>Köşeler:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="445"/>
         <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden X yönü için eğimli köşenin uzunluğunu seçin.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="459"/>
         <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden Y yönü için eğimli köşe uzunluğunu seçin.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="317"/>
         <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, açı fare konumuna göre belirlenir. Aksi takdirde, belirtilen değer kullanılır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="320"/>
         <source>Free</source>
-        <translation type="unfinished"></translation>
+        <translation>Ücretsiz</translation>
     </message>
 </context>
 <context>
@@ -14289,116 +14293,116 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Biçim</translation>
+        <translation>BiçimForm</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="251"/>
         <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikdörtgenin hangi kenarlarının çizileceğini tanımlar (böylece dikdörtgen yerine sadece iki paralel çizgi oluşturmak mümkündür)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="255"/>
         <source>Both</source>
-        <translation type="unfinished"></translation>
+        <translation>Her ikisi de</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="260"/>
         <source>Vertical</source>
-        <translation type="unfinished">Dikey</translation>
+        <translation>DikeyDikey</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="265"/>
         <source>Horizontal</source>
-        <translation type="unfinished">Yatay</translation>
+        <translation>YatayYatay</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="32"/>
         <source>Defines which point of rectangle should be placed into start point position.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikdörtgenin hangi noktasının başlangıç noktası konumuna yerleştirileceğini tanımlar.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="36"/>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="201"/>
         <source>Corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Köşe</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="41"/>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="206"/>
         <source>Mid-Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Orta Dikey</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="46"/>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="211"/>
         <source>Mid-Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Orta Yatay</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="51"/>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="216"/>
         <source>Middle</source>
-        <translation type="unfinished">Orta</translation>
+        <translation>OrtaOrta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="105"/>
         <source>Pick rectangle rotation angle from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden dikdörtgen dönüş açısını seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="138"/>
         <source>Pick radius of rounded corners from drawing. </source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden yuvarlatılmış köşelerin yarıçapını seçin. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="171"/>
         <source>Corners:</source>
-        <translation type="unfinished"></translation>
+        <translation>Köşeler:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="197"/>
         <source>Defines which point of rectangle should be placed into end point position. </source>
-        <translation type="unfinished"></translation>
+        <translation>Dikdörtgenin hangi noktasının uç nokta konumuna yerleştirileceğini tanımlar. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="280"/>
         <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden X yönünde eğim uzunluğunu seçin.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="354"/>
         <source>Edges:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kenarlar:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="361"/>
         <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden Y yönünde eğim uzunluğunu seçin. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="91"/>
         <source>Start Snap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap&apos;i başlat:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="190"/>
         <source>Length of bevel in Y direction. </source>
-        <translation type="unfinished"></translation>
+        <translation>Y yönündeki eğim uzunluğu. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="318"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, tutturma noktalarının köşelerin yarıçapı kadar kaydırılması gerektiğini belirtir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="321"/>
         <source>Snap shift</source>
-        <translation type="unfinished"></translation>
+        <translation>Hızlı vites değiştirme</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="304"/>
         <source>Length X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzunluk X:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="311"/>
@@ -14408,57 +14412,57 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="294"/>
         <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, dikdörtgen için dönme açısını belirlemenizi sağlar.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="297"/>
         <source>Base Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Taban Açısı:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="164"/>
         <source>Rectangle rotation angle.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikdörtgen döndürme açısı.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="347"/>
         <source>End Snap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Son Snap:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="69"/>
         <source>Defines how corners of rectangle should be drawn. </source>
-        <translation type="unfinished"></translation>
+        <translation>Dikdörtgenin köşelerinin nasıl çizileceğini tanımlar. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="73"/>
         <source>Straight</source>
-        <translation type="unfinished"></translation>
+        <translation>Düz</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="78"/>
         <source>Round</source>
-        <translation type="unfinished"></translation>
+        <translation>Yuvarlak</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="83"/>
         <source>Bevel</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğim</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="131"/>
         <source>Radius of rounded corners. </source>
-        <translation type="unfinished"></translation>
+        <translation>Yuvarlatılmış köşelerin yarıçapı. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="231"/>
         <source>Length Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzunluk Y:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="59"/>
         <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, tüm dikdörtgen çoklu çizgi olarak çizilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="62"/>
@@ -14468,7 +14472,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="340"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished"></translation>
+        <translation>X yönündeki eğim uzunluğu.</translation>
     </message>
 </context>
 <context>
@@ -14481,82 +14485,82 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="121"/>
         <source>Inner angle of quadrangle.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dörtgenin iç açısı.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="86"/>
         <source>If checked, inner angle of quadrangle will be fixed to specified value.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, dörtgenin iç açısı belirtilen değere sabitlenir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="89"/>
         <source>Fixed Inner Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sabit İç Açı:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="187"/>
         <source>Base angle of rectangle. </source>
-        <translation type="unfinished"></translation>
+        <translation>Dikdörtgenin taban açısı. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="322"/>
         <source>Length X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzunluk X:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="290"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished"></translation>
+        <translation>X yönündeki eğim uzunluğu.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="368"/>
         <source>Defines how corners should be drawn for rectangle. </source>
-        <translation type="unfinished"></translation>
+        <translation>Dikdörtgenin köşelerinin nasıl çizileceğini tanımlar. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="372"/>
         <source>Straight</source>
-        <translation type="unfinished"></translation>
+        <translation>Düz</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="377"/>
         <source>Round</source>
-        <translation type="unfinished"></translation>
+        <translation>Yuvarlak</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="382"/>
         <source>Bevel</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğim</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="390"/>
         <source>Corners:</source>
-        <translation type="unfinished"></translation>
+        <translation>Köşeler:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="248"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, tutturma noktalarının köşelerin yarıçapı kadar kaydırılması gerektiğini belirtir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="251"/>
         <source>Snap shift</source>
-        <translation type="unfinished"></translation>
+        <translation>Hızlı vites değiştirme</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="258"/>
         <source>Length Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzunluk Y:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="315"/>
         <source>Length of bevel in Y direction. </source>
-        <translation type="unfinished"></translation>
+        <translation>Y yönündeki eğim uzunluğu. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="347"/>
         <source>Radius of rounded corners.</source>
-        <translation type="unfinished"></translation>
+        <translation>Yuvarlatılmış köşelerin yarıçapı.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="265"/>
@@ -14566,7 +14570,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="32"/>
         <source>If checked, the shape will be created as polyline. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, şekil çoklu çizgi olarak oluşturulur. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="35"/>
@@ -14576,37 +14580,37 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="128"/>
         <source>Pick inner angle of quadrangle from drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden dörtgenin iç açısını seçin.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="152"/>
         <source>Edges:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kenarlar:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="354"/>
         <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden yuvarlatılmış köşelerin yarıçapını seçin.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="397"/>
         <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden X yönünde eğim uzunluğunu seçin.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="411"/>
         <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden Y yönünde eğim uzunluğunu seçin.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="428"/>
         <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikdörtgenin hangi kenarlarının çizileceğini tanımlar (böylece dikdörtgen yerine sadece iki paralel çizgi oluşturmak mümkündür).</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="432"/>
         <source>Both</source>
-        <translation type="unfinished"></translation>
+        <translation>Her ikisi de</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="437"/>
@@ -14621,27 +14625,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="450"/>
         <source>Pick base angle of rectangle from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden dikdörtgenin taban açısını seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="159"/>
         <source>If checked, rectangle will be rotated to specified base angle.  Otherwise, base angle will be defined by angle between first and second points of rectangle.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, dikdörtgen belirtilen temel açıya göre döndürülür.  Aksi takdirde, temel açı dikdörtgenin birinci ve ikinci noktaları arasındaki açı ile belirlenir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="162"/>
         <source>Fixed Base Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sabit Taban Açısı:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="194"/>
         <source>If checked, quadrangle will be created instead of rectangle.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, dikdörtgen yerine dörtgen oluşturulur.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="197"/>
         <source>Quadrangle</source>
-        <translation type="unfinished"></translation>
+        <translation>Dörtgen</translation>
     </message>
 </context>
 <context>
@@ -14654,12 +14658,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/status_bar/lc_relzerocoordinateswidget.ui" line="35"/>
         <source>Relative Zero (Cartesian)</source>
-        <translation type="unfinished"></translation>
+        <translation>Göreceli Sıfır (Kartezyen)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_relzerocoordinateswidget.ui" line="45"/>
         <source>Relative Zero (Polar)</source>
-        <translation type="unfinished"></translation>
+        <translation>Göreceli Sıfır (Kutup)</translation>
     </message>
 </context>
 <context>
@@ -14667,12 +14671,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/release_check/lc_releasechecker.cpp" line="111"/>
         <source>Sorry, some network error occurred during checking for new version.</source>
-        <translation type="unfinished"></translation>
+        <translation>Üzgünüz, yeni sürümü kontrol ederken bir ağ hatası oluştu.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/release_check/lc_releasechecker.cpp" line="174"/>
         <source>Unable to parse response from the server</source>
-        <translation type="unfinished"></translation>
+        <translation>Sunucudan gelen yanıtı çözümleyemiyor</translation>
     </message>
 </context>
 <context>
@@ -14685,97 +14689,97 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopyaların mevcut katmana mı yoksa orijinal katmana mı ekleneceğini belirtir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="211"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut Katmanı Kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="50"/>
         <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="unfinished"></translation>
+        <translation>İkincil açıyı, açıların toplamı (göreceli dönme açısı) 0 olacak şekilde ayarlayın. Bu ayar ile nesne hareket eder ancak dönmez.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="53"/>
         <source>Angles mirrored</source>
-        <translation type="unfinished"></translation>
+        <translation>Aynalı açılar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="194"/>
         <source>Pick primary angle from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden birincil açıyı seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="228"/>
         <source>Defines whether current or original drawing attributes will be applied</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut veya orijinal çizim özelliklerinin uygulanıp uygulanmayacağını tanımlar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="231"/>
         <source>Use Current Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut Öznitelikleri Kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="238"/>
         <source>Pick secondary angle from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden ikincil açı seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="145"/>
         <source>Angle for rotation over absolute reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Mutlak referans noktası üzerinden dönme açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="218"/>
         <source>If checked, multiple copies will be created. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, birden fazla kopya oluşturulur. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="221"/>
         <source>Multiple Copies</source>
-        <translation type="unfinished"></translation>
+        <translation>Birden Fazla Kopya</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="94"/>
         <source>Number of copies to create</source>
-        <translation type="unfinished"></translation>
+        <translation>Oluşturulacak kopya sayısı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="120"/>
         <source>Secondary Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>İkincil Açı:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="60"/>
         <source>If checked, the same angle will be used for all copies. Otherwise, it will be increased proportionally to copy number. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, tüm kopyalar için aynı açı kullanılır. Aksi takdirde, kopya sayısına orantılı olarak artırılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="63"/>
         <source>Same secondary angle for copies</source>
-        <translation type="unfinished"></translation>
+        <translation>Same secondary angle for copies</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="177"/>
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, orijinal varlıklar korunur, aksi takdirde kaldırılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="180"/>
         <source>Keep Originals</source>
-        <translation type="unfinished"></translation>
+        <translation>Orijinalleri Saklayın</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="87"/>
         <source>Primary Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Birincil Açı:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="170"/>
         <source>Angle to rotate over secondary reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>İkincil referans noktası üzerinde döndürülecek açı</translation>
     </message>
 </context>
 <context>
@@ -14833,7 +14837,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="95"/>
         <source>Entity type</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlık türü</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="102"/>
@@ -14843,12 +14847,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="109"/>
         <source>Hatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapağı aç</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="116"/>
         <source>Wipeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Silme</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="123"/>
@@ -14871,71 +14875,71 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="44"/>
         <source>Import settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarları içe aktar</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="44"/>
         <source>Export Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Dışa Aktarma Ayarları</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="73"/>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="81"/>
         <source>Settings Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarları Dışa Aktar</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="81"/>
         <source>Application preferences were exported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygulama tercihleri dışa aktarıldı.</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="73"/>
         <source>Can&apos;t open provided file for writing - check that provided location is writable. Preferences were not exported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilen dosyayı yazmak için açamıyorum - verilen konumun yazılabilir olup olmadığını kontrol edin. Tercihler dışa aktarılmadı.</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="45"/>
         <source>LibreCAD settings file (*.%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>LibreCAD ayarları dosyası (*.%1)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="91"/>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="97"/>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="101"/>
         <source>Settings Import Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarları İçe Aktarma Hatası</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="97"/>
         <source>Unexpected error during preferences parsing. Message:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tercihler ayrıştırılırken beklenmedik bir hata oluştu. Mesaj:</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="106"/>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="121"/>
         <source>Settings Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarları İçe Aktar</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="121"/>
         <source>Application preferences were imported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygulama tercihleri içe aktarıldı.</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="106"/>
         <source>No settings groups to import.</source>
-        <translation type="unfinished"></translation>
+        <translation>İçe aktarılacak ayar grubu yok.</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="101"/>
         <source>Unexpected format of file, it does not contains LibreCAD preferences.</source>
-        <translation type="unfinished"></translation>
+        <translation>Beklenmedik dosya biçimi, LibreCAD tercihlerini içermiyor.</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="91"/>
         <source>Can&apos;t open provided file for reading. Preferences were not imported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sağlanan dosyayı okumak için açamıyorum. Tercihler içe aktarılmadı.</translation>
     </message>
 </context>
 <context>
@@ -14943,17 +14947,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_shortcutbutton.cpp" line="35"/>
         <source>Click and type the new key sequence.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tıklayın ve yeni tuş dizisini yazın.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_shortcutbutton.cpp" line="37"/>
         <source>Stop Recording</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaydı Durdur</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_shortcutbutton.cpp" line="38"/>
         <source>Record Shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Kısayol Kaydet</translation>
     </message>
 </context>
 <context>
@@ -14979,12 +14983,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="382"/>
         <source>Start Circle Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıç Daire Açısı:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="375"/>
         <source>Start angle for circle from which ticks will start. </source>
-        <translation type="unfinished"></translation>
+        <translation>Tiklerin başlayacağı dairenin başlangıç açısı. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="189"/>
@@ -14994,7 +14998,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="284"/>
         <source>Offset of tick snap point to intersection point. </source>
-        <translation type="unfinished"></translation>
+        <translation>Tik çıtlama noktasının kesişme noktasına ofseti. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="196"/>
@@ -15004,7 +15008,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="66"/>
         <source>Pick distance from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden mesafeyi seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="86"/>
@@ -15014,12 +15018,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="111"/>
         <source>Distance between ticks.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tikler arasındaki mesafe.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="179"/>
         <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, seçilen varlık tik kesişme noktalarına göre bölünecektir. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="182"/>
@@ -15029,57 +15033,57 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="203"/>
         <source>Pick tick offset from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden tik ofsetini seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="229"/>
         <source>Length of tick.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kene uzunluğu.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="236"/>
         <source>Pick tick angle from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden tik açısını seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="291"/>
         <source>Tick snap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kenelerin ısırması:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="322"/>
         <source>Pick tick length from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden tik uzunluğunu seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="389"/>
         <source>PIck start circle angle from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden başlangıç daire açısını seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="486"/>
         <source>Angle between tick and selected entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tick ile seçilen varlık arasındaki açı.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="312"/>
         <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, açı seçilen varlıkla ilişkilidir, aksi takdirde mutlak açıdır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="315"/>
         <source>Rel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="298"/>
         <source>Tick Length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kene Uzunluğu:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="250"/>
         <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen varlık ile kesişme noktasına hangi tik noktasının yerleştirileceğini tanımlar.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="156"/>
@@ -15101,27 +15105,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="413"/>
         <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, belirlenen sabit mesafe kullanılır. Aksi takdirde, mesafe varlık uzunluğu ve tik sayısına göre hesaplanır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="416"/>
         <source>Fixed </source>
-        <translation type="unfinished"></translation>
+        <translation>Sabit </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="454"/>
         <source>Count of ticks between edges of selected entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen varlığın kenarları arasındaki tik sayısı.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="464"/>
         <source>Count:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sayım:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="142"/>
         <source>Devines how ticks on entity edges should be placed. </source>
-        <translation type="unfinished"></translation>
+        <translation>Varlık kenarlarında kenetlerin nasıl yerleştirilmesi gerektiğini tahmin eder. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="146"/>
@@ -15131,12 +15135,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="151"/>
         <source>Both</source>
-        <translation type="unfinished"></translation>
+        <translation>Her ikisi de</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="169"/>
         <source>Edge Tick:</source>
-        <translation type="unfinished"></translation>
+        <translation>Edge Tick:</translation>
     </message>
 </context>
 <context>
@@ -15157,57 +15161,57 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="32"/>
         <source>Defines the number of line segments to be generated for each spline-fit spline-fit polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Her bir eğri uydurma eğri uydurma poligon için oluşturulacak çizgi segmentlerinin sayısını tanımlar.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="39"/>
         <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenmezse, orijinal spline kaldırılır, aksi takdirde korunur.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="42"/>
         <source>Keep Originals</source>
-        <translation type="unfinished"></translation>
+        <translation>Orijinalleri Saklayın</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="56"/>
         <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, oluşturulan varlıklar için mevcut öznitelikler kullanılır, aksi takdirde orijinal öznitelikler kullanılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="59"/>
         <source>Use Current Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut Öznitelikleri Kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, oluşturulan varlıklar geçerli katmana yerleştirilir, aksi takdirde orijinal katmanlara yerleştirilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="76"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut Katmanı Kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="83"/>
         <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, özel çizgi segmenti miktarı belirtilebilir. Aksi takdirde, mevcut çizim ayarlarından alınan değer kullanılır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="86"/>
         <source>Custom Segments Count</source>
-        <translation type="unfinished"></translation>
+        <translation>Özel Segment Sayısı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="93"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, çizgi segmentleri çoklu çizginin bir parçası olur. Aksi takdirde, ayrı çizgiler olur.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="96"/>
         <source>To Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Polyline&apos;a</translation>
     </message>
 </context>
 <context>
@@ -15220,27 +15224,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_splinefrompolylineoptions.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, oluşturulan varlıklar geçerli katmana yerleştirilir, aksi takdirde orijinal katmanlara yerleştirilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splinefrompolylineoptions.ui" line="35"/>
         <source>User Current Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanıcı Mevcut Katman</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splinefrompolylineoptions.ui" line="42"/>
         <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="unfinished"></translation>
+        <translation>Spline&apos;a eklenecek poligon segmentinin orta noktalarının sayısı. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splinefrompolylineoptions.ui" line="55"/>
         <source>Defines degree of the spline</source>
-        <translation type="unfinished"></translation>
+        <translation>Spline derecesini tanımlar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splinefrompolylineoptions.ui" line="68"/>
         <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenmezse, orijinal poligon silinir, aksi takdirde kalır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splinefrompolylineoptions.ui" line="95"/>
@@ -15250,32 +15254,32 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_splinefrompolylineoptions.ui" line="71"/>
         <source>Keep Originals</source>
-        <translation type="unfinished"></translation>
+        <translation>Orijinalleri Saklayın</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splinefrompolylineoptions.ui" line="78"/>
         <source>Mid points:</source>
-        <translation type="unfinished"></translation>
+        <translation>Orta noktalar:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splinefrompolylineoptions.ui" line="85"/>
         <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, oluşturulan varlıklar için mevcut öznitelikler kullanılır, aksi takdirde orijinal öznitelikler kullanılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splinefrompolylineoptions.ui" line="88"/>
         <source>Use Current Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut Öznitelikleri Kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splinefrompolylineoptions.ui" line="102"/>
         <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and orinary spline will be created.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, çoklu çizgi köşeleri eğri noktaları olarak kabul edilir ve noktalara göre eğri oluşturulur. Aksi takdirde, kontrol noktaları olarak kabul edilir ve normal eğri oluşturulur.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splinefrompolylineoptions.ui" line="105"/>
         <source>Vertexes are spline points</source>
-        <translation type="unfinished"></translation>
+        <translation>Köşeler spline noktalarıdır</translation>
     </message>
 </context>
 <context>
@@ -15298,7 +15302,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_splinepointspropertieseditingwidget.ui" line="62"/>
         <source>If selected, spline points are used</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçildiğinde, spline noktaları kullanılır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_splinepointspropertieseditingwidget.ui" line="65"/>
@@ -15308,7 +15312,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_splinepointspropertieseditingwidget.ui" line="75"/>
         <source>If selected, control points are used</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilirse, kontrol noktaları kullanılır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_splinepointspropertieseditingwidget.ui" line="78"/>
@@ -15342,7 +15346,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_splinepropertieseditingwidget.ui" line="79"/>
         <source>Defines whether spline defines closed contour</source>
-        <translation type="unfinished"></translation>
+        <translation>Spline&apos;ın kapalı konturu tanımlayıp tanımlamadığını belirler</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_splinepropertieseditingwidget.ui" line="82"/>
@@ -15352,7 +15356,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_splinepropertieseditingwidget.ui" line="95"/>
         <source>Degree used to approximate spline</source>
-        <translation type="unfinished"></translation>
+        <translation>Yaklaşık eğri için kullanılan derece</translation>
     </message>
 </context>
 <context>
@@ -15365,62 +15369,62 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="42"/>
         <source>If checked, symmetric star will be created.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, simetrik yıldız oluşturulur.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="45"/>
         <source>Symmetric</source>
-        <translation type="unfinished"></translation>
+        <translation>Simetrik</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="114"/>
         <source>Radius for inner edges.</source>
-        <translation type="unfinished"></translation>
+        <translation>İç kenarlar için yarıçap.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="131"/>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Numara:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="157"/>
         <source>Pick outer radius from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden dış yarıçapı seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="171"/>
         <source>Pick inner radius from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden iç yarıçapı seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="92"/>
         <source>Number of rays.</source>
-        <translation type="unfinished"></translation>
+        <translation>Işın sayısı.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="32"/>
         <source>If checked, outer edges will be rounded. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, dış kenarlar yuvarlatılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="35"/>
         <source>Radius Outer</source>
-        <translation type="unfinished"></translation>
+        <translation>Yarıçap Dış</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="121"/>
         <source>If checked, inner edges will be rounded. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, iç kenarlar yuvarlatılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="124"/>
         <source>Radius Inner</source>
-        <translation type="unfinished"></translation>
+        <translation>Yarıçap İç</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="82"/>
         <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde yıldız çoklu çizgi olarak çizilir. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="85"/>
@@ -15430,7 +15434,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="150"/>
         <source>Radius for outer rays (edges).</source>
-        <translation type="unfinished"></translation>
+        <translation>Dış ışınların (kenarların) yarıçapı.</translation>
     </message>
 </context>
 <context>
@@ -15489,7 +15493,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="162"/>
         <source>Entity&apos;s Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlığın Katmanı</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="196"/>
@@ -15646,7 +15650,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="248"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="260"/>
         <source>Ortho</source>
-        <translation type="unfinished"></translation>
+        <translation>Ortodonti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="250"/>
@@ -15666,47 +15670,47 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="315"/>
         <source>&lt;No name&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;İsim yok&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="332"/>
         <source>Name: </source>
-        <translation type="unfinished"></translation>
+        <translation>Adı: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="333"/>
         <source>Origin X: </source>
-        <translation type="unfinished"></translation>
+        <translation>Origin X: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="334"/>
         <source>Origin Y: </source>
-        <translation type="unfinished"></translation>
+        <translation>Köken Y: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="335"/>
         <source>Angle: </source>
-        <translation type="unfinished"></translation>
+        <translation>Açı: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="336"/>
         <source>Grid: </source>
-        <translation type="unfinished"></translation>
+        <translation>Izgara: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="337"/>
         <source>UCS: </source>
-        <translation type="unfinished"></translation>
+        <translation>UCS: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="337"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Evet</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="337"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>No</translation>
     </message>
 </context>
 <context>
@@ -15719,37 +15723,37 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="37"/>
         <source>Create new user coordinates system.</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni kullanıcı koordinat sistemi oluşturun.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="54"/>
         <source>Restores selected user coordinates system.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen kullanıcı koordinat sistemini geri yükler.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="68"/>
         <source>Preview of coordinate system origin and angle.</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinat sistemi başlangıç noktası ve açının önizlemesi.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="82"/>
         <source>Saves currently used coordinate system (it is usefull if UCS comes from saved view)</source>
-        <translation type="unfinished"></translation>
+        <translation>Şu anda kullanılan koordinat sistemini kaydeder (UCS kaydedilmiş görünümden geliyorsa kullanışlıdır)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="96"/>
         <source>Set UCS by ordinate dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>UCS&apos;yi ordinat boyutu ile ayarla</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="110"/>
         <source>Edit selected user coordinates name. No-name UCS are temporary and are not saved.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen kullanıcı koordinatlarının adını düzenleyin. İsimsiz UCS geçicidir ve kaydedilmez.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="124"/>
         <source>Removes selected user coordinates system.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen kullanıcı koordinat sistemini kaldırır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="127"/>
@@ -15759,116 +15763,118 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="153"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="197"/>
         <source>Filtering user coordinates by name</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanıcı koordinatlarını ada göre filtreleme</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="200"/>
         <source>Filter...</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtre...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="172"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="220"/>
         <source>&lt;No name&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;İsim yok&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="318"/>
         <source>Delete All UCS</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm UCS&apos;leri Sil</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="319"/>
         <source>Are you sure to delete ALL UCS?
  Warning: this action can NOT be undone!</source>
-        <translation type="unfinished"></translation>
+        <translation>TÜM UCS&apos;leri silmek istediğinizden emin misiniz?
+ Uyarı: Bu işlem geri alınamaz!</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="343"/>
         <source>Delete UCS</source>
-        <translation type="unfinished"></translation>
+        <translation>UCS&apos;yi sil</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="344"/>
         <source>Are you sure to delete UCS
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="377"/>
         <source>Delete UCSs</source>
-        <translation type="unfinished"></translation>
+        <translation>UCS&apos;leri sil</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="378"/>
         <source>Are you sure to delete UCS %1?
 Warning: this action can NOT be undone!</source>
-        <translation type="unfinished"></translation>
+        <translation>UCS %1&apos;i silmek istediğinizden emin misiniz?
+Uyarı: Bu işlem geri alınamaz!</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="430"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="443"/>
         <source>Rename UCS</source>
-        <translation type="unfinished"></translation>
+        <translation>UCS&apos;yi yeniden adlandır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="431"/>
         <source>UCS name:</source>
-        <translation type="unfinished"></translation>
+        <translation>UCS adı:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="444"/>
         <source>UCS with provided name already exists, select another one</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilen adla UCS zaten mevcut, başka bir tane seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="491"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="501"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="527"/>
         <source>&amp;Save UCS</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;UCS&apos;yi Kaydet</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="494"/>
         <source>&amp;Update UCS</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;UCS&apos;yi güncelle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="495"/>
         <source>R&amp;emove Selected UCSs</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili UCS&apos;leri kaldır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="508"/>
         <source>&amp;Apply UCS</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Apply UCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="509"/>
         <source>&amp;Preview UCS</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Önizleme UCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="512"/>
         <source>&amp;Rename UCS</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;UCS&apos;yi yeniden adlandır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="513"/>
         <source>R&amp;emove UCS</source>
-        <translation type="unfinished"></translation>
+        <translation>UCS&apos;yi kaldır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="518"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="534"/>
         <source>Remove A&amp;ll UCSs</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm UCS&apos;leri kaldır</translation>
     </message>
 </context>
 <context>
@@ -15886,22 +15892,22 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/other/lc_ucssetoptions.ui" line="61"/>
         <source>Angle X-axis of new coordinate system</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni koordinat sisteminin X ekseninin açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/other/lc_ucssetoptions.ui" line="68"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden açı seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/other/lc_ucssetoptions.ui" line="32"/>
         <source>Specifies whether X-Axis angle is defined by entered value or by mouse position</source>
-        <translation type="unfinished"></translation>
+        <translation>X ekseni açısının girilen değerle mi yoksa fare konumuyla mı tanımlanacağını belirtir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/other/lc_ucssetoptions.ui" line="35"/>
         <source>Free</source>
-        <translation type="unfinished"></translation>
+        <translation>Ücretsiz</translation>
     </message>
 </context>
 <context>
@@ -15914,12 +15920,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="44"/>
         <source>Type of current coordinate system</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut koordinat sisteminin türü</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="96"/>
         <source>Name of selected coordinate system</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen koordinat sisteminin adı</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="105"/>
@@ -15930,7 +15936,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="115"/>
         <source>Position of origin and angle of current UCS&apos;s in world coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dünya koordinatlarında kaynak konumu ve akım UCS&apos;lerinin açısı.</translation>
     </message>
 </context>
 <context>
@@ -15964,7 +15970,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="95"/>
         <source>Polygon</source>
-        <translation type="unfinished"></translation>
+        <translation>Poligon</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="96"/>
@@ -16005,12 +16011,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="212"/>
         <source>Entity Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlık Bilgisi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="164"/>
         <source>Named Views</source>
-        <translation type="unfinished"></translation>
+        <translation>Adlandırılmış Görünümler</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="94"/>
@@ -16030,12 +16036,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="138"/>
         <source>Pens Palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalem Paleti</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="138"/>
         <source>Pens</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalemler</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="151"/>
@@ -16045,22 +16051,22 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="164"/>
         <source>Views</source>
-        <translation type="unfinished"></translation>
+        <translation>Görüşler</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="187"/>
         <source>User Coordinate Systems</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanıcı Koordinat Sistemleri</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="187"/>
         <source>UCSs</source>
-        <translation type="unfinished"></translation>
+        <translation>UCS&apos;ler</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="199"/>
         <source>Layers Tree</source>
-        <translation type="unfinished"></translation>
+        <translation>Katmanlar Ağacı</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="224"/>
@@ -16070,7 +16076,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="238"/>
         <source>Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Kütüphane</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="254"/>
@@ -16098,12 +16104,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="354"/>
         <source>PenWiz</source>
-        <translation type="unfinished"></translation>
+        <translation>PenWiz</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="404"/>
         <source>Toolbar: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Araç çubuğu: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="421"/>
@@ -16119,7 +16125,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="484"/>
         <source>Relative Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Göreceli Sıfır</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="485"/>
@@ -16129,27 +16135,27 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="486"/>
         <source>Selection Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçim Bilgileri</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="487"/>
         <source>Active Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktif Katman</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="489"/>
         <source>UCS Status</source>
-        <translation type="unfinished"></translation>
+        <translation>UCS Durumu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="490"/>
         <source>Angles Basis</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı Temeli</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="494"/>
         <source>Current size of Grid/MetaGrid. Click to change grid size.</source>
-        <translation type="unfinished"></translation>
+        <translation>Grid/MetaGrid&apos;in mevcut boyutu. Grid boyutunu değiştirmek için tıklayın.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="104"/>
@@ -16180,22 +16186,22 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="574"/>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="676"/>
         <source>Flat Buttons</source>
-        <translation type="unfinished"></translation>
+        <translation>Düz Düğmeler</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="689"/>
         <source>Columns Count:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sütun Sayısı:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="562"/>
         <source>Dock Widgets</source>
-        <translation type="unfinished"></translation>
+        <translation>Yuva Widget&apos;ları</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="503"/>
         <source>For &quot;classic&quot; statusbar only. </source>
-        <translation type="unfinished"></translation>
+        <translation>Yalnızca “klasik” durum çubuğu için. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="113"/>
@@ -16205,79 +16211,79 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="221"/>
         <source>Icons Styling</source>
-        <translation type="unfinished"></translation>
+        <translation>Simge Stili</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="233"/>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="288"/>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="355"/>
         <source>Click to select color</source>
-        <translation type="unfinished"></translation>
+        <translation>Rengi seçmek için tıklayın</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="265"/>
         <source>Back Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Arka Renk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="275"/>
         <source>External Icons Directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>Harici Simgeler Dizini:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="423"/>
         <source>Accent Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vurgu Rengi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="369"/>
         <source>Main Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ana Renk:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="42"/>
         <source>General Styling</source>
-        <translation type="unfinished"></translation>
+        <translation>Genel Stil</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="247"/>
         <source>Color for accent elements (originally green)</source>
-        <translation type="unfinished"></translation>
+        <translation>Vurgu öğeleri için renk (orijinal olarak yeşil)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="302"/>
         <source>Color for main elements (originally black)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ana öğeler için renk (orijinal olarak siyah)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="331"/>
         <source>Color for filled background (originally white)</source>
-        <translation type="unfinished"></translation>
+        <translation>Doldurulmuş arka plan rengi (orijinal olarak beyaz)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="379"/>
         <source>Defines location of custom user-provided icons.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanıcı tarafından sağlanan özel simgelerin konumunu tanımlar.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="386"/>
         <source>Saved Icons Style:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaydedilen Simgeler Stili:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="396"/>
         <source>Save Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stili Kaydet</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="403"/>
         <source>Remove Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stili Kaldır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="416"/>
         <source>Advanced Setup ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelişmiş Ayarlar ...</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="81"/>
@@ -16302,12 +16308,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="500"/>
         <source>lClassicStatusBarOnly</source>
-        <translation type="unfinished"></translation>
+        <translation>lKlasikDurumÇubuğuYalnızca</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="110"/>
         <source>If enabled, specific style of UI may be applied</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkinleştirilirse, belirli bir UI stili uygulanabilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="135"/>
@@ -16317,94 +16323,94 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="173"/>
         <source>If checked, buttons for picking values from drawing will be flat</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, çizimden değer seçmek için kullanılan düğmeler düz olacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="176"/>
         <source>Flat pick values buttons</source>
-        <translation type="unfinished"></translation>
+        <translation>Düz seçim değerleri düğmeleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="189"/>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="594"/>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="632"/>
         <source>Side length in pixels</source>
-        <translation type="unfinished"></translation>
+        <translation>Yan uzunluk piksel cinsinden</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="436"/>
         <source>General Docking</source>
-        <translation type="unfinished"></translation>
+        <translation>Genel Bağlantı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="442"/>
         <source>If selected, title bar for docked dock widgets will be vertical. Otherwise, it will be horizontal.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilirse, kenetlenmiş kenetlenmiş widget&apos;ların başlık çubuğu dikey olacaktır. Aksi takdirde, yatay olacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="445"/>
         <source>Tile bar is vertical (except CAD widgets)</source>
-        <translation type="unfinished"></translation>
+        <translation>Döşeme çubuğu dikeydir (CAD widget&apos;ları hariç)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="452"/>
         <source>If not checked, dock areas can only contain a single row (horizontal or vertical) of dock widgets. If checked, the area occupied by a dock widget can be split in either direction to contain more dock widgets.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenmezse, kenetlenme alanları yalnızca tek bir sıra (yatay veya dikey) kenetlenme widget&apos;ı içerebilir. İşaretlenirse, bir kenetlenme widget&apos;ının kapladığı alan her iki yönde de bölünerek daha fazla kenetlenme widget&apos;ı içerebilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="455"/>
         <source>Allow nested docking</source>
-        <translation type="unfinished"></translation>
+        <translation>İç içe yerleştirmeye izin ver</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="462"/>
         <source>If checked, the two vertical dock areas on the sides of the main window show their tabs vertically. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, ana pencerenin yanlarındaki iki dikey kenetlenme alanı sekmelerini dikey olarak gösterir. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="468"/>
         <source>Vertical tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikey sekmeler</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="613"/>
         <source>CAD Widgets</source>
-        <translation type="unfinished"></translation>
+        <translation>CAD Widget&apos;ları</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="654"/>
         <source>Number of columns for actions in left toolbar.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sol araç çubuğundaki eylemler için sütun sayısı.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp" line="216"/>
         <source>Save Icons Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Simge Stilini Kaydet</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp" line="216"/>
         <source>Enter name of icons style:</source>
-        <translation type="unfinished"></translation>
+        <translation>Simge stilinin adını girin:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp" line="227"/>
         <source>Remove Icons Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Simge Stilini Kaldır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp" line="227"/>
         <source>Select style to remove:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaldırmak istediğiniz stili seçin:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp" line="236"/>
         <source>Select External Icons Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Harici Simgeler Klasörünü Seç</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp" line="310"/>
         <source>Select Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Renk Seç</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp" line="403"/>
@@ -16414,7 +16420,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp" line="404"/>
         <source>Icons overrides directory changed. Please restart the application to apply.</source>
-        <translation type="unfinished"></translation>
+        <translation>Simgeler geçersiz kılma dizini değiştirildi. Uygulamayı yeniden başlatarak değişiklikleri uygulayın.</translation>
     </message>
 </context>
 <context>
@@ -16422,22 +16428,22 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/workspaces/lc_workspacesinvoker.cpp" line="51"/>
         <source>New Workspace</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni Çalışma Alanı</translation>
     </message>
     <message>
         <location filename="../src/ui/main/workspaces/lc_workspacesinvoker.cpp" line="51"/>
         <source>Name of workspace to save:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaydedilecek çalışma alanının adı:</translation>
     </message>
     <message>
         <location filename="../src/ui/main/workspaces/lc_workspacesinvoker.cpp" line="70"/>
         <source>Remove Workspace</source>
-        <translation type="unfinished"></translation>
+        <translation>Çalışma Alanını Kaldır</translation>
     </message>
     <message>
         <location filename="../src/ui/main/workspaces/lc_workspacesinvoker.cpp" line="70"/>
         <source>Select workspace to remove:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaldırmak için çalışma alanını seçin:</translation>
     </message>
 </context>
 <context>
@@ -16446,17 +16452,17 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="420"/>
         <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="428"/>
         <source>Saving Workspaces</source>
-        <translation type="unfinished"></translation>
+        <translation>Çalışma Alanlarını Kaydetme</translation>
     </message>
     <message>
         <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="421"/>
         <source>Can&apos;t open workspaces file for writing. Workspaces were not exported. File: </source>
-        <translation type="unfinished"></translation>
+        <translation>Yazma için çalışma alanları dosyası açılamıyor. Çalışma alanları dışa aktarılmadı. Dosya: </translation>
     </message>
     <message>
         <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="429"/>
         <source>Workspaces file does not exists.</source>
-        <translation type="unfinished"></translation>
+        <translation>Çalışma alanları dosyası mevcut değil.</translation>
     </message>
 </context>
 <context>
@@ -16517,7 +16523,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineequidistantoptions.ui" line="127"/>
         <source>Pick spacing from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden aralık seçin</translation>
     </message>
 </context>
 <context>
@@ -16763,7 +16769,7 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="105"/>
         <source>Name of Current Active Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut Etkin Katmanın Adı</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.ui" line="80"/>
@@ -16786,7 +16792,7 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.ui" line="69"/>
         <source>Name of the block</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloğun adı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="76"/>
@@ -16969,12 +16975,12 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.ui" line="44"/>
         <source>Enter your command here</source>
-        <translation type="unfinished"></translation>
+        <translation>Komutunuzu buraya girin</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.ui" line="51"/>
         <source>Click to see more options</source>
-        <translation type="unfinished"></translation>
+        <translation>Daha fazla seçenek görmek için tıklayın</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.ui" line="77"/>
@@ -17011,12 +17017,12 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="177"/>
         <source>Enter Command:</source>
-        <translation type="unfinished"></translation>
+        <translation>Komut girin:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="249"/>
         <source>Command Alias File: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Komut Takma Adı Dosyası: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="339"/>
@@ -17043,22 +17049,22 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
     <message>
         <location filename="../src/ui/components/status_bar/qg_coordinatewidget.ui" line="70"/>
         <source>Absolute Coordinates (Cartesian)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mutlak Koordinatlar (Kartezyen)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_coordinatewidget.ui" line="89"/>
         <source>Absolute Cordinates (Polar)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mutlak Koordinatlar (Kutup)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_coordinatewidget.ui" line="137"/>
         <source>Relative Coordinates (Cartesian)</source>
-        <translation type="unfinished"></translation>
+        <translation>Göreceli Koordinatlar (Kartezyen)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_coordinatewidget.ui" line="150"/>
         <source>Relative Coordinates (Polar)</source>
-        <translation type="unfinished"></translation>
+        <translation>Göreceli Koordinatlar (Kutup)</translation>
     </message>
 </context>
 <context>
@@ -17067,7 +17073,7 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.cpp" line="172"/>
         <source>R</source>
         <comment>Radial dimension prefix</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -17090,17 +17096,17 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="94"/>
         <source>Symbol before dimensional text</source>
-        <translation type="unfinished"></translation>
+        <translation>Boyutsal metin önündeki sembol</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="62"/>
         <source>Superscript</source>
-        <translation type="unfinished"></translation>
+        <translation>Üst simge</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="146"/>
         <source>Subscript</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt simge</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="124"/>
@@ -17110,22 +17116,22 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="69"/>
         <source>Raw text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ham metin:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="187"/>
         <source>Format of the dimension text, &lt;&gt; can be used as a placeholder for the dimension measurement value</source>
-        <translation type="unfinished"></translation>
+        <translation>Boyut metninin biçimi, &lt;&gt; boyut ölçüm değeri için yer tutucu olarak kullanılabilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="200"/>
         <source>Symbol to insert</source>
-        <translation type="unfinished"></translation>
+        <translation>Eklenecek sembol</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="209"/>
         <source>R (Radial)</source>
-        <translation type="unfinished"></translation>
+        <translation>R (Radyal)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="214"/>
@@ -17186,12 +17192,12 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgattributes.ui" line="54"/>
         <source>Layer to apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygulanacak katman</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgattributes.ui" line="69"/>
         <source>Pen attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalem özellikleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgattributes.ui" line="76"/>
@@ -17226,7 +17232,7 @@ Bu, Bloğun kendisinin tüm varlıklarını yinelemeli olarak değiştirir.</tra
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="28"/>
         <source>Scale factor for hatch pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>Hatch deseninin ölçek faktörü</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="35"/>
@@ -17241,12 +17247,12 @@ Bu, Bloğun kendisinin tüm varlıklarını yinelemeli olarak değiştirir.</tra
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="55"/>
         <source>Rotation angle for the hatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapak için dönme açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="62"/>
         <source>If checked, solid will will be used instead of pattern hatch</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, desenli tarama yerine düz tarama kullanılır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="65"/>
@@ -17256,7 +17262,7 @@ Bu, Bloğun kendisinin tüm varlıklarını yinelemeli olarak değiştirir.</tra
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="72"/>
         <source>Pattern of hatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Kuluçka düzeni</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="95"/>
@@ -17266,7 +17272,7 @@ Bu, Bloğun kendisinin tüm varlıklarını yinelemeli olarak değiştirir.</tra
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="101"/>
         <source>If enabled, preview of hatch pattern will be shown below</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkinleştirilirse, tarama deseninin önizlemesi aşağıda gösterilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="104"/>
@@ -17276,12 +17282,12 @@ Bu, Bloğun kendisinin tüm varlıklarını yinelemeli olarak değiştirir.</tra
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="117"/>
         <source>Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Alan</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="124"/>
         <source>Hatched area</source>
-        <translation type="unfinished"></translation>
+        <translation>Kuluçka alanı</translation>
     </message>
 </context>
 <context>
@@ -17300,7 +17306,7 @@ Please choose the unit you want to use for new drawings
 &lt;br&gt;
 and your preferred language for Ui and Command.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="109"/>
@@ -17398,27 +17404,27 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="70"/>
         <source>Layer of MText</source>
-        <translation type="unfinished"></translation>
+        <translation>MText Katmanı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="144"/>
         <source>If checked, default line spacing will be used</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, varsayılan satır aralığı kullanılır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="192"/>
         <source>Height of line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizginin yüksekliği</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="260"/>
         <source>Specific line spacing factor is used</source>
-        <translation type="unfinished"></translation>
+        <translation>Specific line spacing factor is used</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="289"/>
         <source>Font to use</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanılacak yazı tipi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="631"/>
@@ -17428,17 +17434,17 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="643"/>
         <source>Rotation angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Dönme açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="674"/>
         <source>Left to right text direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Soldan sağa metin yönü</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="690"/>
         <source>Right to left text direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Sağdan sola metin yönü</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="714"/>
@@ -17478,7 +17484,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="829"/>
         <source>Text lines to insert</source>
-        <translation type="unfinished"></translation>
+        <translation>Eklenecek metin satırları</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="860"/>
@@ -17488,7 +17494,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="872"/>
         <source>Symbol insertion</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol ekleme</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="881"/>
@@ -17573,7 +17579,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="990"/>
         <source>Codepage to use for characted selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Karakter seçimi için kullanılacak kod sayfası</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="994"/>
@@ -18118,12 +18124,12 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1549"/>
         <source>Selection of character to insert</source>
-        <translation type="unfinished"></translation>
+        <translation>Eklenecek karakterin seçimi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1574"/>
         <source>Selected character preview. Click to insert to text.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen karakter önizlemesi. Metne eklemek için tıklayın.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="876"/>
@@ -18287,7 +18293,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="163"/>
         <source>Multiple Copies</source>
-        <translation type="unfinished"></translation>
+        <translation>Birden Fazla Kopya</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="41"/>
@@ -18517,12 +18523,12 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2007"/>
         <source>&amp;Splines and Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Splines ve Çizgiler</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2013"/>
         <source>Splines</source>
-        <translation type="unfinished"></translation>
+        <translation>Spline&apos;lar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2056"/>
@@ -18595,132 +18601,132 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="55"/>
         <source>Paper format</source>
-        <translation type="unfinished"></translation>
+        <translation>Kağıt formatı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="67"/>
         <source>Width of paper</source>
-        <translation type="unfinished"></translation>
+        <translation>Kağıt genişliği</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="87"/>
         <source>Height of paper</source>
-        <translation type="unfinished"></translation>
+        <translation>Kağıdın yüksekliği</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="120"/>
         <source>Landscape paper orientation</source>
-        <translation type="unfinished"></translation>
+        <translation>Yatay kağıt yönü</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="130"/>
         <source>Portrait paper orientation</source>
-        <translation type="unfinished"></translation>
+        <translation>Portre kağıt yönü</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="274"/>
         <source>Number of pages by horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Yatay olarak sayfa sayısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="294"/>
         <source>Number of pages by vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikey olarak sayfa sayısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="318"/>
         <source>Preview of page and margins</source>
-        <translation type="unfinished"></translation>
+        <translation>Sayfa ve kenar boşluklarının önizlemesi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="378"/>
         <source>Units of measurements to use in drawing </source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimde kullanılacak ölçü birimleri </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="564"/>
         <source>Angles Basis</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı Temeli</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="576"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut kullanıcı koordinat sistemine göre sıfır taban açısı. Kutup koordinatları girişini ve açıya yapıştırmayı etkiler. 0,0 saat 15:00&apos;dir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="586"/>
         <source>Zero base angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sıfır taban açısı:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="593"/>
         <source>degrees.</source>
-        <translation type="unfinished"></translation>
+        <translation>derece.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="600"/>
         <source>Positive direction:</source>
-        <translation type="unfinished"></translation>
+        <translation>Olumlu yön:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="637"/>
         <source>Counterclockwise, 90 degrees is north.</source>
-        <translation type="unfinished"></translation>
+        <translation>Saat yönünün tersine, 90 derece kuzey yönüdür.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="666"/>
         <source>Clockwise, 90 degrees is sourth.</source>
-        <translation type="unfinished"></translation>
+        <translation>Saat yönünde, 90 derece güney yönüdür.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="753"/>
         <source>Right isometric grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Sağ izometrik ızgara</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="756"/>
         <source>Isometric Right</source>
-        <translation type="unfinished"></translation>
+        <translation>İzometrik Sağ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="775"/>
         <source>Left isometric grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Sol izometrik ızgara</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="778"/>
         <source>Isometric Left</source>
-        <translation type="unfinished"></translation>
+        <translation>İzometrik Sol</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="804"/>
         <source>If checked, grid will be shown for this drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, bu çizim için ızgara gösterilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="826"/>
         <source>Top isometric grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Üst izometrik ızgara</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="829"/>
         <source>Isometric Top</source>
-        <translation type="unfinished"></translation>
+        <translation>İzometrik Üst</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="852"/>
         <source>Application Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygulama Ayarları</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="858"/>
         <source>Draw Grid:</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgara Çiz:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="865"/>
         <source>Unitless Grid:</source>
-        <translation type="unfinished"></translation>
+        <translation>Birimsiz Izgara:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="872"/>
@@ -18729,37 +18735,37 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="907"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1976"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin Etiketi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="879"/>
         <source>Automatically Scale Grid:</source>
-        <translation type="unfinished"></translation>
+        <translation>Otomatik Ölçekleme Izgarası:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="886"/>
         <source>Draw Meta Grid:</source>
-        <translation type="unfinished"></translation>
+        <translation>Meta Izgara Çiz:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="917"/>
         <source>Grid Spacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgara Aralığı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="955"/>
         <source>Select or enter grid spacing value by X axis</source>
-        <translation type="unfinished"></translation>
+        <translation>X eksenine göre ızgara aralığı değerini seçin veya girin</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="990"/>
         <source>Select or input grid spacing value by Y axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Y eksenine göre ızgara aralığı değerini seçin veya girin</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1038"/>
         <source>Select or enter values for grid spacing (they will affect Grid drawing and Snap to Grid):</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgara aralığı için değerleri seçin veya girin (bunlar Izgara çizimi ve Izgaraya Yapışmayı etkileyecektir):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1066"/>
@@ -18902,32 +18908,32 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1810"/>
         <source>Styles</source>
-        <translation type="unfinished"></translation>
+        <translation>Stiller</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1818"/>
         <source>New style creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni stil oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1835"/>
         <source>Remove Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stili Kaldır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1849"/>
         <source>Edit Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stili Düzenle</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1863"/>
         <source>Rename Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stili Yeniden Adlandır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1877"/>
         <source>Marks style as active one. Active style will be used during creation of dimensions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Stili aktif olarak işaretler. Ölçüm boyutları oluşturulurken aktif stil kullanılacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1904"/>
@@ -18942,22 +18948,22 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1963"/>
         <source>Active Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktif Stil</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1969"/>
         <source>Style Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Stil Adı:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1986"/>
         <source>If checked, used non-default arrow blocks will be added during drawing&apos;s saving. Embedding arrow blocks is needed for drawings that are later opened in AutoCAD.  This check may be unset if all editing is performed in LibreCAD. </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1989"/>
         <source>Embed arrows blocks on save</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaydettiğinizde ok bloklarını göm</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2069"/>
@@ -18967,12 +18973,12 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2075"/>
         <source>Line Cap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi Ucu:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2082"/>
         <source>End cap for lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Hatlar için son kapak</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2086"/>
@@ -18984,182 +18990,182 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2091"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2125"/>
         <source>Round</source>
-        <translation type="unfinished"></translation>
+        <translation>Yuvarlak</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2101"/>
         <source>Square</source>
-        <translation type="unfinished"></translation>
+        <translation>Kare</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2109"/>
         <source>Line Join:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi Birleştirme:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2116"/>
         <source>Mode of lines joining in polylines or paths</source>
-        <translation type="unfinished"></translation>
+        <translation>Çoklu çizgiler veya yollarla birleştirilen çizgi modları</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2135"/>
         <source>Flat</source>
-        <translation type="unfinished"></translation>
+        <translation>Düz</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3245"/>
         <source>Enter value for points size</source>
-        <translation type="unfinished"></translation>
+        <translation>Puan boyutu için değer girin</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3259"/>
         <source>Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Meta Verisi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3265"/>
         <source>Specifies the title of the drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimin başlığını belirtir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3272"/>
         <source>Keywords:</source>
-        <translation type="unfinished"></translation>
+        <translation>Anahtar Kelimeler:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3279"/>
         <source>Comments:</source>
-        <translation type="unfinished"></translation>
+        <translation>Yorumlar:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3286"/>
         <source>Title:</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlık:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3293"/>
         <source>Specifies the subject of the drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimin konusunu belirtir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3300"/>
         <source>Specifies the author of the drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimin yazarını belirtir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3307"/>
         <source>Specifies drawing-specific keywords.</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizime özgü anahtar kelimeleri belirtir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3314"/>
         <source>Subject:</source>
-        <translation type="unfinished"></translation>
+        <translation>Konu:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3321"/>
         <source>Author:</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazar:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3341"/>
         <source>Provides a space to add comments to the drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizime yorum eklemek için bir alan sağlar.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3349"/>
         <source>User Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanıcı Verileri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3355"/>
         <source>Custom Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Özel Özellikler</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3361"/>
         <source>Add New</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni Ekle</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3368"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Sil</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3394"/>
         <source>Floating point variables</source>
-        <translation type="unfinished"></translation>
+        <translation>Ondalıklı değişkenler</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3400"/>
         <source>$USERR2</source>
-        <translation type="unfinished"></translation>
+        <translation>$USERR2</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3407"/>
         <source>$USERR5</source>
-        <translation type="unfinished"></translation>
+        <translation>$USERR5</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3414"/>
         <source>$USERR3</source>
-        <translation type="unfinished"></translation>
+        <translation>$USERR3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3421"/>
         <source>$USERR4</source>
-        <translation type="unfinished"></translation>
+        <translation>$USERR4</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3428"/>
         <source>$USERR1</source>
-        <translation type="unfinished"></translation>
+        <translation>$USERR1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3453"/>
         <source> Integer variables</source>
-        <translation type="unfinished"></translation>
+        <translation>Tam sayı değişkenleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3459"/>
         <source>$USERI4</source>
-        <translation type="unfinished"></translation>
+        <translation>$USERI4</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3490"/>
         <source>$USERI2</source>
-        <translation type="unfinished"></translation>
+        <translation>$USERI2</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3497"/>
         <source>$USERI1</source>
-        <translation type="unfinished"></translation>
+        <translation>$USERI1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3504"/>
         <source>$USERI3</source>
-        <translation type="unfinished"></translation>
+        <translation>$USERI3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3525"/>
         <source>$USERI5</source>
-        <translation type="unfinished"></translation>
+        <translation>$USERI5</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3536"/>
         <source>Variables</source>
-        <translation type="unfinished"></translation>
+        <translation>Değişkenler</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3542"/>
         <source>Drawing&apos;s Variables</source>
-        <translation type="unfinished"></translation>
+        <translation>Drawing&apos;s Variables</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3548"/>
         <source>&lt;b&gt;Note:&lt;/b&gt; changes of settings made during this invocation of the dialog may be not reflected.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Not:&lt;/b&gt; Bu diyalog çağrısı sırasında yapılan ayar değişiklikleri yansıtılmayabilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3571"/>
@@ -19170,18 +19176,18 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3576"/>
         <source>Code</source>
-        <translation type="unfinished"></translation>
+        <translation>Kod</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3581"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tür</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3586"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="342"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Değer</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="44"/>
@@ -19288,7 +19294,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3167"/>
         <source>If selected, size will be calculated as percentage of current screen size</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçildiğinde, boyut mevcut ekran boyutunun yüzdesi olarak hesaplanacaktır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3170"/>
@@ -19298,7 +19304,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3183"/>
         <source>Size will be defined in drawing units of current drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Boyut, mevcut çizimin çizim birimlerinde tanımlanacaktır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3186"/>
@@ -19321,84 +19327,84 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="935"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="938"/>
         <source>ON</source>
-        <translation type="unfinished"></translation>
+        <translation>AÇIK</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="399"/>
         <source>Delete Custom Property</source>
-        <translation type="unfinished"></translation>
+        <translation>Özel Özelliği Sil</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="400"/>
         <source>Are you sure you&apos;d like to delete property [%1]?</source>
-        <translation type="unfinished"></translation>
+        <translation>[%1] özelliğini silmek istediğinizden emin misiniz?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="422"/>
         <source>Drawing Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizim Seçenekleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="423"/>
         <source>Settings were changed. Are you sure you&apos;d like to skip saving changes (so they will not be saved)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarlar değiştirildi. Değişiklikleri kaydetmeden geçmek istediğinizden emin misiniz (yani kaydedilmeyecekler)?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="458"/>
         <source>&amp;Set as Active</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin Olarak Ayarla</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="461"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="477"/>
         <source>&amp;Create Style</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Stil Oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="463"/>
         <source>&amp;Edit Style</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Stili Düzenle</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="467"/>
         <source>&amp;Rename Style</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Stili Yeniden Adlandır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="469"/>
         <source>&amp;Delete Style</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Stili Sil</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="473"/>
         <source>E&amp;xport Styles</source>
-        <translation type="unfinished"></translation>
+        <translation>Stil &amp;Dışa Aktar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="474"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="478"/>
         <source>&amp;Import Styles</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Stilleri İçe Aktar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="565"/>
         <source>Style to Create - </source>
-        <translation type="unfinished"></translation>
+        <translation>Oluşturulacak Stil -</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="617"/>
         <source>Dimension style editing - </source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçü stili düzenleme -</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="641"/>
         <source>Rename Dimension Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme Stilini Yeniden Adlandır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="642"/>
         <source>Enter new unique name of dimension style (was &quot;%1&quot;):</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçü stili için yeni benzersiz adı girin (önceki: &quot;%1&quot;):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="662"/>
@@ -19406,27 +19412,27 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="683"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="691"/>
         <source>Removing Dimension Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçü Stili Kaldırma</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="663"/>
         <source>Can&apos;t delete last dimension style. At least one should be present! </source>
-        <translation type="unfinished"></translation>
+        <translation>Son boyut stilini silemezsiniz. En az bir tane bulunmalıdır!</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="677"/>
         <source>Can&apos;t delete dimension style as it&apos;s children is used in drawing. Only unused style may be deleted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Boyut stilini silemezsiniz çünkü bu stilin alt öğeleri çizimde kullanılıyor. Yalnızca kullanılmayan stil silinebilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="684"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot; together with child styles?</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; boyut stilini çocuk stilleriyle birlikte kaldırmak istediğinizden emin misiniz?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="692"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot;?</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; ölçü stili kaldırmak istediğinizden emin misiniz?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="929"/>
@@ -19434,32 +19440,32 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="935"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="938"/>
         <source>OFF</source>
-        <translation type="unfinished"></translation>
+        <translation>KAPALI</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1197"/>
         <source>VOID</source>
-        <translation type="unfinished"></translation>
+        <translation>GEÇERSİZ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1200"/>
         <source>INT</source>
-        <translation type="unfinished"></translation>
+        <translation>TAMSAYI</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1204"/>
         <source>DOUBLE</source>
-        <translation type="unfinished"></translation>
+        <translation>ÇİFT</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1208"/>
         <source>STRING</source>
-        <translation type="unfinished"></translation>
+        <translation>DİZGE</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1212"/>
         <source>VECTOR</source>
-        <translation type="unfinished"></translation>
+        <translation>VEKTÖR</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1570"/>
@@ -19559,33 +19565,33 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="965"/>
         <source>Select Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Renk Seç</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1090"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1096"/>
         <source>You must restart LibreCAD to see the changes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Değişiklikleri görmek için LibreCAD&apos;i yeniden başlatmalısınız.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1112"/>
         <source>Select Fonts Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazı Tipleri Klasörünü Seç</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1119"/>
         <source>Select Translations Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Çeviriler Klasörünü Seç</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1126"/>
         <source>Select Hatch Patterns Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Tarama Desenleri Klasörünü Seç</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1133"/>
         <source>Select Other Settings Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Diğer Ayarlar Klasörünü Seç</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1764"/>
@@ -19657,27 +19663,27 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5619"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5656"/>
         <source> px</source>
-        <translation type="unfinished"></translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5538"/>
         <source>Line length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Satır uzunluğu:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4303"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4581"/>
         <source>Left  Isometric Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Sol İzometrik Izgara</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4571"/>
         <source>RIght Isometric Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Sağ İzometrik Kareli</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4509"/>
@@ -19687,185 +19693,185 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4591"/>
         <source>Top Isometric Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Üst İzometrik Izgara</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1227"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1331"/>
         <source>Meta-grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Meta-ağ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="458"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2065"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2516"/>
         <source>Marker Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Marker Rengi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2493"/>
         <source>Marker Radius:</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretçi Yarıçapı:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2572"/>
         <source>Hide marker</source>
-        <translation type="unfinished"></translation>
+        <translation>İşareti gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="947"/>
         <source>Draw meta-grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Meta-ızgara çiz</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="937"/>
         <source>Draw grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgara çiz</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1019"/>
         <source>Simple grid rendering</source>
-        <translation type="unfinished"></translation>
+        <translation>Basit ızgara çizimi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3715"/>
         <source>Active preview&apos;s explanatory entity&apos;s Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktif önizlemenin açıklayıcı öğesinin Rengi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3768"/>
         <source>Preview&apos;s explanatory entity&apos;s Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Önizlemenin açıklayıcı varlığının Rengi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2611"/>
         <source>&amp;Highlighted entity Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Vurgulanan varlık Renk:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2665"/>
         <source>Highlight with screen linewidth in &quot;Draft&quot; mode</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;Taslak&quot; modunda ekran satır genişliği ile vurgula</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2685"/>
         <source>Explanatory Reference Point Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Açıklayıcı Referans Noktası Boyutu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2777"/>
         <source>Explanatory Reference Point Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Açıklayıcı Referans Noktası Stili</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5452"/>
         <source>If selected, the angle of the line interpolation segment is calculated to ensure that resulting sagitta (height of arc segment) is less than specified.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5519"/>
         <source>If selected, the same rendering settings will be applied also to circles.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçildiğinde, aynı render ayarları aynı zamanda dairelere uygulanacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4407"/>
         <source>If checked, the icon for current action will be shown in options toolbar before action&apos;s options</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, geçerli işlem simgesi, işlemin seçeneklerinden önce seçenekler araç çubuğunda gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4410"/>
         <source>Show current command icon in options toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçenekler araç çubuğunda mevcut komut simgesini göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4367"/>
         <source>If enabled, internal ID of entity will be shown in properties dialog and Entity Info widget.</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkinleştirilirse, varlığın dahili kimliği özellikler iletişim kutusunda ve Varlık Bilgisi bileşeninde gösterilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4370"/>
         <source>Show internal IDs of entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlıkların dahili kimliklerini göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4254"/>
         <source>If selected, entities will stay selected after completion of Modify operations. Otherwise, they will be not selected. </source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilirse, varlıklar Düzenleme işlemleri tamamlandıktan sonra seçili kalacaktır. Aksi takdirde, seçili olmayacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4257"/>
         <source>Keep modified entities selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Değiştirilen varlıkları seçili tut</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4926"/>
         <source>If checked, prompt messages of actions will be also shown in bottom statusbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğer işaretlenirse, işlemlere ait uyarı mesajları da alt durum çubuğunda gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4932"/>
         <source>Duplicate prompt messages of actions in statusbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Durum çubuğundaki eylemlerin yineleyen istem mesajları</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4680"/>
         <source>If checked, new drawing will be created with grid disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, yeni çizim ızgara devre dışı bırakılarak oluşturulacaktır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4683"/>
         <source>Grid is Off </source>
-        <translation type="unfinished"></translation>
+        <translation>Izgara kapalı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4965"/>
         <source>New Versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni Sürümler</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4971"/>
         <source>Check GitHub for new releases of LibreCAD on program startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Program başlatıldığında LibreCAD&apos;in yeni sürümleri için GitHub&apos;ı kontrol edin</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4974"/>
         <source>Check for new versions on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıçta yeni sürümleri kontrol et</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4981"/>
         <source>If checked, pre-release versions will be ignored</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, ön sürüm versiyonları göz ardı edilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4987"/>
         <source>Ignore pre-release versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Ön sürüm versiyonlarını görmezden gel</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4889"/>
         <source>Open last opened files</source>
-        <translation type="unfinished"></translation>
+        <translation>Son açılan dosyaları aç</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4896"/>
         <source>If enabled, drop-down menus may become floating</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkinleştirilirse, açılır menüler kayan hale gelebilir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4899"/>
         <source>Allow menus detaching</source>
-        <translation type="unfinished"></translation>
+        <translation>Menülerin ayrılmasına izin ver</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4916"/>
         <source>If unchecked, individual widgets of statusbar are toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol edilmezse, durum çubuğunun bireysel bileşenleri araç çubuklarıdır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4919"/>
         <source>Use &quot;classic&quot; statusbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Use &quot;classic&quot; statusbar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5065"/>
@@ -19996,7 +20002,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="46"/>
         <source>&amp;Graphic View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Grafik Görünümü</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1543"/>
@@ -20006,17 +20012,17 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1758"/>
         <source>If checked, snap indicator will be shown</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, hizalama göstergesi gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1788"/>
         <source>Type of snap lines indicator</source>
-        <translation type="unfinished"></translation>
+        <translation>Kılavuz çizgisi göstergesi türü</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1795"/>
         <source>Adaptive</source>
-        <translation type="unfinished"></translation>
+        <translation>Uyarlanabilir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1800"/>
@@ -20026,18 +20032,18 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1805"/>
         <source>Spiderweb</source>
-        <translation type="unfinished"></translation>
+        <translation>Örümcek ağı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1714"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1761"/>
         <source>Snap Indicator lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Yakala Göstergesi Çizgileri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1836"/>
         <source>Color for snap lines indicator</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi göstergesi için renk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="98"/>
@@ -20069,43 +20075,43 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4040"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4106"/>
         <source>Click to select color</source>
-        <translation type="unfinished"></translation>
+        <translation>Renk seçmek için tıklayın</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1508"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1751"/>
         <source>Line Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hat Tipi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1707"/>
         <source>Type of line to draw snap indicator</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap göstergesini çizmek için çizgi türü</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1879"/>
         <source>Line Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Line Width</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1886"/>
         <source>Width of line for snap indicator</source>
-        <translation type="unfinished"></translation>
+        <translation>Kilit göstergesi için çizgi genişliği</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1778"/>
         <source>If checked, a shap for snap will be drawn</source>
-        <translation type="unfinished"></translation>
+        <translation>If checked, a shap for snap will be drawn</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1781"/>
         <source>Snap Indicator shape</source>
-        <translation type="unfinished"></translation>
+        <translation>Kılavuz Göstergesi şekli</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1721"/>
         <source>Type of snap indicator shape</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapak göstergesi şekli türü</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1728"/>
@@ -20125,27 +20131,27 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1743"/>
         <source>Gap</source>
-        <translation type="unfinished"></translation>
+        <translation>Boşluk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1771"/>
         <source>Snap Indicator Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Yapışma Göstergesi Rengi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1813"/>
         <source>Color for snap indicator shape</source>
-        <translation type="unfinished"></translation>
+        <translation>Yakalama göstergesi şekli için renk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1619"/>
         <source>Angle snap single step</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı yakalama tek adım</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1562"/>
         <source>Angle between steps for Angle Snap (which is usually by corresponding actions if SHIFT is pressed)</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı Yakalama için adımlar arasındaki açı (genellikle SHIFT tuşuna basılı tutulduğunda ilgili eylemlerle belirlenir)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1566"/>
@@ -20185,138 +20191,138 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1555"/>
         <source>deg</source>
-        <translation type="unfinished"></translation>
+        <translation>this is incomplete or unclear</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1668"/>
         <source>If checked, cursor will be hidden during snapping</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, imleç yakalama sırasında gizlenecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1678"/>
         <source>If checked, snap options (middle, distance) will be shown in snap toolbar instead of tool properties toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, yakınlaştırma seçenekleri (orta, mesafe) araç özellikleri araç çubuğu yerine yakınlaştırma araç çubuğunda gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1681"/>
         <source>Show snap options in Snap Selection Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap Seçim Araç Çubuğunda eşleme seçeneklerini göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="717"/>
         <source>Entity Handle</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlık Tutacağı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="860"/>
         <source>Size of square that is highlights entities reference points (endpoints etc.)</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlıkların referans noktalarını (uç noktalar vb.) vurgulayan karenin boyutu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="781"/>
         <source>Color of end handle for entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlık için uç tutacağının rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="743"/>
         <source>Color for start handle of entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlığın başlangıç tutamacının rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="826"/>
         <source>Color of non-endpoint handle of entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlığın uç nokta olmayan tutamacının rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="819"/>
         <source>Handle Size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sap Boyutu:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="905"/>
         <source>If enabled, entity handles are highlighted on hover (requires &quot;highlight entities on hover&quot; to be enabled)</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkinleştirilirse, varlık tutamaçları üzerine gelindiğinde vurgulanır (&quot;üzerine gelindiğinde varlıkları vurgula&quot; seçeneğinin etkinleştirilmiş olması gerekir)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="911"/>
         <source>Show entity handles on mouse hover</source>
-        <translation type="unfinished"></translation>
+        <translation>Fare ile üzerine gelindiğinde varlık tutamaçlarını göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="192"/>
         <source>Overlay Selection Box</source>
-        <translation type="unfinished"></translation>
+        <translation>Yerleştirme Seçim Kutusu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="218"/>
         <source>Inverted Line Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ters Çizgi Rengi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="225"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="423"/>
         <source>Color of line for overlay selection box if box is inverted (from right to left)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kutu ters olduğunda (sağdan sola) üst üste seçim kutusunun çizgi rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="243"/>
         <source>Inverted Fill Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ters Dolgu Rengi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="250"/>
         <source>Color for filling inverted overlay selection box</source>
-        <translation type="unfinished"></translation>
+        <translation>Ters bindirme seçim kutusunu doldurma rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="288"/>
         <source>Fill Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dolgu Rengi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="295"/>
         <source>Fill color for overlay selection box</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaplama seçim kutusu için dolgu rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="333"/>
         <source>Line Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi Rengi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="340"/>
         <source>Color for line for overlay box</source>
-        <translation type="unfinished"></translation>
+        <translation>Bindirme kutusu için çizgi rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="378"/>
         <source>Smaller value - higher transparency of overlay</source>
-        <translation type="unfinished"></translation>
+        <translation>Daha küçük değer - örtüşmenin daha yüksek saydamlığı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="381"/>
         <source>Transparency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Şeffaflık:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="394"/>
         <source>Transparency for overlay selection box. Smaller value - more transparent.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bindirme seçim kutusu için şeffaflık. Daha küçük değer - daha şeffaf.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="520"/>
         <source>General</source>
-        <translation type="unfinished">Genel</translation>
+        <translation>GenelGenel</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="551"/>
         <source>If checked,  objects will be painted smoother due to anti-aliasing</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, nesneler kenar yumuşatma sayesinde daha düzgün boyanır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="663"/>
         <source>If selected, drawing will be panned automatically if mouse is near drawing view boundaries</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili ise, fare çizim görünümü sınırlarına yakın olduğunda çizim otomatik olarak kaydırılacaktır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="615"/>
@@ -20326,7 +20332,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="143"/>
         <source>Backgr&amp;ound Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Backgr&amp;ound Color:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="647"/>
@@ -20341,292 +20347,292 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="64"/>
         <source>Color for drawing background</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizim arka planı için renk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="628"/>
         <source>If disabled, more sequental painting algorithm is used that may deliver better antialising results</source>
-        <translation type="unfinished"></translation>
+        <translation>Devre dışı bırakılırsa, daha iyi kenar yumuşatma sonuçları sağlayabilecek daha ardışık bir boyama algoritması kullanılır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="634"/>
         <source>Use Buffered (classic) rendering</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamponlu (klasik) işleme kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="130"/>
         <source>S&amp;elected Entity Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>S&amp;elected Entity Color:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="535"/>
         <source>Defines whether scrollbar should be shown in graphic view</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafik görünümünde kaydırma çubuğunun gösterilip gösterilmeyeceğini tanımlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="112"/>
         <source>Color for selected entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili varlıklar için renk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="707"/>
         <source>Default zoom factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Varsayılan yakınlaştırma faktörü:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="685"/>
         <source>Controls how quickly the scroll wheel will zoom in &amp; out. Higher values - faster zoom.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaydırma tekerleğinin ne kadar hızlı yakınlaşıp uzaklaşacağını kontrol eder. Daha yüksek değerler - daha hızlı yakınlaşma.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="596"/>
         <source>On mouse wheel zoom, pan to the middle of the window.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fare tekerleği ile yakınlaştırıldığında, pencerenin ortasına kaydırın.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="599"/>
         <source>Pan on wheel zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekerlek üzerinde kaydır ve yakınlaştır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="583"/>
         <source>First time only pan</source>
-        <translation type="unfinished"></translation>
+        <translation>Sadece ilk kullanım tavası</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="922"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1167"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1428"/>
         <source>Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Kılavuz</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1148"/>
         <source>Points Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Puan Tablosu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1206"/>
         <source>Color for grid points</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgara noktaları için renk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1233"/>
         <source>Type of Meta Grid line if grid is drawn as points</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğer ızgara noktalar olarak çizilmişse Meta Grid satırının türü</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1240"/>
         <source>Width of Meta Grid line if grid is drawn by points</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğer ızgara noktalarla çizilmişse Meta Grid satırının genişliği</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1256"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1360"/>
         <source>Line Type: </source>
-        <translation type="unfinished"></translation>
+        <translation>Hat Türü:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1263"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1367"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1515"/>
         <source>Line Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi Genişliği:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1270"/>
         <source>Color for Meta Grid lines if grid drawn by points</source>
-        <translation type="unfinished"></translation>
+        <translation>Color for Meta Grid lines if grid drawn by points</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1288"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1392"/>
         <source>&amp;Meta-grid Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Meta-grid Rengi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1325"/>
         <source>Lines Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgiler Izgarası</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1434"/>
         <source>Width of grid lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgara çizgilerinin genişliği</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1450"/>
         <source>Line type for grid lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgara çizgileri için çizgi türü</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1457"/>
         <source>Color for grid lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgara çizgileri için renk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1337"/>
         <source>Type of Meta Grid lines if grid is drawn by lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğer ızgara çizgilerle çizilmişse Meta Grid çizgi türü</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1344"/>
         <source>Width of Meta Grid lines if grid is drawn by lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğer ızgara çizgilerle çizilmişse Meta Grid çizgilerinin genişliği</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1374"/>
         <source>Color of Meta Grid if grid drawn by lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Meta Izgarasının Rengi, Izgara Çizgilerle Çiziliyorsa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2158"/>
         <source>Axis Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksen Çizgileri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2247"/>
         <source>Y-Axis Extension</source>
-        <translation type="unfinished"></translation>
+        <translation>Y-Ekseni Uzatma</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2354"/>
         <source>Short Axis Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Kısa Eksen Boyutu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2257"/>
         <source>X-Axis Extension</source>
-        <translation type="unfinished"></translation>
+        <translation>X-Ekseni Uzatma</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2164"/>
         <source>Color for X axis</source>
-        <translation type="unfinished"></translation>
+        <translation>X ekseni için renk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2304"/>
         <source>If checked, axises will be inifinite lines</source>
-        <translation type="unfinished"></translation>
+        <translation>If checked, axises will be inifinite lines</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2307"/>
         <source>Extend axis lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksen çizgilerini uzat</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2361"/>
         <source>Color for Y axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Y ekseni için renk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2231"/>
         <source>Y-Axis Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Y-Ekseni Rengi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2327"/>
         <source>Defines how to draw extended Y axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Genişletilmiş Y ekseninin nasıl çizileceğini tanımlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2208"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2331"/>
         <source>Whole Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm Alan</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2213"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2336"/>
         <source>Positive Values Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozitif Değerler Alanı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2218"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2341"/>
         <source>Negative Values Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Negatif Değerler Alanı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2223"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2346"/>
         <source>None</source>
-        <translation type="unfinished">Yok</translation>
+        <translation>YokHiçbiri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2188"/>
         <source>Size of Axis Lines drawn in absolute zero point</source>
-        <translation type="unfinished"></translation>
+        <translation>Mutlak sıfır noktasında çizilen eksen çizgilerinin boyutu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2314"/>
         <source>X-Axis Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>X-Ekseni Rengi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2204"/>
         <source>Defines how to draw extended X axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Genişletilmiş X ekseninin nasıl çizileceğini tanımlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2546"/>
         <source>Color of relative zero marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Göreceli sıfır göstergesinin rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2569"/>
         <source>If checked, relative zero marker will not be drawn</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, göreli sıfır işareti çizilmeyecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2500"/>
         <source>Radius of relative zero marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Göreli sıfır işaretleyicisinin yarıçapı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="928"/>
         <source>Grid General</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgara Genel</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="934"/>
         <source>If checked, grid wil be drawn</source>
-        <translation type="unfinished"></translation>
+        <translation>If checked, grid wil be drawn</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1026"/>
         <source>If checked, grid will not be adjusted to current units of drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, ızgara mevcut çizim birimlerine göre ayarlanmaz</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1029"/>
         <source>Unitless grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Birimsiz ızgara</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="977"/>
         <source>If checked, grid will not be drawn within view pan by mouse operation</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, ızgara fare ile kaydırma işlemi sırasında görünümde çizilmeyecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="980"/>
         <source>Don&apos;t draw grid on panning</source>
-        <translation type="unfinished"></translation>
+        <translation>Don&apos;t draw grid on panning</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1016"/>
         <source>If checked, Meta Grid lines will be drawn on top of grid. Simple grid is faster yet is less visually lean.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, Meta Grid çizgileri ızgaranın üstüne çizilecektir. Basit ızgara daha hızlıdır ancak görsel olarak daha az nettir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1068"/>
         <source>Minimal spacing between grid until grid rescale</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgara yeniden boyutlandırılana kadar minimal boşluk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1003"/>
         <source>Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Puanlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1008"/>
@@ -20636,32 +20642,32 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="954"/>
         <source>If checked, the grid will be scalled automatically</source>
-        <translation type="unfinished"></translation>
+        <translation>If checked, the grid will be scalled automatically</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1049"/>
         <source>&amp;Grid type:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Izgara türü:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="944"/>
         <source>If checked, metagrid will be drawn as part of grid drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğer işaretlenirse, metagrid ızgara çiziminin bir parçası olarak çizilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="967"/>
         <source>If unchecked, vertical line will not be drawn for &quot;Top&quot; isometric view</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğer işaretlenmezse, &quot;Üst&quot; izometrik görünüm için dikey çizgi çizilmeyecek.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="970"/>
         <source>Draw vertical lines for &quot;Top&quot; isometric grid</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;Üst&quot; izometrik ızgara için dikey çizgiler çizin</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2586"/>
         <source>&amp;Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Önizleme</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2795"/>
@@ -20695,47 +20701,47 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3609"/>
         <source>If checked, more informative and explaining preview will be drawn for operations</source>
-        <translation type="unfinished"></translation>
+        <translation>İşlemler için işaretlenirse, daha bilgilendirici ve açıklayıcı bir önizleme çizilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3652"/>
         <source>If more entities in preview than specified, rect will be drawn instead of entities.</source>
-        <translation type="unfinished"></translation>
+        <translation>Belirtilenden daha fazla varlık önizlemede varsa, varlıkların yerine dikdörtgen çizilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3692"/>
         <source>Color for selected preview reference entiites</source>
-        <translation type="unfinished"></translation>
+        <translation>Color for selected preview reference entiites</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3745"/>
         <source>Color for preview reference entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Önizleme referans varlıkları için renk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2605"/>
         <source>Highlight</source>
-        <translation type="unfinished"></translation>
+        <translation>Vurgula</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2672"/>
         <source>Visualize the entity under the mouse cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>Fare imlecinin altındaki varlığı görselleştir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2675"/>
         <source>Highlight entities on mouse hover</source>
-        <translation type="unfinished"></translation>
+        <translation>Fare ile üzerine gelindiğinde varlıkları vurgula</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2644"/>
         <source>Color for highlighted entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Vurgulanan öğeler için renk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2662"/>
         <source>If selected, entity will be highlighted in &quot;Draft&quot; mode using entity&apos;s linewidth instead of 1px</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilirse, varlık 1px yerine varlığın çizgi kalınlığı kullanılarak &quot;Taslak&quot; modunda vurgulanacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2767"/>
@@ -20745,12 +20751,12 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2706"/>
         <source>Size of reference points</source>
-        <translation type="unfinished"></translation>
+        <translation>Referans noktalarının boyutu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3612"/>
         <source>Show operation&apos;s preview explanatory entities </source>
-        <translation type="unfinished"></translation>
+        <translation>Show operation&apos;s preview explanatory entities </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2713"/>
@@ -20770,112 +20776,112 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5532"/>
         <source>Rendering Minimums</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimum İşlemler</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5653"/>
         <source>If height of text line on the screen is less than specified pixels, placholder will be drawn instead of text</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekrandaki metin satırının yüksekliği belirtilen piksel değerinden az ise, metin yerine yer tutucu çizilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5593"/>
         <source>Height of text line:</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin satırının yüksekliği:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5646"/>
         <source>Ellipse Major Axis:</source>
-        <translation type="unfinished"></translation>
+        <translation>Elipsin Büyük Eksenı:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5616"/>
         <source>If screen size of minor ellipse axis is less than value, ellipse is drawn as line</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğer küçük elips ekseninin ekran boyutu değerden küçükse, elips çizgi olarak çizilir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5561"/>
         <source>If screen length of line is less than value, the line is drawn as point</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğer satırın ekran uzunluğu değerden küçükse, satır nokta olarak çizilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5600"/>
         <source>If screen radius of circle is less than value, circle is drawn as point</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğer dairenin ekran yarıçapı bu değerden küçükse, daire bir nokta olarak çizilir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5675"/>
         <source>Circle Radius:</source>
-        <translation type="unfinished"></translation>
+        <translation>Daire Yarıçapı:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5632"/>
         <source>Arc Radius:</source>
-        <translation type="unfinished"></translation>
+        <translation>Yay Yarıçapı:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5577"/>
         <source>If screen radius of arc is less than value, arc is drawn as point</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğer yay yarıçapı değerden küçükse, yay nokta olarak çizilir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5639"/>
         <source>Ellipse Minor Axis:</source>
-        <translation type="unfinished"></translation>
+        <translation>Elipsin Küçük Eksenı:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5545"/>
         <source>If screen size for major ellipse axis is less than value, ellipse is drawn as point</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğer ana elips ekseni için ekran boyutu değerden küçükse, elips nokta olarak çizilir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5394"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) during panning. </source>
-        <translation type="unfinished"></translation>
+        <translation>Seçildiğinde, kaydırma sırasında metin harfleri yerine metin taban çizgileri çizilecektir (taslak moduna benzer şekilde).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5397"/>
         <source>Draw text as draft within paning operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Draw text as draft within paning operations</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5404"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) in preview. </source>
-        <translation type="unfinished"></translation>
+        <translation>Seçildiğinde, önizlemede metin harfleri yerine metin taban çizgileri çizilecektir (taslak moduna benzer şekilde).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5407"/>
         <source>Draw text as draft in preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Metni önizlemede taslak olarak çiz</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3795"/>
         <source>Info Cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilgi İmleci</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3801"/>
         <source>Informational Cursor Overlay </source>
-        <translation type="unfinished"></translation>
+        <translation>Bilgilendirici İmleç Katmanı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3807"/>
         <source>Appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>Görünüm</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3813"/>
         <source>Font that should be used for drawing elements of informational cursor.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilgilendirici imleç öğelerini çizmek için kullanılacak yazı tipi.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3820"/>
         <source>If checked, components of coordinate will be drawn in one line. Otherwise, each component will be on own line. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, koordinatın bileşenleri tek bir satırda çizilecektir. Aksi takdirde, her bileşen kendi satırında olacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3823"/>
         <source>Draw coordinates in one line</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatları tek satırda çizin</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="416"/>
@@ -20887,237 +20893,237 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3837"/>
         <source>If checked, labels for coordinate components will be shown. Otherwise, standard form of coordinates will be displayed.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, koordinat bileşenleri için etiketler gösterilecektir. Aksi takdirde, koordinatların standart formu görüntülenecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3840"/>
         <source>Show labels for coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatlar için etiketleri göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3847"/>
         <source>Font size, in points</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazı tipi boyutu, puan cinsinden</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="488"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2441"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3850"/>
         <source> pt</source>
-        <translation type="unfinished"></translation>
+        <translation>pt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="504"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2401"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3866"/>
         <source>Font size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazı Tipi Boyutu:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1688"/>
         <source>If checked, &quot;Snap To Grid&quot; is ignored if grid is not drawn.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, grid çizilmemişse &apos;Izgaraya Yapış&apos; göz ardı edilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1691"/>
         <source>Ignore &quot;Snap to Grid&quot; if grid is not drawn</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğer ızgara çizilmemişse &apos;Izgaraya Yapış&apos; seçeneğini yoksay</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3873"/>
         <source>Offset of labels from the cursor point.</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiketlerin imleç noktasından olan kayması.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3892"/>
         <source>Cursor position offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>İmleç konum kayması:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3902"/>
         <source>If checked, informational cursor will be enabled and shown where applicable.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, bilgilendirici imleç etkinleştirilecek ve uygun olduğunda gösterilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3905"/>
         <source>Enable Informational Cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilgilendirici İmleci Etkinleştir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3912"/>
         <source>Operations Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Operasyon Önizlemesi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3918"/>
         <source>Show properties for entity that will be created</source>
-        <translation type="unfinished"></translation>
+        <translation>Oluşturulacak varlık için özellikleri göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3925"/>
         <source>Show properties for entity that is edited by handles</source>
-        <translation type="unfinished"></translation>
+        <translation>Kulp ile düzenlenen varlık için özellikleri göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3935"/>
         <source>Content</source>
-        <translation type="unfinished"></translation>
+        <translation>İçerik</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4054"/>
         <source>Color for absolute snap coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mutlak sabit koordinatlar için renk.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3964"/>
         <source>If checked, relative distance and angle from relative zero point to snap point will be shown.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, göreli sıfır noktasından yakalama noktasına olan göreli mesafe ve açı gösterilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3967"/>
         <source>Show relative distance and angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Göreli mesafe ve açıyı göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4077"/>
         <source>Color for snap type/restriction</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap tipi/kısıtlaması için renk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4014"/>
         <source>If checked, the prompt of the active command will be shown.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, aktif komutun istemi gösterilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4017"/>
         <source>Show active command prompt</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktif komut istemcisini göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3941"/>
         <source>If checked, show relative coordinate</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, göreli koordinatı göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3947"/>
         <source>Show relative coordinate</source>
-        <translation type="unfinished"></translation>
+        <translation>Göreli koordinatı göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4024"/>
         <source>If checked, information about the type of snap and restrictions will be shown for snap point (if any)</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, snap noktası için snap türü ve kısıtlamalar hakkında bilgiler gösterilecektir (varsa)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4027"/>
         <source>Show snap info /restriction</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap bilgilerini /kısıtlamayı göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4143"/>
         <source>Color for the command prompt</source>
-        <translation type="unfinished"></translation>
+        <translation>Komut istemi için renk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4120"/>
         <source>Color for relative distance and angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Göreli mesafe ve açı için renk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3954"/>
         <source>If checked, absolute position of snap point will be shown.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, yakalama noktasının mutlak konumu gösterilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3957"/>
         <source>Show absolute coordinate</source>
-        <translation type="unfinished"></translation>
+        <translation>Mutlak koordinatı göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4179"/>
         <source>If checked, name of active command will be shown before command prompt</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, aktif komutun adı komut isteminden önce gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4185"/>
         <source>Show active command name</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktif komut adını göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4192"/>
         <source>If checked, short overview properties of the entity&apos;s that is catched for selection will be shown. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, seçim için yakalanan varlığın kısa genel özellikleri gösterilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4198"/>
         <source>Show properties of catched entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Show properties of catched entity</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4240"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili varlıkların katmanını, katman etkinleştirildiğinde değiştir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4397"/>
         <source>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, çizimler Sekme modundaysa sekmelerde kapatma çarpısı göstergesi gösterilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4400"/>
         <source>Show Close button on drawings tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizim sekmelerinde Kapat düğmesini göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2052"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4418"/>
         <source>Always</source>
-        <translation type="unfinished"></translation>
+        <translation>Her zaman</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4423"/>
         <source>Active Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin Sekme</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4377"/>
         <source>If checked, keyboard shortcut will be shown in tooltip for action</source>
-        <translation type="unfinished"></translation>
+        <translation>İşlem için klavye kısayolu gösterilecekse işaretleyin</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4380"/>
         <source>Show keyboard shortcuts in actions tooltips</source>
-        <translation type="unfinished"></translation>
+        <translation>Eylem ipuçlarında klavye kısayollarını göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4772"/>
         <source>Auto save backup each</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto save backup each</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4458"/>
         <source>If checked, location of dialog will not be saved, but size will</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğer işaretlenirse, iletişim kutusunun konumu kaydedilmeyecek, ancak boyutu kaydedilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4464"/>
         <source>Persist dialog size only</source>
-        <translation type="unfinished"></translation>
+        <translation>Sadece iletişim kutusu boyutunu koru</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4749"/>
         <source> minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>dakikalar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4431"/>
         <source>If checked, dialogs will be positioned and resized to position/size of last invocation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili olduğunda, diyaloglar son kullanım konumuna ve boyutuna göre konumlandırılacak ve yeniden boyutlandırılacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4434"/>
         <source>Persistent dialogs location and size</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalıcı iletişim kutularının konumu ve boyutu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4290"/>
@@ -21132,37 +21138,37 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4538"/>
         <source>Drawing units</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizim birimleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5042"/>
         <source>Languages for commands in Cmd Widget</source>
-        <translation type="unfinished"></translation>
+        <translation>Cmd Widget&apos;te komutlar için diller</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5022"/>
         <source>Language to use for GUI and messages</source>
-        <translation type="unfinished"></translation>
+        <translation>GUI ve mesajlar için kullanılacak dil</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4866"/>
         <source>Defines whether splash screen will be shown on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıçta açılış ekranının gösterilip gösterilmeyeceğini tanımlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4856"/>
         <source>Controls default mode for drawings</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimler için varsayılan modu kontrol eder</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4906"/>
         <source>If checked, after start the main window will be maximized</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, başladıktan sonra ana pencere maksimize edilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1549"/>
         <source>Angle Snap</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı Yakalama</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1581"/>
@@ -21182,556 +21188,556 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1626"/>
         <source>Mark Radius:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mark Radius:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="52"/>
         <source>Background and Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Arka Plan ve Seçim</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="410"/>
         <source>Draft Mode Marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Taslak Modu İşaretleyicisi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2415"/>
         <source>Font that should be used for drawing name of axis in coordinate system zero.</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinat sisteminde eksen adını çizmek için kullanılacak yazı tipi sıfır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="485"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2438"/>
         <source>Font size that should be used for drawing name of axis in coordinate system zero.</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinat sisteminde eksen adını çizmek için kullanılacak sıfır font boyutu.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2474"/>
         <source>If selected, marker for coodinate system will be shown in zero point of current user coordinates system. </source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilirse, koordinat sistemi için işaretçi mevcut kullanıcı koordinat sistemi sıfır noktasında gösterilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="444"/>
         <source>Show Draft mode marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Taslak modu işaretleyicisini göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="451"/>
         <source>Font that should be used for draft mode marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Taslak modu işaretleyicisi için kullanılacak yazı tipi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="441"/>
         <source>If selected, in draft mode text label will be drawin in view corners</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçildiğinde, taslak modda metin etiketi görünüm köşelerine çizilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2395"/>
         <source>Coordinates Zero Marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatlar Sıfır İşareti</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2408"/>
         <source>Marker Size</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretçi Boyutu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2422"/>
         <source>Size of axis of coordinate system&apos;s zero marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinat sisteminin sıfır işaretinin eksen boyutu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2464"/>
         <source>If selected and view is in user coordinate system, the marker for coodinate system will be shown in zero point of world coordinates system. </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2467"/>
         <source>Show WCS zero marker</source>
-        <translation type="unfinished"></translation>
+        <translation>WCS sıfır işaretleyicisini göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2477"/>
         <source>Show UCS zero marker</source>
-        <translation type="unfinished"></translation>
+        <translation>UCS sıfır işaretleyicisini göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2042"/>
         <source>Angles Basis Marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Açılar Temel İşaretleyici</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2033"/>
         <source>Coordinate System</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinat Sistemi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2057"/>
         <source>Only for non-defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Sadece varsayılan olmayanlar için</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2095"/>
         <source>Show angles basis marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Açıları temel işaretleyici ile göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2102"/>
         <source>Base Angle Ray Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Taban Açısı Işın Rengi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2135"/>
         <source>#017CFF</source>
-        <translation type="unfinished"></translation>
+        <translation>#017CFF</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2148"/>
         <source>#00FFFF</source>
-        <translation type="unfinished"></translation>
+        <translation>#00FFFF</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2487"/>
         <source>Relative Zero Marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Göreli Sıfır Belirteci</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1662"/>
         <source>Behavior</source>
-        <translation type="unfinished"></translation>
+        <translation>Davranış</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="993"/>
         <source>Type of grid to be drawn</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizilecek ızgara türü</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1118"/>
         <source>Decimal meta-grid every:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ondalık meta-ızgara her:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1125"/>
         <source>Controls the frequency of major grid lines compared to minor grid lines.</source>
-        <translation type="unfinished"></translation>
+        <translation>Büyük ızgara çizgilerinin sıklığını küçük ızgara çizgilerine kıyasla kontrol eder.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1633"/>
         <source>Radius of arc within angle snap mark.</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı hizalama işaretindeki yay yarıçapı.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1701"/>
         <source>Snap Marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Çıtçıt İşareti</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1938"/>
         <source>Advanced Snap Fine-tuning settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelişmiş Snap İnce Ayar Ayarları</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1944"/>
         <source>Snap on Entity &quot;Free snap&quot; distance switch:</source>
-        <translation type="unfinished"></translation>
+        <translation>Entity &apos;Ücretsiz snap&apos; mesafe anahtarını tak:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1951"/>
         <source>Snap on entity will be invoked if it is enabled and the distance between mouse and snapped point is larger than specified value.</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap on özelliği etkinse ve fare ile yakalanan nokta arasındaki mesafe belirtilen değerden büyükse, snap on nesnesi çağrılacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1954"/>
         <source> drawing units</source>
-        <translation type="unfinished"></translation>
+        <translation>çizim birimleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1983"/>
         <source>Distance in screen coordinates that is used for catching entities </source>
-        <translation type="unfinished"></translation>
+        <translation>Varlıkları yakalamak için kullanılan ekran koordinatlarındaki mesafe</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1996"/>
         <source>Min grid cell snap factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Min ızgara hücresi yakalama faktörü:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2003"/>
         <source>Snap distance (in pixels) for catching entities.</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlıkları yakalamak için eşleme mesafesi (piksel cinsinden).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2006"/>
         <source>Catch entities Snap Distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlıkları Yakala Yakalama Mesafesi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2013"/>
         <source>Grid cell factor used for snap to grid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgaraya yapıştırma için kullanılan ızgara hücresi faktörü.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2039"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2129"/>
         <source>Color of the marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Markerın rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2048"/>
         <source>Defines where to draw angle basis marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı temel işaretleyicisinin nerede çizileceğini tanımlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2092"/>
         <source>If enabled, angles basis marker will be shown in the orign of coordinates system</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkinleştirilirse, açıların temel işareti koordinat sisteminin orijininde gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2142"/>
         <source>Color of the ray that displays zero angle position</source>
-        <translation type="unfinished"></translation>
+        <translation>Sıfır açı pozisyonunu gösteren ışının rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4264"/>
         <source>If checked, it will be possible to enter value of angle in decimal degrees only. Otherwise, angles in surveyor, radiant, imperial degrees and bearing formats are allowed for input.  </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4267"/>
         <source>Allow angles input in decimal degrees only</source>
-        <translation type="unfinished"></translation>
+        <translation>Açılar yalnızca ondalık derece cinsinden girilebilir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4387"/>
         <source>If selected, menu will include top-level items for drawing tools. Otherwise, they will under the same menu item. </source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilirse, menü çizim araçları için birinci düzey öğeleri içerecektir. Aksi takdirde, aynı menü öğesinin altında yer alacaklardır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4390"/>
         <source>Expand &quot;Tools&quot; commands in menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Menüdeki &quot;Araçlar&quot; komutlarını genişlet</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4354"/>
         <source>If selected, separate menu will be created for each group of entity-related commands. Otherwise, these command will be under the same menu. </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4313"/>
         <source>If enabled, it is possible to do with keys - zooming via +/-, scrolling via arrow keys, moving selected entities position via arrow keys and SHIFT/CTRL modifiers.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4316"/>
         <source>Enable scroll and position adjustment via keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Klavye ile kaydırma ve pozisyon ayarını etkinleştir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4344"/>
         <source>If selected, controls for picking values from drawing are available in Tool Options toolbar, allowing to pick length and angle values from drawing. </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4347"/>
         <source>Tool options toolbar includes pick values controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Araç seçenekleri araç çubuğu, değer seçme kontrollerini içerir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4360"/>
         <source>Separate menu per entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Her varlık için ayrı menü</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4706"/>
         <source>Auto-Save Drawings</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimleri Otomatik Kaydet</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4713"/>
         <source>#</source>
-        <translation type="unfinished"></translation>
+        <translation>#</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4718"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4787"/>
         <source>~</source>
-        <translation type="unfinished"></translation>
+        <translation>~</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4723"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4797"/>
         <source>_</source>
-        <translation type="unfinished"></translation>
+        <translation>_</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4728"/>
         <source>__</source>
-        <translation type="unfinished"></translation>
+        <translation>__</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4733"/>
         <source>lcauto_</source>
-        <translation type="unfinished"></translation>
+        <translation>lcauto_</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4738"/>
         <source>autosaved_</source>
-        <translation type="unfinished"></translation>
+        <translation>otomatik_kaydedildi_</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4762"/>
         <source>Auto-save file name prefix:</source>
-        <translation type="unfinished"></translation>
+        <translation>Otomatik kaydetme dosya adı öneki:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4779"/>
         <source>Backup file name suffix:</source>
-        <translation type="unfinished"></translation>
+        <translation>Yedek dosya adı eki:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4792"/>
         <source>$$</source>
-        <translation type="unfinished"></translation>
+        <translation>$$</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4802"/>
         <source>_backup</source>
-        <translation type="unfinished"></translation>
+        <translation>_backup</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4807"/>
         <source>_bak</source>
-        <translation type="unfinished"></translation>
+        <translation>_bak</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4812"/>
         <source>.bak</source>
-        <translation type="unfinished"></translation>
+        <translation>.bak</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4817"/>
         <source>.backup</source>
-        <translation type="unfinished"></translation>
+        <translation>.yedek</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4822"/>
         <source>.lcb</source>
-        <translation type="unfinished"></translation>
+        <translation>.lcb</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4846"/>
         <source>If checked, toolbars with commands will be enabled. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, komutların bulunduğu araç çubukları etkinleştirilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4939"/>
         <source>If enabled, tooltips toolbar&apos;s name will be shown</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkinleştirilirse, araç ipuçları araç çubuğunun adı gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4942"/>
         <source>Show tooltips for toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>Araç çubukları için ipuçlarını göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5119"/>
         <source>Exchange</source>
-        <translation type="unfinished"></translation>
+        <translation>Takas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5125"/>
         <source>Exports settings to the file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarları dosyaya aktarır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5128"/>
         <source>Export settings to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarları dosyaya aktar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5135"/>
         <source>Imports application&apos;s preferences from external file</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygulamanın tercihlerini harici dosyadan içe aktarır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5138"/>
         <source>Import settings from file</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarları dosyadan içe aktar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5148"/>
         <source>Paths</source>
-        <translation type="unfinished"></translation>
+        <translation>Yollar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5321"/>
         <source>Other settings locations</source>
-        <translation type="unfinished"></translation>
+        <translation>Diğer ayar konumları</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5328"/>
         <source>Directory where various settings are located (shortcuts, workspaces, pens etc.)</source>
-        <translation type="unfinished"></translation>
+        <translation>Çeşitli ayarların bulunduğu dizin (kısayollar, çalışma alanları, kalemler vb.)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5379"/>
         <source>Renderer</source>
-        <translation type="unfinished"></translation>
+        <translation>Renderleyici</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5426"/>
         <source>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5436"/>
         <source>If this method is selected, arcs are drawn using method of QT library.  On large zooms, arcs may be rendered with errors near endpoints.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu yöntem seçilirse, eğriler QT kütüphanesinin yöntemi kullanılarak çizilir. Büyük yakınlaştırmalarda, eğriler uç noktalar yakınlarında hatalı olarak çizilebilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5439"/>
         <source>Qt-native drawing method (unexact near endpoints)</source>
-        <translation type="unfinished"></translation>
+        <translation>Qt-native drawing method (unexact near endpoints)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5685"/>
         <source>Fonts Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazı Tipi Dosyaları</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5691"/>
         <source>Amount of letters columns:</source>
-        <translation type="unfinished"></translation>
+        <translation>Harf sütunları sayısı:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5704"/>
         <source>Contains the number of columns in one row for rendering font letter blocks. If 0 - all letters in one row. </source>
-        <translation type="unfinished"></translation>
+        <translation>Yazı tipi harf bloklarını desselendirmek için bir satırdaki sütun sayısını içerir. Eğer 0 ise - tüm harfler bir satırda.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5385"/>
         <source>Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Operasyonlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5391"/>
         <source>If enabled, during pan operation TEXT and MTEXT objects will be drawn schematically</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkinleştirilirse, kaydırma işlemi sırasında TEXT ve MTEXT nesneleri şematik olarak çizilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5417"/>
         <source>Defines how arcs are rendered in UI. </source>
-        <translation type="unfinished"></translation>
+        <translation>UI&apos;de eğrilerin nasıl görüntüleneceğini tanımlar.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4876"/>
         <source>If checked, dock widgets with commands for left sidebar will be enabled. Otherwise, they will be disabled. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, sol kenar çubuğu için komutlu dock bileşenleri etkinleştirilecektir. Aksi takdirde, devre dışı bırakılacaklardır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5420"/>
         <source>Arcs Rendering Method</source>
-        <translation type="unfinished"></translation>
+        <translation>Yayları Görselleştirme Yöntemi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5429"/>
         <source>Interpolate by line segments</source>
-        <translation type="unfinished"></translation>
+        <translation>Doğru parçaları ile enterpolasyon yap</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5446"/>
         <source>Single segment angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Tek segmentli açı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5455"/>
         <source>Determine segments by max sagitta</source>
-        <translation type="unfinished"></translation>
+        <translation>Maksimum sagitta ile segmentleri belirleyin</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5462"/>
         <source>If selected, the fixed angle of line interpolation segment will be used. Smaller angle deliver more smooth arc yet is slower.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçildiğinde, sabit açıdaki çizgi enterpolasyon segmenti kullanılacaktır. Daha küçük açı, daha düzgün bir yay sağlar, ancak daha yavaştır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5465"/>
         <source>Use fixed segment angle value</source>
-        <translation type="unfinished"></translation>
+        <translation>Sabit segment açı değerini kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5472"/>
         <source>Value of fixed segment&apos;s angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Sabit segmentin açısının değeri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5475"/>
         <source> degrees</source>
-        <translation type="unfinished"></translation>
+        <translation>derece</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5494"/>
         <source>Maximal distance betwen arc and segment interpolation line</source>
-        <translation type="unfinished"></translation>
+        <translation>Yay ile segment enterpolasyon hattı arasındaki maksimum mesafe</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5522"/>
         <source>Render circles in the same way as arcs.</source>
-        <translation type="unfinished"></translation>
+        <translation>Daireleri, yaylar ile aynı şekilde render edin.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4166"/>
         <source>If set and user coordinate system is active, absolute coodinate in world coordinate system will be also shown.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğer ayarlandıysa ve kullanıcı koordinat sistemi aktifse, dünya koordinat sistemindeki mutlak koordinat da gösterilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4172"/>
         <source>Show world coordinates if in user coordinate system</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanıcı koordinat sistemindeyse dünya koordinatlarını göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4448"/>
         <source>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4451"/>
         <source>Changing view only modifies drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Görünümü değiştirmek yalnızca çizimi değiştirir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4886"/>
         <source>If set, previously opened files during previous closing of the application will be re-opened.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarlanırsa, uygulamanın önceki kapanışında açılmış olan dosyalar tekrar açılacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4492"/>
         <source>Angles Positive Direction:</source>
-        <translation type="unfinished"></translation>
+        <translation>Açılar Pozitif Yön:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4502"/>
         <source>Zero base angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sıfır taban açısı:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4525"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut kullanıcı koordinat sistemine göre sıfır temel açısı. Kutupsal koordinat girişini ve açıya yapışmayı etkiler. 0.0, saat 15:00&apos;i temsil eder.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4564"/>
         <source>degrees.</source>
-        <translation type="unfinished"></translation>
+        <translation>derece.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4631"/>
         <source>Counterclockwise, 90 degrees is north.</source>
-        <translation type="unfinished"></translation>
+        <translation>Saat yönünün tersine, 90 derece kuzeydir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4660"/>
         <source>Clockwise, 90 degrees is sourth.</source>
-        <translation type="unfinished"></translation>
+        <translation>Clockwise, 90 degrees is sourth.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5179"/>
@@ -21740,48 +21746,48 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5259"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5283"/>
         <source>Click to select directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Dizini seçmek için tıklayın</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5207"/>
         <source>Path to folder with fonts</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazı tiplerinin bulunduğu klasör yolu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5083"/>
         <source>Restores program geometry/layout to original state</source>
-        <translation type="unfinished"></translation>
+        <translation>Program geometrisini/düzenini orijinal durumuna geri yükler</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5099"/>
         <source>Restores the program settings to its original state</source>
-        <translation type="unfinished"></translation>
+        <translation>Program ayarlarını orijinal durumuna geri yükler</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5154"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5335"/>
         <source>Click to select file</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya seçmek için tıklayın</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5214"/>
         <source>Path to folder with hatch patterns</source>
-        <translation type="unfinished"></translation>
+        <translation>Tarama desenlerine sahip klasöre giden yol</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5172"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5190"/>
         <source>Path to file with variables</source>
-        <translation type="unfinished"></translation>
+        <translation>Değişkenlerin bulunduğu dosyanın yolu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5294"/>
         <source>Path to folder with translation files</source>
-        <translation type="unfinished"></translation>
+        <translation>Çeviri dosyalarının bulunduğu klasör yolu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4306"/>
@@ -21839,12 +21845,12 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="211"/>
         <source>Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Puanlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="219"/>
         <source>Export Points</source>
-        <translation type="unfinished"></translation>
+        <translation>İhracat Noktaları</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="20"/>
@@ -21935,7 +21941,7 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="38"/>
         <source>Whether to export points</source>
-        <translation type="unfinished"></translation>
+        <translation>Puanları dışa aktarmak mı</translation>
     </message>
 </context>
 <context>
@@ -22059,7 +22065,7 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgscale.ui" line="109"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bir referans noktasına ve bir hedef noktasına göre merkezin etrafındaki ölçekleme oranlarını bulun.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgscale.ui" line="142"/>
@@ -22287,7 +22293,7 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1621"/>
         <source>Selected character preview. Click to insert to text.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili karakter önizlemesi. Metne eklemek için tıklayın.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1631"/>
@@ -22302,32 +22308,32 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="145"/>
         <source>Text to insert</source>
-        <translation type="unfinished"></translation>
+        <translation>Eklemek için metin</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="197"/>
         <source>Layer of text</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin katmanı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="255"/>
         <source>Obligue of text</source>
-        <translation type="unfinished"></translation>
+        <translation>Obligue of text</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="268"/>
         <source>Rotation angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Dönme açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="301"/>
         <source>Width factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Genişlik faktörü</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="337"/>
         <source>Height of text</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin yüksekliği</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="513"/>
@@ -22342,12 +22348,12 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="948"/>
         <source>Symbol to insert</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekleme sembolü</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1046"/>
         <source>Codepage selection for selecting character</source>
-        <translation type="unfinished"></translation>
+        <translation>Karakter seçimi için kod sayfası seçimi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1055"/>
@@ -22887,7 +22893,7 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1653"/>
         <source>Selection of character to insert</source>
-        <translation type="unfinished"></translation>
+        <translation>Eklenecek karakterin seçimi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="178"/>
@@ -23431,17 +23437,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.cpp" line="344"/>
         <source>Invalid scale provided</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçersiz ölçek belirtildi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.cpp" line="400"/>
         <source>Paper scale factor larger than max print ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Kağıt ölçek faktörü, maksimum baskı oranından büyük</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.cpp" line="404"/>
         <source>Paper scale factor smaller than min print ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Kağıt ölçek faktörü, minimum baskı oranından küçük</translation>
     </message>
 </context>
 <context>
@@ -23472,12 +23478,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/status_bar/qg_selectionwidget.ui" line="169"/>
         <source>Number of selected entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen varlık sayısı</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_selectionwidget.ui" line="203"/>
         <source>Total length of selected entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen öğelerin toplam uzunluğu</translation>
     </message>
 </context>
 <context>
@@ -23500,17 +23506,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="174"/>
         <source>Coordinate system: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinat sistemi: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="174"/>
         <source>User</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanıcı</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="174"/>
         <source>World</source>
-        <translation type="unfinished"></translation>
+        <translation>Dünya</translation>
     </message>
 </context>
 <context>
@@ -23529,17 +23535,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="123"/>
         <source>Color of line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="130"/>
         <source>Width of line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi genişliği</translation>
     </message>
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="137"/>
         <source>Type of line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi türü</translation>
     </message>
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="81"/>
@@ -23674,14 +23680,14 @@ Bu işlem geri alınamaz.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="223"/>
         <source>Layer empty name is not allowed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Katman boş adı izin verilmiyor.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="290"/>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="151"/>
@@ -23693,62 +23699,62 @@ Please specify a different name.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="152"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="957"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="967"/>
         <source>Remove empty layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Boş katmanları kaldır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="958"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="968"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlık bulunmayan katman yok, silinecek bir şey yok.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1111"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1156"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1164"/>
         <source>Add Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Katman Ekle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1112"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1157"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1165"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Boyutsal katman yalnızca normal aktif katman için eklenebilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1228"/>
         <source>Move Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimi Taşı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1235"/>
         <source>Duplicate Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimi Kopyala</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1252"/>
@@ -23757,102 +23763,102 @@ Please specify a different name.</source>
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1791"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1842"/>
         <source>Layer DialogEx</source>
-        <translation type="unfinished"></translation>
+        <translation>Layer DialogEx</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="218"/>
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 renk için geçersiz bir değer sağlandı. Lütfen farklı bir değer belirtin.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1334"/>
         <source>Remove pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalemi çıkar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1335"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalem paletten kaldırılacak, çizim öğeleri etkilenmeyecek.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1336"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1355"/>
         <source>Are you sure you&apos;d like to proceed?</source>
-        <translation type="unfinished"></translation>
+        <translation>Devam etmek istediğinizden emin misiniz?</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1337"/>
         <source>Pen for removal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çıkarma için kalem:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1353"/>
         <source>Remove pens</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalemleri çıkar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1354"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalemler paletten kaldırılacak, çizim elemanları etkilenmeyecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1356"/>
         <source>Pens for removal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çıkarılacak kalemler:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1377"/>
         <source>Select Entities </source>
-        <translation type="unfinished"></translation>
+        <translation>Varlıkları Seç</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1378"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation type="unfinished"></translation>
+        <translation>Görünür katmanlarda kalemle eşleşen hiçbir nesne yok.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1379"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Böyle varlıklar donmuş katmanlarda bulunur.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1380"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Böyle varlıklar kilitli katmanlarda bulunur.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1381"/>
         <source>Please use different pen attributes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lütfen farklı kalem özellikleri kullanın.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1390"/>
         <source>Set pen by entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlığa göre kalemi ayarla</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1391"/>
         <source>Please select only one entity to pick pen setting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lütfen kalem ayarını seçmek için yalnızca bir varlık seçin.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1401"/>
         <source>Saving Pens Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalem Verilerini Kaydetme</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1402"/>
         <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalem verileri belirtilen kalem dosyasına kaydedilemiyor. Dosya için doğru yolu belirtmek ister misiniz?</translation>
     </message>
 </context>
 <context>
@@ -24093,17 +24099,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/main.cpp" line="479"/>
         <source>Release Candidate</source>
-        <translation type="unfinished"></translation>
+        <translation>Sürüm Adayı</translation>
     </message>
     <message>
         <location filename="../src/main/main.cpp" line="480"/>
         <source>BETA</source>
-        <translation type="unfinished"></translation>
+        <translation>BETA</translation>
     </message>
     <message>
         <location filename="../src/main/main.cpp" line="481"/>
         <source>ALPHA</source>
-        <translation type="unfinished"></translation>
+        <translation>ALFA</translation>
     </message>
     <message>
         <location filename="../src/main/doc_plugin_interface.cpp" line="1369"/>
@@ -24861,22 +24867,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="80"/>
         <source>cnlayer</source>
-        <translation type="unfinished"></translation>
+        <translation>cnlayer</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="81"/>
         <source>cnly</source>
-        <translation type="unfinished"></translation>
+        <translation>sadece</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="85"/>
         <source>cslayer</source>
-        <translation type="unfinished"></translation>
+        <translation>cslayer</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="86"/>
         <source>csly</source>
-        <translation type="unfinished"></translation>
+        <translation>csly</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="894"/>
@@ -25372,17 +25378,17 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="261"/>
         <location filename="../src/cmd/rs_commands.cpp" line="316"/>
         <source>cannot change meaning of commands. Refused to reuse command %1 to mean %2</source>
-        <translation type="unfinished"></translation>
+        <translation>komutların anlamını değiştiremez. %1 komutunun %2 anlamında yeniden kullanılmasını reddetti</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>requesting alias(%1) for unknown command(%2): ignored</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilinmeyen komut için takma ad (%1) isteniyor (%2): yok sayıldı</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="310"/>
         <source>reusing an existing alias: was %1=%2, changed to %1=%3</source>
-        <translation type="unfinished"></translation>
+        <translation>mevcut bir takma adın yeniden kullanılması: %1=%2 idi, %1=%3 olarak değiştirildi</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="391"/>
@@ -25392,12 +25398,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="416"/>
         <source>keycode: %1 (%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>tuş kodu: %1 (%2)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="418"/>
         <source>invalid keycode: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>geçersiz tuş kodu: %1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="433"/>
@@ -25486,7 +25492,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="61"/>
         <source>Calculator: </source>
-        <translation type="unfinished"></translation>
+        <translation>Hesap Makinesi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="143"/>
@@ -25497,13 +25503,13 @@ Do you want to replace it?</source>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="271"/>
         <source>cal </source>
         <comment>command to trigger cli calculator</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="272"/>
         <source>calculate </source>
         <comment>command to trigger cli calculator</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="308"/>
@@ -25541,55 +25547,55 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="100"/>
         <source>sline</source>
         <comment>draw snake line</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="101"/>
         <source>sli</source>
         <comment>draw snake line</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="102"/>
         <source>sl</source>
         <comment>draw snake line</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="107"/>
         <source>slinex</source>
         <comment>draw snake line (X)</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="108"/>
         <source>slix</source>
         <comment>draw snake line (X)</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="109"/>
         <source>rlx</source>
         <comment>draw snake line (X)</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="114"/>
         <source>sliney</source>
         <comment>draw snake line (Y)</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="115"/>
         <source>sliy</source>
         <comment>draw snake line (Y)</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="116"/>
         <source>rly</source>
         <comment>draw snake line (Y)</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="121"/>
@@ -25643,229 +25649,229 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="146"/>
         <source>rect1</source>
         <comment>draw rectangle (1 Point)</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="147"/>
         <source>re1</source>
         <comment>draw rectangle (1 Point)</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="152"/>
         <source>rect2</source>
         <comment>draw rectangle (2 Points)</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="153"/>
         <source>re2</source>
         <comment>draw rectangle (2 Points)</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="158"/>
         <source>rect3</source>
         <comment>draw rectangle (3 Points)</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="159"/>
         <source>re3</source>
         <comment>draw rectangle (3 Points)</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="164"/>
         <source>slicel</source>
         <comment>slice/divide line</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="165"/>
         <source>sll</source>
         <comment>slice/divide line</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="170"/>
         <source>slicec</source>
         <comment>slice/divide circle/arc</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="171"/>
         <source>slc</source>
         <comment>slice/divide circle/arc</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="176"/>
         <source>star</source>
         <comment>draw star</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="177"/>
         <source>st</source>
         <comment>draw star</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="182"/>
         <source>cross</source>
         <comment>draw cross for circle</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="183"/>
         <source>cx</source>
         <comment>draw cross for circle</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="187"/>
         <source>bbox</source>
         <comment>draw bound box</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="188"/>
         <source>bb</source>
         <comment>draw bound box</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="192"/>
         <source>midline</source>
         <comment>draw middle line</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="193"/>
         <source>ml</source>
         <comment>draw mid line</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="198"/>
         <source>linepoints</source>
         <comment>draw line of points</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="199"/>
         <source>lpoints</source>
         <comment>draw line of points</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="203"/>
         <source>midpoint</source>
         <comment>draw middle points</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="204"/>
         <source>mpoint</source>
         <comment>draw middle of points</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="209"/>
         <source>criclebyarc</source>
         <comment>draw circle by arc</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="210"/>
         <source>cba</source>
         <comment>draw circle by arc</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="215"/>
         <source>duplicate</source>
         <comment>duplicate entity</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="216"/>
         <source>dup</source>
         <comment>duplicate entity</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="221"/>
         <source>align</source>
         <comment>align entities</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="222"/>
         <source>al</source>
         <comment>align entities</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="227"/>
         <source>align1</source>
         <comment>align entities</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="228"/>
         <source>al1</source>
         <comment>align entities</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="232"/>
         <source>alignref</source>
         <comment>align references</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="233"/>
         <source>alr</source>
         <comment>align references</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="238"/>
         <source>linejoin</source>
         <comment>lines join</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="239"/>
         <source>lj</source>
         <comment>lines join</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="244"/>
         <source>breakdivide</source>
         <comment>break or divide entity</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="245"/>
         <source>bd</source>
         <comment>break or divide entity</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="250"/>
         <source>gapline</source>
         <comment>line gap</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="251"/>
         <source>gl</source>
         <comment>line gap</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="256"/>
@@ -25877,7 +25883,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="257"/>
         <source>parallel</source>
         <comment>create parallel</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="258"/>
@@ -26021,13 +26027,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="326"/>
         <source>polygonvv</source>
         <comment>polygon vertex vertex</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="327"/>
         <source>pvv</source>
         <comment>polygon vertex vertex</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="333"/>
@@ -26189,49 +26195,49 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="424"/>
         <source>arc2p3</source>
         <comment>draw 2pt arc radius</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="425"/>
         <source>a2r</source>
         <comment>draw 2pt arc radius</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="430"/>
         <source>arc2pl</source>
         <comment>draw 2pt arc length</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="431"/>
         <source>a2l</source>
         <comment>draw 2pt arc length</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="436"/>
         <source>arc2ph</source>
         <comment>draw 2pt arc height</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="437"/>
         <source>a2h</source>
         <comment>draw 2pt arc height</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="442"/>
         <source>arc2pa</source>
         <comment>draw 2pt arc angle</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="443"/>
         <source>a2a</source>
         <comment>draw 2pt arc angle</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="450"/>
@@ -26261,37 +26267,37 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="468"/>
         <source>arcellc1ax</source>
         <comment>arc ellipse 1 point</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="469"/>
         <source>ae1</source>
         <comment>arc ellipse 1 point</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="474"/>
         <source>parabola4p</source>
         <comment>Parabola 4 points</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="475"/>
         <source>pl4</source>
         <comment>Parabola 4 points</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="480"/>
         <source>parabolafd</source>
         <comment>Parabola focus directrix</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="481"/>
         <source>plfd</source>
         <comment>Parabola focus directrix</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="487"/>
@@ -26315,13 +26321,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="500"/>
         <source>ellipsec1p</source>
         <comment>ellipse 1 point</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="501"/>
         <source>ea1</source>
         <comment>ellipse 1 point</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="506"/>
@@ -26363,37 +26369,37 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="539"/>
         <source>angleline</source>
         <comment>draw angle from line</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="540"/>
         <source>aline</source>
         <comment>draw angle from line</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="545"/>
         <source>rortoline</source>
         <comment>draw orthogonal</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="546"/>
         <source>rort</source>
         <comment>draw orthogonal</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="551"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="552"/>
         <source>p2l</source>
         <comment>draw line from point to line</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="558"/>
@@ -26507,25 +26513,25 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="636"/>
         <source>dimord</source>
         <comment>dimension - ordinate</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="637"/>
         <source>do</source>
         <comment>dimension - ordinate</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="641"/>
         <source>dimordrebase</source>
         <comment>dimension - ordinate</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="642"/>
         <source>dor</source>
         <comment>dimension - ordinate</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="659"/>
@@ -26801,19 +26807,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="946"/>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="947"/>
         <source>snapmanual</source>
         <comment>snap middle manual</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="948"/>
         <source>smm</source>
         <comment>snap middle manual</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="989"/>
@@ -26849,19 +26855,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1054"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1149"/>
         <source>angle1</source>
-        <translation type="unfinished"></translation>
+        <translation>açı1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1055"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1150"/>
         <source>angle2</source>
-        <translation type="unfinished"></translation>
+        <translation>açı2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1058"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1158"/>
         <source>chordlen</source>
-        <translation type="unfinished"></translation>
+        <translation>kord yapmak</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1061"/>
@@ -26889,278 +26895,278 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1075"/>
         <source>y</source>
-        <translation type="unfinished"></translation>
+        <translation>y</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1076"/>
         <source>p</source>
-        <translation type="unfinished"></translation>
+        <translation>p</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1077"/>
         <source>anglerel</source>
-        <translation type="unfinished"></translation>
+        <translation>balıkçılar</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1078"/>
         <source>start</source>
-        <translation type="unfinished"></translation>
+        <translation>başlamak</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1081"/>
         <source>offset</source>
-        <translation type="unfinished"></translation>
+        <translation>dengelemek</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1082"/>
         <source>linesnap</source>
-        <translation type="unfinished"></translation>
+        <translation>linesnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1083"/>
         <source>ticksnap</source>
-        <translation type="unfinished"></translation>
+        <translation>ticksnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1086"/>
         <source>width</source>
-        <translation type="unfinished"></translation>
+        <translation>genişlik</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1087"/>
         <source>height</source>
-        <translation type="unfinished"></translation>
+        <translation>yükseklik</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1088"/>
         <source>pos</source>
-        <translation type="unfinished"></translation>
+        <translation>poz</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1089"/>
         <source>size</source>
-        <translation type="unfinished"></translation>
+        <translation>size</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1090"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1096"/>
         <source>bevels</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğimler</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1091"/>
         <source>nopoly</source>
-        <translation type="unfinished"></translation>
+        <translation>nopoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1092"/>
         <source>usepoly</source>
-        <translation type="unfinished"></translation>
+        <translation>usepoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1093"/>
         <source>corners</source>
-        <translation type="unfinished"></translation>
+        <translation>köşeler</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1094"/>
         <source>str</source>
-        <translation type="unfinished"></translation>
+        <translation>dizi</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1095"/>
         <source>round</source>
-        <translation type="unfinished"></translation>
+        <translation>yuvarlak</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1097"/>
         <source>snap1</source>
-        <translation type="unfinished"></translation>
+        <translation>anlık1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1098"/>
         <source>topl</source>
-        <translation type="unfinished"></translation>
+        <translation>top</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1099"/>
         <source>top</source>
-        <translation type="unfinished"></translation>
+        <translation>top</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1100"/>
         <source>topr</source>
-        <translation type="unfinished"></translation>
+        <translation>topr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1101"/>
         <source>left</source>
-        <translation type="unfinished"></translation>
+        <translation>sol</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1102"/>
         <source>middle</source>
-        <translation type="unfinished"></translation>
+        <translation>orta</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1103"/>
         <source>right</source>
-        <translation type="unfinished"></translation>
+        <translation>sağ</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1104"/>
         <source>bottoml</source>
-        <translation type="unfinished"></translation>
+        <translation>bottoml</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1105"/>
         <source>bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>alt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1106"/>
         <source>bottomr</source>
-        <translation type="unfinished"></translation>
+        <translation>bottomr</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1107"/>
         <source>snapcorner</source>
-        <translation type="unfinished"></translation>
+        <translation>snapcorner</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1108"/>
         <source>snapshift</source>
-        <translation type="unfinished"></translation>
+        <translation>anlık kaydırma</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1109"/>
         <source>sizein</source>
-        <translation type="unfinished"></translation>
+        <translation>size</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1110"/>
         <source>sizeout</source>
-        <translation type="unfinished"></translation>
+        <translation>sizeout</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1111"/>
         <source>hor</source>
-        <translation type="unfinished"></translation>
+        <translation>hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1112"/>
         <source>vert</source>
-        <translation type="unfinished"></translation>
+        <translation>yeşil</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1115"/>
         <source>snap2</source>
-        <translation type="unfinished"></translation>
+        <translation>snap2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1116"/>
         <source>corner</source>
-        <translation type="unfinished"></translation>
+        <translation>köşe</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1117"/>
         <source>mid-vert</source>
-        <translation type="unfinished"></translation>
+        <translation>orta-dik</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1118"/>
         <source>mid-hor</source>
-        <translation type="unfinished"></translation>
+        <translation>mid-hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1120"/>
         <source>quad</source>
-        <translation type="unfinished"></translation>
+        <translation>kare</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1121"/>
         <source>noquad</source>
-        <translation type="unfinished"></translation>
+        <translation>dörtgen değil</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1122"/>
         <source>angle_inner</source>
-        <translation type="unfinished"></translation>
+        <translation>iç_açı</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1125"/>
         <source>edges</source>
-        <translation type="unfinished"></translation>
+        <translation>kenarlar</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1126"/>
         <source>edge-none</source>
-        <translation type="unfinished"></translation>
+        <translation>kenarsız</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1127"/>
         <source>edge-both</source>
-        <translation type="unfinished"></translation>
+        <translation>her iki kenar</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1128"/>
         <source>edge-start</source>
-        <translation type="unfinished"></translation>
+        <translation>kenar-başlangıç</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1129"/>
         <source>edge-end</source>
-        <translation type="unfinished"></translation>
+        <translation>kenar-uc</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1130"/>
         <source>end</source>
-        <translation type="unfinished"></translation>
+        <translation>son</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1131"/>
         <source>both</source>
-        <translation type="unfinished"></translation>
+        <translation>her ikisi</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1132"/>
         <source>none</source>
-        <translation type="unfinished"></translation>
+        <translation>hiçbiri</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1133"/>
         <source>fit</source>
-        <translation type="unfinished"></translation>
+        <translation>formda</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1134"/>
         <source>nofit</source>
-        <translation type="unfinished"></translation>
+        <translation>kar amacı gütmeyen</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1135"/>
         <source>dist_fixed</source>
-        <translation type="unfinished"></translation>
+        <translation>sabit_mesafe</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1136"/>
         <source>dist_flex</source>
-        <translation type="unfinished"></translation>
+        <translation>esnek_dağılım</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1137"/>
         <source>distance</source>
-        <translation type="unfinished"></translation>
+        <translation>mesafe</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1141"/>
         <source>sym</source>
-        <translation type="unfinished"></translation>
+        <translation>sim</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1142"/>
         <source>nosym</source>
-        <translation type="unfinished"></translation>
+        <translation>nosym</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1160"/>
@@ -27667,7 +27673,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="40"/>
         <source>User Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanıcı Rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="118"/>
@@ -27679,12 +27685,12 @@ Do you want to replace it?</source>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimension.cpp" line="34"/>
         <source>R</source>
         <comment>Radial dimension prefix</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="29"/>
         <source>Angle Snap</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı Yakalama</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="30"/>
@@ -27694,12 +27700,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="31"/>
         <source>Use Mirrored Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Aynalı Açıyı Kullan</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="32"/>
         <source>Snap to Relative Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Göreli Sıfıra Yapıştır</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="44"/>
@@ -27721,22 +27727,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/entities/rs_polyline.cpp" line="620"/>
         <source>Polyline contains arc segments, and scaling by different xy-factors will generate incorrect results</source>
-        <translation type="unfinished"></translation>
+        <translation>Çoklu çizgi eğrisel segmentler içerir ve farklı xy faktörleri ile ölçeklendirme hatalı sonuçlar üretecektir</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Hatch:: eşleşen desen bulunamadı. Lütfen uygulama tercihleri ​​içinde desen yolunu ayarlayın</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hatch:: yükleme deseni başarısız oldu: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="41"/>
         <source>-Unchanged-</source>
-        <translation type="unfinished"></translation>
+        <translation>-Değişmedi-</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="48"/>
@@ -27761,7 +27767,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="56"/>
         <source>0.13mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>0.13mmISO</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="58"/>
@@ -27771,7 +27777,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="60"/>
         <source>0.18mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>0.18mmISO</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="62"/>
@@ -27781,7 +27787,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="64"/>
         <source>0.25mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>0.25mmISO</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="66"/>
@@ -27791,7 +27797,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="68"/>
         <source>0.35mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>0.35mmISO</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="70"/>
@@ -27801,7 +27807,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="72"/>
         <source>0.50mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>0.50mmISO</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="74"/>
@@ -27816,7 +27822,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="78"/>
         <source>0.70mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>0.70mmISO</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="80"/>
@@ -27831,7 +27837,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="84"/>
         <source>1.00mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>1.00mmISO</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="86"/>
@@ -27846,7 +27852,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="90"/>
         <source>1.40mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>1.40mmISO</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="92"/>
@@ -27856,7 +27862,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="94"/>
         <source>2.00mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>2.00mmISO</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="96"/>
@@ -27866,73 +27872,73 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/ucs/lc_ucs.cpp" line="135"/>
         <source>WCS</source>
-        <translation type="unfinished"></translation>
+        <translation>Dünya Şampiyonası Serisi</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="741"/>
         <source>Invalid printing scale %1. Cannot fit print preview to page</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçersiz baskı ölçeği %1. Yazdırma önizlemesi sayfaya sığdırılamıyor</translation>
     </message>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="160"/>
         <source>Export to PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF olarak dışa aktar</translation>
     </message>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="162"/>
         <source>PDF files (*.pdf);;All files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF dosyaları (*.pdf);;Tüm dosyalar (*.*)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="435"/>
         <source>Left-</source>
-        <translation type="unfinished"></translation>
+        <translation>Sol</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="438"/>
         <source>Middle-</source>
-        <translation type="unfinished"></translation>
+        <translation>Orta-</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="441"/>
         <source>Right-</source>
-        <translation type="unfinished"></translation>
+        <translation>Right-</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="444"/>
         <source>Forward-</source>
-        <translation type="unfinished"></translation>
+        <translation>İleri</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="447"/>
         <source>Back-</source>
-        <translation type="unfinished"></translation>
+        <translation>Geri</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="450"/>
         <source>Task-</source>
-        <translation type="unfinished"></translation>
+        <translation>Görev-</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="454"/>
         <source>Click</source>
-        <translation type="unfinished"></translation>
+        <translation>Tıkla</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="457"/>
         <source>Double-Click</source>
-        <translation type="unfinished"></translation>
+        <translation>Çift Tıkla</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="468"/>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="552"/>
         <source>Any</source>
-        <translation type="unfinished"></translation>
+        <translation>Herhangi</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="472"/>
         <source>Either</source>
-        <translation type="unfinished"></translation>
+        <translation>Her ikisi de</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="476"/>
@@ -27962,7 +27968,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="496"/>
         <source>Spline by Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Noktalara Göre Eğri</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="500"/>
@@ -27977,7 +27983,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="508"/>
         <source>Parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Parabol</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="512"/>
@@ -27987,7 +27993,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="516"/>
         <source>Hatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Küçük kapak</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="520"/>
@@ -27997,37 +28003,37 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="524"/>
         <source>Dim. Linear</source>
-        <translation type="unfinished"></translation>
+        <translation>Boyut. Doğrusal</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="528"/>
         <source>Dim. Aligned</source>
-        <translation type="unfinished"></translation>
+        <translation>Sönük. Hizalanmış</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="532"/>
         <source>Dim. Diametric</source>
-        <translation type="unfinished"></translation>
+        <translation>Çap. Çapraz</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="536"/>
         <source>Dim. Radial</source>
-        <translation type="unfinished"></translation>
+        <translation>Çap. Radyal</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="540"/>
         <source>Dim. Arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Dim. Yay</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="544"/>
         <source>Dim. Ordinate</source>
-        <translation type="unfinished"></translation>
+        <translation>Boyuna Ölçü</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="548"/>
         <source>Leader</source>
-        <translation type="unfinished"></translation>
+        <translation>Lider</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="556"/>
@@ -28037,7 +28043,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstylestreemodel.cpp" line="48"/>
         <source>[Override]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Geçersiz Kıl]</translation>
     </message>
 </context>
 <context>
@@ -28045,12 +28051,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="101"/>
         <source>Select to create block (Enter to complete)</source>
-        <translation type="unfinished"></translation>
+        <translation>Blok oluşturmak için seçin (Tamamlamak için Enter)</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="101"/>
         <source>Select contour</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontur seç</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="107"/>
@@ -28063,12 +28069,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionblocksexplode.cpp" line="50"/>
         <source>Select to explode container (Enter to complete)</source>
-        <translation type="unfinished"></translation>
+        <translation>Konteyneri patlatmak için seçin (Tamamlamak için Enter)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionblocksexplode.cpp" line="51"/>
         <source>Select and explode</source>
-        <translation type="unfinished"></translation>
+        <translation>Seç ve patlat</translation>
     </message>
 </context>
 <context>
@@ -28151,27 +28157,27 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="564"/>
         <source>Selecting</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçme</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="564"/>
         <source>De-Selecting</source>
-        <translation type="unfinished"></translation>
+        <translation>De-Selecting</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="565"/>
         <source> entities </source>
-        <translation type="unfinished"></translation>
+        <translation>varlıklar</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="566"/>
         <source>that intersect with box</source>
-        <translation type="unfinished"></translation>
+        <translation>kutuyla kesişen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="566"/>
         <source>that are within box</source>
-        <translation type="unfinished"></translation>
+        <translation>kutunun içinde olanlar</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="609"/>
@@ -28181,12 +28187,12 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="610"/>
         <source>Length: </source>
-        <translation type="unfinished"></translation>
+        <translation>Uzunluk:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="611"/>
         <source>Angle: </source>
-        <translation type="unfinished"></translation>
+        <translation>Açı:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="620"/>
@@ -28196,22 +28202,22 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="491"/>
         <source>Offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Ofset</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="494"/>
         <source>New Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni Pozisyon</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="536"/>
         <source>Copy Offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Ofseti Kopyala</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="538"/>
         <source>Move Offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Ofseti Taşı</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="621"/>
@@ -28223,17 +28229,17 @@ Bu blok eklenemez.</translation>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="622"/>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="633"/>
         <source>Center:</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkez:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="623"/>
         <source>Angle Length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Açısal Uzunluk:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="624"/>
         <source>Chord Length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kiriş Uzunluğu:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="625"/>
@@ -28248,67 +28254,67 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="937"/>
         <source>Set new position</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni konum belirle</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="937"/>
         <source>Create a copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir kopya oluştur</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="945"/>
         <source>Lengthen Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgiyi Uzat</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="948"/>
         <source>Lengthen/Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzat / Ölçeklendir</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="948"/>
         <source>Lengthen Chord</source>
-        <translation type="unfinished"></translation>
+        <translation>Akoru Uzat</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="951"/>
         <source>Move in Previous segment direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Önceki segmentin yönünde hareket et</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="951"/>
         <source>Move in Next segment direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonraki segment yönüne hareket et</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="956"/>
         <source>Set new ref position</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni referans pozisyonu ayarla</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="960"/>
         <source>Zoom, pan or select entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Yakınlaştır, kaydır veya varlığı seç</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="960"/>
         <source>Scroll Horizontally / Select Contour</source>
-        <translation type="unfinished"></translation>
+        <translation>Yatay Kaydır / Konturu Seç</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="960"/>
         <source>Pan / Scroll Vertically / Select Child entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Pan / Dikey Kaydır / Alt öğeleri seç</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="965"/>
         <source>Select/Deselect entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlıkları Seç/Seçimi Kaldır</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="965"/>
         <source>Select Intersecting</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesişeni Seç</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="965"/>
@@ -28368,12 +28374,12 @@ Bu blok eklenemez.</translation>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="211"/>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="221"/>
         <source>Switch Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Yönü Değiştir</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="221"/>
         <source>Snap to Adjacent Dim</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitişik Ölçüye Yapıştır</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="211"/>
@@ -28391,7 +28397,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="268"/>
         <source>Length of chord should be non-zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Kiriş uzunluğu sıfırdan farklı olmalıdır</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="408"/>
@@ -28415,23 +28421,23 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="503"/>
         <source>Specify start point</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıç noktasını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="510"/>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="513"/>
         <source>Alternative Arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif Ark</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="516"/>
         <source>Specify chord length (negative for alt point):</source>
-        <translation type="unfinished"></translation>
+        <translation>Kiriş uzunluğunu belirtin (alternatif nokta için negatif):</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="516"/>
         <source>Use alternative arc point</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif ark noktası kullan</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="500"/>
@@ -28446,7 +28452,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="510"/>
         <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitiş açısını veya [açı/korduzun] belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="513"/>
@@ -28487,12 +28493,12 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="277"/>
         <source>Alternate arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif hikâye çizgisi</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="279"/>
         <source>Alternate Arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif Ark</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="277"/>
@@ -28671,7 +28677,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="341"/>
         <source>Specify the another line/arc/circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Başka bir çizgi/yay/dairiyi belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2_1p.cpp" line="344"/>
@@ -28699,7 +28705,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="416"/>
         <source>No common tangential circle for selected entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen varlıklar için ortak teğetsel çember yok</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp" line="503"/>
@@ -28904,12 +28910,12 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="203"/>
         <source>Select to hatch (Enter to complete)</source>
-        <translation type="unfinished"></translation>
+        <translation>Çıkarmak için seçin (Tamamlamak için Enter)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="203"/>
         <source>Hatch immediately after selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimden hemen sonra aç</translation>
     </message>
 </context>
 <context>
@@ -28991,7 +28997,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="309"/>
         <source>Alternate Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif Yön</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineangle.cpp" line="312"/>
@@ -29009,7 +29015,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="136"/>
         <source> entities will be created</source>
-        <translation type="unfinished"></translation>
+        <translation>varlıklar oluşturulacak</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="216"/>
@@ -29076,7 +29082,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="248"/>
         <source>Alternate Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif Nokta</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="255"/>
@@ -29094,7 +29100,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="109"/>
         <source> entities will be created</source>
-        <translation type="unfinished"></translation>
+        <translation>varlıklar oluşturulacak</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="138"/>
@@ -29128,7 +29134,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="110"/>
         <source> entities will be created</source>
-        <translation type="unfinished"></translation>
+        <translation>varlıklar oluşturulacak</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="180"/>
@@ -29172,7 +29178,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="96"/>
         <source>To be created:</source>
-        <translation type="unfinished"></translation>
+        <translation>Oluşturulacak:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="96"/>
@@ -29192,7 +29198,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="99"/>
         <source>Center:</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkez:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/rs_actiondrawlinerectangle.cpp" line="141"/>
@@ -29221,12 +29227,12 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="254"/>
         <source>Specify angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Açıyı belirt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="257"/>
         <source>Specify length</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzunluğu belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinerelangle.cpp" line="251"/>
@@ -29245,7 +29251,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="192"/>
         <source>Alternate Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif Nokta</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
@@ -29258,17 +29264,17 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="215"/>
         <source>Select first circle/ellipse/parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>İlk daire/ellipse/parabolü seç</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="218"/>
         <source>Select second circle/ellipse/parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>İkinci daire/ellipse/parabolü seç</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="221"/>
         <source>Select the tangent line closest to cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>İmlece en yakın teğet çizgiyi seç</translation>
     </message>
 </context>
 <context>
@@ -29364,7 +29370,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="745"/>
         <source>Alternative Arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif Ark</translation>
     </message>
 </context>
 <context>
@@ -29395,7 +29401,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="156"/>
         <source>Text: </source>
-        <translation type="unfinished"></translation>
+        <translation>Metin:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="240"/>
@@ -29420,7 +29426,7 @@ Bu blok eklenemez.</translation>
         <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="157"/>
         <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="165"/>
         <source>Select to cut (Enter to complete)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesmek için seçin (Tamamlamak için Enter)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="153"/>
@@ -29428,48 +29434,48 @@ Bu blok eklenemez.</translation>
         <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="161"/>
         <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="165"/>
         <source>Select contour</source>
-        <translation type="unfinished"></translation>
+        <translation>Konturu seç</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="153"/>
         <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="161"/>
         <source>Set point after selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçim sonrası nokta belirle</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="157"/>
         <source>Cut right after selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimden hemen sonra kes</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="161"/>
         <source>Select to copy (Enter to complete)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopyalamak için seçin (Tamamlamak için Enter)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="165"/>
         <source>Copy right after selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Copy right after selection</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="179"/>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Referans noktasını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="179"/>
         <source>Paste Immediately</source>
-        <translation type="unfinished"></translation>
+        <translation>Hemen Yapıştır</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="183"/>
         <source>Set paste reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Yapıştırma referans noktasını ayarla</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="183"/>
         <source>Paste Multiple</source>
-        <translation type="unfinished"></translation>
+        <translation>Birden Çok Yapıştır</translation>
     </message>
 </context>
 <context>
@@ -29501,7 +29507,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="250"/>
         <source>Single Line Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Tek Satır Modu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="98"/>
@@ -29510,7 +29516,7 @@ Complementary: %2
 Supplementary: %3
 Alternative: %4
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="140"/>
@@ -29520,18 +29526,18 @@ Supplementary: %3
 Alternative: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
         <source>Restart with first line selection</source>
-        <translation type="unfinished"></translation>
+        <translation>İlk satır seçimi ile yeniden başlat</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="272"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="294"/>
         <source>Angle Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı Bilgisi</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="273"/>
@@ -29543,54 +29549,54 @@ Intersection :@(%7, %8)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="274"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="296"/>
         <source>Complementary:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamamlayıcı:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="275"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="297"/>
         <source>Supplementary:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ek:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="276"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="298"/>
         <source>Alternative: </source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="277"/>
         <source>Line From:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hattın Gönderildiği:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="278"/>
         <source>Line To:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hattı Gönder:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="279"/>
         <source>Line Angle 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi Açısı 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="280"/>
         <source>Line Angle 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi Açısı 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="299"/>
         <source>Intersection:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kavşak:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="300"/>
         <source>Line 1 Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Satır 1 Açısı:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="301"/>
         <source>Line 2 Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi 2 Açısı:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
@@ -29609,17 +29615,17 @@ Intersection :@(%7, %8)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="153"/>
         <source>Closing Point: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapama Noktası: %1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="160"/>
         <source>Point: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Puan: %1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
         <source>Specify point and complete</source>
-        <translation type="unfinished"></translation>
+        <translation>Noktayı belirtin ve tamamlayın</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="178"/>
@@ -29647,7 +29653,7 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Start: (%6 , %7)
 End: (%8 , %9)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="98"/>
@@ -29667,12 +29673,12 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="101"/>
         <source>From:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kimden:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="102"/>
         <source>To:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kime:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="157"/>
@@ -29682,7 +29688,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="160"/>
         <source>Don&apos;t move relative zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Sıfıra göre hareket etme</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="160"/>
@@ -29699,7 +29705,7 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Point On Entity: (%6 , %7)
 Point: (%8 , %9)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="275"/>
@@ -29709,12 +29715,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="275"/>
         <source>Do not snap to child entities in container</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapsayıcıdaki alt öğelere yapışma</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="279"/>
         <source>Relative point is on entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Göreceli nokta varlık üzerinde</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="306"/>
@@ -29734,12 +29740,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="309"/>
         <source>From:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kimden:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="310"/>
         <source>To:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kime:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="279"/>
@@ -29781,27 +29787,27 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="62"/>
         <source>Selected:</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçildi:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="64"/>
         <source>Total Length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Toplam Uzunluk:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="71"/>
         <source>Select to measure total length (Enter to complete)</source>
-        <translation type="unfinished"></translation>
+        <translation>Toplam uzunluğu ölçmek için seçin (Tamamlamak için Enter tuşuna basın)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="71"/>
         <source>Select contour</source>
-        <translation type="unfinished"></translation>
+        <translation>Konturu seç</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="71"/>
         <source>Select and finish</source>
-        <translation type="unfinished"></translation>
+        <translation>Seç ve bitir</translation>
     </message>
 </context>
 <context>
@@ -29814,12 +29820,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/lib/actions/rs_actioninterface.cpp" line="594"/>
         <source>SHIFT:</source>
-        <translation type="unfinished"></translation>
+        <translation>SHIFT:</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_actioninterface.cpp" line="601"/>
         <source>CTRL:</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL:</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_actioninterface.cpp" line="620"/>
@@ -29861,17 +29867,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="62"/>
         <source>Select to modify attributes (Enter to complete)</source>
-        <translation type="unfinished"></translation>
+        <translation>Öznitelikleri değiştirmek için seçin (Tamamlamak için Enter tuşuna basın)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="63"/>
         <source>Modify attributes immediately after selecting</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçtikten hemen sonra özellikleri değiştirin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="63"/>
         <source>Select contour</source>
-        <translation type="unfinished"></translation>
+        <translation>Konturu seç</translation>
     </message>
 </context>
 <context>
@@ -29879,12 +29885,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="81"/>
         <source>Selected lines are parallel</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen çizgiler paraleldir</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="84"/>
         <source>Selected lines are not children of the same polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili çizgiler aynı polilinenin parçaları değildir</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="165"/>
@@ -29894,33 +29900,33 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="166"/>
         <source>Intersection:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kavşak:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="167"/>
         <source>Point 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Madde 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="168"/>
         <source>Point 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>Madde 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="215"/>
         <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçersiz varlık seçildi (kesilemez).</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="218"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="233"/>
         <source>Invalid entity selected (non-atomic).</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçersiz varlık seçildi (atomik olmayan).</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="230"/>
         <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçersiz varlık seçildi (ilk varlıkla kısaltılamaz).</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="299"/>
@@ -29959,7 +29965,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="95"/>
         <source>At:</source>
-        <translation type="unfinished"></translation>
+        <translation>At:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="110"/>
@@ -29969,7 +29975,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="122"/>
         <source>Cutting point may not be entity&apos;s endpoint.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesme noktası, varlığın son noktası olmayabilir.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="141"/>
@@ -29992,17 +29998,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="44"/>
         <source>Select to delete (Enter to complete)</source>
-        <translation type="unfinished"></translation>
+        <translation>Silmek için seçin (Tamamlamak için Enter tuşuna basın)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="45"/>
         <source>Delete immediately after selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimden hemen sonra sil</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydelete.cpp" line="45"/>
         <source>Select contour</source>
-        <translation type="unfinished"></translation>
+        <translation>Konturu seç</translation>
     </message>
 </context>
 <context>
@@ -30071,12 +30077,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyexplodetext.cpp" line="47"/>
         <source>Select to explode text (Enter to complete)</source>
-        <translation type="unfinished"></translation>
+        <translation>Metni patlatmak için seçin (Tamamlamak için Enter)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyexplodetext.cpp" line="47"/>
         <source>Explode immediately after selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimden hemen sonra patla</translation>
     </message>
 </context>
 <context>
@@ -30084,7 +30090,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="119"/>
         <source>Mirror</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayna</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="120"/>
@@ -30094,42 +30100,42 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="121"/>
         <source>Angle (alt):</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı (alt):</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="122"/>
         <source>Line From:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hattın Gönderildiği:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="123"/>
         <source>Line To:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hattı Gönder:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="234"/>
         <source>Select to mirror (Enter to complete)</source>
-        <translation type="unfinished"></translation>
+        <translation>Aynalamak için seçin (Tamamlamak için Enter&apos;a basın)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="234"/>
         <source>Select contour</source>
-        <translation type="unfinished"></translation>
+        <translation>Konturu seç</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="241"/>
         <source>Specify mirror line</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayna çizgisini belirt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="241"/>
         <source>Flip Vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikey Olarak Çevir</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="241"/>
         <source>Flip Horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Yatay Olarak Çevir</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="244"/>
@@ -30147,12 +30153,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="106"/>
         <source>Moving Offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Hareketli Ofset</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="106"/>
         <source>Copy Offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Ofseti Kopyala</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="184"/>
@@ -30162,22 +30168,22 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
         <source>Create a Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir Kopya Oluştur</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="196"/>
         <source>Select to move (Enter to complete)</source>
-        <translation type="unfinished"></translation>
+        <translation>Taşımak için seçin (Tamamlamak için Enter&apos;a basın)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="197"/>
         <source>Move immediately after selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimden hemen sonra taşı</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="197"/>
         <source>Select contour</source>
-        <translation type="unfinished"></translation>
+        <translation>Konturu seç</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
@@ -30191,19 +30197,19 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="79"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="111"/>
         <source>Moving with rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Dönüşle hareket etme</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="80"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="112"/>
         <source>Source:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaynak:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="81"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="113"/>
         <source>Target:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hedef:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="82"/>
@@ -30229,17 +30235,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="341"/>
         <source>Select to move and rotate  (Enter to complete)</source>
-        <translation type="unfinished"></translation>
+        <translation>Taşımak ve döndürmek için seçin (Tamamlamak için Enter)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="342"/>
         <source>Move and rotate immediately after selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimden hemen sonra taşı ve döndür</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="342"/>
         <source>Select contour</source>
-        <translation type="unfinished"></translation>
+        <translation>Konturu seç</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="325"/>
@@ -30257,7 +30263,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="88"/>
         <source>Offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Ofset</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="89"/>
@@ -30273,22 +30279,22 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="179"/>
         <source>Specify reference point for direction of offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Ofset yönü için referans noktasını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="192"/>
         <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ofset oluşturmak için çizgi, çoklu çizgi, daire veya yay seçin (Tamamlamak için Enter)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="192"/>
         <source>Offset immediately after selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimden hemen sonra ofset</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="192"/>
         <source>Select contour</source>
-        <translation type="unfinished"></translation>
+        <translation>Konturu seç</translation>
     </message>
 </context>
 <context>
@@ -30296,17 +30302,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="49"/>
         <source>Select to revert direction (Enter to complete)</source>
-        <translation type="unfinished"></translation>
+        <translation>Yönü geri almak için seçin (Tamamlamak için Enter)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="49"/>
         <source>Revert immediately after selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimden hemen sonra geri al</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrevertdirection.cpp" line="49"/>
         <source>Select contour</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontur seç</translation>
     </message>
 </context>
 <context>
@@ -30322,7 +30328,7 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="201"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="241"/>
         <source>Rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Dönme</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="133"/>
@@ -30334,12 +30340,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="203"/>
         <source>Source Point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Source Point:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="204"/>
         <source>Target Point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hedef Noktası:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="136"/>
@@ -30353,39 +30359,39 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="134"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="146"/>
         <source>Reference Point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Referans Noktası:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="135"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="147"/>
         <source>Center Point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkez Noktası:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="248"/>
         <source>Second Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>İkinci Açı:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="582"/>
         <source>Select to rotate (Enter to complete)</source>
-        <translation type="unfinished"></translation>
+        <translation>Döndürmek için seçin (Tamamlamak için Enter)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="582"/>
         <source>Rotate immediately after selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimden hemen sonra döndür</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="582"/>
         <source>Select contour</source>
-        <translation type="unfinished"></translation>
+        <translation>Konturu seç</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="588"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="591"/>
         <source>Snap to center of selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimin merkezine hizala</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="591"/>
@@ -30400,7 +30406,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="597"/>
         <source>Specify target point for rotation around reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Referans noktası etrafında dönme için hedef noktayı belirtin</translation>
     </message>
 </context>
 <context>
@@ -30408,42 +30414,42 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="93"/>
         <source>Rotating Twice</source>
-        <translation type="unfinished"></translation>
+        <translation>İki Kez Döndürme</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="94"/>
         <source>Center 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkez 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="95"/>
         <source>Angle 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="96"/>
         <source>Center 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkez 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="97"/>
         <source>Angle 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="170"/>
         <source>Select for two axis rotation  (Enter to complete)</source>
-        <translation type="unfinished"></translation>
+        <translation>İki eksenli dönüş için seçin (Tamamlamak için Enter tuşuna basın)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="170"/>
         <source>Rotate 2 Axis immediately after selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimden hemen sonra 2 Eksen Döndür</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="170"/>
         <source>Select contour</source>
-        <translation type="unfinished"></translation>
+        <translation>Konturu seç</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="176"/>
@@ -30467,17 +30473,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="229"/>
         <source>Round</source>
-        <translation type="unfinished"></translation>
+        <translation>Yuvarlak</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="230"/>
         <source>Point 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Madde 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="231"/>
         <source>Point 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>Madde 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="424"/>
@@ -30500,22 +30506,22 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="169"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçek</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="170"/>
         <source>Center:</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkez:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="171"/>
         <source>Source Point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Source Point:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="172"/>
         <source>Target Point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hedef Noktası:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="173"/>
@@ -30525,52 +30531,52 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="176"/>
         <source>Scale by X:</source>
-        <translation type="unfinished"></translation>
+        <translation>X ile ölçekle:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="177"/>
         <source>Scale by Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Y&apos;ye göre ölçekle:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="362"/>
         <source>Specify scale center</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçek merkezini belirt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="362"/>
         <source>Snap to center of selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimin merkezine hizala</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="366"/>
         <source>Specify source point</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaynak noktayı belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="369"/>
         <source>Specify target point</source>
-        <translation type="unfinished"></translation>
+        <translation>Hedef noktayı belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="369"/>
         <source>Free snap</source>
-        <translation type="unfinished"></translation>
+        <translation>Ücretsiz snap</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="378"/>
         <source>Select to scale  (Enter to complete)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçeklendirmek için seçin (Tamamlamak için Enter tuşuna basın)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="378"/>
         <source>Scale immediately after selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimden hemen sonra ölçekle</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="378"/>
         <source>Select contour</source>
-        <translation type="unfinished"></translation>
+        <translation>Konturu seç</translation>
     </message>
 </context>
 <context>
@@ -30590,28 +30596,28 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="91"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="111"/>
         <source>Stretch</source>
-        <translation type="unfinished"></translation>
+        <translation>Germek</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="80"/>
         <source>Start Corner:</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıç Köşesi:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="81"/>
         <source>End Corner:</source>
-        <translation type="unfinished"></translation>
+        <translation>Uç Köşe:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="92"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="112"/>
         <source>Reference Point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Referans Noktası:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="113"/>
         <source>Target Point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hedef Noktası:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="114"/>
@@ -30649,17 +30655,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="112"/>
         <source>Trim Two</source>
-        <translation type="unfinished"></translation>
+        <translation>İkisini Kırp</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="114"/>
         <source>Intersection:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kavşak:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="116"/>
         <source>Intersection 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kavşak 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="207"/>
@@ -30677,7 +30683,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="173"/>
         <source>No entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiçbir varlık bulunamadı.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="180"/>
@@ -30692,7 +30698,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="236"/>
         <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kırpmak için çizgi/daire yayı seçin VEYA uzunluk değeri girin:</translation>
     </message>
 </context>
 <context>
@@ -30705,17 +30711,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="126"/>
         <source>Choose entities (Enter to Complete)</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlıkları seçin (Tamamlamak için Enter)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="126"/>
         <source>Order immediately after selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimden hemen sonra sipariş verin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="126"/>
         <source>Select contour</source>
-        <translation type="unfinished"></translation>
+        <translation>Konturu seç</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="130"/>
@@ -30851,12 +30857,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="158"/>
         <source>No polyline found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiç polilin bulunamadı.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="177"/>
         <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen noktalar arasında en az iki poligon segmenti olmalıdır.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="195"/>
@@ -30937,12 +30943,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="138"/>
         <source>First segment should be on selected polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>İlk segment, seçilen polilin üzerinde olmalıdır.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="150"/>
         <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="unfinished"></translation>
+        <translation>İkinci segment, seçilen poligon üzerinde olmalı ve birinci segmentle eşit olmamalıdır.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="183"/>
@@ -31000,22 +31006,22 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="393"/>
         <source>Limit of pages has been exceeded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sayfa sınırı aşıldı.</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="453"/>
         <source>Drag with Left Button to Position Paper or with Middle Button to Pan</source>
-        <translation type="unfinished"></translation>
+        <translation>Kağıdı Yerleştirmek İçin Sol Tuşa veya Kaydırmak İçin Orta Tuşa Sürükleyin</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="453"/>
         <source>Move Horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Yatay Hareket Et</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="453"/>
         <source>Move Vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikey Olarak Hareket Et</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="197"/>
@@ -31043,7 +31049,8 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="82"/>
         <source>Specify entity to select</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Seçilecek varlığı belirtin</translatorcomment>
+        <translation>Specify entity to select</translation>
     </message>
 </context>
 <context>
@@ -31056,12 +31063,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="173"/>
         <source>Select intersecting entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesişen varlığı seç</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="173"/>
         <source>Select child entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt varlıkları seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="176"/>
@@ -31074,7 +31081,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectlayer.cpp" line="69"/>
         <source>Specify entity with desired layer</source>
-        <translation type="unfinished"></translation>
+        <translation>İstenilen katmanla varlığı belirtin</translation>
     </message>
 </context>
 <context>
@@ -31082,12 +31089,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectsingle.cpp" line="114"/>
         <source>Specify entity to select</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilecek varlığı belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectsingle.cpp" line="114"/>
         <source>Select contour</source>
-        <translation type="unfinished"></translation>
+        <translation>Konturu seçin</translation>
     </message>
 </context>
 <context>
@@ -31095,27 +31102,27 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="116"/>
         <source>De-Selecting</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimi Kaldırma</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="116"/>
         <source>Selecting</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçme</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="117"/>
         <source> entities </source>
-        <translation type="unfinished"></translation>
+        <translation> varlıklar </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="118"/>
         <source>that intersect with box</source>
-        <translation type="unfinished"></translation>
+        <translation>kutu ile kesişen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="118"/>
         <source>that are within box</source>
-        <translation type="unfinished"></translation>
+        <translation>kutunun içinde olanlar</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="166"/>
@@ -31125,22 +31132,22 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="168"/>
         <source>Select Intersecting</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesişenleri Seç</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="167"/>
         <source>De-select entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlıkları seçimi kaldır</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="167"/>
         <source>Select entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlıkları seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="168"/>
         <source>De-select intersecting</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesişenleri seçimi kaldır</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="163"/>
@@ -31228,22 +31235,22 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="993"/>
         <source>Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgara</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="995"/>
         <source>Entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlık</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="997"/>
         <source>Endpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Uç nokta</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="999"/>
         <source>Intersection</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesişme</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1001"/>
@@ -31253,7 +31260,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1003"/>
         <source>Distance</source>
-        <translation type="unfinished"></translation>
+        <translation>Mesafe</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1005"/>
@@ -31268,32 +31275,32 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1009"/>
         <source>Angle Relative</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı Göreceli</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1011"/>
         <source>Angle (on Entity)</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı (Varlık Üzerinde)</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1183"/>
         <source>Dist: </source>
-        <translation type="unfinished"></translation>
+        <translation>Dist: </translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1188"/>
         <source>Angle: </source>
-        <translation type="unfinished"></translation>
+        <translation>Açı: </translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1193"/>
         <source>dX: </source>
-        <translation type="unfinished"></translation>
+        <translation>dX: </translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1194"/>
         <source>dY: </source>
-        <translation type="unfinished"></translation>
+        <translation>dY: </translation>
     </message>
 </context>
 <context>
@@ -31332,7 +31339,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="87"/>
         <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçildiğinde, belirtilen yarıçaplı teğet yay oluşturulur.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="47"/>
@@ -31342,7 +31349,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="112"/>
         <source>If selected, arc with specified angle will be created</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçildiğinde, belirtilen açıyla bir yay oluşturulur.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="60"/>
@@ -31352,7 +31359,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="67"/>
         <source>Pick radius form drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Yarıçap seçme formu çizimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="90"/>
@@ -31369,7 +31376,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="128"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden açı seçin</translation>
     </message>
 </context>
 <context>
@@ -31397,12 +31404,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="95"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished"></translation>
+        <translation>X yönündeki eğim uzunluğu.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="102"/>
         <source>Pick first length form drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>İlk uzunluk form çizimini seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="116"/>
@@ -31412,12 +31419,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="126"/>
         <source>Length of bevel in Y direction. </source>
-        <translation type="unfinished"></translation>
+        <translation>Y yönündeki eğim uzunluğu. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="133"/>
         <source>Pick second length form drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>İkinci uzunluk form çizimini seçin</translation>
     </message>
 </context>
 <context>
@@ -31435,12 +31442,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/circle/qg_circleoptions.ui" line="66"/>
         <source>Radius of circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Dairenin yarıçapı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/qg_circleoptions.ui" line="73"/>
         <source>Pick radius from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden yarıçap seç</translation>
     </message>
 </context>
 <context>
@@ -31468,7 +31475,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/circle/qg_circletan2options.ui" line="82"/>
         <source>Pick radius from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden yarıçap seç</translation>
     </message>
 </context>
 <context>
@@ -31481,12 +31488,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="50"/>
         <source>Style:</source>
-        <translation type="unfinished"></translation>
+        <translation>Stil:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="57"/>
         <source>Dimension style</source>
-        <translation type="unfinished"></translation>
+        <translation>Boyut stili</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="76"/>
@@ -31496,17 +31503,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="92"/>
         <source>Prefix character</source>
-        <translation type="unfinished"></translation>
+        <translation>Önek karakteri</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="115"/>
         <source>User-specified dimension&apos;s label. Enter value or either &quot;&lt;&gt;&quot; or just leave empty for automatic measurement.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanıcı tarafından belirlenen boyutun etiketi. Değer girin veya “&lt;&gt;” yazın ya da otomatik ölçüm için boş bırakın.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="128"/>
         <source>Suffix symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonek sembolü</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="132"/>
@@ -31547,12 +31554,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="188"/>
         <source>Tolerance - Upper Limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Tolerans - Üst Sınır</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="218"/>
         <source>Tolerance - Lower Limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Tolerans - Alt Sınır</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="243"/>
@@ -31563,17 +31570,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="265"/>
         <source>Dimension angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Boyut açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="287"/>
         <source>Horizontal Dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Yatay Boyut</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="316"/>
         <source>Vertical Dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikey Boyut</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="333"/>
@@ -31583,28 +31590,28 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="346"/>
         <source>Distance between dimensions in baseline</source>
-        <translation type="unfinished"></translation>
+        <translation>Temel çizgideki boyutlar arasındaki mesafe</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="353"/>
         <source>If checked, distance between dimenions is defined by mouse</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, boyutlar arasındaki mesafe fare ile belirlenir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="356"/>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="386"/>
         <source>Free</source>
-        <translation type="unfinished"></translation>
+        <translation>Ücretsiz</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="376"/>
         <source>Angle for dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Boyut açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="383"/>
         <source>If checked, angle for dimension is defined by mouse</source>
-        <translation type="unfinished"></translation>
+        <translation>If checked, angle for dimension is defined by mouse</translation>
     </message>
 </context>
 <context>
@@ -31627,17 +31634,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="70"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden açı seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="84"/>
         <source>Scale Factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçek Faktörü:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="113"/>
         <source>DPI:</source>
-        <translation type="unfinished"></translation>
+        <translation>DPI:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="106"/>
@@ -31695,17 +31702,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="53"/>
         <source>Pick row spacing from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden sıra aralığını seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="92"/>
         <source>Pick column spacing from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden sütun aralığını seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="167"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden açı seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="234"/>
@@ -31743,7 +31750,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/insert/qg_libraryinsertoptions.ui" line="111"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden açı seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_libraryinsertoptions.ui" line="59"/>
@@ -31771,7 +31778,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="210"/>
         <source>Point on created line that will be placed into insertion point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekleme noktasına yerleştirilecek oluşturulan çizgi üzerindeki nokta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="133"/>
@@ -31796,7 +31803,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="69"/>
         <source>Pick line angle from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden çizgi açısını seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="214"/>
@@ -31816,17 +31823,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="232"/>
         <source>PIck line length from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden hat uzunluğunu seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="191"/>
         <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilirse, çizgi açı tabanının eksenine dik olacaktır. Aksi takdirde, ekran eksenine dik olacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="194"/>
         <source>To Angles Basis</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı Temeline</translation>
     </message>
 </context>
 <context>
@@ -31849,7 +31856,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_linebisectoroptions.ui" line="79"/>
         <source>Pick line length from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden çizgi uzunluğunu seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linebisectoroptions.ui" line="93"/>
@@ -31910,12 +31917,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="62"/>
         <source>Direction:</source>
-        <translation type="unfinished"></translation>
+        <translation>Yön:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="321"/>
         <source>Creates polyline from line segments</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi segmentlerinden poligon oluşturur</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="324"/>
@@ -31925,12 +31932,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="331"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden açı seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="190"/>
         <source>Vertical line</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikey çizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="193"/>
@@ -31940,7 +31947,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="237"/>
         <source>Line by specified angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Belirtilen açı ile çizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="240"/>
@@ -31950,7 +31957,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="124"/>
         <source>Horizontal line</source>
-        <translation type="unfinished"></translation>
+        <translation>Yatay çizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="127"/>
@@ -31961,12 +31968,12 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="311"/>
         <source>If checked, angle is relative to previous segment</source>
         <extracomment>Angle is relative to previous segment</extracomment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="314"/>
         <source>Rel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="257"/>
@@ -31976,7 +31983,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="260"/>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>Geri al</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="267"/>
@@ -32001,12 +32008,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="218"/>
         <source>Angle of line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="168"/>
         <source>Line to arbitrary point</source>
-        <translation type="unfinished"></translation>
+        <translation>Keyfi noktaya çizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="171"/>
@@ -32034,7 +32041,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparalleloptions.ui" line="79"/>
         <source>Pick distance from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden mesafeyi seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparalleloptions.ui" line="99"/>
@@ -32057,12 +32064,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparallelthroughoptions.ui" line="62"/>
         <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, varlığın her iki tarafında paraleller oluşturulur.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparallelthroughoptions.ui" line="65"/>
         <source>Symmetric</source>
-        <translation type="unfinished"></translation>
+        <translation>Simetrik</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparallelthroughoptions.ui" line="101"/>
@@ -32090,7 +32097,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="80"/>
         <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, çokgenin köşeleri yuvarlatılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="83"/>
@@ -32100,7 +32107,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="126"/>
         <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, çokgen çoklu çizgi olarak çizilir. Aksi takdirde, ayrı ayrı nesneler oluşturulur. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="129"/>
@@ -32110,7 +32117,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="143"/>
         <source>Pick radius from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden yarıçap seç</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="90"/>
@@ -32120,17 +32127,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="119"/>
         <source>Rounding radius for vertex bevel.</source>
-        <translation type="unfinished"></translation>
+        <translation>Köşe eğriliği için yuvarlama yarıçapı.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="70"/>
         <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilirse, referans noktaları çokgenin köşeleri içindir. Aksi takdirde, kenarların orta noktası içindir. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="73"/>
         <source>Vertex to Vertex</source>
-        <translation type="unfinished"></translation>
+        <translation>Köşeden Köşeye</translation>
     </message>
 </context>
 <context>
@@ -32153,7 +32160,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_linerelangleoptions.ui" line="79"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden açı seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linerelangleoptions.ui" line="99"/>
@@ -32168,7 +32175,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_linerelangleoptions.ui" line="122"/>
         <source>Pick length from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden uzunluğu seçin</translation>
     </message>
 </context>
 <context>
@@ -32186,7 +32193,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/text/qg_mtextoptions.ui" line="81"/>
         <source>Text to insert</source>
-        <translation type="unfinished"></translation>
+        <translation>Eklenecek metin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/qg_mtextoptions.ui" line="94"/>
@@ -32196,12 +32203,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/text/qg_mtextoptions.ui" line="110"/>
         <source>Rotation angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Dönme açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/qg_mtextoptions.ui" line="117"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden açı seçin</translation>
     </message>
 </context>
 <context>
@@ -32214,67 +32221,67 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="158"/>
         <source>Distance for offset from original entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Orijinal varlıktan ofset mesafesi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, oluşturulan varlıklar geçerli katmana yerleştirilir, aksi takdirde orijinal katmanlarda kalırlar.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="96"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut Katmanı Kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="63"/>
         <source>Number of copies.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopyaların sayısı.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="136"/>
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, orijinal varlıklar korunur, aksi takdirde kaldırılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="139"/>
         <source>Keep Originals</source>
-        <translation type="unfinished"></translation>
+        <translation>Orijinalleri Saklayın</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="109"/>
         <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, ofset mesafesinin düzeltmeleri kullanılır, aksi takdirde fare ile tanımlanır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="112"/>
         <source>Fixed Distance</source>
-        <translation type="unfinished"></translation>
+        <translation>Sabit Mesafe</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="119"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, mevcut öznitelikler oluşturulan varlıklara uygulanır, aksi takdirde orijinal öznitelikler kullanılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="122"/>
         <source>Use Current Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut Öznitelikleri Kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="172"/>
         <source>Pick distance from the drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden mesafeyi seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="76"/>
         <source>If checked, multiple copies will be created. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, birden fazla kopya oluşturulur. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="79"/>
         <source>Multiple Copies</source>
-        <translation type="unfinished"></translation>
+        <translation>Birden Fazla Kopya</translation>
     </message>
 </context>
 <context>
@@ -32287,57 +32294,57 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="50"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, mevcut öznitelikler oluşturulan varlıklara uygulanır, aksi takdirde orijinal öznitelikler kullanılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="53"/>
         <source>Use Current Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut Öznitelikleri Kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="173"/>
         <source>If checked, multiple copies will be created. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, birden fazla kopya oluşturulur. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="176"/>
         <source>Multiple Copies</source>
-        <translation type="unfinished"></translation>
+        <translation>Birden Fazla Kopya</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="183"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden açı seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="90"/>
         <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, tüm kopyalar aynı açı ile döndürülür. Aksi takdirde, açı her kopyanın sayısına orantılı olacaktır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="93"/>
         <source>Same angle for copies</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopyalar için aynı açı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="166"/>
         <source>Rotation angle. </source>
-        <translation type="unfinished"></translation>
+        <translation>Dönme açısı. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="60"/>
         <source>Number of copies.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopyaların sayısı.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="134"/>
         <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, dönüş açısı fare ile belirlenir. Aksi takdirde, belirtilen değer kullanılır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="137"/>
         <source>Free</source>
-        <translation type="unfinished"></translation>
+        <translation>Ücretsiz</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="100"/>
@@ -32347,22 +32354,22 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, oluşturulan varlıklar geçerli katmana yerleştirilir, aksi takdirde orijinal katmanlarda kalır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="147"/>
         <source>Use Current Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut Katmanı Kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="80"/>
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlenirse, orijinal varlıklar korunur, aksi takdirde kaldırılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="83"/>
         <source>Keep Originals</source>
-        <translation type="unfinished"></translation>
+        <translation>Orijinalleri Saklayın</translation>
     </message>
 </context>
 <context>
@@ -32375,7 +32382,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="53"/>
         <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="unfinished"></translation>
+        <translation>Polilin uçlarını birleştirerek kapalı kontur oluşturur</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="56"/>
@@ -32385,7 +32392,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="63"/>
         <source>Undo for previous vertex</source>
-        <translation type="unfinished"></translation>
+        <translation>Önceki köşe için geri al</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="66"/>
@@ -32395,12 +32402,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="73"/>
         <source>Segment Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Segment Türü:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="92"/>
         <source>Defines which segment of polyline should be created</source>
-        <translation type="unfinished"></translation>
+        <translation>Polilin&apos;in hangi segmentinin oluşturulacağını tanımlar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="96"/>
@@ -32421,7 +32428,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="111"/>
         <source>Tan Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Tan Açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="116"/>
@@ -32431,22 +32438,22 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="144"/>
         <source>Tangential arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Teğet yay</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="164"/>
         <source>Tangental arc with fixed radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Sabit yarıçaplı teğet yay</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="184"/>
         <source>Tangental arc with fixed angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Sabit açılı teğet yay</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="204"/>
         <source>Arc with angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı içeren yay</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="224"/>
@@ -32456,12 +32463,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="249"/>
         <source>Radius of arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yay yarıçapı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="256"/>
         <source>Pick radius form drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Yarıçap seçme formu çizimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="270"/>
@@ -32471,12 +32478,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="295"/>
         <source>Angle of arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yay açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="302"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden açı seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="351"/>
@@ -32499,22 +32506,22 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="23"/>
         <source>Landscape Orientation</source>
-        <translation type="unfinished"></translation>
+        <translation>Yatay Yönlendirme</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="78"/>
         <source>Drawing Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizim Ayarları</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="99"/>
         <source>Scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçek:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="118"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;baskı boyutu: çizim boyutu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="149"/>
@@ -32534,12 +32541,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="44"/>
         <source>Landscape Orientation of paper</source>
-        <translation type="unfinished"></translation>
+        <translation>Kağıdın Yatay Yönlendirme</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="61"/>
         <source>Portrait Orientation of paper</source>
-        <translation type="unfinished"></translation>
+        <translation>Kağıdın dikey yönü</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="172"/>
@@ -32549,47 +32556,47 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="237"/>
         <source>Page in center of drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimin ortasındaki sayfa</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="263"/>
         <source>Zoom to Print Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazdırma Alanını Yakınlaştır</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="290"/>
         <source>Fit to 1 Page</source>
-        <translation type="unfinished"></translation>
+        <translation>1 sayfaya sığdır</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="310"/>
         <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkinleştirilirse, kağıt alanı sütunlar ve satırlar halinde düzenlenmiş belirli sayıda sayfayı içerecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="313"/>
         <source>Tiled Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Karo Baskı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="329"/>
         <source>Pages Rows::</source>
-        <translation type="unfinished"></translation>
+        <translation>Sayfalar Satırlar::</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="336"/>
         <source>Amount of pages columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Sayfa sayısı sütunları</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="346"/>
         <source>Pages Columns:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sayfa Sütunları:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="353"/>
         <source>Amount of pages rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Sayfa satır sayısı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="369"/>
@@ -32622,12 +32629,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_roundoptions.ui" line="95"/>
         <source>Rounding radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Yuvarlama yarıçapı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_roundoptions.ui" line="102"/>
         <source>Pick radius from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden yarıçap seç</translation>
     </message>
 </context>
 <context>
@@ -32640,17 +32647,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="50"/>
         <source>Snap Distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çekim Mesafesi:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="60"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıçta belirlenen kopma noktasından kopma noktasının uzaklığı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="67"/>
         <source>Pick distance from drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden mesafeyi seçin.</translation>
     </message>
 </context>
 <context>
@@ -32663,7 +32670,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="59"/>
         <source>Snap Middle Points:</source>
-        <translation type="unfinished"></translation>
+        <translation>Orta Noktaları Yakala:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
@@ -32686,12 +32693,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/spline/qg_splineoptions.ui" line="72"/>
         <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="unfinished"></translation>
+        <translation>Noktalar arasında yaklaşım için kullanılan spline derecesi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/qg_splineoptions.ui" line="94"/>
         <source>If selected, closed spline is created</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilirse, kapalı spline oluşturulur.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/qg_splineoptions.ui" line="97"/>
@@ -32701,7 +32708,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/spline/qg_splineoptions.ui" line="110"/>
         <source>Undo previous point</source>
-        <translation type="unfinished"></translation>
+        <translation>Önceki noktayı geri al</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/qg_splineoptions.ui" line="113"/>
@@ -32729,12 +32736,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/text/qg_textoptions.ui" line="76"/>
         <source>Rotation angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Dönme açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/qg_textoptions.ui" line="83"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden açı seçin</translation>
     </message>
 </context>
 <context>
@@ -32752,7 +32759,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="53"/>
         <source>Total</source>
-        <translation type="unfinished"></translation>
+        <translation>Toplam</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="72"/>
@@ -32767,17 +32774,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="110"/>
         <source>Pick length from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimden uzunluğu seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="137"/>
         <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretlendiğinde, çizginin her iki tarafında da kırpma/uzatma işlemi gerçekleştirilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="140"/>
         <source>Symmetric</source>
-        <translation type="unfinished"></translation>
+        <translation>Simetrik</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="50"/>
