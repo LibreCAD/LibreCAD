@@ -3227,6 +3227,8 @@ bool RS_Modification::explode(const std::vector<RS_Entity*> &entitiesList, const
     }
 
     std::vector<RS_Entity*> clonesList;
+    // Issue #2296, only collect exploded containers to delete
+    std::vector<RS_Entity*> toDelete;
 
     for(auto e: entitiesList){
         if (e->isContainer()) {
@@ -3307,12 +3309,13 @@ bool RS_Modification::explode(const std::vector<RS_Entity*> &entitiesList, const
 */
                 }
             }
+	    toDelete.push_back(e);
         } else {
             e->setSelected(false);
         }
     }
 
-    deleteOriginalAndAddNewEntities(clonesList, entitiesList, false, remove, forceUndoableOperation);
+    deleteOriginalAndAddNewEntities(clonesList, toDelete, false, remove, forceUndoableOperation);
     clonesList.clear();
 
     container->updateInserts();
