@@ -184,7 +184,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="192"/>
         <source>Specify dimension arc location</source>
-        <translation>Yay konumu ölçüsünü belirtin</translation>
+        <translation>Yay konum ölçüsünü belirtin</translation>
     </message>
 </context>
 <context>
@@ -207,7 +207,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="306"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>Komşu Ölçüyü Yakala</translation>
+        <translation>Bitişik Ölçüyü Yakala</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="321"/>
@@ -261,7 +261,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="162"/>
         <source>Do not apply style override</source>
-        <translation>Stil geçersiz kılma uygulamayın</translation>
+        <translation>Stil geçersiz kılmayı uygulamayın</translation>
     </message>
 </context>
 <context>
@@ -274,7 +274,7 @@
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="61"/>
         <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation>Yay yüksekliği (kordon ile üst yay noktası arasındaki mesafe)</translation>
+        <translation>Yay yüksekliği (kiriş ile üst yay noktası arasındaki mesafe)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="64"/>
@@ -329,17 +329,17 @@
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.cpp" line="48"/>
         <source>Pick radius from drawing</source>
-        <translation>Çizimden yarıçap seç</translation>
+        <translation>Çizimden yarıçap seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.cpp" line="55"/>
         <source>Pick height from drawing</source>
-        <translation>Çizimden yüksekliği seçin</translation>
+        <translation>Çizimden yükseklik seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.cpp" line="62"/>
         <source>Pick length from drawing</source>
-        <translation>Çizimden uzunluğu seçin</translation>
+        <translation>Çizimden uzunluk seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.cpp" line="69"/>
@@ -390,7 +390,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="203"/>
         <source>Opposite Arc direction</source>
-        <translation>Karşı yay yönü</translation>
+        <translation>Karşıt yay yönü</translation>
     </message>
 </context>
 <context>
@@ -487,7 +487,7 @@ noktalar arasındaki mesafe=%2 çap=%3 den daha büyük</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="236"/>
         <source>Select circle center</source>
-        <translation>Çember merkezini seç</translation>
+        <translation>Çember merkezini seçin</translation>
     </message>
 </context>
 <context>
@@ -511,7 +511,7 @@ noktalar arasındaki mesafe=%2 çap=%3 den daha büyük</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="417"/>
         <source>Select base linear/aligned dimension</source>
-        <translation>Temel doğrusal/hizalı ölçümlendirmeyi seçin</translation>
+        <translation>Temel doğrusal/hizalı ölçüyü seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="417"/>
@@ -526,12 +526,12 @@ noktalar arasındaki mesafe=%2 çap=%3 den daha büyük</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="420"/>
         <source>Mirror offset direction</source>
-        <translation>Ayna ofset yönü</translation>
+        <translation>Aynalama ötelemesi yönü</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="423"/>
         <source>Specify dimension line location</source>
-        <translation>Ölçü çizgisinin yerini belirtin</translation>
+        <translation>Ölçü çizgisinin konumunu belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="423"/>
@@ -559,12 +559,12 @@ noktalar arasındaki mesafe=%2 çap=%3 den daha büyük</translation>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="277"/>
         <source>Set start angle of arc</source>
-        <translation>Yayın başlangıç açısını ayarla</translation>
+        <translation>Yayın başlangıç açısını ayarlayın</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="281"/>
         <source>Set end angle of arc</source>
-        <translation>Yayın son açısını ayarla</translation>
+        <translation>Yayın bitiş açısını ayarlayın</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="317"/>
@@ -592,7 +592,7 @@ noktalar arasındaki mesafe=%2 çap=%3 den daha büyük</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinefrompointtoline.cpp" line="404"/>
         <source>Select Initial Point</source>
-        <translation>Başlangıç Noktasını Seç</translation>
+        <translation>Başlangıç Noktasını Seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinefrompointtoline.cpp" line="407"/>
@@ -632,7 +632,7 @@ veya [sayı]</translation>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="517"/>
         <source>Specify line direction angle
 or [x|y|p|number|edges|distance]</source>
-        <translation>Çizgi yön açısını belirtin
+        <translation>Çizgi yönü açısını belirtin
 veya [x|y|p|sayı|kenarlar|mesafe]</translation>
     </message>
     <message>
@@ -678,7 +678,7 @@ veya [%2]</translation>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542"/>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
-        <translation>Mesafeyi belirtin (açı %1 derece)
+        <translation>Mesafeyi  belirtin (açı %1 derece)
 veya [%2]</translation>
     </message>
     <message>
@@ -720,7 +720,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="208"/>
         <source>Invalid value of rounding radius</source>
-        <translation>Yuvarlama yarıçapı geçersiz değer</translation>
+        <translation>Yuvarlama yarıçapı değeri geçersiz</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="218"/>
@@ -778,7 +778,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon3.cpp" line="51"/>
         <source>Specify a tangent</source>
-        <translation>Bir teğet belirt</translation>
+        <translation>Bir teğet belirtin</translation>
     </message>
 </context>
 <context>
@@ -786,12 +786,12 @@ veya [%2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="468"/>
         <source>Specify first point</source>
-        <translation>İlk noktayı belirt</translation>
+        <translation>İlk noktayı belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="477"/>
         <source>Specify direction (x or y) or [%1]</source>
-        <translation>Yönü (x veya y) veya [%1] belirtin</translation>
+        <translation>Yönü belirtin (x veya y) veya [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="491"/>
@@ -834,7 +834,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="516"/>
         <source>Specify angle or [%1]</source>
-        <translation>Açı veya [%1] belirtin</translation>
+        <translation>Açıyı veya [%1] belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="528"/>
@@ -877,7 +877,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="290"/>
         <source>Enter offset value</source>
-        <translation>Ofset değerini girin</translation>
+        <translation>Öteleme değerini girin</translation>
     </message>
 </context>
 <context>
@@ -918,7 +918,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="278"/>
         <source>Select line that is parallel to directrix of parabola or set vertex point</source>
-        <translation>Parabolün direktrisine paralel olan çizgiyi seçin veya tepe noktasını ayarlayın</translation>
+        <translation>Parabolün doğrultmanına paralel olan çizgiyi seçin veya tepe noktasını ayarlayın</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="282"/>
@@ -982,12 +982,12 @@ veya [%2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="275"/>
         <source>Enter number of points by X</source>
-        <translation>X ile nokta sayısını girin</translation>
+        <translation>X tarafından nokta sayısını girin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="279"/>
         <source>Enter number of points by Y</source>
-        <translation>Y ile nokta sayısını girin</translation>
+        <translation>Y tarafından nokta sayısını girin</translation>
     </message>
 </context>
 <context>
@@ -1057,12 +1057,12 @@ veya [%2]</translation>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="551"/>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="569"/>
         <source>Specify first point first</source>
-        <translation>İlk noktayı önce belirtin</translation>
+        <translation>Öncelikle noktayı ilk belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="560"/>
         <source>Specify width or second point first</source>
-        <translation>Önce genişliği veya ikinci noktayı belirtin</translation>
+        <translation>Öncelikle genişliği veya ikinci noktayı belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="589"/>
@@ -1133,12 +1133,12 @@ veya [%2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="214"/>
         <source>Specify first control point</source>
-        <translation>İlk kontrol noktasını belirt</translation>
+        <translation>İlk kontrol noktasını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
         <source>Specify next control point or [%1]</source>
-        <translation>Sonraki kontrol noktasını belirtin veya [%1]</translation>
+        <translation>Sonraki kontrol noktasını veya [%1] belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
@@ -1148,7 +1148,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="233"/>
         <source>Specify next control point</source>
-        <translation>Sonraki kontrol noktasını belirt</translation>
+        <translation>Sonraki kontrol noktasını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="265"/>
@@ -1215,7 +1215,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="129"/>
         <source>Paste Multiple</source>
-        <translation>Birden Fazla Yapıştır</translation>
+        <translation>Çoklu Yapıştır</translation>
     </message>
 </context>
 <context>
@@ -1223,12 +1223,12 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="512"/>
         <source>&amp;Window Zoom</source>
-        <translation>&amp;Çerçeveye Yakınlaştır</translation>
+        <translation>&amp;Pencereye Yakınlaş</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="326"/>
         <source>Zoom &amp;Panning</source>
-        <translation>Yakınlaştır &amp;Taşı</translation>
+        <translation>Yakınlaş &amp;Taşı</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="239"/>
@@ -1394,7 +1394,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="217"/>
         <source>Orthogonal From Line</source>
-        <translation>Çizgiden Ortogonal</translation>
+        <translation>Çizgiden Dik Açılı</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="218"/>
@@ -1424,7 +1424,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
         <source>By Arc</source>
-        <translation>Arc tarafından</translation>
+        <translation>Yay tarafından</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="253"/>
@@ -1530,7 +1530,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="313"/>
         <source>A&amp;ppend node</source>
-        <translation>&amp;Sona düğüm ekle</translation>
+        <translation>&amp;Düğüm ilave et</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="314"/>
@@ -1625,7 +1625,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="369"/>
         <source>Re&amp;vert direction</source>
-        <translation>&amp;Yönü Geri Al</translation>
+        <translation>&amp;Yönü Geri Çevir</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="370"/>
@@ -1645,7 +1645,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="319"/>
         <source>Polyline Arcs to Chords</source>
-        <translation>DevamlıÇizgi Yayları ile Akorlar</translation>
+        <translation>DevamlıÇizgi Yayları ile Kirişler</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="371"/>
@@ -1655,7 +1655,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="372"/>
         <source>&amp;Mirror</source>
-        <translation>&amp;Ayna</translation>
+        <translation>&amp;Aynala</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="374"/>
@@ -1685,7 +1685,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="381"/>
         <source>&amp;Stretch</source>
-        <translation>&amp;Sündür</translation>
+        <translation>&amp;Esnet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="382"/>
@@ -1760,7 +1760,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="232"/>
         <source>Select Points</source>
-        <translation>Seçme Noktaları</translation>
+        <translation>Noktaları Seç</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="233"/>
@@ -1770,7 +1770,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="269"/>
         <source>&amp;Center, Point, Chord</source>
-        <translation>&amp;Merkez, Nokta, Akor</translation>
+        <translation>&amp;Merkez, Nokta, Kiriş</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="270"/>
@@ -1855,7 +1855,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="386"/>
         <source>Break/Divide</source>
-        <translation>Bölme/Ayırma</translation>
+        <translation>Böl/Ayır</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="387"/>
@@ -1910,7 +1910,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="407"/>
         <source>Copy Pen</source>
-        <translation>Kopyalama Kalemi</translation>
+        <translation>Kalemi Kopyala</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="413"/>
@@ -1951,7 +1951,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="54"/>
         <source>Circle drawing commands</source>
-        <translation>Daire çizme komutları</translation>
+        <translation>Çember çizme komutları</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="55"/>
@@ -2041,7 +2041,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="63"/>
         <source>Line drawing commands</source>
-        <translation>Çizgi çizme komutları</translation>
+        <translation>Çizgi çizim komutları</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="64"/>
@@ -2126,7 +2126,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="72"/>
         <source>Snap restrictions</source>
-        <translation>Yakalama kısıtlamaları</translation>
+        <translation>Kısıtlamaları Yakala</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="73"/>
@@ -2206,12 +2206,12 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="81"/>
         <source>InfoCursor</source>
-        <translation>Bilgi İmleci</translation>
+        <translation>Bilgiİmleci</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="81"/>
         <source>Informational Cursor</source>
-        <translation>Bilgi İmleci</translation>
+        <translation>Bilgilendirmeİmleci</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="82"/>
@@ -2266,7 +2266,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="219"/>
         <source>Centerline</source>
-        <translation>Merkez hattı</translation>
+        <translation>Merkez çizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="220"/>
@@ -2286,7 +2286,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261"/>
         <source>Tangential &amp;3 Entities</source>
-        <translation>Teğetsel &amp;3 Öğeler</translation>
+        <translation>Teğetsel &amp;3 Öğe</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="348"/>
@@ -2296,7 +2296,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="349"/>
         <source>Select Ordinates by base</source>
-        <translation>Temel göre sıralama seçin</translation>
+        <translation>Temele göre sıralama seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="350"/>
@@ -2341,7 +2341,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="429"/>
         <source>Snap on Endpoints</source>
-        <translation>Uç noktadan yakala</translation>
+        <translation>Uç noktaları yakala</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="430"/>
@@ -2351,22 +2351,22 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="431"/>
         <source>Snap Center</source>
-        <translation>Merkez Yakala</translation>
+        <translation>Merkezi Yakala</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="432"/>
         <source>Snap Middle</source>
-        <translation>Orta Nokta Yakala</translation>
+        <translation>Orta Noktayı Yakala</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="433"/>
         <source>Snap Distance</source>
-        <translation>Mesafe Yakala</translation>
+        <translation>Mesafeyi Yakala</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="434"/>
         <source>Snap Intersection</source>
-        <translation>Kesişim Yakala</translation>
+        <translation>Kesişimi Yakala</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="440"/>
@@ -2606,7 +2606,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="654"/>
         <source>Invert Selection</source>
-        <translation>Diğerlerini Seç</translation>
+        <translation>Seçimi Ters Çevir</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
@@ -2743,7 +2743,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Focus on &amp;Command Line</source>
-        <translation>&amp;Komut Satırına Geç</translation>
+        <translation>&amp;Komut Satırına Odaklan</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="568"/>
@@ -2773,7 +2773,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="610"/>
         <source>Floating</source>
-        <translation>Yüzüyor</translation>
+        <translation>Yüzer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="571"/>
@@ -2803,12 +2803,12 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="377"/>
         <source>Tr&amp;im Two</source>
-        <translation>İki &amp;Budama</translation>
+        <translation>İkili &amp;Budama</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="379"/>
         <source>O&amp;ffset</source>
-        <translation>&amp;Paraleli</translation>
+        <translation>&amp;Ötele</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="421"/>
@@ -2823,22 +2823,22 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="488"/>
         <source>Lower After Entity</source>
-        <translation>Öğe Sonrası Düşüş</translation>
+        <translation>Öğenin aşağısına</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="489"/>
         <source>Raise Over Entity</source>
-        <translation>Öğe Üzerinde Yükseltme</translation>
+        <translation>Öğenin yukarısına</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="490"/>
         <source>Move to Top</source>
-        <translation>En Üstüne Git</translation>
+        <translation>En Üstüne Taşı</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="639"/>
         <source>&amp;Save View</source>
-        <translation>&amp;Kaydet Görünüm</translation>
+        <translation>&amp;Görünümü Kaydet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="641"/>
@@ -2848,27 +2848,27 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="642"/>
         <source>Restore View 1</source>
-        <translation>Görünümü Geri Yükle 1</translation>
+        <translation>Görünüm 1&apos;i Geri Yükle</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="643"/>
         <source>Restore View 2</source>
-        <translation>Görünümü Geri Yükle 2</translation>
+        <translation>Görünüm 2&apos;yi Geri Yükle</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="644"/>
         <source>Restore View 3</source>
-        <translation>Görünümü Geri Yükle 3</translation>
+        <translation>Görünüm 3&apos;ü Geri Yükle</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="645"/>
         <source>Restore View 4</source>
-        <translation>Görünümü Geri Yükle 4</translation>
+        <translation>Görünüm 4&apos;ü Geri Yükle</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="646"/>
         <source>Restore View 5</source>
-        <translation>Görünümü Geri Yükle 5</translation>
+        <translation>Görünüm 5&apos;i Geri Yükle</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="668"/>
@@ -2883,12 +2883,12 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="681"/>
         <source>Pick Point</source>
-        <translation>Seçim Noktası</translation>
+        <translation>Noktayı Seç</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="682"/>
         <source>Pick Distance</source>
-        <translation>Mesafe Seçimi</translation>
+        <translation>Mesafe Seç</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="683"/>
@@ -2898,7 +2898,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="690"/>
         <source>Cut Quic&amp;k</source>
-        <translation>Hızlı &amp;Kesim</translation>
+        <translation>Hızlı &amp;Kes</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="692"/>
@@ -3020,17 +3020,17 @@ veya [%2]</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="141"/>
         <source>Select first edge point of angle</source>
-        <translation>Ağın ilk kenar noktasını seçin</translation>
+        <translation>Açının ilk kenar noktasını seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="145"/>
         <source>Select second (intersection) point of angle</source>
-        <translation>Ağın ikinci (kesişim) noktasını seçin</translation>
+        <translation>Açının ikinci (kesişim) noktasını seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="149"/>
         <source>Select second edge point of angle</source>
-        <translation>Ağın ikinci kenar noktasını seçin</translation>
+        <translation>Açının ikinci kenar noktasını seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="189"/>
@@ -3152,7 +3152,7 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="44"/>
         <source>Polar Relative: (%1)</source>
-        <translation>Kutupsal Göreceli: (%1)</translation>
+        <translation>Kutup Göreceli: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="46"/>
@@ -3213,7 +3213,7 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="140"/>
         <source>Lines are parallel</source>
-        <translation>Çizgiler paralelÇizgiler paraleldir</translation>
+        <translation>Çizgiler paraleldir</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="160"/>
@@ -3225,7 +3225,7 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="318"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="337"/>
         <source>Angle:</source>
-        <translation>Açı:Açı:</translation>
+        <translation>Açı:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="162"/>
@@ -3264,7 +3264,7 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="289"/>
         <source>Select first edge point of angle</source>
-        <translation>Ağın ilk kenar noktasını seçin</translation>
+        <translation>Açının ilk kenar noktasını seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="289"/>
@@ -3279,7 +3279,7 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="293"/>
         <source>Select second (intersection) point of angle</source>
-        <translation>Ağın ikinci (kesişim) noktasını seçin</translation>
+        <translation>Açının ikinci (kesişim) noktasını seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="293"/>
@@ -3289,7 +3289,7 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="297"/>
         <source>Select second edge point of angle</source>
-        <translation>Ağın ikinci kenar noktasını seçin</translation>
+        <translation>Açının ikinci kenar noktasını seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="297"/>
@@ -3305,13 +3305,13 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="301"/>
         <source>Pick Complementary</source>
-        <translation>Tamamlayıcı Seç</translation>
+        <translation>Tamamlayıcı Seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="317"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="335"/>
         <source>Pick Angle</source>
-        <translation>Açı Seç</translation>
+        <translation>Açı Seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="322"/>
@@ -3348,7 +3348,7 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="336"/>
         <source>Distance:</source>
-        <translation>Mesafe:Mesafe:</translation>
+        <translation>Mesafe:</translation>
     </message>
 </context>
 <context>
@@ -3357,7 +3357,7 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="168"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="180"/>
         <source>Pick Distance</source>
-        <translation>Mesafe Seçimi</translation>
+        <translation>Mesafe Seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="169"/>
@@ -3407,7 +3407,7 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="285"/>
         <source>Specify first point of distance</source>
-        <translation>İlk mesafe noktasını belirt</translation>
+        <translation>İlk mesafe noktasını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="285"/>
@@ -3430,7 +3430,7 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickposition.cpp" line="75"/>
         <source>Pick Coordinates</source>
-        <translation>Koordinatları Seç</translation>
+        <translation>Koordinatları Seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickposition.cpp" line="76"/>
@@ -3497,13 +3497,13 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>selected</source>
         <comment>Layers to export</comment>
-        <translation></translation>
+        <translation>seçili</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="75"/>
         <source>visible</source>
         <comment>Layers to export</comment>
-        <translation></translation>
+        <translation>görünür</translation>
     </message>
 </context>
 <context>
@@ -3715,26 +3715,26 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="240"/>
         <source>Break/Divide Line</source>
-        <translation>Kırma/Bölme Çizgisi</translation>
+        <translation>Çizgiyi Kır/Böl</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="241"/>
         <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="363"/>
         <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="462"/>
         <source>Point 1:</source>
-        <translation>1. Madde:</translation>
+        <translation>Nokta 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="242"/>
         <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="365"/>
         <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="464"/>
         <source>Point 2:</source>
-        <translation>2. nokta:</translation>
+        <translation>Nokta 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="361"/>
         <source>Break/Divide Circle</source>
-        <translation>Daireyi Böl/Ayır</translation>
+        <translation>Daireyi Kır/Böl</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="362"/>
@@ -3751,7 +3751,7 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="460"/>
         <source>Break/Divide Arc</source>
-        <translation>Kırma/Bölme Yayı</translation>
+        <translation>Yayı Kır/Böl</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="512"/>
@@ -3761,7 +3761,7 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="512"/>
         <source>Proceed even if no intersections</source>
-        <translation>Kavşak olmasa bile devam edin</translation>
+        <translation>Kesişim olmasa bile devam edin</translation>
     </message>
 </context>
 <context>
@@ -3770,7 +3770,7 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
         <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="204"/>
         <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="240"/>
         <source>Duplicate Offset</source>
-        <translation>Yinelenen Ofset</translation>
+        <translation>Çift Ötele</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="265"/>
@@ -3780,12 +3780,12 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="265"/>
         <source>Interactive Offset</source>
-        <translation>Etkileşimli Ofset</translation>
+        <translation>Etkileşimli Öteleme</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifyduplicate.cpp" line="268"/>
         <source>Select direction of offset</source>
-        <translation>Ofset yönünü seçin</translation>
+        <translation>Öteleme yönünü seçin</translation>
     </message>
 </context>
 <context>
@@ -3806,17 +3806,17 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="71"/>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="96"/>
         <source>End:</source>
-        <translation>Son:</translation>
+        <translation>Bitiş:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="434"/>
         <source>Select line</source>
-        <translation>Çizgiyi seç</translation>
+        <translation>Çizgiyi seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="434"/>
         <source>Use Alternative Line Endpoint</source>
-        <translation>Alternatif Hat Uç Noktası Kullanın</translation>
+        <translation>Alternatif Çizgi Uç Noktası Kullanın</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="438"/>
@@ -3829,17 +3829,17 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="113"/>
         <source>Lines Join</source>
-        <translation>Çizgiler Birleşiyor</translation>
+        <translation>Çizgiler Birleşir</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="115"/>
         <source>Lines are parallel</source>
-        <translation>Çizgiler paralel</translation>
+        <translation>Çizgiler paraleldir</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="118"/>
         <source>Intersection:</source>
-        <translation>Kesişme noktası:</translation>
+        <translation>Kesişim:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="171"/>
@@ -3899,17 +3899,17 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="168"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Kalemi seçmek için öğeyi belirtin</translation>
+        <translation>Kalem seçmek için öğeyi belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="171"/>
         <source>Specify entity to apply pen</source>
-        <translation>Kalemi uygulayacak öğeyi belirtin</translation>
+        <translation>Kalemin uygulanacağı öğeyi belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="171"/>
         <source>Apply Resolved Pen</source>
-        <translation>Çözülmüş Kalem Uygula</translation>
+        <translation>Çözümlenmiş Kalemi Uygula</translation>
     </message>
 </context>
 <context>
@@ -3917,7 +3917,7 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenpick.cpp" line="88"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Kalemi seçmek için öğeyi belirtin</translation>
+        <translation>Kalem seçmek için öğeyi belirtin</translation>
     </message>
 </context>
 <context>
@@ -3925,7 +3925,7 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinearcstolines.cpp" line="115"/>
         <source>Specify polyline with arc segments</source>
-        <translation>Yay segmentleri ile DevamlıÇizgi belirtin</translation>
+        <translation>Yay segmentleri ile DevamlıÇizgiyi belirtin</translation>
     </message>
 </context>
 <context>
@@ -3943,7 +3943,7 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="241"/>
         <source>Select segment of polyline to modify</source>
-        <translation>Değiştirmek istediğiniz polilin segmentini seçin</translation>
+        <translation>Değiştirmek istediğiniz DevamlıÇizgi segmentini seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="245"/>
@@ -3956,12 +3956,12 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="189"/>
         <source>Selecting</source>
-        <translation>Seçme</translation>
+        <translation>Seçim</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="189"/>
         <source>De-Selecting</source>
-        <translation>Seçimi Kaldırma</translation>
+        <translation>Seçimi Kaldır</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="190"/>
@@ -4017,7 +4017,7 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actionselectdimordinatesameorigin.cpp" line="77"/>
         <source>Select reference ordinate dimension</source>
-        <translation>Referans sıralı ölçüyü seçin</translation>
+        <translation>Sıralı ölçü referansını seçin</translation>
     </message>
 </context>
 <context>
@@ -4058,7 +4058,7 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="213"/>
         <source>Insert AFTER selected point</source>
-        <translation>Seçilen noktanın SONRASINA ekle</translation>
+        <translation>Seçilen noktanın ARDINA ekleyin</translation>
     </message>
 </context>
 <context>
@@ -4071,7 +4071,7 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionsplineappendpoint.cpp" line="227"/>
         <source>Specify first control point</source>
-        <translation>İlk kontrol noktasını belirt</translation>
+        <translation>İlk kontrol noktasını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionsplineappendpoint.cpp" line="231"/>
@@ -11245,12 +11245,12 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyrotateoptions.ui" line="150"/>
         <source>Multiple copies will be created if checked.</source>
-        <translation>Seçiliyse birden fazla kopya oluşturulacaktır.</translation>
+        <translation>Seçiliyse çoklu kopya oluşturulacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyrotateoptions.ui" line="153"/>
         <source>Multiple Copies</source>
-        <translation>Birden Çok Kopya</translation>
+        <translation>Çoklu Kopyalar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyrotateoptions.ui" line="160"/>
@@ -11288,12 +11288,12 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyscaleoptions.ui" line="63"/>
         <source>If checked, multiple copies will be created.</source>
-        <translation>Seçiliyse, birden fazla kopya oluşturulacaktır.</translation>
+        <translation>Seçiliyse, çoklu kopya oluşturulacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyscaleoptions.ui" line="66"/>
         <source>Multiple Copies</source>
-        <translation>Birden Çok Kopya</translation>
+        <translation>Çoklu Kopya</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyscaleoptions.ui" line="107"/>
@@ -11434,12 +11434,12 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_moveoptions.ui" line="95"/>
         <source>If checked, multiple copies will be created. </source>
-        <translation>Seçiliyse, birden fazla kopya oluşturulacaktır. </translation>
+        <translation>Seçiliyse, çoklu kopya oluşturulacaktır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_moveoptions.ui" line="98"/>
         <source>Multiple Copies</source>
-        <translation>Çoklu Kopyalar</translation>
+        <translation>Çoklu Kopya</translation>
     </message>
 </context>
 <context>
@@ -14737,12 +14737,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="218"/>
         <source>If checked, multiple copies will be created. </source>
-        <translation>İşaretlendiğinde, birden fazla kopya oluşturulur. </translation>
+        <translation>İşaretlendiğinde, çoklu kopya oluşturulur. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="221"/>
         <source>Multiple Copies</source>
-        <translation>Birden Fazla Kopya</translation>
+        <translation>Çoklu Kopya</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="94"/>
@@ -18296,7 +18296,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="163"/>
         <source>Multiple Copies</source>
-        <translation>Birden Fazla Kopya</translation>
+        <translation>Çoklu Kopya</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="41"/>
@@ -32290,7 +32290,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="79"/>
         <source>Multiple Copies</source>
-        <translation>Birden Fazla Kopya</translation>
+        <translation>Çoklu Kopya</translation>
     </message>
 </context>
 <context>
@@ -32313,12 +32313,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="173"/>
         <source>If checked, multiple copies will be created. </source>
-        <translation>İşaretlendiğinde, birden fazla kopya oluşturulur. </translation>
+        <translation>İşaretlendiğinde, çoklu kopya oluşturulur. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="176"/>
         <source>Multiple Copies</source>
-        <translation>Birden Fazla Kopya</translation>
+        <translation>Çoklu Kopya</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="183"/>
