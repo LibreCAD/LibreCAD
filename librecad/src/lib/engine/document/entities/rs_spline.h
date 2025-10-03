@@ -150,6 +150,15 @@ public:
     void fillStrokePoints(int splineSegments, std::vector<RS_Vector>& points);
     friend class RS_FilterDXFRW;
 private:
+    size_t getUnwrappedSize() const;
+    std::vector<RS_Vector> getUnwrappedControlPoints() const;
+    std::vector<double> getUnwrappedWeights() const;
+    std::vector<double> getUnwrappedKnotVector() const;
+    void removeWrapping();
+    void addWrapping();
+    void updateControlAndWeightWrapping();
+    void updateKnotWrapping();
+
     /**
      * Generates B-Spline open knot vector with multiplicity
      * equal to the order at the ends.
