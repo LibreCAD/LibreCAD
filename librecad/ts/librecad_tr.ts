@@ -138,7 +138,7 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="739"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation> çoklu çizginin bir parçası olduğu için bölünmez. Önce çoklu çizgiyi genişletin.</translation>
+        <translation> DevamlıÇizginin bir parçası olduğu için bölünmez. Önce DevamlıÇizgiyi genişletin.</translation>
     </message>
 </context>
 <context>
@@ -1520,7 +1520,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="311"/>
         <source>&amp;Polyline</source>
-        <translation>&amp;Çoklu çizgi</translation>
+        <translation>&amp;DevamlıÇizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="312"/>
@@ -1550,7 +1550,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="317"/>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation>&amp;Eş Mesafeli Çoklu Çizgi Oluştur</translation>
+        <translation>&amp;Eş Mesafeli DevamlıÇizgi Oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="327"/>
@@ -1645,7 +1645,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="319"/>
         <source>Polyline Arcs to Chords</source>
-        <translation>Çoklu Çizgi Yayları ile Akorlar</translation>
+        <translation>DevamlıÇizgi Yayları ile Akorlar</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="371"/>
@@ -1810,7 +1810,7 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="291"/>
         <source>&amp;Spline from polyline</source>
-        <translation>&amp;Çoklu çizgiden eğri</translation>
+        <translation>&amp;DevamlıÇizgiden eğri</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="292"/>
@@ -1830,12 +1830,12 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="318"/>
         <source>Polyline from Existing &amp;Segments</source>
-        <translation>Mevcut &amp;Segmentlerden Çoklu Çizgi</translation>
+        <translation>Mevcut &amp;Segmentlerden DevamlıÇizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="320"/>
         <source>Polyline Change Segment Type</source>
-        <translation>Çoklu Çizgi Değiştirme Segmenti Türü</translation>
+        <translation>DevamlıÇizgi Değiştirme Segmenti Türü</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331"/>
@@ -2101,12 +2101,12 @@ veya [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="70"/>
         <source>Polyline</source>
-        <translation>Çoklu çizgi</translation>
+        <translation>DevamlıÇizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="70"/>
         <source>Polyline drawing commands</source>
-        <translation>Çoklu çizgi çizim komutları</translation>
+        <translation>DevamlıÇizgi çizim komutları</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="71"/>
@@ -3925,7 +3925,7 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinearcstolines.cpp" line="115"/>
         <source>Specify polyline with arc segments</source>
-        <translation>Yay segmentleri ile çoklu çizgi belirtin</translation>
+        <translation>Yay segmentleri ile DevamlıÇizgi belirtin</translation>
     </message>
 </context>
 <context>
@@ -3938,7 +3938,7 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="237"/>
         <source>Select polyline to modify</source>
-        <translation>Değiştirmek için çoklu çizgiyi seçin</translation>
+        <translation>Değiştirmek için DevamlıÇizgiyi seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_actionpolylinechangesegmenttype.cpp" line="241"/>
@@ -4705,7 +4705,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_crossoptions.ui" line="209"/>
         <source>Extension</source>
-        <translation>Uzatma</translation>
+        <translation>Uzantı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_crossoptions.ui" line="214"/>
@@ -5198,7 +5198,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="204"/>
         <source>Extension Lines</source>
-        <translation>Extension Lines</translation>
+        <translation>Uzatma Çizgileri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="216"/>
@@ -5238,7 +5238,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="368"/>
         <source>Extend beyond dim lines:</source>
-        <translation>Belirsiz sınırların ötesine geçin:</translation>
+        <translation>Ölçü çizgilerinin ötesine genişlet:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="285"/>
@@ -5263,7 +5263,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="388"/>
         <source>Sets the total length of the extension lines starting from the dimension line toward the dimension origin. (DIMFXL system variable)</source>
-        <translation>Ölçü çizgisinden ölçü başlangıcına doğru uzanan uzantı çizgilerinin toplam uzunluğunu ayarlar. (DIMFXL sistem değişkeni)</translation>
+        <translation>Ölçü çizgisinden ölçü başlangıcına doğru uzanan uzatma çizgilerinin toplam uzunluğunu ayarlar. (DIMFXL sistem değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="345"/>
@@ -5278,7 +5278,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="269"/>
         <source>Suppresses the display of first extension line (DIMSE1 system variable).</source>
-        <translation>İlk uzantı çizgisinin görüntülenmesini engeller (DIMSE1 sistem değişkeni).</translation>
+        <translation>İlk uzatma çizgisinin görüntülenmesini engeller (DIMSE1 sistem değişkeni).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="272"/>
@@ -5344,22 +5344,22 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="505"/>
         <source>Arrowheads</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok Uçları</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="553"/>
         <source>Displays and sets the size of arrowheads. (DIMASZ system variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok uçlarının boyutunu gösterir ve ayarlar. (DIMASZ sistem değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="539"/>
         <source>Sets the arrowhead for the leader line. (DIMLDRBLK system variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kılavuz çizgi için ok ucu ayarlar. (DIMLDRBLK sistem değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="511"/>
         <source>Leader:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kılavuz:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="518"/>
@@ -5456,17 +5456,17 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="679"/>
         <source>Creates a center mark. The size of the center mark is stored as a positive value in the DIMCEN system variable.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir merkez işareti oluşturur. Merkez işaretinin boyutu, DIMCEN sistem değişkeninde pozitif bir değer olarak saklanır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="682"/>
         <source>Mark</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretle</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="689"/>
         <source>Creates a centerline. The size of the centerline is stored as a negative value in the DIMCEN system variable.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir merkez çizgi oluşturur. Merkez çizginin boyutu, DIMCEN sistem değişkeninde negatif bir değer olarak saklanır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="692"/>
@@ -5497,7 +5497,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="764"/>
         <source>Lists the available text styles.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut metin stillerini listeler.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="774"/>
@@ -5532,7 +5532,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="822"/>
         <source>Fraction height scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bölüntü yüksekliği ölçeği:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="829"/>
@@ -5557,7 +5557,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="859"/>
         <source>Displays a rectangular frame around the dimension text. This option changes the value stored in the DIMGAP system variable to a negative value.</source>
-        <translation>Ölçü metninin etrafında dikdörtgen bir çerçeve gösterir. Bu seçenek, DIMGAP sistem değişkeninde saklanan değeri negatif bir değere değiştirir.</translation>
+        <translation>Ölçü metninin etrafında dikdörtgen bir çerçeve gösterir. Bu seçenek, ÖLÇÜBOŞLUĞU sistem değişkeninde saklanan değeri negatif bir değere değiştirir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="862"/>
@@ -5588,7 +5588,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="911"/>
         <source>Aligns text with the dimension line when text is inside the extension lines, but aligns it horizontally when text is outside the extension lines (DIMTIH and DIMTOH system variables).</source>
-        <translation>Metni, metin ölçü çizgilerinin içindeyse ölçü çizgisine hizalar, ancak metin ölçü çizgilerinin dışındaysa yatay olarak hizalar (DIMTIH ve DIMTOH sistem değişkenleri).</translation>
+        <translation>Metni, metin ölçü çizgilerinin içindeyse ölçü çizgisiyle hizalar, ancak metin ölçü çizgilerinin dışındaysa yatay olarak hizalar (DIMTIH ve DIMTOH sistem değişkenleri).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="904"/>
@@ -5599,7 +5599,8 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="577"/>
         <source>Specifies the size of oblique strokes drawn instead of arrowheads for linear, radius, and diameter dimensioning. If = 0 – draws arrowheads.
 &gt;0 – Draws oblique strokes instead of arrowheads (DIMTSZ variable). </source>
-        <translation>Doğrusal, yarıçap ve çap ölçülendirmede ok yerine çizilen eğik çizgilerin ölçüsü belirtir. Eğer = 0 – ok çizer.&gt;0 – Ok yerine eğik çizgiler çizer (DIMTSZ değişkeni).</translation>
+        <translation>Doğrusal, yarıçap ve çap ölçülendirmede ok yerine çizilen eğik çizgilerin ölçüsü belirtir. Eğer = 0 ise – ok uçları çizer.
+&gt;0 – Ok uçları yerine eğik çizgiler çizer (DIMTSZ değişkeni). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="914"/>
@@ -5711,12 +5712,12 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1052"/>
         <source>Broken dim line text gap:</source>
-        <translation>Kırık dim çizgi metin boşluğu:</translation>
+        <translation>Kırık ölçü çizgisi metin boşluğu:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1059"/>
         <source>Sets the current text gap, which is the distance around the dimension text when the dimension line is broken to accommodate the dimension text (DIMGAP system variable).</source>
-        <translation>Ölçü metninin etrafındaki mesafe olan mevcut metin boşluğunu ayarlar ve bu mesafe, ölçü metnini sığdırmak için ölçü çizgisi kırıldığında geçerlidir (DIMGAP sistem değişkeni).</translation>
+        <translation>Ölçü metninin etrafındaki mesafe olan mevcut metin boşluğunu ayarlar ve bu mesafe, ölçü metnini sığdırmak için ölçü çizgisi kırıldığında geçerlidir (ÖLÇÜBOŞLUĞU sistem değişkeni).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1086"/>
@@ -5767,7 +5768,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1147"/>
         <source>Determines a scale factor based on the scaling between the current model space viewport and paper space. (DIMSCALE system variable)</source>
-        <translation></translation>
+        <translation>Mevcut model alanı görünüm penceresi ile kağıt alanı arasındaki ölçeklemeye dayalı bir ölçek faktörü belirler. (DIMSCALE sistem değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1150"/>
@@ -5777,7 +5778,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1175"/>
         <source>If selected, moves the dimension line whenever dimension text is moved. (DIMTMOVE system variable)</source>
-        <translation></translation>
+        <translation>Seçildiğinde, ölçü metni taşındığında ölçü çizgisini de taşır. (DIMTMOVE sistem değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1178"/>
@@ -5787,7 +5788,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1185"/>
         <source>If selected, dimension lines are not moved when text is moved. If text is moved away from the dimension line, a leader line is created connecting the text to the dimension line. The leader line is omitted when text is too close to the dimension line. (DIMTMOVE system variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilirse, metin taşındığında ölçü çizgileri hareket ettirilmez. Metin ölçü çizgisinden uzaklaştırılırsa, metni ölçü çizgisine bağlayan bir öncül çizgi oluşturulur. Metin ölçü çizgisine çok yakın olduğunda öncül çizgi atlanır. (DIMTMOVE sistem değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1188"/>
@@ -5802,7 +5803,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1202"/>
         <source>If selected, dimension lines are not moved when text is moved. Text that is moved away from the dimension line is not connected to the dimension line with a leader. (DIMTMOVE system variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilirse, ölçü çizgileri metin taşındığında hareket ettirilmez. Ölçü çizgisinden uzaklaştırılan metin, bir gösterici ile ölçü çizgisine bağlanmaz. (DIMTMOVE sistem değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1205"/>
@@ -5817,12 +5818,12 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1240"/>
         <source>If there isn&apos;t enough room to place both text and arrow inside extension lines, the first thing to move outside the extension lines is:</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğer hem metni hem de oku uzatma çizgileri içinde yerleştirecek yeterli alan yoksa, uzatma çizgilerinin dışına taşınan ilk şey şudur:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1250"/>
         <source>Suppresses arrowheads if not enough space is available inside the extension lines. (DIMSOXD system variable)</source>
-        <translation>Uzantı çizgilerinin içinde yeterli alan yoksa ok başlarını engeller. (DIMSOXD sistem değişkeni)</translation>
+        <translation>Uzatma çizgilerinin içinde yeterli alan yoksa ok başlarını engeller. (DIMSOXD sistem değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1253"/>
@@ -5832,7 +5833,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1260"/>
         <source>When not enough space is available for text and arrowheads, moves both outside the extension lines (DIMATFIT system variable).</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin ve ok uçları için yeterli alan olmadığında, ikisi de uzatma çizgilerinin dışına taşınır (DIMATFIT sistem değişkeni).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1263"/>
@@ -5842,7 +5843,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1270"/>
         <source>Moves either the text or the arrowheads outside the extension lines based on the best fit (DIMATFIT system variable).</source>
-        <translation type="unfinished"></translation>
+        <translation>Metni veya ok başlarını en iyi uyuma göre uzatma çizgilerinin dışına taşır (DIMATFIT sistem değişkeni).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1273"/>
@@ -5966,7 +5967,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1450"/>
         <source>Sets a scale factor for linear dimension measurements. It is recommended that you do not change this value from the default value of 1.00. (DIMLFAC system variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Doğrusal ölçü ölçümleri için bir ölçek faktörü ayarlar. Bu değeri varsayılan değer olan 1.00&apos;den değiştirmemeniz önerilir. (DIMLFAC sistem değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1460"/>
@@ -6001,7 +6002,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1507"/>
         <source>Sets the current units format for all dimension types except Angular. (DIMLUNIT system variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Açısal birimler hariç tüm ölçü türleri için geçerli birim formatını ayarlar. (DIMLUNIT sistem değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1514"/>
@@ -6027,7 +6028,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1538"/>
         <source>Sets nearest rounding value for dimension measurements for all dimension types except Angular. (DIMRND system variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Açısal olanlar hariç tüm ölçü türleri için boyut ölçümlerinin en yakın yuvarlama değerini ayarlar. (DIMRND sistem değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1548"/>
@@ -6074,7 +6075,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1627"/>
         <source> Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMZIN system variable)</source>
-        <translation>Mesafe tam feet sayısı olduğunda, bir feet ve inç ölçüsünün inç kısmını engeller (DIMZIN sistem değişkeni)</translation>
+        <translation> Mesafe tam feet sayısı olduğunda, bir feet ve inç ölçüsünün inç kısmını engeller (DIMZIN sistem değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1630"/>
@@ -6111,12 +6112,12 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1664"/>
         <source>Sets the number of sub units to a unit. It is used to calculate the dimension distance in a sub unit when the distance is less than one unit. </source>
-        <translation type="unfinished"></translation>
+        <translation>Alt birimlerin bir birime göre sayısını ayarlar. Mesafe bir birimden az olduğunda bir alt birimdeki ölçü mesafesini hesaplamak için kullanılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1680"/>
         <source>Includes a suffix to the dimension value sub unit. You can enter text or use control codes to display special symbols.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçü değeri alt birimine bir ek içerir. Özel sembolleri göstermek için metin girebilir veya kontrol kodlarını kullanabilirsiniz.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1707"/>
@@ -6141,7 +6142,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1762"/>
         <source>Specifies the multiplier used as the conversion factor between primary and alternate units.For example, to convert inches to millimeters, enter 25.4. The value has no effect on angular dimensions, and it is not applied to the rounding value or the plus or minus tolerance values. (DIMALTF system variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Birincil ve alternatif birimler arasındaki dönüşüm faktörü olarak kullanılan çarpanı belirtir. Örneğin, inçleri milimetreye dönüştürmek için 25,4 girin. Bu değer açısal ölçülere etki etmez ve yuvarlama değeri veya artı/eksi tolerans değerlerine uygulanmaz. (DIMALTF sistem değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1772"/>
@@ -6151,7 +6152,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1779"/>
         <source>Sets rounding rules for alternate units for all dimension types except Angular. If you enter a value of 0.25, all alternate measurements are rounded to the nearest 0.25 unit. If you enter a value of 1.0, all dimension measurements are rounded to the nearest integer. The number of digits displayed after the decimal point depends on the Precision setting. (DIMALTRND system variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Açısal olanlar hariç tüm ölçü türleri için alternatif birimler için yuvarlama kurallarını belirler. Eğer 0,25 değerini girerseniz, tüm alternatif ölçümler en yakın 0,25 birime yuvarlanır. Eğer 1,0 değerini girerseniz, tüm boyut ölçümleri en yakın tam sayıya yuvarlanır. Ondalık noktadan sonra görüntülenen rakam sayısı, Hassasiyet ayarına bağlıdır. (DIMALTRND sistem değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1789"/>
@@ -6186,7 +6187,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1831"/>
         <source>Includes a prefix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the control code %%c displays the diameter symbol. (DIMAPOST system variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif ölçü metninde bir önek içerir. Özel sembolleri göstermek için metin girebilir veya kontrol kodlarını kullanabilirsiniz. Örneğin, %%c kontrol kodunu girmek, çap sembolünü gösterir. (DIMAPOST sistem değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1845"/>
@@ -6211,7 +6212,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1925"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet. For example, 1&apos;-0&quot; becomes 1&apos;. (DIMALTZ system variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mesafe tam feet cinsinden olduğunda, bir feet ve inç ölçüsündeki inç kısmını engeller. Örneğin, 1&apos;-0&quot; 1&apos; olur. (DIMALTZ sistem değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1938"/>
@@ -6221,7 +6222,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1958"/>
         <source>Includes a suffix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the text cm results in dimension text similar to that shown in the illustration. When you enter a suffix, it overrides any default suffixes. (DIMAPOST system variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif ölçü metninde bir ek içerir. Özel sembolleri göstermek için metin girebilir veya kontrol kodlarını kullanabilirsiniz. Örneğin, cm metnini girmek, şekilde gösterildiği gibi ölçü metni ile sonuçlanır. Bir ek girdiğinizde, mevcut varsayılan eklerin yerine geçer. (DIMAPOST sistem değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1982"/>
@@ -6231,7 +6232,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2000"/>
         <source>Sets the minimum or lower tolerance value. (DIMTM system variable)</source>
-        <translation>Minimum veya alt tolerans değerini ayarlar. (DIMTM sistem değişkeni)</translation>
+        <translation>En küçük veya alt tolerans değerini ayarlar. (DIMTM sistem değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2016"/>
@@ -6246,12 +6247,12 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2036"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMTZIN system variable). </source>
-        <translation type="unfinished"></translation>
+        <translation>Mesafe 1 feet&apos;ten az olduğunda, bir feet ve inç ölçüsünün feet kısmını engeller (DIMTZIN sistem değişkeni). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2046"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMTZIN system variable). </source>
-        <translation type="unfinished"></translation>
+        <translation>Mesafe tam feet cinsinden olduğunda, feet ve inç ölçüsünün inç kısmını engeller (DIMTZIN sistem değişkeni). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2059"/>
@@ -6316,7 +6317,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2141"/>
         <source>Sets the maximum or upper tolerance value. When you select Symmetrical in Method, this value is used for the tolerance. (DIMTP system variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>En büyük veya üst tolerans değerini ayarlar. Yöntem bölümünde Simetrik&apos;i seçtiğinizde, bu değer tolerans için kullanılır. (DIMTP sistem değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2151"/>
@@ -6331,7 +6332,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2165"/>
         <source>Sets the current height for the tolerance text. The ratio of the tolerance height to the main dimension text height is calculated and stored in the DIMTFAC system variable.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tolerans metni için geçerli yüksekliği ayarlar. Tolerans yüksekliğinin ana ölçü metni yüksekliğine oranı hesaplanır ve DIMTFAC sistem değişkeninde saklanır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2175"/>
@@ -6386,12 +6387,12 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2260"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMALTTZ system variable).</source>
-        <translation type="unfinished"></translation>
+        <translation>Mesafe 1 feet&apos;ten az olduğunda, bir feet-inç ölçüsünün feet kısmını engeller (DIMALTTZ sistem değişkeni).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2270"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMALTTZ system variable).</source>
-        <translation type="unfinished"></translation>
+        <translation>Mesafe tam sayı feet olduğunda feet ve inç ölçüsündeki inç kısmını engeller (DIMALTTZ sistem değişkeni).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.cpp" line="398"/>
@@ -6765,7 +6766,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgentityproperties.cpp" line="200"/>
         <source>Polyline Properties</source>
-        <translation>Çoklu Çizgi Özellikleri</translation>
+        <translation>DevamlıÇizgi Özellikleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgentityproperties.cpp" line="206"/>
@@ -7152,7 +7153,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="112"/>
         <source>Polyline</source>
-        <translation>Çoklu çizgi</translation>
+        <translation>DevamlıÇizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="113"/>
@@ -7862,7 +7863,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="136"/>
         <source>If enabled, click on the table item will apply coordinates system. Otherwise, coordinates system should be applied explicitly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkinleştirilmişse, tablo öğesine tıklamak koordinat sistemini uygular. Aksi takdirde koordinat sistemi açıkça uygulanmalıdır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="153"/>
@@ -8338,12 +8339,12 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_drawboundingboxoptions.ui" line="59"/>
         <source>If selected, bounding box is drawn as polyline</source>
-        <translation>Seçildiğinde, sınırlayıcı kutu çoklu çizgi olarak çizilir</translation>
+        <translation>Seçildiğinde, sınırlayıcı kutu DevamlıÇizgi olarak çizilir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_drawboundingboxoptions.ui" line="65"/>
         <source>Polyline</source>
-        <translation>Çoklu çizgi</translation>
+        <translation>DevamlıÇizgi</translation>
     </message>
 </context>
 <context>
@@ -9988,12 +9989,12 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_linejoinoptions.ui" line="38"/>
         <source>If checked, polyline will be created instead of individual lines</source>
-        <translation>İşaretlendiğinde, tek tek çizgiler yerine çoklu çizgi oluşturulur</translation>
+        <translation>İşaretlendiğinde, tek tek çizgiler yerine DevamlıÇizgi oluşturulur</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_linejoinoptions.ui" line="41"/>
         <source>Create Polyline</source>
-        <translation>Çoklu Çizgi Oluştur</translation>
+        <translation>DevamlıÇizgi Oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_linejoinoptions.ui" line="66"/>
@@ -10360,7 +10361,7 @@ Lütfen farklı bir değer girin.</translation>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="232"/>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="268"/>
         <source>&amp;Polyline</source>
-        <translation>&amp;Çoklu çizgi</translation>
+        <translation>&amp;DevamlıÇizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="217"/>
@@ -10552,7 +10553,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="972"/>
         <source>Polyline</source>
-        <translation>Çoklu çizgi</translation>
+        <translation>DevamlıÇizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="976"/>
@@ -10690,7 +10691,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="1466"/>
         <source>Modify Polyline</source>
-        <translation>Çoklu Çizgiyi Değiştir</translation>
+        <translation>DevamlıÇizgi Değiştir</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="1518"/>
@@ -12792,7 +12793,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_polylinepropertieseditingwidget.ui" line="69"/>
         <source>Defines whether polyline is closed contour</source>
-        <translation>Çoklu çizginin kapalı kontur olup olmadığını tanımlar</translation>
+        <translation>DevamlıÇizginin kapalı kontur olup olmadığını tanımlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_polylinepropertieseditingwidget.ui" line="72"/>
@@ -14142,12 +14143,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="46"/>
         <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation>İşaretlendiğinde, dikdörtgen tek tek segmentler yerine çoklu çizgi olarak oluşturulur.</translation>
+        <translation>İşaretlendiğinde, dikdörtgen tek tek segmentler yerine DevamlıÇizgi olarak oluşturulur.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="49"/>
         <source>Polyline</source>
-        <translation>Çoklu çizgi</translation>
+        <translation>DevamlıÇizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="419"/>
@@ -14464,12 +14465,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="59"/>
         <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation>İşaretlendiğinde, tüm dikdörtgen çoklu çizgi olarak çizilir.</translation>
+        <translation>İşaretlendiğinde, tüm dikdörtgen DevamlıÇizgi olarak çizilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="62"/>
         <source>Polyline</source>
-        <translation>Çoklu çizgi</translation>
+        <translation>DevamlıÇizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="340"/>
@@ -14572,12 +14573,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="32"/>
         <source>If checked, the shape will be created as polyline. </source>
-        <translation>İşaretlendiğinde, şekil çoklu çizgi olarak oluşturulur. </translation>
+        <translation>İşaretlendiğinde, şekil DevamlıÇizgi olarak oluşturulur. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="35"/>
         <source>Polyline</source>
-        <translation>Çoklu çizgi</translation>
+        <translation>DevamlıÇizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="128"/>
@@ -14824,7 +14825,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="74"/>
         <source>Polyline</source>
-        <translation>Çoklu çizgi</translation>
+        <translation>DevamlıÇizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="81"/>
@@ -15208,7 +15209,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="93"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation>İşaretlendiğinde, çizgi segmentleri çoklu çizginin bir parçası olur. Aksi takdirde, ayrı çizgiler olur</translation>
+        <translation>İşaretlendiğinde, çizgi segmentleri DevamlıÇizgi bir parçası olur. Aksi takdirde, ayrı çizgiler olur</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="96"/>
@@ -15426,12 +15427,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="82"/>
         <source>If checked, the star will be drawn as polyline. </source>
-        <translation>İşaretlendiğinde yıldız çoklu çizgi olarak çizilir. </translation>
+        <translation>İşaretlendiğinde yıldız DevamlıÇizgi olarak çizilir. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="85"/>
         <source>Polyline</source>
-        <translation>Çoklu çizgi</translation>
+        <translation>DevamlıÇizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="150"/>
@@ -15545,7 +15546,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="275"/>
         <source>Polyline</source>
-        <translation>Çoklu çizgi</translation>
+        <translation>DevamlıÇizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="276"/>
@@ -15618,7 +15619,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="308"/>
         <source>PolyLines</source>
-        <translation>Çoklu Çizgiler</translation>
+        <translation>DevamlıÇizgiler</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="310"/>
@@ -15745,7 +15746,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="96"/>
         <source>Set UCS by ordinate dimension</source>
-        <translation type="unfinished">UCS&apos;yi sıralı ölçü ile ayarla</translation>
+        <translation>UCS&apos;yi sıralı ölçü ile ayarla</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="110"/>
@@ -15987,7 +15988,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="100"/>
         <source>Polyline</source>
-        <translation>Çoklu çizgi</translation>
+        <translation>DevamlıÇizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="102"/>
@@ -16357,17 +16358,17 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="452"/>
         <source>If not checked, dock areas can only contain a single row (horizontal or vertical) of dock widgets. If checked, the area occupied by a dock widget can be split in either direction to contain more dock widgets.</source>
-        <translation>İşaretlenmezse, kenetlenme alanları yalnızca tek bir sıra (yatay veya dikey) kenetlenme bileşen&apos;i içerebilir. İşaretlenirse, bir kenetlenme bileşen&apos;inin kapladığı alan her iki yönde de bölünerek daha fazla kenetlenme bileşen&apos;i içerebilir.</translation>
+        <translation>İşaretlenmezse, rıhtımlama alanları yalnızca tek bir sıra (yatay veya dikey) rıhtımlama bileşen&apos;i içerebilir. İşaretlenirse, bir rıhtımlama bileşen&apos;inin kapladığı alan her iki yönde de bölünerek daha fazla rıhtımlama bileşen&apos;i içerebilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="455"/>
         <source>Allow nested docking</source>
-        <translation>İç içe yerleştirmeye izin ver</translation>
+        <translation>İç içe rıhtımlamaya izin ver</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="462"/>
         <source>If checked, the two vertical dock areas on the sides of the main window show their tabs vertically. </source>
-        <translation>İşaretlendiğinde, ana pencerenin yanlarındaki iki dikey kenetlenme alanı sekmelerini dikey olarak gösterir. </translation>
+        <translation>İşaretlendiğinde, ana pencerenin yanlarındaki iki dikey rıhtımlama alanı sekmelerini dikey olarak gösterir. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="468"/>
@@ -16510,7 +16511,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineequidistantoptions.ui" line="81"/>
         <source>Distance from original polyline</source>
-        <translation>Özgün çoklu çizgiden uzaklık</translation>
+        <translation>Özgün DevamlıÇizgiden uzaklık</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineequidistantoptions.ui" line="56"/>
@@ -19007,7 +19008,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2116"/>
         <source>Mode of lines joining in polylines or paths</source>
-        <translation>Çoklu çizgiler veya yollarla birleştirilen çizgi modları</translation>
+        <translation>DevamlıÇizgiler veya yollarla birleştirilen çizgi modları</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2135"/>
@@ -22375,7 +22376,7 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1070"/>
         <source>[0250-02AF] IPA Extensions</source>
-        <translation>[0250-02AF] IPA Oluşumları</translation>
+        <translation>[0250-02AF] IPA Uzantıları</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1075"/>
@@ -23733,14 +23734,18 @@ Clear filtering mask and repeat.</source>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation></translation>
+        <translation>[%1]
+için böyle bir alt katman zaten mevcut.
+Lütfen farklı bir ad belirtin.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1157"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation></translation>
+        <translation>[%1]
+için böyle bir alt katman zaten mevcut.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1165"/>
@@ -24330,7 +24335,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="533"/>
         <source>polyline</source>
         <comment>draw polyline</comment>
-        <translation>çokluçizgi</translation>
+        <translation>DevamlıÇizgi</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="534"/>
@@ -24414,7 +24419,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="332"/>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>çokluçizgi2v</translation>
+        <translation>çokgen2n</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="334"/>
@@ -25868,13 +25873,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="250"/>
         <source>gapline</source>
         <comment>line gap</comment>
-        <translation></translation>
+        <translation>boşlukçizgi</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="251"/>
         <source>gl</source>
         <comment>line gap</comment>
-        <translation></translation>
+        <translation>bç</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="256"/>
@@ -27731,7 +27736,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/entities/rs_polyline.cpp" line="620"/>
         <source>Polyline contains arc segments, and scaling by different xy-factors will generate incorrect results</source>
-        <translation>Çoklu çizgi eğrisel segmentler içerir ve farklı xy faktörleri ile ölçeklendirme hatalı sonuçlar üretecektir</translation>
+        <translation>DevamlıÇizgi eğrisel segmentler içerir ve farklı xy faktörleri ile ölçeklendirme hatalı sonuçlar üretecektir</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
@@ -27962,7 +27967,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="488"/>
         <source>Polyline</source>
-        <translation>Çoklu çizgi</translation>
+        <translation>DevamlıÇizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="492"/>
@@ -28308,7 +28313,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="960"/>
         <source>Pan / Scroll Vertically / Select Child entities</source>
-        <translation>Pan / Dikey Kaydır / Alt öğeleri seç</translation>
+        <translation>Taşı / Dikey Kaydır / Alt öğeleri seç</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="965"/>
@@ -28388,7 +28393,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="211"/>
         <source>Specify second extension line origin</source>
-        <translation>İkinci ölçüm noktasını belirtin</translation>
+        <translation>İkinci uzatma çizgisi başlangıcını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="221"/>
@@ -29322,7 +29327,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="779"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation>Çoklu çizgi kapatılamıyor: Henüz yeterli sayıda öğe tanımlanmadı.</translation>
+        <translation>DevamlıÇizgi kapatılamıyor: Henüz yeterli sayıda öğe tanımlanmadı.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="802"/>
@@ -29339,7 +29344,7 @@ Bu blok eklenemez.</translation>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="401"/>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="567"/>
         <source>Enter number of polylines</source>
-        <translation>Çoklu çizgi sayısını girin</translation>
+        <translation>DevamlıÇizgi sayısını girin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="525"/>
@@ -30020,27 +30025,27 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="148"/>
         <source>Specify first break point on a polyline</source>
-        <translation>Çoklu çizgide ilk kırılma noktasını belirt</translation>
+        <translation>DevamlıÇizgide ilk kırılma noktasını belirt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="151"/>
         <source>Specify second break point on the same polyline</source>
-        <translation>Aynı çoklu çizgi üzerinde ikinci kırılma noktasını belirtin</translation>
+        <translation>Aynı DevamlıÇizgi üzerinde ikinci kırılma noktasını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="89"/>
         <source>Entities not in the same polyline.</source>
-        <translation>Öğeler aynı çoklu çizgide değil.</translation>
+        <translation>Öğeler aynı DevamlıÇizgide değil.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="92"/>
         <source>Parent of second entity is not a polyline</source>
-        <translation>İkinci öğenin atası çoklu çizgi değil</translation>
+        <translation>İkinci öğenin atası DevamlıÇizgi değil</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="115"/>
         <source>Parent of first entity is not a polyline</source>
-        <translation>İlk öğenin atası çoklu çizgi değil</translation>
+        <translation>İlk öğenin atası DevamlıÇizgi değil</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="95"/>
@@ -30288,7 +30293,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="192"/>
         <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
-        <translation>Ofset oluşturmak için çizgi, çoklu çizgi, daire veya yay seçin (Tamamlamak için Enter)</translation>
+        <translation>Öteleme oluşturmak için çizgi, DevamlıÇizgi, daire veya yay seçin (Tamamlamak için Enter)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="192"/>
@@ -30744,7 +30749,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="104"/>
         <source>Entity must be a polyline.</source>
-        <translation>Öğe bir çoklu çizgi olmalıdır.</translation>
+        <translation>Öğe bir DevamlıÇizgi olmalıdır.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="131"/>
@@ -30759,7 +30764,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="168"/>
         <source>Specify polyline to add nodes</source>
-        <translation>Düğüm eklenecek çoklu çizgiyi belirtin</translation>
+        <translation>Düğüm eklenecek DevamlıÇizgiyi belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="171"/>
@@ -30777,27 +30782,27 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="122"/>
         <source>Entity must be a polyline.</source>
-        <translation>Öğe bir çoklu çizgi olmalıdır.</translation>
+        <translation>Öğe bir DevamlıÇizgi olmalıdır.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="162"/>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation>Mevcut çoklu çizginin başlangıcına veya sonuna yakın bir yere tıklayın.</translation>
+        <translation>Mevcut DevamlıÇizginin başlangıcına veya sonuna yakın bir yere tıklayın.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="285"/>
         <source>Enter number of polylines</source>
-        <translation>Çoklu çizgi sayısını girin</translation>
+        <translation>DevamlıÇizgi sayısını girin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="299"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation>Çoklu çizgiyi başlangıç veya bitiş noktasına yakın bir yerde belirtin</translation>
+        <translation>DevamlıÇizgiyi başlangıç veya bitiş noktasına yakın bir yerde belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="125"/>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation>Kapalı çoklu çizgiye düğümler eklenemez.</translation>
+        <translation>Kapalı DevamlıÇizgiye düğümler eklenemez.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="319"/>
@@ -30816,12 +30821,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="94"/>
         <source>Entity must be a polyline.</source>
-        <translation>Öğe bir çoklu çizgi olmalıdır.</translation>
+        <translation>Öğe bir DevamlıÇizgi olmalıdır.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="142"/>
         <source>Specify polyline to delete node</source>
-        <translation>Düğümü silmek için çoklu çizgiyi belirtin</translation>
+        <translation>Düğümü silmek için DevamlıÇizgiyi belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="145"/>
@@ -30850,7 +30855,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="118"/>
         <source>Entity must be a polyline.</source>
-        <translation>Öğe bir çoklu çizgi olmalıdır.</translation>
+        <translation>Öğe bir DevamlıÇizgi olmalıdır.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="143"/>
@@ -30871,7 +30876,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="195"/>
         <source>Specify polyline to delete between two nodes</source>
-        <translation>İki düğüm arası silinecek çoklu çizgiyi belirtin</translation>
+        <translation>İki düğüm arası silinecek DevamlıÇizgiyi belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="198"/>
@@ -30900,12 +30905,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="323"/>
         <source>Entity must be a polyline.</source>
-        <translation>Öğe bir çoklu çizgi olmalıdır.</translation>
+        <translation>Öğe bir DevamlıÇizgi olmalıdır.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="381"/>
         <source>Choose the original polyline</source>
-        <translation>Özgün çoklu çizgiyi seçin</translation>
+        <translation>Özgün DevamlıÇizgiyi seçin</translation>
     </message>
 </context>
 <context>
@@ -30918,18 +30923,18 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="357"/>
         <source>Choose one of the segments on the original polyline</source>
-        <translation>Özgün çoklu çizgideki bölümlerden birini seçin</translation>
+        <translation>Özgün DevamlıÇizgideki bölümlerden birini seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="335"/>
         <source>Entity can not be a closed polyline.</source>
-        <translation>Öğe kapalı çoklu çizgi olamaz.</translation>
+        <translation>Öğe kapalı DevamlıÇizgi olamaz.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="63"/>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="84"/>
         <source>Polyline created</source>
-        <translation>Çoklu çizgi oluşturuldu</translation>
+        <translation>DevamlıÇizgi oluşturuldu</translation>
     </message>
 </context>
 <context>
@@ -30942,7 +30947,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="113"/>
         <source>Entity must be a polyline.</source>
-        <translation>Öğe bir çoklu çizgi olmalıdır.</translation>
+        <translation>Öğe bir DevamlıÇizgi olmalıdır.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="138"/>
@@ -30957,7 +30962,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="183"/>
         <source>Specify polyline to trim</source>
-        <translation>Kırpılacak çoklu çizgiyi belirtin</translation>
+        <translation>Kırpılacak DevamlıÇizgiyi belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="186"/>
@@ -31931,7 +31936,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="324"/>
         <source>Polyline</source>
-        <translation>Çoklu çizgi</translation>
+        <translation>DevamlıÇizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="331"/>
@@ -32111,12 +32116,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="126"/>
         <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation>İşaretlendiğinde, çokgen çoklu çizgi olarak çizilir. Aksi takdirde, ayrı ayrı nesneler oluşturulur. </translation>
+        <translation>İşaretlendiğinde, çokgen DevamlıÇizgi olarak çizilir. Aksi takdirde, ayrı ayrı nesneler oluşturulur. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="129"/>
         <source>Polyline</source>
-        <translation>Çoklu çizgi</translation>
+        <translation>DevamlıÇizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="143"/>
@@ -32381,7 +32386,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="32"/>
         <source>Polyline Options</source>
-        <translation>Çoklu Çizgi Seçenekleri</translation>
+        <translation>DevamlıÇizgi Seçenekleri</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="53"/>
