@@ -121,6 +121,8 @@ public:
     RS_Vector getNearestDist(double distance, const RS_Vector& coord, double* dist = nullptr) const override;
 
     void addControlPoint(const RS_Vector& v, double w = 1.0);
+    // add control point without considering wrapping for closed splines
+    void addControlPointRaw(const RS_Vector& v, double w = 1.0);
     void removeLastControlPoint();
 
     void move(const RS_Vector& offset) override;

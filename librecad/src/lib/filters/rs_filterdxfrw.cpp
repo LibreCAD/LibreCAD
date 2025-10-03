@@ -807,11 +807,12 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
     for (size_t i=0; i < data->controllist.size(); ++i) {
         const std::shared_ptr<DRW_Coord>& vert = data->controllist[i];
         const double weight = data->weightlist[i];
-        spline->addControlPoint({vert->x, vert->y}, weight);
+        spline->addControlPointRaw({vert->x, vert->y}, weight);
     }
     if (data->ncontrol== 0 && data->degree != 2){
+        // TODO: use fitlist
         for (auto const& vert: data->fitlist)
-            spline->addControlPoint({vert->x, vert->y});
+            spline->addControlPointRaw({vert->x, vert->y});
     }
     // ensure that the spline is really closed
     if (spline->getData().closed and !spline->hasWrappedControlPoints()) {
@@ -3705,16 +3706,16 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
     sp.flags = (s->isClosed()) ? 0x1011 : 0x1000;
 
     // write spline control points:
-    for (const RS_Vector& v: s->getControlPoints()) {
+    for (const RS_Vector& v: s->getUnwrappedControlPoints()) {
         sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
     }
-    sp.weightlist = s->getWeights();
+    sp.weightlist = s->getUnwrappedWeights();
 
     sp.ncontrol = sp.controllist.size();
     sp.degree = s->getDegree();
 
     // knot vector from RS_Spline
-    sp.knotslist = (s->isClosed()) ? s->knotu(sp.ncontrol, sp.degree + 1) : s->knot(sp.ncontrol, sp.degree + 1);
+    sp.knotslist = s->getUnwrappedKnotVector();
     sp.nknots = sp.knotslist.size();
 
     getEntityAttributes(&sp, s);

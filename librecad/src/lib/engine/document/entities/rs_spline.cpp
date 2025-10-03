@@ -68,15 +68,10 @@ std::ostream& operator << (std::ostream& os, const RS_SplineData& ld) {
  */
 RS_Spline::RS_Spline(RS_EntityContainer* parent,
                      const RS_SplineData& d)
-    :RS_EntityContainer(parent), data(d) {
-    if (data.closed) {
-        size_t unwrapped_n = getNumberOfControlPoints();
-        if (unwrapped_n < 3 || unwrapped_n < static_cast<size_t>(data.degree)) {
-            data.closed = false;
-            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::RS_Spline: Invalid closed spline: not enough control points");
-        } else if (!hasWrappedControlPoints()) {
+    :RS_EntityContainer(parent), data(d)
+{
+    if (data.closed && !hasWrappedControlPoints()) {
             addWrapping();
-        }
     }
     calculateBorders();
 }
@@ -130,10 +125,11 @@ std::vector<double> RS_Spline::getUnwrappedKnotVector() const {
 
 void RS_Spline::removeWrapping() {
     size_t wrap_size = static_cast<size_t>(data.degree);
-    if (!data.closed || !hasWrappedControlPoints()) return;
+    if (!data.closed || !hasWrappedControlPoints())
+        return;
     data.controlPoints.resize(data.controlPoints.size() - wrap_size);
     data.weights.resize(data.weights.size() - wrap_size);
-    if (!data.knotslist.empty()) {
+    if (data.knotslist.size() > wrap_size) {
         data.knotslist.resize(data.knotslist.size() - wrap_size);
     }
 }
@@ -141,14 +137,11 @@ void RS_Spline::removeWrapping() {
 void RS_Spline::addWrapping() {
     size_t wrap_size = static_cast<size_t>(data.degree);
     size_t base_n = data.controlPoints.size();
-    if (!data.closed || base_n < 3 || base_n < wrap_size) return;
+    if (!data.closed || base_n < wrap_size)
+        return;
     data.controlPoints.insert(data.controlPoints.end(), data.controlPoints.begin(), data.controlPoints.begin() + wrap_size);
     data.weights.insert(data.weights.end(), data.weights.begin(), data.weights.begin() + wrap_size);
-    if (data.knotslist.empty()) {
-        data.knotslist = knotu(base_n, data.degree + 1);
-    } else {
-        updateKnotWrapping();
-    }
+    updateKnotWrapping();
 }
 
 void RS_Spline::updateControlAndWeightWrapping() {
@@ -162,6 +155,10 @@ void RS_Spline::updateControlAndWeightWrapping() {
 }
 
 void RS_Spline::updateKnotWrapping() {
+    if (data.knotslist.empty()) {
+        data.knotslist = data.closed ? knotu(data.controlPoints.size(), data.degree + 1) :
+                             knot(data.controlPoints.size(), data.degree + 1);
+    }
     if (!data.closed || data.knotslist.empty()) return;
     size_t base_n = getUnwrappedSize();
     size_t base_k_size = base_n + static_cast<size_t>(data.degree) + 1;
@@ -176,7 +173,8 @@ void RS_Spline::updateKnotWrapping() {
 void RS_Spline::calculateBorders() {
     resetBorders();
     size_t n = getUnwrappedSize();
-    if (n == 0) return;
+    if (n == 0)
+        return;
     for (size_t i = 0; i < n; ++i) {
         minV = RS_Vector::minimum(data.controlPoints[i], minV);
         maxV = RS_Vector::maximum(data.controlPoints[i], maxV);
@@ -269,6 +267,12 @@ void RS_Spline::update() {
 
     if (isUndone()) {
         return;
+    }
+
+    if (isClosed()) {
+        addWrapping();
+    } else {
+        removeWrapping();
     }
 
     if (data.degree < 1 || data.degree > 3) {
@@ -501,8 +505,11 @@ void RS_Spline::addControlPoint(const RS_Vector& v, double w) {
     removeWrapping();
     data.controlPoints.push_back(v);
     data.weights.push_back(w);
-    if (!data.knotslist.empty()) data.knotslist.clear();
     addWrapping();
+}
+void RS_Spline::addControlPointRaw(const RS_Vector& v, double w) {
+    data.controlPoints.push_back(v);
+    data.weights.push_back(w);
 }
 
 /**
@@ -514,7 +521,6 @@ void RS_Spline::removeLastControlPoint() {
     if (n > 0) {
         data.controlPoints.pop_back();
         data.weights.pop_back();
-        if (!data.knotslist.empty()) data.knotslist.clear();
     }
     addWrapping();
 }
@@ -523,9 +529,6 @@ void RS_Spline::setWeight(size_t index, double w) {
     size_t n = getUnwrappedSize();
     if (index < n) {
         data.weights[index] = w;
-        if (data.closed) {
-            updateControlAndWeightWrapping();
-        }
         update();
     }
 }
@@ -537,9 +540,6 @@ void RS_Spline::setWeights(const std::vector<double>& weights) {
         return;
     }
     data.weights = weights;
-    if (data.closed) {
-        updateControlAndWeightWrapping();
-    }
     update();
 }
 
