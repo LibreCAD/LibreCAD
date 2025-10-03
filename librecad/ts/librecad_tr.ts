@@ -4156,7 +4156,7 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui" line="40"/>
         <source>Reset</source>
-        <translation>Reset</translation>
+        <translation>Sıfırla</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui" line="47"/>
@@ -4251,7 +4251,7 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui" line="213"/>
         <source>Filtering actions by name</source>
-        <translation>Eylemleri ada göre filtreleme</translation>
+        <translation>Eylemleri ada göre filtrele</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui" line="220"/>
@@ -4328,12 +4328,12 @@ XML oluşturma sırasında bir hata oluştu.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="276"/>
         <source>Import Shortcuts Mapping</source>
-        <translation>Kısayol Eşleme İçe Aktarma</translation>
+        <translation>Kısayol Eşlemesini İçe Aktar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="276"/>
         <source>Export Shortcuts Mapping</source>
-        <translation>Kısa Yolların Dışa Aktarılması Eşlemesi</translation>
+        <translation>Kısa Yol Eşleşmesini Dışa Aktar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="355"/>
@@ -4383,7 +4383,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.ui" line="105"/>
         <source>0.000</source>
-        <translation></translation>
+        <translation>0.000</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.cpp" line="76"/>
@@ -4466,7 +4466,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_arcpropertieseditingwidget.ui" line="153"/>
         <source>Y Coordinate of arc&apos;s center</source>
-        <translation>Y Yay merkezinin koordinatı</translation>
+        <translation>Yay merkezinin Y koordinatı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_arcpropertieseditingwidget.ui" line="172"/>
@@ -4507,12 +4507,12 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_arcpropertieseditingwidget.ui" line="304"/>
         <source>End angle of arc</source>
-        <translation>Yay son açısı</translation>
+        <translation>Yayın son açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_arcpropertieseditingwidget.ui" line="347"/>
         <source>Defines whether arc is reversed (clockwise)</source>
-        <translation>Yay tersine çevrilip çevrilmeyeceğini (saat yönünde) tanımlar</translation>
+        <translation>Yayın tersine çevrilip çevrilmeyeceğini (saat yönünde) tanımlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_arcpropertieseditingwidget.ui" line="350"/>
@@ -4540,7 +4540,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circlebyarcoptions.ui" line="62"/>
         <source>Layer to which created circle should be placed</source>
-        <translation>Oluşturulan dairenin yerleştirileceği katman</translation>
+        <translation>Oluşturulan çemberin yerleştirileceği katman</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circlebyarcoptions.ui" line="66"/>
@@ -4552,7 +4552,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
         <location filename="../src/ui/action_options/circle/lc_circlebyarcoptions.ui" line="71"/>
         <source>Original</source>
         <comment>layer</comment>
-        <translation></translation>
+        <translation>Orijinal</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circlebyarcoptions.ui" line="106"/>
@@ -4675,7 +4675,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_crossoptions.ui" line="140"/>
         <source>X:</source>
-        <translation></translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_crossoptions.ui" line="83"/>
@@ -4786,17 +4786,17 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="207"/>
         <source>Dot Blank</source>
-        <translation>Nokta Boşluğu</translation>
+        <translation>Nokta Boşluk</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="208"/>
         <source>Origin Indicator</source>
-        <translation>Menşe Göstergesi</translation>
+        <translation>Orijin Göstergesi</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="209"/>
         <source>Origin Indicator 2</source>
-        <translation>Menşe Göstergesi 2</translation>
+        <translation>Orijin Göstergesi 2</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="210"/>
@@ -4866,7 +4866,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="223"/>
         <source>Architecture Tick</source>
-        <translation>Mimarlık Tick</translation>
+        <translation>Mimari Tik</translation>
     </message>
 </context>
 <context>
@@ -4884,7 +4884,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="99"/>
         <source>Diametric</source>
-        <translation>Diametrik</translation>
+        <translation>Çapsal</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="103"/>
@@ -4899,7 +4899,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="111"/>
         <source>Leader and Tolerance</source>
-        <translation>Liderlik ve Hoşgörü</translation>
+        <translation>Kılavuz ve Tolerans</translation>
     </message>
 </context>
 <context>
@@ -4912,7 +4912,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="35"/>
         <source>Zoom Auto</source>
-        <translation>Otomatik Yakınlaştırma</translation>
+        <translation>Otomatik Yakınlaştır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="62"/>
@@ -4927,7 +4927,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="90"/>
         <source>Zoom Pan</source>
-        <translation>Yakınlaştırma Kaydırma</translation>
+        <translation>Yakınlaştır Kaydır</translation>
     </message>
 </context>
 <context>
@@ -4940,7 +4940,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="108"/>
         <source>Can&apos;t open provided file for writing - check that provided location is writable. Dimension styles were not exported.</source>
-        <translation>Sağlanan dosya yazma için açılamıyor - sağlanan konumun yazılabilir olduğunu kontrol edin. Ölçü stili dışa aktarılmadı.</translation>
+        <translation>Sağlanan dosya, yazma için açılamıyor - sağlanan konumun yazılabilir olduğunu kontrol edin. Ölçü stili dışa aktarılmadı.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="117"/>
@@ -4991,12 +4991,12 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="185"/>
         <source>Import Dimension Styles</source>
-        <translation>Ölçü Stilleri İçe Aktar</translation>
+        <translation>Ölçü Stillerini İçe Aktar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="185"/>
         <source>Export Dimension Styles</source>
-        <translation>Ölçü Stilleri Dışa Aktar</translation>
+        <translation>Ölçü Stillerini Dışa Aktar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="186"/>
@@ -5009,7 +5009,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.ui" line="6"/>
         <source>About LibreCAD</source>
-        <translation>LibreCAD hakkında</translation>
+        <translation>LibreCAD Hakkında</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.ui" line="33"/>
@@ -5030,12 +5030,12 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.ui" line="76"/>
         <source>&amp;Copy Version Info</source>
-        <translation>&amp;Kopyala Sürüm Bilgisi</translation>
+        <translation>&amp;Sürüm Bilgisini Kopyala</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.ui" line="83"/>
         <source>Force check whether new version is available</source>
-        <translation>Yeni sürümün mevcut olup olmadığını zorla kontrol et</translation>
+        <translation>Yeni sürümün mevcut olup olmadığını kontrol etmeye zorla</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.ui" line="86"/>
@@ -5113,7 +5113,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="43"/>
         <source>Lines</source>
-        <translation>ÇizgilerÇizgiler</translation>
+        <translation>Çizgiler</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="55"/>
@@ -5124,7 +5124,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="74"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="243"/>
         <source>Color:</source>
-        <translation>Renk:Renk:</translation>
+        <translation>Renk:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="124"/>
@@ -5144,7 +5144,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="88"/>
         <source>Linewidth:</source>
-        <translation>Çizgi genişliği:</translation>
+        <translation>Çizgi kalınlığı:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="137"/>
@@ -5154,7 +5154,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="111"/>
         <source>Extend beyond</source>
-        <translation>Ötesine geçmek</translation>
+        <translation>Ötesine uzat</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="101"/>
