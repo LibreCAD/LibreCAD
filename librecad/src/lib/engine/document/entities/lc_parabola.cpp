@@ -591,3 +591,27 @@ double LC_Parabola::areaLineIntegral() const
 
     return a * y0 + b * y1 + c * y2;
 }
+
+double LC_Parabola::getLength() const
+{
+    if (!data.valid)
+        return 0.0;
+    double h = data.axis.magnitude();
+    if (h < RS_TOLERANCE)
+        return 0.0;
+
+    double x1 = data.FindX(getStartpoint());
+    double x2 = data.FindX(getEndpoint());
+
+    double xmin = std::min(x1, x2);
+    double xmax = std::max(x1, x2);
+
+    auto F = [h](double x) -> double {
+        double sqrt_term = std::sqrt(x * x + 4 * h * h);
+        return (x / (4. * h)) * sqrt_term + h * std::log(x + sqrt_term);
+    };
+
+    return F(xmax) - F(xmin);
+}
+
+

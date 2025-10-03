@@ -20,12 +20,13 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include "lc_appwindowdialogsinvoker.h"
 
 #include <QFileDialog>
 #include <QImageWriter>
+#include <QMessageBox>
 
 #include "comboboxoption.h"
+#include "lc_appwindowdialogsinvoker.h"
 #include "lc_dlgabout.h"
 #include "lc_dlgnewversionavailable.h"
 #include "lc_widgetoptionsdialog.h"
@@ -55,17 +56,39 @@ void LC_AppWindowDialogsInvoker::showNewVersionAvailableDialog( LC_ReleaseChecke
 }
 
 void LC_AppWindowDialogsInvoker::showLicenseWindow() const {
-    QDialog dlg(m_appWin);
-    dlg.setWindowTitle(QObject::tr("License"));
-    auto viewer = new TextFileViewer(&dlg);
-    auto layout = new QVBoxLayout;
+    QDialog dlg(m_appWin); 
+    dlg.setWindowTitle(tr("License"));  // Use non-static tr() since this class likely inherits QObject
+
+    auto* viewer = new TextFileViewer(&dlg);  // Use raw pointer with parent for Qt ownership
+    auto* layout = new QVBoxLayout;
     layout->addWidget(viewer);
     dlg.setLayout(layout);
 
-    viewer->addFile("readme", ":/readme.md");
-    viewer->addFile("GPLv2", ":/gpl-2.0.txt");
-    viewer->setFile("readme");
-    dlg.exec();
+    // Check and add files with error handling
+    QStringList missingFiles;
+    std::pair<QString, QString> files[] = {
+	    {"readme.md", "readme"},
+	    {"gpl-2.0.txt", "GPLv2"},
+    };
+    for(const auto& [fileName, title] : files) {
+	const QString file = ":/" + fileName;
+        if (QFile::exists(file)) {
+            viewer->addFile(title, file);
+        } else {
+            missingFiles << file;
+        }
+    }
+
+    // If any files are missing, show a warning
+    if (missingFiles.isEmpty()) {
+        // Attempt to set the default file if available
+        viewer->setFile("readme");
+        dlg.resize(800, 600);  // Set a reasonable default size for better UX; adjust as needed
+        dlg.exec();  
+    } else {
+        QString errorMsg = tr("The following files could not be loaded:\n") + missingFiles.join("\n");
+        QMessageBox::warning(&dlg, tr("Error"), errorMsg);
+    }
 }
 
 void LC_AppWindowDialogsInvoker::showDeviceOptions() {

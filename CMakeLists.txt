@@ -268,12 +268,13 @@ include_directories(librecad/src/plugins/intern)
 include_directories(librecad/src/test)
 
 set(SOURCES
-        librecad/res/arrows/arrows.qrc
-        librecad/res/images/images.qrc
-        librecad/res/controls/controls.qrc
-        librecad/res/icons/icons.qrc
-        librecad/res/gdt/gdt.qrc
-        librecad/res/dxf/dxf.qrc
+       librecad/res/icons/icons.qrc
+       librecad/res/controls/controls.qrc
+       librecad/res/images/images.qrc
+       librecad/res/arrows/arrows.qrc
+       librecad/res/dxf/dxf.qrc
+       librecad/res/gdt/gdt.qrc
+       licenses/licenses.qrc
         libraries/jwwlib/src/dl_attributes.h
         libraries/jwwlib/src/dl_codes.h
         libraries/jwwlib/src/dl_creationinterface.h

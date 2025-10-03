@@ -248,6 +248,7 @@ void RS_Hatch::update() {
         RS_DEBUG->print(RS_Debug::D_NOTICE, "RS_Hatch::update: Undone hatch, skipping");
         return;
     }
+    activateContour(true);  // active for loop validation
 
     updateRunning = true;
     updateError = HATCH_OK;
