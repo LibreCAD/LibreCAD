@@ -71,7 +71,7 @@ RS_Spline::RS_Spline(RS_EntityContainer* parent,
     :RS_EntityContainer(parent), data(d)
 {
     if (data.closed && !hasWrappedControlPoints()) {
-            addWrapping();
+        addWrapping();
     }
     calculateBorders();
 }
@@ -786,7 +786,7 @@ std::ostream& operator << (std::ostream& os, const RS_Spline& l) {
 bool RS_Spline::hasWrappedControlPoints() const {
     const std::vector<RS_Vector>& controlPoints = data.controlPoints;
     const std::vector<double>& weights = data.weights;
-    if (!data.closed || data.degree < 3 || controlPoints.size() < static_cast<size_t>(2 * data.degree) + 1)
+    if (!data.closed || data.degree < 1 || controlPoints.size() < static_cast<size_t>(2 * data.degree) + 1)
         return false;
     if (controlPoints.size() != weights.size()) return false;
     if (!std::equal(controlPoints.cbegin(), controlPoints.cbegin() + data.degree,
