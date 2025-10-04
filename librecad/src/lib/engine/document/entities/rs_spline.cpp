@@ -132,16 +132,18 @@ void RS_Spline::removeWrapping() {
     if (data.knotslist.size() > wrap_size) {
         data.knotslist.resize(data.knotslist.size() - wrap_size);
     }
+    data.wrapped = false;
 }
 
 void RS_Spline::addWrapping() {
     size_t wrap_size = static_cast<size_t>(data.degree);
     size_t base_n = data.controlPoints.size();
-    if (!data.closed || base_n < wrap_size)
+    if (!data.closed || base_n < wrap_size || data.wrapped)
         return;
     data.controlPoints.insert(data.controlPoints.end(), data.controlPoints.begin(), data.controlPoints.begin() + wrap_size);
     data.weights.insert(data.weights.end(), data.weights.begin(), data.weights.begin() + wrap_size);
     updateKnotWrapping();
+    data.wrapped = true;
 }
 
 void RS_Spline::updateControlAndWeightWrapping() {
@@ -152,6 +154,7 @@ void RS_Spline::updateControlAndWeightWrapping() {
     if (base_n < 3 || base_n < wrap_size) return;
     data.controlPoints.insert(data.controlPoints.end(), data.controlPoints.begin(), data.controlPoints.begin() + wrap_size);
     data.weights.insert(data.weights.end(), data.weights.begin(), data.weights.begin() + wrap_size);
+    data.wrapped = true;
 }
 
 void RS_Spline::updateKnotWrapping() {
@@ -164,9 +167,20 @@ void RS_Spline::updateKnotWrapping() {
     size_t base_k_size = base_n + static_cast<size_t>(data.degree) + 1;
     data.knotslist.resize(base_k_size);
     double last = data.knotslist.back();
-    double delta = (data.knotslist.size() > 1) ? last - data.knotslist[data.knotslist.size() - 2] : 1.0;
+    double total_delta = 0.0;
+    int count_delta = 0;
+    for (size_t i = 1; i < data.knotslist.size(); ++i) {
+        double dd = data.knotslist[i] - data.knotslist[i - 1];
+        if (dd > 1e-10) {  // non-zero delta
+            total_delta += dd;
+            count_delta++;
+        }
+    }
+    double average_delta = (count_delta > 0) ? total_delta / count_delta : 1.0;
+    double current = last;
     for (size_t i = 0; i < static_cast<size_t>(data.degree); ++i) {
-        data.knotslist.push_back(last + (i + 1) * delta);
+        current += average_delta;
+        data.knotslist.push_back(current);
     }
 }
 
@@ -784,16 +798,5 @@ std::ostream& operator << (std::ostream& os, const RS_Spline& l) {
  *          for a cubic spline with wrapped splines, the last three control points are the same as the first three.
  */
 bool RS_Spline::hasWrappedControlPoints() const {
-    const std::vector<RS_Vector>& controlPoints = data.controlPoints;
-    const std::vector<double>& weights = data.weights;
-    if (!data.closed || data.degree < 1 || controlPoints.size() < static_cast<size_t>(2 * data.degree) + 1)
-        return false;
-    if (controlPoints.size() != weights.size()) return false;
-    if (!std::equal(controlPoints.cbegin(), controlPoints.cbegin() + data.degree,
-                    controlPoints.cbegin() + controlPoints.size() - data.degree))
-        return false;
-    if (!std::equal(weights.cbegin(), weights.cbegin() + data.degree,
-                    weights.cbegin() + weights.size() - data.degree))
-        return false;
-    return true;
+    return data.wrapped;
 }

@@ -4468,7 +4468,7 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity* ent, const RS_Entity* entit
 
     // Layer:
     RS_Layer* layer = entity->getLayer();
-    QStringlayerName;
+    QString layerName;
     if (layer) {
         layerName = layer->getName();
     } else {
