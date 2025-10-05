@@ -5208,7 +5208,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="295"/>
         <source>Linetype ext line 1:</source>
-        <translation>Çizgi türü uzatma çizgisi 1:</translation>
+        <translation>Uzatma çizgisi çizgi türü 1:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="361"/>
@@ -5218,7 +5218,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="338"/>
         <source>Linetype ext line 2:</source>
-        <translation>Çizgi türü uzatma çizgisi 2:</translation>
+        <translation>Uzatma çizgisi çizgi türü 2:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="308"/>
@@ -5243,12 +5243,12 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="285"/>
         <source>Specifies a distance to extend the extension lines above the dimension line. (DIMEXE system variable)</source>
-        <translation>Ölçü çizgisinin üstünde uzatma çizgilerini uzatmak için bir mesafe belirtir. (DIMEXE sistem değişkeni)</translation>
+        <translation>Uzatma çizgilerini ölçü çizgisinin üstüne uzatmak için bir mesafe belirtir. (DIMEXE sistem değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="375"/>
         <source>Offset from origin:</source>
-        <translation>Başlangıç noktasından ofset:</translation>
+        <translation>Başlangıç noktasından ötele:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="404"/>
@@ -5258,7 +5258,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="223"/>
         <source>Length:</source>
-        <translation>Uzunluk:Uzunluk:</translation>
+        <translation>Uzunluk:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="388"/>
@@ -5273,7 +5273,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="348"/>
         <source>Fixed length extension lines</source>
-        <translation>Sabit uzunlukta uzatma hatları</translation>
+        <translation>Sabit uzunlukta uzatma çizgileri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="269"/>
@@ -5304,7 +5304,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1719"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2305"/>
         <source>Preview</source>
-        <translation>ÖnizlemeÖnizleme</translation>
+        <translation>Önizleme</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="437"/>
@@ -5339,7 +5339,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="486"/>
         <source>Determines the angle of the transverse segment of the dimension line in a jogged radius dimension. (DIMJOGANG system variable)</source>
-        <translation>Bükümlü yarıçap ölçüsünde ölçü çizgisinin enine segmentinin açısını belirler. (DIMJOGANG sistem değişkeni)</translation>
+        <translation>Bükümlü yarıçap ölçüsünde ölçü çizgisinin enine segmentin açısını belirler. (DIMJOGANG sistem değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="505"/>
@@ -5379,17 +5379,17 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="546"/>
         <source>Second:</source>
-        <translation>İkincisi:</translation>
+        <translation>İkinci:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="525"/>
         <source>First:</source>
-        <translation>Birincisi:</translation>
+        <translation>Birinci:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="563"/>
         <source>Arrow size:</source>
-        <translation>Ok boyutu:Ok boyutu:</translation>
+        <translation>Ok boyutu:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="532"/>
@@ -5537,7 +5537,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="829"/>
         <source>Sets the height of the current dimension text style. (DIMTXT system variable)</source>
-        <translation>Geçerli ölçü metin stilinin yüksekliğini ayarlar. (DIMTXT sistem değişkeni)</translation>
+        <translation>Geçerli ölçü metni stilinin yüksekliğini ayarlar. (DIMTXT sistem değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="842"/>
@@ -5547,17 +5547,17 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="849"/>
         <source>Defines whether text background will be filled by color</source>
-        <translation>Metin arka planının renk ile doldurulup doldurulmayacağını tanımlar</translation>
+        <translation>Metnin arka planının renk ile doldurulup doldurulmayacağını tanımlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="852"/>
         <source>Fill text background by color</source>
-        <translation>Metin arka planını renkle doldur</translation>
+        <translation>Metnin arka planını renkle doldur</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="859"/>
         <source>Displays a rectangular frame around the dimension text. This option changes the value stored in the DIMGAP system variable to a negative value.</source>
-        <translation>Ölçü metninin etrafında dikdörtgen bir çerçeve gösterir. Bu seçenek, ÖLÇÜBOŞLUĞU sistem değişkeninde saklanan değeri negatif bir değere değiştirir.</translation>
+        <translation>Ölçü metninin etrafında dikdörtgen bir çerçeve gösterir. Bu seçenek, DIMGAP sistem değişkeninde saklanan değeri negatif bir değere değiştirir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="862"/>
@@ -5567,7 +5567,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="885"/>
         <source>Text Alignment</source>
-        <translation>Metin Hizalama</translation>
+        <translation>Metni Hizalama</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="891"/>
@@ -5652,22 +5652,22 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="970"/>
         <source>At Ext Line 1</source>
-        <translation>UzantiÇizgisi 1&apos;de</translation>
+        <translation>UzatmaÇizgisi 1&apos;de</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="975"/>
         <source>At Ext Line 2</source>
-        <translation>UzantiÇizgisi 2&apos;de</translation>
+        <translation>UzatmaÇizgisi 2&apos;de</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="980"/>
         <source>Over Ext Line 1</source>
-        <translation>UzantiÇizgisi 1 Üzerinde</translation>
+        <translation>UzatmaÇizgisi 1 Üzerinde</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="985"/>
         <source>Over Ext Line 2</source>
-        <translation>UzantiÇizgisi 2 Üzerinde</translation>
+        <translation>UzatmaÇizgisi 2 Üzerinde</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="993"/>
@@ -5717,7 +5717,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1059"/>
         <source>Sets the current text gap, which is the distance around the dimension text when the dimension line is broken to accommodate the dimension text (DIMGAP system variable).</source>
-        <translation>Ölçü metninin etrafındaki mesafe olan mevcut metin boşluğunu ayarlar ve bu mesafe, ölçü metnini sığdırmak için ölçü çizgisi kırıldığında geçerlidir (ÖLÇÜBOŞLUĞU sistem değişkeni).</translation>
+        <translation>Ölçü metninin etrafındaki mesafe olan mevcut metin boşluğunu ayarlar ve bu mesafe, ölçü metnini sığdırmak için ölçü çizgisi kırıldığında geçerlidir (DIMGAP sistem değişkeni).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1086"/>
@@ -5813,7 +5813,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1234"/>
         <source>Fit Options</source>
-        <translation>Uyum Seçenekleri</translation>
+        <translation>Sığdırma Seçenekleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1240"/>
@@ -5878,7 +5878,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1327"/>
         <source>Primary Units</source>
-        <translation>Birincil Birimler</translation>
+        <translation>Ana Birimler</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1333"/>
@@ -5915,7 +5915,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2019"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2243"/>
         <source>Leading</source>
-        <translation>Öncülük eden</translation>
+        <translation>Öncelik eden</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1362"/>
@@ -5929,7 +5929,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2029"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2253"/>
         <source>Trailing</source>
-        <translation>Takip</translation>
+        <translation>Takip eden</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1375"/>
@@ -6038,7 +6038,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1561"/>
         <source>Includes a prefix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation>Ölçü metninde belirttiğiniz önek içerir. (DIMPOST sistem değişkeni)</translation>
+        <translation>Ölçü metni belirttiğiniz öneki içerir. (DIMPOST sistem değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1575"/>
@@ -6142,7 +6142,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1762"/>
         <source>Specifies the multiplier used as the conversion factor between primary and alternate units.For example, to convert inches to millimeters, enter 25.4. The value has no effect on angular dimensions, and it is not applied to the rounding value or the plus or minus tolerance values. (DIMALTF system variable)</source>
-        <translation>Birincil ve alternatif birimler arasındaki dönüşüm faktörü olarak kullanılan çarpanı belirtir. Örneğin, inçleri milimetreye dönüştürmek için 25,4 girin. Bu değer açısal ölçülere etki etmez ve yuvarlama değeri veya artı/eksi tolerans değerlerine uygulanmaz. (DIMALTF sistem değişkeni)</translation>
+        <translation>Ana ve alternatif birimler arasındaki dönüşüm faktörü olarak kullanılan çarpanı belirtir. Örneğin, inçleri milimetreye dönüştürmek için 25,4 girin. Bu değer açısal ölçülere etki etmez ve yuvarlama değeri veya artı/eksi tolerans değerlerine uygulanmaz. (DIMALTF sistem değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1772"/>
@@ -6162,27 +6162,27 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1796"/>
         <source>Placement</source>
-        <translation>Yerleştirme</translation>
+        <translation>Yerleşim</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1802"/>
         <source>Places alternate units after the primary units in dimension text.</source>
-        <translation>Ölçü metninde birincil birimlerden sonra alternatif birimleri yerleştirir.</translation>
+        <translation>Ölçü metninde ana birimlerden sonra alternatif birimleri yerleştirir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1805"/>
         <source>After primary value</source>
-        <translation>Birincil değerden sonra</translation>
+        <translation>Ana değerden sonra</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1812"/>
         <source>Places alternate units below the primary units in dimension text.</source>
-        <translation>Ölçü metninde birincil birimlerin altına alternatif birimler yerleştirir.</translation>
+        <translation>Ölçü metninde ana birimlerin altına alternatif birimler yerleştirir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1815"/>
         <source>Below primary value</source>
-        <translation>Birincil değerin altında</translation>
+        <translation>Ana değerin altında</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1831"/>
@@ -6282,7 +6282,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2091"/>
         <source>Controls text justification for symmetrical and deviation tolerances (DIMTOLJ system variable).</source>
-        <translation>Simetrik ve sapma toleransları için metin hizalamasını kontrol eder (DIMTOLJ sistem değişkeni).</translation>
+        <translation>Simetri ve sapma toleransları için metin hizalamasını kontrol eder (DIMTOLJ sistem değişkeni).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2095"/>
@@ -6307,7 +6307,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2127"/>
         <source>Lower value:</source>
-        <translation>Daha düşük değer:</translation>
+        <translation>Alt değer:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2134"/>
@@ -6337,7 +6337,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2175"/>
         <source>Scaling for height:</source>
-        <translation>Boyuna göre ölçeklendirme:</translation>
+        <translation>Yüksekliğe göre ölçeklendir:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2182"/>
@@ -6357,7 +6357,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2198"/>
         <source>Values are stacked by their operational symbols.</source>
-        <translation>Değerler, operasyonel sembolleriyle sıralanır.</translation>
+        <translation>Değerler, işlem sembollerine göre sıralanır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2201"/>
@@ -6404,7 +6404,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.cpp" line="1798"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.cpp" line="1799"/>
         <source>User Block...</source>
-        <translation>Kullanıcı Engelle...</translation>
+        <translation>Kullanıcı Bloğu...</translation>
     </message>
 </context>
 <context>
@@ -6447,7 +6447,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="332"/>
         <source>Edit style override</source>
-        <translation>Stil geçersiz kılma düzenle</translation>
+        <translation>Stil geçersiz kılmayı düzenle</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="346"/>
@@ -6616,7 +6616,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="404"/>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="410"/>
         <source>Saving Style Override</source>
-        <translation>Stil Kaydetme Geçersiz Kılma</translation>
+        <translation>Stil Geçersiz Kılmayı Kaydet</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="404"/>
@@ -6662,7 +6662,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="583"/>
         <source>&amp;Create override</source>
-        <translation>&amp;Yaratma geçersiz kılma</translation>
+        <translation>&amp;Geçersiz kılma Oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="587"/>
@@ -6672,7 +6672,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="590"/>
         <source>&amp;Edit override</source>
-        <translation>&amp;Düzenleme geçersiz kılma</translation>
+        <translation>&amp;Geçersiz kılmayı Düzenleme</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="591"/>
@@ -6726,7 +6726,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgentityproperties.ui" line="76"/>
         <source>Name:</source>
-        <translation>Adı:</translation>
+        <translation>Ad:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgentityproperties.ui" line="98"/>
@@ -6751,12 +6751,12 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgentityproperties.cpp" line="182"/>
         <source>Arc Properties</source>
-        <translation>Ark Özellikleri</translation>
+        <translation>Yay Özellikleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgentityproperties.cpp" line="188"/>
         <source>Circle Properties</source>
-        <translation>Daire Özellikleri</translation>
+        <translation>Çember Özellikleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgentityproperties.cpp" line="194"/>
@@ -6791,7 +6791,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgentityproperties.cpp" line="230"/>
         <source>Insert Properties</source>
-        <translation>Özellikleri Ekle</translation>
+        <translation>Özellik Ekle</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgentityproperties.cpp" line="238"/>
@@ -6935,12 +6935,12 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="333"/>
         <source>All States</source>
-        <translation>Tüm Devletler</translation>
+        <translation>Tüm Durumlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="360"/>
         <source>Default Main color all states</source>
-        <translation>Varsayılan Ana renk tüm durumlar</translation>
+        <translation>Tüm durumlar için varsayılan renk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="398"/>
@@ -7123,12 +7123,12 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="106"/>
         <source>Either Absent or Any Entity</source>
-        <translation>Ya Yok Ya Da Herhangi Bir Öğe</translation>
+        <translation>Ya Noksan Ya Da Herhangi Bir Öğe</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="107"/>
         <source>Absent Entity</source>
-        <translation>Yok Olan Öğe</translation>
+        <translation>Noksan Olan Öğe</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="108"/>
@@ -7208,7 +7208,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="123"/>
         <source>Dimension Diametric</source>
-        <translation>Ölçülendirme Çap</translation>
+        <translation>Ölçülendirme Çapsal</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="124"/>
@@ -7218,17 +7218,17 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="125"/>
         <source>Dimension Ordinate</source>
-        <translation>Sıralı Ölçülendirme</translation>
+        <translation>Ölçülendirme Sıralı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="126"/>
         <source>Dimension Arc</source>
-        <translation>Ölçülendirme Yay</translation>
+        <translation>Ölçülendirme Yaylı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="127"/>
         <source>Leader</source>
-        <translation>Lider</translation>
+        <translation>Kılavuz</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="230"/>
@@ -7301,7 +7301,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="58"/>
         <source>Toolip with view details for table items</source>
-        <translation>Tablo öğelerinin ayrıntılarını görüntüleyen Toolip</translation>
+        <translation>Tablo öğeleri için ayrıntıları görüntüleyen araç ipucu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="68"/>
@@ -7351,7 +7351,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="108"/>
         <source>VIew Details column</source>
-        <translation>Ayrıntıları Görüntüle sütunu</translation>
+        <translation>Ayrıntıları sütununu Görüntüle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="131"/>
@@ -7391,7 +7391,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="184"/>
         <source>If enabled, click on the view table item will restore view. Otherwise, view should be restored explicitly.</source>
-        <translation></translation>
+        <translation>Etkinleştirilirse, tablo görünümü öğesine tıklamak görünümü geri yükleyecektir. Aksi takdirde, görünüm açıkça geri yüklenmelidir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="187"/>
@@ -7406,12 +7406,12 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="36"/>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
-        <translation></translation>
+        <translation>Seçilirse ve oluşturma sırasında girilen isimle aynı görünüme sahip bir tane varsa, yeni konumla güncellenecektir. Aksi takdirde yeni görünümün benzersiz adı gerekecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="26"/>
         <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation></translation>
+        <translation>Seçilirse, görünüm kaldırıldığında onay iletişim kutusu görüntülenecektir. Aksi takdirde görünüm sessizce kaldırılacaktır. </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="29"/>
@@ -7430,7 +7430,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewcustomvariable.ui" line="36"/>
         <source>Name:</source>
-        <translation>Adı:</translation>
+        <translation>Ad:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewcustomvariable.ui" line="43"/>
@@ -7495,7 +7495,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="64"/>
         <source>Leader And Tolerances</source>
-        <translation>Lider ve Toleranslar</translation>
+        <translation>Kılavuz ve Toleranslar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="95"/>
@@ -7538,7 +7538,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="46"/>
         <source>Latest Pre-release Version</source>
-        <translation>En Son Ön Sürüm</translation>
+        <translation>En Son Ön-Sürüm</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="52"/>
@@ -7576,7 +7576,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="86"/>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="262"/>
         <source>Check if you prefer not to be notified about this update on subsequent version checks</source>
-        <translation>Sonraki sürüm kontrollerinde bu güncelleme hakkında bilgilendirilmek istemediğinizi işaretleyin</translation>
+        <translation>Sonraki sürüm kontrollerinde bu güncelleme hakkında bilgilendirilme istemediğinizi işaretleyin</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="89"/>
@@ -7597,7 +7597,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="115"/>
         <source>However, if you&apos;d like to check the most recent and fresh features included into pre-release builds, disable &quot;Ignore pre-release updates&quot; checkbox below.</source>
-        <translation></translation>
+        <translation>Ancak, ön-sürüm derlemelerine eklenen en yeni ve taze özellikleri kontrol etmek isterseniz, aşağıdaki &quot;Ön-sürüm güncellemelerini yoksay&quot; kutusunun işaretini kaldırın.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="141"/>
@@ -7607,12 +7607,12 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="147"/>
         <source>If checked, notifications about pre-release updates will not be shown.</source>
-        <translation>İşaretlendiğinde, ön sürüm güncellemeleriyle ilgili bildirimler gösterilmez.</translation>
+        <translation>İşaretlendiğinde, ön-sürüm güncellemeleriyle ilgili bildirimler gösterilmez.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="153"/>
         <source>Ignore pre-release updates</source>
-        <translation>Ön sürüm güncellemelerini yok say</translation>
+        <translation>Ön-sürüm güncellemelerini yok say</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="160"/>
@@ -7642,12 +7642,12 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="222"/>
         <source>Lateat Release Version</source>
-        <translation>Geç Sürüm</translation>
+        <translation>En Son Yayımlanan Sürüm</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="231"/>
         <source>&lt;a href=&quot;https://api.github.com/repos/LibreCAD/LibreCAD/releases/176244221&quot;&gt;2.2.0.2-rc-alpha&lt;/a&gt;</source>
-        <translation></translation>
+        <translation>&lt;a href=&quot;https://api.github.com/repos/LibreCAD/LibreCAD/releases/176244221&quot;&gt;2.2.0.2-rc-alpha&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.cpp" line="111"/>
@@ -7755,7 +7755,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgtolerance.ui" line="191"/>
         <source>Primary Datum</source>
-        <translation>Birincil Veri</translation>
+        <translation>Ana Veri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgtolerance.ui" line="240"/>
@@ -7788,12 +7788,12 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="26"/>
         <source>If сhecked, the tooltip with additional information about UCS will be shown for table item.</source>
-        <translation></translation>
+        <translation>Seçiliyse, tablo öğesi için UCS hakkında ek bilgileri içeren ipucu gösterilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="29"/>
         <source>Toolip with UCS details for table items</source>
-        <translation>Tablo öğeleri için UCS ayrıntılarını içeren Toolip</translation>
+        <translation>Tablo öğeleri için UCS ayrıntılarını içeren İpucu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="39"/>
@@ -7823,7 +7823,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="85"/>
         <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation></translation>
+        <translation>Seçiliyse, görünüm kaldırılırken onay diyaloğu gösterilecektir. Aksi takdirde, görünüm sessizce kaldırılacaktır. </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="88"/>
@@ -7833,7 +7833,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="95"/>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
-        <translation></translation>
+        <translation>Eğer işaretlenirse ve oluşturma sırasında girilen isimle bir görünüm zaten mevcutsa, yeni konum ile güncellenecektir. Aksi takdirde, yeni görünüm için benzersiz bir isim gerekecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="98"/>
@@ -7848,17 +7848,17 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="118"/>
         <source>Zoom Auto</source>
-        <translation>Otomatik Yakınlaştırma</translation>
+        <translation>Otomatik Yakınlaştır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="123"/>
         <source>Pan, UCS Origin in Center</source>
-        <translation>Pan, UCS Merkezde Köken</translation>
+        <translation>UCS orijini Merkeze Taşı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="128"/>
         <source>Pan, UCS Origin in Left-Bottom</source>
-        <translation>Pan, Sol Altta UCS Kökeni</translation>
+        <translation>UCS orijini Sol Altta Taşı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="136"/>
@@ -7938,7 +7938,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="218"/>
         <source>Blink:</source>
-        <translation>Blink:</translation>
+        <translation>Yanıp Sön:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="225"/>
@@ -8017,7 +8017,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="103"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="119"/>
         <source>Ortho</source>
-        <translation>Ortodonti</translation>
+        <translation>Dik açılı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="106"/>
@@ -8060,12 +8060,12 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.ui" line="84"/>
         <source>Actions that are included. Use drag-n-drop to reorder, double-click for remove item from the list.</source>
-        <translation></translation>
+        <translation>Dahil edilen eylemler. Sıralamayı değiştirmek için sürükle-bırak kullanın, listedeki öğeyi kaldırmak için çift tıklayın.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.ui" line="91"/>
         <source>Define a custom menu by specifing the set of included actions. Menu will be shown as a popup in the drawing area as soon as menu invocation shortcut is invoked. </source>
-        <translation></translation>
+        <translation>Dahil edilen işlemler kümesini belirterek özel bir menü tanımlayın. Menü, menü çağırma kısayolu kullanıldığında çizim alanında açılır bir pencere olarak gösterilecektir. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.ui" line="116"/>
@@ -8110,7 +8110,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.ui" line="252"/>
         <source>NONE</source>
-        <translation>YOK</translation>
+        <translation>HİÇBİRİ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.ui" line="259"/>
@@ -8220,7 +8220,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="62"/>
         <source>Name of Custom Nenu</source>
-        <translation>Özel Nenu Adı</translation>
+        <translation>Özel Menu Adı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="70"/>
@@ -8250,7 +8250,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="75"/>
         <source>Define a custom toolbar by specifying the set of used actions. Once created, the custom toolbar will behave exactly as built-in ones.</source>
-        <translation></translation>
+        <translation>Kullanılan eylemler kümesini belirterek özel bir araç çubuğu tanımlayın. Oluşturulduktan sonra, özel araç çubuğu yerleşik araç çubuklarıyla tamamen aynı şekilde çalışacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="202"/>
@@ -8260,7 +8260,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="203"/>
         <source>Are you sure you&apos;d like to unassign &quot;%1&quot; menu? Note: Just an invocation shortcut will be removed and menu will not be deleted.</source>
-        <translation></translation>
+        <translation>&quot;%1&quot; menüsünün atamasını kaldırmak istediğinizden emin misiniz? Not: Sadece bir çağrı kısayolu kaldırılacak ve menü silinmeyecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="216"/>
@@ -8314,7 +8314,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_drawboundingboxoptions.ui" line="72"/>
         <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation></translation>
+        <translation>İşaretlenirse, tüm seçimin sınır kutusu oluşturulacak. Aksi takdirde, sınır kutusu tek tek öğeler için oluşturulacaktır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_drawboundingboxoptions.ui" line="75"/>
@@ -8324,12 +8324,12 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_drawboundingboxoptions.ui" line="89"/>
         <source>Pick offset from drawing</source>
-        <translation>Çizimden ofset seç</translation>
+        <translation>Çizimden öteleme seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_drawboundingboxoptions.ui" line="42"/>
         <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn.</source>
-        <translation></translation>
+        <translation>Seçilirse, sınırlayıcı kutu için yalnızca köşe noktaları çizilecektir. Aksi takdirde, kenar çizgileri çizilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_drawboundingboxoptions.ui" line="45"/>
@@ -8357,17 +8357,17 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicateoptions.ui" line="122"/>
         <source>Vertical offset of duplicate from original entity</source>
-        <translation>Orijinal öğeden kopyalanmış öğenin dikey ofseti</translation>
+        <translation>Orijinal öğeden kopyalanmış öğenin dikey ötelemesi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicateoptions.ui" line="103"/>
         <source>Horizontal offset of duplicate from original entity</source>
-        <translation>Orijinal öğeden kopyalanmış öğenin yatay ofseti</translation>
+        <translation>Orijinal öğeden kopyalanmış öğenin yatay ötelemesi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicateoptions.ui" line="129"/>
         <source>Pick offset by X from drawing</source>
-        <translation>Çizimden X kadar ofset seç</translation>
+        <translation>Çizimden X kadar öteleme seç</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicateoptions.ui" line="157"/>
@@ -8387,7 +8387,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicateoptions.ui" line="181"/>
         <source>Pick offset by Y from drawing</source>
-        <translation>Çizimden Y ile ofset seç</translation>
+        <translation>Çizimden Y ile öteleme seç</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicateoptions.ui" line="164"/>
@@ -8403,19 +8403,19 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
         <location filename="../src/ui/action_options/modify/lc_duplicateoptions.ui" line="73"/>
         <source>Active</source>
         <comment>pen</comment>
-        <translation></translation>
+        <translation>Aktif</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicateoptions.ui" line="78"/>
         <source>Original</source>
         <comment>pen</comment>
-        <translation></translation>
+        <translation>Orijinal</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicateoptions.ui" line="83"/>
         <source>Original Resolved</source>
         <comment>pen</comment>
-        <translation></translation>
+        <translation>Orijinal Çözüldü</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicateoptions.ui" line="45"/>
@@ -8426,23 +8426,23 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
         <location filename="../src/ui/action_options/modify/lc_duplicateoptions.ui" line="49"/>
         <source>Active</source>
         <comment>layer</comment>
-        <translation></translation>
+        <translation>Aktif</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicateoptions.ui" line="54"/>
         <source>Original</source>
         <comment>layer</comment>
-        <translation></translation>
+        <translation>Orijinal</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicateoptions.ui" line="150"/>
         <source>Offset Y:</source>
-        <translation>Ofset Y:</translation>
+        <translation>Ötele Y:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicateoptions.ui" line="62"/>
         <source>Offset X:</source>
-        <translation>Ofset X:</translation>
+        <translation>Ötele X:</translation>
     </message>
 </context>
 <context>
@@ -8581,7 +8581,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_ellipsepropertieseditingwidget.ui" line="154"/>
         <source>Major:</source>
-        <translation>Büyük(Major):</translation>
+        <translation>Büyük:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_ellipsepropertieseditingwidget.ui" line="176"/>
@@ -8596,7 +8596,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_ellipsepropertieseditingwidget.ui" line="203"/>
         <source>Minor:</source>
-        <translation>Küçük(Minor):</translation>
+        <translation>Küçük:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_ellipsepropertieseditingwidget.ui" line="225"/>
@@ -8851,7 +8851,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/action_options/info/lc_infodist2options.ui" line="35"/>
         <source>Snap On Entity</source>
-        <translation>Öğede yakala</translation>
+        <translation>Öğeyi yakala</translation>
     </message>
 </context>
 <context>
@@ -8957,7 +8957,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_insertpropertieseditingwidget.ui" line="257"/>
         <source>Amount of rows for copies</source>
-        <translation>Kopyalar için çizgi sayısı</translation>
+        <translation>Kopyalar için satır sayısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_insertpropertieseditingwidget.ui" line="264"/>
@@ -9005,12 +9005,12 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>Katman AyarlarıKatman Ayarları</translation>
+        <translation>Katman Ayarları</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="48"/>
         <source>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</source>
-        <translation></translation>
+        <translation>Yeni katmanın adı. Hiyerarşik katmanlar oluşturmak için, sanal katmanın adını ve katman adı ayırıcıyı dahil edin.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="64"/>
@@ -9066,7 +9066,8 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation></translation>
+        <translation>Bir Yapı Katmanı, geometrik yapılar oluşturmak için kullanılmak üzere tasarlanmış sonsuz düz çizgilerden oluşan varlıklara sahiptir.
+Bir Yapı Katmanının içeriği yazdırmada görünmemelidir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="152"/>
@@ -9126,12 +9127,12 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="57"/>
         <source>Layers Export Options</source>
-        <translation>Katmanları Dışa Aktarma Seçenekleri</translation>
+        <translation>Katman Dışa Aktarım Seçenekleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation></translation>
+        <translation>İşaretlenirse, belgede bulunan Adlandırılmış Görünümler dışa aktarılan çizimlere dahil edilecektir. Aksi takdirde, görünümler dahil edilmez.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
@@ -9141,7 +9142,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
         <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation></translation>
+        <translation>Seçildiğinde, her bir orijinal dışa aktarılan katman ayrı bir çizimde saklanacaktır. Aksi takdirde, tüm katmanlar tek birleştirilmiş çizimde dışa aktarılacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
@@ -9161,7 +9162,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation></translation>
+        <translation>İşaretlenirse, belgeden UCS&apos;ler dışa aktarılan çizimlere dahil edilecektir. Aksi takdirde, UCS&apos;ler dahil edilmez.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
@@ -9174,7 +9175,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="20"/>
         <source>Layers Tree Options</source>
-        <translation>Katmanlar Ağacı Seçenekleri</translation>
+        <translation>Katman Ağacı Seçenekleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="36"/>
@@ -9234,7 +9235,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="175"/>
         <source>Duplicating Name</source>
-        <translation>Adın çoğaltılması</translation>
+        <translation>Ad Kopyalama</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="181"/>
@@ -9274,7 +9275,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="243"/>
         <source>Show full name as ToolTip</source>
-        <translation>Tam adı ToolTip olarak göster</translation>
+        <translation>Tam adı Araçİpucu olarak göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="250"/>
@@ -9304,7 +9305,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="305"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation></translation>
+        <translation>İşaretlenirse, katmanlar listesinde sürükle&amp;bırak işlemleri etkinleştirilir ve katman hiyerarşisi yeniden yapılandırılabilir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="308"/>
@@ -9339,7 +9340,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="354"/>
         <source>Color for separator lines in layers tree view</source>
-        <translation>Katmanlar ağaç görünümünde ayırıcı çizgilerin rengi</translation>
+        <translation>Katman Unsur ağacında ayırıcı çizgilerin rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="388"/>
@@ -9378,7 +9379,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="534"/>
         <source>Threeview items separator grid</source>
-        <translation>Üç görünüm öğesi ayırıcı ızgara</translation>
+        <translation>Üç görünüm öğesi ayırıcı ızgarası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="544"/>
@@ -9523,7 +9524,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="230"/>
         <source>Collapse Secondary</source>
-        <translation>İkincil Çökertme</translation>
+        <translation>İkincil Daraltma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="238"/>
@@ -9543,7 +9544,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="259"/>
         <source>Add dimensions Layer</source>
-        <translation>Ölçüsel Katman ekle</translation>
+        <translation>Ölçü Katmanı ekle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="268"/>
@@ -9578,12 +9579,12 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="655"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>&amp;Kopyala Yapısı (Alt Ağaç)</translation>
+        <translation>&amp;Yapıyı Kopyala (Alt Ağaç)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="656"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>&amp;Yinelenen İçerik (Alt Ağaç)</translation>
+        <translation>&amp;Çoğaltılan İçerik (Alt Ağaç)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="658"/>
@@ -9593,7 +9594,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp;Katman Düzenle &amp;Özellikler</translation>
+        <translation>&amp;Katman &amp;Özniteliklerini Düzenle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="665"/>
@@ -9603,7 +9604,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="674"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;Ölçüler Alt Katmanı Ekle</translation>
+        <translation>&amp;Ölçü Alt Katmanı Ekle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="678"/>
@@ -9624,7 +9625,7 @@ Lütfen farklı bir değer girin.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="696"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="706"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Ölçüsel Katmana Dönüştür</translation>
+        <translation>Ölçü Katmanına Dönüştür</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="697"/>
@@ -9656,7 +9657,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="722"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>&amp;İçeriği ile Katmanı Çoğalt</translation>
+        <translation>&amp;Katmanı İçeriği ile Çoğalt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
@@ -9711,7 +9712,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
         <source>&amp;Export Single Layer</source>
-        <translation>Tek Katmanlı &amp;Dışa Aktar</translation>
+        <translation>Tek Katmanı &amp;Dışa Aktar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="749"/>
@@ -9721,7 +9722,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="753"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>&amp;Görünür katman(lar)ı dışa aktar</translation>
+        <translation>&amp;Görünür Katman(lar)ı Dışa aktar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="755"/>
@@ -9734,7 +9735,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="14"/>
         <source>Form</source>
-        <translation>BiçimForm</translation>
+        <translation>Biçim</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="163"/>
@@ -9759,7 +9760,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="265"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation>Kesişim noktasından tik yakalama noktasının ötelemesi</translation>
+        <translation>Kesişim noktasından tik yakalama noktasına ötele</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="301"/>
@@ -9769,7 +9770,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="329"/>
         <source>Pick offset from drawing</source>
-        <translation>Çizimden ofset seç</translation>
+        <translation>Çizimden öteleme seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="122"/>
@@ -9779,7 +9780,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="125"/>
         <source>Divide</source>
-        <translation>Bölme çizgisiBöl</translation>
+        <translation>Böl</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="132"/>
@@ -9794,7 +9795,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="272"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation>Oluşturulan çizginin hangi kısmının kesişme noktasına yapıştırılacağını tanımlar</translation>
+        <translation>Oluşturulan çizginin hangi kısmının kesişme noktasında yakalanacağını tanımlar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="66"/>
@@ -9891,12 +9892,12 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/line/lc_linefrompointtolineoptions.ui" line="266"/>
         <source>End offset:</source>
-        <translation>Son ofset:</translation>
+        <translation>Uç  ötele:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_linefrompointtolineoptions.ui" line="259"/>
         <source>Offset for created line from intersection point</source>
-        <translation>Kesişme noktasından oluşturulan çizgi için ofset</translation>
+        <translation>Kesişim noktasından oluşturulan çizgi için öteleme</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_linefrompointtolineoptions.ui" line="120"/>
@@ -9921,7 +9922,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/line/lc_linefrompointtolineoptions.ui" line="134"/>
         <source>End</source>
-        <translation>Son</translation>
+        <translation>Uç</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_linefrompointtolineoptions.ui" line="171"/>
@@ -9946,7 +9947,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/line/lc_linefrompointtolineoptions.ui" line="273"/>
         <source>Pick offset from drawing</source>
-        <translation>Çizimden ofset seç</translation>
+        <translation>Çizimden öteleme seç</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_linefrompointtolineoptions.ui" line="318"/>
@@ -9956,7 +9957,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/line/lc_linefrompointtolineoptions.ui" line="322"/>
         <source>To Intersection</source>
-        <translation>Kavşağa</translation>
+        <translation>Kesişime</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_linefrompointtolineoptions.ui" line="327"/>
@@ -9999,13 +10000,13 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_linejoinoptions.ui" line="66"/>
         <source>Policy for the line was selected second</source>
-        <translation>Hat politikası ikinci olarak seçildi</translation>
+        <translation>Çizgi için politika ikinci olarak seçildi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_linejoinoptions.ui" line="70"/>
         <location filename="../src/ui/action_options/modify/lc_linejoinoptions.ui" line="124"/>
         <source>Extend/Trim</source>
-        <translation>Uzat/Kısalt</translation>
+        <translation>Uzat/Kırp</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_linejoinoptions.ui" line="75"/>
@@ -10022,12 +10023,12 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_linejoinoptions.ui" line="88"/>
         <source>Line 1:</source>
-        <translation>1. satır:</translation>
+        <translation>Çizgi 1:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_linejoinoptions.ui" line="95"/>
         <source>Line 2:</source>
-        <translation>2. satır:</translation>
+        <translation>Çizgi 2:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_linejoinoptions.ui" line="120"/>
@@ -10047,17 +10048,17 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_linejoinoptions.ui" line="169"/>
         <source>Line 1</source>
-        <translation>1. satır</translation>
+        <translation>Çizgi 1</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_linejoinoptions.ui" line="174"/>
         <source>Line 2</source>
-        <translation>2. satır</translation>
+        <translation>Çizgi 2</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_linejoinoptions.ui" line="179"/>
         <source>Both lines</source>
-        <translation>Her iki hat</translation>
+        <translation>Her iki çizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_linejoinoptions.ui" line="187"/>
@@ -10080,7 +10081,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="20"/>
         <source>Form</source>
-        <translation>BiçimForm</translation>
+        <translation>Biçim</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="67"/>
@@ -10090,7 +10091,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="71"/>
         <source>None</source>
-        <translation>YokYok</translation>
+        <translation>Hiçbiri</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="76"/>
@@ -10130,12 +10131,12 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="115"/>
         <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
-        <translation></translation>
+        <translation>Tüm noktaların çizginin başlangıç/bitiş noktaları arasına sığıp sığmayacağını veya çizgi uzunluğunun nokta sayısına ve noktalar arasındaki mesafeye göre hesaplanıp hesaplanmayacağını belirtir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="118"/>
         <source>Fit Line</source>
-        <translation>Fit Line</translation>
+        <translation>Çizgiyi Sığdır</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="143"/>
@@ -10160,7 +10161,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="176"/>
         <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation></translation>
+        <translation>Seçiliyse, noktalar arasındaki belirli sabit mesafe kullanılacaktır. Aksi takdirde, mesafe hesaplanacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="179"/>
@@ -10198,7 +10199,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_linepropertieseditingwidget.ui" line="107"/>
         <source>Starting point Y coordinate</source>
-        <translation>Başlangıç noktası Y koordinatı</translation>
+        <translation>Başlangıç noktasının Y koordinatı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_linepropertieseditingwidget.ui" line="114"/>
@@ -10208,7 +10209,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_linepropertieseditingwidget.ui" line="130"/>
         <source>Starting point X coordinate</source>
-        <translation>Başlangıç noktası X koordinatı</translation>
+        <translation>Başlangıç noktasının X koordinatı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_linepropertieseditingwidget.ui" line="137"/>
@@ -10218,12 +10219,12 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_linepropertieseditingwidget.ui" line="153"/>
         <source>Ending point Y coordinate</source>
-        <translation>Bitiş noktası Y koordinatı</translation>
+        <translation>Bitiş noktasının Y koordinatı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_linepropertieseditingwidget.ui" line="166"/>
         <source>Ending point X coordinate</source>
-        <translation>Bitiş noktası X koordinatı</translation>
+        <translation>Bitiş noktasının X koordinatı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_linepropertieseditingwidget.ui" line="191"/>
@@ -10292,7 +10293,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="163"/>
         <source>&amp;Submit Error</source>
-        <translation>&amp;Gönder Hata</translation>
+        <translation>&amp;Hata Gönder</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="164"/>
@@ -10321,7 +10322,7 @@ Lütfen farklı bir değer girin.</translation>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="224"/>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="257"/>
         <source>Poin&amp;t</source>
-        <translation>Poin&amp;t</translation>
+        <translation>Nok&amp;ta</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="193"/>
@@ -10342,7 +10343,7 @@ Lütfen farklı bir değer girin.</translation>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="228"/>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="262"/>
         <source>Poly&amp;gon</source>
-        <translation>Poly&amp;gon</translation>
+        <translation>Çok&amp;gen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="205"/>
@@ -10354,7 +10355,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="209"/>
         <source>Ellip&amp;se</source>
-        <translation>Ellip&amp;se</translation>
+        <translation>Elip&amp;s</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="213"/>
@@ -10383,7 +10384,7 @@ Lütfen farklı bir değer girin.</translation>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="234"/>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="274"/>
         <source>Ot&amp;her</source>
-        <translation>Ot&amp;her</translation>
+        <translation>Di&amp;ğer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="239"/>
@@ -10645,7 +10646,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="1247"/>
         <source>Modify Generic</source>
-        <translation>Genel Değiştir</translation>
+        <translation>Geneli Değiştir</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="1287"/>
@@ -10666,7 +10667,7 @@ Lütfen farklı bir değer girin.</translation>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="1370"/>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="1425"/>
         <source>Draw Circle</source>
-        <translation>Daire Çiz</translation>
+        <translation>Çember Çiz</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="1332"/>
@@ -10681,7 +10682,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="1355"/>
         <source>Modify Circle</source>
-        <translation>Daireyi Değiştir</translation>
+        <translation>Çemberi Değiştir</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="1408"/>
@@ -10691,7 +10692,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="1466"/>
         <source>Modify Polyline</source>
-        <translation>DevamlıÇizgi Değiştir</translation>
+        <translation>DevamlıÇizgiyi Değiştir</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="1518"/>
@@ -10711,7 +10712,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="1570"/>
         <source>Modify MText</source>
-        <translation>MText&apos;i değiştir</translation>
+        <translation>ÇMetin&apos;i değiştir</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="1723"/>
@@ -10741,7 +10742,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="589"/>
         <source>Ta&amp;b mode</source>
-        <translation>Ta&amp;b modu</translation>
+        <translation>Sek&amp;me modu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory.cpp" line="593"/>
@@ -10829,7 +10830,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_midlineoptions.ui" line="42"/>
         <source>Pick offset from drawing</source>
-        <translation>Çizimden ofset seç</translation>
+        <translation>Çizimden öteleme seç</translation>
     </message>
 </context>
 <context>
@@ -10847,17 +10848,17 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="73"/>
         <source>Align left edges</source>
-        <translation>Sol kenarları hizala</translation>
+        <translation>Sol kenarları hizalayın</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="93"/>
         <source>Center entities horizontally</source>
-        <translation>Öğeleri yatay olarak ortala</translation>
+        <translation>Öğeleri yatay olarak ortalayın</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="113"/>
         <source>Align right edges</source>
-        <translation>Sağ kenarları hizala</translation>
+        <translation>Sağ kenarları hizalayın</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="136"/>
@@ -10907,17 +10908,17 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="210"/>
         <source>Align top edges</source>
-        <translation>Üst kenarları hizala</translation>
+        <translation>Üst kenarları hizalayın</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="230"/>
         <source>Center entities vertically</source>
-        <translation>Öğeleri dikey olarak ortala</translation>
+        <translation>Öğeleri dikey olarak ortalayın</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="250"/>
         <source>Align bottom edges</source>
-        <translation>Alt kenarları hizala</translation>
+        <translation>Alt kenarları hizalayın</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="270"/>
@@ -10935,7 +10936,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignrefoptions.ui" line="46"/>
         <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation>İşaretlendiğinde, yansıtılan öğeler için geçerli öznitelikler kullanılır, aksi takdirde orijinal öznitelikler kullanılır. </translation>
+        <translation>İşaretlendiğinde, aynalanan öğeler için geçerli öznitelikler kullanılır, aksi takdirde orijinal öznitelikler kullanılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignrefoptions.ui" line="49"/>
@@ -10955,12 +10956,12 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignrefoptions.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation>Kontrol edilirse, aynalı öğeler geçerli katmana yerleştirilir, aksi takdirde orijinal katmanlara yerleştirilir.</translation>
+        <translation>Kontrol edilirse, aynalanan öğeler geçerli katmana yerleştirilir, aksi takdirde orijinal katmanlara yerleştirilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignrefoptions.ui" line="69"/>
         <source>User Current Layer</source>
-        <translation>Kullanıcı Mevcut Katman</translation>
+        <translation>Kullanıcı Mevcut Katmanı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignrefoptions.ui" line="76"/>
@@ -10983,7 +10984,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifybreakdivideoptions.ui" line="45"/>
         <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation>Kontrol edilirse, kavşak noktaları arasındaki segmentler kaldırılacaktır. Kontrol edilmezse - öğe kavşak noktalarına bölünecektir. </translation>
+        <translation>Kontrol edilirse, kavşak noktaları arasındaki segmentler kaldırılacaktır. Kontrol edilmezse - öğe kesişim noktalarına bölünecektir. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifybreakdivideoptions.ui" line="48"/>
@@ -11083,7 +11084,7 @@ Lütfen farklı bir değer girin.</translation>
         <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="87"/>
         <source>End</source>
         <comment>snap</comment>
-        <translation>Son</translation>
+        <translation>Uç</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="141"/>
@@ -11126,12 +11127,12 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifymirroroptions.ui" line="35"/>
         <source>Mirror to selected line</source>
-        <translation>Seçili çizgiye ayna</translation>
+        <translation>Seçili çizgiye aynala</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifymirroroptions.ui" line="42"/>
         <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation>Kontrol edilmezse, orijinal öğeler kaldırılacak, aksi takdirde hayatta kalacaklar.</translation>
+        <translation>Kontrol edilmezse, orijinal öğeler kaldırılacak, aksi takdirde kalacaklar.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifymirroroptions.ui" line="45"/>
@@ -11146,7 +11147,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifymirroroptions.ui" line="62"/>
         <source>Use Current Attributes</source>
-        <translation>Mevcut Özellikleri Kullan</translation>
+        <translation>Mevcut Öznitelikleri Kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifymirroroptions.ui" line="82"/>
@@ -11156,7 +11157,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifymirroroptions.ui" line="85"/>
         <source>User Current Layer</source>
-        <translation>Kullanıcının Mevcut Katmanı</translation>
+        <translation>Kullanıcı Mevcut Katmanı</translation>
     </message>
 </context>
 <context>
@@ -11210,7 +11211,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyrotateoptions.ui" line="210"/>
         <source>Use Current Attributes</source>
-        <translation>Mevcut Özellikleri Kullan</translation>
+        <translation>Mevcut Öznitelikleri Kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyrotateoptions.ui" line="197"/>
@@ -11265,7 +11266,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyrotateoptions.ui" line="252"/>
         <source>Pick second rotation angle from drawing</source>
-        <translation>Çizimden ikinci dönme açısını seçin</translation>
+        <translation>Çizimden ikinci dönüş açısını seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyrotateoptions.ui" line="107"/>
@@ -11293,7 +11294,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyscaleoptions.ui" line="66"/>
         <source>Multiple Copies</source>
-        <translation>Çoklu Kopya</translation>
+        <translation>Çoklu Kopyalar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyscaleoptions.ui" line="107"/>
@@ -11419,7 +11420,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_moveoptions.ui" line="71"/>
         <source>Use Current Attributes</source>
-        <translation>Mevcut Özellikleri Kullan</translation>
+        <translation>Mevcut Öznitelikleri Kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_moveoptions.ui" line="78"/>
@@ -11439,7 +11440,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_moveoptions.ui" line="98"/>
         <source>Multiple Copies</source>
-        <translation>Çoklu Kopya</translation>
+        <translation>Çoklu Kopyalar</translation>
     </message>
 </context>
 <context>
@@ -11452,7 +11453,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="37"/>
         <source>Create vew for current zoom and offset of drawing</source>
-        <translation>Çizimin mevcut yakınlaştırma ve ofseti için görünüm oluştur</translation>
+        <translation>Çizimin mevcut yakınlaştırma ve ötelemesi için görünüm oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="54"/>
@@ -11482,7 +11483,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="136"/>
         <source>Filtering views by name</source>
-        <translation>Görünümleri ada göre filtreleme</translation>
+        <translation>Görünümleri ada göre filtrele</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="139"/>
@@ -11542,13 +11543,13 @@ Uyarı: Bu işlem geri alınamaz!</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="338"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="349"/>
         <source>View Creation</source>
-        <translation>Oluşturma Görüntüle</translation>
+        <translation>Oluşum Görüntüle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="338"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="371"/>
         <source>Empty name of View is not allowed</source>
-        <translation>Boş View adı kullanılamaz</translation>
+        <translation>Boş Görünüm adı kullanılamaz</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="349"/>
@@ -11564,7 +11565,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="371"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="378"/>
         <source>View Rename</source>
-        <translation>Görüntüle Yeniden Adlandır</translation>
+        <translation>Yeniden Adlandırmayı Görüntüle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="378"/>
@@ -11591,7 +11592,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="466"/>
         <source>Re&amp;name View</source>
-        <translation>Ye&amp;niden adlandırma Görünüm</translation>
+        <translation>Görü&amp;nümü Yeniden Adlandır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="467"/>
@@ -11601,7 +11602,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="468"/>
         <source>R&amp;emove View</source>
-        <translation>Görüntül&amp;emeyi kaldır</translation>
+        <translation>Görünü&amp;mü kaldır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="470"/>
@@ -11638,7 +11639,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="311"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="323"/>
         <source>Ortho</source>
-        <translation>Ortodonti</translation>
+        <translation>Dik açılı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="313"/>
@@ -11705,12 +11706,12 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="411"/>
         <source>UCS Origin X: </source>
-        <translation>UCS Origin X: </translation>
+        <translation>UCS Orijin X: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="412"/>
         <source>UCS Origin Y: </source>
-        <translation>UCS Kökeni Y: </translation>
+        <translation>UCS Orijin Y: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="413"/>
@@ -11720,7 +11721,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="416"/>
         <source>In Paperspace: </source>
-        <translation>Paperspace&apos;te: </translation>
+        <translation>Kağıt alanında: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="416"/>
@@ -11779,7 +11780,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_parabolapropertieseditingwidget.cpp" line="89"/>
         <source>Parabola control points cannot be collinear</source>
-        <translation>Parabol kontrol noktaları aynı doğru üzerinde olamaz.</translation>
+        <translation>Parabol kontrol noktaları aynı doğru üzerinde olamaz</translation>
     </message>
 </context>
 <context>
@@ -11802,7 +11803,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/action_options/point/lc_pastetopointsoptions.ui" line="78"/>
         <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation>Seçilirse, ekleme noktası olarak kullanılan nokta nesnesi yapıştırma işleminden sonra silinir. Aksi takdirde, nesne kalır.</translation>
+        <translation>Seçilirse, ekleme noktası olarak kullanılan nokta nesnesi yapışma işleminden sonra silinir. Aksi takdirde, nesne kalır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_pastetopointsoptions.ui" line="81"/>
@@ -11870,7 +11871,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="158"/>
         <source>Array rows number.</source>
-        <translation>Dizi satır sayısı.</translation>
+        <translation>Dizi satırlarının sayısı.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="207"/>
@@ -12186,7 +12187,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="329"/>
         <source>Border</source>
-        <translation>Sınır çizgisi</translation>
+        <translation>Sınır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="330"/>
@@ -12289,7 +12290,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="227"/>
         <source>Name:</source>
-        <translation>Adı:</translation>
+        <translation>Ad:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="228"/>
@@ -12299,7 +12300,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="229"/>
         <source>Line Width:</source>
-        <translation>Çizgi Genişliği:</translation>
+        <translation>Çizgi Kalınlığı:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="232"/>
@@ -12343,12 +12344,12 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="242"/>
         <source>Line Width Icon</source>
-        <translation>Çizgi Genişliği Simgesi</translation>
+        <translation>Çizgi Kalınlığı Simgesi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="249"/>
         <source>Line Width Name</source>
-        <translation>Çizgi Genişliği Adı</translation>
+        <translation>Çizgi Kalınlığı Adı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="26"/>
@@ -12405,17 +12406,17 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="318"/>
         <source>If set, filter will igore the case of pen&apos;s name</source>
-        <translation>Ayarlandığında, filtre kalemin adının büyük/küçük harfini dikkate almayacaktır.</translation>
+        <translation>Ayarlandığında, filtre kalemin adının büyük/küçük harfini dikkate almayacaktır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="321"/>
         <source>Case-insensitive pens filtering</source>
-        <translation>Büyük/küçük harf duyarlı olmayan kalemler filtreleme</translation>
+        <translation>Büyük/küçük harf duyarsız kalem filtreleme</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="151"/>
         <source>Controls whether tooltip will be shown for table item or not</source>
-        <translation>Tablo öğesi için araç ipucunun gösterilip gösterilmeyeceğini kontrol eder.</translation>
+        <translation>Tablo öğesi için araç ipucunun gösterilip gösterilmeyeceğini kontrol eder</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="154"/>
@@ -12460,7 +12461,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="298"/>
         <source>If selected, additional messages will be show as part of pen related operations</source>
-        <translation>Seçilirse, kalemle ilgili işlemlerin bir parçası olarak ek mesajlar gösterilecektir.</translation>
+        <translation>Seçilirse, kalemle ilgili işlemlerin bir parçası olarak ek mesajlar gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="301"/>
@@ -12475,7 +12476,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="183"/>
         <source>Defines how the program to react on double click on pen item in table</source>
-        <translation>Tablodaki kalem öğesine çift tıklandığında programın nasıl tepki vereceğini tanımlar.</translation>
+        <translation>Tablodaki kalem öğesine çift tıklandığında programın nasıl tepki vereceğini tanımlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="51"/>
@@ -12503,12 +12504,12 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="46"/>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
-        <translation>Öğe Çizim Kalemi ile Doldurma Kalemi Düzenleyici</translation>
+        <translation>Öğe Çizim Kalemi ile Kalemi Düzenleyicisini Doldur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="63"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>Öğe Özniteliklerine Göre Doldurma Kalemi Düzenleyicisi</translation>
+        <translation>Öğe Özniteliklerine Göre Kalem Düzenleyicisini Doldur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="80"/>
@@ -12524,7 +12525,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="117"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="120"/>
         <source>Save</source>
-        <translation>KaydetKaydet</translation>
+        <translation>Kaydet</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="134"/>
@@ -12534,12 +12535,12 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="151"/>
         <source>Fill Editor Pen by Current Pen</source>
-        <translation>Mevcut Kalemle Editör Kalemini Doldur</translation>
+        <translation>Mevcut Kalemle Düzenleyici Kalemini Doldur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="168"/>
         <source>Apply Editor Pen As Current Pen</source>
-        <translation>Editör Kalemini Geçerli Kalem Olarak Uygula</translation>
+        <translation>Düzenleyici Kalemini Geçerli Kalem Olarak Uygula</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="171"/>
@@ -12554,7 +12555,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="202"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Aktif Katmandan Kalemle Doldurma Editörü</translation>
+        <translation>Aktif Katman Kaleminden Kalem Düzenleyicisini Doldur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
@@ -12564,7 +12565,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="219"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Apply Editor Pen to Active Layer Pen</translation>
+        <translation>Düzenleyici Kalem&apos;i Aktif Katman Kalemine Uygula</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
@@ -12589,22 +12590,22 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="343"/>
         <source>Line type</source>
-        <translation>Çizgi tipiÇizgi türü</translation>
+        <translation>Çizgi türü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="362"/>
         <source>Width:</source>
-        <translation>Genişlik:Genişlik:</translation>
+        <translation>Genişlik:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="369"/>
         <source>Width of line</source>
-        <translation>Çizgi genişliği</translation>
+        <translation>Çizgi kalınlığı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="399"/>
         <source>Pen Name:</source>
-        <translation>Takma Ad:</translation>
+        <translation>Kalem Adı:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="433"/>
@@ -12624,7 +12625,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="515"/>
         <source>Filtering pens by name</source>
-        <translation>Kalemleri isme göre filtreleme</translation>
+        <translation>Kalemleri isme göre filtrele</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="518"/>
@@ -12659,7 +12660,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="281"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>&amp;Select Entities With Attributes Pen</translation>
+        <translation>&amp;Kalem Öznitelikleri ile Öğeleri Seç</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="282"/>
@@ -12669,7 +12670,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="285"/>
         <source>&amp;Edit Pen</source>
-        <translation>&amp;Düzenle Kalem</translation>
+        <translation>Kal&amp;em Düzenle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="286"/>
@@ -12691,7 +12692,9 @@ Uyarı: Bu işlem geri alınamaz!</translation>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
 Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation></translation>
+        <translation>Kalemler dosyasının konumu değiştirildi, lütfen yeni kalem dosyasının kullanılabilmesi için uygulamayı yeniden başlatın.
+
+Lütfen unutmayın, eğer uygulamayı yeniden başlatmadan editör üzerinden kalemi kaydederseniz, paletten mevcut kalemler yeni dosyaya kaydedilecek ve mevcut içerik üzerine yazılacaktır.</translation>
     </message>
 </context>
 <context>
@@ -12750,7 +12753,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_pointslatticeoptions.ui" line="32"/>
         <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation>Kafes Y yönüne göre nokta sayısı (kafes sıralarının sayısı)</translation>
+        <translation>Kafesin Y yönüne göre nokta sayısı (kafes sıralarının sayısı)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_pointslatticeoptions.ui" line="42"/>
@@ -12765,12 +12768,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_pointslatticeoptions.ui" line="56"/>
         <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation>X kafes yönüne göre nokta sayısı (kafes sütunlarının sayısı)</translation>
+        <translation>Kafesin X yönüne göre nokta sayısı (kafes sütunlarının sayısı)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_pointslatticeoptions.ui" line="66"/>
         <source>If selected, last point of lattice will be adjusted accoriding to position of first point, so lattice will be rect or quadrangle</source>
-        <translation>Seçilirse, kafesin son noktası ilk noktanın konumuna göre ayarlanacak, böylece kafes dikdörtgen veya dörtgen olacaktır.</translation>
+        <translation>Seçilirse, kafesin son noktası ilk noktanın konumuna göre ayarlanacak, böylece kafes dikdörtgen veya dörtgen olacaktır</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_pointslatticeoptions.ui" line="69"/>
@@ -12820,13 +12823,13 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="239"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="381"/>
         <source>SOLID</source>
-        <translation>KATİ</translation>
+        <translation>KATI</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="242"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="384"/>
         <source>CONSTRUCTION</source>
-        <translation>İNŞAAT</translation>
+        <translation>YAPI</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="245"/>
@@ -12838,13 +12841,13 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="528"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="546"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>ÇİZGİ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="573"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="588"/>
         <source>CIRCLE</source>
-        <translation>DAİRE</translation>
+        <translation>ÇEMBER</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="613"/>
@@ -12856,25 +12859,25 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="692"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="715"/>
         <source>ELLIPSE ARC</source>
-        <translation>ELLIPSE ARC</translation>
+        <translation>ELİPS YAY</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="709"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="715"/>
         <source>ELLIPSE</source>
-        <translation>ELLIPSE</translation>
+        <translation>ELİPS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="761"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="767"/>
         <source>POINT</source>
-        <translation>POINT</translation>
+        <translation>NOKTA</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="773"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="786"/>
         <source>POLYLINE</source>
-        <translation>POLYLINE</translation>
+        <translation>DEVAMLIÇİZGİ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="636"/>
@@ -12966,13 +12969,13 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="421"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="423"/>
         <source>To Cmd</source>
-        <translation>Cmd&apos;ye</translation>
+        <translation>Kmt&apos;e</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="100"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="499"/>
         <source>ID</source>
-        <translation>Kimlik</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="501"/>
@@ -12992,17 +12995,17 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="516"/>
         <source>Line Width</source>
-        <translation>Çizgi Genişliği</translation>
+        <translation>Çizgi Kalınlığı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="518"/>
         <source>Min</source>
-        <translation>Min</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="519"/>
         <source>Max</source>
-        <translation>Maksimum</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="536"/>
@@ -13112,7 +13115,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="629"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="663"/>
         <source>Chord Length</source>
-        <translation>Akor Uzunluğu</translation>
+        <translation>Kiriş Uzunluğu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="630"/>
@@ -13213,13 +13216,13 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="800"/>
         <source>Vertex - 0:</source>
-        <translation>Vertex - 0:</translation>
+        <translation>Nokta - 0:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="822"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="835"/>
         <source>Vertex - </source>
-        <translation>Vertex - </translation>
+        <translation>Nokta - </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="842"/>
@@ -13260,7 +13263,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="854"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="875"/>
         <source>Cols</source>
-        <translation>Cols</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="855"/>
@@ -13363,7 +13366,7 @@ Katman: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1050"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1083"/>
         <source>HAlign</source>
-        <translation>HAlign</translation>
+        <translation>YHizala</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="900"/>
@@ -13371,13 +13374,13 @@ Katman: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1051"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1084"/>
         <source>VAlign</source>
-        <translation>VAlign</translation>
+        <translation>DHizala</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="901"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="929"/>
         <source>Generation</source>
-        <translation>Nesil</translation>
+        <translation>jenerasyon</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="967"/>
@@ -13409,18 +13412,18 @@ Katman: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1021"/>
         <source>Mirrored in X</source>
-        <translation>X&apos;te yansıtılmış</translation>
+        <translation>X&apos;te aynalanmış</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1023"/>
         <source>Mirrored in Y</source>
-        <translation>Y&apos;de yansıtılmış</translation>
+        <translation>Y&apos;de aynalanmış</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1030"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1064"/>
         <source>MTEXT</source>
-        <translation>MTEXT</translation>
+        <translation>ÇMETİN</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1038"/>
@@ -13446,18 +13449,18 @@ Katman: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1053"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1086"/>
         <source>Line Spacing Factor</source>
-        <translation>Satır Aralığı Faktörü</translation>
+        <translation>Çizgi Aralığı Faktörü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1054"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1087"/>
         <source>Line Spacing</source>
-        <translation>Satır Aralığı</translation>
+        <translation>Çizgi Aralığı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1098"/>
         <source>By Style</source>
-        <translation>Tarzına göre</translation>
+        <translation>Stile göre</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1100"/>
@@ -13542,7 +13545,7 @@ Katman: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1198"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1221"/>
         <source>Use Control Points</source>
-        <translation>Kontrol Noktalarını Kullanma</translation>
+        <translation>Kontrol Noktalarını Kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1406"/>
@@ -13576,13 +13579,13 @@ Katman: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1239"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1255"/>
         <source>Focus</source>
-        <translation>Odaklanma</translation>
+        <translation>Odaklan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1240"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1256"/>
         <source>Vertex</source>
-        <translation>Vertex</translation>
+        <translation>Nokta</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1241"/>
@@ -13599,7 +13602,7 @@ Katman: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1268"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1284"/>
         <source>HATCH</source>
-        <translation>HATCH</translation>
+        <translation>TARAMA</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1269"/>
@@ -13635,7 +13638,7 @@ Katman: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1301"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1312"/>
         <source>DIMLEADER</source>
-        <translation>DIMLEADER</translation>
+        <translation>ÖLÇÜKILAVUZ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1303"/>
@@ -13647,7 +13650,7 @@ Katman: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1318"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1336"/>
         <source>DIMARC</source>
-        <translation>DIMARC</translation>
+        <translation>ÖLÇÜYAY</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1323"/>
@@ -13659,13 +13662,13 @@ Katman: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1353"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1365"/>
         <source>DIMANGULAR</source>
-        <translation>DIMANGULAR</translation>
+        <translation>ÖLÇÜAÇISAL</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1372"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1379"/>
         <source>DIMDIAMETRIC</source>
-        <translation>DİMİDIAMETRİK</translation>
+        <translation>ÖLÇÜÇAPSAL</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1374"/>
@@ -13683,13 +13686,13 @@ Katman: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1386"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1397"/>
         <source>DIMRADIAL</source>
-        <translation>DIMRADIAL</translation>
+        <translation>ÖLÇÜRADYAL</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1412"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1428"/>
         <source>DIMLINEAR</source>
-        <translation>DİMİNEER</translation>
+        <translation>ÖLÇÜDOĞRUSAL</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1415"/>
@@ -13710,7 +13713,7 @@ Katman: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1446"/>
         <source>Text Middle Point </source>
-        <translation>Metin Ortası Noktası </translation>
+        <translation>Metnin Orta Noktası </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1419"/>
@@ -13746,7 +13749,7 @@ Katman: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1445"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1457"/>
         <source>Leader End Point</source>
-        <translation>Lider Son Nokta</translation>
+        <translation>Kılavuz Son Noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1417"/>
@@ -13755,13 +13758,13 @@ Katman: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1467"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1482"/>
         <source>Text Middle Point</source>
-        <translation>Metin Ortası Noktası</translation>
+        <translation>Metnin Orta Noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1462"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1476"/>
         <source>DIMALIGNED</source>
-        <translation>DIMALIGNED</translation>
+        <translation>ÖLÇÜHİZALI</translation>
     </message>
 </context>
 <context>
@@ -13785,13 +13788,13 @@ Katman: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="234"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="251"/>
         <source>Set Relative Zero</source>
-        <translation>Göreceli Sıfırı Ayarla</translation>
+        <translation>Göreceli Sıfıra Ayarla</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="236"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="253"/>
         <source>To Cmd</source>
-        <translation>Cmd&apos;ye</translation>
+        <translation>Kmt&apos;e</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="271"/>
@@ -13875,12 +13878,12 @@ Katman: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="181"/>
         <source>Delta to First</source>
-        <translation>Delta&apos;dan First&apos;e</translation>
+        <translation>Değişim&apos;den İlk&apos;e</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="186"/>
         <source>Delta to Previous</source>
-        <translation>Öncekiye Delta</translation>
+        <translation>Öncekine Göre Değişim</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="217"/>
@@ -13906,7 +13909,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="378"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="388"/>
         <source>&amp;To Cmd</source>
-        <translation>&amp;Cmd&apos;ye</translation>
+        <translation>&amp;Kmt&apos;e</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="367"/>
@@ -13917,7 +13920,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="370"/>
         <source>&amp;Remove Coordinate</source>
-        <translation>Koordinatı Kaldır</translation>
+        <translation>Koo&amp;rdinatı Kaldır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="373"/>
@@ -13960,7 +13963,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="14"/>
         <source>Dialog</source>
-        <translation>Dialog</translation>
+        <translation>Diyalog</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="30"/>
@@ -13980,7 +13983,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="46"/>
         <source>If selected, all points collected will be connected by path that shows how they will be selected during point preview</source>
-        <translation>Seçildiğinde, toplanan tüm noktalar, nokta önizlemesi sırasında nasıl seçileceklerini gösteren bir yol ile birbirine bağlanacaktır.</translation>
+        <translation>Seçildiğinde, toplanan tüm noktalar, nokta önizlemesi sırasında nasıl seçileceklerini gösteren bir yol ile birbirine bağlanacaktır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="49"/>
@@ -13995,7 +13998,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be show in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Seçilirse, polilin parçaları olan çizgiler ve yaylar hakkında daha ayrıntılı bilgiler Öğe Bilgisi araç kutusunda gösterilecektir.&lt;br/&gt;Aksi takdirde, yalnızca köşe/bulge bilgileri görüntülenecektir.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Seçilirse, devamlıçizgi parçaları olan çizgiler ve yaylar hakkında daha ayrıntılı bilgiler Öğe Bilgisi araç kutusunda gösterilecektir.&lt;br/&gt;Aksi takdirde, yalnızca nokta/çıkıntılar hakkında bilgileri görüntülenecektir.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="84"/>
@@ -14030,7 +14033,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="126"/>
         <source>If selected, entities under mouse cursor will be examined for theif settings, if there is no active action</source>
-        <translation>Seçildiğinde, fare imlecinin altındaki öğeler, aktif bir eylem yoksa, if ayarları açısından incelenecektir</translation>
+        <translation>Seçilirse, fare imlecinin altındaki öğeler ayarları için incelenecektir, eğer aktif bir eylem yoksa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="129"/>
@@ -14073,7 +14076,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="195"/>
         <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation>Dikdörtgenin hangi kenarlarının çizileceğini tanımlar (böylece dikdörtgen yerine sadece iki paralel çizgi oluşturmak mümkündür).</translation>
+        <translation>Dikdörtgenin hangi kenarlarının çizileceğini tanımlar (böylece dikdörtgen yerine sadece iki paralel çizgi oluşturmak mümkündür)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="199"/>
@@ -14113,7 +14116,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="250"/>
         <source>Bevel</source>
-        <translation>Eğim</translation>
+        <translation>Eğimli</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="307"/>
@@ -14296,7 +14299,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>BiçimForm</translation>
+        <translation>Biçim</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="251"/>
@@ -14311,12 +14314,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="260"/>
         <source>Vertical</source>
-        <translation>DikeyDikey</translation>
+        <translation>Dikey</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="265"/>
         <source>Horizontal</source>
-        <translation>YatayYatay</translation>
+        <translation>Yatay</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="32"/>
@@ -14345,7 +14348,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="51"/>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="216"/>
         <source>Middle</source>
-        <translation>OrtaOrta</translation>
+        <translation>Orta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="105"/>
@@ -14430,7 +14433,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="347"/>
         <source>End Snap:</source>
-        <translation>Son Yakala:</translation>
+        <translation>Uç Yakala:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="69"/>
@@ -14450,7 +14453,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="83"/>
         <source>Bevel</source>
-        <translation>Eğim</translation>
+        <translation>Eğimli</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="131"/>
@@ -14533,7 +14536,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="382"/>
         <source>Bevel</source>
-        <translation>Eğim</translation>
+        <translation>Eğimli</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="390"/>
@@ -14608,7 +14611,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="428"/>
         <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation>Dikdörtgenin hangi kenarlarının çizileceğini tanımlar (böylece dikdörtgen yerine sadece iki paralel çizgi oluşturmak mümkündür).</translation>
+        <translation>Dikdörtgenin hangi kenarlarının çizileceğini tanımlar (böylece dikdörtgen yerine sadece iki paralel çizgi oluşturmak mümkündür)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="432"/>
@@ -14692,7 +14695,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="208"/>
         <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation>Kopyaların mevcut katmana mı yoksa orijinal katmana mı ekleneceğini belirtir.</translation>
+        <translation>Kopyaların mevcut katmana mı yoksa orijinal katmana mı ekleneceğini belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="211"/>
@@ -14707,7 +14710,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="53"/>
         <source>Angles mirrored</source>
-        <translation>Aynalı açılar</translation>
+        <translation>Aynalanmış açılar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="194"/>
@@ -14762,7 +14765,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="63"/>
         <source>Same secondary angle for copies</source>
-        <translation>Same secondary angle for copies</translation>
+        <translation>Kopyalar için aynı ikincil açı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="177"/>
@@ -14835,7 +14838,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="88"/>
         <source>MText</source>
-        <translation>ÇokluYazı</translation>
+        <translation>ÇMetin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="95"/>
@@ -14850,12 +14853,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="109"/>
         <source>Hatch</source>
-        <translation>Kapağı aç</translation>
+        <translation>Tarama</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="116"/>
         <source>Wipeout</source>
-        <translation>Silme</translation>
+        <translation>Silip yok et</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="123"/>
@@ -14883,7 +14886,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="44"/>
         <source>Export Settings</source>
-        <translation>Dışa Aktarma Ayarları</translation>
+        <translation>Dışa Aktarım Ayarları</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="73"/>
@@ -14922,7 +14925,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="106"/>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="121"/>
         <source>Settings Import</source>
-        <translation>Ayarları İçe Aktar</translation>
+        <translation>Ayarları İçe Aktarımı</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="121"/>
@@ -14955,7 +14958,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_shortcutbutton.cpp" line="37"/>
         <source>Stop Recording</source>
-        <translation>Kaydı Durdur</translation>
+        <translation>Kaydı Durdurun</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_shortcutbutton.cpp" line="38"/>
@@ -14986,12 +14989,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="382"/>
         <source>Start Circle Angle:</source>
-        <translation>Başlangıç Daire Açısı:</translation>
+        <translation>Çember Başlangıç Açısı:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="375"/>
         <source>Start angle for circle from which ticks will start. </source>
-        <translation>Tiklerin başlayacağı dairenin başlangıç açısı. </translation>
+        <translation>Tiklerin başlayacağı çember için başlangıç açısı. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="189"/>
@@ -15036,12 +15039,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="203"/>
         <source>Pick tick offset from drawing</source>
-        <translation>Çizimden tik ofsetini seçin</translation>
+        <translation>Çizimden tik ötelemesini seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="229"/>
         <source>Length of tick.</source>
-        <translation>Kene uzunluğu.</translation>
+        <translation>Tik uzunluğu.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="236"/>
@@ -15061,12 +15064,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="389"/>
         <source>PIck start circle angle from drawing</source>
-        <translation>Çizimden başlangıç daire açısını seçin</translation>
+        <translation>Çizimden çember başlangıç açısını seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="486"/>
         <source>Angle between tick and selected entity.</source>
-        <translation>Tick ile seçilen öğe arasındaki açı.</translation>
+        <translation>Tik ile seçilen öğe arasındaki açı.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="312"/>
@@ -15076,12 +15079,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="315"/>
         <source>Rel</source>
-        <translation>Rel</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="298"/>
         <source>Tick Length:</source>
-        <translation>Kene Uzunluğu:</translation>
+        <translation>Tik Uzunluğu:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="250"/>
@@ -15143,7 +15146,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="169"/>
         <source>Edge Tick:</source>
-        <translation>Edge Tick:</translation>
+        <translation>Kenar Tik:</translation>
     </message>
 </context>
 <context>
@@ -15164,7 +15167,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="32"/>
         <source>Defines the number of line segments to be generated for each spline-fit spline-fit polyline</source>
-        <translation>Her sığdırılacak-eğri çokgen için oluşturulacak çizgi segmentlerinin sayısını tanımlar.</translation>
+        <translation>Her sığdırılacak-eğri çokgen için oluşturulacak çizgi segmentlerinin sayısını tanımlar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="39"/>
@@ -15214,7 +15217,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="96"/>
         <source>To Polyline</source>
-        <translation>Polyline&apos;a</translation>
+        <translation>DevamlıÇizgiye</translation>
     </message>
 </context>
 <context>
@@ -15305,7 +15308,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_splinepointspropertieseditingwidget.ui" line="62"/>
         <source>If selected, spline points are used</source>
-        <translation>Seçildiğinde, eğri noktaları kullanılır.</translation>
+        <translation>Seçildiğinde, eğri noktaları kullanılır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_splinepointspropertieseditingwidget.ui" line="65"/>
@@ -15315,7 +15318,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_splinepointspropertieseditingwidget.ui" line="75"/>
         <source>If selected, control points are used</source>
-        <translation>Seçilirse, kontrol noktaları kullanılır.</translation>
+        <translation>Seçilirse, kontrol noktaları kullanılır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_splinepointspropertieseditingwidget.ui" line="78"/>
@@ -15412,7 +15415,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="35"/>
         <source>Radius Outer</source>
-        <translation>Yarıçap Dış</translation>
+        <translation>Dış Yarıçap</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="121"/>
@@ -15422,7 +15425,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="124"/>
         <source>Radius Inner</source>
-        <translation>Yarıçap İç</translation>
+        <translation>İç Yarıçap</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="82"/>
@@ -15653,7 +15656,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="248"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="260"/>
         <source>Ortho</source>
-        <translation>Ortodonti</translation>
+        <translation>Dik açılı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="250"/>
@@ -15678,17 +15681,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="332"/>
         <source>Name: </source>
-        <translation>Adı: </translation>
+        <translation>Ad: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="333"/>
         <source>Origin X: </source>
-        <translation>Origin X: </translation>
+        <translation>Orijin X: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="334"/>
         <source>Origin Y: </source>
-        <translation>Köken Y: </translation>
+        <translation>Orijin Y: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="335"/>
@@ -15771,7 +15774,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="197"/>
         <source>Filtering user coordinates by name</source>
-        <translation>Kullanıcı koordinatlarını ada göre filtreleme</translation>
+        <translation>Kullanıcı koordinatlarını ada göre filtrele</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="200"/>
@@ -15806,7 +15809,9 @@ p, li { white-space: pre-wrap; }
         <source>Are you sure to delete UCS
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
-        <translation></translation>
+        <translation>UCS&apos;yi sileceğinizden emin misiniz 
+&quot;%1&quot;? 
+Uyarı: Bu eylem geri alınamaz!</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="377"/>
@@ -15851,17 +15856,17 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="495"/>
         <source>R&amp;emove Selected UCSs</source>
-        <translation>Seçili UCS&apos;leri kaldır</translation>
+        <translation>Seçili UCS&apos;leri &amp;kaldır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="508"/>
         <source>&amp;Apply UCS</source>
-        <translation>&amp;Apply UCS</translation>
+        <translation>&amp;UCS&apos;yi Uygula</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="509"/>
         <source>&amp;Preview UCS</source>
-        <translation>&amp;Önizleme UCS</translation>
+        <translation>&amp;UCS&apos;yi Önizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="512"/>
@@ -15871,13 +15876,13 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="513"/>
         <source>R&amp;emove UCS</source>
-        <translation>UCS&apos;yi kaldır</translation>
+        <translation>UCS&apos;yi k&amp;aldır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="518"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="534"/>
         <source>Remove A&amp;ll UCSs</source>
-        <translation>Tüm UCS&apos;leri kaldır</translation>
+        <translation>&amp;Tüm UCS&apos;leri kaldır</translation>
     </message>
 </context>
 <context>
@@ -15905,7 +15910,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/action_options/other/lc_ucssetoptions.ui" line="32"/>
         <source>Specifies whether X-Axis angle is defined by entered value or by mouse position</source>
-        <translation>X ekseni açısının girilen değerle mi yoksa fare konumuyla mı tanımlanacağını belirtir.</translation>
+        <translation>X ekseni açısının girilen değerle mi yoksa fare konumuyla mı tanımlanacağını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/other/lc_ucssetoptions.ui" line="35"/>
@@ -15939,7 +15944,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="115"/>
         <source>Position of origin and angle of current UCS&apos;s in world coordinates.</source>
-        <translation>Dünya koordinatlarında kaynak konumu ve akım UCS&apos;lerinin açısı.</translation>
+        <translation>Dünya koordinatlarındaki mevcut UC&apos;lerin orijin konumu ve açısı.</translation>
     </message>
 </context>
 <context>
@@ -16054,7 +16059,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="164"/>
         <source>Views</source>
-        <translation>Görüşler</translation>
+        <translation>Görünümler</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="187"/>
@@ -16069,7 +16074,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="199"/>
         <source>Layers Tree</source>
-        <translation>Katmanlar Ağacı</translation>
+        <translation>Katman Ağacı</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="224"/>
@@ -16107,7 +16112,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="354"/>
         <source>PenWiz</source>
-        <translation>PenWiz</translation>
+        <translation>KalSih</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="404"/>
@@ -16158,7 +16163,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="494"/>
         <source>Current size of Grid/MetaGrid. Click to change grid size.</source>
-        <translation>Izgara/MetaIzgara&apos;nın mevcut boyutu. Grid boyutunu değiştirmek için tıklayın.</translation>
+        <translation>Izgara/MetaIzgara&apos;nın mevcut boyutu. Izgara boyutunu değiştirmek için tıklayın.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="104"/>
@@ -16316,7 +16321,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="110"/>
         <source>If enabled, specific style of UI may be applied</source>
-        <translation>Etkinleştirilirse, belirli bir UI stili uygulanabilir.</translation>
+        <translation>Etkinleştirilirse, belirli bir UI stili uygulanabilir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="135"/>
@@ -16326,12 +16331,12 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="173"/>
         <source>If checked, buttons for picking values from drawing will be flat</source>
-        <translation>İşaretlendiğinde, çizimden değer seçmek için kullanılan düğmeler düz olacaktır.</translation>
+        <translation>İşaretlendiğinde, çizimden değer seçmek için kullanılan düğmeler düz olacaktır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="176"/>
         <source>Flat pick values buttons</source>
-        <translation>Düz seçim değerleri düğmeleri</translation>
+        <translation>Düzlemsel seçim değer düğmeleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="189"/>
@@ -16455,7 +16460,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
         <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="420"/>
         <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="428"/>
         <source>Saving Workspaces</source>
-        <translation>Çalışma Alanlarını Kaydetme</translation>
+        <translation>Çalışma Alanlarını Kaydetmek</translation>
     </message>
     <message>
         <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="421"/>
@@ -16511,7 +16516,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineequidistantoptions.ui" line="81"/>
         <source>Distance from original polyline</source>
-        <translation>Özgün DevamlıÇizgiden uzaklık</translation>
+        <translation>Orijinal DevamlıÇizgiden uzaklık</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineequidistantoptions.ui" line="56"/>
@@ -16603,7 +16608,7 @@ Lütfen dosya izinlerini kontrol edin.</translation>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1037"/>
         <source>Loaded document: </source>
-        <translation>Yüklü belge: </translation>
+        <translation>Yüklenen belge: </translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="981"/>
@@ -16708,7 +16713,7 @@ Lütfen öğeyi ve izinlerini kontrol edin.</translation>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="980"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>&apos;%1&apos; dosyası yok. Açılış iptal edildi</translation>
+        <translation>&apos;%1&apos; dosyası yok. Açılma iptal edildi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="226"/>
@@ -16718,7 +16723,7 @@ Lütfen öğeyi ve izinlerini kontrol edin.</translation>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
         <source>Save cancelled</source>
-        <translation>Kaydet iptal edildi</translation>
+        <translation>Kayıt iptal edildi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="361"/>
@@ -16743,14 +16748,14 @@ Lütfen öğeyi ve izinlerini kontrol edin.</translation>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1090"/>
         <source>Save All cancelled</source>
-        <translation>Tümünü kaydet iptal edildi</translation>
+        <translation>Tümünü kaydetmek iptal edildi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1208"/>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1214"/>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1228"/>
         <source>Close All cancelled</source>
-        <translation>Tümünü kapat iptal edildi</translation>
+        <translation>Tümünü kapatmak iptal edildi</translation>
     </message>
 </context>
 <context>
@@ -16813,7 +16818,7 @@ Lütfen öğeyi ve izinlerini kontrol edin.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="183"/>
         <source>Filter</source>
-        <translation>Süzgeç</translation>
+        <translation>Filtre</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="185"/>
@@ -16912,7 +16917,7 @@ Lütfen öğeyi ve izinlerini kontrol edin.</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="122"/>
         <source>Dark Cyan</source>
-        <translation>Koyu Camgöbeği</translation>
+        <translation>Koyu Turkuaz</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="124"/>
@@ -16922,7 +16927,7 @@ Lütfen öğeyi ve izinlerini kontrol edin.</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="126"/>
         <source>Dark Magenta</source>
-        <translation>Koyu Macenta</translation>
+        <translation>Koyu Mor</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="135"/>
@@ -17025,7 +17030,7 @@ Lütfen öğeyi ve izinlerini kontrol edin.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="249"/>
         <source>Command Alias File: %1</source>
-        <translation>Komut Takma Adı Dosyası: %1</translation>
+        <translation>Komut Takma Ad Dosyası: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="339"/>
@@ -17084,12 +17089,12 @@ Lütfen öğeyi ve izinlerini kontrol edin.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="20"/>
         <source>Dimension Label Editor</source>
-        <translation>Ölçülendirme Etiketi Düzenleyici</translation>
+        <translation>Ölçü Etiketi Düzenleyicisi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="38"/>
         <source>Dimension Label:</source>
-        <translation>Ölçülendirme Etiketi:</translation>
+        <translation>Ölçü Etiketi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="165"/>
@@ -17099,7 +17104,7 @@ Lütfen öğeyi ve izinlerini kontrol edin.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="94"/>
         <source>Symbol before dimensional text</source>
-        <translation>Ölçüsel metin önündeki sembol</translation>
+        <translation>Ölçü metni önündeki sembol</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="62"/>
@@ -17124,7 +17129,7 @@ Lütfen öğeyi ve izinlerini kontrol edin.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="187"/>
         <source>Format of the dimension text, &lt;&gt; can be used as a placeholder for the dimension measurement value</source>
-        <translation>Ölçü metninin biçimi, &lt;&gt; Ölçü ölçüm değeri için yer tutucu olarak kullanılabilir</translation>
+        <translation>Ölçü metninin biçimi, &lt;&gt; Ölçü boyut değeri için yer tutucu olarak kullanılabilir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="200"/>
@@ -17230,12 +17235,12 @@ Bu, Bloğun kendisindeki tüm birimleri özyinelemeli olarak değiştirir.</tran
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="22"/>
         <source>Pattern</source>
-        <translation>Şablon</translation>
+        <translation>Desen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="28"/>
         <source>Scale factor for hatch pattern</source>
-        <translation>Hatch deseninin ölçek faktörü</translation>
+        <translation>Tarama deseninin ölçek faktörü</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="35"/>
@@ -17245,27 +17250,27 @@ Bu, Bloğun kendisindeki tüm birimleri özyinelemeli olarak değiştirir.</tran
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="45"/>
         <source>Scale:</source>
-        <translation>Oran:</translation>
+        <translation>Ölçek:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="55"/>
         <source>Rotation angle for the hatch</source>
-        <translation>Kapak için dönme açısı</translation>
+        <translation>Tarama için dönüş açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="62"/>
         <source>If checked, solid will will be used instead of pattern hatch</source>
-        <translation>İşaretlendiğinde, desenli tarama yerine düz tarama kullanılır.</translation>
+        <translation>İşaretlendiğinde, desenli tarama yerine düz tarama kullanılır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="65"/>
         <source>Solid Fill</source>
-        <translation>Dolgu</translation>
+        <translation>Katı Dolgu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="72"/>
         <source>Pattern of hatch</source>
-        <translation>Kuluçka düzeni</translation>
+        <translation>Tarama deseni</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="95"/>
@@ -17275,7 +17280,7 @@ Bu, Bloğun kendisindeki tüm birimleri özyinelemeli olarak değiştirir.</tran
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="101"/>
         <source>If enabled, preview of hatch pattern will be shown below</source>
-        <translation>Etkinleştirilirse, tarama deseninin önizlemesi aşağıda gösterilecektir.</translation>
+        <translation>Etkinleştirilirse, tarama deseninin önizlemesi aşağıda gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="104"/>
@@ -17290,7 +17295,7 @@ Bu, Bloğun kendisindeki tüm birimleri özyinelemeli olarak değiştirir.</tran
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="124"/>
         <source>Hatched area</source>
-        <translation>Kuluçka alanı</translation>
+        <translation>Taralı alan</translation>
     </message>
 </context>
 <context>
@@ -17309,7 +17314,13 @@ Please choose the unit you want to use for new drawings
 &lt;br&gt;
 and your preferred language for Ui and Command.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation></translation>
+        <translation>&lt;font size = &quot;+1&quot;&gt; &lt;b&gt; Librecad&apos;e Hoş Geldiniz &lt;/b&gt;
+&lt;/font&gt;
+&lt;br&gt;
+Lütfen yeni çizimler için kullanmak istediğiniz birimi seçin
+&lt;br&gt;
+ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
+(Bu ayarları daha sonra değiştirebilirsiniz.)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="109"/>
@@ -17332,7 +17343,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="20"/>
         <source>MText</source>
-        <translation>ÇokluYazı</translation>
+        <translation>ÇMetin</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="51"/>
@@ -17407,12 +17418,12 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="70"/>
         <source>Layer of MText</source>
-        <translation>MText Katmanı</translation>
+        <translation>ÇMetin Katmanı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="144"/>
         <source>If checked, default line spacing will be used</source>
-        <translation>İşaretlendiğinde, varsayılan çizgi aralığı kullanılır.</translation>
+        <translation>İşaretlendiğinde, varsayılan çizgi aralığı kullanılır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="192"/>
@@ -17422,7 +17433,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="260"/>
         <source>Specific line spacing factor is used</source>
-        <translation>Specific line spacing factor is used</translation>
+        <translation>Belirli çizgi boşluk faktörü kullanılır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="289"/>
@@ -17497,7 +17508,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="872"/>
         <source>Symbol insertion</source>
-        <translation>Sembol ekle</translation>
+        <translation>Sembol eklemek</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="881"/>
@@ -17512,7 +17523,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="891"/>
         <source>At (@)</source>
-        <translation>Kuyruklu a (@)</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="896"/>
@@ -18007,7 +18018,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1414"/>
         <source>[D800-DBFF] High Surrogates</source>
-        <translation>[D800-DBFF] Yüksek Suretler</translation>
+        <translation>[D800-DBFF] High Surrogates</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1419"/>
@@ -18180,7 +18191,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmirror.ui" line="26"/>
         <source>Mirroring Options</source>
-        <translation>Yansılama Seçenekleri</translation>
+        <translation>Aynalama Seçenekleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmirror.ui" line="70"/>
@@ -18253,7 +18264,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmove.ui" line="26"/>
         <source>Move/Copy Options</source>
-        <translation>Taşı/Kopyala Seçenekleri</translation>
+        <translation>Taşıma/Kopyalama Seçenekleri</translation>
     </message>
 </context>
 <context>
@@ -18261,7 +18272,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="26"/>
         <source>Move/Rotate Options</source>
-        <translation>Taşı/Döndür Seçenekleri</translation>
+        <translation>Taşıma/Döndürme Seçenekleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="63"/>
@@ -18445,7 +18456,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1717"/>
         <source>Dimension line gap:</source>
-        <translation>Ölçülendirme çizgisi boşluğu:</translation>
+        <translation>Ölçü çizgisi boşluğu:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1918"/>
@@ -18480,7 +18491,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1932"/>
         <source>Deg/min/sec</source>
-        <translation>Der/Dak/San</translation>
+        <translation>Der/dak/san</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1933"/>
@@ -18495,7 +18506,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1935"/>
         <source>Surveyor&apos;s units</source>
-        <translation>Haritacı birimleri</translation>
+        <translation>Haritacı Birimleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="962"/>
@@ -18505,7 +18516,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1445"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1450"/>
         <source>auto</source>
-        <translation>özdevinimli</translation>
+        <translation>otomatik</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1561"/>
@@ -18559,12 +18570,12 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="791"/>
         <source>Use orthogonal grid</source>
-        <translation>Dik ızgara kullan</translation>
+        <translation>Dik açılı ızgara kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="794"/>
         <source>Orthogonal Grid</source>
-        <translation>Dik Izgara</translation>
+        <translation>Dik Açılı Izgara</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1220"/>
@@ -18594,7 +18605,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1351"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tüm ölçü geometrilerini büyütme çarpanı.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tüm ölçü geometrilerini çarpmak için ölçekleyin.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1058"/>
@@ -18624,7 +18635,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="130"/>
         <source>Portrait paper orientation</source>
-        <translation>Portre kağıt yönü</translation>
+        <translation>Dikey kağıt yönü</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="274"/>
@@ -18669,7 +18680,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="600"/>
         <source>Positive direction:</source>
-        <translation>Olumlu yön:</translation>
+        <translation>Pozitif yön:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="637"/>
@@ -18704,7 +18715,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="804"/>
         <source>If checked, grid will be shown for this drawing</source>
-        <translation>İşaretlendiğinde, bu çizim için ızgara gösterilecektir.</translation>
+        <translation>İşaretlendiğinde, bu çizim için ızgara gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="826"/>
@@ -18743,7 +18754,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="879"/>
         <source>Automatically Scale Grid:</source>
-        <translation>Otomatik Ölçekleme Izgarası:</translation>
+        <translation>Izgarayı Otomatik Ölçekle:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="886"/>
@@ -18815,7 +18826,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1319"/>
         <source>Format units</source>
-        <translation>Biçim birimleri</translation>
+        <translation>Format birimleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1326"/>
@@ -18830,7 +18841,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1444"/>
         <source>Length to enlarge over dimension line</source>
-        <translation>Ölçü çizgisi üzerinde büyütülecek uzunluk</translation>
+        <translation>Ölçü çizgisinin üzerine genişletilecek uzunluk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1469"/>
@@ -18861,7 +18872,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1577"/>
         <source>Enlarge:</source>
-        <translation>Büyüt:</translation>
+        <translation>Genişlet:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1587"/>
@@ -18936,7 +18947,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1877"/>
         <source>Marks style as active one. Active style will be used during creation of dimensions.</source>
-        <translation>Stil aktif olarak işaretler. Ölçüm boyutları oluşturulurken aktif stil kullanılacaktır.</translation>
+        <translation>Stili aktif olarak işaretler. Ölçü boyutları oluşturulurken aktif stil kullanılacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1904"/>
@@ -18961,7 +18972,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1986"/>
         <source>If checked, used non-default arrow blocks will be added during drawing&apos;s saving. Embedding arrow blocks is needed for drawings that are later opened in AutoCAD.  This check may be unset if all editing is performed in LibreCAD. </source>
-        <translation></translation>
+        <translation>İşaretlenirse, çizim kaydedilirken varsayılan olmayan ok blokları eklenecektir. Çizimler daha sonra AutoCAD&apos;de açılacaksa ok bloklarının gömülmesi gereklidir. Bu işaretleme, tüm düzenlemeler LibreCAD&apos;de yapılıyorsa kaldırılabilir. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1989"/>
@@ -18981,7 +18992,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2082"/>
         <source>End cap for lines</source>
-        <translation>Hatlar için son kapak</translation>
+        <translation>Çizgiler için uç kapak</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2086"/>
@@ -19003,7 +19014,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2109"/>
         <source>Line Join:</source>
-        <translation>Çizgi Birleştirme:</translation>
+        <translation>Çizgi Birleştir:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2116"/>
@@ -19103,57 +19114,57 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3400"/>
         <source>$USERR2</source>
-        <translation>$USERR2</translation>
+        <translation>$KULLANICIR2</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3407"/>
         <source>$USERR5</source>
-        <translation>$USERR5</translation>
+        <translation>$KULLANICIR5</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3414"/>
         <source>$USERR3</source>
-        <translation>$USERR3</translation>
+        <translation>$KULLANICIR3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3421"/>
         <source>$USERR4</source>
-        <translation>$USERR4</translation>
+        <translation>$KULLANICIR4</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3428"/>
         <source>$USERR1</source>
-        <translation>$USERR1</translation>
+        <translation>$KULLANICIR1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3453"/>
         <source> Integer variables</source>
-        <translation>Tam sayı değişkenleri</translation>
+        <translation> Tam sayı değişkenleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3459"/>
         <source>$USERI4</source>
-        <translation>$USERI4</translation>
+        <translation>$KULLANICII4</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3490"/>
         <source>$USERI2</source>
-        <translation>$USERI2</translation>
+        <translation>$KULLANICII2</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3497"/>
         <source>$USERI1</source>
-        <translation>$USERI1</translation>
+        <translation>$KULLANICII1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3504"/>
         <source>$USERI3</source>
-        <translation>$USERI3</translation>
+        <translation>$KULLANICII3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3525"/>
         <source>$USERI5</source>
-        <translation>$USERI5</translation>
+        <translation>$KULLANICII5</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3536"/>
@@ -19163,7 +19174,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3542"/>
         <source>Drawing&apos;s Variables</source>
-        <translation>Drawing&apos;s Variables</translation>
+        <translation>Çizimin Değişkenleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3548"/>
@@ -19355,7 +19366,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="458"/>
         <source>&amp;Set as Active</source>
-        <translation>Aktif Olarak Ayarla</translation>
+        <translation>&amp;Aktif Olarak Ayarla</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="461"/>
@@ -19463,7 +19474,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1208"/>
         <source>STRING</source>
-        <translation>DİZGE</translation>
+        <translation>METİNSEL</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1212"/>
@@ -19666,7 +19677,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5619"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5656"/>
         <source> px</source>
-        <translation>px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5538"/>
@@ -19824,7 +19835,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4683"/>
         <source>Grid is Off </source>
-        <translation>Izgara kapalı</translation>
+        <translation>Izgara kapalı </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4965"/>
@@ -19869,7 +19880,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4916"/>
         <source>If unchecked, individual widgets of statusbar are toolbars</source>
-        <translation>Kontrol edilmezse, durum çubuğunun bireysel bileşenleri araç çubuklarıdır.</translation>
+        <translation>Kontrol edilmezse, durum çubuğunun bireysel bileşenleri araç çubuklarıdır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4919"/>
@@ -20433,7 +20444,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1256"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1360"/>
         <source>Line Type: </source>
-        <translation>Hat Türü:</translation>
+        <translation>Hat Türü: </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1263"/>
@@ -20744,7 +20755,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2662"/>
         <source>If selected, entity will be highlighted in &quot;Draft&quot; mode using entity&apos;s linewidth instead of 1px</source>
-        <translation>Seçilirse, öğe 1px yerine öğenin çizgi kalınlığı kullanılarak &quot;Taslak&quot; modunda vurgulanacaktır.</translation>
+        <translation>Seçilirse, öğe 1px yerine öğenin çizgi kalınlığı kullanılarak &quot;Taslak&quot; modunda vurgulanacaktır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2767"/>
@@ -20804,7 +20815,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5561"/>
         <source>If screen length of line is less than value, the line is drawn as point</source>
-        <translation>Eğer çizginin ekran uzunluğu değerden küçükse, çizgi nokta olarak çizilir.</translation>
+        <translation>Eğer çizginin ekran uzunluğu değerden küçükse, çizgi nokta olarak çizilir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5600"/>
@@ -20839,7 +20850,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5394"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) during panning. </source>
-        <translation>Seçildiğinde, kaydırma sırasında metin harfleri yerine metin taban çizgileri çizilecektir (taslak moduna benzer şekilde).</translation>
+        <translation>Seçildiğinde, kaydırma sırasında metin harfleri yerine metin taban çizgileri çizilecektir (taslak moduna benzer şekilde). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5397"/>
@@ -20849,7 +20860,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5404"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) in preview. </source>
-        <translation>Seçildiğinde, önizlemede metin harfleri yerine metin taban çizgileri çizilecektir (taslak moduna benzer şekilde).</translation>
+        <translation>Seçildiğinde, önizlemede metin harfleri yerine metin taban çizgileri çizilecektir (taslak moduna benzer şekilde). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5407"/>
@@ -20864,7 +20875,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3801"/>
         <source>Informational Cursor Overlay </source>
-        <translation>Bilgilendirici İmleç Katmanı</translation>
+        <translation>Bilgilendirici İmleç Katmanı </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3807"/>
@@ -20913,7 +20924,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2441"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3850"/>
         <source> pt</source>
-        <translation>pt</translation>
+        <translation> pt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="504"/>
@@ -21055,7 +21066,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4192"/>
         <source>If checked, short overview properties of the entity&apos;s that is catched for selection will be shown. </source>
-        <translation>İşaretlenirse, seçim için yakalanan öğenin kısa genel özellikleri gösterilecektir.</translation>
+        <translation>İşaretlenirse, seçim için yakalanan öğenin kısa genel özellikleri gösterilecektir. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4198"/>
@@ -21070,7 +21081,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4397"/>
         <source>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</source>
-        <translation>İşaretlenirse, çizimler Sekme modundaysa sekmelerde kapatma çarpısı göstergesi gösterilecektir.</translation>
+        <translation>İşaretlenirse, çizimler Sekme modundaysa sekmelerde kapatma çarpısı göstergesi gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4400"/>
@@ -21116,7 +21127,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4749"/>
         <source> minutes</source>
-        <translation>dakikalar</translation>
+        <translation> dakika</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4431"/>
@@ -21217,7 +21228,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2474"/>
         <source>If selected, marker for coodinate system will be shown in zero point of current user coordinates system. </source>
-        <translation>Seçilirse, koordinat sistemi için işaretçi mevcut kullanıcı koordinat sistemi sıfır noktasında gösterilecektir.</translation>
+        <translation>Seçilirse, koordinat sistemi için işaretçi mevcut kullanıcı koordinat sistemi sıfır noktasında gösterilecektir. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="444"/>
@@ -21232,7 +21243,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="441"/>
         <source>If selected, in draft mode text label will be drawin in view corners</source>
-        <translation>Seçildiğinde, taslak modda metin etiketi görünüm köşelerine çizilecektir.</translation>
+        <translation>Seçildiğinde, taslak modda metin etiketi görünüm köşelerine çizilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2395"/>
@@ -21352,12 +21363,12 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1954"/>
         <source> drawing units</source>
-        <translation>çizim birimleri</translation>
+        <translation> çizim birimleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1983"/>
         <source>Distance in screen coordinates that is used for catching entities </source>
-        <translation>Öğeleri yakalamak için kullanılan ekran koordinatlarındaki mesafe</translation>
+        <translation>Öğeleri yakalamak için kullanılan ekran koordinatlarındaki mesafe </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1996"/>
@@ -21413,7 +21424,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4387"/>
         <source>If selected, menu will include top-level items for drawing tools. Otherwise, they will under the same menu item. </source>
-        <translation>Seçilirse, menü çizim araçları için birinci düzey öğeleri içerecektir. Aksi takdirde, aynı menü öğesinin altında yer alacaklardır.</translation>
+        <translation>Seçilirse, menü çizim araçları için birinci düzey öğeleri içerecektir. Aksi takdirde, aynı menü öğesinin altında yer alacaklardır. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4390"/>
@@ -21635,7 +21646,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4876"/>
         <source>If checked, dock widgets with commands for left sidebar will be enabled. Otherwise, they will be disabled. </source>
-        <translation>İşaretlenirse, sol kenar çubuğu için komutlu rıhtım bileşenleri aktifleştirilecektir. Aksi takdirde, devre dışı bırakılacaklardır.</translation>
+        <translation>İşaretlenirse, sol kenar çubuğu için komutlu rıhtım bileşenleri aktifleştirilecektir. Aksi takdirde, devre dışı bırakılacaklardır. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5420"/>
@@ -21675,7 +21686,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5475"/>
         <source> degrees</source>
-        <translation>derece</translation>
+        <translation> derece</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5494"/>
@@ -23824,7 +23835,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1377"/>
         <source>Select Entities </source>
-        <translation>Öğeleri Seç</translation>
+        <translation>Öğeleri Seç </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1378"/>
@@ -23835,13 +23846,15 @@ Please specify a different value.</source>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1379"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Böyle öğeler donmuş katmanlarda bulunur.</translation>
+        <translation>Böyle öğeler donmuş katmanlarda bulunur.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1380"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Böyle öğeler kilitli katmanlarda bulunur.</translation>
+        <translation>Böyle öğeler kilitli katmanlarda bulunur.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1381"/>
@@ -25500,7 +25513,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="61"/>
         <source>Calculator: </source>
-        <translation>Hesap Makinesi:</translation>
+        <translation>Hesap Makinesi: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="143"/>
@@ -29410,7 +29423,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="156"/>
         <source>Text: </source>
-        <translation>Metin:</translation>
+        <translation>Metin: </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/text/rs_actiondrawtext.cpp" line="240"/>
@@ -29570,7 +29583,7 @@ Intersection :@(%7, %8)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="276"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="298"/>
         <source>Alternative: </source>
-        <translation>Alternatif:</translation>
+        <translation>Alternatif: </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="277"/>
@@ -31348,7 +31361,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="87"/>
         <source>If selected, tangental arc with specified radius will be created</source>
-        <translation>Seçildiğinde, belirtilen yarıçaplı teğet yay oluşturulur.</translation>
+        <translation>Seçildiğinde, belirtilen yarıçaplı teğet yay oluşturulur</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="47"/>
@@ -31358,7 +31371,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="112"/>
         <source>If selected, arc with specified angle will be created</source>
-        <translation>Seçildiğinde, belirtilen açıyla bir yay oluşturulur.</translation>
+        <translation>Seçildiğinde, belirtilen açıyla bir yay oluşturulur</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="60"/>
@@ -31604,7 +31617,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="353"/>
         <source>If checked, distance between dimenions is defined by mouse</source>
-        <translation>İşaretlendiğinde, ölçüler arasındaki mesafe fare ile belirlenir.</translation>
+        <translation>İşaretlendiğinde, ölçüler arasındaki mesafe fare ile belirlenir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="356"/>
@@ -31837,7 +31850,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="191"/>
         <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation>Seçilirse, çizgi açı tabanının eksenine dik olacaktır. Aksi takdirde, ekran eksenine dik olacaktır.</translation>
+        <translation>Seçilirse, çizgi açı tabanının eksenine dik olacaktır. Aksi takdirde, ekran eksenine dik olacaktır</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="194"/>
@@ -32073,7 +32086,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparallelthroughoptions.ui" line="62"/>
         <source>If checked, parallels will be created on both sides of entity</source>
-        <translation>İşaretlendiğinde, öğenin her iki tarafında paraleller oluşturulur.</translation>
+        <translation>İşaretlendiğinde, öğenin her iki tarafında paraleller oluşturulur</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparallelthroughoptions.ui" line="65"/>
@@ -32580,7 +32593,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="310"/>
         <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
-        <translation>Aktifleştirilirse, kağıt alanı sütunlar ve satırlar halinde düzenlenmiş belirli sayıda sayfayı içerecektir.</translation>
+        <translation>Aktifleştirilirse, kağıt alanı sütunlar ve satırlar halinde düzenlenmiş belirli sayıda sayfayı içerecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="313"/>
@@ -32707,7 +32720,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/spline/qg_splineoptions.ui" line="94"/>
         <source>If selected, closed spline is created</source>
-        <translation>Seçilirse, kapalı eğri oluşturulur.</translation>
+        <translation>Seçilirse, kapalı eğri oluşturulur</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/qg_splineoptions.ui" line="97"/>
