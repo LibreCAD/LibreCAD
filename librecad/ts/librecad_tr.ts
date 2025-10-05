@@ -19692,17 +19692,17 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4581"/>
         <source>Left  Isometric Grid</source>
-        <translation>Sol İzometrik Izgara</translation>
+        <translation>Sol  İzometrik Izgara</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4571"/>
         <source>RIght Isometric Grid</source>
-        <translation>Sağ İzometrik Kareli</translation>
+        <translation>Sağ İzometrik Izgara</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4509"/>
         <source>Orthogonal Grid</source>
-        <translation>Dik Izgara</translation>
+        <translation>Dik Açılı Izgara</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4591"/>
@@ -19720,7 +19720,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2065"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2516"/>
         <source>Marker Color:</source>
-        <translation>Marker Rengi:</translation>
+        <translation>Vurgulama Rengi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2493"/>
@@ -19760,32 +19760,32 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2611"/>
         <source>&amp;Highlighted entity Color:</source>
-        <translation>&amp;Vurgulanan öğe Renk:</translation>
+        <translation>&amp;Vurgulanan öğe Rengi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2665"/>
         <source>Highlight with screen linewidth in &quot;Draft&quot; mode</source>
-        <translation>&quot;Taslak&quot; modunda ekran çizgigenişliği ile vurgula</translation>
+        <translation>&quot;Taslak&quot; modunda ekran çizgi kalınlığı ile vurgula</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2685"/>
         <source>Explanatory Reference Point Size</source>
-        <translation>Açıklayıcı Referans Noktası Boyutu</translation>
+        <translation>Açıklayıcı Referans Nokta Boyutu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2777"/>
         <source>Explanatory Reference Point Style</source>
-        <translation>Açıklayıcı Referans Noktası Stili</translation>
+        <translation>Açıklayıcı Referans Nokta Stili</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5452"/>
         <source>If selected, the angle of the line interpolation segment is calculated to ensure that resulting sagitta (height of arc segment) is less than specified.</source>
-        <translation></translation>
+        <translation>Seçildiğinde, doğrusal enterpolasyon segmentinin açısı, ortaya çıkan sagitta (yay segmentinin yüksekliği) belirtilenden az olmasını sağlamak için hesaplanır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5519"/>
         <source>If selected, the same rendering settings will be applied also to circles.</source>
-        <translation>Seçildiğinde, aynı render ayarları aynı zamanda dairelere uygulanacaktır.</translation>
+        <translation>Seçildiğinde, aynı render ayarları aynı zamanda çemberlere uygulanacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4407"/>
@@ -19855,12 +19855,12 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4981"/>
         <source>If checked, pre-release versions will be ignored</source>
-        <translation>İşaretlenirse, ön sürüm versiyonları göz ardı edilecektir</translation>
+        <translation>İşaretlenirse, ön-sürüm versiyonları göz ardı edilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4987"/>
         <source>Ignore pre-release versions</source>
-        <translation>Ön sürüm versiyonlarını görmezden gel</translation>
+        <translation>Ön-sürüm versiyonlarını görmezden gel</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4889"/>
@@ -19885,7 +19885,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4919"/>
         <source>Use &quot;classic&quot; statusbar</source>
-        <translation>Use &quot;classic&quot; statusbar</translation>
+        <translation>&quot;Klasik&quot; durum çubuğunu kullan</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5065"/>
@@ -19936,7 +19936,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4879"/>
         <source>Enable CAD dockwidgets</source>
-        <translation>CAD rıhtımbileşenleri etkin</translation>
+        <translation>CAD rıhtım bileşenleri etkin</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4849"/>
@@ -19961,7 +19961,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1086"/>
         <source>This will also include custom menus and toolbars. Continue?</source>
-        <translation>Bu aynı zamanda özel menüleri ve araç çubuklarını da içerecektir. Devam?</translation>
+        <translation>Bu ayrıca özel menüleri ve araç çubuklarını da içerecek. Devam edilsin mi?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4237"/>
@@ -19971,7 +19971,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5165"/>
         <source>Variable File:</source>
-        <translation>Değişken Dosyası:</translation>
+        <translation>Değişken Dosya:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1036"/>
@@ -19986,7 +19986,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4441"/>
         <source>Don&apos;t use native OS file open dialog</source>
-        <translation>İşletim sistemi dosya açma iletişim kutusunu kullanma</translation>
+        <translation>İşletim sistemi dosya açma iletişim kutusunu kullanmayın</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="666"/>
@@ -20095,7 +20095,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1508"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1751"/>
         <source>Line Type:</source>
-        <translation>Hat Tipi:</translation>
+        <translation>Çizgi Türü:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1707"/>
@@ -20105,12 +20105,12 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1879"/>
         <source>Line Width</source>
-        <translation>Line Width</translation>
+        <translation>Çizgi Kalınlığı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1886"/>
         <source>Width of line for snap indicator</source>
-        <translation>Yakalama göstergesi için çizgi genişliği</translation>
+        <translation>Yakalama göstergesi için çizgi kalınlığı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1778"/>
@@ -20160,7 +20160,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1619"/>
         <source>Angle snap single step</source>
-        <translation>Açı yakalama tek adım</translation>
+        <translation>Açı yakalamadaki her bir adım</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1562"/>
@@ -20205,7 +20205,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1555"/>
         <source>deg</source>
-        <translation>this is incomplete or unclear</translation>
+        <translation>der</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1668"/>
@@ -20250,7 +20250,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="819"/>
         <source>Handle Size:</source>
-        <translation>Sap Boyutu:</translation>
+        <translation>Tutamaç Boyutu:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="905"/>
@@ -20265,12 +20265,12 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="192"/>
         <source>Overlay Selection Box</source>
-        <translation>Yerleştirme Seçim Kutusu</translation>
+        <translation>Kaplama Seçim Kutusu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="218"/>
         <source>Inverted Line Color:</source>
-        <translation>Ters Çizgi Rengi:</translation>
+        <translation>Ters Çevrilmiş Çizgi Rengi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="225"/>
@@ -20281,12 +20281,12 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="243"/>
         <source>Inverted Fill Color:</source>
-        <translation>Ters Dolgu Rengi:</translation>
+        <translation>Ters Çevrilmiş Dolgu Rengi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="250"/>
         <source>Color for filling inverted overlay selection box</source>
-        <translation>Ters bindirme seçim kutusunu doldurma rengi</translation>
+        <translation>Ters çevrilmiş kaplama seçim kutusu dolgu rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="288"/>
@@ -20306,7 +20306,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="340"/>
         <source>Color for line for overlay box</source>
-        <translation>Bindirme kutusu için çizgi rengi</translation>
+        <translation>Kaplama kutusu için çizgi rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="378"/>
@@ -20321,12 +20321,12 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="394"/>
         <source>Transparency for overlay selection box. Smaller value - more transparent.</source>
-        <translation>Bindirme seçim kutusu için şeffaflık. Daha küçük değer - daha şeffaf.</translation>
+        <translation>Kaplama seçim kutusu için şeffaflık. Daha küçük değer - daha şeffaf.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="520"/>
         <source>General</source>
-        <translation>GenelGenel</translation>
+        <translation>Genel</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="551"/>
@@ -20346,7 +20346,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="143"/>
         <source>Backgr&amp;ound Color:</source>
-        <translation>Backgr&amp;ound Color:</translation>
+        <translation>A&amp;rkaplan Rengi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="647"/>
@@ -20376,7 +20376,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="130"/>
         <source>S&amp;elected Entity Color:</source>
-        <translation>S&amp;elected Entity Color:</translation>
+        <translation>S&amp;eçili Öğe Rengi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="535"/>
@@ -20411,7 +20411,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="583"/>
         <source>First time only pan</source>
-        <translation>Sadece ilk kullanım tavası</translation>
+        <translation>İlk seferinde sadece taşı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="922"/>
@@ -20438,25 +20438,25 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1240"/>
         <source>Width of Meta Grid line if grid is drawn by points</source>
-        <translation>Eğer ızgara noktalarla çizilmişse Meta Izgara çizgisinin genişliği</translation>
+        <translation>Eğer ızgara noktalarla çizilmişse Meta Izgara çizgisinin kalınlığı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1256"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1360"/>
         <source>Line Type: </source>
-        <translation>Hat Türü: </translation>
+        <translation>Çizgi Türü: </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1263"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1367"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1515"/>
         <source>Line Width:</source>
-        <translation>Çizgi Genişliği:</translation>
+        <translation>Çizgi Kalınlığı:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1270"/>
         <source>Color for Meta Grid lines if grid drawn by points</source>
-        <translation>Meta Izgara çizgileri için renk, eğer ızgara noktalarla çizilmişse</translation>
+        <translation>Eğer ızgara noktalarla çizilmişse, Meta Izgara çizgileri için renk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1288"/>
@@ -20472,7 +20472,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1434"/>
         <source>Width of grid lines</source>
-        <translation>Izgara çizgilerinin genişliği</translation>
+        <translation>Izgara çizgilerinin kalınlığı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1450"/>
@@ -20492,12 +20492,12 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1344"/>
         <source>Width of Meta Grid lines if grid is drawn by lines</source>
-        <translation>Eğer ızgara çizgilerle çizilmişse Meta Izgara çizgilerinin genişliği</translation>
+        <translation>Eğer ızgara çizgilerle çizilmişse Meta Izgara çizgilerinin kalınlığı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1374"/>
         <source>Color of Meta Grid if grid drawn by lines</source>
-        <translation>Meta Izgarasının Rengi, Izgara Çizgilerle Çiziliyorsa</translation>
+        <translation>Izgara Çizgilerle Çiziliyorsa, Meta Izgarasının Rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2158"/>
@@ -20507,7 +20507,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2247"/>
         <source>Y-Axis Extension</source>
-        <translation>Y-Ekseni Uzatma</translation>
+        <translation>Y-Ekseni Uzantısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2354"/>
@@ -20517,7 +20517,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2257"/>
         <source>X-Axis Extension</source>
-        <translation>X-Ekseni Uzatma</translation>
+        <translation>X-Ekseni Uzantısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2164"/>
@@ -20527,7 +20527,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2304"/>
         <source>If checked, axises will be inifinite lines</source>
-        <translation>If checked, axises will be inifinite lines</translation>
+        <translation>İşaretlenirse, eksenler sonsuz çizgiler halinde olacaktır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2307"/>
@@ -20571,7 +20571,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2223"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2346"/>
         <source>None</source>
-        <translation>YokHiçbiri</translation>
+        <translation>Hiçbiri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2188"/>
@@ -20725,7 +20725,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3692"/>
         <source>Color for selected preview reference entiites</source>
-        <translation>Color for selected preview reference entiites</translation>
+        <translation>Seçili önizleme referans öğeleri için renk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3745"/>
@@ -20770,7 +20770,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3612"/>
         <source>Show operation&apos;s preview explanatory entities </source>
-        <translation>Show operation&apos;s preview explanatory entities </translation>
+        <translation>Operasyonun önizleme açıklayıcı öğelerini göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2713"/>
@@ -20790,12 +20790,12 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5532"/>
         <source>Rendering Minimums</source>
-        <translation>Minimum İşlemler</translation>
+        <translation>Minimumları Render&apos;la</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5653"/>
         <source>If height of text line on the screen is less than specified pixels, placholder will be drawn instead of text</source>
-        <translation>Ekrandaki metin çizgisinin yüksekliği belirtilen piksel değerinden az ise, metin yerine yer tutucu çizilecektir</translation>
+        <translation>Ekrandaki metin satırının yüksekliği belirtilen piksel değerinden az ise, metin yerine yer tutucu çizilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5593"/>
@@ -20805,7 +20805,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5646"/>
         <source>Ellipse Major Axis:</source>
-        <translation>Elipsin Büyük Eksenı:</translation>
+        <translation>Elipsin Büyük Ekseni:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5616"/>
@@ -20820,12 +20820,12 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5600"/>
         <source>If screen radius of circle is less than value, circle is drawn as point</source>
-        <translation>Eğer dairenin ekran yarıçapı bu değerden küçükse, daire bir nokta olarak çizilir</translation>
+        <translation>Eğer çemberin ekran yarıçapı bu değerden küçükse, daire bir nokta olarak çizilir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5675"/>
         <source>Circle Radius:</source>
-        <translation>Daire Yarıçapı:</translation>
+        <translation>Çember Yarıçapı:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5632"/>
@@ -20840,7 +20840,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5639"/>
         <source>Ellipse Minor Axis:</source>
-        <translation>Elipsin Küçük Eksenı:</translation>
+        <translation>Elipsin Küçük Ekseni:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5545"/>
@@ -20855,7 +20855,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5397"/>
         <source>Draw text as draft within paning operations</source>
-        <translation>Draw text as draft within paning operations</translation>
+        <translation>Pencereleme işlemleri sırasında metni taslak olarak çiz</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5404"/>
@@ -20946,12 +20946,12 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3873"/>
         <source>Offset of labels from the cursor point.</source>
-        <translation>Etiketlerin imleç noktasından olan kayması.</translation>
+        <translation>Etiketlerin imleç noktasından olan ötelemesi.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3892"/>
         <source>Cursor position offset:</source>
-        <translation>İmleç konum kayması:</translation>
+        <translation>İmleç konum ötelemesi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3902"/>
@@ -20976,7 +20976,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3925"/>
         <source>Show properties for entity that is edited by handles</source>
-        <translation>Kulp ile düzenlenen öğe için özellikleri göster</translation>
+        <translation>Tutamaç ile düzenlenen öğe için özellikleri göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3935"/>
@@ -21071,17 +21071,17 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4198"/>
         <source>Show properties of catched entity</source>
-        <translation>Show properties of catched entity</translation>
+        <translation>Yakalanan öğelerin özelliklerini göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4240"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>Seçili öğelerin katmanını, katman etkinleştirildiğinde değiştir</translation>
+        <translation>Seçili öğelerin katmanı, katman etkinleştirildiğinde değiştir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4397"/>
         <source>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</source>
-        <translation>İşaretlenirse, çizimler Sekme modundaysa sekmelerde kapatma çarpısı göstergesi gösterilecektir</translation>
+        <translation>İşaretlenirse, çizimler Sekme modundaysa sekmelerdeki kapatma işareti (çarpı) gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4400"/>
@@ -21102,7 +21102,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4377"/>
         <source>If checked, keyboard shortcut will be shown in tooltip for action</source>
-        <translation>İşlem için klavye kısayolu gösterilecekse işaretleyin</translation>
+        <translation>İşaretlenirse, eylem için klavye kısayolu araç ipucunda gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4380"/>
@@ -21112,7 +21112,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4772"/>
         <source>Auto save backup each</source>
-        <translation>Auto save backup each</translation>
+        <translation>Yedeklemeyi her seferinde otomatik kaydet</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4458"/>
@@ -21157,7 +21157,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5042"/>
         <source>Languages for commands in Cmd Widget</source>
-        <translation>Kmt Bileşen&apos;de komutlar için diller</translation>
+        <translation>Kmt Bileşen&apos;inde komutlar için diller</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5022"/>
@@ -21177,7 +21177,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4906"/>
         <source>If checked, after start the main window will be maximized</source>
-        <translation>İşaretlenirse, başladıktan sonra ana pencere maksimize edilecektir</translation>
+        <translation>İşaretlenirse, başladıktan sonra ana pencere büyütülecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1549"/>
@@ -21202,12 +21202,12 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1626"/>
         <source>Mark Radius:</source>
-        <translation>Mark Radius:</translation>
+        <translation>Yarıçap İşareti:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="52"/>
         <source>Background and Selection</source>
-        <translation>Arka Plan ve Seçim</translation>
+        <translation>Arkaplan ve Seçim</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="410"/>
@@ -21217,13 +21217,13 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2415"/>
         <source>Font that should be used for drawing name of axis in coordinate system zero.</source>
-        <translation>Koordinat sisteminde eksen adını çizmek için kullanılacak yazı tipi sıfır.</translation>
+        <translation>Koordinat sisteminin sıfır noktasındaki eksen adının çizilmesinde kullanılması gereken yazı tipi.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="485"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2438"/>
         <source>Font size that should be used for drawing name of axis in coordinate system zero.</source>
-        <translation>Koordinat sisteminde eksen adını çizmek için kullanılacak sıfır font boyutu.</translation>
+        <translation>Koordinat sisteminin sıfırında eksenin adını çizmek için kullanılması gereken yazı tipi boyutu.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2474"/>
@@ -21248,7 +21248,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2395"/>
         <source>Coordinates Zero Marker</source>
-        <translation>Koordinatlar Sıfır İşareti</translation>
+        <translation>Sıfır İşaretinin Koordinatları</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2408"/>
@@ -21263,7 +21263,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2464"/>
         <source>If selected and view is in user coordinate system, the marker for coodinate system will be shown in zero point of world coordinates system. </source>
-        <translation></translation>
+        <translation>Seçim yapılıp görünüm kullanıcı koordinat sistemindeyse, koordinat sistemi işareti dünya koordinat sisteminin sıfır noktasında gösterilecektir. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2467"/>
@@ -21348,7 +21348,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1938"/>
         <source>Advanced Snap Fine-tuning settings</source>
-        <translation>Gelişmiş Yakalama Gelişmiş Ayarları</translation>
+        <translation>Gelişmiş Yakalama Detay Ayarları</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1944"/>
@@ -21383,7 +21383,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2006"/>
         <source>Catch entities Snap Distance:</source>
-        <translation>Öğeleri Yakala Yakalama Mesafesi:</translation>
+        <translation>Öğeleri Tutma Yakalama Mesafesi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2013"/>
@@ -21394,7 +21394,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2039"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2129"/>
         <source>Color of the marker</source>
-        <translation>Markerın rengi</translation>
+        <translation>İşaretleyicinin rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2048"/>
@@ -21414,7 +21414,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4264"/>
         <source>If checked, it will be possible to enter value of angle in decimal degrees only. Otherwise, angles in surveyor, radiant, imperial degrees and bearing formats are allowed for input.  </source>
-        <translation></translation>
+        <translation>İşaretlenirse, yalnızca ondalık derece cinsinden açı değeri girilebilecektir. Aksi takdirde, topograf, radyan, İngiliz derece ve yön formatlarındaki açıların girişi de mümkündür.  </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4267"/>
@@ -21434,22 +21434,22 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4354"/>
         <source>If selected, separate menu will be created for each group of entity-related commands. Otherwise, these command will be under the same menu. </source>
-        <translation></translation>
+        <translation>Seçilirse, öğeler ilgili komut gruplarının her biri için ayrı bir menü oluşturulacaktır. Aksi takdirde, bu komutlar aynı menü altında yer alacaktır. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4313"/>
         <source>If enabled, it is possible to do with keys - zooming via +/-, scrolling via arrow keys, moving selected entities position via arrow keys and SHIFT/CTRL modifiers.</source>
-        <translation></translation>
+        <translation>Etkinleştirilirse, bu işlemler tuşlarla yapılabilir - +/- ile yakınlaştırma, ok tuşları ile kaydırma, seçili öğelerin konumunu ok tuşları ve SHIFT/CTRL değiştiricileri ile taşımak.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4316"/>
         <source>Enable scroll and position adjustment via keyboard</source>
-        <translation>Klavye ile kaydırma ve pozisyon ayarını aktifleştir</translation>
+        <translation>Klavye ile kaydırma ve konumlandırma ayarını aktifleştir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4344"/>
         <source>If selected, controls for picking values from drawing are available in Tool Options toolbar, allowing to pick length and angle values from drawing. </source>
-        <translation></translation>
+        <translation>Seçilirse, çizimden değerleri seçmek için kontroller, Araç Seçenekleri araç çubuğunda mevcut olur ve çizimden uzunluk ve açı değerlerini seçmeye imkan tanır. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4347"/>
@@ -21506,7 +21506,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4779"/>
         <source>Backup file name suffix:</source>
-        <translation>Yedek dosya adı eki:</translation>
+        <translation>Yedek dosya adı soneki:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4792"/>
@@ -21516,7 +21516,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4802"/>
         <source>_backup</source>
-        <translation>_backup</translation>
+        <translation>_yedek</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4807"/>
@@ -21601,7 +21601,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5426"/>
         <source>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</source>
-        <translation></translation>
+        <translation>İşaretlenirse, yaylar çizgi segmentleri interpolasyonu kullanılarak çizilir. Bu, uç noktalara yakın çizim hatalarını en aza indirir, ancak daha az düzgün yayların çizilmesine yol açabilir. Büyük yakınlaştırmalarda uç noktalarda çizim hatası oluşmaz.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5436"/>
@@ -21611,7 +21611,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5439"/>
         <source>Qt-native drawing method (unexact near endpoints)</source>
-        <translation>Qt-native drawing method (unexact near endpoints)</translation>
+        <translation>Qt-yerel çizim yöntemi (uç noktalara yakın tam değil)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5685"/>
@@ -21651,7 +21651,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5420"/>
         <source>Arcs Rendering Method</source>
-        <translation>Yayları Görselleştirme Yöntemi</translation>
+        <translation>Yayların Renderlenme Yöntemi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5429"/>
@@ -21666,7 +21666,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5455"/>
         <source>Determine segments by max sagitta</source>
-        <translation>Maksimum sagitta ile segmentleri belirleyin</translation>
+        <translation>En fazla sagitta ile segmentleri belirleyin</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5462"/>
@@ -21681,7 +21681,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5472"/>
         <source>Value of fixed segment&apos;s angle</source>
-        <translation>Sabit segmentin açısının değeri</translation>
+        <translation>Sabit segment açısının değeri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5475"/>
@@ -21691,12 +21691,12 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5494"/>
         <source>Maximal distance betwen arc and segment interpolation line</source>
-        <translation>Yay ile segment enterpolasyon hattı arasındaki maksimum mesafe</translation>
+        <translation>Yay ile segment enterpolasyon çizgisi arasındaki en fazla mesafe</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5522"/>
         <source>Render circles in the same way as arcs.</source>
-        <translation>Daireleri, yaylar ile aynı şekilde render edin.</translation>
+        <translation>Çemberleri, yaylar ile aynı şekilde render edin.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4166"/>
@@ -21711,7 +21711,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4448"/>
         <source>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </source>
-        <translation></translation>
+        <translation>İşaretlenirse, çizim için yapılan yakınlaştırma veya kaydırma gibi değişiklikler, çizimin değiştirilmiş olarak işaretlenmesine neden olur. Aksi takdirde, yalnızca görünümü değiştirmek, çizimin değiştirilen durumu üzerinde etkili olmaz.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4451"/>
@@ -21726,7 +21726,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4492"/>
         <source>Angles Positive Direction:</source>
-        <translation>Açılar Pozitif Yön:</translation>
+        <translation>Açıların Pozitif Yönü:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4502"/>
@@ -21751,7 +21751,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4660"/>
         <source>Clockwise, 90 degrees is sourth.</source>
-        <translation>Clockwise, 90 degrees is sourth.</translation>
+        <translation>Saat yönünde, 90 derece güneydir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5179"/>
