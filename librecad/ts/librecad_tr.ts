@@ -20770,7 +20770,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3612"/>
         <source>Show operation&apos;s preview explanatory entities </source>
-        <translation>Operasyonun önizleme açıklayıcı öğelerini göster</translation>
+        <translation>Operasyonun önizleme açıklayıcı öğelerini göster </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2713"/>
@@ -21711,7 +21711,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4448"/>
         <source>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </source>
-        <translation>İşaretlenirse, çizim için yapılan yakınlaştırma veya kaydırma gibi değişiklikler, çizimin değiştirilmiş olarak işaretlenmesine neden olur. Aksi takdirde, yalnızca görünümü değiştirmek, çizimin değiştirilen durumu üzerinde etkili olmaz.</translation>
+        <translation>İşaretlenirse, çizim için yapılan yakınlaştırma veya kaydırma gibi değişiklikler, çizimin değiştirilmiş olarak işaretlenmesine neden olur. Aksi takdirde, yalnızca görünümü değiştirmek, çizimin değiştirilen durumu üzerinde etkili olmaz. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4451"/>
@@ -21864,12 +21864,12 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="219"/>
         <source>Export Points</source>
-        <translation>İhracat Noktaları</translation>
+        <translation>Noktaları Dışa Aktar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="20"/>
         <source>Export as CAM/plain SVG</source>
-        <translation>CAM/düz SVG olarak dışa aktar</translation>
+        <translation>CAM/Düz SVG olarak dışa aktar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="60"/>
@@ -21889,7 +21889,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="167"/>
         <source>Dash/Dot Lines</source>
-        <translation>Çizgi/Nokta Çizgileri</translation>
+        <translation>Kesikli/Noktalı Çizgiler</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="177"/>
@@ -21899,7 +21899,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="199"/>
         <source>Bake dash/dot lines to SVG path</source>
-        <translation>SVG yoluna çizgi/nokta çizgileri ekleyin</translation>
+        <translation>SVG yoluna kesikli/noktalı çizgileri ekleyin</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="31"/>
@@ -21955,7 +21955,7 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="38"/>
         <source>Whether to export points</source>
-        <translation>Noktaları dışa aktarmak mı</translation>
+        <translation>Noktaları dışa aktarıp aktarmama</translation>
     </message>
 </context>
 <context>
@@ -22064,7 +22064,7 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgscale.ui" line="26"/>
         <source>Scaling Options</source>
-        <translation>Oranlama Seçenekleri</translation>
+        <translation>Ölçekleme Seçenekleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgscale.ui" line="63"/>
@@ -22114,7 +22114,7 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgscale.ui" line="44"/>
         <source>Isotropic Scaling</source>
-        <translation>Eşit Ölçekle</translation>
+        <translation>İzotropik Ölçekleme</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgscale.ui" line="72"/>
@@ -22242,7 +22242,7 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="967"/>
         <source>At (@)</source>
-        <translation>Salyangoz (@)</translation>
+        <translation>Et (@)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="972"/>
@@ -22332,7 +22332,7 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="255"/>
         <source>Obligue of text</source>
-        <translation>Obligue of text</translation>
+        <translation>Metnin eğik olması</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="268"/>
@@ -22842,7 +22842,7 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1525"/>
         <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
-        <translation>[FF00-FFEF] Yarım ve Tam Genişlikli Bçemler</translation>
+        <translation>[FF00-FFEF] Yarım ve Tam Genişlikli Biçemler</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1530"/>
@@ -22942,7 +22942,7 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="844"/>
         <source>Baseline Left</source>
-        <translation>Baz çizgi Sol</translation>
+        <translation>Temel çizgi Sol</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="589"/>
@@ -22954,12 +22954,12 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="704"/>
         <source>Baseline Right</source>
-        <translation>Baz çizgi Sağ</translation>
+        <translation>Temel çizgi Sağ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="586"/>
         <source>Baseline Center</source>
-        <translation>Baz çizgi Orta</translation>
+        <translation>Temel çizgi Orta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="561"/>
@@ -22998,7 +22998,7 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/dialogs/main/qg_exitdialog.ui" line="44"/>
         <source>again Still No Text supplied.</source>
-        <translation>tekrar Hiçbir Metin sağlanmadı.</translation>
+        <translation>Yine de metin sağlanmadı.</translation>
     </message>
 </context>
 <context>
@@ -23116,7 +23116,7 @@ yani pişirme için gereken varsayılan adım değeri</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/qg_dlgimageoptions.ui" line="43"/>
         <source>auto</source>
-        <translation>özdevinimli</translation>
+        <translation>otomatik</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/qg_dlgimageoptions.ui" line="203"/>
@@ -23217,7 +23217,7 @@ Yapı Katmanının içeriği çıktıda görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layer_widget/qg_layerwidget.cpp" line="247"/>
         <source>Filter</source>
-        <translation>Süz</translation>
+        <translation>Filtre</translation>
     </message>
 </context>
 <context>
@@ -23274,17 +23274,17 @@ Yapı Katmanının içeriği çıktıda görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="86"/>
         <source>Dot</source>
-        <translation>Noktalı</translation>
+        <translation>Noktalı Çizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="88"/>
         <source>Dot (small)</source>
-        <translation>Dar noktalamalı</translation>
+        <translation>Noktalı Çizgi (küçük)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="89"/>
         <source>Dot (large)</source>
-        <translation>Geniş noktalamalı</translation>
+        <translation>Noktalı Çizgi (geniş)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="90"/>
@@ -23294,42 +23294,42 @@ Yapı Katmanının içeriği çıktıda görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="92"/>
         <source>Dash (small)</source>
-        <translation>Dar kesikli çizgi</translation>
+        <translation>Kesikli çizgi (küçük)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="93"/>
         <source>Dash (large)</source>
-        <translation>Geniş kesikli çizgi</translation>
+        <translation>Kesikli çizgi (geniş)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="94"/>
         <source>Dash Dot</source>
-        <translation>Noktalı kesikli çizgi</translation>
+        <translation>Noktalı Kesik Çizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="96"/>
         <source>Dash Dot (small)</source>
-        <translation>Noktalı dar kesikli çizgi</translation>
+        <translation>Noktalı Kesik Çizgi (küçük)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="97"/>
         <source>Dash Dot (large)</source>
-        <translation>Noktalı geniş kesikli çizgi</translation>
+        <translation>Noktalı Kesik Çizgi (geniş)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="98"/>
         <source>Divide</source>
-        <translation>Bölme çizgisi</translation>
+        <translation>Bölme Çizgisi</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="100"/>
         <source>Divide (small)</source>
-        <translation>Dar kesikli bölme çizgisi</translation>
+        <translation>Bölme Çizgisi (küçük)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="101"/>
         <source>Divide (large)</source>
-        <translation>Geniş kesikli bölme çizgisi</translation>
+        <translation>Bölme Çizgisi (geniş)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="102"/>
@@ -23339,12 +23339,12 @@ Yapı Katmanının içeriği çıktıda görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="104"/>
         <source>Center (small)</source>
-        <translation>Dar kesikli eksen çizgisi</translation>
+        <translation>Eksen çizgisi (küçük)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="105"/>
         <source>Center (large)</source>
-        <translation>Geniş kesikli eksen çizgisi</translation>
+        <translation>Eksen çizgisi (geniş)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="106"/>
@@ -23354,42 +23354,42 @@ Yapı Katmanının içeriği çıktıda görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="108"/>
         <source>Border (small)</source>
-        <translation>Dar kesikli sınır çizgisi</translation>
+        <translation>Sınır çizgisi (küçük)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="109"/>
         <source>Border (large)</source>
-        <translation>Geniş kesikli sınır çizgisi</translation>
+        <translation>Sınır çizgisi (geniş)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="87"/>
         <source>Dot (tiny)</source>
-        <translation>Nokta (küçük)</translation>
+        <translation>Noktalı Çizgi (minik)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="91"/>
         <source>Dash (tiny)</source>
-        <translation>Çizgi (küçük)</translation>
+        <translation>Kesikli çizgi (minik)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="95"/>
         <source>Dash Dot (tiny)</source>
-        <translation>Çizgi Nokta (küçük)</translation>
+        <translation>Noktalı Kesik Çizgi (minik)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="99"/>
         <source>Divide (tiny)</source>
-        <translation>Bölü (küçük)</translation>
+        <translation>Bölme Çizgisi (minik)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="103"/>
         <source>Center (tiny)</source>
-        <translation>Eksen (küçük)</translation>
+        <translation>Eksen çizgisi (minik)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="107"/>
         <source>Border (tiny)</source>
-        <translation>Sınır (küçük)</translation>
+        <translation>Sınır çizgisi (minik)</translation>
     </message>
 </context>
 <context>
@@ -23456,12 +23456,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.cpp" line="400"/>
         <source>Paper scale factor larger than max print ratio</source>
-        <translation>Kağıt ölçek faktörü, maksimum baskı oranından büyük</translation>
+        <translation>Kağıt ölçek faktörü, en fazla baskı oranından büyük</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.cpp" line="404"/>
         <source>Paper scale factor smaller than min print ratio</source>
-        <translation>Kağıt ölçek faktörü, minimum baskı oranından küçük</translation>
+        <translation>Kağıt ölçek faktörü, en küçük baskı oranından küçük</translation>
     </message>
 </context>
 <context>
@@ -23554,7 +23554,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="130"/>
         <source>Width of line</source>
-        <translation>Çizgi genişliği</translation>
+        <translation>Çizgi kalınlığı</translation>
     </message>
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="137"/>
@@ -23678,7 +23678,7 @@ Bu işlem geri alınamaz.</translation>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="514"/>
         <source>Remove %n block(s)</source>
         <translation>
-            <numerusform>%n bloğu kaldır</numerusform>
+            <numerusform>%n blok(ları) kaldır</numerusform>
         </translation>
     </message>
     <message>
@@ -23694,14 +23694,14 @@ Bu işlem geri alınamaz.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="223"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>Katman boş adı izin verilmiyor.</translation>
+        <translation>Katman adının boş olmasına izin verilmiyor.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="290"/>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation></translation>
+        <translation>Aynı isimle katman oluşturmaya çalışıldı. Çoğaltılmış katman adı [%1]. Lütfen farklı bir isim belirtin.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="151"/>
@@ -23713,7 +23713,7 @@ Please specify a different name.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="152"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation></translation>
+        <translation>Katman listesi ayırıcı dizgesi boş. Katman ağacını oluşturmak mümkün olmayacaktır. Lütfen farklı bir değer belirtin.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="957"/>
@@ -23726,7 +23726,9 @@ Please specify a different value.</source>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation></translation>
+        <translation>Öğe bulunmayan katman(lar) bulundu, ancak filtrelenmiş ve görünür değiller. 
+
+Filtreleme maskesini temizleyin ve tekrar deneyin.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="968"/>
@@ -23782,13 +23784,17 @@ için böyle bir alt katman zaten mevcut.
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation></translation>
+        <translation>&quot;&apos;Katmana göre&apos; değerini kaynak katman değerleriyle değiştirilsin mi?
+
+Eğer Evet - &apos;Katmana göre&apos; kalemlerine sahip nesneler, yeni katmanda önceki katmanlarda olduğu gibi görünecek ve &apos;Katmana göre&apos; değeri çözülmüş kalemlerle değiştirilecektir.
+
+Eğer Hayır - &apos;Katmana göre&apos; değerleri aynı kalacak ve böylece hedef katmanın kalemi bu tür nesneler için kalemi belirleyecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1791"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1842"/>
         <source>Layer DialogEx</source>
-        <translation>Layer DialogEx</translation>
+        <translation>Katman DiyaloğuEx</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="218"/>
@@ -23815,7 +23821,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1337"/>
         <source>Pen for removal:</source>
-        <translation>Çıkarma için kalem:</translation>
+        <translation>Çıkarılacak Kalem:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1353"/>
@@ -28179,12 +28185,12 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="564"/>
         <source>Selecting</source>
-        <translation>Seçme</translation>
+        <translation>Seçim</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="564"/>
         <source>De-Selecting</source>
-        <translation>De-Selecting</translation>
+        <translation>Seçimi Kaldırmak</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="565"/>
@@ -28224,22 +28230,22 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="491"/>
         <source>Offset</source>
-        <translation>Ofset</translation>
+        <translation>Öteleme</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="494"/>
         <source>New Position</source>
-        <translation>Yeni Pozisyon</translation>
+        <translation>Yeni Konum</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="536"/>
         <source>Copy Offset</source>
-        <translation>Ofseti Kopyala</translation>
+        <translation>Ötelemeyi Kopyala</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="538"/>
         <source>Move Offset</source>
-        <translation>Ofseti Taşı</translation>
+        <translation>Ötelemeyi Taşı</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="621"/>
@@ -28296,12 +28302,12 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="948"/>
         <source>Lengthen Chord</source>
-        <translation>Akoru Uzat</translation>
+        <translation>Kirişi Uzat</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="951"/>
         <source>Move in Previous segment direction</source>
-        <translation>Önceki segmentin yönünde hareket et</translation>
+        <translation>Önceki segmentin yönüne hareket et</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="951"/>
@@ -28311,7 +28317,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="956"/>
         <source>Set new ref position</source>
-        <translation>Yeni referans pozisyonu ayarla</translation>
+        <translation>Yeni referans konumu ayarla</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="960"/>
@@ -28349,7 +28355,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="216"/>
         <source>Select first line</source>
-        <translation>İlk kenarı seçin</translation>
+        <translation>İlk çizgiyi seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="219"/>
@@ -28449,7 +28455,7 @@ Bu blok eklenemez.</translation>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="510"/>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="513"/>
         <source>Alternative Arc</source>
-        <translation>Alternatif Ark</translation>
+        <translation>Alternatif Yay</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="516"/>
@@ -28459,7 +28465,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="516"/>
         <source>Use alternative arc point</source>
-        <translation>Alternatif ark noktası kullan</translation>
+        <translation>Alternatif yay noktası kullan</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="500"/>
@@ -28474,7 +28480,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="510"/>
         <source>Specify end angle or [angle/chordlen]</source>
-        <translation>Bitiş açısını veya [açı/korduzun] belirtin</translation>
+        <translation>Bitiş açısını veya [açı/kirişini] belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc.cpp" line="513"/>
@@ -28502,7 +28508,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarc3p.cpp" line="230"/>
         <source>Specify startpoint or [center]</source>
-        <translation>Başlangıç noktası veya [merkez] belirt</translation>
+        <translation>Başlangıç noktası belirt veya [merkez]</translation>
     </message>
 </context>
 <context>
@@ -28510,17 +28516,17 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="273"/>
         <source>Specify base entity</source>
-        <translation>Baz öğeyi belirtin</translation>
+        <translation>Temel öğeyi belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="277"/>
         <source>Alternate arc</source>
-        <translation>Alternatif hikâye çizgisi</translation>
+        <translation>Alternatif yay</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="279"/>
         <source>Alternate Arc</source>
-        <translation>Alternatif Ark</translation>
+        <translation>Alternatif Yay</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp" line="277"/>
@@ -28561,7 +28567,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="153"/>
         <source>Specify first point</source>
-        <translation>İlk noktayı belirt</translation>
+        <translation>İlk noktayı belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle2p.cpp" line="156"/>
@@ -28579,7 +28585,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="172"/>
         <source>Specify first point</source>
-        <translation>İlk noktayı belirt</translation>
+        <translation>İlk noktayı belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircle3p.cpp" line="175"/>
@@ -28745,7 +28751,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="273"/>
         <source>Specify the first point on ellipse</source>
-        <translation>Elipsin ilk noktasını belirt</translation>
+        <translation>Elipsin ilk noktasını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="276"/>
@@ -28795,7 +28801,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="345"/>
         <source>Specify start angle</source>
-        <translation>Başlangıç açısını belirt</translation>
+        <translation>Başlangıç açısını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="348"/>
@@ -28808,12 +28814,12 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="243"/>
         <source>Specify the center of ellipse</source>
-        <translation>Elips merkezini belirtin</translation>
+        <translation>Elipsin merkezini belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="246"/>
         <source>Specify the first point on ellipse</source>
-        <translation>Elipsin ilk noktasını belirt</translation>
+        <translation>Elipsin ilk noktasını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="249"/>
@@ -28851,7 +28857,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="163"/>
         <source>specify a point on ellipse, or total distance to foci</source>
-        <translation>elips üzerinde bir nokta veya odaklara olan toplam mesafeyi belirtin</translation>
+        <translation>Elips üzerinde bir nokta veya odaklara olan toplam mesafeyi belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="178"/>
@@ -28864,12 +28870,12 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="307"/>
         <source>Specify the first line</source>
-        <translation>İlk çizgiyi belirt</translation>
+        <translation>İlk çizgiyi belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="310"/>
         <source>Specify the second line</source>
-        <translation>İkinci çizgiyi belirt</translation>
+        <translation>İkinci çizgiyi belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="313"/>
