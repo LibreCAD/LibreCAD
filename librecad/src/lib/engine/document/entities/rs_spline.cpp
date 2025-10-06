@@ -167,20 +167,41 @@ void RS_Spline::updateKnotWrapping() {
     size_t base_k_size = base_n + static_cast<size_t>(data.degree) + 1;
     data.knotslist.resize(base_k_size);
     double last = data.knotslist.back();
-    double total_delta = 0.0;
-    int count_delta = 0;
-    for (size_t i = 1; i < data.knotslist.size(); ++i) {
-        double dd = data.knotslist[i] - data.knotslist[i - 1];
-        if (dd > 1e-10) {  // non-zero delta
-            total_delta += dd;
-            count_delta++;
+    double first = data.knotslist.front();
+    double span = last - first;
+    size_t wrap_size = static_cast<size_t>(data.degree);
+    if (base_k_size <= wrap_size + 1) {  // +1 for safety, need at least wrap_size deltas
+        // Fallback to average if not enough knots
+        double total_delta = 0.0;
+        int count_delta = 0;
+        double last_non_zero_delta = 1.0;  // Default
+        for (size_t i = 1; i < data.knotslist.size(); ++i) {
+            double dd = data.knotslist[i] - data.knotslist[i - 1];
+            if (dd > 1e-10) {  // non-zero delta
+                total_delta += dd;
+                count_delta++;
+                last_non_zero_delta = dd;  // Update last non-zero for better local preservation
+            }
         }
-    }
-    double average_delta = (count_delta > 0) ? total_delta / count_delta : 1.0;
-    double current = last;
-    for (size_t i = 0; i < static_cast<size_t>(data.degree); ++i) {
-        current += average_delta;
-        data.knotslist.push_back(current);
+        double delta = (count_delta > 0) ? total_delta / count_delta : 1.0;
+        // Use last_non_zero_delta if multiplicity at end, else average
+        if (std::fabs(data.knotslist.back() - data.knotslist[base_k_size - 2]) < 1e-10) {
+            delta = last_non_zero_delta;  // Preserve local spacing near closure
+        }
+        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "Extending knots with delta: %f (average: %f, last: %f)", delta, total_delta / count_delta, last_non_zero_delta);
+        double current = last;
+        for (size_t i = 0; i < wrap_size; ++i) {
+            current += delta;
+            data.knotslist.push_back(current);
+        }
+    } else {
+        // Shift deltas method for non-uniform periodic extension
+        double current = last;
+        for (size_t i = 0; i < wrap_size; ++i) {
+            double delta = data.knotslist[i + 1] - data.knotslist[i];
+            current += delta;
+            data.knotslist.push_back(current);
+        }
     }
 }
 
@@ -232,12 +253,8 @@ void RS_Spline::setClosed(bool c) {
     if (data.closed == c) return;
 
     size_t n = getUnwrappedSize();
-    if (n < static_cast<size_t>(data.degree + 1) && !c) {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::setClosed: Not enough control points for open spline");
-        return;
-    }
-    if (n < 3 && c) {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::setClosed: Not enough control points for closed spline");
+    if ((!c && n < static_cast<size_t>(data.degree + 1)) || (c && n < 3)) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::setClosed: Not enough control points");
         return;
     }
 

@@ -1759,6 +1759,7 @@ if(BUILD_TESTS)
     add_executable(librecad_tests
         librecad/src/lib/math/tests/rs_math_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_ellipse_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/rs_spline_tests.cpp
         ${SOURCES}
     )
 
