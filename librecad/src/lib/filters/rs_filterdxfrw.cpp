@@ -815,9 +815,9 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
             spline->addControlPointRaw({vert->x, vert->y});
     }
     // ensure that the spline is really closed
-    if (spline->getData().closed and !spline->hasWrappedControlPoints()) {
-        spline->getData().closed = 0;
-    }
+    // if (spline->getData().closed and !spline->hasWrappedControlPoints()) {
+    //     spline->getData().closed = 0;
+    // }
 
     spline->update();
 }
