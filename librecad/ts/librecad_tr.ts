@@ -28903,7 +28903,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>Geçersiz tarama alanı. Lütfen seçilen objelerin bir veya daha fazla kapalı kontur oluşturduğunu kontrol edin.</translation>
+        <translation>Geçersiz tarama alanı. Lütfen seçilen öğenin bir veya daha fazla kapalı kontur oluşturduğunu kontrol edin.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="159"/>
@@ -28981,7 +28981,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="252"/>
         <source>Specify first point</source>
-        <translation>İlk noktayı belirt</translation>
+        <translation>İlk noktayı belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="274"/>
@@ -29054,7 +29054,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="265"/>
         <source>Select first line</source>
-        <translation>İlk kenarı seçin</translation>
+        <translation>İlk çizgiyi seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinebisector.cpp" line="268"/>
@@ -29091,7 +29091,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="114"/>
         <source>Specify first point</source>
-        <translation>İlk noktayı belirt</translation>
+        <translation>İlk noktayı belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="117"/>
@@ -29133,7 +29133,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="138"/>
         <source>Enter number:</source>
-        <translation>Paralel sayısı:</translation>
+        <translation>Sayı Girin:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="166"/>
@@ -29144,7 +29144,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="182"/>
         <source>Not a valid number. Try 1..99</source>
-        <translation>Paralel sayısı geçersiz: 1..99 arasında olmalı</translation>
+        <translation>Sayı geçersiz: 1..99 arasında olmalı</translation>
     </message>
 </context>
 <context>
@@ -29167,12 +29167,12 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="180"/>
         <source>Number:</source>
-        <translation>Paralel sayısı:</translation>
+        <translation>Sayı:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="210"/>
         <source>Not a valid number. Try 1..99</source>
-        <translation>Paralel sayısı geçersiz. 1..99 arasında olmalı</translation>
+        <translation>Sayı geçersiz. 1..99 arasında olmalı</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallelthrough.cpp" line="213"/>
@@ -29292,12 +29292,12 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="215"/>
         <source>Select first circle/ellipse/parabola</source>
-        <translation>İlk daire/ellipse/parabolü seç</translation>
+        <translation>İlk çember/ellipse/parabolü seç</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="218"/>
         <source>Select second circle/ellipse/parabola</source>
-        <translation>İkinci daire/ellipse/parabolü seç</translation>
+        <translation>İkinci çemberi/ellipse/parabolü seç</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="221"/>
@@ -29331,12 +29331,12 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="725"/>
         <source>Specify first point</source>
-        <translation>İlk noktayı belirt</translation>
+        <translation>İlk noktayı belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="756"/>
         <source>Specify next point or [%1]</source>
-        <translation>Sonraki noktayı belirtin veya [%1]</translation>
+        <translation>Sonraki noktayı veya [%1] belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="758"/>
@@ -29398,7 +29398,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="745"/>
         <source>Alternative Arc</source>
-        <translation>Alternatif Ark</translation>
+        <translation>Alternatif Yay</translation>
     </message>
 </context>
 <context>
@@ -29406,17 +29406,17 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="215"/>
         <source>Specify first control point</source>
-        <translation>İlk kontrol noktasını belirt</translation>
+        <translation>İlk kontrol noktasını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="227"/>
         <source>Specify next control point or [%1]</source>
-        <translation>Sonraki kontrol noktasını belirtin veya [%1]</translation>
+        <translation>Sonraki kontrol noktasını veya [%1] belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="229"/>
         <source>Specify next control point</source>
-        <translation>Sonraki kontrol noktasını belirt</translation>
+        <translation>Sonraki kontrol noktasını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="283"/>
@@ -29483,7 +29483,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="165"/>
         <source>Copy right after selection</source>
-        <translation>Copy right after selection</translation>
+        <translation>Seçimden hemen sonra kopyala</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="179"/>
@@ -29503,7 +29503,7 @@ Bu blok eklenemez.</translation>
     <message>
         <location filename="../src/actions/drawing/edit/rs_actioneditcopy.cpp" line="183"/>
         <source>Paste Multiple</source>
-        <translation>Birden Çok Yapıştır</translation>
+        <translation>Çoklu Yapıştır</translation>
     </message>
 </context>
 <context>
@@ -29544,7 +29544,11 @@ Complementary: %2
 Supplementary: %3
 Alternative: %4
 </source>
-        <translation></translation>
+        <translation>Açı: %1
+Tamamlayıcı: %2
+Tümleyen: %3
+Alternatif: %4
+</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="140"/>
@@ -29554,7 +29558,12 @@ Supplementary: %3
 Alternative: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
-        <translation></translation>
+        <translation>Açı: %1
+Tamamlayıcı: %2
+Tümleyen: %3
+Alternatif: %4
+Kesişim: (%5 , %6)
+Kesişim :@(%7, %8)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
@@ -29594,12 +29603,12 @@ Intersection :@(%7, %8)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="277"/>
         <source>Line From:</source>
-        <translation>Hattın Gönderildiği:</translation>
+        <translation>Çizgiden:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="278"/>
         <source>Line To:</source>
-        <translation>Hattı Gönder:</translation>
+        <translation>Çizgiye:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="279"/>
@@ -29614,7 +29623,7 @@ Intersection :@(%7, %8)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="299"/>
         <source>Intersection:</source>
-        <translation>Kavşak:</translation>
+        <translation>Kesişim:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="300"/>
@@ -29624,7 +29633,7 @@ Intersection :@(%7, %8)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="301"/>
         <source>Line 2 Angle:</source>
-        <translation>Çizgi 2 Açısı:</translation>
+        <translation>2. Çizgi Açısı:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
@@ -29658,12 +29667,12 @@ Intersection :@(%7, %8)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="178"/>
         <source>Specify first point of polygon</source>
-        <translation>Çokgenin ilk noktasını belirt</translation>
+        <translation>Çokgenin ilk noktasını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
         <source>Specify next point of polygon</source>
-        <translation>Çokgenin sonraki noktasını belirt</translation>
+        <translation>Çokgenin sonraki noktasını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="101"/>
@@ -29681,7 +29690,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Start: (%6 , %7)
 End: (%8 , %9)</source>
-        <translation></translation>
+        <translation>Mesafe: %1
+Kartezyen: (%2 , %3)
+Polar: (%4 &lt; %5)
+Başlangıç: (%6 , %7)
+Bitiş: (%8 , %9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="98"/>
@@ -29711,7 +29724,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="157"/>
         <source>Specify first point of distance</source>
-        <translation>İlk mesafe noktasını belirt</translation>
+        <translation>İlk mesafe noktasını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="160"/>
@@ -29733,7 +29746,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Point On Entity: (%6 , %7)
 Point: (%8 , %9)</source>
-        <translation></translation>
+        <translation>Mesafe: %1
+Kartezyen: (%2 , %3)
+Kutup: (%4 &lt; %5)
+Nokta Üzerinde Varlık: (%6 , %7)
+Nokta: (%8 , %9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="275"/>
@@ -29877,12 +29894,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="197"/>
         <source>Enter angle:</source>
-        <translation>Açıyı girin:</translation>
+        <translation>Açı girin:</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="200"/>
         <source>Enter factor:</source>
-        <translation>Çarpanı girin:</translation>
+        <translation>Çarpan girin:</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="65"/>
@@ -29900,7 +29917,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="63"/>
         <source>Modify attributes immediately after selecting</source>
-        <translation>Seçtikten hemen sonra özellikleri değiştirin</translation>
+        <translation>Seçtikten hemen sonra öznitelikleri değiştirin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyattributes.cpp" line="63"/>
@@ -29918,7 +29935,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="84"/>
         <source>Selected lines are not children of the same polyline</source>
-        <translation>Seçili çizgiler aynı polilinenin parçaları değildir</translation>
+        <translation>Seçili çizgiler aynı devamlıçizginin alt parçaları değildir</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="165"/>
@@ -29928,17 +29945,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="166"/>
         <source>Intersection:</source>
-        <translation>Kavşak:</translation>
+        <translation>Kesişim:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="167"/>
         <source>Point 1:</source>
-        <translation>Madde 1:</translation>
+        <translation>Nokta 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="168"/>
         <source>Point 2:</source>
-        <translation>Madde 2:</translation>
+        <translation>Nokta 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="215"/>
@@ -29954,7 +29971,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="230"/>
         <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation>Geçersiz öğe seçildi (ilk öğeyle kısaltılamaz).</translation>
+        <translation>Geçersiz öğe seçildi (ilk öğeyle kırpılamaz).</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifybevel.cpp" line="299"/>
@@ -29993,7 +30010,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="95"/>
         <source>At:</source>
-        <translation>At:</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="110"/>
@@ -30018,7 +30035,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifycut.cpp" line="114"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation>Öğe bir çizgi, yay, çember, elips veya interpolasyon eğri olmalıdır.</translation>
+        <translation>Öğe bir çizgi, yay, çember, elips veya interpolasyonlu eğri olmalıdır.</translation>
     </message>
 </context>
 <context>
@@ -30044,7 +30061,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="148"/>
         <source>Specify first break point on a polyline</source>
-        <translation>DevamlıÇizgide ilk kırılma noktasını belirt</translation>
+        <translation>DevamlıÇizgide ilk kırılma noktasını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="151"/>
@@ -30059,17 +30076,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="92"/>
         <source>Parent of second entity is not a polyline</source>
-        <translation>İkinci öğenin atası DevamlıÇizgi değil</translation>
+        <translation>İkinci öğenin üst öğesi DevamlıÇizgi değil</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="115"/>
         <source>Parent of first entity is not a polyline</source>
-        <translation>İlk öğenin atası DevamlıÇizgi değil</translation>
+        <translation>İlk öğenin üst öğesi DevamlıÇizgi değil</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="95"/>
         <source>Parent of second entity is nullptr</source>
-        <translation>İkinci öğenin atası nullptr</translation>
+        <translation>İkinci öğenin üst öğesi nullptr</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="98"/>
@@ -30079,7 +30096,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="118"/>
         <source>Parent of first entity is nullptr</source>
-        <translation>İlk öğenin atası nullptr</translation>
+        <translation>İlk öğenin üst öğesi nullptr</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifydeletefree.cpp" line="121"/>
@@ -30110,7 +30127,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyexplodetext.cpp" line="47"/>
         <source>Explode immediately after selection</source>
-        <translation>Seçimden hemen sonra patla</translation>
+        <translation>Seçimden hemen sonra patlat</translation>
     </message>
 </context>
 <context>
@@ -30118,7 +30135,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="119"/>
         <source>Mirror</source>
-        <translation>Ayna</translation>
+        <translation>Aynala</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="120"/>
@@ -30133,12 +30150,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="122"/>
         <source>Line From:</source>
-        <translation>Hattın Gönderildiği:</translation>
+        <translation>Çizgiden:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="123"/>
         <source>Line To:</source>
-        <translation>Hattı Gönder:</translation>
+        <translation>Çizgiye:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="234"/>
@@ -30153,7 +30170,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="241"/>
         <source>Specify mirror line</source>
-        <translation>Ayna çizgisini belirt</translation>
+        <translation>Aynalama eksenini belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="241"/>
@@ -30168,12 +30185,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="244"/>
         <source>Specify first point of mirror line</source>
-        <translation>Aynalama çizgisinin ilk noktasını belirt</translation>
+        <translation>Aynalama ekseninin ilk noktasını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymirror.cpp" line="249"/>
         <source>Specify second point of mirror line</source>
-        <translation>Yansılama ekseninin ikinci noktasını belirtin</translation>
+        <translation>Aynalama ekseninin ikinci noktasını belirtin</translation>
     </message>
 </context>
 <context>
@@ -30181,17 +30198,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="106"/>
         <source>Moving Offset</source>
-        <translation>Hareketli Ofset</translation>
+        <translation>Ötelemeyi Taşımak</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="106"/>
         <source>Copy Offset</source>
-        <translation>Ofseti Kopyala</translation>
+        <translation>Ötelemeyi Kopyala</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="184"/>
         <source>Specify reference point</source>
-        <translation>Başlama noktasını belirtin</translation>
+        <translation>Referans noktasını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
@@ -30211,7 +30228,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="197"/>
         <source>Select contour</source>
-        <translation>Konturu seç</translation>
+        <translation>Konturu seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymove.cpp" line="187"/>
@@ -30225,7 +30242,7 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="79"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="111"/>
         <source>Moving with rotation</source>
-        <translation>Dönüşle hareket etme</translation>
+        <translation>Dönüşle hareket etmek</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="80"/>
@@ -30258,7 +30275,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="322"/>
         <source>Specify reference point</source>
-        <translation>Başlama noktasını belirtin</translation>
+        <translation>Referans noktasını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="341"/>
@@ -30273,7 +30290,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="342"/>
         <source>Select contour</source>
-        <translation>Konturu seç</translation>
+        <translation>Konturu seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifymoverotate.cpp" line="325"/>
@@ -30291,7 +30308,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="88"/>
         <source>Offset</source>
-        <translation>Ofset</translation>
+        <translation>Ötele</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="89"/>
@@ -30307,17 +30324,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="179"/>
         <source>Specify reference point for direction of offset</source>
-        <translation>Ofset yönü için referans noktasını belirtin</translation>
+        <translation>Öteleme yönü için referans noktasını belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="192"/>
         <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
-        <translation>Öteleme oluşturmak için çizgi, DevamlıÇizgi, daire veya yay seçin (Tamamlamak için Enter)</translation>
+        <translation>Öteleme oluşturmak için çizgi, DevamlıÇizgi, çember veya yay seçin (Tamamlamak için Enter)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="192"/>
         <source>Offset immediately after selection</source>
-        <translation>Seçimden hemen sonra ofset</translation>
+        <translation>Seçimden hemen sonra ötele</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyoffset.cpp" line="192"/>
@@ -30356,7 +30373,7 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="201"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="241"/>
         <source>Rotation</source>
-        <translation>Dönme</translation>
+        <translation>Döndür</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="133"/>
@@ -30368,12 +30385,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="203"/>
         <source>Source Point:</source>
-        <translation>Source Point:</translation>
+        <translation>Kaynak Nokta:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="204"/>
         <source>Target Point:</source>
-        <translation>Hedef Noktası:</translation>
+        <translation>Hedef Nokta:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="136"/>
@@ -30387,13 +30404,13 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="134"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="146"/>
         <source>Reference Point:</source>
-        <translation>Referans Noktası:</translation>
+        <translation>Referans Nokta:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="135"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="147"/>
         <source>Center Point:</source>
-        <translation>Merkez Noktası:</translation>
+        <translation>Merkez Nokta:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="248"/>
@@ -30442,7 +30459,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="93"/>
         <source>Rotating Twice</source>
-        <translation>İki Kez Döndürme</translation>
+        <translation>İki Kez Döndürmek</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="94"/>
@@ -30506,17 +30523,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="230"/>
         <source>Point 1:</source>
-        <translation>Madde 1:</translation>
+        <translation>Nokta 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="231"/>
         <source>Point 2:</source>
-        <translation>Madde 2:</translation>
+        <translation>Nokta 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="424"/>
         <source>Specify second entity</source>
-        <translation>İkinci varlığı belirtin</translation>
+        <translation>İkinci öğeyi belirtin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="427"/>
@@ -30526,7 +30543,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>İlk varlığı belirtin veya yarıçapı girin &lt;%1&gt;</translation>
+        <translation>İlk öğeyi belirtin veya yarıçapı girin &lt;%1&gt;</translation>
     </message>
 </context>
 <context>
@@ -30544,12 +30561,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="171"/>
         <source>Source Point:</source>
-        <translation>Source Point:</translation>
+        <translation>Kaynak Nokta:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="172"/>
         <source>Target Point:</source>
-        <translation>Hedef Noktası:</translation>
+        <translation>Hedef Nokta:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="173"/>
@@ -30624,7 +30641,7 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="91"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="111"/>
         <source>Stretch</source>
-        <translation>Germek</translation>
+        <translation>Esnet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="80"/>
@@ -30634,18 +30651,18 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="81"/>
         <source>End Corner:</source>
-        <translation>Uç Köşe:</translation>
+        <translation>Bitiş Köşesi:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="92"/>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="112"/>
         <source>Reference Point:</source>
-        <translation>Referans Noktası:</translation>
+        <translation>Referans Nokta:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="113"/>
         <source>Target Point:</source>
-        <translation>Hedef Noktası:</translation>
+        <translation>Hedef Nokta:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="114"/>
@@ -30668,12 +30685,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="200"/>
         <source>Select first trim entity</source>
-        <translation>İlk kırpma varlığını seçin</translation>
+        <translation>İlk kırpma öğesini seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="202"/>
         <source>Select limiting entity</source>
-        <translation>Sınırlayıcı varlığı seçin</translation>
+        <translation>Sınırlayıcı öğeyi seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="112"/>
@@ -30688,22 +30705,22 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="114"/>
         <source>Intersection:</source>
-        <translation>Kavşak:</translation>
+        <translation>Kesişim:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="116"/>
         <source>Intersection 2:</source>
-        <translation>Kavşak 2:</translation>
+        <translation>Kesişim 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="207"/>
         <source>Select second trim entity</source>
-        <translation>İkinci kırpma varlığını seçin</translation>
+        <translation>İkinci kırpma öğesini seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="209"/>
         <source>Select entity to trim</source>
-        <translation>Kırpılacak varlığı seçin</translation>
+        <translation>Kırpılacak öğeyi seçin</translation>
     </message>
 </context>
 <context>
@@ -30726,7 +30743,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="236"/>
         <source>Select line/arc to trim OR enter length value:</source>
-        <translation>Kırpmak için çizgi/daire yayı seçin VEYA uzunluk değeri girin:</translation>
+        <translation>Kırpmak için çizgiyi/çemberi yayı seçin VEYA uzunluk değeri girin:</translation>
     </message>
 </context>
 <context>
@@ -30744,7 +30761,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="126"/>
         <source>Order immediately after selection</source>
-        <translation>Seçimden hemen sonra sipariş verin</translation>
+        <translation>Seçimden hemen sonra sırala</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="126"/>
@@ -30754,7 +30771,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="130"/>
         <source>Choose entity for order</source>
-        <translation>Dizmek için öğe seçin</translation>
+        <translation>Sıralama için öğe seçin</translation>
     </message>
 </context>
 <context>
@@ -30885,7 +30902,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="158"/>
         <source>No polyline found.</source>
-        <translation>Hiç polilin bulunamadı.</translation>
+        <translation>Hiç devamlıçizgi bulunamadı.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="177"/>
@@ -30971,7 +30988,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="138"/>
         <source>First segment should be on selected polyline.</source>
-        <translation>İlk segment, seçilen polilin üzerinde olmalıdır.</translation>
+        <translation>İlk segment, seçilen devamlıçizgi üzerinde olmalıdır.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="150"/>
@@ -31004,32 +31021,32 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="160"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>Kağıt koordinatlarında çıktı ofseti (%1, %2)</translation>
+        <translation>Kağıt koordinatlarında çıktı ötelemesi (%1, %2)</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="163"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>Grafik koordinatlarında çıktı ofseti (%1, %2)</translation>
+        <translation>Grafik koordinatlarında çıktı ötelemesi (%1, %2)</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="185"/>
         <source>Printout offset in graph coordinates</source>
-        <translation>Grafik koordinatlarında çıktı ofseti</translation>
+        <translation>Grafik koordinatlarında çıktı ötelemesi</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="189"/>
         <source>Printout offset in paper coordinates</source>
-        <translation>Kağıt koordinatlarında çıktı ofseti</translation>
+        <translation>Kağıt koordinatlarında çıktı ötelemesi</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="222"/>
         <source>: select printout offset coordinates</source>
-        <translation>: çıktı ofset koordinatlarını seçin</translation>
+        <translation>: çıktı ötelemesi koordinatlarını seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="223"/>
         <source>type in offset from command line to offset printout</source>
-        <translation>ofset çıktısına komut satırından uzaklık yazın</translation>
+        <translation>öteleme çıktısına komut satırından uzaklık yazın</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="393"/>
@@ -31049,12 +31066,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="453"/>
         <source>Move Vertically</source>
-        <translation>Dikey Olarak Hareket Et</translation>
+        <translation>Dikey Hareket Et</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="197"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Çıktı ofseti göreceli sıfırı yok sayar. &apos;@&apos; göz ardı ediliyor</translation>
+        <translation>Çıktı ötelemesi göreceli sıfırı yok sayar. &apos;@&apos; göz ardı ediliyor</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="177"/>
@@ -31077,8 +31094,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="82"/>
         <source>Specify entity to select</source>
-        <translatorcomment>Seçilecek öğeyi belirtin</translatorcomment>
-        <translation>Specify entity to select</translation>
+        <translation>Seçilecek öğeyi belirtin</translation>
     </message>
 </context>
 <context>
@@ -31091,7 +31107,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="173"/>
         <source>Select intersecting entity</source>
-        <translation>Kesişen öğeyi seç</translation>
+        <translation>Kesişen öğeyi seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="173"/>
@@ -31130,12 +31146,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="116"/>
         <source>De-Selecting</source>
-        <translation>Seçimi Kaldırma</translation>
+        <translation>Seçimi Kaldır</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="116"/>
         <source>Selecting</source>
-        <translation>Seçme</translation>
+        <translation>Seçim</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="117"/>
@@ -31160,12 +31176,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="168"/>
         <source>Select Intersecting</source>
-        <translation>Kesişenleri Seç</translation>
+        <translation>Kesişenleri Seçin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="167"/>
         <source>De-select entities</source>
-        <translation>Öğeleri seçimi kaldır</translation>
+        <translation>Öğelerin seçimini kaldır</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="167"/>
@@ -31175,7 +31191,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="168"/>
         <source>De-select intersecting</source>
-        <translation>Kesişenleri seçimi kaldır</translation>
+        <translation>Kesişenlerin seçimi kaldırın</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="163"/>
@@ -31209,12 +31225,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="63"/>
         <source>Regenerated %1 dimension entities</source>
-        <translation>%1 ölçülendirme öğeyi yeniden oluşturuldu</translation>
+        <translation>Ölçülendirme öğeleri %1 yeniden oluşturuldu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="66"/>
         <source>No dimension entities found</source>
-        <translation>Bir ölçülendirme öğeyi bulunamadı</translation>
+        <translation>Ölçülendirme öğeleri bulunamadı</translation>
     </message>
 </context>
 <context>
@@ -31387,13 +31403,13 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="67"/>
         <source>Pick radius form drawing</source>
-        <translation>Yarıçap seçme formu çizimi</translation>
+        <translation>Çizimden Yarıçap seç</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="90"/>
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation>Yarı çap</translation>
+        <translation>Yarıçap</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="115"/>
@@ -31437,7 +31453,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="102"/>
         <source>Pick first length form drawing</source>
-        <translation>İlk uzunluk form çizimini seçin</translation>
+        <translation>Çizimden ilk uzunluğu seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="116"/>
@@ -31452,7 +31468,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="133"/>
         <source>Pick second length form drawing</source>
-        <translation>İkinci uzunluk form çizimini seçin</translation>
+        <translation>Çizimden ikinci uzunluğu seçin</translation>
     </message>
 </context>
 <context>
@@ -31470,12 +31486,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/circle/qg_circleoptions.ui" line="66"/>
         <source>Radius of circle</source>
-        <translation>Dairenin yarıçapı</translation>
+        <translation>Çemberin yarıçapı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/qg_circleoptions.ui" line="73"/>
         <source>Pick radius from drawing</source>
-        <translation>Çizimden yarıçap seç</translation>
+        <translation>Çizimden yarıçap seçin</translation>
     </message>
 </context>
 <context>
@@ -31503,7 +31519,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/circle/qg_circletan2options.ui" line="82"/>
         <source>Pick radius from drawing</source>
-        <translation>Çizimden yarıçap seç</translation>
+        <translation>Çizimden yarıçap seçin</translation>
     </message>
 </context>
 <context>
@@ -31634,7 +31650,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="376"/>
         <source>Angle for dimension</source>
-        <translation>Ölçü açısı</translation>
+        <translation>Ölçünün açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="383"/>
@@ -31682,7 +31698,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="120"/>
         <source>DPI of Image</source>
-        <translation>Resim DPI değeri</translation>
+        <translation>Resmin DPI değeri</translation>
     </message>
 </context>
 <context>
@@ -31710,7 +31726,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="131"/>
         <source>Scale Factor</source>
-        <translation>Büyütme Çarpanı</translation>
+        <translation>Ölçek Çarpanı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="193"/>
@@ -31730,12 +31746,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="53"/>
         <source>Pick row spacing from drawing</source>
-        <translation>Çizimden sıra aralığını seçin</translation>
+        <translation>Çizimden satır aralığı seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="92"/>
         <source>Pick column spacing from drawing</source>
-        <translation>Çizimden sütun aralığını seçin</translation>
+        <translation>Çizimden sütun aralığı seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="167"/>
@@ -31788,7 +31804,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/insert/qg_libraryinsertoptions.ui" line="75"/>
         <source>Scale Factor</source>
-        <translation>Büyütme Çarpanı</translation>
+        <translation>Ölçek Çarpanı</translation>
     </message>
 </context>
 <context>
@@ -31806,7 +31822,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="210"/>
         <source>Point on created line that will be placed into insertion point</source>
-        <translation>Ekleme noktasına yerleştirilecek oluşturulan çizgi üzerindeki nokta</translation>
+        <translation>Oluşturulan çizgi üzerinde ekleme noktasına yerleştirilecek nokta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="133"/>
@@ -31851,7 +31867,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="232"/>
         <source>PIck line length from drawing</source>
-        <translation>Çizimden hat uzunluğunu seçin</translation>
+        <translation>Çizimden çizgi uzunluğunu seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="191"/>
@@ -31996,12 +32012,12 @@ Point: (%8 , %9)</source>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="311"/>
         <source>If checked, angle is relative to previous segment</source>
         <extracomment>Angle is relative to previous segment</extracomment>
-        <translation></translation>
+        <translation>İşaretlenirse, açı önceki segmente göre olur</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="314"/>
         <source>Rel</source>
-        <translation>Rel</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="257"/>
@@ -32041,7 +32057,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="168"/>
         <source>Line to arbitrary point</source>
-        <translation>Keyfi noktaya çizgi</translation>
+        <translation>Rastgele noktaya çizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="171"/>
@@ -32145,7 +32161,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="143"/>
         <source>Pick radius from drawing</source>
-        <translation>Çizimden yarıçap seç</translation>
+        <translation>Çizimden yarıçap seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="90"/>
@@ -32173,7 +32189,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_linerelangleoptions.ui" line="32"/>
         <source>Line Relative Angle Options</source>
-        <translation>Çizgi Göreli Açı Seçenekleri</translation>
+        <translation>Çizgi Göreceli Açı Seçenekleri</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linerelangleoptions.ui" line="56"/>
@@ -32211,7 +32227,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/text/qg_mtextoptions.ui" line="32"/>
         <source>Text Options</source>
-        <translation>Yazı Seçenekleri</translation>
+        <translation>Metin Seçenekleri</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/qg_mtextoptions.ui" line="53"/>
@@ -32249,7 +32265,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="158"/>
         <source>Distance for offset from original entity</source>
-        <translation>Orijinal öğeden ofset mesafesi</translation>
+        <translation>Orijinal öğeden öteleme mesafesi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="93"/>
@@ -32279,7 +32295,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="109"/>
         <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation>İşaretlendiğinde, ofset mesafesinin düzeltmeleri kullanılır, aksi takdirde fare ile tanımlanır.</translation>
+        <translation>İşaretlendiğinde, öteleme mesafesinin düzeltmeleri kullanılır, aksi takdirde fare ile tanımlanır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="112"/>
@@ -32410,7 +32426,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="53"/>
         <source>Connects ends of the polyline so closed contour is created</source>
-        <translation>Polilin uçlarını birleştirerek kapalı kontur oluşturur</translation>
+        <translation>DevamlıÇizgi uçlarını birleştirerek kapalı kontur oluşturur</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="56"/>
@@ -32435,7 +32451,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="92"/>
         <source>Defines which segment of polyline should be created</source>
-        <translation>Polilin&apos;in hangi segmentinin oluşturulacağını tanımlar</translation>
+        <translation>DevamlıÇizginin hangi segmentinin oluşturulacağını tanımlar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="96"/>
@@ -32569,12 +32585,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="44"/>
         <source>Landscape Orientation of paper</source>
-        <translation>Kağıdın Yatay Yönlendirme</translation>
+        <translation>Kağıdın Yatay Yönü</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="61"/>
         <source>Portrait Orientation of paper</source>
-        <translation>Kağıdın dikey yönü</translation>
+        <translation>Kağıdın Dikey Yönü</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="172"/>
@@ -32584,7 +32600,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="237"/>
         <source>Page in center of drawing</source>
-        <translation>Çizimin ortasındaki sayfa</translation>
+        <translation>Sayfaya ortala</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="263"/>
@@ -32614,7 +32630,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="336"/>
         <source>Amount of pages columns</source>
-        <translation>Sayfa sayısı sütunları</translation>
+        <translation>Sayfa sütun sayısı</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="346"/>
@@ -32662,7 +32678,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_roundoptions.ui" line="102"/>
         <source>Pick radius from drawing</source>
-        <translation>Çizimden yarıçap seç</translation>
+        <translation>Çizimden yarıçap seçin</translation>
     </message>
 </context>
 <context>
@@ -32703,7 +32719,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
         <source>Number of equidistant division points</source>
-        <translation>Eşit aralıklı bölme noktaları sayısı</translation>
+        <translation>Eşit aralıklı bölme noktalarının sayısı</translation>
     </message>
 </context>
 <context>
@@ -32749,7 +32765,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/text/qg_textoptions.ui" line="32"/>
         <source>Text Options</source>
-        <translation>Yazı Seçenekleri</translation>
+        <translation>Metin Seçenekleri</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/qg_textoptions.ui" line="53"/>
@@ -32802,7 +32818,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="110"/>
         <source>Pick length from drawing</source>
-        <translation>Çizimden uzunluğu seçin</translation>
+        <translation>Çizimden uzunluk seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="137"/>
