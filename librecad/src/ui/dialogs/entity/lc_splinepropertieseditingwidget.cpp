@@ -36,6 +36,9 @@ LC_SplinePropertiesEditingWidget::LC_SplinePropertiesEditingWidget(QWidget *pare
 {
     ui->setupUi(this);
     ui->tableControlPoints->setContextMenuPolicy(Qt::CustomContextMenu);
+    // hide extra index columns
+    ui->tableControlPoints->verticalHeader()->setVisible(false);
+    ui->tableKnots->verticalHeader()->setVisible(false);
 
     // Connect table signals
     connect(ui->tableControlPoints, &QTableWidget::itemChanged,
