@@ -36,6 +36,11 @@ class RS_Spline : public RS_EntityContainer {
 public:
     RS_Spline(RS_EntityContainer* parent, const RS_SplineData& d);
 
+    RS2::EntityType rtti() const override
+    {
+        return RS2::EntitySpline;
+    }
+
     RS_Entity* clone() const override;
 
     RS_SplineData& getData();
