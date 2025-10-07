@@ -1,191 +1,134 @@
-/****************************************************************************
-**
-** This file is part of the LibreCAD project, a 2D CAD program
-**
-** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
-** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
-**
-**
-** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software
-** Foundation and appearing in the file gpl-2.0.txt included in the
-** packaging of this file.
-**
-** This program is distributed in the hope that it will be useful,
-** but WITHOUT ANY WARRANTY; without even the implied warranty of
-** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-** GNU General Public License for more details.
-**
-** You should have received a copy of the GNU General Public License
-** along with this program; if not, write to the Free Software
-** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-**
-** This copyright notice MUST APPEAR in all copies of the script!
-**
-**********************************************************************/
-
-
 #ifndef RS_SPLINE_H
 #define RS_SPLINE_H
 
+#include <iostream>
+#include <stdexcept>
+#include <vector>
+#include <ostream>
+
 #include "rs_entitycontainer.h"
+#include "rs_debug.h"
+#include "rs_line.h"
+#include "rs_painter.h"
+#include "rs_pen.h"
+#include "rs_vector.h"
 
 /**
- * Holds the data that defines a line.
+ * Data structure for spline.
  */
 struct RS_SplineData {
-    /**
-     * Default constructor. Leaves the data object uninitialized.
-     */
     RS_SplineData() = default;
+    RS_SplineData(int _degree, bool _closed);
+    friend std::ostream& operator << (std::ostream& os, const RS_SplineData& ld);
 
-    RS_SplineData(int degree, bool closed);
-
-    /** Degree of the spline (1, 2, 3) */
-    int degree = 3;
-    /** Closed flag. */
-    bool closed = false;
-    /** Wrapped flag. */
-    bool wrapped = false;
-    /** Control points of the spline. */
     std::vector<RS_Vector> controlPoints;
     std::vector<double> knotslist;
     std::vector<double> weights;
+    int degree = 3;
+    bool closed = false;
+    bool wrapped = false;
 };
-
-std::ostream& operator << (std::ostream& os, const RS_SplineData& ld);
 
 /**
  * Class for a spline entity.
- *
- * @author Andrew Mustun
  */
 class RS_Spline : public RS_EntityContainer {
 public:
-    RS_Spline(RS_EntityContainer* parent,
-              const RS_SplineData& d);
+    RS_Spline(RS_EntityContainer* parent, const RS_SplineData& d);
 
     RS_Entity* clone() const override;
 
-    /**	@return RS2::EntitySpline */
-    RS2::EntityType rtti() const override {
-        return RS2::EntitySpline;
-    }
-    /** @return false */
-    bool isEdge() const override {
-        return false;
-    }
-
-    /** @return Copy of data that defines the spline. */
     RS_SplineData& getData();
     const RS_SplineData& getData() const;
 
-    /** Sets the splines degree (1-3). */
-    void setDegree(int degree);
+    size_t getUnwrappedSize() const;
+    std::vector<RS_Vector> getUnwrappedControlPoints() const;
+    std::vector<double> getUnwrappedWeights() const;
+    std::vector<double> getUnwrappedKnotVector() const;
 
-    /** @return Degree of this spline curve (1-3).*/
+    void removeWrapping();
+    void addWrapping();
+    void updateControlAndWeightWrapping();
+    void updateKnotWrapping();
+
+    void calculateBorders();
+
+    void setDegree(int degree);
     int getDegree() const;
 
-    /** @return Number of knots (n + k). */
+    size_t getNumberOfControlPoints() const;
     size_t getNumberOfKnots() const;
 
-    /** @return Number of control points. */
-    size_t getNumberOfControlPoints() const;
-
-    /**
-     * @retval true if the spline is closed.
-     * @retval false otherwise.
-     */
     bool isClosed() const;
-
-    /**
-     * Sets the closed flag of this spline.
-     */
     void setClosed(bool c);
 
     RS_VectorSolutions getRefPoints() const override;
     RS_Vector getNearestRef(const RS_Vector& coord, double* dist = nullptr) const override;
     RS_Vector getNearestSelectedRef(const RS_Vector& coord, double* dist = nullptr) const override;
 
-    RS_Vector getNearestPointOnEntity(const RS_Vector &coord, bool onEntity, double *dist, RS_Entity **entity) const override;
-
-    /** @return Start point of the entity */
-    RS_Vector getStartpoint() const override;
-    /** @return End point of the entity */
-    RS_Vector getEndpoint() const override;
-    /** Sets the startpoint */
-    /** Sets the endpoint */
     void update() override;
 
-    RS_Vector getNearestEndpoint(const RS_Vector& coord, double* dist = nullptr) const override;
-    RS_Vector getNearestCenter(const RS_Vector& coord, double* dist = nullptr) const override;
-    RS_Vector getNearestMiddle(const RS_Vector& coord, double* dist = nullptr, int middlePoints = 1) const override;
-    RS_Vector getNearestDist(double distance, const RS_Vector& coord, double* dist = nullptr) const override;
+    void fillStrokePoints(int splineSegments, std::vector<RS_Vector>& points);
 
-    void addControlPoint(const RS_Vector& v, double w = 1.0);
-    // add control point without considering wrapping for closed splines
-    void addControlPointRaw(const RS_Vector& v, double w = 1.0);
-    void removeLastControlPoint();
+    RS_Vector getStartpoint() const override;
+    RS_Vector getEndpoint() const override;
+
+    RS_Vector getNearestEndpoint(const RS_Vector& coord, double* dist) const override;
+
+    RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
+                                      bool onEntity = true,
+                                      double* dist = nullptr,
+                                      RS_Entity** entity=nullptr)const override;
+    RS_Vector getNearestCenter(const RS_Vector& coord, double* dist) const override;
+    RS_Vector getNearestMiddle(const RS_Vector& coord, double* dist, int middlePoints) const override;
+    RS_Vector getNearestDist(double distance, const RS_Vector& coord, double* dist) const override;
+
+    double getDistanceToPoint(const RS_Vector& coord,
+                              RS_Entity** entity,
+                              RS2::ResolveLevel level=RS2::ResolveNone,
+                              double solidDist = RS_MAXDOUBLE) const override;
 
     void move(const RS_Vector& offset) override;
     void rotate(const RS_Vector& center, double angle) override;
     void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
     void scale(const RS_Vector& center, const RS_Vector& factor) override;
-    void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
     RS_Entity& shear(double k) override;
+    void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
 
     void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
     void revertDirection() override;
 
     void draw(RS_Painter* painter) override;
+
     const std::vector<RS_Vector>& getControlPoints() const;
     const std::vector<double>& getWeights() const;
     double getWeight(size_t index) const;
+
+    void addControlPoint(const RS_Vector& v, double w = 1.0);
+    void addControlPointRaw(const RS_Vector& v, double w = 1.0);
+    void removeLastControlPoint();
+
     void setWeight(size_t index, double w);
     void setWeights(const std::vector<double>& weights);
+
     void setControlPoint(size_t index, const RS_Vector& v);
     void setKnot(size_t index, double k);
-    void insertControlPoint(size_t index, const RS_Vector& v, double w = 1.0);
+
+    void insertControlPoint(size_t index, const RS_Vector& v, double w);
     void removeControlPoint(size_t index);
+
     const std::vector<double>& getKnotVector() const;
     void setKnotVector(const std::vector<double>& knots);
-    friend std::ostream& operator << (std::ostream& os, const RS_Spline& l);
-    void calculateBorders() override;
-    void fillStrokePoints(int splineSegments, std::vector<RS_Vector>& points);
-    friend class RS_FilterDXFRW;
-private:
-    size_t getUnwrappedSize() const;
-    std::vector<RS_Vector> getUnwrappedControlPoints() const;
-    std::vector<double> getUnwrappedWeights() const;
-    std::vector<double> getUnwrappedKnotVector() const;
-    void removeWrapping();
-    void addWrapping();
-    void updateControlAndWeightWrapping();
-    void updateKnotWrapping();
 
-    /**
-     * Generates B-Spline open knot vector with multiplicity
-     * equal to the order at the ends.
-     */
     std::vector<double> knot(size_t num, size_t order) const;
-    void rbspline(size_t npts, size_t k, size_t p1,
-                  const std::vector<RS_Vector>& b,
-                  const std::vector<double>& h,
-                  std::vector<RS_Vector>& p) const;
-
     std::vector<double> knotu(size_t num, size_t order) const;
-    void rbsplinu(size_t npts, size_t k, size_t p1,
-                  const std::vector<RS_Vector>& b,
-                  const std::vector<double>& h,
-                  std::vector<RS_Vector>& p) const;
 
-    /**
-     * @brief hasWrappedControlPoints whether the control points are wrapped, needed for a closed spline.
-     *          only implemented for cubic splines
-     * @return bool - true, if the control points are already wrapped.
-     *          for a cubic spline with wrapped splines, the last three control points are the same as the first three.
-     */
+    void rbspline(size_t npts, size_t k, size_t p1, const std::vector<RS_Vector>& b, const std::vector<double>& h, std::vector<RS_Vector>& p) const;
+    void rbsplinu(size_t npts, size_t k, size_t p1, const std::vector<RS_Vector>& b, const std::vector<double>& h, std::vector<RS_Vector>& p) const;
+
     bool hasWrappedControlPoints() const;
+
+    friend std::ostream& operator << (std::ostream& os, const RS_Spline& l);
 
 protected:
     RS_SplineData data;

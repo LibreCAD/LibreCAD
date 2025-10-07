@@ -153,6 +153,7 @@ void RS_ActionDrawSpline::onCoordinateEvent(int status,  [[maybe_unused]]bool is
             m_actionData->history.append(mouse);
             if (m_actionData->spline){
                 m_actionData->spline->addControlPoint(mouse);
+                m_actionData->spline->update();
                 deletePreview();
                 drawSnapper();
             }

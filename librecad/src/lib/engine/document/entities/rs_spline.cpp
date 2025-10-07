@@ -158,11 +158,8 @@ void RS_Spline::updateControlAndWeightWrapping() {
 }
 
 void RS_Spline::updateKnotWrapping() {
-    if (data.knotslist.empty()) {
-        data.knotslist = data.closed ? knotu(data.controlPoints.size(), data.degree + 1) :
-                             knot(data.controlPoints.size(), data.degree + 1);
-    }
     if (!data.closed || data.knotslist.empty()) return;
+
     size_t base_n = getUnwrappedSize();
     size_t base_k_size = base_n + static_cast<size_t>(data.degree) + 1;
     data.knotslist.resize(base_k_size);
@@ -170,35 +167,37 @@ void RS_Spline::updateKnotWrapping() {
     double first = data.knotslist.front();
     double span = last - first;
     size_t wrap_size = static_cast<size_t>(data.degree);
-    if (base_k_size <= wrap_size + 1) {  // +1 for safety, need at least wrap_size deltas
-        // Fallback to average if not enough knots
-        double total_delta = 0.0;
-        int count_delta = 0;
-        double last_non_zero_delta = 1.0;  // Default
-        for (size_t i = 1; i < data.knotslist.size(); ++i) {
-            double dd = data.knotslist[i] - data.knotslist[i - 1];
-            if (dd > 1e-10) {  // non-zero delta
-                total_delta += dd;
-                count_delta++;
-                last_non_zero_delta = dd;  // Update last non-zero for better local preservation
-            }
+
+    // Compute fallback delta (available always)
+    double total_delta = 0.0;
+    int count_delta = 0;
+    double last_non_zero_delta = 1.0;
+    for (size_t i = 1; i < data.knotslist.size(); ++i) {
+        double dd = data.knotslist[i] - data.knotslist[i - 1];
+        if (dd > 1e-10) {
+            total_delta += dd;
+            count_delta++;
+            last_non_zero_delta = dd;
         }
-        double delta = (count_delta > 0) ? total_delta / count_delta : 1.0;
-        // Use last_non_zero_delta if multiplicity at end, else average
-        if (std::fabs(data.knotslist.back() - data.knotslist[base_k_size - 2]) < 1e-10) {
-            delta = last_non_zero_delta;  // Preserve local spacing near closure
-        }
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "Extending knots with delta: %f (average: %f, last: %f)", delta, total_delta / count_delta, last_non_zero_delta);
+    }
+    double fallback_delta = (count_delta > 0) ? total_delta / count_delta : 1.0;
+    if (std::fabs(data.knotslist.back() - data.knotslist[base_k_size - 2]) < 1e-10) {
+        fallback_delta = last_non_zero_delta;
+    }
+
+    if (base_k_size <= wrap_size + 1) {
+        // Original fallback extension
         double current = last;
         for (size_t i = 0; i < wrap_size; ++i) {
-            current += delta;
+            current += fallback_delta;
             data.knotslist.push_back(current);
         }
     } else {
-        // Shift deltas method for non-uniform periodic extension
+        // Shift deltas, with fallback for zero
         double current = last;
         for (size_t i = 0; i < wrap_size; ++i) {
             double delta = data.knotslist[i + 1] - data.knotslist[i];
+            if (delta <= 1e-10) delta = fallback_delta;
             current += delta;
             data.knotslist.push_back(current);
         }
@@ -259,13 +258,63 @@ void RS_Spline::setClosed(bool c) {
     }
 
     removeWrapping();
-    data.knotslist.clear();
     data.closed = c;
+
+    size_t base_k_size = n + static_cast<size_t>(data.degree) + 1;
+
     if (data.closed) {
+        // Check if clamped at end
+        bool clamped_end = true;
+        double last = data.knotslist.back();
+        for (size_t i = 1; i <= static_cast<size_t>(data.degree); ++i) {
+            if (std::fabs(data.knotslist[base_k_size - i - 1] - last) > 1e-10) clamped_end = false;
+        }
+
+        if (clamped_end) {
+            // Spread the end knots
+            double prev_delta = 0.0;
+            for (int i = base_k_size - data.degree - 2; i >= 0; --i) {
+                double dd = data.knotslist[i + 1] - data.knotslist[i];
+                if (dd > 1e-10) {
+                    prev_delta = dd;
+                    break;
+                }
+            }
+            if (prev_delta == 0.0) prev_delta = last - data.knotslist.front();
+            if (prev_delta == 0.0) prev_delta = 1.0;
+            double d = prev_delta / (data.degree + 1.0);
+            for (size_t i = 0; i <= static_cast<size_t>(data.degree); ++i) {
+                data.knotslist[base_k_size - data.degree - 1 + i] = last - static_cast<double>(data.degree - i) * d;
+            }
+        }
+
         addWrapping();
+        if (data.knotslist.empty()) {
+            data.knotslist = knotu(data.controlPoints.size(), data.degree + 1);
+        } else {
+            updateKnotWrapping();
+        }
     } else {
-        data.knotslist = knot(n, data.degree + 1);
+        // Check if clamped at start (to re-clamp end if needed)
+        bool clamped_start = true;
+        double first = data.knotslist.front();
+        for (size_t i = 1; i <= static_cast<size_t>(data.degree); ++i) {
+            if (std::fabs(data.knotslist[i] - first) > 1e-10) clamped_start = false;
+        }
+
+        if (clamped_start) {
+            // Re-clamp the end
+            double last = data.knotslist.back();
+            for (size_t i = 1; i <= static_cast<size_t>(data.degree); ++i) {
+                data.knotslist[base_k_size - i - 1] = last;
+            }
+        }
+
+        if (data.knotslist.empty()) {
+            data.knotslist = knot(n, data.degree + 1);
+        }
     }
+
     update();
 }
 
@@ -300,7 +349,7 @@ void RS_Spline::update() {
         return;
     }
 
-    if (isClosed()) {
+    if (data.closed) {
         addWrapping();
     } else {
         removeWrapping();
@@ -338,7 +387,7 @@ void RS_Spline::update() {
         maxV = RS_Vector::maximum(prev, maxV);
     }
 
-    if (isClosed() && !p.empty()) {
+    if (isClosed() && !p.empty() && p.back().squaredTo(p.front()) > RS_TOLERANCE2) {
         auto* closingLine = new RS_Line{this, p.back(), p.front()};
         closingLine->setLayer(nullptr);
         closingLine->setPen(RS_Pen(RS2::FlagInvalid));
@@ -403,7 +452,36 @@ RS_Vector RS_Spline::getNearestEndpoint(const RS_Vector& coord, double* dist) co
 }
 
 RS_Vector RS_Spline::getNearestPointOnEntity(const RS_Vector &coord, bool onEntity, double *dist, RS_Entity **entity) const {
-    return RS_EntityContainer::getNearestPointOnEntity(coord, onEntity, dist, entity);
+    const RS_Vector vp = RS_EntityContainer::getNearestPointOnEntity(coord, onEntity, dist, nullptr);
+    if (vp.valid && entity != nullptr)
+        *entity = const_cast<RS_Spline*>(this);
+    return  vp;
+}
+
+double RS_Spline::getDistanceToPoint(const RS_Vector &coord,RS_Entity **entity,RS2::ResolveLevel level,double solidDist) const{
+    RS_DEBUG->print("RS_Spline::getDistanceToPoint");
+    double minDist = RS_MAXDOUBLE;      // minimum measured distance
+    double curDist = 0.;                     // currently measured distance
+    RS_Entity *closestEntity = nullptr;    // closest entity found
+    RS_Entity *subEntity = nullptr;
+
+    for (RS_Entity* e: *this) {
+        if (e != nullptr) {
+            curDist = e->getDistanceToPoint(coord, &subEntity, level, solidDist);
+
+            if (curDist <= minDist) {
+                closestEntity = const_cast<RS_Spline*>(this);
+                minDist = curDist;
+            }
+        }
+    }
+
+    if (entity != nullptr) {
+        *entity = closestEntity;
+    }
+    RS_DEBUG->print("RS_Spline::getDistanceToPoint: OK");
+
+    return minDist;
 }
 
 RS_Vector RS_Spline::getNearestCenter(const RS_Vector& /*coord*/,
