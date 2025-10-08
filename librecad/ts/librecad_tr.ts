@@ -4256,7 +4256,7 @@ Bitiş Kenar Noktası: (%9 , %10)</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui" line="220"/>
         <source>If checked, matched actions will be highlighted onlye, otherwide - non-matched actions are hidden</source>
-        <translation>İşaretlendiğinde, eşleşen eylemler vurgulanır, aksi takdirde eşleşmeyen eylemler gizlenir</translation>
+        <translation>Onaylandığında, eşleşen eylemler vurgulanır, aksi takdirde eşleşmeyen eylemler gizlenir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui" line="223"/>
@@ -4530,7 +4530,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circlebyarcoptions.ui" line="131"/>
         <source>If checked, original arc will be removed</source>
-        <translation>İşaretlendiğinde, orijinal yay kaldırılacaktır</translation>
+        <translation>Onaylandığında, orijinal yay kaldırılacaktır</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circlebyarcoptions.ui" line="134"/>
@@ -7311,7 +7311,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="75"/>
         <source>If checked, type of grid for saved view will be shown</source>
-        <translation>İşaretlendiğinde, kaydedilen görünüm için ızgara türü gösterilecektir</translation>
+        <translation>Onaylandığında, kaydedilen görünüm için ızgara türü gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="78"/>
@@ -7326,17 +7326,17 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="65"/>
         <source>If checked, the column with details of view&apos;s coordinate system will be show</source>
-        <translation>İşaretlendiğinde, görünümün koordinat sisteminin ayrıntılarını içeren sütun gösterilir</translation>
+        <translation>Onaylandığında, görünümün koordinat sisteminin ayrıntılarını içeren sütun gösterilir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="85"/>
         <source>If checked, the column with view type icon will be shown.</source>
-        <translation>İşaretlendiğinde, görünüm türü simgesinin bulunduğu sütun gösterilir.</translation>
+        <translation>Onaylandığında, görünüm türü simgesinin bulunduğu sütun gösterilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="95"/>
         <source>If checked, the column with icon for type of coordinate system for the view will be shown.</source>
-        <translation>İşaretlendiğinde, görünüm için koordinat sistemi türünü gösteren simgenin bulunduğu sütun gösterilir.</translation>
+        <translation>Onaylandığında, görünüm için koordinat sistemi türünü gösteren simgenin bulunduğu sütun gösterilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="98"/>
@@ -7346,7 +7346,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="105"/>
         <source>If checked, the column with view details will be shown in the table.</source>
-        <translation>İşaretlendiğinde, görünüm ayrıntılarını içeren sütun tabloda gösterilir.</translation>
+        <translation>Onaylandığında, görünüm ayrıntılarını içeren sütun tabloda gösterilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="108"/>
@@ -7406,7 +7406,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="36"/>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
-        <translation>Seçilirse ve oluşturma sırasında girilen isimle aynı görünüme sahip bir tane varsa, yeni konumla güncellenecektir. Aksi takdirde yeni görünümün benzersiz adı gerekecektir.</translation>
+        <translation>Onaylandığında ve oluşturma sırasında girilen isimle aynı görünüme sahip bir tane varsa, yeni konumla güncellenecektir. Aksi takdirde yeni görünümün benzersiz adı gerekecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="26"/>
@@ -7607,7 +7607,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="147"/>
         <source>If checked, notifications about pre-release updates will not be shown.</source>
-        <translation>İşaretlendiğinde, ön-sürüm güncellemeleriyle ilgili bildirimler gösterilmez.</translation>
+        <translation>Onaylandığında, ön-sürüm güncellemeleriyle ilgili bildirimler gösterilmez.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="153"/>
@@ -7803,7 +7803,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="46"/>
         <source>If checked, column with details of UCS origin and angle will be shown in the table</source>
-        <translation>İşaretlendiğinde, UCS kökeni ve açısı ile ilgili ayrıntıları içeren sütun tabloda gösterilecektir</translation>
+        <translation>Onaylandığında, UCS kökeni ve açısı ile ilgili ayrıntıları içeren sütun tabloda gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="49"/>
@@ -7833,7 +7833,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="95"/>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
-        <translation>Eğer işaretlenirse ve oluşturma sırasında girilen isimle bir görünüm zaten mevcutsa, yeni konum ile güncellenecektir. Aksi takdirde, yeni görünüm için benzersiz bir isim gerekecektir.</translation>
+        <translation>Onaylandığında ve oluşturma sırasında girilen isimle bir görünüm zaten mevcutsa, yeni konum ile güncellenecektir. Aksi takdirde, yeni görünüm için benzersiz bir isim gerekecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="98"/>
@@ -7878,12 +7878,12 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="36"/>
         <source>If checked, the column with icon for type of UCS will be shown in the table. </source>
-        <translation>İşaretlendiğinde, UCS türünü gösteren simgenin bulunduğu sütun tabloda gösterilir. </translation>
+        <translation>Onaylandığında, UCS türünü gösteren simgenin bulunduğu sütun tabloda gösterilir. </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="56"/>
         <source>If checked, the column with type of grid for UCS will be shown</source>
-        <translation>İşaretlendiğinde, UCS için ızgara türü sütunu gösterilecektir</translation>
+        <translation>Onaylandığında, UCS için ızgara türü sütunu gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="114"/>
@@ -8314,7 +8314,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_drawboundingboxoptions.ui" line="72"/>
         <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation>İşaretlenirse, tüm seçimin sınır kutusu oluşturulacak. Aksi takdirde, sınır kutusu tek tek öğeler için oluşturulacaktır. </translation>
+        <translation>Onaylandığında, tüm seçimin sınır kutusu oluşturulacak. Aksi takdirde, sınır kutusu tek tek öğeler için oluşturulacaktır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_drawboundingboxoptions.ui" line="75"/>
@@ -8377,7 +8377,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicateoptions.ui" line="171"/>
         <source>If checked, duplicate will be positioned in original&apos;s coordinates</source>
-        <translation>İşaretlendiğinde, kopya orijinalin koordinatlarına yerleştirilir</translation>
+        <translation>Onaylandığında, kopya orijinalin koordinatlarına yerleştirilir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicateoptions.ui" line="174"/>
@@ -8465,7 +8465,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse1pointoptions.ui" line="97"/>
         <source>If checked, angle for major radius may be specified</source>
-        <translation>İşaretlendiğinde, ana yarıçap açısı belirtilebilir</translation>
+        <translation>Onaylandığında, ana yarıçap açısı belirtilebilir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse1pointoptions.ui" line="100"/>
@@ -8490,7 +8490,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse1pointoptions.ui" line="107"/>
         <source>If checked, major radius angle is specified by mouse</source>
-        <translation>İşaretlendiğinde, ana yarıçap açısı fare ile belirlenir</translation>
+        <translation>Onaylandığında, ana yarıçap açısı fare ile belirlenir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse1pointoptions.ui" line="110"/>
@@ -8846,7 +8846,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/action_options/info/lc_infodist2options.ui" line="32"/>
         <source>If checked, the point will be always inside selected entity</source>
-        <translation>İşaretlendiğinde, nokta her zaman seçilen nesnenin içinde olacaktır</translation>
+        <translation>Onaylandığında, nokta her zaman seçilen nesnenin içinde olacaktır</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/info/lc_infodist2options.ui" line="35"/>
@@ -9132,7 +9132,7 @@ Bir Yapı Katmanının içeriği yazdırmada görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="63"/>
         <source>If checked, Named Views from the document will be included into exported drawings. Otherwise, views are not included.</source>
-        <translation>İşaretlenirse, belgede bulunan Adlandırılmış Görünümler dışa aktarılan çizimlere dahil edilecektir. Aksi takdirde, görünümler dahil edilmez.</translation>
+        <translation>Onaylandığında, belgede bulunan Adlandırılmış Görünümler dışa aktarılan çizimlere dahil edilecektir. Aksi takdirde, görünümler dahil edilmez.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="66"/>
@@ -9142,7 +9142,7 @@ Bir Yapı Katmanının içeriği yazdırmada görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="73"/>
         <source>If checked, each original exported layer will be stored in separate drawing. Otherwise, all layers will be in exported to one combined drawing.</source>
-        <translation>Seçildiğinde, her bir orijinal dışa aktarılan katman ayrı bir çizimde saklanacaktır. Aksi takdirde, tüm katmanlar tek birleştirilmiş çizimde dışa aktarılacaktır.</translation>
+        <translation>Onaylandığında, her bir orijinal dışa aktarılan katman ayrı bir çizimde saklanacaktır. Aksi takdirde, tüm katmanlar tek birleştirilmiş çizimde dışa aktarılacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="76"/>
@@ -9152,7 +9152,7 @@ Bir Yapı Katmanının içeriği yazdırmada görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>İşaretlendiğinde, öğeler orijinal katmanda saklanacaktır. Aksi takdirde, “0” katmanına yerleştirilirler.</translation>
+        <translation>Onaylandığında, öğeler orijinal katmanda saklanacaktır. Aksi takdirde, “0” katmanına yerleştirilirler.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
@@ -9162,7 +9162,7 @@ Bir Yapı Katmanının içeriği yazdırmada görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>İşaretlenirse, belgeden UCS&apos;ler dışa aktarılan çizimlere dahil edilecektir. Aksi takdirde, UCS&apos;ler dahil edilmez.</translation>
+        <translation>Onaylandığında, belgeden UCS&apos;ler dışa aktarılan çizimlere dahil edilecektir. Aksi takdirde, UCS&apos;ler dahil edilmez.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
@@ -9270,7 +9270,7 @@ Bir Yapı Katmanının içeriği yazdırmada görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="240"/>
         <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation>İşaretlendiğinde, araç ipucu katmanın tam adını (tüm üst katman seviyeleriyle birlikte) içerir</translation>
+        <translation>Onaylandığında, araç ipucu katmanın tam adını (tüm üst katman seviyeleriyle birlikte) içerir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="243"/>
@@ -9280,7 +9280,7 @@ Bir Yapı Katmanının içeriği yazdırmada görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="250"/>
         <source>If checked, icons for layer types will be shown</source>
-        <translation>İşaretlendiğinde, katman türleri için simgeler gösterilecektir</translation>
+        <translation>Onaylandığında, katman türleri için simgeler gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="253"/>
@@ -9305,7 +9305,7 @@ Bir Yapı Katmanının içeriği yazdırmada görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="305"/>
         <source>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</source>
-        <translation>İşaretlenirse, katmanlar listesinde sürükle&amp;bırak işlemleri etkinleştirilir ve katman hiyerarşisi yeniden yapılandırılabilir</translation>
+        <translation>Onaylandığında, katmanlar listesinde sürükle&amp;bırak işlemleri etkinleştirilir ve katman hiyerarşisi yeniden yapılandırılabilir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="308"/>
@@ -9740,7 +9740,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="163"/>
         <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation>İşaretlendiğinde, çizginin uzunluğu ayar yerine fare konumuna göre belirlenir</translation>
+        <translation>Onaylandığında, çizginin uzunluğu ayar yerine fare konumuna göre belirlenir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="166"/>
@@ -9775,7 +9775,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="122"/>
         <source>If checked, original entity will be divided by intersection point.</source>
-        <translation>İşaretlendiğinde, orijinal öğe kesişme noktası ile bölünecektir.</translation>
+        <translation>Onaylandığında, orijinal öğe kesişme noktası ile bölünecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="125"/>
@@ -9833,7 +9833,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="146"/>
         <source>If checked, angle is relative to angle of selected entity</source>
-        <translation>İşaretlendiğinde, açı seçilen nesnenin açısına göre belirlenir</translation>
+        <translation>Onaylandığında, açı seçilen nesnenin açısına göre belirlenir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineanglereloptions.ui" line="149"/>
@@ -9967,7 +9967,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/line/lc_linefrompointtolineoptions.ui" line="65"/>
         <source>If checked, created line will be orthogonal to selected line</source>
-        <translation>İşaretlendiğinde, oluşturulan çizgi seçilen çizgiye dik olacaktır</translation>
+        <translation>Onaylandığında, oluşturulan çizgi seçilen çizgiye dik olacaktır</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_linefrompointtolineoptions.ui" line="68"/>
@@ -9990,7 +9990,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_linejoinoptions.ui" line="38"/>
         <source>If checked, polyline will be created instead of individual lines</source>
-        <translation>İşaretlendiğinde, tek tek çizgiler yerine DevamlıÇizgi oluşturulur</translation>
+        <translation>Onaylandığında, tek tek çizgiler yerine DevamlıÇizgi oluşturulur</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_linejoinoptions.ui" line="41"/>
@@ -10068,7 +10068,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_linejoinoptions.ui" line="207"/>
         <source>If checked, original lines will be removed</source>
-        <translation>İşaretlendiğinde, orijinal çizgiler kaldırılacaktır</translation>
+        <translation>Onaylandığında, orijinal çizgiler kaldırılacaktır</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_linejoinoptions.ui" line="210"/>
@@ -10146,7 +10146,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="38"/>
         <source>If checked, line of points will be drawn with specified angle</source>
-        <translation>İşaretlendiğinde, noktalar çizgisi belirtilen açıyla çizilecektir</translation>
+        <translation>Onaylandığında, noktalar çizgisi belirtilen açıyla çizilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="41"/>
@@ -10161,7 +10161,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="176"/>
         <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation>Seçiliyse, noktalar arasındaki belirli sabit mesafe kullanılacaktır. Aksi takdirde, mesafe hesaplanacaktır.</translation>
+        <translation>Onaylandığında, noktalar arasındaki belirli sabit mesafe kullanılacaktır. Aksi takdirde, mesafe hesaplanacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_linepointsoptions.ui" line="179"/>
@@ -10936,7 +10936,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignrefoptions.ui" line="46"/>
         <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation>İşaretlendiğinde, aynalanan öğeler için geçerli öznitelikler kullanılır, aksi takdirde orijinal öznitelikler kullanılır. </translation>
+        <translation>Onaylandığında, aynalanan öğeler için geçerli öznitelikler kullanılır, aksi takdirde orijinal öznitelikler kullanılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignrefoptions.ui" line="49"/>
@@ -10956,7 +10956,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignrefoptions.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation>Kontrol edilirse, aynalanan öğeler geçerli katmana yerleştirilir, aksi takdirde orijinal katmanlara yerleştirilir.</translation>
+        <translation>Onaylandığında, aynalanan öğeler geçerli katmana yerleştirilir, aksi takdirde orijinal katmanlara yerleştirilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignrefoptions.ui" line="69"/>
@@ -10966,7 +10966,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignrefoptions.ui" line="76"/>
         <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation>Kontrol edilirse, gerekirse öğeler ölçeklendirilecektir. Aksi takdirde, sadece konumlandırılır ve döndürülürler.</translation>
+        <translation>Onaylandığında, gerekirse öğeler ölçeklendirilecektir. Aksi takdirde, sadece konumlandırılır ve döndürülürler.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignrefoptions.ui" line="79"/>
@@ -10984,7 +10984,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifybreakdivideoptions.ui" line="45"/>
         <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation>Kontrol edilirse, kesişim noktaları arasındaki segmentler kaldırılacaktır. Kontrol edilmezse - öğe kesişim noktalarına bölünecektir. </translation>
+        <translation>Onaylandığında, kesişim noktaları arasındaki segmentler kaldırılacaktır. Kontrol edilmezse - öğe kesişim noktalarına bölünecektir. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifybreakdivideoptions.ui" line="48"/>
@@ -10994,7 +10994,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifybreakdivideoptions.ui" line="55"/>
         <source>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed. </source>
-        <translation>Kontrol edilirse, seçilen segment kaldırılır. Aksi takdirde, seçilen segment hayatta kalır ve kalan segmentler kaldırılır. </translation>
+        <translation>Onaylandığında, seçilen segment kaldırılır. Aksi takdirde, seçilen segment hayatta kalır ve kalan segmentler kaldırılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifybreakdivideoptions.ui" line="58"/>
@@ -11122,7 +11122,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifymirroroptions.ui" line="32"/>
         <source>If checked, mirror will be performed by selected line entity.</source>
-        <translation>İşaretlenirse, aynalama seçilen çizgi nesnesi tarafından gerçekleştirilecektir.</translation>
+        <translation>Onaylandığında, aynalama seçilen çizgi nesnesi tarafından gerçekleştirilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifymirroroptions.ui" line="35"/>
@@ -11142,7 +11142,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifymirroroptions.ui" line="59"/>
         <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation>Seçiliyse, aynalanmış öğeler için mevcut özellikler kullanılacaktır; aksi takdirde, orijinal olanlar kullanılacaktır. </translation>
+        <translation>Onaylandığında, aynalanmış öğeler için mevcut özellikler kullanılacaktır; aksi takdirde, orijinal olanlar kullanılacaktır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifymirroroptions.ui" line="62"/>
@@ -11152,7 +11152,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifymirroroptions.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation>İşaretlenirse, aynalanmış öğeler mevcut katmana yerleştirilecektir, aksi takdirde orijinal katmanlara yerleştirileceklerdir.</translation>
+        <translation>Onaylandığında, aynalanmış öğeler mevcut katmana yerleştirilecektir, aksi takdirde orijinal katmanlara yerleştirileceklerdir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifymirroroptions.ui" line="85"/>
@@ -11170,7 +11170,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyrotateoptions.ui" line="50"/>
         <source>Free selection of factor should be performed by mouse if checked.</source>
-        <translation>Seçim işaretlendiyse faktörün serbest seçimi fare ile yapılmalıdır.</translation>
+        <translation>Seçim onaylandığında faktörün serbest seçimi fare ile yapılmalıdır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyrotateoptions.ui" line="53"/>
@@ -11181,7 +11181,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyrotateoptions.ui" line="187"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation>İşaretlenirse, yeni girdiler mevcut katmana yerleştirilecektir; aksi takdirde, orijinal katmanlarda olacaktır.</translation>
+        <translation>Onaylandığında, yeni girdiler mevcut katmana yerleştirilecektir; aksi takdirde, orijinal katmanlarda olacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyrotateoptions.ui" line="190"/>
@@ -11206,7 +11206,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyrotateoptions.ui" line="207"/>
         <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation>İşaretlenirse, mevcut özellikler oluşturulan öğelere uygulanacaktır, aksi takdirde orijinal olanlar kullanılacaktır. </translation>
+        <translation>Onaylandığında, mevcut özellikler oluşturulan öğelere uygulanacaktır, aksi takdirde orijinal olanlar kullanılacaktır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyrotateoptions.ui" line="210"/>
@@ -11216,7 +11216,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyrotateoptions.ui" line="197"/>
         <source>If checked, second rotation is around reference point</source>
-        <translation>Seçiliyse, ikinci dönüş referans noktası etrafında olur</translation>
+        <translation>Onaylandığında, ikinci dönüş referans noktası etrafında olur</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyrotateoptions.ui" line="200"/>
@@ -11236,7 +11236,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyrotateoptions.ui" line="140"/>
         <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation>Eğer işaretlenirse, orijinal öğeler korunur; aksi takdirde kaldırılırlar.</translation>
+        <translation>Onaylandığında, orijinal öğeler korunur; aksi takdirde kaldırılırlar.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyrotateoptions.ui" line="143"/>
@@ -11246,7 +11246,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyrotateoptions.ui" line="150"/>
         <source>Multiple copies will be created if checked.</source>
-        <translation>Seçiliyse çoklu kopya oluşturulacaktır.</translation>
+        <translation>Onaylandığındaçoklu kopya oluşturulacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyrotateoptions.ui" line="153"/>
@@ -11289,7 +11289,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyscaleoptions.ui" line="63"/>
         <source>If checked, multiple copies will be created.</source>
-        <translation>Seçiliyse, çoklu kopya oluşturulacaktır.</translation>
+        <translation>Onaylandığında, çoklu kopya oluşturulacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyscaleoptions.ui" line="66"/>
@@ -11304,7 +11304,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyscaleoptions.ui" line="147"/>
         <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation>İşaretlenirse, X ve Y ekseni için aynı ölçekleme faktörü uygulanacaktır.</translation>
+        <translation>Onaylandığında, X ve Y ekseni için aynı ölçekleme faktörü uygulanacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyscaleoptions.ui" line="150"/>
@@ -11314,7 +11314,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyscaleoptions.ui" line="73"/>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation>Eğer işaretlenirse, orijinal öğeler korunur; aksi takdirde kaldırılır.</translation>
+        <translation>Onaylandığında, orijinal öğeler korunur; aksi takdirde kaldırılır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyscaleoptions.ui" line="76"/>
@@ -11329,7 +11329,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyscaleoptions.ui" line="199"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation>Seçiliyse, oluşturulan öğelere mevcut özellikler uygulanır; aksi takdirde orijinal özellikler kullanılacaktır. </translation>
+        <translation>Onaylandığında, oluşturulan öğelere mevcut özellikler uygulanır; aksi takdirde orijinal özellikler kullanılacaktır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyscaleoptions.ui" line="202"/>
@@ -11349,7 +11349,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyscaleoptions.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation>İşaretlenirse, oluşturulan öğeler mevcut katmana yerleştirilecektir. Aksi takdirde, orijinal katmanlarına yerleştirileceklerdir. </translation>
+        <translation>Onaylandığında, oluşturulan öğeler mevcut katmana yerleştirilecektir. Aksi takdirde, orijinal katmanlarına yerleştirileceklerdir. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyscaleoptions.ui" line="86"/>
@@ -11359,7 +11359,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyscaleoptions.ui" line="209"/>
         <source>If checked, factor will be freely selected by mouse. Otherwise, specified values of factors will be used.</source>
-        <translation>İşaretlenirse, faktör fare ile serbestçe seçilecektir. Aksi takdirde, belirtilen faktör değerleri kullanılacaktır.</translation>
+        <translation>Onaylandığında, faktör fare ile serbestçe seçilecektir. Aksi takdirde, belirtilen faktör değerleri kullanılacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyscaleoptions.ui" line="212"/>
@@ -11382,7 +11382,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifystretchoptions.ui" line="32"/>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation>Eğer işaretlenirse, orijinal öğeler korunur; aksi takdirde kaldırılır.</translation>
+        <translation>Onaylandığında, orijinal öğeler korunur; aksi takdirde kaldırılır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifystretchoptions.ui" line="35"/>
@@ -11400,7 +11400,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_moveoptions.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation>İşaretlenirse, oluşturulan öğeler mevcut katmana yerleştirilecektir. Aksi takdirde, orijinal katmanlarına yerleştirileceklerdir. </translation>
+        <translation>Onaylandığında, oluşturulan öğeler mevcut katmana yerleştirilecektir. Aksi takdirde, orijinal katmanlarına yerleştirileceklerdir. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_moveoptions.ui" line="48"/>
@@ -11415,7 +11415,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_moveoptions.ui" line="68"/>
         <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation>İşaretlenirse, mevcut özellikler oluşturulan öğelere uygulanacaktır, aksi takdirde orijinal olanlar kullanılacaktır. </translation>
+        <translation>Onaylandığında, mevcut özellikler oluşturulan öğelere uygulanacaktır, aksi takdirde orijinal olanlar kullanılacaktır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_moveoptions.ui" line="71"/>
@@ -11425,7 +11425,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_moveoptions.ui" line="78"/>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation>Eğer işaretlenirse, orijinal öğeler korunur; aksi takdirde kaldırılır.</translation>
+        <translation>Onaylandığında, orijinal öğeler korunur; aksi takdirde kaldırılır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_moveoptions.ui" line="81"/>
@@ -11435,7 +11435,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_moveoptions.ui" line="95"/>
         <source>If checked, multiple copies will be created. </source>
-        <translation>Seçiliyse, çoklu kopya oluşturulacaktır. </translation>
+        <translation>Onaylandığında, çoklu kopya oluşturulacaktır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_moveoptions.ui" line="98"/>
@@ -11886,7 +11886,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="267"/>
         <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
-        <translation>İşaretlendiğinde, her bir yapıştırma ve tüm dizi için aynı dönme açısı kullanılır. Aksi takdirde, farklı açılar kullanılır. </translation>
+        <translation>Onaylandığında, her bir yapıştırma ve tüm dizi için aynı dönme açısı kullanılır. Aksi takdirde, farklı açılar kullanılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="270"/>
@@ -11906,7 +11906,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="57"/>
         <source>If checked, arrays of copies will be created on paste.</source>
-        <translation>İşaretlendiğinde, yapıştırma sırasında kopyaların dizileri oluşturulur.</translation>
+        <translation>Onaylandığında, yapıştırma sırasında kopyaların dizileri oluşturulur.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_pastetransformoptions.ui" line="60"/>
@@ -12635,7 +12635,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="547"/>
         <source>If checked, matched pens are highlighted, otherwise non-matching pens are hidden.</source>
-        <translation>İşaretlendiğinde, eşleşen kalemler vurgulanır, aksi takdirde eşleşmeyen kalemler gizlenir.</translation>
+        <translation>Onaylandığında, eşleşen kalemler vurgulanır, aksi takdirde eşleşmeyen kalemler gizlenir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="550"/>
@@ -14061,7 +14061,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="388"/>
         <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation>İşaretlendiğinde, yakalama noktasının köşelerin yarıçapı kadar kaydırılması gerektiğini belirtir.</translation>
+        <translation>Onaylandığında, yakalama noktasının köşelerin yarıçapı kadar kaydırılması gerektiğini belirtir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="391"/>
@@ -14121,7 +14121,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="307"/>
         <source>If checked, rectangle will be rotated on specified angle.</source>
-        <translation>İşaretlendiğinde, dikdörtgen belirtilen açıda döndürülür.</translation>
+        <translation>Onaylandığında, dikdörtgen belirtilen açıda döndürülür.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="310"/>
@@ -14131,7 +14131,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="258"/>
         <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation>İşaretlendiğinde, belirtilen dikdörtgenin yüksekliği ve genişliği, köşeleri yuvarlatmak için yayların merkezleri arasındaki mesafeyi tanımlar. Aksi takdirde, bu değerler dikdörtgenin dış boyutunu tanımlar.</translation>
+        <translation>Onaylandığında, belirtilen dikdörtgenin yüksekliği ve genişliği, köşeleri yuvarlatmak için yayların merkezleri arasındaki mesafeyi tanımlar. Aksi takdirde, bu değerler dikdörtgenin dış boyutunu tanımlar.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="261"/>
@@ -14146,7 +14146,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="46"/>
         <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation>İşaretlendiğinde, dikdörtgen tek tek segmentler yerine DevamlıÇizgi olarak oluşturulur.</translation>
+        <translation>Onaylandığında, dikdörtgen tek tek segmentler yerine DevamlıÇizgi olarak oluşturulur.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="49"/>
@@ -14286,7 +14286,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="317"/>
         <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
-        <translation>İşaretlendiğinde, açı fare konumuna göre belirlenir. Aksi takdirde, belirtilen değer kullanılır.</translation>
+        <translation>Onaylandığında, açı fare konumuna göre belirlenir. Aksi takdirde, belirtilen değer kullanılır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle1pointoptions.ui" line="320"/>
@@ -14398,7 +14398,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="318"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation>İşaretlendiğinde, yakalama noktalarının köşelerin yarıçapı kadar kaydırılması gerektiğini belirtir.</translation>
+        <translation>Onaylandığında, yakalama noktalarının köşelerin yarıçapı kadar kaydırılması gerektiğini belirtir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="321"/>
@@ -14418,7 +14418,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="294"/>
         <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation>İşaretlendiğinde, dikdörtgen için dönme açısını belirlemenizi sağlar.</translation>
+        <translation>Onaylandığında, dikdörtgen için dönme açısını belirlemenizi sağlar.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="297"/>
@@ -14468,7 +14468,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="59"/>
         <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation>İşaretlendiğinde, tüm dikdörtgen DevamlıÇizgi olarak çizilir.</translation>
+        <translation>Onaylandığında, tüm dikdörtgen DevamlıÇizgi olarak çizilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle2pointsoptions.ui" line="62"/>
@@ -14496,7 +14496,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="86"/>
         <source>If checked, inner angle of quadrangle will be fixed to specified value.</source>
-        <translation>İşaretlendiğinde, dörtgenin iç açısı belirtilen değere sabitlenir.</translation>
+        <translation>Onaylandığında, dörtgenin iç açısı belirtilen değere sabitlenir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="89"/>
@@ -14546,7 +14546,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="248"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation>İşaretlendiğinde, yakalama noktalarının köşelerin yarıçapı kadar kaydırılması gerektiğini belirtir.</translation>
+        <translation>Onaylandığında, yakalama noktalarının köşelerin yarıçapı kadar kaydırılması gerektiğini belirtir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="251"/>
@@ -14576,7 +14576,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="32"/>
         <source>If checked, the shape will be created as polyline. </source>
-        <translation>İşaretlendiğinde, şekil DevamlıÇizgi olarak oluşturulur. </translation>
+        <translation>Onaylandığında, şekil DevamlıÇizgi olarak oluşturulur. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="35"/>
@@ -14636,7 +14636,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="159"/>
         <source>If checked, rectangle will be rotated to specified base angle.  Otherwise, base angle will be defined by angle between first and second points of rectangle.</source>
-        <translation>İşaretlendiğinde, dikdörtgen belirtilen temel açıya göre döndürülür.  Aksi takdirde, temel açı dikdörtgenin birinci ve ikinci noktaları arasındaki açı ile belirlenir.</translation>
+        <translation>Onaylandığında, dikdörtgen belirtilen temel açıya göre döndürülür.  Aksi takdirde, temel açı dikdörtgenin birinci ve ikinci noktaları arasındaki açı ile belirlenir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="162"/>
@@ -14646,7 +14646,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="194"/>
         <source>If checked, quadrangle will be created instead of rectangle.</source>
-        <translation>İşaretlendiğinde, dikdörtgen yerine dörtgen oluşturulur.</translation>
+        <translation>Onaylandığında, dikdörtgen yerine dörtgen oluşturulur.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle3pointsoptions.ui" line="197"/>
@@ -14740,7 +14740,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="218"/>
         <source>If checked, multiple copies will be created. </source>
-        <translation>İşaretlendiğinde, çoklu kopya oluşturulur. </translation>
+        <translation>Onaylandığında, çoklu kopya oluşturulur. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="221"/>
@@ -14760,7 +14760,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="60"/>
         <source>If checked, the same angle will be used for all copies. Otherwise, it will be increased proportionally to copy number. </source>
-        <translation>İşaretlendiğinde, tüm kopyalar için aynı açı kullanılır. Aksi takdirde, kopya sayısına orantılı olarak artırılır. </translation>
+        <translation>Onaylandığında, tüm kopyalar için aynı açı kullanılır. Aksi takdirde, kopya sayısına orantılı olarak artırılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="63"/>
@@ -14770,7 +14770,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="177"/>
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation>İşaretlenirse, orijinal öğeler korunur, aksi takdirde kaldırılır. </translation>
+        <translation>Onaylandığında, orijinal öğeler korunur, aksi takdirde kaldırılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="180"/>
@@ -15029,7 +15029,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="179"/>
         <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation>İşaretlendiğinde, seçilen öğe tik kesişme noktalarına göre bölünecektir. </translation>
+        <translation>Onaylandığında, seçilen öğe tik kesişme noktalarına göre bölünecektir. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="182"/>
@@ -15074,7 +15074,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="312"/>
         <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation>İşaretlendiğinde, açı seçilen öğeyle ilişkilidir, aksi takdirde mutlak açıdır.</translation>
+        <translation>Onaylandığında, açı seçilen öğeyle ilişkilidir, aksi takdirde mutlak açıdır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="315"/>
@@ -15111,7 +15111,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="413"/>
         <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation>İşaretlendiğinde, belirlenen sabit mesafe kullanılır. Aksi takdirde, mesafe öğe uzunluğu ve tik sayısına göre hesaplanır. </translation>
+        <translation>Onaylandığında, belirlenen sabit mesafe kullanılır. Aksi takdirde, mesafe öğe uzunluğu ve tik sayısına göre hesaplanır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slicedivideoptions.ui" line="416"/>
@@ -15182,7 +15182,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="56"/>
         <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation>İşaretlendiğinde, oluşturulan öğeler için mevcut öznitelikler kullanılır, aksi takdirde orijinal öznitelikler kullanılır. </translation>
+        <translation>Onaylandığında, oluşturulan öğeler için mevcut öznitelikler kullanılır, aksi takdirde orijinal öznitelikler kullanılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="59"/>
@@ -15192,7 +15192,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation>İşaretlendiğinde, oluşturulan öğeler geçerli katmana yerleştirilir, aksi takdirde orijinal katmanlara yerleştirilir.</translation>
+        <translation>Onaylandığında, oluşturulan öğeler geçerli katmana yerleştirilir, aksi takdirde orijinal katmanlara yerleştirilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="76"/>
@@ -15202,7 +15202,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="83"/>
         <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation>İşaretlendiğinde, özel çizgi segmenti miktarı belirtilebilir. Aksi takdirde, mevcut çizim ayarlarından alınan değer kullanılır.</translation>
+        <translation>Onaylandığında, özel çizgi segmenti miktarı belirtilebilir. Aksi takdirde, mevcut çizim ayarlarından alınan değer kullanılır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="86"/>
@@ -15212,7 +15212,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="93"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation>İşaretlendiğinde, çizgi segmentleri DevamlıÇizgi bir parçası olur. Aksi takdirde, ayrı çizgiler olur</translation>
+        <translation>Onaylandığında, çizgi segmentleri DevamlıÇizgi bir parçası olur. Aksi takdirde, ayrı çizgiler olur</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splineexplodeoptions.ui" line="96"/>
@@ -15230,7 +15230,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_splinefrompolylineoptions.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation>İşaretlendiğinde, oluşturulan öğeler geçerli katmana yerleştirilir, aksi takdirde orijinal katmanlara yerleştirilir.</translation>
+        <translation>Onaylandığında, oluşturulan öğeler geçerli katmana yerleştirilir, aksi takdirde orijinal katmanlara yerleştirilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splinefrompolylineoptions.ui" line="35"/>
@@ -15270,7 +15270,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_splinefrompolylineoptions.ui" line="85"/>
         <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation>İşaretlendiğinde, oluşturulan öğeler için mevcut öznitelikler kullanılır, aksi takdirde orijinal öznitelikler kullanılır. </translation>
+        <translation>Onaylandığında, oluşturulan öğeler için mevcut öznitelikler kullanılır, aksi takdirde orijinal öznitelikler kullanılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splinefrompolylineoptions.ui" line="88"/>
@@ -15280,7 +15280,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_splinefrompolylineoptions.ui" line="102"/>
         <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and orinary spline will be created.</source>
-        <translation>İşaretlendiğinde, devamlıçizgi köşeleri eğri noktaları olarak kabul edilir ve noktalara göre eğri oluşturulur. Aksi takdirde, kontrol noktaları olarak kabul edilir ve normal eğri oluşturulur.</translation>
+        <translation>Onaylandığında, devamlıçizgi köşeleri eğri noktaları olarak kabul edilir ve noktalara göre eğri oluşturulur. Aksi takdirde, kontrol noktaları olarak kabul edilir ve normal eğri oluşturulur.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_splinefrompolylineoptions.ui" line="105"/>
@@ -15375,7 +15375,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="42"/>
         <source>If checked, symmetric star will be created.</source>
-        <translation>İşaretlendiğinde, simetrik yıldız oluşturulur.</translation>
+        <translation>Onaylandığında, simetrik yıldız oluşturulur.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="45"/>
@@ -15410,7 +15410,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="32"/>
         <source>If checked, outer edges will be rounded. </source>
-        <translation>İşaretlendiğinde, dış kenarlar yuvarlatılır. </translation>
+        <translation>Onaylandığında, dış kenarlar yuvarlatılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="35"/>
@@ -15420,7 +15420,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="121"/>
         <source>If checked, inner edges will be rounded. </source>
-        <translation>İşaretlendiğinde, iç kenarlar yuvarlatılır. </translation>
+        <translation>Onaylandığında, iç kenarlar yuvarlatılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="124"/>
@@ -15430,7 +15430,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="82"/>
         <source>If checked, the star will be drawn as polyline. </source>
-        <translation>İşaretlendiğinde yıldız DevamlıÇizgi olarak çizilir. </translation>
+        <translation>Onaylandığında yıldız DevamlıÇizgi olarak çizilir. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_staroptions.ui" line="85"/>
@@ -16331,7 +16331,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="173"/>
         <source>If checked, buttons for picking values from drawing will be flat</source>
-        <translation>İşaretlendiğinde, çizimden değer seçmek için kullanılan düğmeler düz olacaktır</translation>
+        <translation>Onaylandığında, çizimden değer seçmek için kullanılan düğmeler düz olacaktır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="176"/>
@@ -16363,7 +16363,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="452"/>
         <source>If not checked, dock areas can only contain a single row (horizontal or vertical) of dock widgets. If checked, the area occupied by a dock widget can be split in either direction to contain more dock widgets.</source>
-        <translation>İşaretlenmezse, rıhtımlama alanları yalnızca tek bir sıra (yatay veya dikey) rıhtımlama bileşen&apos;i içerebilir. İşaretlenirse, bir rıhtımlama bileşen&apos;inin kapladığı alan her iki yönde de bölünerek daha fazla rıhtımlama bileşen&apos;i içerebilir.</translation>
+        <translation>Onaylandığında, rıhtımlama alanları yalnızca tek bir sıra (yatay veya dikey) rıhtımlama bileşen&apos;i içerebilir. İşaretlenirse, bir rıhtımlama bileşen&apos;inin kapladığı alan her iki yönde de bölünerek daha fazla rıhtımlama bileşen&apos;i içerebilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="455"/>
@@ -16373,7 +16373,7 @@ Uyarı: Bu işlem geri alınamaz!</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="462"/>
         <source>If checked, the two vertical dock areas on the sides of the main window show their tabs vertically. </source>
-        <translation>İşaretlendiğinde, ana pencerenin yanlarındaki iki dikey rıhtımlama alanı sekmelerini dikey olarak gösterir. </translation>
+        <translation>Onaylandığında, ana pencerenin yanlarındaki iki dikey rıhtımlama alanı sekmelerini dikey olarak gösterir. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="468"/>
@@ -17260,7 +17260,7 @@ Bu, Bloğun kendisindeki tüm birimleri özyinelemeli olarak değiştirir.</tran
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="62"/>
         <source>If checked, solid will will be used instead of pattern hatch</source>
-        <translation>İşaretlendiğinde, desenli tarama yerine düz tarama kullanılır</translation>
+        <translation>Onaylandığında, desenli tarama yerine düz tarama kullanılır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="65"/>
@@ -17423,7 +17423,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="144"/>
         <source>If checked, default line spacing will be used</source>
-        <translation>İşaretlendiğinde, varsayılan çizgi aralığı kullanılır</translation>
+        <translation>Onaylandığında, varsayılan çizgi aralığı kullanılır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="192"/>
@@ -18715,7 +18715,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="804"/>
         <source>If checked, grid will be shown for this drawing</source>
-        <translation>İşaretlendiğinde, bu çizim için ızgara gösterilecektir</translation>
+        <translation>Onaylandığında, bu çizim için ızgara gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="826"/>
@@ -18972,7 +18972,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1986"/>
         <source>If checked, used non-default arrow blocks will be added during drawing&apos;s saving. Embedding arrow blocks is needed for drawings that are later opened in AutoCAD.  This check may be unset if all editing is performed in LibreCAD. </source>
-        <translation>İşaretlenirse, çizim kaydedilirken varsayılan olmayan ok blokları eklenecektir. Çizimler daha sonra AutoCAD&apos;de açılacaksa ok bloklarının gömülmesi gereklidir. Bu işaretleme, tüm düzenlemeler LibreCAD&apos;de yapılıyorsa kaldırılabilir. </translation>
+        <translation>Onaylandığında, çizim kaydedilirken varsayılan olmayan ok blokları eklenecektir. Çizimler daha sonra AutoCAD&apos;de açılacaksa ok bloklarının gömülmesi gereklidir. Bu işaretleme, tüm düzenlemeler LibreCAD&apos;de yapılıyorsa kaldırılabilir. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1989"/>
@@ -19790,7 +19790,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4407"/>
         <source>If checked, the icon for current action will be shown in options toolbar before action&apos;s options</source>
-        <translation>İşaretlenirse, geçerli işlem simgesi, işlemin seçeneklerinden önce seçenekler araç çubuğunda gösterilecektir</translation>
+        <translation>Onaylandığında, geçerli işlem simgesi, işlemin seçeneklerinden önce seçenekler araç çubuğunda gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4410"/>
@@ -19820,7 +19820,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4926"/>
         <source>If checked, prompt messages of actions will be also shown in bottom statusbar</source>
-        <translation>Eğer işaretlenirse, işlemlere ait uyarı mesajları da alt durum çubuğunda gösterilecektir</translation>
+        <translation>Onaylandığında, işlemlere ait uyarı mesajları da alt durum çubuğunda gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4932"/>
@@ -19830,7 +19830,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4680"/>
         <source>If checked, new drawing will be created with grid disabled</source>
-        <translation>İşaretlenirse, yeni çizim ızgara devre dışı bırakılarak oluşturulacaktır</translation>
+        <translation>Onaylandığında, yeni çizim ızgara devre dışı bırakılarak oluşturulacaktır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4683"/>
@@ -19855,7 +19855,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4981"/>
         <source>If checked, pre-release versions will be ignored</source>
-        <translation>İşaretlenirse, ön-sürüm versiyonları göz ardı edilecektir</translation>
+        <translation>Onaylandığında, ön-sürüm versiyonları göz ardı edilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4987"/>
@@ -20026,7 +20026,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1758"/>
         <source>If checked, snap indicator will be shown</source>
-        <translation>İşaretlenirse, yakalama göstergesi gösterilecektir</translation>
+        <translation>Onaylandığında, yakalama göstergesi gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1788"/>
@@ -20115,7 +20115,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1778"/>
         <source>If checked, a shap for snap will be drawn</source>
-        <translation>İşaretlenirse, bir yakalama için şekil çizilecektir</translation>
+        <translation>Onaylandığında, bir yakalama için şekil çizilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1781"/>
@@ -20210,12 +20210,12 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1668"/>
         <source>If checked, cursor will be hidden during snapping</source>
-        <translation>İşaretlenirse, imleç yakalama sırasında gizlenecektir</translation>
+        <translation>Onaylandığında, imleç yakalama sırasında gizlenecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1678"/>
         <source>If checked, snap options (middle, distance) will be shown in snap toolbar instead of tool properties toolbar</source>
-        <translation>İşaretlenirse, yakalama seçenekleri (orta, mesafe) araç özellikleri araç çubuğu yerine yakalama araç çubuğunda gösterilecektir</translation>
+        <translation>Onaylandığında, yakalama seçenekleri (orta, mesafe) araç özellikleri araç çubuğu yerine yakalama araç çubuğunda gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1681"/>
@@ -20225,7 +20225,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="717"/>
         <source>Entity Handle</source>
-        <translation>Öğe Tutacağı</translation>
+        <translation>Öğe Kulpu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="860"/>
@@ -20235,32 +20235,32 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="781"/>
         <source>Color of end handle for entity</source>
-        <translation>Öğe için uç tutacağının rengi</translation>
+        <translation>Öğe için uç kulpunun rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="743"/>
         <source>Color for start handle of entity</source>
-        <translation>Öğenin başlangıç tutamacının rengi</translation>
+        <translation>Öğenin başlangıç kulpunun rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="826"/>
         <source>Color of non-endpoint handle of entity</source>
-        <translation>Öğenin uç nokta olmayan tutamacının rengi</translation>
+        <translation>Öğenin uç nokta olmayan kulpunun rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="819"/>
         <source>Handle Size:</source>
-        <translation>Tutamaç Boyutu:</translation>
+        <translation>Kulp Boyutu:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="905"/>
         <source>If enabled, entity handles are highlighted on hover (requires &quot;highlight entities on hover&quot; to be enabled)</source>
-        <translation>Etkinleştirilirse, öğe tutamaçları üzerine gelindiğinde vurgulanır (&quot;üzerine gelindiğinde öğeleri vurgula&quot; seçeneğinin etkinleştirilmiş olması gerekir)</translation>
+        <translation>Etkinleştirilirse, öğe kulpları üzerine gelindiğinde vurgulanır (&quot;üzerine gelindiğinde öğeleri vurgula&quot; seçeneğinin etkinleştirilmiş olması gerekir)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="911"/>
         <source>Show entity handles on mouse hover</source>
-        <translation>Fare ile üzerine gelindiğinde öğe tutamaçlarını göster</translation>
+        <translation>Fare ile üzerine gelindiğinde öğe kulplarını göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="192"/>
@@ -20331,7 +20331,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="551"/>
         <source>If checked,  objects will be painted smoother due to anti-aliasing</source>
-        <translation>İşaretlenirse, nesneler kenar yumuşatma sayesinde daha düzgün boyanır</translation>
+        <translation>Onaylandığında, nesneler kenar yumuşatma sayesinde daha düzgün boyanır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="663"/>
@@ -20527,7 +20527,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2304"/>
         <source>If checked, axises will be inifinite lines</source>
-        <translation>İşaretlenirse, eksenler sonsuz çizgiler halinde olacaktır</translation>
+        <translation>Onaylandığında, eksenler sonsuz çizgiler halinde olacaktır</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2307"/>
@@ -20596,7 +20596,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2569"/>
         <source>If checked, relative zero marker will not be drawn</source>
-        <translation>İşaretlenirse, göreli sıfır işareti çizilmeyecektir</translation>
+        <translation>Onaylandığında, göreli sıfır işareti çizilmeyecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2500"/>
@@ -20611,12 +20611,12 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="934"/>
         <source>If checked, grid wil be drawn</source>
-        <translation>İşaretlenirse, ızgara çizilecektir</translation>
+        <translation>Onaylandığında, ızgara çizilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1026"/>
         <source>If checked, grid will not be adjusted to current units of drawing</source>
-        <translation>İşaretlenirse, ızgara mevcut çizim birimlerine göre ayarlanmaz</translation>
+        <translation>Onaylandığında, ızgara mevcut çizim birimlerine göre ayarlanmaz</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1029"/>
@@ -20626,7 +20626,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="977"/>
         <source>If checked, grid will not be drawn within view pan by mouse operation</source>
-        <translation>İşaretlenirse, ızgara fare ile kaydırma işlemi sırasında görünümde çizilmeyecektir</translation>
+        <translation>Onaylandığında, ızgara fare ile kaydırma işlemi sırasında görünümde çizilmeyecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="980"/>
@@ -20636,7 +20636,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1016"/>
         <source>If checked, Meta Grid lines will be drawn on top of grid. Simple grid is faster yet is less visually lean.</source>
-        <translation>İşaretlenirse, Meta Izgara çizgileri ızgaranın üstüne çizilecektir. Basit ızgara daha hızlıdır ancak görsel olarak daha az nettir.</translation>
+        <translation>Onaylandığında, Meta Izgara çizgileri ızgaranın üstüne çizilecektir. Basit ızgara daha hızlıdır ancak görsel olarak daha az nettir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1068"/>
@@ -20656,7 +20656,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="954"/>
         <source>If checked, the grid will be scalled automatically</source>
-        <translation>Seçiliyse, ızgara otomatik olarak ölçeklendirilecektir</translation>
+        <translation>Onaylandığında, ızgara otomatik olarak ölçeklendirilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1049"/>
@@ -20666,7 +20666,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="944"/>
         <source>If checked, metagrid will be drawn as part of grid drawing.</source>
-        <translation>Eğer işaretlenirse, metaızgara ızgara çiziminin bir parçası olarak çizilecektir.</translation>
+        <translation>Onaylandığında, metaızgara ızgara çiziminin bir parçası olarak çizilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="967"/>
@@ -20715,7 +20715,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3609"/>
         <source>If checked, more informative and explaining preview will be drawn for operations</source>
-        <translation>İşlemler için işaretlenirse, daha bilgilendirici ve açıklayıcı bir önizleme çizilecektir</translation>
+        <translation>İşlemler için onaylandığında, daha bilgilendirici ve açıklayıcı bir önizleme çizilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3652"/>
@@ -20890,7 +20890,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3820"/>
         <source>If checked, components of coordinate will be drawn in one line. Otherwise, each component will be on own line. </source>
-        <translation>İşaretlenirse, koordinatın bileşenleri tek bir çizgide çizilecektir. Aksi takdirde, her bileşen kendi çizgisinde olacaktır. </translation>
+        <translation>Onaylandığında, koordinatın bileşenleri tek bir çizgide çizilecektir. Aksi takdirde, her bileşen kendi çizgisinde olacaktır. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3823"/>
@@ -20907,7 +20907,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3837"/>
         <source>If checked, labels for coordinate components will be shown. Otherwise, standard form of coordinates will be displayed.</source>
-        <translation>İşaretlenirse, koordinat bileşenleri için etiketler gösterilecektir. Aksi takdirde, koordinatların standart formu görüntülenecektir.</translation>
+        <translation>Onaylandığında, koordinat bileşenleri için etiketler gösterilecektir. Aksi takdirde, koordinatların standart formu görüntülenecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3840"/>
@@ -20936,7 +20936,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1688"/>
         <source>If checked, &quot;Snap To Grid&quot; is ignored if grid is not drawn.</source>
-        <translation>İşaretlenirse, ızgara çizilmemişse &apos;Izgarayı Yakala&apos; göz ardı edilir.</translation>
+        <translation>Onaylandığında, ızgara çizilmemişse &apos;Izgarayı Yakala&apos; göz ardı edilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1691"/>
@@ -20956,7 +20956,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3902"/>
         <source>If checked, informational cursor will be enabled and shown where applicable.</source>
-        <translation>İşaretlenirse, bilgilendirici imleç etkinleştirilecek ve uygun olduğunda gösterilecektir.</translation>
+        <translation>Onaylandığında, bilgilendirici imleç etkinleştirilecek ve uygun olduğunda gösterilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3905"/>
@@ -20976,7 +20976,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3925"/>
         <source>Show properties for entity that is edited by handles</source>
-        <translation>Tutamaç ile düzenlenen öğe için özellikleri göster</translation>
+        <translation>Kulp ile düzenlenen öğe için özellikleri göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3935"/>
@@ -20991,7 +20991,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3964"/>
         <source>If checked, relative distance and angle from relative zero point to snap point will be shown.</source>
-        <translation>İşaretlenirse, göreli sıfır noktasından yakalama noktasına olan göreli mesafe ve açı gösterilecektir.</translation>
+        <translation>Onaylandığında, göreli sıfır noktasından yakalama noktasına olan göreli mesafe ve açı gösterilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3967"/>
@@ -21006,7 +21006,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4014"/>
         <source>If checked, the prompt of the active command will be shown.</source>
-        <translation>İşaretlenirse, aktif komutun istemi gösterilecektir.</translation>
+        <translation>Onaylandığında, aktif komutun istemi gösterilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4017"/>
@@ -21016,7 +21016,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3941"/>
         <source>If checked, show relative coordinate</source>
-        <translation>İşaretlenirse, göreli koordinatı göster</translation>
+        <translation>Onaylandığında, göreli koordinatı göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3947"/>
@@ -21026,7 +21026,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4024"/>
         <source>If checked, information about the type of snap and restrictions will be shown for snap point (if any)</source>
-        <translation>İşaretlenirse, yakalama noktası için yakalama türü ve kısıtlamalar hakkında bilgiler gösterilecektir (varsa)</translation>
+        <translation>Onaylandığında, yakalama noktası için yakalama türü ve kısıtlamalar hakkında bilgiler gösterilecektir (varsa)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4027"/>
@@ -21046,7 +21046,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3954"/>
         <source>If checked, absolute position of snap point will be shown.</source>
-        <translation>İşaretlenirse, yakalama noktasının mutlak konumu gösterilecektir.</translation>
+        <translation>Onaylandığında, yakalama noktasının mutlak konumu gösterilecektir.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3957"/>
@@ -21056,7 +21056,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4179"/>
         <source>If checked, name of active command will be shown before command prompt</source>
-        <translation>İşaretlenirse, aktif komutun adı komut isteminden önce gösterilecektir</translation>
+        <translation>Onaylandığında, aktif komutun adı komut isteminden önce gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4185"/>
@@ -21066,7 +21066,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4192"/>
         <source>If checked, short overview properties of the entity&apos;s that is catched for selection will be shown. </source>
-        <translation>İşaretlenirse, seçim için yakalanan öğenin kısa genel özellikleri gösterilecektir. </translation>
+        <translation>Onaylandığında, seçim için yakalanan öğenin kısa genel özellikleri gösterilecektir. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4198"/>
@@ -21081,7 +21081,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4397"/>
         <source>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</source>
-        <translation>İşaretlenirse, çizimler Sekme modundaysa sekmelerdeki kapatma işareti (çarpı) gösterilecektir</translation>
+        <translation>Onaylandığında, çizimler Sekme modundaysa sekmelerdeki kapatma işareti (çarpı) gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4400"/>
@@ -21102,7 +21102,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4377"/>
         <source>If checked, keyboard shortcut will be shown in tooltip for action</source>
-        <translation>İşaretlenirse, eylem için klavye kısayolu araç ipucunda gösterilecektir</translation>
+        <translation>Onaylandığında, eylem için klavye kısayolu araç ipucunda gösterilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4380"/>
@@ -21117,7 +21117,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4458"/>
         <source>If checked, location of dialog will not be saved, but size will</source>
-        <translation>Eğer işaretlenirse, iletişim kutusunun konumu kaydedilmeyecek, ancak boyutu kaydedilecektir</translation>
+        <translation>Onaylandığında, iletişim kutusunun konumu kaydedilmeyecek, ancak boyutu kaydedilecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4464"/>
@@ -21132,7 +21132,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4431"/>
         <source>If checked, dialogs will be positioned and resized to position/size of last invocation.</source>
-        <translation>Seçili olduğunda, diyaloglar son kullanım konumuna ve boyutuna göre konumlandırılacak ve yeniden boyutlandırılacaktır.</translation>
+        <translation>Onaylandığında, diyaloglar son kullanım konumuna ve boyutuna göre konumlandırılacak ve yeniden boyutlandırılacaktır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4434"/>
@@ -21177,7 +21177,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4906"/>
         <source>If checked, after start the main window will be maximized</source>
-        <translation>İşaretlenirse, başladıktan sonra ana pencere büyütülecektir</translation>
+        <translation>Onaylandığında, başladıktan sonra ana pencere büyütülecektir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1549"/>
@@ -21414,7 +21414,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4264"/>
         <source>If checked, it will be possible to enter value of angle in decimal degrees only. Otherwise, angles in surveyor, radiant, imperial degrees and bearing formats are allowed for input.  </source>
-        <translation>İşaretlenirse, yalnızca ondalık derece cinsinden açı değeri girilebilecektir. Aksi takdirde, topograf, radyan, İngiliz derece ve yön formatlarındaki açıların girişi de mümkündür.  </translation>
+        <translation>Onaylandığında, yalnızca ondalık derece cinsinden açı değeri girilebilecektir. Aksi takdirde, topograf, radyan, İngiliz derece ve yön formatlarındaki açıların girişi de mümkündür.  </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4267"/>
@@ -21541,7 +21541,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4846"/>
         <source>If checked, toolbars with commands will be enabled. </source>
-        <translation>İşaretlenirse, komutların bulunduğu araç çubukları aktifleştirilecektir. </translation>
+        <translation>Onaylandığında, komutların bulunduğu araç çubukları aktifleştirilecektir. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4939"/>
@@ -21601,7 +21601,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5426"/>
         <source>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</source>
-        <translation>İşaretlenirse, yaylar çizgi segmentleri interpolasyonu kullanılarak çizilir. Bu, uç noktalara yakın çizim hatalarını en aza indirir, ancak daha az düzgün yayların çizilmesine yol açabilir. Büyük yakınlaştırmalarda uç noktalarda çizim hatası oluşmaz.</translation>
+        <translation>Onaylandığında, yaylar çizgi segmentleri interpolasyonu kullanılarak çizilir. Bu, uç noktalara yakın çizim hatalarını en aza indirir, ancak daha az düzgün yayların çizilmesine yol açabilir. Büyük yakınlaştırmalarda uç noktalarda çizim hatası oluşmaz.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5436"/>
@@ -21646,7 +21646,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4876"/>
         <source>If checked, dock widgets with commands for left sidebar will be enabled. Otherwise, they will be disabled. </source>
-        <translation>İşaretlenirse, sol kenar çubuğu için komutlu rıhtım bileşenleri aktifleştirilecektir. Aksi takdirde, devre dışı bırakılacaklardır. </translation>
+        <translation>Onaylandığında, sol kenar çubuğu için komutlu rıhtım bileşenleri aktifleştirilecektir. Aksi takdirde, devre dışı bırakılacaklardır. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5420"/>
@@ -21711,7 +21711,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4448"/>
         <source>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </source>
-        <translation>İşaretlenirse, çizim için yapılan yakınlaştırma veya kaydırma gibi değişiklikler, çizimin değiştirilmiş olarak işaretlenmesine neden olur. Aksi takdirde, yalnızca görünümü değiştirmek, çizimin değiştirilen durumu üzerinde etkili olmaz. </translation>
+        <translation>Onaylandığında, çizim için yapılan yakınlaştırma veya kaydırma gibi değişiklikler, çizimin değiştirilmiş olarak işaretlenmesine neden olur. Aksi takdirde, yalnızca görünümü değiştirmek, çizimin değiştirilen durumu üzerinde etkili olmaz. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4451"/>
@@ -31639,7 +31639,7 @@ Nokta: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="353"/>
         <source>If checked, distance between dimenions is defined by mouse</source>
-        <translation>İşaretlendiğinde, ölçüler arasındaki mesafe fare ile belirlenir</translation>
+        <translation>Onaylandığında, ölçüler arasındaki mesafe fare ile belirlenir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="356"/>
@@ -31655,7 +31655,7 @@ Nokta: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="383"/>
         <source>If checked, angle for dimension is defined by mouse</source>
-        <translation>İşaretlenirse, ölçü için açı fare ile tanımlanır</translation>
+        <translation>Onaylandığında, ölçü için açı fare ile tanımlanır</translation>
     </message>
 </context>
 <context>
@@ -32012,7 +32012,7 @@ Nokta: (%8 , %9)</translation>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="311"/>
         <source>If checked, angle is relative to previous segment</source>
         <extracomment>Angle is relative to previous segment</extracomment>
-        <translation>İşaretlenirse, açı önceki segmente göre olur</translation>
+        <translation>Onaylandığında, açı önceki segmente göre olur</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="314"/>
@@ -32108,7 +32108,7 @@ Nokta: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparallelthroughoptions.ui" line="62"/>
         <source>If checked, parallels will be created on both sides of entity</source>
-        <translation>İşaretlendiğinde, öğenin her iki tarafında paraleller oluşturulur</translation>
+        <translation>Onaylandığında, öğenin her iki tarafında paraleller oluşturulur</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparallelthroughoptions.ui" line="65"/>
@@ -32141,7 +32141,7 @@ Nokta: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="80"/>
         <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation>İşaretlendiğinde, çokgenin köşeleri yuvarlatılır. </translation>
+        <translation>Onaylandığında, çokgenin köşeleri yuvarlatılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="83"/>
@@ -32151,7 +32151,7 @@ Nokta: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="126"/>
         <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation>İşaretlendiğinde, çokgen DevamlıÇizgi olarak çizilir. Aksi takdirde, ayrı ayrı nesneler oluşturulur. </translation>
+        <translation>Onaylandığında, çokgen DevamlıÇizgi olarak çizilir. Aksi takdirde, ayrı ayrı nesneler oluşturulur. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="129"/>
@@ -32270,7 +32270,7 @@ Nokta: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation>İşaretlendiğinde, oluşturulan öğeler geçerli katmana yerleştirilir, aksi takdirde orijinal katmanlarda kalırlar.</translation>
+        <translation>Onaylandığında, oluşturulan öğeler geçerli katmana yerleştirilir, aksi takdirde orijinal katmanlarda kalırlar.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="96"/>
@@ -32285,7 +32285,7 @@ Nokta: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="136"/>
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation>İşaretlenirse, orijinal öğeler korunur, aksi takdirde kaldırılır. </translation>
+        <translation>Onaylandığında, orijinal öğeler korunur, aksi takdirde kaldırılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="139"/>
@@ -32295,7 +32295,7 @@ Nokta: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="109"/>
         <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation>İşaretlendiğinde, öteleme mesafesinin düzeltmeleri kullanılır, aksi takdirde fare ile tanımlanır.</translation>
+        <translation>Onaylandığında, öteleme mesafesinin düzeltmeleri kullanılır, aksi takdirde fare ile tanımlanır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="112"/>
@@ -32305,7 +32305,7 @@ Nokta: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="119"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation>İşaretlendiğinde, mevcut öznitelikler oluşturulan öğelere uygulanır, aksi takdirde orijinal öznitelikler kullanılır. </translation>
+        <translation>Onaylandığında, mevcut öznitelikler oluşturulan öğelere uygulanır, aksi takdirde orijinal öznitelikler kullanılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="122"/>
@@ -32320,7 +32320,7 @@ Nokta: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="76"/>
         <source>If checked, multiple copies will be created. </source>
-        <translation>İşaretlendiğinde, birden fazla kopya oluşturulur. </translation>
+        <translation>Onaylandığında, birden fazla kopya oluşturulur. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="79"/>
@@ -32338,7 +32338,7 @@ Nokta: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="50"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation>İşaretlendiğinde, mevcut öznitelikler oluşturulan öğeler uygulanır, aksi takdirde orijinal öznitelikler kullanılır. </translation>
+        <translation>Onaylandığında, mevcut öznitelikler oluşturulan öğeler uygulanır, aksi takdirde orijinal öznitelikler kullanılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="53"/>
@@ -32348,7 +32348,7 @@ Nokta: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="173"/>
         <source>If checked, multiple copies will be created. </source>
-        <translation>İşaretlendiğinde, çoklu kopya oluşturulur. </translation>
+        <translation>Onaylandığında, çoklu kopya oluşturulur. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="176"/>
@@ -32363,7 +32363,7 @@ Nokta: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="90"/>
         <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation>İşaretlendiğinde, tüm kopyalar aynı açı ile döndürülür. Aksi takdirde, açı her kopyanın sayısına orantılı olacaktır. </translation>
+        <translation>Onaylandığında, tüm kopyalar aynı açı ile döndürülür. Aksi takdirde, açı her kopyanın sayısına orantılı olacaktır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="93"/>
@@ -32383,7 +32383,7 @@ Nokta: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="134"/>
         <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation>İşaretlendiğinde, dönüş açısı fare ile belirlenir. Aksi takdirde, belirtilen değer kullanılır.</translation>
+        <translation>Onaylandığında, dönüş açısı fare ile belirlenir. Aksi takdirde, belirtilen değer kullanılır.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="137"/>
@@ -32398,7 +32398,7 @@ Nokta: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation>İşaretlendiğinde, oluşturulan öğeler geçerli katmana yerleştirilir, aksi takdirde orijinal katmanlarda kalır. </translation>
+        <translation>Onaylandığında, oluşturulan öğeler geçerli katmana yerleştirilir, aksi takdirde orijinal katmanlarda kalır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="147"/>
@@ -32408,7 +32408,7 @@ Nokta: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="80"/>
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation>İşaretlenirse, orijinal öğeler korunur, aksi takdirde kaldırılır. </translation>
+        <translation>Onaylandığında, orijinal öğeler korunur, aksi takdirde kaldırılır. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="83"/>
@@ -32823,7 +32823,7 @@ Nokta: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="137"/>
         <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation>İşaretlendiğinde, çizginin her iki tarafında da kırpma/uzatma işlemi gerçekleştirilir.</translation>
+        <translation>Onaylandığında, çizginin her iki tarafında da kırpma/uzatma işlemi gerçekleştirilir.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="140"/>
