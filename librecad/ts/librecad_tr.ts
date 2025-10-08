@@ -4575,7 +4575,7 @@ Değişiklikleri silmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circlebyarcoptions.ui" line="141"/>
         <source>Pick offset value from drawing</source>
-        <translation>Çizimden ofset değerini seçin</translation>
+        <translation>Çizimden ötelem değerini seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circlebyarcoptions.ui" line="32"/>
@@ -9315,7 +9315,7 @@ Bir Yapı Katmanının içeriği yazdırmada görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="315"/>
         <source>If primary layer is renames, secondary layers are renamed too.</source>
-        <translation>Birincil katman yeniden adlandırılırsa, ikincil katmanlar da yeniden adlandırılır.</translation>
+        <translation>Ana katman yeniden adlandırılırsa, ikincil katmanlar da yeniden adlandırılır.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="318"/>
@@ -9340,7 +9340,7 @@ Bir Yapı Katmanının içeriği yazdırmada görünmemelidir.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="354"/>
         <source>Color for separator lines in layers tree view</source>
-        <translation>Katman Unsur ağacında ayırıcı çizgilerin rengi</translation>
+        <translation>Katmanlar ağacı görünümündeki ayırıcı çizgiler için renk</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="388"/>
@@ -10984,7 +10984,7 @@ Lütfen farklı bir değer girin.</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifybreakdivideoptions.ui" line="45"/>
         <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation>Kontrol edilirse, kavşak noktaları arasındaki segmentler kaldırılacaktır. Kontrol edilmezse - öğe kesişim noktalarına bölünecektir. </translation>
+        <translation>Kontrol edilirse, kesişim noktaları arasındaki segmentler kaldırılacaktır. Kontrol edilmezse - öğe kesişim noktalarına bölünecektir. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifybreakdivideoptions.ui" line="48"/>
@@ -14715,7 +14715,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="194"/>
         <source>Pick primary angle from drawing</source>
-        <translation>Çizimden birincil açıyı seçin</translation>
+        <translation>Çizimden ana açıyı seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="228"/>
@@ -14780,7 +14780,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="87"/>
         <source>Primary Angle:</source>
-        <translation>Birincil Açı:</translation>
+        <translation>Ana Açı:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate2options.ui" line="170"/>
@@ -17498,7 +17498,7 @@ ve kullanıcı arayüzü ile komut için tercih ettiğiniz dili. &lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="829"/>
         <source>Text lines to insert</source>
-        <translation>Eklenecek metin çizgileri</translation>
+        <translation>Eklenecek metin satırları</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="860"/>
@@ -23923,27 +23923,27 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="922"/>
         <source>Multiple-image Network Graphics</source>
-        <translation>Çoklu-Resim Ağ Grafikleri</translation>
+        <translation>Çoklu-Resim Ağ Grafikleri (MNG)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="924"/>
         <source>Portable Bit Map</source>
-        <translation>Taşınabilir Bit Haritası(pbm)</translation>
+        <translation>Taşınabilir Bit Haritası (PBM)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="926"/>
         <source>Portable Grey Map</source>
-        <translation>Taşınabilir Gri Harita(pgm)</translation>
+        <translation>Taşınabilir Gri Harita (PGM)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="928"/>
         <source>Portable Network Graphic</source>
-        <translation>Taşınabilir Ağ Grafiği(png)</translation>
+        <translation>Taşınabilir Ağ Grafiği (PNG)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="930"/>
         <source>Portable Pixel Map</source>
-        <translation>Taşınabilir Piksel Haritası(ppm)</translation>
+        <translation>Taşınabilir Piksel Haritası (PPM)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="932"/>
@@ -23998,7 +23998,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="208"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="264"/>
         <source>Foot</source>
-        <translation>Ayak</translation>
+        <translation>Foot</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="210"/>
@@ -24046,7 +24046,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="224"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="280"/>
         <source>Yard</source>
-        <translation>Yarda</translation>
+        <translation>Yard</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="226"/>
@@ -24141,7 +24141,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/doc_plugin_interface.cpp" line="1369"/>
         <source>enter an integer number</source>
-        <translation>bir tam sayı gir</translation>
+        <translation>bir tam sayı girin</translation>
     </message>
     <message>
         <location filename="../src/main/doc_plugin_interface.cpp" line="1373"/>
@@ -24153,12 +24153,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/doc_plugin_interface.cpp" line="1387"/>
         <source>enter a number</source>
-        <translation>bir sayı gir</translation>
+        <translation>bir sayı girin</translation>
     </message>
     <message>
         <location filename="../src/main/doc_plugin_interface.cpp" line="1404"/>
         <source>enter text</source>
-        <translation>metin gir</translation>
+        <translation>metin girin</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="450"/>
@@ -24173,7 +24173,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="936"/>
         <source>Scalable Vector Graphics</source>
-        <translation>Ölçeklenebilir Vektör Grafiği(svg)</translation>
+        <translation>Ölçeklenebilir Vektör Grafiği (SVG)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="938"/>
@@ -24183,22 +24183,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="940"/>
         <source>Encapsulated PostScript</source>
-        <translation>Kapsülleşmiş PostScript</translation>
+        <translation>Kapsülleşmiş PostScript (EPS)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="942"/>
         <source>Encapsulated PostScript Format</source>
-        <translation>Kapsülleşmiş PostScript Biçimi</translation>
+        <translation>Kapsülleşmiş PostScript Biçimi (EPSF)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="944"/>
         <source>Encapsulated PostScript Interchange</source>
-        <translation>Kapsüllenmiş PostScript Değişimi</translation>
+        <translation>Kapsüllenmiş PostScript Değişimi (EPSI)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="946"/>
         <source>Windows Icon</source>
-        <translation>Windows simgesi</translation>
+        <translation>Windows simgesi (ICO)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="948"/>
@@ -24223,12 +24223,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="956"/>
         <source>Targa Image File</source>
-        <translation>Targa Resim Dosyası (tif)</translation>
+        <translation>Targa Resim Dosyası (TIF)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="958"/>
         <source>Tagged Image File Format</source>
-        <translation>Etiketli Resim Dosyası Formatı (tiff)</translation>
+        <translation>Etiketli Resim Dosyası Formatı (TIFF)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="443"/>
@@ -24238,7 +24238,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="184"/>
         <source>Opened dwg file version %1.</source>
-        <translation>Dwg dosyası sürüm %1 açıldı.</translation>
+        <translation>DWG dosyası sürüm %1 açıldı.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5230"/>
@@ -24273,7 +24273,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5258"/>
         <source>error reading offsets in dwg file</source>
-        <translation>dwg dosyasındaki ofsetler okunurken hata</translation>
+        <translation>dwg dosyasındaki ötelemeler okunurken hata</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5262"/>
@@ -24288,7 +24288,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="447"/>
         <source>dwg Drawing %1</source>
-        <translation>dwg Çizim %1</translation>
+        <translation>dwg Çizimi %1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="193"/>
@@ -24360,7 +24360,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="534"/>
         <source>pl</source>
         <comment>draw polyline</comment>
-        <translation>çç</translation>
+        <translation>dç</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="486"/>
@@ -24444,7 +24444,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="334"/>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>çokluç2</translation>
+        <translation>ç2n</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="341"/>
@@ -24649,13 +24649,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="624"/>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation>ölçülendirhizalı</translation>
+        <translation>hizalıölçü</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="647"/>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
-        <translation>ölçülendiryatay</translation>
+        <translation>yatayölçü</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="648"/>
@@ -24679,7 +24679,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="630"/>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
-        <translation>ölçülendirdoğrusal</translation>
+        <translation>doğrusalölçü</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="631"/>
@@ -24691,7 +24691,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="673"/>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
-        <translation>ölçülendiraçı</translation>
+        <translation>açıölçüsü</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="675"/>
@@ -24703,19 +24703,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="660"/>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
-        <translation>ölçülendiryarıçap</translation>
+        <translation>yarıçapölçüsü</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="668"/>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
-        <translation>ölçülendirçapsal</translation>
+        <translation>çapsalölçü</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="666"/>
         <source>dimdiameter</source>
         <comment>dimension - diametric</comment>
-        <translation>ölçülendirçap</translation>
+        <translation>çapölçüsü</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="667"/>
@@ -24727,19 +24727,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="680"/>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
-        <translation>ölçülendiruzak</translation>
+        <translation>kılavuzölçü</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="681"/>
         <source>ld</source>
         <comment>dimension - leader</comment>
-        <translation>öu</translation>
+        <translation>kö</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="686"/>
         <source>dimregen</source>
         <comment>dimension - regenerate</comment>
-        <translation>öyü</translation>
+        <translation>ölçüüret</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="961"/>
@@ -24899,7 +24899,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="81"/>
         <source>cnly</source>
-        <translation>sadece</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="85"/>
@@ -25106,12 +25106,12 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1059"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1165"/>
         <source>columns</source>
-        <translation>sütun sayısı</translation>
+        <translation>sütunlar</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1060"/>
         <source>columnspacing</source>
-        <translation>sütunboşluğu</translation>
+        <translation>sütunaralığı</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1062"/>
@@ -25143,7 +25143,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1069"/>
         <source>rowspacing</source>
-        <translation>satırboşluğu</translation>
+        <translation>satıraralığı</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1070"/>
@@ -25207,13 +25207,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1169"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>sütunboşluğu</translation>
+        <translation>sütunaralığı</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1170"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>sütun boşluğu</translation>
+        <translation>stnaralığı</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1171"/>
@@ -25345,7 +25345,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1209"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation>satırboşluğu</translation>
+        <translation>satıraralığı</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1210"/>
@@ -25373,7 +25373,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1218"/>
         <source>undo</source>
-        <translation>gerial</translation>
+        <translation>geri al</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1221"/>
@@ -25394,12 +25394,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1230"/>
         <source>paperoffset</source>
-        <translation>kağıtofseti</translation>
+        <translation>kağıt ötelemesi</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1231"/>
         <source>graphoffset</source>
-        <translation>grafikofseti</translation>
+        <translation>grafik ötelemesi</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="261"/>
@@ -25446,7 +25446,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="204"/>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>Yok</translation>
+        <translation>Hiçbiri</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="5242"/>
@@ -25530,13 +25530,13 @@ Do you want to replace it?</source>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="271"/>
         <source>cal </source>
         <comment>command to trigger cli calculator</comment>
-        <translation></translation>
+        <translation>hçk </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="272"/>
         <source>calculate </source>
         <comment>command to trigger cli calculator</comment>
-        <translation></translation>
+        <translation>hm </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="308"/>
@@ -25574,31 +25574,31 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="100"/>
         <source>sline</source>
         <comment>draw snake line</comment>
-        <translation></translation>
+        <translation>yçç</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="101"/>
         <source>sli</source>
         <comment>draw snake line</comment>
-        <translation></translation>
+        <translation>yçz</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="102"/>
         <source>sl</source>
         <comment>draw snake line</comment>
-        <translation></translation>
+        <translation>yç</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="107"/>
         <source>slinex</source>
         <comment>draw snake line (X)</comment>
-        <translation></translation>
+        <translation>yççx</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="108"/>
         <source>slix</source>
         <comment>draw snake line (X)</comment>
-        <translation></translation>
+        <translation>yçzx</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="109"/>
@@ -26933,17 +26933,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1077"/>
         <source>anglerel</source>
-        <translation>balıkçılar</translation>
+        <translation>açı rel</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1078"/>
         <source>start</source>
-        <translation>başlamak</translation>
+        <translation>başlangıç</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1081"/>
         <source>offset</source>
-        <translation>dengelemek</translation>
+        <translation>ötele</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1082"/>
@@ -26968,7 +26968,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1088"/>
         <source>pos</source>
-        <translation>poz</translation>
+        <translation>knm</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1089"/>
@@ -26979,17 +26979,17 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1090"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1096"/>
         <source>bevels</source>
-        <translation>Eğimler</translation>
+        <translation>pahlar</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1091"/>
         <source>nopoly</source>
-        <translation>nopoly</translation>
+        <translation>poly&apos;siz</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1092"/>
         <source>usepoly</source>
-        <translation>usepoly</translation>
+        <translation>poly kullan</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1093"/>
@@ -27014,17 +27014,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1098"/>
         <source>topl</source>
-        <translation>top</translation>
+        <translation>üstsol</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1099"/>
         <source>top</source>
-        <translation>top</translation>
+        <translation>üst</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1100"/>
         <source>topr</source>
-        <translation>topr</translation>
+        <translation>üstsağ</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1101"/>
@@ -27044,7 +27044,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1104"/>
         <source>bottoml</source>
-        <translation>bottoml</translation>
+        <translation>altsol</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1105"/>
@@ -27054,7 +27054,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1106"/>
         <source>bottomr</source>
-        <translation>bottomr</translation>
+        <translation>altsağ</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1107"/>
@@ -27069,22 +27069,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1109"/>
         <source>sizein</source>
-        <translation>size</translation>
+        <translation>içboyut</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1110"/>
         <source>sizeout</source>
-        <translation>sizeout</translation>
+        <translation>dışboyut</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1111"/>
         <source>hor</source>
-        <translation>hor</translation>
+        <translation>yty</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1112"/>
         <source>vert</source>
-        <translation>yeşil</translation>
+        <translation>dky</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1115"/>
@@ -27099,17 +27099,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1117"/>
         <source>mid-vert</source>
-        <translation>orta-dik</translation>
+        <translation>orta-dky</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1118"/>
         <source>mid-hor</source>
-        <translation>mid-hor</translation>
+        <translation>orta-yty</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1120"/>
         <source>quad</source>
-        <translation>kare</translation>
+        <translation>dörtgen</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1121"/>
@@ -27144,7 +27144,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1129"/>
         <source>edge-end</source>
-        <translation>kenar-uc</translation>
+        <translation>kenar-son</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1130"/>
@@ -27164,12 +27164,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1133"/>
         <source>fit</source>
-        <translation>formda</translation>
+        <translation>sığdır</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1134"/>
         <source>nofit</source>
-        <translation>kar amacı gütmeyen</translation>
+        <translation>sığdırma</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1135"/>
@@ -27189,12 +27189,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1141"/>
         <source>sym</source>
-        <translation>sim</translation>
+        <translation>smtrk</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1142"/>
         <source>nosym</source>
-        <translation>nosym</translation>
+        <translation>smtrk değik</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1160"/>
@@ -27454,7 +27454,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="92"/>
         <source>Import error:</source>
         <comment>fileImport</comment>
-        <translation>İçe aktar hatası:</translation>
+        <translation>İçe aktarım hatası:</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="107"/>
@@ -27472,7 +27472,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
         <source>Ignore error and open the file?</source>
         <comment>dwgImport</comment>
-        <translation>Hatayı göz ardı edip dosya açılsın mı?</translation>
+        <translation>Hata göz ardı edilip dosya açılsın mı?</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="116"/>
@@ -27582,7 +27582,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="75"/>
         <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation>-- tüm dxf dosyalarını aynı addaki pdf dosyalarına yazdır.</translation>
+        <translation>-- tüm dxf dosyalarını aynı isimdeki pdf dosyalarına yazdır.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="77"/>
@@ -27660,7 +27660,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="128"/>
         <source>Input DXF file(s)</source>
-        <translation>DXF dosyalarını gir</translation>
+        <translation>DXF dosyalarını girin</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="57"/>
@@ -27691,7 +27691,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="38"/>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor%1</translation>
+        <translation>/ÖzelRenk%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
@@ -27728,7 +27728,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="31"/>
         <source>Use Mirrored Angle</source>
-        <translation>Aynalı Açıyı Kullan</translation>
+        <translation>Aynalanmış Açıyı Kullan</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="32"/>
@@ -27760,12 +27760,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Hatch:: eşleşen desen bulunamadı. Lütfen uygulama tercihleri ​​içinde desen yolunu ayarlayın</translation>
+        <translation>Tarama:: eşleşen desen bulunamadı. Lütfen uygulama tercihleri ​​içinde desen yolunu ayarlayın</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: yükleme deseni başarısız oldu: %1</translation>
+        <translation>Tarama:: yükleme deseni başarısız oldu: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="41"/>
@@ -27900,7 +27900,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/ucs/lc_ucs.cpp" line="135"/>
         <source>WCS</source>
-        <translation>Dünya Şampiyonası Serisi</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="741"/>
@@ -27920,7 +27920,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="435"/>
         <source>Left-</source>
-        <translation>Sol</translation>
+        <translation>Sol-</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="438"/>
@@ -27930,17 +27930,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="441"/>
         <source>Right-</source>
-        <translation>Right-</translation>
+        <translation>Sağ-</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="444"/>
         <source>Forward-</source>
-        <translation>İleri</translation>
+        <translation>İleri-</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="447"/>
         <source>Back-</source>
-        <translation>Geri</translation>
+        <translation>Geri-</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="450"/>
@@ -28021,7 +28021,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="516"/>
         <source>Hatch</source>
-        <translation>Küçük kapak</translation>
+        <translation>Tarama</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="520"/>
@@ -28056,12 +28056,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="544"/>
         <source>Dim. Ordinate</source>
-        <translation>Sıralı Ölçü</translation>
+        <translation>Ölçü Sıralı</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="548"/>
         <source>Leader</source>
-        <translation>Lider</translation>
+        <translation>Kılavuz</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="556"/>
