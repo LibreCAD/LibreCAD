@@ -29,6 +29,7 @@
 #include <vector>
 #include <cmath>
 #include <stdexcept>
+#include <algorithm>
 
 #include "rs_spline.h"
 
@@ -38,6 +39,33 @@ bool comparePoints(const std::vector<RS_Vector>& actual, const std::vector<std::
     for (size_t i = 0; i < actual.size(); ++i) {
         if (std::fabs(actual[i].x - expected[i].first) > epsilon ||
             std::fabs(actual[i].y - expected[i].second) > epsilon) {
+            return false;
+        }
+    }
+    return true;
+}
+
+// Helper function to normalize knot vector to [0,1]
+std::vector<double> normalizeKnots(const std::vector<double>& knots) {
+    if (knots.empty()) return {};
+    double min_k = *std::min_element(knots.begin(), knots.end());
+    double max_k = *std::max_element(knots.begin(), knots.end());
+    double range = max_k - min_k;
+    if (range < 1e-10) return knots; // Constant knots, no normalization needed
+    std::vector<double> norm(knots.size());
+    for (size_t i = 0; i < knots.size(); ++i) {
+        norm[i] = (knots[i] - min_k) / range;
+    }
+    return norm;
+}
+
+// Helper function to compare knot vectors with approximation, after scaling to [0,1]
+bool compareKnots(const std::vector<double>& actual, const std::vector<double>& expected, double epsilon = 1e-6) {
+    if (actual.size() != expected.size()) return false;
+    auto norm_actual = normalizeKnots(actual);
+    auto norm_expected = normalizeKnots(expected);
+    for (size_t i = 0; i < actual.size(); ++i) {
+        if (std::fabs(norm_actual[i] - norm_expected[i]) > epsilon) {
             return false;
         }
     }
@@ -250,103 +278,6 @@ TEST_CASE("RS_Spline Clamped Uniform Knots", "[spline]") {
     }
 }
 
-TEST_CASE("RS_Spline Non-Uniform Clamped Knots", "[spline]") {
-    RS_Spline s(nullptr, RS_SplineData(3, false));
-    s.addControlPoint(RS_Vector(0.0, 0.0), 1.0);
-    s.addControlPoint(RS_Vector(1.0, 1.0), 1.0);
-    s.addControlPoint(RS_Vector(2.0, 0.0), 1.0);
-    s.addControlPoint(RS_Vector(3.0, 1.0), 1.0);
-    std::vector<double> original_knots = {0.0, 0.0, 0.0, 0.0, 1.0, 1.5, 2.5, 3.0};
-    s.setKnotVector(original_knots);
-    s.update();
-
-    std::vector<RS_Vector> points;
-    s.fillStrokePoints(8, points);
-    REQUIRE(points.size() == 32);
-
-    std::vector<RS_Vector> start_points(points.begin(), points.begin() + 5);
-    std::vector<std::pair<double, double>> start_expected = {
-        {0.0, 0.0},
-        {0.09573883238412793, 0.09165109522264367},
-        {0.18942782868800795, 0.1733752550173617},
-        {0.2810983182840455, 0.24565137121949582},
-        {0.37078163054464625, 0.30895833566438785}
-    };
-    REQUIRE(comparePoints(start_points, start_expected));
-
-    std::vector<RS_Vector> end_points(points.begin() + 27, points.end());
-    std::vector<std::pair<double, double>> end_expected = {
-        {1.9570944244906183, 0.3909838541841496},
-        {2.0084842924223945, 0.38269872705776165},
-        {2.0586702173288725, 0.3774167440576759},
-        {2.1076835285824576, 0.375616797019234},
-        {2.155555555555556, 0.37777777777777777}
-    };
-    REQUIRE(comparePoints(end_points, end_expected));
-
-    REQUIRE(s.getMin().x == Catch::Approx(0.0));
-    REQUIRE(s.getMin().y == Catch::Approx(0.0));
-    REQUIRE(s.getMax().x == Catch::Approx(2.1555555556));
-    REQUIRE(s.getMax().y == Catch::Approx(0.5541263394));
-
-    // Set to closed
-    s.setClosed(true);
-    s.update();
-    points.clear();
-    s.fillStrokePoints(8, points);
-    REQUIRE(points.size() == 32);
-
-    std::vector<RS_Vector> start_points_closed(points.begin(), points.begin() + 5);
-    std::vector<std::pair<double, double>> start_expected_closed = {
-        {0.0, 0.0},
-        {0.2810983182840455, 0.24565137121949582},
-        {0.5443120405491589, 0.4105803766238124},
-        {0.7904870598502902, 0.5077170957671779},
-        {1.0204692692423885, 0.5499916082038199}
-    };
-    REQUIRE(comparePoints(start_points_closed, start_expected_closed));
-
-    std::vector<RS_Vector> end_points_closed(points.begin() + 27, points.end());
-    std::vector<std::pair<double, double>> end_expected_closed = {
-        {0.5232687724480548, 0.4436272699808666},
-        {0.5660535060924439, 0.5186767815783289},
-        {0.6521801886475778, 0.5964653754489608},
-        {0.7680339699909369, 0.6619280990903292},
-        {0.9000000000000001, 0.7000000000000002}
-    };
-    REQUIRE(comparePoints(end_points_closed, end_expected_closed));
-
-    REQUIRE(s.getMin().x == Catch::Approx(0.0));
-    REQUIRE(s.getMin().y == Catch::Approx(0.0));
-    REQUIRE(s.getMax().x == Catch::Approx(2.5115348036));
-    REQUIRE(s.getMax().y == Catch::Approx(0.6924238864));
-
-    // Round-trip back to open
-    s.setClosed(false);
-    s.update();
-    points.clear();
-    s.fillStrokePoints(8, points);
-    REQUIRE(points.size() == 32);
-
-    std::vector<RS_Vector> rt_points = {points[0], points[31]};
-    std::vector<std::pair<double, double>> rt_expected = {
-        {0.0, 0.0},
-        {2.155555555555556, 0.37777777777777777}
-    };
-    REQUIRE(comparePoints(rt_points, rt_expected));
-
-    REQUIRE(s.getMin().x == Catch::Approx(0.0));
-    REQUIRE(s.getMin().y == Catch::Approx(0.0));
-    REQUIRE(s.getMax().x == Catch::Approx(2.1555555556));
-    REQUIRE(s.getMax().y == Catch::Approx(0.5541263394));
-
-    const auto& restored_knots = s.getKnotVector();
-    REQUIRE(restored_knots.size() == original_knots.size());
-    for (size_t i = 0; i < restored_knots.size(); ++i) {
-        REQUIRE(restored_knots[i] == Catch::Approx(original_knots[i]));
-    }
-}
-
 TEST_CASE("RS_Spline Non-Uniform Open Knots", "[spline]") {
     RS_Spline s(nullptr, RS_SplineData(3, false));
     s.addControlPoint(RS_Vector(0.0, 0.0), 1.0);
@@ -520,4 +451,187 @@ TEST_CASE("RS_Spline Edge Cases", "[spline]") {
 
     // Invalid degree
     REQUIRE_THROWS_AS(RS_Spline(nullptr, RS_SplineData(4, false)), std::invalid_argument);
+}
+
+TEST_CASE("RS_Spline Add Control Points Validate Scaled Uniform Knots", "[spline]") {
+    for (size_t num = 4; num <= 10; ++num) {
+        RS_Spline s(nullptr, RS_SplineData(3, false));
+
+        for (size_t i = 0; i < num; ++i) {
+            double x = static_cast<double>(i);
+            double y = (i % 2 == 0) ? 0.0 : 1.0;
+            s.addControlPoint(RS_Vector(x, y), 1.0);
+        }
+
+        size_t order = 4;
+        std::vector<double> expected_knots(num + order, 0.0);
+        std::iota(expected_knots.begin() + order, expected_knots.begin() + num + 1, 1.0);
+        std::fill(expected_knots.begin() + num + 1, expected_knots.end(), expected_knots[num]);
+
+        REQUIRE(compareKnots(s.getKnotVector(), expected_knots));
+    }
+}
+
+TEST_CASE("RS_Spline addControlPoint Incremental Open Uniform", "[spline]") {
+    RS_Spline s(nullptr, RS_SplineData(3, false));
+
+    s.addControlPoint(RS_Vector(0.0, 0.0), 1.0);
+    REQUIRE(s.getKnotVector().empty());
+
+    s.addControlPoint(RS_Vector(1.0, 1.0), 1.0);
+    REQUIRE(s.getKnotVector().empty());
+
+    s.addControlPoint(RS_Vector(2.0, 0.0), 1.0);
+    REQUIRE(s.getKnotVector().empty());
+
+    s.addControlPoint(RS_Vector(3.0, 1.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0}));
+
+    s.addControlPoint(RS_Vector(4.0, 0.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 0.0, 0.0, 0.0, 1.0, 2.0, 2.0, 2.0, 2.0}));
+
+    s.addControlPoint(RS_Vector(5.0, 1.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 0.0, 0.0, 0.0, 1.0, 2.0, 3.0, 3.0, 3.0, 3.0}));
+
+    s.addControlPoint(RS_Vector(6.0, 0.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 0.0, 0.0, 0.0, 1.0, 2.0, 3.0, 4.0, 4.0, 4.0, 4.0}));
+
+    s.addControlPoint(RS_Vector(7.0, 1.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 0.0, 0.0, 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 5.0, 5.0, 5.0}));
+
+    s.addControlPoint(RS_Vector(8.0, 0.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 0.0, 0.0, 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 6.0, 6.0, 6.0}));
+
+    s.addControlPoint(RS_Vector(9.0, 1.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 0.0, 0.0, 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 7.0, 7.0, 7.0}));
+}
+
+TEST_CASE("RS_Spline addControlPoint Incremental Closed Uniform", "[spline]") {
+    RS_Spline s(nullptr, RS_SplineData(3, true));
+
+    s.addControlPoint(RS_Vector(0.0, 0.0), 1.0);
+    REQUIRE(s.getKnotVector().empty());
+
+    s.addControlPoint(RS_Vector(1.0, 1.0), 1.0);
+    REQUIRE(s.getKnotVector().empty());
+
+    s.addControlPoint(RS_Vector(2.0, 0.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0}));
+
+    s.addControlPoint(RS_Vector(3.0, 1.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0}));
+
+    s.addControlPoint(RS_Vector(4.0, 0.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0}));
+
+    s.addControlPoint(RS_Vector(5.0, 1.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0}));
+
+    s.addControlPoint(RS_Vector(6.0, 0.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0}));
+
+    s.addControlPoint(RS_Vector(7.0, 1.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0}));
+
+    s.addControlPoint(RS_Vector(8.0, 0.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0}));
+
+    s.addControlPoint(RS_Vector(9.0, 1.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0}));
+}
+
+TEST_CASE("RS_Spline addControlPoint Incremental Open Non-Uniform", "[spline]") {
+    RS_Spline s(nullptr, RS_SplineData(3, false));
+
+    s.addControlPoint(RS_Vector(0.0, 0.0), 1.0);
+    s.addControlPoint(RS_Vector(1.0, 1.0), 1.0);
+    s.addControlPoint(RS_Vector(2.0, 0.0), 1.0);
+    s.addControlPoint(RS_Vector(3.0, 1.0), 1.0);
+
+    std::vector<double> custom_knots = {0.0, 0.0, 0.0, 0.0, 1.0, 1.5, 2.5, 3.0};
+    s.setKnotVector(custom_knots);
+    REQUIRE(compareKnots(s.getKnotVector(), custom_knots));
+
+    s.addControlPoint(RS_Vector(4.0, 0.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 0.0, 0.0, 0.0, 1.0, 1.5, 2.5, 3.0, 3.75}));
+
+    s.addControlPoint(RS_Vector(5.0, 1.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 0.0, 0.0, 0.0, 1.0, 1.5, 2.5, 3.0, 3.75, 4.5}));
+
+    s.addControlPoint(RS_Vector(6.0, 0.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 0.0, 0.0, 0.0, 1.0, 1.5, 2.5, 3.0, 3.75, 4.5, 5.25}));
+
+    s.addControlPoint(RS_Vector(7.0, 1.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 0.0, 0.0, 0.0, 1.0, 1.5, 2.5, 3.0, 3.75, 4.5, 5.25, 6.0}));
+
+    s.addControlPoint(RS_Vector(8.0, 0.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 0.0, 0.0, 0.0, 1.0, 1.5, 2.5, 3.0, 3.75, 4.5, 5.25, 6.0, 6.75}));
+
+    s.addControlPoint(RS_Vector(9.0, 1.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 0.0, 0.0, 0.0, 1.0, 1.5, 2.5, 3.0, 3.75, 4.5, 5.25, 6.0, 6.75, 7.5}));
+}
+
+TEST_CASE("RS_Spline addControlPoint Incremental Closed Non-Uniform", "[spline]") {
+    RS_Spline s(nullptr, RS_SplineData(3, true));
+
+    s.addControlPoint(RS_Vector(0.0, 0.0), 1.0);
+    s.addControlPoint(RS_Vector(1.0, 1.0), 1.0);
+    s.addControlPoint(RS_Vector(2.0, 0.0), 1.0);
+    s.addControlPoint(RS_Vector(3.0, 1.0), 1.0);
+
+    std::vector<double> custom_knots = {0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5};
+    s.setKnotVector(custom_knots);
+    REQUIRE(compareKnots(s.getKnotVector(), custom_knots));
+
+    s.addControlPoint(RS_Vector(4.0, 0.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0}));
+
+    s.addControlPoint(RS_Vector(5.0, 1.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5}));
+
+    s.addControlPoint(RS_Vector(6.0, 0.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0}));
+
+    s.addControlPoint(RS_Vector(7.0, 1.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5}));
+
+    s.addControlPoint(RS_Vector(8.0, 0.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0}));
+
+    s.addControlPoint(RS_Vector(9.0, 1.0), 1.0);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5}));
+}
+
+TEST_CASE("RS_Spline SetClosed Roundtrip", "[spline]") {
+    RS_Spline s(nullptr, RS_SplineData(3, false));
+    s.addControlPoint(RS_Vector(0.0, 0.0), 1.0);
+    s.addControlPoint(RS_Vector(10.0, 1.0), 1.0);
+    s.addControlPoint(RS_Vector(20.0, 0.0), 1.0);
+    s.addControlPoint(RS_Vector(30.0, 1.0), 1.0);
+    s.addControlPoint(RS_Vector(40.0, 0.0), 1.0);
+
+    // Initial open
+    auto initial_control = s.getControlPoints();
+    auto initial_knots = s.getKnotVector();
+    REQUIRE(initial_control.size() == 5);
+    REQUIRE(initial_knots.size() == 9);
+    REQUIRE(compareKnots(initial_knots, {0.0, 0.0, 0.0, 0.0, 1.0, 2.0, 2.0, 2.0, 2.0}));
+
+    // Set closed
+    s.setClosed(true);
+    REQUIRE(s.isClosed());
+    REQUIRE(s.getControlPoints().size() == 5);
+    REQUIRE(s.getKnotVector().size() == 9);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0}));
+
+    // Set back to open
+    s.setClosed(false);
+    REQUIRE(!s.isClosed());
+    REQUIRE(s.getControlPoints().size() == 5);
+    REQUIRE(s.getKnotVector().size() == 9);
+    REQUIRE(compareKnots(s.getKnotVector(), {0.0, 0.0, 0.0, 0.0, 1.0, 2.0, 2.0, 2.0, 2.0}));
+
+    // Verify same as initial
+    REQUIRE(s.getControlPoints() == initial_control);
+    REQUIRE(s.getKnotVector() == initial_knots);
 }

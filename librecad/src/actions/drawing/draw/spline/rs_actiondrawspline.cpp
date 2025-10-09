@@ -142,6 +142,7 @@ void RS_ActionDrawSpline::onCoordinateEvent(int status,  [[maybe_unused]]bool is
             if (!m_actionData->spline){
                 m_actionData->spline = new RS_Spline(m_container, m_actionData->data);
                 m_actionData->spline->addControlPoint(mouse);
+                m_actionData->spline->update();
             }
             setStatus(SetNextPoint);
             moveRelativeZero(mouse);

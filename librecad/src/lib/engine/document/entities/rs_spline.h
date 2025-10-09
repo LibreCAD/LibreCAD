@@ -57,7 +57,7 @@ struct RS_SplineData {
     /** Weights for control points (rational splines). */
     std::vector<double> weights;
 
-    /** Degree (>=1). */
+    /** Degree (1-3). */
     int degree = 3;
 
     /** Closed flag. */
@@ -109,7 +109,7 @@ public:
     /** Calculate borders. */
     void calculateBorders() override;
 
-    /** Set degree (>=1). */
+    /** Set degree (1-3). */
     void setDegree(int degree);
 
     /** Get degree. */
@@ -257,9 +257,6 @@ private:
 
     /** Generate uniform knot vector. */
     std::vector<double> knotu(size_t num, size_t order) const;
-
-    /** Helper: Generate rational basis functions. */
-    static std::vector<double> rbasis(int c, double t, int npts, const std::vector<double>& x, const std::vector<double>& h);
 
     /** Compute rational B-spline points. */
     void rbspline(size_t npts, size_t k, size_t p1, const std::vector<RS_Vector>& b, const std::vector<double>& h, std::vector<RS_Vector>& p) const;
