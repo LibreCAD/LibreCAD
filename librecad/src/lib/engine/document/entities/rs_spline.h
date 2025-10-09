@@ -43,7 +43,7 @@ struct RS_SplineData {
     RS_SplineData() = default;
 
     /** Constructor with initialisation. */
-    RS_SplineData(int _degree, bool _closed);
+    RS_SplineData(int _degree, bool _closed, bool _isNatural = true);
 
     /** Friend operator for output. */
     friend std::ostream& operator << (std::ostream& os, const RS_SplineData& ld);
@@ -65,6 +65,9 @@ struct RS_SplineData {
 
     /** Wrapped flag (for closed splines). */
     bool wrapped = false;
+
+    /** Natural flag (for open splines, true for natural end conditions). */
+    bool isNatural = true;
 };
 
 /**
@@ -266,6 +269,9 @@ private:
 
     /** Internal spline data. */
     RS_SplineData data;
+
+    /** Saved open knots for round-trip. */
+    std::vector<double> savedOpenKnots;
 };
 
 #endif

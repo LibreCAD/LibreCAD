@@ -33,16 +33,18 @@
 #include "rs_pen.h"
 
 /** Constructor for RS_SplineData with degree and closed flag. */
-RS_SplineData::RS_SplineData(int _degree, bool _closed):
+RS_SplineData::RS_SplineData(int _degree, bool _closed, bool _isNatural):
     degree(_degree)
     ,closed(_closed)
+    ,isNatural(_isNatural)
 {
 }
 
 /** Stream operator for RS_SplineData. */
 std::ostream& operator << (std::ostream& os, const RS_SplineData& ld) {
     os << "( degree: " << ld.degree <<
-        " closed: " << ld.closed;
+        " closed: " << ld.closed <<
+        " isNatural: " << ld.isNatural;
     if (ld.controlPoints.size()) {
         os << "\n(control points:\n";
         for (auto const& v: ld.controlPoints)
@@ -73,7 +75,9 @@ RS_Spline::RS_Spline(RS_EntityContainer* parent,
     if (data.closed && !hasWrappedControlPoints()) {
         addWrapping();
     }
-    calculateBorders();
+    RS_Spline::update();
+    if (!isEmpty())
+        RS_EntityContainer::calculateBorders();
 }
 
 /** Clone the spline. */
@@ -116,8 +120,16 @@ std::vector<RS_Vector> RS_Spline::getUnwrappedControlPoints() const {
 
 /** Get unwrapped weights. */
 std::vector<double> RS_Spline::getUnwrappedWeights() const {
-    size_t n = getUnwrappedSize();
-    if (n == 0) return {};
+    const size_t n = getUnwrappedSize();
+    if (n == 0)
+        return {};
+
+    if (n > data.weights.size()) {
+        std::vector<double> ret = data.weights;
+        ret.insert(ret.end(), n - data.weights.size(), 1.);
+        return ret;
+    }
+
     return {data.weights.begin(), data.weights.begin() + n};
 }
 
@@ -276,7 +288,10 @@ void RS_Spline::setClosed(bool c) {
 
     if (data.closed) {
 
-        // Follow TinySpline: force uniform non-clamped knots for closed
+        if (!data.knotslist.empty()) {
+            savedOpenKnots = data.knotslist;
+        }
+        // Force uniform non-clamped knots for closed
         data.knotslist.resize(base_k_size);
         size_t order = data.degree + 1;
         double delta = 1.0 / static_cast<double>(n);
@@ -288,18 +303,12 @@ void RS_Spline::setClosed(bool c) {
         updateKnotWrapping();
     } else {
 
-        // For open, force clamping at both ends
-        if (data.knotslist.empty()) {
-            data.knotslist = knot(n, data.degree + 1);
+        if (!savedOpenKnots.empty()) {
+            data.knotslist = savedOpenKnots;
+            savedOpenKnots.clear();
         } else {
-            // Clamp both start and end
-            double first = data.knotslist.front();
-            double last = data.knotslist.back();
-            size_t order = static_cast<size_t>(data.degree + 1);
-            for (size_t i = 1; i < order; ++i) {
-                data.knotslist[i] = first;
-                data.knotslist[base_k_size - i - 1] = last;
-            }
+            // Regenerate clamped uniform
+            data.knotslist = knot(n, data.degree + 1);
         }
     }
 
@@ -792,48 +801,48 @@ std::vector<double> rbasis(int c, double t, int npts,
 
     int const nplusc = npts + c;
 
-    std::vector<double> temp(nplusc,0.);
+    std::vector<double> basisFunctions(nplusc,0.);
 
     // First order basis
     for (int i = 0; i< nplusc-1; i++)
-        if ((t >= x[i]) && (t < x[i+1])) temp[i] = 1;
+        if ((t >= x[i]) && (t < x[i+1])) basisFunctions[i] = 1;
 
     // Higher order basis
     for (int k = 2; k <= c; k++) {
         for (int i = 0; i < nplusc-k; i++) {
-            if (temp[i] != 0) {
+            if (basisFunctions[i] != 0) {
                 double den = x[i+k-1]-x[i];
                 if (den != 0.0) {
-                    temp[i] = ((t-x[i])*temp[i])/den;
+                    basisFunctions[i] = ((t-x[i])*basisFunctions[i])/den;
                 } else {
-                    temp[i] = 0.0;
+                    basisFunctions[i] = 0.0;
                 }
             }
-            if (temp[i+1] != 0) {
+            if (basisFunctions[i+1] != 0) {
                 double den = x[i+k]-x[i+1];
                 if (den != 0.0) {
-                    temp[i] += ((x[i+k]-t)*temp[i+1])/den;
+                    basisFunctions[i] += ((x[i+k]-t)*basisFunctions[i+1])/den;
                 }
             }
         }
     }
 
     // Last point
-    if (t >= x[nplusc-1]) temp[npts-1] = 1;
+    if (t >= x[nplusc-1]) basisFunctions[npts-1] = 1;
 
     // Denominator sum
-    double sum = 0.;
+    double denominatorSum = 0.;
     for (int i = 0; i < npts; i++) {
-        sum += temp[i]*h[i];
+        denominatorSum += basisFunctions[i]*h[i];
     }
 
-    std::vector<double> r(npts, 0);
+    std::vector<double> rationalBasis(npts, 0);
     // Rational basis
-    if (sum != 0) {
+    if (denominatorSum != 0) {
         for (int i = 0; i < npts; i++)
-            r[i] = (temp[i]*h[i])/sum;
+            rationalBasis[i] = (basisFunctions[i]*h[i])/denominatorSum;
     }
-    return r;
+    return rationalBasis;
 }
 }
 
