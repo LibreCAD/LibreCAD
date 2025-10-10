@@ -75,9 +75,7 @@ RS_Spline::RS_Spline(RS_EntityContainer* parent,
     if (data.closed && !hasWrappedControlPoints()) {
         addWrapping();
     }
-    RS_Spline::update();
-    if (!isEmpty())
-        RS_EntityContainer::calculateBorders();
+    calculateBorders();
 }
 
 /** Clone the spline. */
@@ -120,16 +118,8 @@ std::vector<RS_Vector> RS_Spline::getUnwrappedControlPoints() const {
 
 /** Get unwrapped weights. */
 std::vector<double> RS_Spline::getUnwrappedWeights() const {
-    const size_t n = getUnwrappedSize();
-    if (n == 0)
-        return {};
-
-    if (n > data.weights.size()) {
-        std::vector<double> ret = data.weights;
-        ret.insert(ret.end(), n - data.weights.size(), 1.);
-        return ret;
-    }
-
+    size_t n = getUnwrappedSize();
+    if (n == 0) return {};
     return {data.weights.begin(), data.weights.begin() + n};
 }
 
@@ -151,10 +141,14 @@ void RS_Spline::removeWrapping() {
         return;
     data.controlPoints.resize(data.controlPoints.size() - wrap_size);
     data.weights.resize(data.weights.size() - wrap_size);
-    if (data.knotslist.size() > wrap_size) {
-        data.knotslist.resize(data.knotslist.size() - wrap_size);
-    }
     data.wrapped = false;
+
+    // After resizing control, calculate base
+    size_t current_n = data.controlPoints.size();
+    size_t base_k_size = current_n + data.degree + 1;
+    if (data.knotslist.size() == base_k_size + wrap_size) {
+        data.knotslist.resize(base_k_size);
+    }
 }
 
 /** Add wrapping to control points and weights for closed splines. */
@@ -188,9 +182,7 @@ void RS_Spline::updateKnotWrapping() {
 
     size_t base_n = getUnwrappedSize();
     size_t base_k_size = base_n + static_cast<size_t>(data.degree) + 1;
-    data.knotslist.resize(base_k_size);
     double last = data.knotslist.back();
-    double first = data.knotslist.front();
     size_t wrap_size = static_cast<size_t>(data.degree);
 
     // Compute fallback delta
@@ -206,7 +198,7 @@ void RS_Spline::updateKnotWrapping() {
         }
     }
     double fallback_delta = (count_delta > 0) ? total_delta / count_delta : 1.0;
-    if (std::fabs(data.knotslist.back() - data.knotslist[base_k_size - 2]) < 1e-10) {
+    if (std::fabs(last - data.knotslist[base_k_size - 2]) < 1e-10) {
         fallback_delta = last_non_zero_delta;
     }
 
@@ -291,12 +283,13 @@ void RS_Spline::setClosed(bool c) {
         if (!data.knotslist.empty()) {
             savedOpenKnots = data.knotslist;
         }
-        // Force uniform non-clamped knots for closed
-        data.knotslist.resize(base_k_size);
-        size_t order = data.degree + 1;
-        double delta = 1.0 / static_cast<double>(n);
-        for (size_t i = 0; i < base_k_size; ++i) {
-            data.knotslist[i] = static_cast<double>(i) * delta;
+        if (data.knotslist.empty()) {
+            data.knotslist.resize(base_k_size);
+            size_t order = data.degree + 1;
+            double delta = 1.0 / static_cast<double>(n);
+            for (size_t i = 0; i < base_k_size; ++i) {
+                data.knotslist[i] = static_cast<double>(i) * delta;
+            }
         }
 
         addWrapping();
