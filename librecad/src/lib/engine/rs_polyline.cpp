@@ -693,9 +693,14 @@ void RS_Polyline::stretch(const RS_Vector& firstCorner,
  */
 void RS_Polyline::draw(RS_Painter* painter,RS_GraphicView* view, double& /*patternOffset*/) {
 
-    if (painter == nullptr || view == nullptr) return;
-
-    painter->drawPolyline(*this, *view);
+    if (painter == nullptr || view == nullptr)
+	    return;
+    // Issue #2326, directly draw entities, as RS_Painter::drawPolyline() may have precision issues
+    double offset = 0.;
+    for(RS_Entity* e: std::as_const(*this)) {
+        if (e != nullptr)
+            e->draw(painter, view, offset);
+    }
 }
 
 
