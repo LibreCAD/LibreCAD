@@ -1,5 +1,5 @@
 name: librecad
-version: '2.2.1.3-rc'
+version: '2.2.1.2'
 grade: stable
 base: core22
 confinement: strict
@@ -48,7 +48,7 @@ parts:
     plugin: qmake
     source: https://github.com/LibreCAD/LibreCAD.git
     source-type: git
-    source-branch: 2.2.1
+    source-tag: v2.2.1.2
     qmake-parameters: ["QMAKE_CFLAGS+=-march=x86-64", "QMAKE_CXXFLAGS+=-march=x86-64"]
     build-environment: [{QT_SELECT: qt5}]
     build-packages:
@@ -64,6 +64,10 @@ parts:
       - libgl1-mesa-dev
       - libqt5svg5-dev
       - rsync
+      - qtchooser
+      - qt5-qmake
+      - qttools5-dev-tools
+      - libmuparser-dev
     override-build: |
       craftctl default
       make -r -j$(nproc)
@@ -74,12 +78,14 @@ parts:
       - libqt5svg5
       - libqt5printsupport5
       - libqt5waylandclient5
+      - libmuparser2v5
+      - libgl1
     stage: [-usr/share/pkgconfig]
     override-stage: |
       export SRC_DIR=$CRAFT_PART_BUILD/unix
       mkdir -p $CRAFT_STAGE/usr/{bin,share/{icons,librecad/resources/qm,applications}}
       cp -a $SRC_DIR/librecad $CRAFT_STAGE/usr/bin/
-      cp -a $CRAFT_PART_SRC/librecad/res/*.qm $CRAFT_STAGE/usr/share/librecad/resources/qm/
+      find $CRAFT_PART_SRC/librecad/res $CRAFT_PART_SRC/librecad/ts -name '*.qm' -exec cp -a {} $CRAFT_STAGE/usr/share/librecad/resources/qm/ ';'
       rsync -vaut $CRAFT_PART_SRC/librecad/support/* $CRAFT_STAGE/usr/share/librecad/resources/
       find $CRAFT_PART_SRC -type f -name librecad.svg -exec cp -av '{}' $CRAFT_STAGE/usr/share/icons/ ';'
       export DESKTOP_DIR=$CRAFT_PART_SRC/desktop
