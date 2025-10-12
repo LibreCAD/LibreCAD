@@ -26,16 +26,87 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <vector>
+
 #include "rs_spline.h"
 #include "rs_debug.h"
 #include "rs_line.h"
 #include "rs_painter.h"
 #include "rs_pen.h"
 
+namespace {
+std::vector<double> convertOpenToClosedKnotVector(const std::vector<double>& openKnots, size_t n, size_t m) {
+    if (openKnots.size() <= n)
+        return {};
+
+    // Detect if clamped using tolerance
+    bool isClamped = false;
+    if (openKnots.size() >= 2 * (m + 1)) {
+        double startValue = openKnots[0];
+        bool isStartClamped = true;
+        for (size_t i = 1; i <= m; ++i) {
+            if (std::abs(openKnots[i] - startValue) > RS_TOLERANCE) {
+                isStartClamped = false;
+                break;
+            }
+        }
+
+        double endValue = openKnots.back();
+        bool isEndClamped = true;
+        for (size_t i = 1; i <= m; ++i) {
+            if (std::abs(openKnots[openKnots.size() - i - 1] - endValue) > RS_TOLERANCE) {
+                isEndClamped = false;
+                break;
+            }
+        }
+
+        isClamped = isStartClamped && isEndClamped;
+    }
+
+    double period = openKnots.back() - openKnots.front();
+    if (period <= 0.0) {
+        // Invalid period; return empty vector
+        return {};
+    }
+
+    size_t startIdx = isClamped ? m + 1 : 0;
+    size_t lastIdx = n;
+    if (startIdx + m > n || startIdx >= lastIdx) {
+        // Not enough knots to append from startIdx
+        return {};
+    }
+    std::vector<double> closedKnots = {openKnots.cbegin() + startIdx, openKnots.cbegin() + lastIdx + 1};
+    if (closedKnots.size() < 2)
+        return {};
+    double delta = period * closedKnots.size() / (closedKnots.size() - 1);
+
+    const size_t newSize = n + 2 * m + 1;
+    for (size_t i = 0; closedKnots.size() < newSize; ++i) {
+        closedKnots.push_back(closedKnots[i] + delta);
+    }
+
+    return closedKnots;
+}
+
+std::vector<double> convertClosedToOpenKnotVector(const std::vector<double>& closedKnots, size_t n, size_t m) {
+    if (closedKnots.size() < n + 2*m + 1)
+        return {};
+
+    size_t openSize = n + m + 1;
+
+    std::vector<double> openKnots(m, closedKnots.front());
+    std::copy(closedKnots.cbegin(), closedKnots.cbegin() -m + 2, std::back_inserter(openKnots));
+    while(openKnots.size() < openSize)
+        openKnots.push_back(openKnots.back());
+    return openKnots;
+}
+}
+
 /** Constructor for RS_SplineData with degree and closed flag. */
 RS_SplineData::RS_SplineData(int _degree, bool _closed, bool _isNatural):
     degree(_degree)
     ,closed(_closed)
+    ,wrapped(false)
     ,isNatural(_isNatural)
 {
 }
@@ -44,7 +115,8 @@ RS_SplineData::RS_SplineData(int _degree, bool _closed, bool _isNatural):
 std::ostream& operator << (std::ostream& os, const RS_SplineData& ld) {
     os << "( degree: " << ld.degree <<
         " closed: " << ld.closed <<
-        " isNatural: " << ld.isNatural;
+        " isNatural: " << ld.isNatural <<
+        " wrapped: " << ld.wrapped;
     if (ld.controlPoints.size()) {
         os << "\n(control points:\n";
         for (auto const& v: ld.controlPoints)
@@ -61,6 +133,12 @@ std::ostream& operator << (std::ostream& os, const RS_SplineData& ld) {
         os << "\n(weights:\n";
         for (auto const& w: ld.weights)
             os<<w << " ";
+        os<<")\n";
+    }
+    if (ld.savedOpenKnots.size()) {
+        os << "\n(saved open knots:\n";
+        for (auto const& v: ld.savedOpenKnots)
+            os<<v;
         os<<")\n";
     }
     os  << ")";
@@ -136,19 +214,12 @@ std::vector<double> RS_Spline::getUnwrappedKnotVector() const {
 
 /** Remove wrapping from control points, weights, and knots. */
 void RS_Spline::removeWrapping() {
-    size_t wrap_size = static_cast<size_t>(data.degree);
     if (!data.closed || !hasWrappedControlPoints())
         return;
-    data.controlPoints.resize(data.controlPoints.size() - wrap_size);
-    data.weights.resize(data.weights.size() - wrap_size);
+    size_t n = getUnwrappedSize();
+    data.controlPoints.resize(n);
+    data.weights.resize(n);
     data.wrapped = false;
-
-    // After resizing control, calculate base
-    size_t current_n = data.controlPoints.size();
-    size_t base_k_size = current_n + data.degree + 1;
-    if (data.knotslist.size() == base_k_size + wrap_size) {
-        data.knotslist.resize(base_k_size);
-    }
 }
 
 /** Add wrapping to control points and weights for closed splines. */
@@ -159,7 +230,9 @@ void RS_Spline::addWrapping() {
         return;
     data.controlPoints.insert(data.controlPoints.end(), data.controlPoints.begin(), data.controlPoints.begin() + wrap_size);
     data.weights.insert(data.weights.end(), data.weights.begin(), data.weights.begin() + wrap_size);
-    updateKnotWrapping();
+    if (data.knotslist.empty()) {
+        data.knotslist = knotu(base_n, data.degree + 1);
+    }
     data.wrapped = true;
 }
 
@@ -169,9 +242,11 @@ void RS_Spline::updateControlAndWeightWrapping() {
     size_t base_n = getUnwrappedSize();
     data.controlPoints.resize(base_n);
     data.weights.resize(base_n);
-    if (base_n < 3 || base_n < wrap_size) return;
+    if (base_n < 3 || base_n < wrap_size)
+        return;
     data.controlPoints.insert(data.controlPoints.end(), data.controlPoints.begin(), data.controlPoints.begin() + wrap_size);
     data.weights.insert(data.weights.end(), data.weights.begin(), data.weights.begin() + wrap_size);
+    updateKnotWrapping();
     data.wrapped = true;
 }
 
@@ -180,44 +255,46 @@ void RS_Spline::updateKnotWrapping() {
     if (!data.closed || data.knotslist.empty())
         return;
 
-    size_t base_n = getUnwrappedSize();
+    size_t base_n = data.controlPoints.size();
     size_t base_k_size = base_n + static_cast<size_t>(data.degree) + 1;
-    double last = data.knotslist.back();
-    size_t wrap_size = static_cast<size_t>(data.degree);
+    if (data.knotslist.size() != base_k_size) return; // assume base
 
-    // Compute fallback delta
-    double total_delta = 0.0;
-    int count_delta = 0;
-    double last_non_zero_delta = 1.0;
-    for (size_t i = 1; i < data.knotslist.size(); ++i) {
-        double dd = data.knotslist[i] - data.knotslist[i - 1];
-        if (dd > 1e-10) {
-            total_delta += dd;
-            count_delta++;
-            last_non_zero_delta = dd;
+    int m = data.degree;
+
+    // Detect if clamped
+    bool clamped = false;
+    if (base_k_size >= static_cast<size_t>(2 * (m + 1))) {
+        double start = data.knotslist[0];
+        bool start_clamped = true;
+        for (int i = 1; i <= m; ++i) {
+            if (data.knotslist[i] != start) {
+                start_clamped = false;
+                break;
+            }
         }
-    }
-    double fallback_delta = (count_delta > 0) ? total_delta / count_delta : 1.0;
-    if (std::fabs(last - data.knotslist[base_k_size - 2]) < 1e-10) {
-        fallback_delta = last_non_zero_delta;
+
+        double end = data.knotslist.back();
+        bool end_clamped = true;
+        for (int i = 1; i <= m; ++i) {
+            if (data.knotslist[base_k_size - i - 1] != end) {
+                end_clamped = false;
+                break;
+            }
+        }
+
+        clamped = start_clamped && end_clamped;
     }
 
-    if (base_k_size <= wrap_size + 1) {
-        // Fallback extension
-        double current = last;
-        for (size_t i = 0; i < wrap_size; ++i) {
-            current += fallback_delta;
-            data.knotslist.push_back(current);
-        }
-    } else {
-        // Shift deltas with fallback
-        double current = last;
-        for (size_t i = 0; i < wrap_size; ++i) {
-            double delta = data.knotslist[i + 1] - data.knotslist[i];
-            if (delta <= 1e-10) delta = fallback_delta;
-            current += delta;
-            data.knotslist.push_back(current);
-        }
+    double period = data.knotslist.back() - data.knotslist[0];
+
+    int start_idx = clamped ? m + 1 : 1;
+    if (static_cast<size_t>(start_idx + m) > base_k_size) {
+        // Not enough knots
+        return;
+    }
+
+    for (int i = 0; i < m; ++i) {
+        data.knotslist.push_back(data.knotslist[start_idx + i] + period);
     }
 }
 
@@ -276,36 +353,49 @@ void RS_Spline::setClosed(bool c) {
     removeWrapping();
     data.closed = c;
 
-    size_t base_k_size = n + static_cast<size_t>(data.degree) + 1;
-
     if (data.closed) {
-
-        if (!data.knotslist.empty()) {
-            savedOpenKnots = data.knotslist;
-        }
-        if (data.knotslist.empty()) {
-            data.knotslist.resize(base_k_size);
-            size_t order = data.degree + 1;
-            double delta = 1.0 / static_cast<double>(n);
-            for (size_t i = 0; i < base_k_size; ++i) {
-                data.knotslist[i] = static_cast<double>(i) * delta;
-            }
-        }
-
+        data.knotslist = convertOpenToClosedKnotVector(data.knotslist, n, data.degree);
         addWrapping();
-        updateKnotWrapping();
     } else {
-
-        if (!savedOpenKnots.empty()) {
-            data.knotslist = savedOpenKnots;
-            savedOpenKnots.clear();
+        if (!data.savedOpenKnots.empty()) {
+            data.knotslist = data.savedOpenKnots;
+            data.savedOpenKnots = {};
         } else {
-            // Regenerate clamped uniform
-            data.knotslist = knot(n, data.degree + 1);
+            data.knotslist = convertClosedToOpenKnotVector(data.knotslist, n, data.degree);
         }
     }
 
     update();
+}
+
+std::vector<double> RS_Spline::adjustToOpenClamped(const std::vector<double>& knots, size_t num_control, size_t order, bool is_natural) const {
+    size_t expected_size = num_control + order;
+    if (knots.size() != expected_size) {
+        return is_natural ? knot(num_control, order) : openUniformKnot(num_control, order);
+    }
+
+    std::vector<double> adjusted = knots;
+
+    double min_k = *std::min_element(adjusted.begin(), adjusted.end());
+    double max_k = *std::max_element(adjusted.begin(), adjusted.end());
+    double range = max_k - min_k;
+
+    if (range < 1e-10) {
+        return is_natural ? knot(num_control, order) : openUniformKnot(num_control, order);
+    }
+
+    // Normalize
+    for (auto& k : adjusted) {
+        k = (k - min_k) / range;
+    }
+
+    if (is_natural) {
+        // Clamp ends
+        std::fill(adjusted.begin(), adjusted.begin() + order, 0.0);
+        std::fill(adjusted.end() - order, adjusted.end(), 1.0);
+    } // else keep normalized
+
+    return adjusted;
 }
 
 /** Get reference points (unwrapped control points). */
@@ -339,12 +429,6 @@ void RS_Spline::update() {
         return;
     }
 
-    if (data.closed) {
-        addWrapping();
-    } else {
-        removeWrapping();
-    }
-
     if (data.degree < 1 || data.degree > 3) {
         RS_DEBUG->print("RS_Spline::update: invalid degree: %d", data.degree);
         return;
@@ -355,6 +439,10 @@ void RS_Spline::update() {
     if ((!data.closed && n < static_cast<size_t>(data.degree) + 1) || (data.closed && n < 3)) {
         RS_DEBUG->print("RS_Spline::update: not enough control points");
         return;
+    }
+
+    if (data.closed && !hasWrappedControlPoints()) {
+        addWrapping();
     }
 
     resetBorders();
@@ -574,43 +662,33 @@ double RS_Spline::getWeight(size_t index) const {
 
 /** Add control point with weight, handling wrapping. */
 void RS_Spline::addControlPoint(const RS_Vector& v, double w) {
-    removeWrapping();
-
-    size_t old_size = data.controlPoints.size();
-
+    size_t old_size = getUnwrappedSize();
     bool was_empty = data.knotslist.empty();
 
-    bool was_uniform = false;
-
-    size_t expected_k_size = old_size + static_cast<size_t>(data.degree) + 1;
-
-    if (!was_empty && data.knotslist.size() == expected_k_size) {
-        auto gen_knots = data.closed ? knotu(old_size, data.degree + 1) : knot(old_size, data.degree + 1);
-        if (data.knotslist == gen_knots) {
-            was_uniform = true;
-        }
+    if (data.closed && data.wrapped) {
+        data.controlPoints.insert(data.controlPoints.begin() + old_size, v);
+        data.weights.insert(data.weights.begin() + old_size, w);
+    } else {
+        data.controlPoints.push_back(v);
+        data.weights.push_back(w);
     }
 
-    data.controlPoints.push_back(v);
-    data.weights.push_back(w);
-
-    size_t new_size = data.controlPoints.size();
-
+    size_t new_unwrapped = old_size + 1;
     size_t min_size = data.closed ? 3 : static_cast<size_t>(data.degree + 1);
-    if (new_size < min_size) {
-        addWrapping();
+    if (new_unwrapped < min_size) {
         return;
     }
 
-    if (was_empty || was_uniform) {
-        data.knotslist = data.closed ? knotu(new_size, data.degree + 1) : knot(new_size, data.degree + 1);
+    addWrapping();
+
+    if (was_empty) {
+        data.knotslist = data.closed ? knotu(new_unwrapped, data.degree + 1) : knot(new_unwrapped, data.degree + 1);
     } else {
         // custom non-uniform, append with fallback delta
-        double last = data.knotslist.back();
-
         double total_delta = 0.0;
         int count_delta = 0;
         double last_non_zero_delta = 1.0;
+        size_t expected_k_size = old_size + static_cast<size_t>(data.degree) + 1;
         for (size_t i = 1; i < data.knotslist.size(); ++i) {
             double dd = data.knotslist[i] - data.knotslist[i - 1];
             if (dd > 1e-10) {
@@ -620,13 +698,15 @@ void RS_Spline::addControlPoint(const RS_Vector& v, double w) {
             }
         }
         double fallback_delta = (count_delta > 0) ? total_delta / count_delta : 1.0;
-        if (std::fabs(data.knotslist.back() - data.knotslist[expected_k_size - 2]) < 1e-10) {
+        if (std::abs(data.knotslist.back() - data.knotslist[expected_k_size - 2]) < 1e-10) {
             fallback_delta = last_non_zero_delta;
         }
-        data.knotslist.push_back(last + fallback_delta);
+        size_t pos = new_unwrapped;
+        double last = data.knotslist[pos - 1];
+        data.knotslist.insert(data.knotslist.begin() + pos, last + fallback_delta);
+        for (size_t i = pos + 1; i < data.knotslist.size(); ++i)
+            data.knotslist[i] += fallback_delta;
     }
-
-    addWrapping();
 }
 
 /** Add raw control point. */
@@ -637,11 +717,57 @@ void RS_Spline::addControlPointRaw(const RS_Vector& v, double w) {
 
 /** Remove last control point, handling wrapping. */
 void RS_Spline::removeLastControlPoint() {
+    size_t old_size = getUnwrappedSize();
+    std::vector<double> gen_knots = data.closed ? knotu(old_size, data.degree + 1) : knot(old_size, data.degree + 1);
+    bool was_uniform = (data.knotslist == gen_knots);
+    bool was_empty = data.knotslist.empty();
+
     removeWrapping();
     size_t n = data.controlPoints.size();
     if (n > 0) {
         data.controlPoints.pop_back();
         data.weights.pop_back();
+    }
+
+    if (!data.knotslist.empty() && !(was_empty || was_uniform)) {
+        size_t remove_k_pos = n;
+        double total_delta = 0.0;
+        int count_delta = 0;
+        double last_non_zero_delta = 1.0;
+        size_t expected_k_size = old_size + static_cast<size_t>(data.degree) + 1;
+        for (size_t i = 1; i < data.knotslist.size(); ++i) {
+            double dd = data.knotslist[i] - data.knotslist[i - 1];
+            if (dd > 1e-10) {
+                total_delta += dd;
+                count_delta++;
+                last_non_zero_delta = dd;
+            }
+        }
+        double fallback_delta = (count_delta > 0) ? total_delta / count_delta : 1.0;
+        if (std::abs(data.knotslist.back() - data.knotslist[expected_k_size - 2]) < 1e-10) {
+            fallback_delta = last_non_zero_delta;
+        }
+        if (remove_k_pos < data.knotslist.size()) {
+            data.knotslist.erase(data.knotslist.begin() + remove_k_pos);
+            for (size_t i = remove_k_pos; i < data.knotslist.size(); ++i) {
+                data.knotslist[i] -= fallback_delta;
+            }
+        }
+    }
+
+    size_t new_size = data.controlPoints.size();
+    size_t min_size = data.closed ? 3 : static_cast<size_t>(data.degree + 1);
+    if (new_size < min_size) {
+        addWrapping();
+        return;
+    }
+
+    if (was_empty || was_uniform) {
+        data.knotslist = data.closed ? knotu(new_size, data.degree + 1) : knot(new_size, data.degree + 1);
+    }
+
+    if (data.closed) {
+        updateKnotWrapping();
     }
     addWrapping();
 }
@@ -692,57 +818,126 @@ void RS_Spline::setKnot(size_t index, double k) {
 
 /** Insert control point, clear knots if present. */
 void RS_Spline::insertControlPoint(size_t index, const RS_Vector& v, double w) {
-    removeWrapping();
+    size_t old_size = getUnwrappedSize();
+    size_t new_unwrapped = old_size + 1;
+    size_t min_size = data.closed ? 3 : static_cast<size_t>(data.degree + 1);
+    if (new_unwrapped < min_size) {
+        return;
+    }
+
+    bool original_closed = data.closed;
+    if (original_closed) {
+        setClosed(false);
+    }
+
+    std::vector<double> gen_knots = data.closed ? knotu(old_size, data.degree + 1) : knot(old_size, data.degree + 1);
+    bool was_uniform = (data.knotslist == gen_knots);
+    bool was_empty = data.knotslist.empty();
+
     size_t n = data.controlPoints.size();
     if (index > n) index = n;
     data.controlPoints.insert(data.controlPoints.begin() + index, v);
     data.weights.insert(data.weights.begin() + index, w);
-    if (!data.knotslist.empty()) {
-        size_t insert_k_pos = index + data.degree;
-        double new_k;
-        if (insert_k_pos > 0 && insert_k_pos < data.knotslist.size()) {
-            new_k = (data.knotslist[insert_k_pos - 1] + data.knotslist[insert_k_pos]) / 2.0;
-        } else if (insert_k_pos == 0) {
-            // Insert at beginning
-            double fallback_delta = 1.0; // Default
-            if (!data.knotslist.empty()) {
-                fallback_delta = data.knotslist[1] - data.knotslist[0];
-                if (fallback_delta <= 1e-10) fallback_delta = 1.0;
+
+    if (was_empty || was_uniform) {
+        data.knotslist = data.closed ? knotu(new_unwrapped, data.degree + 1) : knot(new_unwrapped, data.degree + 1);
+    } else {
+        double total_delta = 0.0;
+        int count_delta = 0;
+        double last_non_zero_delta = 1.0;
+        size_t expected_k_size = old_size + static_cast<size_t>(data.degree) + 1;
+        for (size_t i = 1; i < data.knotslist.size(); ++i) {
+            double dd = data.knotslist[i] - data.knotslist[i - 1];
+            if (dd > 1e-10) {
+                total_delta += dd;
+                count_delta++;
+                last_non_zero_delta = dd;
             }
-            new_k = data.knotslist[0] - fallback_delta;
-        } else {
-            // Append at end
-            double fallback_delta = 1.0; // Default
-            if (!data.knotslist.empty()) {
-                fallback_delta = data.knotslist.back() - data.knotslist[data.knotslist.size() - 2];
-                if (fallback_delta <= 1e-10) fallback_delta = 1.0;
-            }
-            new_k = data.knotslist.back() + fallback_delta;
         }
-        data.knotslist.insert(data.knotslist.begin() + insert_k_pos, new_k);
+        double fallback_delta = (count_delta > 0) ? total_delta / count_delta : 1.0;
+        if (std::abs(data.knotslist.back() - data.knotslist[expected_k_size - 2]) < 1e-10) {
+            fallback_delta = last_non_zero_delta;
+        }
+        size_t pos = index + 1;
+        if (pos > data.knotslist.size()) pos = data.knotslist.size();
+        double last = (pos > 0) ? data.knotslist[pos - 1] : (data.knotslist.empty() ? 0.0 : data.knotslist[0] - fallback_delta);
+        data.knotslist.insert(data.knotslist.begin() + pos, last + fallback_delta);
+        for (size_t i = pos + 1; i < data.knotslist.size(); ++i) {
+            data.knotslist[i] += fallback_delta;
+        }
     }
-    addWrapping();
+
+    if (original_closed) {
+        setClosed(true);
+    }
+
     update();
 }
 
 /** Remove control point, clear knots if present. */
 void RS_Spline::removeControlPoint(size_t index) {
-    removeWrapping();
+    size_t old_size = getUnwrappedSize();
+    bool original_closed = data.closed;
+    if (original_closed) {
+        setClosed(false);
+    }
+
+    std::vector<double> gen_knots = data.closed ? knotu(old_size, data.degree + 1) : knot(old_size, data.degree + 1);
+    bool was_uniform = (data.knotslist == gen_knots);
+    bool was_empty = data.knotslist.empty();
+
     size_t n = data.controlPoints.size();
-    if (index < n) {
-        data.controlPoints.erase(data.controlPoints.begin() + index);
-        if (index < data.weights.size()) {
-            data.weights.erase(data.weights.begin() + index);
+    if (index >= n) {
+        if (original_closed) {
+            setClosed(true);
         }
-        if (!data.knotslist.empty()) {
-            size_t remove_k_pos = index + data.degree;
-            if (remove_k_pos < data.knotslist.size()) {
-                data.knotslist.erase(data.knotslist.begin() + remove_k_pos);
+        return;
+    }
+    data.controlPoints.erase(data.controlPoints.begin() + index);
+    data.weights.erase(data.weights.begin() + index);
+
+    size_t new_size = old_size - 1;
+    size_t min_size = original_closed ? 3 : static_cast<size_t>(data.degree + 1);
+    if (new_size < min_size) {
+        if (original_closed) {
+            setClosed(true);
+        }
+        return;
+    }
+
+    if (was_empty || was_uniform) {
+        data.knotslist = data.closed ? knotu(new_size, data.degree + 1) : knot(new_size, data.degree + 1);
+    } else {
+        double total_delta = 0.0;
+        int count_delta = 0;
+        double last_non_zero_delta = 1.0;
+        size_t expected_k_size = old_size + static_cast<size_t>(data.degree) + 1;
+        for (size_t i = 1; i < data.knotslist.size(); ++i) {
+            double dd = data.knotslist[i] - data.knotslist[i - 1];
+            if (dd > 1e-10) {
+                total_delta += dd;
+                count_delta++;
+                last_non_zero_delta = dd;
             }
         }
-        addWrapping();
-        update();
+        double fallback_delta = (count_delta > 0) ? total_delta / count_delta : 1.0;
+        if (std::abs(data.knotslist.back() - data.knotslist[expected_k_size - 2]) < 1e-10) {
+            fallback_delta = last_non_zero_delta;
+        }
+        size_t remove_k_pos = index + 1;
+        if (remove_k_pos < data.knotslist.size()) {
+            data.knotslist.erase(data.knotslist.begin() + remove_k_pos);
+            for (size_t i = remove_k_pos; i < data.knotslist.size(); ++i) {
+                data.knotslist[i] -= fallback_delta;
+            }
+        }
     }
+
+    if (original_closed) {
+        setClosed(true);
+    }
+
+    update();
 }
 
 /** Get knot vector (unwrapped). */
@@ -783,6 +978,13 @@ std::vector<double> RS_Spline::knot(size_t num, size_t order) const {
     //use uniform knots
     std::iota(knotVector.begin() + order, knotVector.begin() + num + 1, 1);
     std::fill(knotVector.begin() + num + 1, knotVector.end(), knotVector[num]);
+    return knotVector;
+}
+
+/** Generate open uniform knot vector without multiple knots at ends. */
+std::vector<double> RS_Spline::openUniformKnot(size_t num, size_t order) const {
+    std::vector<double> knotVector(num + order);
+    std::iota(knotVector.begin(), knotVector.end(), 0.0);
     return knotVector;
 }
 
@@ -875,12 +1077,13 @@ std::vector<double> RS_Spline::knotu(size_t num, size_t order) const{
         return data.knotslist;
     }
     std::vector<double> knotVector(num + order, 0.);
-    //use uniform knots
-    std::iota(knotVector.begin(), knotVector.begin() + num + order, 0);
+    double delta = 1.0 / static_cast<double>(num);
+    for (size_t i = 0; i < num + order; ++i) {
+        knotVector[i] = static_cast<double>(i) * delta;
+    }
     if (data.closed && hasWrappedControlPoints()) {
         // Extend for wrapping
         knotVector.resize(num + order + data.degree);
-        double delta = (num + order > 1) ? 1.0 : 1.0; // Uniform spacing
         for (int i = 0; i < data.degree; ++i) {
             knotVector[num + order + i] = knotVector[num + order - 1] + (i + 1) * delta;
         }

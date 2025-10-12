@@ -36,7 +36,7 @@
 #include "rs_vector.h"
 
 /**
- * Data structure for spline.
+ * Holds the data that defines a spline.
  */
 struct RS_SplineData {
     /** Default constructor. */
@@ -68,6 +68,9 @@ struct RS_SplineData {
 
     /** Natural flag (for open splines, true for natural end conditions). */
     bool isNatural = true;
+
+    /** Saved open knots for round-trip. */
+    std::vector<double> savedOpenKnots;
 };
 
 /**
@@ -100,6 +103,9 @@ public:
     /** Get const spline data reference. */
     const RS_SplineData& getData() const;
 
+    /** Get unwrapped size (control points without wrapping). */
+    size_t getUnwrappedSize() const;
+
     /** Get unwrapped control points. */
     std::vector<RS_Vector> getUnwrappedControlPoints() const;
 
@@ -109,16 +115,28 @@ public:
     /** Get unwrapped knot vector. */
     std::vector<double> getUnwrappedKnotVector() const;
 
-    /** Calculate borders. */
+    /** Remove wrapping from control points, weights, and knots. */
+    void removeWrapping();
+
+    /** Add wrapping to control points and weights for closed splines. */
+    void addWrapping();
+
+    /** Update wrapping for control points and weights. */
+    void updateControlAndWeightWrapping();
+
+    /** Update knot vector wrapping for closed splines. */
+    void updateKnotWrapping();
+
+    /** Calculate bounding box from control points. */
     void calculateBorders() override;
 
-    /** Set degree (1-3). */
+    /** Set degree (1-3), throws if invalid. */
     void setDegree(int degree);
 
     /** Get degree. */
     int getDegree() const;
 
-    /** Get number of control points. */
+    /** Get number of control points (unwrapped). */
     size_t getNumberOfControlPoints() const;
 
     /** Get number of knots. */
@@ -127,40 +145,42 @@ public:
     /** Check if closed. */
     bool isClosed() const;
 
-    /** Set closed flag. */
+    /** Set closed flag and adjust wrapping/knots. */
     void setClosed(bool c);
 
-    /** Get reference points. */
+    std::vector<double> adjustToOpenClamped(const std::vector<double>& knots, size_t num_control, size_t order, bool is_natural) const;
+
+    /** Get reference points (unwrapped control points). */
     RS_VectorSolutions getRefPoints() const override;
 
-    /** Nearest reference point. */
+    /** Nearest reference point (overrides container method). */
     RS_Vector getNearestRef(const RS_Vector& coord, double* dist = nullptr) const override;
 
-    /** Nearest selected reference. */
+    /** Nearest selected reference (overrides container method). */
     RS_Vector getNearestSelectedRef(const RS_Vector& coord, double* dist = nullptr) const override;
 
-    /** Update internal state. */
+    /** Update polyline approximation. */
     void update() override;
 
-    /** Fill stroke points. */
+    /** Fill points for spline approximation. */
     void fillStrokePoints(int splineSegments, std::vector<RS_Vector>& points);
 
-    /** Get start point. */
+    /** Get start point (invalid if closed). */
     RS_Vector getStartpoint() const override;
 
-    /** Get end point. */
+    /** Get end point (invalid if closed). */
     RS_Vector getEndpoint() const override;
 
-    /** Nearest endpoint. */
+    /** Nearest endpoint or control point. */
     RS_Vector getNearestEndpoint(const RS_Vector& coord, double* dist) const override;
 
-    /** Nearest center. */
+    /** Nearest center (invalid). */
     RS_Vector getNearestCenter(const RS_Vector& coord, double* dist) const override;
 
-    /** Nearest middle point. */
+    /** Nearest middle point (invalid). */
     RS_Vector getNearestMiddle(const RS_Vector& coord, double* dist, int middlePoints) const override;
 
-    /** Nearest point at distance. */
+    /** Nearest point at distance (invalid). */
     RS_Vector getNearestDist(double distance, const RS_Vector& coord, double* dist) const override;
 
     /** Move by offset. */
@@ -181,31 +201,31 @@ public:
     /** Mirror across axis. */
     void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
 
-    /** Move reference point. */
+    /** Move reference point (control point). */
     void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
 
-    /** Revert direction. */
+    /** Revert direction by reversing points, weights, knots. */
     void revertDirection() override;
 
-    /** Draw with painter. */
+    /** Draw spline with painter. */
     void draw(RS_Painter* painter) override;
 
-    /** Get control points. */
+    /** Get control points (unwrapped). */
     std::vector<RS_Vector> getControlPoints() const;
 
-    /** Get weights. */
+    /** Get weights (unwrapped). */
     std::vector<double> getWeights() const;
 
     /** Get weight at index. */
     double getWeight(size_t index) const;
 
-    /** Add control point. */
+    /** Add control point with weight, handling wrapping. */
     void addControlPoint(const RS_Vector& v, double w = 1.0);
 
     /** Add raw control point. */
     void addControlPointRaw(const RS_Vector& v, double w = 1.0);
 
-    /** Remove last control point. */
+    /** Remove last control point, handling wrapping. */
     void removeLastControlPoint();
 
     /** Set weight at index. */
@@ -220,58 +240,42 @@ public:
     /** Set knot at index. */
     void setKnot(size_t index, double k);
 
-    /** Insert control point. */
-    void insertControlPoint(size_t index, const RS_Vector& v, double w);
+    /** Insert control point, clear knots if present. */
+    void insertControlPoint(size_t index, const RS_Vector& v, double w = 1.);
 
-    /** Remove control point. */
+    /** Remove control point, clear knots if present. */
     void removeControlPoint(size_t index);
 
-    /** Get knot vector. */
+    /** Get knot vector (unwrapped). */
     std::vector<double> getKnotVector() const;
 
-    /** Set knot vector. */
+    /** Set knot vector, validate size and monotonicity. */
     void setKnotVector(const std::vector<double>& knots);
 
-    /** Check if wrapped. */
+    /** Generate open knot vector. */
+    std::vector<double> knot(size_t num, size_t order) const;
+
+    /** Generate open uniform knot vector without multiple knots at ends. */
+    std::vector<double> openUniformKnot(size_t num, size_t order) const;
+
+    /** Generate uniform knot vector for periodic splines. */
+    std::vector<double> knotu(size_t num, size_t order) const;
+
+    /** Generate rational B-spline points (open). */
+    void rbspline(size_t npts, size_t k, size_t p1, const std::vector<RS_Vector>& b, const std::vector<double>& h, std::vector<RS_Vector>& p) const;
+
+    /** Generate rational B-spline points (periodic). */
+    void rbsplinu(size_t npts, size_t k, size_t p1, const std::vector<RS_Vector>& b, const std::vector<double>& h, std::vector<RS_Vector>& p) const;
+
+    /** Check if control points wrapped (for closed cubic splines). */
     bool hasWrappedControlPoints() const;
 
     /** Output operator. */
     friend std::ostream& operator << (std::ostream& os, const RS_Spline& l);
 
 private:
-
-    /** Remove wrapping. */
-    void removeWrapping();
-
-    /** Add wrapping. */
-    void addWrapping();
-
-    /** Update control/weight wrapping. */
-    void updateControlAndWeightWrapping();
-
-    /** Update knot wrapping. */
-    void updateKnotWrapping();
-
-    /** Get unwrapped size. */
-    size_t getUnwrappedSize() const;
-
-    /** Generate standard knot vector. */
-    std::vector<double> knot(size_t num, size_t order) const;
-
-    /** Generate uniform knot vector. */
-    std::vector<double> knotu(size_t num, size_t order) const;
-
-    /** Compute rational B-spline points. */
-    void rbspline(size_t npts, size_t k, size_t p1, const std::vector<RS_Vector>& b, const std::vector<double>& h, std::vector<RS_Vector>& p) const;
-
-    /** Compute rational B-spline points (uniform). */
-    void rbsplinu(size_t npts, size_t k, size_t p1, const std::vector<RS_Vector>& b, const std::vector<double>& h, std::vector<RS_Vector>& p) const;
-
     /** Internal spline data. */
     RS_SplineData data;
-
-    /** Saved open knots for round-trip. */
-    std::vector<double> savedOpenKnots;
 };
 
 #endif
