@@ -1060,10 +1060,15 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w, bool forced)
         return;
     }
 
-    if(w==activedMdiSubWindow) return;
+    QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(w);
+    if(w==activedMdiSubWindow) {
+        // Issue #2332 : still need to update File menu entries for the file name
+        if (m != nullptr && m->getDocument() != nullptr)
+            enableFileActions(m);
+        return;
+    }
     activedMdiSubWindow=w;
 
-    QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(w);
     enableFileActions(m);
 
     if (m && m->getDocument()) {
