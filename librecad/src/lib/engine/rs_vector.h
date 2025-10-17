@@ -152,6 +152,7 @@ public:
     /** switch x,y for all vectors */
     RS_Vector flipXY(void) const;
 
+    friend RS_Vector operator * (double scale, const RS_Vector& vp);
     friend std::ostream& operator << (std::ostream&, const RS_Vector& v);
 
 #ifdef RS_TEST

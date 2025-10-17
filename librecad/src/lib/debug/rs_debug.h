@@ -146,7 +146,7 @@ public:
 private:
     RS_Debug();
 
-    RS_DebugLevel m_debugLevel = D_INFORMATIONAL;
+    RS_DebugLevel m_debugLevel = D_WARNING;
 };
 
 #endif

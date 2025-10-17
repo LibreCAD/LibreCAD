@@ -32,6 +32,12 @@
 #include "rs_math.h"
 namespace {
 constexpr double EPS = 1e-6;
+
+bool setDebuggingLevel() {
+  RS_DEBUG->setLevel(RS_Debug::D_WARNING);
+  return true;
+}
+static bool g_setDebugging = setDebuggingLevel();
 }
 
 TEST_CASE("RS_Math::correctAngle") {
