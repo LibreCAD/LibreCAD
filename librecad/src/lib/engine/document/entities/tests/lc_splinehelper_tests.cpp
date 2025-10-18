@@ -23,12 +23,15 @@
 **********************************************************************/
 
 #define CATCH_CONFIG_MAIN
-#include <catch2/catch.hpp>
+#include <cmath>
+#include <vector>
+
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers_floating_point.hpp>
+
 #include "lc_splinehelper.h"
 #include "rs_spline.h"
 #include "rs_vector.h"
-#include <vector>
-#include <cmath>
 
 namespace {
 

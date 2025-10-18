@@ -24,15 +24,15 @@
 **
 **********************************************************************/
 
-#ifndef RS_SPLINEHELPER_H
-#define RS_SPLINEHELPER_H
+#ifndef LC_SPLINEHELPER_H
+#define LC_SPLINEHELPER_H
 
 #include <vector>
 #include <cstddef>
 #include "rs_spline.h"
 
 /**
- * @class RS_SplineHelper
+ * @class LC_SplineHelper
  * @brief Helper class for spline type manipulations, knot conversions, and wrapping.
  * Includes Boehm's algorithm for non-uniform knot insertion/removal.
  *
@@ -40,7 +40,7 @@
  * (Standard, ClampedOpen, WrappedClosed) while preserving non-uniform knots via snapshots.
  * It supports rational B-splines (NURBS) and ensures round-trip integrity.
  */
-class RS_SplineHelper {
+class LC_SplineHelper {
 public:
     // Knot conversions
     static std::vector<double> convertClosedToOpenKnotVector(const std::vector<double>& closedKnots,
@@ -91,4 +91,4 @@ public:
 private:
 };
 
-#endif // RS_SPLINEHELPER_H
+#endif // LC_SPLINEHELPER_H

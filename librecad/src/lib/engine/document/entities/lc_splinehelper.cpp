@@ -33,7 +33,7 @@
 
 #include "rs_debug.h"
 #include "rs_math.h"
-#include "rs_splinehelper.h"
+#include "lc_splinehelper.h"
 #include "rs_vector.h"
 
 
@@ -142,7 +142,7 @@ RS_Vector evaluateNURBS(const RS_SplineData& data, double t) {
  * @param degree         Spline degree
  * @return               Open clamped knot vector
  */
-std::vector<double> RS_SplineHelper::convertClosedToOpenKnotVector(const std::vector<double>& closedKnots,
+std::vector<double> LC_SplineHelper::convertClosedToOpenKnotVector(const std::vector<double>& closedKnots,
                                                                    size_t unwrappedSize,
                                                                    size_t degree) {
     size_t order = degree + 1;
@@ -174,7 +174,7 @@ std::vector<double> RS_SplineHelper::convertClosedToOpenKnotVector(const std::ve
  * @param fallback  Fallback if invalid
  * @return          Normalized knots
  */
-std::vector<double> RS_SplineHelper::getNormalizedKnotVector(const std::vector<double>& knots,
+std::vector<double> LC_SplineHelper::getNormalizedKnotVector(const std::vector<double>& knots,
                                                              double newMin,
                                                              double newMax,
                                                              const std::vector<double>& fallback) {
@@ -199,7 +199,7 @@ std::vector<double> RS_SplineHelper::getNormalizedKnotVector(const std::vector<d
  * @param order        Order (degree + 1)
  * @return             Unclamped knots
  */
-std::vector<double> RS_SplineHelper::unclampKnotVector(const std::vector<double>& knots,
+std::vector<double> LC_SplineHelper::unclampKnotVector(const std::vector<double>& knots,
                                                        size_t numControl,
                                                        size_t order) {
     size_t degree = order - 1;
@@ -237,7 +237,7 @@ std::vector<double> RS_SplineHelper::unclampKnotVector(const std::vector<double>
  * @param order        Order
  * @return             Clamped knots
  */
-std::vector<double> RS_SplineHelper::clampKnotVector(const std::vector<double>& knots,
+std::vector<double> LC_SplineHelper::clampKnotVector(const std::vector<double>& knots,
                                                      size_t numControl,
                                                      size_t order) {
     if (knots.size() != numControl + order) return knots;
@@ -252,7 +252,7 @@ std::vector<double> RS_SplineHelper::clampKnotVector(const std::vector<double>& 
 /**
  * Convert Standard to ClampedOpen, preserving original knots in snapshot.
  */
-void RS_SplineHelper::toClampedOpenFromStandard(RS_SplineData& data, size_t unwrappedSize) {
+void LC_SplineHelper::toClampedOpenFromStandard(RS_SplineData& data, size_t unwrappedSize) {
     size_t order = data.degree + 1;
     size_t expectedSize = unwrappedSize + order;
 
@@ -264,7 +264,7 @@ void RS_SplineHelper::toClampedOpenFromStandard(RS_SplineData& data, size_t unwr
 /**
  * Convert ClampedOpen to Standard, restoring from snapshot if available.
  */
-void RS_SplineHelper::toStandardFromClampedOpen(RS_SplineData& data, size_t unwrappedSize) {
+void LC_SplineHelper::toStandardFromClampedOpen(RS_SplineData& data, size_t unwrappedSize) {
     size_t order = data.degree + 1;
     size_t expectedSize = unwrappedSize + order;
 
@@ -282,7 +282,7 @@ void RS_SplineHelper::toStandardFromClampedOpen(RS_SplineData& data, size_t unwr
 /**
  * Convert ClampedOpen to WrappedClosed.
  */
-void RS_SplineHelper::toWrappedClosedFromClampedOpen(RS_SplineData& data, size_t unwrappedSize) {
+void LC_SplineHelper::toWrappedClosedFromClampedOpen(RS_SplineData& data, size_t unwrappedSize) {
     size_t wrapSize = static_cast<size_t>(data.degree);
     if (unwrappedSize < 3 || wrapSize >= unwrappedSize) return;
 
@@ -311,7 +311,7 @@ void RS_SplineHelper::toWrappedClosedFromClampedOpen(RS_SplineData& data, size_t
 /**
  * Convert WrappedClosed to ClampedOpen.
  */
-void RS_SplineHelper::toClampedOpenFromWrappedClosed(RS_SplineData& data, size_t& unwrappedSize) {
+void LC_SplineHelper::toClampedOpenFromWrappedClosed(RS_SplineData& data, size_t& unwrappedSize) {
     size_t wrapSize = static_cast<size_t>(data.degree);
     size_t order = data.degree + 1;
     size_t baseSize = unwrappedSize + order;
@@ -333,7 +333,7 @@ void RS_SplineHelper::toClampedOpenFromWrappedClosed(RS_SplineData& data, size_t
 /**
  * Convert Standard to WrappedClosed directly.
  */
-void RS_SplineHelper::toWrappedClosedFromStandard(RS_SplineData& data, size_t unwrappedSize) {
+void LC_SplineHelper::toWrappedClosedFromStandard(RS_SplineData& data, size_t unwrappedSize) {
     data.savedOpenKnots = data.knotslist;
     toClampedOpenFromStandard(data, unwrappedSize);
     toWrappedClosedFromClampedOpen(data, unwrappedSize);
@@ -342,7 +342,7 @@ void RS_SplineHelper::toWrappedClosedFromStandard(RS_SplineData& data, size_t un
 /**
  * Convert WrappedClosed to Standard directly.
  */
-void RS_SplineHelper::toStandardFromWrappedClosed(RS_SplineData& data, size_t unwrappedSize) {
+void LC_SplineHelper::toStandardFromWrappedClosed(RS_SplineData& data, size_t unwrappedSize) {
     toClampedOpenFromWrappedClosed(data, unwrappedSize);
     toStandardFromClampedOpen(data, unwrappedSize);
 
@@ -357,7 +357,7 @@ void RS_SplineHelper::toStandardFromWrappedClosed(RS_SplineData& data, size_t un
 /**
  * Add wrapping to control points and weights.
  */
-void RS_SplineHelper::addWrapping(RS_SplineData& data, bool isClosed) {
+void LC_SplineHelper::addWrapping(RS_SplineData& data, bool isClosed) {
     if (!isClosed || data.degree <= 0) return;
     size_t wrapSize = static_cast<size_t>(data.degree);
     size_t n = data.controlPoints.size();
@@ -372,7 +372,7 @@ void RS_SplineHelper::addWrapping(RS_SplineData& data, bool isClosed) {
 /**
  * Remove wrapping.
  */
-void RS_SplineHelper::removeWrapping(RS_SplineData& data, bool isClosed, size_t& unwrappedSize) {
+void LC_SplineHelper::removeWrapping(RS_SplineData& data, bool isClosed, size_t& unwrappedSize) {
     if (!isClosed || data.degree <= 0) return;
     size_t wrapSize = static_cast<size_t>(data.degree);
     size_t n = data.controlPoints.size();
@@ -386,7 +386,7 @@ void RS_SplineHelper::removeWrapping(RS_SplineData& data, bool isClosed, size_t&
 /**
  * Update control and weight wrapping.
  */
-void RS_SplineHelper::updateControlAndWeightWrapping(RS_SplineData& data, bool isClosed, size_t unwrappedSize) {
+void LC_SplineHelper::updateControlAndWeightWrapping(RS_SplineData& data, bool isClosed, size_t unwrappedSize) {
     removeWrapping(data, isClosed, unwrappedSize);
     addWrapping(data, isClosed);
 }
@@ -394,7 +394,7 @@ void RS_SplineHelper::updateControlAndWeightWrapping(RS_SplineData& data, bool i
 /**
  * Update knot wrapping for closed splines.
  */
-void RS_SplineHelper::updateKnotWrapping(RS_SplineData& data, bool isClosed, size_t unwrappedSize) {
+void LC_SplineHelper::updateKnotWrapping(RS_SplineData& data, bool isClosed, size_t unwrappedSize) {
     if (!isClosed || data.degree <= 0) return;
     size_t order = data.degree + 1;
     size_t baseSize = unwrappedSize + order;
@@ -418,7 +418,7 @@ void RS_SplineHelper::updateKnotWrapping(RS_SplineData& data, bool isClosed, siz
 /**
  * Check if knot vector is custom (non-uniform/non-standard).
  */
-bool RS_SplineHelper::isCustomKnotVector(const std::vector<double>& knots, size_t numCtrl, size_t order) {
+bool LC_SplineHelper::isCustomKnotVector(const std::vector<double>& knots, size_t numCtrl, size_t order) {
     auto uniform = openUniformKnot(numCtrl, order);
     auto clamped = knot(numCtrl, order);
     return !vectorsEqual(knots, uniform) && !vectorsEqual(knots, clamped);
@@ -427,7 +427,7 @@ bool RS_SplineHelper::isCustomKnotVector(const std::vector<double>& knots, size_
 /**
  * Find span index for parameter t.
  */
-int RS_SplineHelper::findSpan(const std::vector<double>& knots, double t, int degree, size_t numCtrl) {
+int LC_SplineHelper::findSpan(const std::vector<double>& knots, double t, int degree, size_t numCtrl) {
     size_t n = numCtrl - 1;
     if (t >= knots[n + 1] - RS_TOLERANCE) return static_cast<int>(n);
     if (t <= knots[degree] + RS_TOLERANCE) return degree;
@@ -439,7 +439,7 @@ int RS_SplineHelper::findSpan(const std::vector<double>& knots, double t, int de
 /**
  * Boehm's knot insertion algorithm.
  */
-void RS_SplineHelper::insertKnotBoehm(RS_SplineData& data, double t, double tol) {
+void LC_SplineHelper::insertKnotBoehm(RS_SplineData& data, double t, double tol) {
     size_t p = data.degree;
     size_t np = data.controlPoints.size();
     if (data.knotslist.size() != np + p + 1) return;
@@ -499,7 +499,7 @@ double computeMaxError(const RS_SplineData& orig, const RS_SplineData& reduced, 
 /**
  * Boehm's knot removal algorithm with full error check.
  */
-bool RS_SplineHelper::removeKnotBoehm(RS_SplineData& data, size_t r, double tol) {
+bool LC_SplineHelper::removeKnotBoehm(RS_SplineData& data, size_t r, double tol) {
     size_t p = data.degree;
     size_t np = data.controlPoints.size();
     size_t nk = data.knotslist.size();
@@ -596,7 +596,7 @@ bool RS_SplineHelper::removeKnotBoehm(RS_SplineData& data, size_t r, double tol)
 /**
  * Fallback non-uniform knot insertion.
  */
-void RS_SplineHelper::insertKnotNonUniform(std::vector<double>& knots, size_t index, double newKnot, size_t order) {
+void LC_SplineHelper::insertKnotNonUniform(std::vector<double>& knots, size_t index, double newKnot, size_t order) {
     if (index > knots.size()) index = knots.size();
     knots.insert(knots.begin() + index, newKnot);
 }
@@ -604,7 +604,7 @@ void RS_SplineHelper::insertKnotNonUniform(std::vector<double>& knots, size_t in
 /**
  * Fallback non-uniform knot removal.
  */
-void RS_SplineHelper::removeKnotNonUniform(std::vector<double>& knots, size_t index, size_t order) {
+void LC_SplineHelper::removeKnotNonUniform(std::vector<double>& knots, size_t index, size_t order) {
     if (index >= knots.size()) return;
     knots.erase(knots.begin() + index);
 }
@@ -612,7 +612,7 @@ void RS_SplineHelper::removeKnotNonUniform(std::vector<double>& knots, size_t in
 /**
  * Generate clamped uniform knot vector.
  */
-std::vector<double> RS_SplineHelper::knot(size_t num, size_t order) {
+std::vector<double> LC_SplineHelper::knot(size_t num, size_t order) {
     std::vector<double> k(num + order, 0.0);
     std::iota(k.begin() + order - 1, k.begin() + num + 1, 1.0);
     std::fill(k.begin() + num + 1, k.end(), static_cast<double>(num - order + 2));
@@ -622,7 +622,7 @@ std::vector<double> RS_SplineHelper::knot(size_t num, size_t order) {
 /**
  * Generate open uniform knot vector.
  */
-std::vector<double> RS_SplineHelper::openUniformKnot(size_t num, size_t order) {
+std::vector<double> LC_SplineHelper::openUniformKnot(size_t num, size_t order) {
     std::vector<double> k(num + order);
     std::iota(k.begin(), k.end(), 0.0);
     return k;
@@ -631,7 +631,7 @@ std::vector<double> RS_SplineHelper::openUniformKnot(size_t num, size_t order) {
 /**
  * Validate spline data consistency.
  */
-bool RS_SplineHelper::validate(const RS_SplineData& data, size_t unwrappedSize) {
+bool LC_SplineHelper::validate(const RS_SplineData& data, size_t unwrappedSize) {
     RS_DEBUG->setLevel(RS_Debug::D_WARNING);
     QString errorMsg = "";
     std::shared_ptr<QString> msgOutput{&errorMsg, [](QString* pointer) {

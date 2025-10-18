@@ -32,7 +32,7 @@
 #include <numeric>
 
 #include "rs_spline.h"
-#include "rs_splinehelper.h"
+#include "lc_splinehelper.h"
 #include "rs_debug.h"
 #include "rs_line.h"
 #include "rs_painter.h"
@@ -225,24 +225,24 @@ std::vector<double> RS_Spline::getUnwrappedKnotVector() const {
 /** Remove wrapping from control points, weights, and knots. */
 void RS_Spline::removeWrapping() {
     size_t unwrappedSize = getUnwrappedSize();
-    RS_SplineHelper::removeWrapping(data, isClosed(), unwrappedSize);
+    LC_SplineHelper::removeWrapping(data, isClosed(), unwrappedSize);
 }
 
 /** Add wrapping to control points and weights for closed splines. */
 void RS_Spline::addWrapping() {
-    RS_SplineHelper::addWrapping(data, isClosed());
+    LC_SplineHelper::addWrapping(data, isClosed());
 }
 
 /** Update wrapping for control points and weights. */
 void RS_Spline::updateControlAndWeightWrapping() {
     size_t unwrappedSize = getUnwrappedSize();
-    RS_SplineHelper::updateControlAndWeightWrapping(data, isClosed(), unwrappedSize);
+    LC_SplineHelper::updateControlAndWeightWrapping(data, isClosed(), unwrappedSize);
 }
 
 /** Update knot vector wrapping for closed splines. */
 void RS_Spline::updateKnotWrapping() {
     size_t unwrappedSize = getUnwrappedSize();
-    RS_SplineHelper::updateKnotWrapping(data, isClosed(), unwrappedSize);
+    LC_SplineHelper::updateKnotWrapping(data, isClosed(), unwrappedSize);
 }
 
 /** Calculate bounding box from control points. */
@@ -323,7 +323,7 @@ void RS_Spline::update() {
     }
 
     size_t unwrappedSize = getUnwrappedSize();
-    if (!RS_SplineHelper::validate(data, unwrappedSize)) {
+    if (!LC_SplineHelper::validate(data, unwrappedSize)) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::update: Invalid spline data");
         return;
     }
@@ -997,10 +997,10 @@ void RS_Spline::changeType(RS_SplineData::SplineType newType) {
 
     if (isClosedNew) {
         data.savedOpenType = data.type;
-        RS_SplineHelper::toWrappedClosedFromStandard(data, unwrappedSize);
+        LC_SplineHelper::toWrappedClosedFromStandard(data, unwrappedSize);
     } else {
         if (data.type == RS_SplineData::SplineType::WrappedClosed) {
-            RS_SplineHelper::toStandardFromWrappedClosed(data, unwrappedSize);
+            LC_SplineHelper::toStandardFromWrappedClosed(data, unwrappedSize);
         }
         data.type = newType;
     }
