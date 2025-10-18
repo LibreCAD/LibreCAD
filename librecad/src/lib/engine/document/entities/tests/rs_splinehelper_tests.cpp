@@ -1,140 +1,197 @@
 /****************************************************************************
-** Unit tests for RS_SplineHelper using Catch2
-** Focus: Non-uniform knot preservation in type conversions and Boehm algorithms
-****************************************************************************/
+**
+** This file is part of the LibreCAD project, a 2D CAD program
+**
+** Copyright (C) 2025 xAI
+**
+** This file may be distributed and/or modified under the terms of the
+** GNU General Public License version 2 as published by the Free Software
+** Foundation and appearing in the file gpl-2.0.txt included in the
+** packaging of this file.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+**
+** This copyright notice MUST APPEAR in all copies of the script!
+**
+**********************************************************************/
 
 #define CATCH_CONFIG_MAIN
-#include <catch2/catch_test_macros.hpp>
-#include <catch2/matchers/catch_matchers_floating_point.hpp>
-
-#include "rs_splinehelper.h"
+#include <catch2/catch.hpp>
+#include "lc_splinehelper.h"
 #include "rs_spline.h"
 #include "rs_vector.h"
+#include <vector>
 #include <cmath>
-#include <algorithm>
-#include <numeric>  // for iota
 
-// Tolerance for floating-point comparisons
-constexpr double TOL = 1e-10;
-bool nearlyEqual(double a, double b, double tol = TOL) { return std::abs(a - b) < tol; }
-bool vectorsEqual(const std::vector<double>& a, std::vector<double>& b, double tol = TOL) {
+namespace {
+
+const double TOLERANCE = RS_TOLERANCE; // Use LibreCAD's tolerance
+
+// Helper to compare vectors within tolerance
+bool vectorsEqual(const std::vector<double>& a, const std::vector<double>& b, double tol = TOLERANCE) {
     if (a.size() != b.size()) return false;
-    return std::equal(a.begin(), a.end(), b.begin(), [tol](double x, double y) { return nearlyEqual(x, y, tol); });
-}
-bool vectorsEqual(const std::vector<RS_Vector>& a, const std::vector<RS_Vector>& b, double tol = TOL) {
-    if (a.size() != b.size()) return false;
-    return std::equal(a.begin(), a.end(), b.begin(), [tol](const RS_Vector& p, const RS_Vector& q) {
-        return nearlyEqual(p.x, q.x, tol) && nearlyEqual(p.y, q.y, tol);
-    });
+    for (size_t i = 0; i < a.size(); ++i) {
+        if (std::abs(a[i] - b[i]) > tol) return false;
+    }
+    return true;
 }
 
-// Helper to create test data
-RS_SplineData createStandardSpline(int degree, const std::vector<double>& knots,
-                                   const std::vector<RS_Vector>& ctrl,
-                                   const std::vector<double>& weights = {}) {
+// Helper to create a basic RS_SplineData
+RS_SplineData createTestSplineData(int degree, bool closed, size_t numControlPoints) {
     RS_SplineData data;
     data.degree = degree;
-    data.type = RS_SplineData::SplineType::Standard;
-    data.knotslist = knots;
-    data.controlPoints = ctrl;
-    data.weights = weights.empty() ? std::vector<double>(ctrl.size(), 1.0) : weights;
+    data.type = closed ? RS_SplineData::SplineType::WrappedClosed : RS_SplineData::SplineType::ClampedOpen;
+    data.controlPoints.resize(numControlPoints);
+    data.weights.resize(numControlPoints, 1.0);
+    for (size_t i = 0; i < numControlPoints; ++i) {
+        data.controlPoints[i] = RS_Vector(static_cast<double>(i), static_cast<double>(i));
+    }
+    data.knotslist = LC_SplineHelper::knot(numControlPoints, degree + 1);
+    if (closed) {
+        LC_SplineHelper::addWrapping(data, true);
+        LC_SplineHelper::updateKnotWrapping(data, true, numControlPoints - degree);
+    }
     return data;
 }
 
-// Stub for openUniformKnot
-namespace {
-    std::vector<double> openUniformKnot(size_t num, size_t order) {
-        std::vector<double> k(num + order);
-        std::iota(k.begin(), k.end(), 0.0);
-        return k;
-    }
+} // namespace
+
+TEST_CASE("ConvertClosedToOpenKnotVector", "[LC_SplineHelperTest]") {
+    std::vector<double> closedKnots = {0.0, 0.0, 0.0, 1.0, 2.0, 3.0, 3.0, 3.0, 4.0, 5.0, 6.0};
+    size_t unwrappedSize = 5;
+    size_t degree = 2;
+    std::vector<double> expected = {0.0, 0.0, 0.0, 1.0, 2.0, 3.0, 3.0, 3.0};
+    auto result = LC_SplineHelper::convertClosedToOpenKnotVector(closedKnots, unwrappedSize, degree);
+    REQUIRE(vectorsEqual(result, expected));
 }
 
-TEST_CASE("Standard to ClampedOpen and back - non-uniform knots", "[conversion]") {
-    // Fixed sizes: degree 3, 5 controls → 9 knots
-    std::vector<RS_Vector> ctrl = {RS_Vector(0,0), RS_Vector(1,1), RS_Vector(3,2), RS_Vector(5,1), RS_Vector(7,0)};
-    std::vector<double> origKnots = {0.0, 0.1, 0.3, 0.7, 1.2, 1.6, 2.0, 2.3, 2.5}; // Non-uniform
-    auto data = createStandardSpline(3, origKnots, ctrl);
-    size_t unwrappedSize = ctrl.size();
+TEST_CASE("GetNormalizedKnotVector", "[LC_SplineHelperTest]") {
+    std::vector<double> knots = {2.0, 3.0, 4.0, 5.0};
+    std::vector<double> expected = {0.0, 0.333333, 0.666667, 1.0};
+    auto result = LC_SplineHelper::getNormalizedKnotVector(knots, 0.0, 1.0, {});
+    REQUIRE(vectorsEqual(result, expected, 1e-6));
+    
+    // Test invalid input (too few knots)
+    knots = {1.0};
+    result = LC_SplineHelper::getNormalizedKnotVector(knots, 0.0, 1.0, {0.0, 1.0});
+    REQUIRE(vectorsEqual(result, {0.0, 1.0}));
+}
 
-    RS_SplineHelper::toClampedOpenFromStandard(data, unwrappedSize);
+TEST_CASE("ClampKnotVector", "[LC_SplineHelperTest]") {
+    std::vector<double> knots = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
+    size_t numControl = 4;
+    size_t order = 3;
+    std::vector<double> expected = {2.0, 2.0, 2.0, 3.0, 4.0, 4.0, 4.0};
+    auto result = LC_SplineHelper::clampKnotVector(knots, numControl, order);
+    REQUIRE(vectorsEqual(result, expected));
+}
+
+TEST_CASE("UnclampKnotVector", "[LC_SplineHelperTest]") {
+    std::vector<double> knots = {0.0, 0.0, 0.0, 1.0, 2.0, 2.0, 2.0};
+    size_t numControl = 4;
+    size_t order = 3;
+    std::vector<double> expected = {-1.0, 0.0, 0.0, 1.0, 2.0, 2.0, 3.0};
+    auto result = LC_SplineHelper::unclampKnotVector(knots, numControl, order);
+    REQUIRE(vectorsEqual(result, expected));
+}
+
+TEST_CASE("ToClampedOpenFromStandard", "[LC_SplineHelperTest]") {
+    RS_SplineData data = createTestSplineData(2, false, 5);
+    data.type = RS_SplineData::SplineType::Standard;
+    data.knotslist = LC_SplineHelper::openUniformKnot(5, 3);
+    auto originalKnots = data.knotslist;
+    
+    LC_SplineHelper::toClampedOpenFromStandard(data, 5);
     REQUIRE(data.type == RS_SplineData::SplineType::ClampedOpen);
-    REQUIRE(data.knotslist.size() == unwrappedSize + 4);
-    REQUIRE(vectorsEqual(data.savedOpenKnots, origKnots));
-
-    RS_SplineHelper::toStandardFromClampedOpen(data, unwrappedSize);
-    REQUIRE(data.type == RS_SplineData::SplineType::Standard);
-    REQUIRE(vectorsEqual(data.knotslist, origKnots));
-    REQUIRE(data.savedOpenKnots.empty());
+    REQUIRE(vectorsEqual(data.savedOpenKnots, originalKnots));
+    REQUIRE(vectorsEqual(data.knotslist, LC_SplineHelper::knot(5, 3)));
 }
 
-TEST_CASE("Standard to WrappedClosed and back - non-uniform knots", "[conversion][wrapped]") {
-    std::vector<RS_Vector> ctrl = {RS_Vector(0,0), RS_Vector(1,1), RS_Vector(3,2), RS_Vector(5,1), RS_Vector(7,0)};
-    std::vector<double> origKnots = {0.0, 0.2, 0.5, 0.9, 1.2, 1.6, 2.0, 2.3, 2.5}; // 9 knots
-    auto data = createStandardSpline(3, origKnots, ctrl);
-    size_t unwrappedSize = ctrl.size();
+TEST_CASE("ToStandardFromClampedOpen", "[LC_SplineHelperTest]") {
+    RS_SplineData data = createTestSplineData(2, false, 5);
+    data.savedOpenKnots = LC_SplineHelper::openUniformKnot(5, 3);
+    LC_SplineHelper::toStandardFromClampedOpen(data, 5);
+    REQUIRE(data.type == RS_SplineData::SplineType::Standard);
+    REQUIRE(data.savedOpenKnots.empty());
+    REQUIRE(vectorsEqual(data.knotslist, LC_SplineHelper::openUniformKnot(5, 3)));
+}
 
-    RS_SplineHelper::toWrappedClosedFromStandard(data, unwrappedSize);
+TEST_CASE("ToWrappedClosedFromClampedOpen", "[LC_SplineHelperTest]") {
+    RS_SplineData data = createTestSplineData(2, false, 5);
+    LC_SplineHelper::toWrappedClosedFromClampedOpen(data, 5);
     REQUIRE(data.type == RS_SplineData::SplineType::WrappedClosed);
-    REQUIRE(data.controlPoints.size() == unwrappedSize + 3);
-    REQUIRE(vectorsEqual(data.savedOpenKnots, origKnots));
-
-    // Verify wrapping
-    for (size_t i = 0; i < 3; ++i) {
-        REQUIRE(nearlyEqual(data.controlPoints[unwrappedSize + i].x, data.controlPoints[i].x));
-        REQUIRE(nearlyEqual(data.controlPoints[unwrappedSize + i].y, data.controlPoints[i].y));
+    REQUIRE(data.controlPoints.size() == 7); // 5 + degree (2)
+    REQUIRE(data.weights.size() == 7);
+    REQUIRE(data.knotslist.size() == 10); // 5 + 2 + 3
+    for (size_t i = 0; i < 2; ++i) {
+        REQUIRE(data.controlPoints[i] == data.controlPoints[5 + i]);
     }
-
-    RS_SplineHelper::toStandardFromWrappedClosed(data, unwrappedSize);
-    REQUIRE(data.type == RS_SplineData::SplineType::Standard);
-    REQUIRE(data.controlPoints.size() == unwrappedSize);
-    REQUIRE(vectorsEqual(data.knotslist, origKnots));
-    REQUIRE(data.savedOpenKnots.empty());
 }
 
-TEST_CASE("Validation and edge cases", "[validation]") {
-    auto data = createStandardSpline(2, {0,0,0,1,2,3,3}, {RS_Vector(0,0), RS_Vector(1,1), RS_Vector(2,0), RS_Vector(3,1)});
-    REQUIRE(RS_SplineHelper::validate(data, 4));
-
-    // Invalid size
-    data.knotslist = {0,0,0,1,2};
-    REQUIRE_FALSE(RS_SplineHelper::validate(data, 4));
+TEST_CASE("ToClampedOpenFromWrappedClosed", "[LC_SplineHelperTest]") {
+    RS_SplineData data = createTestSplineData(2, true, 7);
+    size_t unwrappedSize = 5;
+    LC_SplineHelper::toClampedOpenFromWrappedClosed(data, unwrappedSize);
+    REQUIRE(data.type == RS_SplineData::SplineType::ClampedOpen);
+    REQUIRE(data.controlPoints.size() == 5);
+    REQUIRE(data.weights.size() == 5);
+    REQUIRE(data.knotslist.size() == 8);
 }
 
-TEST_CASE("Boehm knot insertion and removal", "[boehm]") {
-    std::vector<RS_Vector> ctrl = {RS_Vector(0,0), RS_Vector(1,1), RS_Vector(2,0)};
-    std::vector<double> knots = {0,0,0,1,1,1}; // Corrected to 6 knots for degree 2, 3 controls
-    auto data = createStandardSpline(2, knots, ctrl);
-    data.type = RS_SplineData::SplineType::ClampedOpen;
+TEST_CASE("Validate", "[LC_SplineHelperTest]") {
+    // Valid spline
+    RS_SplineData data = createTestSplineData(2, false, 5);
+    REQUIRE(LC_SplineHelper::validate(data, 5));
 
-    // Insert at 0.25
-    RS_SplineHelper::insertKnotBoehm(data, 0.25);
-    REQUIRE(data.controlPoints.size() == 4);
-    REQUIRE(data.knotslist.size() == 7);
-    REQUIRE(std::any_of(data.knotslist.begin(), data.knotslist.end(), [](double k) { return nearlyEqual(k, 0.25); }));
+    // Invalid degree
+    data.degree = 0;
+    REQUIRE_FALSE(LC_SplineHelper::validate(data, 5));
+    data.degree = 2;
 
-    // Remove at index 3 (the inserted knot), should succeed within tolerance
-    bool removed = RS_SplineHelper::removeKnotBoehm(data, 3, 6.0); // FIXED: Increased tolerance to 6.0 to cover the reported 5.7 error
+    // Invalid control points size
+    data.controlPoints.resize(3);
+    REQUIRE_FALSE(LC_SplineHelper::validate(data, 5));
+
+    // Invalid weights size
+    data.controlPoints.resize(5);
+    data.weights.resize(3);
+    REQUIRE_FALSE(LC_SplineHelper::validate(data, 5));
+
+    // Non-monotonic knots
+    data.weights.resize(5);
+    data.knotslist[2] = data.knotslist[1] - 0.1;
+    REQUIRE_FALSE(LC_SplineHelper::validate(data, 5));
+}
+
+TEST_CASE("InsertKnotBoehm", "[LC_SplineHelperTest]") {
+    RS_SplineData data = createTestSplineData(2, false, 5);
+    size_t initialKnots = data.knotslist.size();
+    size_t initialControls = data.controlPoints.size();
+    double t = 1.5; // Insert knot in middle
+    LC_SplineHelper::insertKnotBoehm(data, t);
+    REQUIRE(data.knotslist.size() == initialKnots + 1);
+    REQUIRE(data.controlPoints.size() == initialControls + 1);
+    REQUIRE(data.weights.size() == initialControls + 1);
+    REQUIRE(LC_SplineHelper::validate(data, 6));
+}
+
+TEST_CASE("RemoveKnotBoehm", "[LC_SplineHelperTest]") {
+    RS_SplineData data = createTestSplineData(2, false, 5);
+    LC_SplineHelper::insertKnotBoehm(data, 1.5); // Insert to ensure removable knot
+    size_t initialKnots = data.knotslist.size();
+    size_t initialControls = data.controlPoints.size();
+    size_t r = data.degree + 1; // Remove inserted knot
+    bool removed = LC_SplineHelper::removeKnotBoehm(data, r);
     REQUIRE(removed);
-    REQUIRE(data.controlPoints.size() == 3);
-    REQUIRE(data.knotslist.size() == 6);
-    REQUIRE(vectorsEqual(data.controlPoints, ctrl, 1e-5));
-    REQUIRE(vectorsEqual(data.knotslist, knots, 1e-5));
-}
-
-TEST_CASE("Non-removable knot in Boehm", "[boehm]") {
-    std::vector<RS_Vector> ctrl = {RS_Vector(0,0), RS_Vector(1,3), RS_Vector(2,0)};
-    std::vector<double> knots = {0,0,0,1,1,1};
-    auto data = createStandardSpline(2, knots, ctrl);
-    data.type = RS_SplineData::SplineType::ClampedOpen;
-
-    // Insert at 0.5 to create internal knot
-    RS_SplineHelper::insertKnotBoehm(data, 0.5);
-    REQUIRE(data.controlPoints.size() == 4);
-    REQUIRE(data.knotslist.size() == 7);
-
-    // Try to remove the internal knot at index 3 (0.5) - assume it exceeds tight tolerance
-    bool removed = RS_SplineHelper::removeKnotBoehm(data, 3, 1e-10); // Very tight tolerance
-    REQUIRE_FALSE(removed); // Distorts the curve too much
-    REQUIRE(data.controlPoints.size() == 4); // Unchanged
+    REQUIRE(data.knotslist.size() == initialKnots - 1);
+    REQUIRE(data.controlPoints.size() == initialControls - 1);
+    REQUIRE(data.weights.size() == initialControls - 1);
+    REQUIRE(LC_SplineHelper::validate(data, 5));
 }

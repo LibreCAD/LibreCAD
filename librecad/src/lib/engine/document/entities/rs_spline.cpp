@@ -40,49 +40,6 @@
 
 namespace {
 
-/** Compute rational B-spline basis functions */
-std::vector<double> rbasis(int c, double t, int npts,
-                           const std::vector<double>& x,
-                           const std::vector<double>& h) {
-
-    int const nplusc = npts + c;
-
-    std::vector<double> temp(nplusc,0.);
-
-    // calculate the first order nonrational basis functions n[i]
-    for (int i = 0; i< nplusc-1; i++)
-        if ((t >= x[i]) && (t < x[i+1])) temp[i] = 1;
-
-    /* calculate the higher order nonrational basis functions */
-
-    for (int k = 2; k <= c; k++) {
-        for (int i = 0; i < nplusc-k; i++) {
-            // if the lower order basis function is zero skip the calculation
-            if (temp[i] != 0)
-                temp[i] = ((t-x[i])*temp[i])/(x[i+k-1]-x[i]);
-            // if the lower order basis function is zero skip the calculation
-            if (temp[i+1] != 0)
-                temp[i] += ((x[i+k]-t)*temp[i+1])/(x[i+k]-x[i+1]);
-        }
-    }
-
-    // pick up last point
-    if (t >= x[nplusc-1]) temp[npts-1] = 1;
-
-    // calculate sum for denominator of rational basis functions
-    double sum = 0.;
-    for (int i = 0; i < npts; i++) {
-        sum += temp[i]*h[i];
-    }
-
-    std::vector<double> r(npts, 0);
-    // form rational basis functions and put in r vector
-    if (sum != 0) {
-        for (int i = 0; i < npts; i++)
-            r[i] = (temp[i]*h[i])/sum;
-    }
-    return r;
-}
 
 std::vector<double> convertOpenToClosedKnotVector(const std::vector<double>& openKnots,
                                                   size_t n, size_t m) {
@@ -128,8 +85,7 @@ std::vector<double> convertOpenToClosedKnotVector(const std::vector<double>& ope
     std::vector<double> closedKnots = {openKnots.cbegin() + startIdx, openKnots.cbegin() + lastIdx + 1};
     if (closedKnots.size() < 2)
         return {};
-    double delta = period * closedKnots.size() / (closedKnots.size() - 1);
-
+    double delta = period; // FIXED: Corrected delta to period for proper periodic extension and uniform spacing
     const size_t newSize = n + 2 * m + 1;
     for (size_t i = 0; closedKnots.size() < newSize; ++i) {
         closedKnots.push_back(closedKnots[i] + delta);
@@ -144,9 +100,9 @@ std::vector<double> convertClosedToOpenKnotVector(const std::vector<double>& clo
 
     size_t openSize = n + m + 1;
 
-    std::vector<double> openKnots(m, closedKnots.front());
-    std::copy(closedKnots.cbegin() + m, closedKnots.cbegin() + n + 1, std::back_inserter(openKnots)); // FIXED: Corrected invalid iterator range (was cbegin() - m + 2, causing negative offsets)
-    while(openKnots.size() < openSize)
+    std::vector<double> openKnots(m + 1, closedKnots.front());
+    std::copy(closedKnots.cbegin() + m + 1, closedKnots.cbegin() + n + 1, std::back_inserter(openKnots));
+    while (openKnots.size() < openSize)
         openKnots.push_back(openKnots.back());
     return openKnots;
 }
@@ -1243,4 +1199,49 @@ bool RS_Spline::solveLinear(const std::vector<std::vector<double>>& A, const std
         x[i] /= mat[i][i];
     }
     return true;
+}
+
+
+/** Compute rational B-spline basis functions */
+std::vector<double> RS_Spline::rbasis(int c, double t, int npts,
+                                      const std::vector<double>& x,
+                                      const std::vector<double>& h) {
+
+    int const nplusc = npts + c;
+
+    std::vector<double> temp(nplusc,0.);
+
+    // calculate the first order nonrational basis functions n[i]
+    for (int i = 0; i< nplusc-1; i++)
+        if ((t >= x[i]) && (t < x[i+1])) temp[i] = 1;
+
+    /* calculate the higher order nonrational basis functions */
+
+    for (int k = 2; k <= c; k++) {
+        for (int i = 0; i < nplusc-k; i++) {
+            // if the lower order basis function is zero skip the calculation
+            if (temp[i] != 0)
+                temp[i] = ((t-x[i])*temp[i])/(x[i+k-1]-x[i]);
+            // if the lower order basis function is zero skip the calculation
+            if (temp[i+1] != 0)
+                temp[i] += ((x[i+k]-t)*temp[i+1])/(x[i+k]-x[i+1]);
+        }
+    }
+
+    // pick up last point
+    if (t >= x[nplusc-1]) temp[npts-1] = 1;
+
+    // calculate sum for denominator of rational basis functions
+    double sum = 0.;
+    for (int i = 0; i < npts; i++) {
+        sum += temp[i]*h[i];
+    }
+
+    std::vector<double> r(npts, 0);
+    // form rational basis functions and put in r vector
+    if (sum != 0) {
+        for (int i = 0; i < npts; i++)
+            r[i] = (temp[i]*h[i])/sum;
+    }
+    return r;
 }

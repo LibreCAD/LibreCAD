@@ -73,6 +73,64 @@ bool vectorsEqual(const std::vector<double>& a, const std::vector<double>& b) {
     return std::equal(a.begin(), a.end(), b.begin(),
                       [](double x, double y) { return std::abs(x - y) < RS_TOLERANCE; });
 }
+
+/** Compute rational B-spline basis functions (copied for evaluate) */
+std::vector<double> rbasis_helper(int c, double t, int npts,
+                                  const std::vector<double>& x,
+                                  const std::vector<double>& h) {
+
+    int const nplusc = npts + c;
+
+    std::vector<double> temp(nplusc,0.);
+
+    // calculate the first order nonrational basis functions n[i]
+    for (int i = 0; i< nplusc-1; i++)
+        if ((t >= x[i]) && (t < x[i+1])) temp[i] = 1;
+
+    /* calculate the higher order nonrational basis functions */
+
+    for (int k = 2; k <= c; k++) {
+        for (int i = 0; i < nplusc-k; i++) {
+            // if the lower order basis function is zero skip the calculation
+            if (temp[i] != 0)
+                temp[i] = ((t-x[i])*temp[i])/(x[i+k-1]-x[i]);
+            // if the lower order basis function is zero skip the calculation
+            if (temp[i+1] != 0)
+                temp[i] += ((x[i+k]-t)*temp[i+1])/(x[i+k]-x[i+1]);
+        }
+    }
+
+    // pick up last point
+    if (t >= x[nplusc-1]) temp[npts-1] = 1;
+
+    // calculate sum for denominator of rational basis functions
+    double sum = 0.;
+    for (int i = 0; i < npts; i++) {
+        sum += temp[i]*h[i];
+    }
+
+    std::vector<double> r(npts, 0);
+    // form rational basis functions and put in r vector
+    if (sum != 0) {
+        for (int i = 0; i < npts; i++)
+            r[i] = (temp[i]*h[i])/sum;
+    }
+    return r;
+}
+
+/** Evaluate NURBS at t using rbasis_helper. */
+RS_Vector evaluateNURBS(const RS_SplineData& data, double t) {
+    size_t np = data.controlPoints.size();
+    size_t k = data.degree + 1;
+    auto x = data.knotslist;
+    auto h = data.weights;
+    auto nbasis = rbasis_helper(k, t, np, x, h);
+    RS_Vector point(0.0, 0.0);
+    for (size_t i = 0; i < np; i++) {
+        point += data.controlPoints[i] * nbasis[i];
+    }
+    return point;
+}
 }
 
 /**
@@ -393,23 +451,20 @@ void RS_SplineHelper::insertKnotBoehm(RS_SplineData& data, double t, double tol)
     bool rational = std::any_of(data.weights.begin(), data.weights.end(),
                                 [](double w) { return std::abs(w - 1.0) > RS_TOLERANCE; });
 
-    std::vector<RS_Vector> hom(np);
-    std::vector<double> w(np);
+    std::vector<Homog> hom(np);
     for (size_t i = 0; i < np; ++i) {
-        w[i] = rational ? data.weights[i] : 1.0;
-        hom[i] = data.controlPoints[i] * w[i];
+        double ww = rational ? data.weights[i] : 1.0;
+        hom[i] = Homog(data.controlPoints[i], ww);
     }
 
-    std::vector<RS_Vector> newHom(np + 1);
-    std::vector<double> newW(np + 1);
-    for (size_t i = 0; i <= static_cast<size_t>(k - p); ++i) { newHom[i] = hom[i]; newW[i] = w[i]; }
-    for (size_t i = k + 1; i < np; ++i) { newHom[i + 1] = hom[i]; newW[i + 1] = w[i]; }
+    std::vector<Homog> newHom(np + 1);
+    for (size_t i = 0; i <= static_cast<size_t>(k - p); ++i) newHom[i] = hom[i];
+    for (size_t i = k; i < np; i++) newHom[i + 1] = hom[i];  // FIXED: Changed from k+1 to k
 
-    for (int j = k - p + 1; j <= k; ++j) {
+    for (int j = static_cast<int>(k - p) + 1; j <= k; ++j) {
         double denom = data.knotslist[j + p] - data.knotslist[j];
         double alpha = (denom > RS_TOLERANCE) ? (t - data.knotslist[j]) / denom : 0.0;
         newHom[j] = hom[j - 1] * (1 - alpha) + hom[j] * alpha;
-        newW[j] = w[j - 1] * (1 - alpha) + w[j] * alpha;
     }
 
     std::vector<double> newKnots(data.knotslist.size() + 1);
@@ -418,22 +473,31 @@ void RS_SplineHelper::insertKnotBoehm(RS_SplineData& data, double t, double tol)
     std::copy(data.knotslist.begin() + k + 1, data.knotslist.end(), newKnots.begin() + k + 2);
 
     data.knotslist = newKnots;
-    data.weights = newW;
     data.controlPoints.resize(np + 1);
+    data.weights.resize(np + 1);
     for (size_t i = 0; i <= np; ++i) {
-        data.controlPoints[i] = (std::abs(newW[i]) > RS_TOLERANCE) ? newHom[i] / newW[i] : RS_Vector(false);
+        data.controlPoints[i] = newHom[i].toPoint();
+        data.weights[i] = newHom[i].w;
     }
 }
 
 /**
- * Boehm's knot removal algorithm.
- * Removes knot at index r if possible without exceeding error tolerance.
- * Returns true if removed, false otherwise.
- *
- * @param data  Spline data to modify
- * @param r     Index of knot to remove (0 to knots.size()-1)
- * @param tol   Maximum allowed geometric error (default RS_TOLERANCE)
- * @return      true if knot was removed
+ * Compute max error in span [u_lo, u_hi] by sampling.
+ */
+double computeMaxError(const RS_SplineData& orig, const RS_SplineData& reduced, double u_lo, double u_hi, int samples = 10) {
+    double max_err = 0.0;
+    for (int k = 0; k <= samples; ++k) {
+        double param = u_lo + (u_hi - u_lo) * static_cast<double>(k) / samples;
+        RS_Vector p_orig = evaluateNURBS(orig, param);
+        RS_Vector p_red = evaluateNURBS(reduced, param);
+        double dist = p_orig.distanceTo(p_red);
+        if (dist > max_err) max_err = dist;
+    }
+    return max_err;
+}
+
+/**
+ * Boehm's knot removal algorithm with full error check.
  */
 bool RS_SplineHelper::removeKnotBoehm(RS_SplineData& data, size_t r, double tol) {
     size_t p = data.degree;
@@ -477,58 +541,55 @@ bool RS_SplineHelper::removeKnotBoehm(RS_SplineData& data, size_t r, double tol)
     int k = findSpan(data.knotslist, u, p, np);
     int s = 1; // Removing one instance
 
-    // Error check: For i from k-p to k-s, compute error
-    double maxError = 0.0;
-    int ord = static_cast<int>(p) + 1;
-    for (int i = k - static_cast<int>(p); i <= k - s; ++i) {
-        if (i < 0 || i >= static_cast<int>(np)) continue;
-        double denom = data.knotslist[k + ord] - data.knotslist[i + ord - 1];
-        if (std::abs(denom) < RS_TOLERANCE) continue;
-        double alpha = (data.knotslist[k + ord] - data.knotslist[i]) / denom;
-        if (std::abs(alpha) < RS_TOLERANCE || std::abs(1.0 - alpha) < RS_TOLERANCE) continue;
+    // Create tentative reduced data for error check
+    RS_SplineData reduced = data;  // Copy
+    std::vector<Homog> Pw_red = Pw;  // Copy for reduced
 
-        Homog estimated = Pw[i + 1] * alpha + Pw[i] * (1.0 - alpha);
-        Homog diff = Pw[i] - estimated;
-        maxError = std::max(maxError, diff.magnitude());
-    }
-    if (maxError > tol) {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "removeKnotBoehm: Error %f exceeds tolerance %f", maxError, tol);
-        return false;
-    }
-
-    // Perform removal: Update controls backward
-    for (int j = k - p + 1; j <= k - s; ++j) {
+    // Perform tentative removal on reduced
+    for (int j = k - s; j >= k - static_cast<int>(p) + 1; --j) {
         if (j < 0 || j >= static_cast<int>(np)) continue;
-        double denom = data.knotslist[k + ord] - data.knotslist[j + ord - 1];
+        double denom = reduced.knotslist[j + p] - reduced.knotslist[j];
         if (std::abs(denom) < RS_TOLERANCE) return false;
-        double alpha = (data.knotslist[k + ord] - data.knotslist[j]) / denom;
+        double alpha = (u - reduced.knotslist[j]) / denom;
 
-        // Solve for Pw[j-1]
-        Pw[j - 1] = (Pw[j] - Pw[j - 1] * (1.0 - alpha)) / alpha;
+        // Solve for Pw_red[j]
+        Pw_red[j] = (Pw_red[j] - Pw_red[j - 1] * alpha) / (1.0 - alpha);
     }
 
     // Shift controls to remove one
     for (size_t j = static_cast<size_t>(k - s + 1); j < np; ++j) {
-        Pw[j - 1] = Pw[j];
+        Pw_red[j - 1] = Pw_red[j];
     }
-    Pw.resize(np - 1);
+    Pw_red.resize(np - 1);
 
-    // Remove knot
+    // Remove knot from reduced
     std::vector<double> newKnots;
     newKnots.reserve(nk - 1);
     for (size_t j = 0; j < nk; ++j) {
-        if (j != r) newKnots.push_back(data.knotslist[j]);
+        if (j != r) newKnots.push_back(reduced.knotslist[j]);
     }
-    data.knotslist = newKnots;
+    reduced.knotslist = newKnots;
 
-    // Update data
-    data.controlPoints.resize(np - 1);
-    data.weights.resize(np - 1);
+    // Update reduced data
+    reduced.controlPoints.resize(np - 1);
+    reduced.weights.resize(np - 1);
     for (size_t i = 0; i < np - 1; ++i) {
-        data.controlPoints[i] = Pw[i].toPoint();
-        data.weights[i] = Pw[i].w;
+        reduced.controlPoints[i] = Pw_red[i].toPoint();
+        reduced.weights[i] = Pw_red[i].w;
     }
 
+    // Compute global error in affected span [u_lo, u_hi]
+    double u_lo = data.knotslist[k - p + 1];  // Approximate affected start
+    double u_hi = data.knotslist[k + 1];  // End of span
+    double max_err = computeMaxError(data, reduced, u_lo, u_hi);
+
+    if (max_err > tol) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "removeKnotBoehm: Error %f exceeds tolerance %f", max_err, tol);
+        return false;
+    }
+
+    // Apply to original data
+    data = reduced;  // Copy back if success
     return true;
 }
 
