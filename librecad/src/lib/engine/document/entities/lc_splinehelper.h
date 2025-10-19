@@ -87,6 +87,7 @@ public:
     // Generators
     static std::vector<double> knot(size_t controlPointCount, size_t splineOrder);  // Clamped uniform
     static std::vector<double> openUniformKnot(size_t controlPointCount, size_t splineOrder);  // Standard uniform
+    static std::vector<double> computeAveragedKnots(const std::vector<double>& parameters, int degree);  // Averaged knots for interpolation
 
 private:
 };
