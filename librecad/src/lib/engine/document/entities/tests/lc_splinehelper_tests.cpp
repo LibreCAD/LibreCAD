@@ -91,13 +91,13 @@ TEST_CASE("ConvertClosedToOpenKnotVector", "[LC_SplineHelperTest]") {
 
 TEST_CASE("GetNormalizedKnotVector", "[LC_SplineHelperTest]") {
     std::vector<double> knots = {2.0, 3.0, 4.0, 5.0};
-    std::vector<double> expected = {0.0, 0.333333, 0.666667, 1.0};
-    auto result = LC_SplineHelper::getNormalizedKnotVector(knots, 0.0, 1.0, {});
+    std::vector<double> expected = {0.0, 1.0, 2.0, 3.0};
+    auto result = LC_SplineHelper::getNormalizedKnotVector(knots, 0.0, {});
     REQUIRE(vectorsEqual(result, expected, 1e-6));
     
     // Test invalid input (too few knots)
     knots = {1.0};
-    result = LC_SplineHelper::getNormalizedKnotVector(knots, 0.0, 1.0, {0.0, 1.0});
+    result = LC_SplineHelper::getNormalizedKnotVector(knots, 0.0, {0.0, 1.0});
     REQUIRE(vectorsEqual(result, {0.0, 1.0}));
 }
 
@@ -114,9 +114,9 @@ TEST_CASE("UnclampKnotVector", "[LC_SplineHelperTest]") {
     std::vector<double> knots = {0.0, 0.0, 0.0, 1.0, 2.0, 2.0, 2.0};
     size_t numControl = 4;
     size_t order = 3;
-    std::vector<double> expected = {0.0, 0.333333, 0.666667, 1.0, 1.333333, 1.666667, 2.0};
+    std::vector<double> expected = {-1.0, 0.0, 0.0, 1.0, 2.0, 2.0, 3.0};
     auto result = LC_SplineHelper::unclampKnotVector(knots, numControl, order);
-    REQUIRE(vectorsEqual(result, expected, 1e-6));
+    REQUIRE(vectorsEqual(result, expected));
 }
 
 TEST_CASE("ToClampedOpenFromStandard", "[LC_SplineHelperTest]") {
@@ -153,7 +153,7 @@ TEST_CASE("ToWrappedClosedFromClampedOpen", "[LC_SplineHelperTest]") {
 }
 
 TEST_CASE("ToClampedOpenFromWrappedClosed", "[LC_SplineHelperTest]") {
-    RS_SplineData data = createSplineData(2, true, 5);
+    RS_SplineData data = createSplineData(2, true, 7);
     size_t unwrappedSize = 5;
     LC_SplineHelper::toClampedOpenFromWrappedClosed(data, unwrappedSize);
     REQUIRE(data.type == RS_SplineData::SplineType::ClampedOpen);

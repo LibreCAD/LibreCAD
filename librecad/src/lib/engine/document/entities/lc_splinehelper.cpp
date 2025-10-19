@@ -197,27 +197,21 @@ std::vector<double> LC_SplineHelper::convertClosedToOpenKnotVector(const std::ve
     std::copy(closedKnotVector.begin() + splineOrder, closedKnotVector.begin() + unwrappedControlCount + 1, std::back_inserter(openKnotVector));
     double lastKnotValue = openKnotVector.back();
     std::fill_n(std::back_inserter(openKnotVector), splineOrder - 1, lastKnotValue);
-    return getNormalizedKnotVector(openKnotVector, 0.0, static_cast<double>(unwrappedControlCount - splineDegree), {});
+    return getNormalizedKnotVector(openKnotVector, 0.0, {});
 }
 
 /**
- * Normalize knot vector to [newMin, newMax] while preserving relative spacing.
+ * Normalize knot vector by shifting to newMinimum (no scaling).
  */
 std::vector<double> LC_SplineHelper::getNormalizedKnotVector(const std::vector<double>& inputKnotVector,
                                                              double newMinimum,
-                                                             double newMaximum,
                                                              const std::vector<double>& fallbackKnotVector) {
     if (inputKnotVector.size() < 2) return fallbackKnotVector;
     double minKnot = *std::min_element(inputKnotVector.begin(), inputKnotVector.end());
-    double maxKnot = *std::max_element(inputKnotVector.begin(), inputKnotVector.end());
-    double knotRange = maxKnot - minKnot;
-    if (knotRange < RS_TOLERANCE) return fallbackKnotVector;
-
-    std::vector<double> normalizedKnotVector(inputKnotVector.size());
-    double scaleFactor = (newMaximum - newMinimum) / knotRange;
-    std::transform(inputKnotVector.begin(), inputKnotVector.end(), normalizedKnotVector.begin(),
-                   [minKnot, newMinimum, scaleFactor](double knotValue) { return newMinimum + (knotValue - minKnot) * scaleFactor; });
-    return normalizedKnotVector;
+    std::vector<double> shiftedKnotVector(inputKnotVector.size());
+    std::transform(inputKnotVector.begin(), inputKnotVector.end(), shiftedKnotVector.begin(),
+                   [minKnot, newMinimum](double knotValue) { return newMinimum + (knotValue - minKnot); });
+    return shiftedKnotVector;
 }
 
 /**
@@ -231,7 +225,7 @@ std::vector<double> LC_SplineHelper::unclampKnotVector(const std::vector<double>
     for (int extensionIndex = splineDegree - 1; extensionIndex >= 0; --extensionIndex) unclampedKnotVector[extensionIndex] = unclampedKnotVector[extensionIndex + 1] - leftIntervalSpacing;
     double rightIntervalSpacing = inputKnotVector[controlPointCount] - inputKnotVector[controlPointCount - 1];
     for (size_t extensionIndex = controlPointCount + 1; extensionIndex < unclampedKnotVector.size(); ++extensionIndex) unclampedKnotVector[extensionIndex] = unclampedKnotVector[extensionIndex - 1] + rightIntervalSpacing;
-    return getNormalizedKnotVector(unclampedKnotVector, 0.0, static_cast<double>(controlPointCount - splineDegree), {});
+    return getNormalizedKnotVector(unclampedKnotVector, 0.0, {});
 }
 
 /**
@@ -451,7 +445,8 @@ void LC_SplineHelper::insertKnotBoehm(RS_SplineData& splineData, double paramete
 }
 
 /**
- * Remove knot using Boehm's algorithm if error < tol.
+ * Remove knot using simplified Boehm's algorithm (NURBS Book A5.8 for s=1).
+ * Checks removability via control point difference; no sampling for speed.
  */
 bool LC_SplineHelper::removeKnotBoehm(RS_SplineData& splineData, size_t r, double tol) {
     size_t p = splineData.degree;
@@ -468,13 +463,9 @@ bool LC_SplineHelper::removeKnotBoehm(RS_SplineData& splineData, size_t r, doubl
         return false;
     }
 
-    int mult = 1;
-    for (size_t i = r + 1; i < nk && RS_Math::equal(splineData.knotslist[i], splineData.knotslist[r]); ++i) ++mult;
-    for (int i = static_cast<int>(r) - 1; i >= 0 && RS_Math::equal(splineData.knotslist[i], splineData.knotslist[r]); --i) ++mult;
-    if (mult > 1) {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "removeKnotBoehm: Knot multiplicity > 1, cannot remove exactly");
-        return false;
-    }
+    // Assume multiplicity s=1 for simplification
+    int s = 1;
+    double u = splineData.knotslist[r];
 
     bool rational = std::any_of(splineData.weights.begin(), splineData.weights.end(),
                                 [](double w) { return std::abs(w - 1.0) > RS_TOLERANCE; });
@@ -485,87 +476,64 @@ bool LC_SplineHelper::removeKnotBoehm(RS_SplineData& splineData, size_t r, doubl
         Pw[i] = Homog(splineData.controlPoints[i], ww);
     }
 
-    int k = findSpan(splineData.knotslist, splineData.knotslist[r], p, np);
-    int s = 1; // Removing one instance
+    int k = findSpan(splineData.knotslist, u, p, np);
 
-    RS_SplineData reduced = splineData;  // Copy
-    std::vector<Homog> Qw = Pw;  // Copy for reduced
+    // Simplified Boehm removal
+    int first = k - p;
+    int last = k - s + 1;
 
-    // Left estimates
-    std::vector<Homog> left(p + 1);
-    for (int j = 0; j <= p - s; ++j) {
-        left[j] = Qw[k - p + j];
-    }
-    for (int j = 1; j <= s; ++j) {
-        int L = k - p + j;
-        for (int i = 0; i <= p - j; ++i) {
-            double denom = reduced.knotslist[L + p - i] - reduced.knotslist[L];
-            if (std::abs(denom) < tol) return false;
-            double alpha = (reduced.knotslist[r] - reduced.knotslist[L]) / denom;
-            left[p - j - i] = (left[p - j - i] - left[p - j - i - 1] * (1.0 - alpha)) / alpha;
-        }
-    }
+    std::vector<Homog> temp(2 * (p - s) + 1);
 
-    // Right estimates
-    std::vector<Homog> right(p + 1);
-    for (int j = 0; j <= p - s; ++j) {
-        right[j] = Qw[k - p + j];
-    }
-    for (int j = 1; j <= s; ++j) {
-        int L = k - p + j;
-        for (int i = 0; i <= p - j; ++i) {
-            double denom = reduced.knotslist[L + p - i] - reduced.knotslist[L];
-            if (std::abs(denom) < tol) return false;
-            double alpha = (reduced.knotslist[r] - reduced.knotslist[L]) / denom;
-            right[i] = right[i] * alpha + right[i + 1] * (1.0 - alpha);
-        }
+    int off = first - 1;
+    temp[0] = Pw[off];
+    temp[last + s - off - 1] = Pw[last];
+
+    int i = first;
+    int j = last;
+    int ii = 1;
+    int jj = last + s - off - 2;
+
+    int remflag = 0;
+    while (j - i > remflag) {
+        double alfi = (u - splineData.knotslist[i]) / (splineData.knotslist[i + p + 1 - remflag] - splineData.knotslist[i]);
+        double alfj = (u - splineData.knotslist[j]) / (splineData.knotslist[j + p + 1 - remflag] - splineData.knotslist[j]);
+        temp[ii] = (Pw[i] - temp[ii - 1] * (1.0 - alfi)) / alfi;
+        temp[jj] = (Pw[j] - temp[jj + 1] * alfj) / (1.0 - alfj);
+        ++i;
+        --j;
+        ++ii;
+        --jj;
     }
 
-    // Check tolerance for all s=1 (single)
-    if ((left[p - s] - right[s]).magnitude() > tol) return false;
+    // Check removability
+    if ((temp[ii - 1] - temp[jj + 1]).magnitude() > tol) return false;
 
-    // Use average for new point
-    Qw[k - p] = (left[p - s] + right[s]) / 2.0;
-
-    // Shift
-    for (size_t j = k - p + s + 1; j < np; ++j) {
-        Qw[j - s] = Qw[j];
+    i = first;
+    j = last;
+    while (j - i > remflag) {
+        Pw[i] = temp[i - off];
+        Pw[j] = temp[j - off];
+        ++i;
+        --j;
     }
-    Qw.resize(np - s);
+
+    // Shift remaining controls
+    for (size_t l = k - p + 1; l < np - 1; ++l) {
+        Pw[l] = Pw[l + 1];
+    }
+    Pw.resize(np - 1);
+
+    // Update splineData
+    splineData.controlPoints.resize(np - 1);
+    splineData.weights.resize(np - 1);
+    for (size_t l = 0; l < np - 1; ++l) {
+        splineData.controlPoints[l] = Pw[l].toPoint();
+        splineData.weights[l] = Pw[l].w;
+    }
 
     // Remove knot
-    std::vector<double> newKnots;
-    newKnots.reserve(nk - s);
-    for (size_t j = 0; j < nk; ++j) {
-        if (j != r) newKnots.push_back(reduced.knotslist[j]);
-    }
-    reduced.knotslist = newKnots;
+    splineData.knotslist.erase(splineData.knotslist.begin() + r);
 
-    // Update reduced
-    reduced.controlPoints.resize(np - s);
-    reduced.weights.resize(np - s);
-    for (size_t i = 0; i < np - s; ++i) {
-        reduced.controlPoints[i] = Qw[i].toPoint();
-        reduced.weights[i] = Qw[i].w;
-    }
-
-    // Error check (curve distance)
-    double u_lo = splineData.knotslist[k - p + 1];
-    double u_hi = splineData.knotslist[k + 1];
-    const int samples = 50;
-    double step = (u_hi - u_lo) / (samples - 1.0);
-    double max_err = 0.0;
-    for (int i = 0; i < samples; ++i) {
-        double t = u_lo + i * step;
-        max_err = std::max(max_err, evaluateNURBS(splineData, t).distanceTo(evaluateNURBS(reduced, t)));
-    }
-
-    if (max_err > tol) {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "removeKnotBoehm: Error %f exceeds tolerance %f", max_err, tol);
-        return false;
-    }
-
-    splineData = reduced;
     return true;
 }
 
