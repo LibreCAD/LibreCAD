@@ -1022,6 +1022,18 @@ const LC_CommandItem g_commandList[] = {
              {"zr", QObject::tr("zr", "zoom - redraw")}},
             RS2::ActionZoomRedraw
         },
+        // zoom in
+        {
+            {{"zoomin", QObject::tr("zoomin", "zoom - in")}},
+            {{"zi", QObject::tr("zi", "zoom - in")}},
+            RS2::ActionZoomIn
+        },
+        // zoom out
+        {
+            {{"zoomout", QObject::tr("zoomout", "zoom - out")}},
+            {{"zo", QObject::tr("zo", "zoom - out")}},
+            RS2::ActionZoomOut
+        },
         // zoom auto
         {
             {{"zoomauto", QObject::tr("zoomauto", "zoom - auto")}},
