@@ -64,16 +64,17 @@ RS_SplineData createSplineData(int degree, bool closed, size_t numControlPoints,
     RS_SplineData data;
     data.degree = degree;
     data.type = closed ? RS_SplineData::SplineType::WrappedClosed : RS_SplineData::SplineType::ClampedOpen;
-    data.controlPoints.resize(numControlPoints);
-    data.weights.resize(numControlPoints, 1.0);
-    for (size_t i = 0; i < numControlPoints; ++i) {
+    size_t actualPoints = closed ? numControlPoints - degree : numControlPoints;
+    data.controlPoints.resize(actualPoints);
+    data.weights.resize(actualPoints, 1.0);
+    for (size_t i = 0; i < actualPoints; ++i) {
         data.controlPoints[i] = RS_Vector(static_cast<double>(i), static_cast<double>(i));
         if (rational) data.weights[i] = 1.0 + static_cast<double>(i) * 0.1;
     }
-    data.knotslist = customKnots ? std::vector<double>{0.0, 0.0, 0.0, 0.5, 1.5, 3.0, 3.0, 3.0} : LC_SplineHelper::knot(numControlPoints, degree + 1);
+    data.knotslist = customKnots ? std::vector<double>{0.0, 0.0, 0.0, 0.5, 1.5, 3.0, 3.0, 3.0} : LC_SplineHelper::knot(actualPoints, degree + 1);
     if (closed) {
         LC_SplineHelper::addWrapping(data, true);
-        LC_SplineHelper::updateKnotWrapping(data, true, numControlPoints - degree);
+        LC_SplineHelper::updateKnotWrapping(data, true, actualPoints);
     }
     return data;
 }

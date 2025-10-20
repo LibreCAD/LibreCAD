@@ -301,7 +301,7 @@ public:
 
     /** Change spline type (Standard, ClampedOpen, WrappedClosed) */
     void changeType(RS_SplineData::SplineType newType);
-static std::vector<double> rbasis(int c, double t, int npts,
+    static std::vector<double> rbasis(int c, double t, int npts,
                                       const std::vector<double>& x,
                                       const std::vector<double>& h);
 

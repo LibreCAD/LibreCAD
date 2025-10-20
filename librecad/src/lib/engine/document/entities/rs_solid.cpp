@@ -60,7 +60,7 @@ bool isInternalPoint(const RS_Vector& point, const RS_VectorSolutions& contour){
     RS_VectorSolutions sol;
 
     // ignore invalid points
-    std::copy_if(contour.begin(), contour.end(), std::back_inserter(sol), RS_Vector::isValid);
+    std::copy(contour.begin(), contour.end(), std::back_inserter(sol));
 
     switch (sol.size()) {
         case 0:

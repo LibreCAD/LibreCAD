@@ -34,13 +34,13 @@ public:
     static void toClampedOpenFromStandard(RS_SplineData& splineData, size_t unwrappedControlCount);
     static void toStandardFromClampedOpen(RS_SplineData& splineData, size_t unwrappedControlCount);
     static void toWrappedClosedFromClampedOpen(RS_SplineData& splineData, size_t unwrappedControlCount);
-    static void toClampedOpenFromWrappedClosed(RS_SplineData& splineData, size_t& unwrappedControlCount);
+    static void toClampedOpenFromWrappedClosed(RS_SplineData& splineData, size_t unwrappedControlCount);
     static void toWrappedClosedFromStandard(RS_SplineData& splineData, size_t unwrappedControlCount);
     static void toStandardFromWrappedClosed(RS_SplineData& splineData, size_t unwrappedControlCount);
 
     // Wrapping
     static void addWrapping(RS_SplineData& splineData, bool isClosed);
-    static void removeWrapping(RS_SplineData& splineData, bool isClosed, size_t& unwrappedControlCount);
+    static void removeWrapping(RS_SplineData& splineData, bool isClosed, size_t unwrappedControlCount);
     static void updateControlAndWeightWrapping(RS_SplineData& splineData, bool isClosed, size_t unwrappedControlCount);
     static void updateKnotWrapping(RS_SplineData& splineData, bool isClosed, size_t unwrappedControlCount);
 
