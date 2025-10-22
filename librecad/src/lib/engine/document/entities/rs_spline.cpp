@@ -634,18 +634,22 @@ std::ostream& operator << (std::ostream& os, const RS_Spline& l) {
 void RS_Spline::changeType(RS_SplineData::SplineType newType) {
     if (data.type == newType) return;
 
-    size_t unwrappedSize = getUnwrappedSize();
-    bool isClosedNew = (newType == RS_SplineData::SplineType::WrappedClosed);
-
-    if (isClosedNew) {
-        data.savedOpenType = data.type;
-        LC_SplineHelper::toWrappedClosedFromStandard(data);
-    } else {
-        if (data.type == RS_SplineData::SplineType::WrappedClosed) {
-            LC_SplineHelper::toStandardFromWrappedClosed(data);
-        }
-        data.type = newType;
+    // Always convert to Standard as intermediate
+    if (data.type == RS_SplineData::SplineType::WrappedClosed) {
+        LC_SplineHelper::toStandardFromWrappedClosed(data);
+    } else if (data.type == RS_SplineData::SplineType::ClampedOpen) {
+        LC_SplineHelper::toStandardFromClampedOpen(data);
     }
+    // Now data.type is Standard (or was already)
+
+    if (newType == RS_SplineData::SplineType::WrappedClosed) {
+        data.savedOpenType = RS_SplineData::SplineType::Standard;
+        LC_SplineHelper::toWrappedClosedFromStandard(data);
+    } else if (newType == RS_SplineData::SplineType::ClampedOpen) {
+        LC_SplineHelper::toClampedOpenFromStandard(data);
+    }
+    // For Standard, already there
+
     update();
 }
 
