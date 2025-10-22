@@ -76,7 +76,7 @@ struct RS_SplineData {
     std::vector<RS_Vector> fitPoints;
 
     /** Degree (1-3) */
-    int degree = 3;
+    size_t degree = 3;
 
     /** Spline type */
     SplineType type = SplineType::ClampedOpen;
