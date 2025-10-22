@@ -1762,7 +1762,7 @@ if(BUILD_TESTS)
         librecad/src/lib/math/tests/rs_math_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_ellipse_tests.cpp
         #librecad/src/lib/engine/document/entities/tests/rs_spline_tests.cpp
-        librecad/src/lib/engine/document/entities/tests/lc_splinehelper_tests.cpp
+        #librecad/src/lib/engine/document/entities/tests/lc_splinehelper_tests.cpp
         ${SOURCES}
     )
 

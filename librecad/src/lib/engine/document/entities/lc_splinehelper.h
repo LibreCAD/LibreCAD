@@ -8,17 +8,15 @@
 /**
  * @class LC_SplineHelper
  * @brief Helper class for spline type manipulations, knot conversions, and wrapping.
- * Includes Boehm's algorithm for non-uniform knot insertion/removal.
- *
- * This class provides static methods to handle conversions between spline representations
- * (Standard, ClampedOpen, WrappedClosed) while preserving non-uniform knots via snapshots.
- * It supports rational B-splines (NURBS) and ensures round-trip integrity.
  */
 class LC_SplineHelper {
 public:
     // Knot conversions
     static std::vector<double> convertClosedToOpenKnotVector(const std::vector<double>& closedKnotVector,
                                                              size_t unwrappedControlCount,
+                                                             size_t splineDegree);
+    static std::vector<double> convertOpenToClosedKnotVector(const std::vector<double>& openKnots,
+                                                             size_t n,
                                                              size_t splineDegree);
     static std::vector<double> getNormalizedKnotVector(const std::vector<double>& inputKnotVector,
                                                        double newMinimum,
@@ -44,23 +42,15 @@ public:
     static void updateControlAndWeightWrapping(RS_SplineData& splineData, bool isClosed, size_t unwrappedControlCount);
     static void updateKnotWrapping(RS_SplineData& splineData, bool isClosed, size_t unwrappedControlCount);
 
-    // Validation
-    static bool validate(const RS_SplineData& splineData, size_t unwrappedControlCount);
-    static bool isCustomKnotVector(const std::vector<double>& knotVector, size_t controlCount, size_t splineOrder);  // Non-uniform detection
-
-    // Boehm's algorithms (non-uniform)
-    static int findSpan(const std::vector<double>& knotVector, double parameterT, int splineDegree, size_t controlPointCount);
-    static void insertKnotBoehm(RS_SplineData& splineData, double parameterT, double tolerance = RS_TOLERANCE);  // Inserts and refines controls
-    static bool removeKnotBoehm(RS_SplineData& splineData, size_t knotIndexToRemove, double tolerance = RS_TOLERANCE);  // Removable if error < tol
-
-    // Fallback non-uniform edits (heuristic for simple cases)
-    static void insertKnotNonUniform(std::vector<double>& knotVector, size_t insertIndex, double newKnotValue, size_t splineOrder);
-    static void removeKnotNonUniform(std::vector<double>& knotVector, size_t removeIndex, size_t splineOrder);
-
     // Generators
     static std::vector<double> knot(size_t controlPointCount, size_t splineOrder);  // Clamped uniform
-    static std::vector<double> openUniformKnot(size_t controlPointCount, size_t splineOrder);  // Standard uniform
-    static std::vector<double> computeAveragedKnots(const std::vector<double>& parameters, int degree);  // Averaged knots for interpolation
+    static std::vector<double> generateOpenUniformKnotVector(size_t controlPointCount, size_t splineOrder);
+
+    // Knot manipulation
+    static void extendKnotVector(std::vector<double>& knots);
+    static void insertKnot(std::vector<double>& knots, size_t knot_index);
+    static void removeKnot(std::vector<double>& knots, size_t knot_index);
+    static void ensureMonotonic(std::vector<double>& knots);
 
 private:
 };
