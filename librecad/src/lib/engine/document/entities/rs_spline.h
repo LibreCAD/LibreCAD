@@ -282,7 +282,14 @@ private:
     /** Internal spline data */
     RS_SplineData data;
 
+    /** Robust NURBS evaluation using de Boor */
     static RS_Vector evaluateNURBS(const RS_SplineData& data, double t);
+
+    /** Find knot span */
+    static int findSpan(int n, int p, double u, const std::vector<double>& U);
+
+    /** Compute basis functions non-recursively */
+    static std::vector<double> basisFunctions(int i, double u, int p, const std::vector<double>& U);
 
     /** Get non-rational B-spline basis functions */
     std::vector<double> getBSplineBasis(double t,
@@ -294,6 +301,9 @@ private:
     bool solveLinear(const std::vector<std::vector<double>>& A,
                      const std::vector<double>& b,
                      std::vector<double>& x) const;
+
+    /** Validate the spline data integrity */
+    bool validate() const;
 };
 
 #endif

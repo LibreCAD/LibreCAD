@@ -218,13 +218,23 @@ bool RS_Spline::isClosed() const {
 void RS_Spline::setClosed(bool c) {
     size_t unwrapped = getUnwrappedSize();
     if (c) {
+        if (data.type == RS_SplineData::SplineType::WrappedClosed) return; // Already closed
         data.savedOpenType = data.type;
-        LC_SplineHelper::toWrappedClosedFromStandard(data);
-    } else {
-        if (data.type == RS_SplineData::SplineType::WrappedClosed) {
-            LC_SplineHelper::toStandardFromWrappedClosed(data);
+        if (data.type == RS_SplineData::SplineType::ClampedOpen) {
+            LC_SplineHelper::toWrappedClosedFromClampedOpen(data);
+        } else {
+            LC_SplineHelper::toWrappedClosedFromStandard(data);
         }
-        data.type = RS_SplineData::SplineType::ClampedOpen;
+    } else {
+        if (data.type != RS_SplineData::SplineType::WrappedClosed) return; // Already open
+        LC_SplineHelper::toStandardFromWrappedClosed(data);
+        // Restore to the original open type
+        if (data.savedOpenType == RS_SplineData::SplineType::ClampedOpen) {
+            LC_SplineHelper::toClampedOpenFromStandard(data);
+        } else if (data.savedOpenType == RS_SplineData::SplineType::Standard) {
+            // Already in Standard after toStandardFromWrappedClosed
+        }
+        data.savedOpenType = RS_SplineData::SplineType::ClampedOpen; // Reset to default if needed
     }
     update();
 }
@@ -919,4 +929,23 @@ RS_Vector RS_Spline::evaluateNURBS(const RS_SplineData& data, double t) {
         point += data.controlPoints[basisIndex] * basisFunctions[basisIndex];
     }
     return point;
+}
+
+/** Validate the spline data integrity */
+bool RS_Spline::validate() const {
+    size_t unwrappedSize = getUnwrappedSize();
+    size_t order = data.degree + 1;
+    size_t expectedKnots = data.controlPoints.size() + order;
+    if (data.knotslist.size() != expectedKnots) return false;
+    if (data.weights.size() != data.controlPoints.size()) return false;
+    if (data.type == RS_SplineData::SplineType::WrappedClosed) {
+        if (unwrappedSize + data.degree != data.controlPoints.size()) return false;
+    } else {
+        if (unwrappedSize != data.controlPoints.size()) return false;
+    }
+    if (data.degree < 1 || data.degree > 3) return false;
+    for (size_t i = 1; i < data.knotslist.size(); ++i) {
+        if (data.knotslist[i] < data.knotslist[i - 1] - RS_TOLERANCE) return false;
+    }
+    return true;
 }

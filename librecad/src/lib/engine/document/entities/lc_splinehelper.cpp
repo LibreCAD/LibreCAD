@@ -158,10 +158,10 @@ std::vector<double> LC_SplineHelper::unclampKnotVector(const std::vector<double>
     size_t iRight = inputKnotVector.size() - m - 1;
     if (iRight <= m)
         return inputKnotVector;
-    double delta = (inputKnotVector[iRight] - inputKnotVector[m])/(iRight - m);
-    for(size_t i = 0; i < m; ++i) {
-        unclampedKnotVector[i] = unclampedKnotVector[m] - delta * (m - i + 1);
-        unclampedKnotVector[inputKnotVector.size() - m] = unclampedKnotVector[iRight] + delta * i;
+    double delta = (inputKnotVector[iRight] - inputKnotVector[m]) / (iRight - m);
+    for (size_t i = 0; i < m; ++i) {
+        unclampedKnotVector[i] = unclampedKnotVector[m] - delta * (m - i);
+        unclampedKnotVector[inputKnotVector.size() - m + i] = unclampedKnotVector[iRight] + delta * (i + 1);
     }
     return unclampedKnotVector;
 }
@@ -183,6 +183,10 @@ void LC_SplineHelper::toStandardFromClampedOpen(RS_SplineData& splineData) {
     assert(splineData.type == RS_SplineData::SplineType::ClampedOpen);
     splineData.type = RS_SplineData::SplineType::Standard;
     splineData.knotslist = unclampKnotVector(splineData.knotslist, splineData.controlPoints.size(), splineData.degree + 1);
+    if (!splineData.savedOpenKnots.empty()) {
+        splineData.knotslist = splineData.savedOpenKnots;
+        splineData.savedOpenKnots.clear();
+    }
 }
 
 /**
