@@ -383,15 +383,31 @@ double RS_Spline::getWeight(size_t index) const {
 
 /** Add control point with weight, handling wrapping */
 void RS_Spline::addControlPoint(const RS_Vector& v, double w) {
-    size_t old_unwrapped_size = getUnwrappedSize();
-    bool closed = isClosed();
-    if (closed) {
-        data.controlPoints.insert(data.controlPoints.begin() + old_unwrapped_size, v);
-        data.weights.insert(data.weights.begin() + old_unwrapped_size, w);
-    } else {
-        data.controlPoints.push_back(v);
-        data.weights.push_back(w);
+    if (data.controlPoints.size() >= std::numeric_limits<size_t>::max() - 1) {
+        return; // Edge case: overflow prevention
     }
+
+    RS_SplineData::SplineType original_type = data.type;
+    changeType(RS_SplineData::SplineType::Standard);
+
+    data.controlPoints.push_back(v);
+    data.weights.push_back(w);
+
+    size_t current_control_size = data.controlPoints.size();
+    size_t order = data.degree + 1;
+    size_t expected_knot_size = current_control_size + order;
+    bool valid_knots = (data.knotslist.size() == expected_knot_size - 1); // Check old size
+
+    if (valid_knots) {
+        LC_SplineHelper::extendKnotVector(data.knotslist);
+        LC_SplineHelper::ensureMonotonic(data.knotslist);
+    } else {
+        // Edge case: regenerate if invalid
+        data.knotslist = LC_SplineHelper::generateOpenUniformKnotVector(current_control_size, order);
+    }
+
+    changeType(original_type);
+    calculateBorders();
     update();
 }
 
