@@ -297,11 +297,6 @@ private:
                                         int degree,
                                         size_t numControls) const;
 
-    /** Solve linear system using Gaussian elimination */
-    bool solveLinear(const std::vector<std::vector<double>>& A,
-                     const std::vector<double>& b,
-                     std::vector<double>& x) const;
-
     /** Validate the spline data integrity */
     bool validate() const;
 };
