@@ -1,0 +1,53 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "x64-debug",
+            "displayName": "Debug-x64",
+            "generator": "Ninja",
+            "environment": {
+                "QTDIR": "D:/Dev/Qt/6.8.3/msvc2022_64"
+            },
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_TOOLCHAIN_FILE": "H:/QT/vcpkg/scripts/buildsystems/vcpkg.cmake"
+            }
+        },
+        {
+            "name": "x64-relwithdebug",
+            "displayName": "Rel-DbgInfo-x64",
+            "generator": "Ninja",
+            "environment": {
+                "QTDIR": "D:/Dev/Qt/6.8.3/msvc2022_64"
+            },
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+                "CMAKE_TOOLCHAIN_FILE": "H:/QT/vcpkg/scripts/buildsystems/vcpkg.cmake"
+            }
+        },
+        {
+            "name": "x64-release",
+            "displayName": "Rel-x64",
+            "generator": "Ninja",
+            "environment": {
+                "QTDIR": "D:/Dev/Qt/6.8.3/msvc2022_64"
+            },
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "MinSizeRel",
+                "CMAKE_TOOLCHAIN_FILE": "H:/QT/vcpkg/scripts/buildsystems/vcpkg.cmake"
+            }
+        }
+    ]
+}
