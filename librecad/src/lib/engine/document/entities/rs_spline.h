@@ -274,16 +274,26 @@ public:
 
     /** Change spline type (Standard, ClampedOpen, WrappedClosed) */
     void changeType(RS_SplineData::SplineType newType);
+
+    /** Public method to evaluate spline at parameter t */
+    RS_Vector getPointAt(double t) const;
+
+    /** Find parameters where derivative is zero for x or y */
+    std::vector<double> findDerivativeZeros(bool isX) const;
+
+    /** Calculate tight bounding box using extrema and endpoints */
+    void calculateTightBorders();
+
+    /** Robust NURBS evaluation using de Boor */
+    static RS_Vector evaluateNURBS(const RS_SplineData& data, double t);
+
+private:
     static std::vector<double> rbasis(int c, double t, int npts,
                                       const std::vector<double>& x,
                                       const std::vector<double>& h);
 
-private:
     /** Internal spline data */
     RS_SplineData data;
-
-    /** Robust NURBS evaluation using de Boor */
-    static RS_Vector evaluateNURBS(const RS_SplineData& data, double t);
 
     /** Find knot span */
     static int findSpan(int n, int p, double u, const std::vector<double>& U);
@@ -299,6 +309,14 @@ private:
 
     /** Validate the spline data integrity */
     bool validate() const;
+
+    /** Approximate derivative at t */
+    double getDerivative(double t, bool isX) const;
+
+    /** Bisection to find zero of derivative */
+    double bisectDerivativeZero(double a, double b, double fa, bool isX) const;
+
+    void resetBorders();
 };
 
 #endif

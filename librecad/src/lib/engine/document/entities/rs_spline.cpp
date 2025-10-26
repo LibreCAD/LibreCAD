@@ -92,8 +92,8 @@ RS_Spline::RS_Spline(RS_EntityContainer* parent,
     if (data.type == RS_SplineData::SplineType::WrappedClosed && !hasWrappedControlPoints()) {
         addWrapping();
     }
-    calculateBorders();
-    update();  // Generate approximation on creation
+    RS_Spline::calculateBorders();
+    RS_Spline::update();  // Generate approximation on creation
 }
 
 /** Clone the spline. */
@@ -238,7 +238,15 @@ void RS_Spline::setClosed(bool c) {
     update();
 }
 
-/** Get reference points (unwrapped control points). */
+/** Adjust knot vector to open clamped form */
+std::vector<double> RS_Spline::adjustToOpenClamped(const std::vector<double>& knots,
+                                                   size_t num_control,
+                                                   size_t order,
+                                                   bool is_natural) const {
+    return LC_SplineHelper::clampKnotVector(knots, num_control, order);
+}
+
+/** Get reference points (unwrapped control points) */
 RS_VectorSolutions RS_Spline::getRefPoints() const {
     RS_VectorSolutions ret = RS_VectorSolutions(getControlPoints());
     return ret;
@@ -262,6 +270,9 @@ void RS_Spline::update() {
     for (size_t i = 0; i < points.size() - 1; ++i) {
         addEntity(new RS_Line(this, points[i], points[i + 1]));
     }
+    if (isClosed() && points.size() > 1) {
+        addEntity(new RS_Line(this, points.back(), points.front()));
+    }
 }
 
 /** Fill points for spline approximation */
@@ -270,11 +281,11 @@ void RS_Spline::fillStrokePoints(int splineSegments, std::vector<RS_Vector>& poi
     auto knotVector = data.knotslist;
     auto weightVector = data.weights;
     double t_min = knotVector[data.degree];
-    double t_max = knotVector[numControlPoints];
+    double t_max = knotVector[numControlPoints - data.degree - 1];
     double step = (t_max - t_min) / splineSegments;
     for (int i = 0; i <= splineSegments; ++i) {
         double t = t_min + i * step;
-        points.push_back(evaluateNURBS(data, t));
+        points.push_back(getPointAt(t));
     }
 }
 
@@ -338,8 +349,12 @@ void RS_Spline::scale(const RS_Vector& center, const RS_Vector& factor) {
 
 /** Shear by factor */
 RS_Entity& RS_Spline::shear(double k) {
-    for (auto& cp : data.controlPoints) cp.shear(k);
-    for (auto& fp : data.fitPoints) fp.shear(k);
+    for (auto& cp : data.controlPoints) {
+        cp.x += k * cp.y;
+    }
+    for (auto& fp : data.fitPoints) {
+        fp.x += k * fp.y;
+    }
     calculateBorders();
     return *this;
 }
@@ -353,18 +368,21 @@ void RS_Spline::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2)
 
 /** Move reference point (control point) */
 void RS_Spline::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
-    for (auto& cp : data.controlPoints) {
-        if (cp == ref) cp += offset;
-    }
-    calculateBorders();
-    update();
+    RS_EntityContainer::moveRef(ref, offset);
 }
 
 /** Revert direction by reversing points, weights, knots */
 void RS_Spline::revertDirection() {
-    std::reverse(data.controlPoints.begin(), data.controlPoints.end());
-    std::reverse(data.weights.begin(), data.weights.end());
-    std::reverse(data.knotslist.begin(), data.knotslist.end());
+    std::reverse(data.controlPoints.begin(), data.controlPoints.begin() + getUnwrappedSize());
+    std::reverse(data.weights.begin(), data.weights.begin() + getUnwrappedSize());
+    auto knots = data.knotslist;
+    std::reverse(knots.begin(), knots.begin() + getNumberOfKnots());
+    double maxK = knots.back();
+    for (auto& k : knots) {
+        k = maxK - k;
+    }
+    data.knotslist = knots;
+    updateControlAndWeightWrapping();
     update();
 }
 
@@ -385,101 +403,49 @@ std::vector<double> RS_Spline::getWeights() const {
 
 /** Get weight at index */
 double RS_Spline::getWeight(size_t index) const {
-    if (index >= data.weights.size()) return 1.0;
     return data.weights[index];
 }
 
 /** Add control point with weight, handling wrapping */
 void RS_Spline::addControlPoint(const RS_Vector& v, double w) {
-    if (data.controlPoints.size() >= std::numeric_limits<size_t>::max() - 1) {
-        return; // Edge case: overflow prevention
-    }
-
-    RS_SplineData::SplineType originalType = data.type;
-    changeType(RS_SplineData::SplineType::Standard);
-
     data.controlPoints.push_back(v);
     data.weights.push_back(w);
-
-    size_t currentControlCount = data.controlPoints.size();
-    size_t splineOrder = data.degree + 1;
-    size_t expectedKnotCount = currentControlCount + splineOrder;
-    bool hasValidKnots = (data.knotslist.size() == expectedKnotCount - 1); // Check old size
-
-    if (hasValidKnots) {
-        LC_SplineHelper::extendKnotVector(data.knotslist);
-        LC_SplineHelper::ensureMonotonic(data.knotslist);
-    } else {
-        // Edge case: regenerate if invalid
-        data.knotslist = LC_SplineHelper::generateOpenUniformKnotVector(currentControlCount, splineOrder);
+    if (isClosed()) {
+        updateControlAndWeightWrapping();
     }
-
-    changeType(originalType);
     calculateBorders();
     update();
 }
 
 /** Add raw control point */
 void RS_Spline::addControlPointRaw(const RS_Vector& v, double w) {
-    if (data.controlPoints.size() >= std::numeric_limits<size_t>::max() - 1) {
-        return; // Edge case: overflow prevention
-    }
-
-    RS_SplineData::SplineType originalType = data.type;
-    changeType(RS_SplineData::SplineType::Standard);
-
     data.controlPoints.push_back(v);
     data.weights.push_back(w);
-
-    size_t currentControlCount = data.controlPoints.size();
-    size_t splineOrder = data.degree + 1;
-    size_t expectedKnotCount = currentControlCount + splineOrder;
-    bool hasValidKnots = (data.knotslist.size() == expectedKnotCount - 1); // Check old size
-
-    if (hasValidKnots) {
-        LC_SplineHelper::extendKnotVector(data.knotslist);
-        LC_SplineHelper::ensureMonotonic(data.knotslist);
-    } else {
-        // Edge case: regenerate if invalid
-        data.knotslist = LC_SplineHelper::generateOpenUniformKnotVector(currentControlCount, splineOrder);
-    }
-
-    changeType(originalType);
-    calculateBorders();
-    update();
 }
 
 /** Remove last control point, handling wrapping */
 void RS_Spline::removeLastControlPoint() {
-    if (data.controlPoints.empty()) return;
-    size_t oldUnwrappedCount = getUnwrappedSize();
-    bool isSplineClosed = isClosed();
-    if (isSplineClosed) {
-        data.controlPoints.erase(data.controlPoints.begin() + oldUnwrappedCount - 1);
-        data.weights.erase(data.weights.begin() + oldUnwrappedCount - 1);
-    } else {
-        data.controlPoints.pop_back();
-        data.weights.pop_back();
+    data.controlPoints.pop_back();
+    data.weights.pop_back();
+    if (isClosed()) {
+        updateControlAndWeightWrapping();
     }
+    calculateBorders();
     update();
 }
 
 /** Set weight at index */
 void RS_Spline::setWeight(size_t index, double w) {
-    if (index >= data.weights.size()) return;
     data.weights[index] = w;
-    update();
 }
 
 /** Set all weights */
 void RS_Spline::setWeights(const std::vector<double>& weights) {
     data.weights = weights;
-    update();
 }
 
 /** Set control point at index */
 void RS_Spline::setControlPoint(size_t index, const RS_Vector& v) {
-    if (index >= data.controlPoints.size()) return;
     data.controlPoints[index] = v;
     calculateBorders();
     update();
@@ -487,80 +453,27 @@ void RS_Spline::setControlPoint(size_t index, const RS_Vector& v) {
 
 /** Set knot at index */
 void RS_Spline::setKnot(size_t index, double k) {
-    if (index >= data.knotslist.size()) return;
     data.knotslist[index] = k;
-    LC_SplineHelper::ensureMonotonic(data.knotslist);
-    update();
 }
 
 /** Insert control point, clear knots if present */
 void RS_Spline::insertControlPoint(size_t index, const RS_Vector& v, double w) {
-    if (index > data.controlPoints.size()) {
-        index = data.controlPoints.size();
-    }
-    if (data.controlPoints.size() >= std::numeric_limits<size_t>::max() - 1) {
-        return; // Edge case: overflow prevention
-    }
-
-    RS_SplineData::SplineType originalType = data.type;
-    changeType(RS_SplineData::SplineType::Standard);
-
     data.controlPoints.insert(data.controlPoints.begin() + index, v);
     data.weights.insert(data.weights.begin() + index, w);
-
-    size_t currentControlCount = data.controlPoints.size();
-    size_t splineOrder = data.degree + 1;
-    size_t expectedKnotCount = currentControlCount + splineOrder;
-    bool hasValidKnots = (data.knotslist.size() == expectedKnotCount - 1);
-
-    if (hasValidKnots) {
-        size_t insertKnotIndex = index + data.degree;
-        LC_SplineHelper::insertKnot(data.knotslist, insertKnotIndex);
-        LC_SplineHelper::ensureMonotonic(data.knotslist);
-    } else {
-        // Edge case: regenerate if invalid
-        data.knotslist = LC_SplineHelper::generateOpenUniformKnotVector(currentControlCount, splineOrder);
+    if (data.knotslist.size() > 0) {
+        data.knotslist.clear();
     }
-
-    changeType(originalType);
     calculateBorders();
     update();
 }
 
 /** Remove control point, clear knots if present */
 void RS_Spline::removeControlPoint(size_t index) {
-    if (index >= data.controlPoints.size()) {
-        return;
-    }
-    size_t minControlCount = static_cast<size_t>(data.degree + 1);
-    if (data.controlPoints.size() <= minControlCount) {
-        return; // Edge case: cannot reduce below minimum
-    }
-
-    RS_SplineData::SplineType originalType = data.type;
-    changeType(RS_SplineData::SplineType::Standard);
-
     data.controlPoints.erase(data.controlPoints.begin() + index);
     data.weights.erase(data.weights.begin() + index);
-
-    size_t currentControlCount = data.controlPoints.size();
-    size_t splineOrder = data.degree + 1;
-    size_t expectedOldKnotCount = currentControlCount + splineOrder + 1; // Old size
-    bool hasValidKnots = (data.knotslist.size() == expectedOldKnotCount);
-
-    if (hasValidKnots) {
-        size_t removeKnotIndex = index + data.degree;
-        if (removeKnotIndex >= data.knotslist.size()) {
-            removeKnotIndex = data.knotslist.size() - 1;
-        }
-        LC_SplineHelper::removeKnot(data.knotslist, removeKnotIndex);
-        LC_SplineHelper::ensureMonotonic(data.knotslist);
-    } else {
-        // Edge case: regenerate if invalid
-        data.knotslist = LC_SplineHelper::generateOpenUniformKnotVector(currentControlCount, splineOrder);
+    if (data.knotslist.size() > 0) {
+        data.knotslist.clear();
     }
-
-    changeType(originalType);
     calculateBorders();
     update();
 }
@@ -572,10 +485,8 @@ std::vector<double> RS_Spline::getKnotVector() const {
 
 /** Set knot vector, validate size and monotonicity */
 void RS_Spline::setKnotVector(const std::vector<double>& knots) {
-    if (knots.size() != data.controlPoints.size() + data.degree + 1) return;
     data.knotslist = knots;
     LC_SplineHelper::ensureMonotonic(data.knotslist);
-    update();
 }
 
 /** Generate open knot vector */
@@ -590,8 +501,10 @@ std::vector<double> RS_Spline::openUniformKnot(size_t num, size_t order) const {
 
 /** Generate uniform knot vector for periodic splines */
 std::vector<double> RS_Spline::knotu(size_t num, size_t order) const {
-    std::vector<double> kn(num + order);
-    std::iota(kn.begin(), kn.end(), 0.0);
+    std::vector<double> kn(num + order, 0.0);
+    for (size_t i = 1; i < num + order; i++) {
+        kn[i] = i;
+    }
     return kn;
 }
 
@@ -600,12 +513,12 @@ void RS_Spline::rbspline(size_t npts, size_t k, size_t p1,
                          const std::vector<RS_Vector>& b,
                          const std::vector<double>& h,
                          std::vector<RS_Vector>& p) const {
-    double t = 0.;
+    double t = static_cast<double>(p1 - 1);
 
-    double step = static_cast<double>(k - p1) / (npts - 1);
+    double step = static_cast<double>(k - p1 + 2) / npts;
     for (size_t i = 0; i < npts; i++) {
-        if ((i == npts - 1) && t != (k - p1)) {
-            t = static_cast<double>(k - p1);
+        if ((i == npts - 1) && t != (k - p1 + 1)) {
+            t = static_cast<double>(k - p1 + 1);
         }
 
         p[i] = RS_Vector(0.0, 0.0);
@@ -639,18 +552,18 @@ void RS_Spline::rbsplinu(size_t npts, size_t k, size_t p1,
     }
 }
 
-/** Check if control points wrapped (for closed cubic splines). */
+/** Check if control points wrapped (for closed cubic splines) */
 bool RS_Spline::hasWrappedControlPoints() const {
     return data.type == RS_SplineData::SplineType::WrappedClosed;
 }
 
-/** Stream operator for RS_Spline. */
-std::ostream& operator << (std::ostream& os, const RS_Spline& l) {
+/** Output operator */
+std::ostream& operator<<(std::ostream& os, const RS_Spline& l) {
     os << " Spline: " << l.getData() << "\n";
     return os;
 }
 
-/** Change spline type using helper */
+/** Change spline type (Standard, ClampedOpen, WrappedClosed) */
 void RS_Spline::changeType(RS_SplineData::SplineType newType) {
     if (data.type == newType) return;
 
@@ -673,7 +586,246 @@ void RS_Spline::changeType(RS_SplineData::SplineType newType) {
     update();
 }
 
-/** Set spline from fit points using global interpolation */
+/** Public method to evaluate spline at parameter t */
+RS_Vector RS_Spline::getPointAt(double t) const {
+    return evaluateNURBS(data, t);
+}
+
+/** Find parameters where derivative is zero for x or y */
+std::vector<double> RS_Spline::findDerivativeZeros(bool isX) const {
+    std::vector<double> zeros;
+    auto knotVector = data.knotslist;
+    size_t degree = data.degree;
+    size_t numControlPoints = data.controlPoints.size();
+    if (numControlPoints < degree + 1) return zeros;
+
+    bool isRational = !data.weights.empty() && !std::all_of(data.weights.begin(), data.weights.end(), [](double w) { return w == 1.0; });
+
+    // For simplicity, assume single span Bezier-like for degree 3 with 4 points
+    if (degree == 3 && numControlPoints == 4 && knotVector.size() == 8) {
+        if (isRational) {
+            // For rational, solve w*coord' - coord*w' =0, which is a quintic
+            // Coefficients for coord(t) = (sum bi * Ni * wi) / sum Ni*wi, deriv = (w coord' - coord w') / w^2 =0 so w coord' - coord w' =0
+            // For Bezier, Ni are Bernstein, but to use RS_Math, set up the polynomial
+            // But RS_Math has up to quartic, for quintic, need numerical or factor
+            // For test, use numerical as fallback
+            double tMin = knotVector[degree];
+            double tMax = knotVector[numControlPoints - degree - 1];
+            int numSamples = 100;
+            double step = (tMax - tMin) / numSamples;
+            double prevDeriv = getDerivative(tMin, isX);
+            for (int i = 1; i <= numSamples; ++i) {
+                double t = tMin + i * step;
+                double deriv = getDerivative(t, isX);
+                if (deriv * prevDeriv <= 0.0) {
+                    zeros.push_back(bisectDerivativeZero(t - step, t, prevDeriv, isX));
+                }
+                prevDeriv = deriv;
+            }
+        } else {
+            // Non-rational cubic Bezier
+            double P0 = isX ? data.controlPoints[0].x : data.controlPoints[0].y;
+            double P1 = isX ? data.controlPoints[1].x : data.controlPoints[1].y;
+            double P2 = isX ? data.controlPoints[2].x : data.controlPoints[2].y;
+            double P3 = isX ? data.controlPoints[3].x : data.controlPoints[3].y;
+
+            double a = 3 * (P3 - 3*P2 + 3*P1 - P0);
+            double b = 6 * (P2 - 2*P1 + P0);
+            double c = 3 * (P1 - P0);
+
+            std::vector<double> ce = {0., 0., a, b, c};
+            auto roots = RS_Math::quarticSolverFull(ce);
+            for (double root : roots) {
+                if (root >= 0.0 && root <= 1.0) zeros.push_back(root);
+            }
+        }
+    } else if (degree == 2 && numControlPoints == 3 && knotVector.size() == 6) {
+        if (isRational) {
+            // Rational quadratic, cubic equation
+            double w0 = data.weights[0];
+            double w1 = data.weights[1];
+            double w2 = data.weights[2];
+
+            double Q0 = w0 * (isX ? data.controlPoints[0].x : data.controlPoints[0].y);
+            double Q1 = w1 * (isX ? data.controlPoints[1].x : data.controlPoints[1].y);
+            double Q2 = w2 * (isX ? data.controlPoints[2].x : data.controlPoints[2].y);
+
+            double a0 = w0;
+            double a1 = -2*w0 + 2*w1;
+            double a2 = w0 - 2*w1 + w2;
+
+            double a0_Q = Q0;
+            double a1_Q = -2*Q0 + 2*Q1;
+            double a2_Q = Q0 - 2*Q1 + Q2;
+
+            double b0 = -2*w0 + 2*w1;
+            double b1 = 2*w0 - 4*w1 + 2*w2;
+
+            double b0_Q = -2*Q0 + 2*Q1;
+            double b1_Q = 2*Q0 - 4*Q1 + 2*Q2;
+
+            double ce3 = b1_Q * a2 - a2_Q * b1;
+            double ce2 = b0_Q * a2 + b1_Q * a1 - a1_Q * b1 - a2_Q * b0;
+            double ce1 = b0_Q * a1 + b1_Q * a0 - a0_Q * b1 - a1_Q * b0;
+            double ce0 = b0_Q * a0 - a0_Q * b0;
+
+            std::vector<double> ce = {0., ce3, ce2, ce1, ce0};
+            auto roots = RS_Math::quarticSolverFull(ce);
+            for (double root : roots) {
+                if (root >= 0.0 && root <= 1.0) zeros.push_back(root);
+            }
+        } else {
+            // Non-rational quadratic Bezier
+            double P0 = isX ? data.controlPoints[0].x : data.controlPoints[0].y;
+            double P1 = isX ? data.controlPoints[1].x : data.controlPoints[1].y;
+            double P2 = isX ? data.controlPoints[2].x : data.controlPoints[2].y;
+
+            double a = 2 * (P2 - 2*P1 + P0);
+            double b = 2 * (P1 - P0);
+
+            if (std::abs(a) > RS_TOLERANCE) {
+                double root = -b / a;
+                if (root >= 0.0 && root <= 1.0) zeros.push_back(root);
+            }
+        }
+    } else {
+        // General case or degree 1, use numerical method
+        double tMin = knotVector[degree];
+        double tMax = knotVector[numControlPoints - degree - 1];
+        int numSamples = 100;
+        double step = (tMax - tMin) / numSamples;
+        double prevDeriv = getDerivative(tMin, isX);
+        for (int i = 1; i <= numSamples; ++i) {
+            double t = tMin + i * step;
+            double deriv = getDerivative(t, isX);
+            if (deriv * prevDeriv <= 0.0) {
+                zeros.push_back(bisectDerivativeZero(t - step, t, prevDeriv, isX));
+            }
+            prevDeriv = deriv;
+        }
+    }
+    return zeros;
+}
+
+/** Bisection to find zero of derivative */
+double RS_Spline::bisectDerivativeZero(double a, double b, double fa, bool isX) const {
+    for (int iter = 0; iter < 20; ++iter) {
+        double m = (a + b) / 2.0;
+        double fm = getDerivative(m, isX);
+        if (fm * fa > 0.0) {
+            a = m;
+            fa = fm;
+        } else {
+            b = m;
+        }
+        if (std::abs(b - a) < 1e-9) break;
+    }
+    return (a + b) / 2.0;
+}
+
+/** Approximate derivative at t using central difference */
+double RS_Spline::getDerivative(double t, bool isX) const {
+    double eps = 1e-6;
+    RS_Vector p1 = getPointAt(t - eps);
+    RS_Vector p2 = getPointAt(t + eps);
+    if (isX) return (p2.x - p1.x) / (2 * eps);
+    return (p2.y - p1.y) / (2 * eps);
+}
+
+/** Calculate tight bounding box using extrema and endpoints */
+void RS_Spline::calculateTightBorders() {
+    resetBorders();
+    auto knotVector = data.knotslist;
+    double tMin = knotVector[data.degree];
+    double tMax = knotVector[data.controlPoints.size() - data.degree - 1];
+    RS_Vector start = getPointAt(tMin);
+    RS_Vector end = getPointAt(tMax);
+    minV = RS_Vector::minimum(start, minV);
+    minV = RS_Vector::minimum(end, minV);
+    maxV = RS_Vector::maximum(start, maxV);
+    maxV = RS_Vector::maximum(end, maxV);
+
+    auto xZeros = findDerivativeZeros(true);
+    for (double t : xZeros) {
+        if (t >= tMin && t <= tMax) {
+            RS_Vector point = getPointAt(t);
+            minV = RS_Vector::minimum(point, minV);
+            maxV = RS_Vector::maximum(point, maxV);
+        }
+    }
+
+    auto yZeros = findDerivativeZeros(false);
+    for (double t : yZeros) {
+        if (t >= tMin && t <= tMax) {
+            RS_Vector point = getPointAt(t);
+            minV = RS_Vector::minimum(point, minV);
+            maxV = RS_Vector::maximum(point, maxV);
+        }
+    }
+}
+
+void RS_Spline::resetBorders() {
+    minV = RS_Vector(RS_MAXDOUBLE, RS_MAXDOUBLE);
+    maxV = RS_Vector(RS_MINDOUBLE, RS_MINDOUBLE);
+}
+
+RS_Vector RS_Spline::evaluateNURBS(const RS_SplineData& data, double t) {
+    size_t numControlPoints = data.controlPoints.size();
+    size_t splineOrder = data.degree + 1;
+    auto knotVector = data.knotslist;
+    auto weightVector = data.weights;
+    auto basisFunctions = rbasis(static_cast<int>(splineOrder), t, static_cast<int>(numControlPoints), knotVector, weightVector);
+    RS_Vector point(0.0, 0.0);
+    for (size_t basisIndex = 0; basisIndex < numControlPoints; basisIndex++) {
+        point += data.controlPoints[basisIndex] * basisFunctions[basisIndex];
+    }
+    return point;
+}
+
+std::vector<double> RS_Spline::rbasis(int c, double t, int npts,
+                                      const std::vector<double>& x,
+                                      const std::vector<double>& h) {
+
+    int const nplusc = npts + c;
+
+    std::vector<double> temp(nplusc,0.);
+
+    // calculate the first order nonrational basis functions n[i]
+    for (int i = 0; i< nplusc-1; i++)
+        if ((t >= x[i]) && (t < x[i+1])) temp[i] = 1;
+
+    /* calculate the higher order nonrational basis functions */
+
+    for (int k = 2; k <= c; k++) {
+        for (int i = 0; i < nplusc-k; i++) {
+            // if the lower order basis function is zero skip the calculation
+            if (temp[i] != 0)
+                temp[i] = ((t-x[i])*temp[i])/(x[i+k-1]-x[i]);
+            // if the lower order basis function is zero skip the calculation
+            if (temp[i+1] != 0)
+                temp[i] += ((x[i+k]-t)*temp[i+1])/(x[i+k]-x[i+1]);
+        }
+    }
+
+    // pick up last point
+    if (t >= x[nplusc-1]) temp[npts-1] = 1;
+
+    // calculate sum for denominator of rational basis functions
+    double sum = 0.;
+    for (int i = 0; i < npts; i++) {
+        sum += temp[i]*h[i];
+    }
+
+    std::vector<double> r(npts, 0);
+    // form rational basis functions and put in r vector
+    if (sum != 0) {
+        for (int i = 0; i < npts; i++)
+            r[i] = (temp[i]*h[i])/sum;
+    }
+    return r;
+}
+
+/** Set fit points and generate spline via interpolation */
 void RS_Spline::setFitPoints(const std::vector<RS_Vector>& fitPoints, bool useCentripetal) {
     size_t minPoints = static_cast<size_t>(data.degree + 1);
     if (fitPoints.size() < minPoints) {
@@ -832,117 +984,4 @@ std::vector<double> RS_Spline::getBSplineBasis(double t, const std::vector<doubl
     return {basisFunctions.begin(), basisFunctions.begin() + numPoints};
 }
 
-/** Compute rational B-spline basis functions */
-std::vector<double> RS_Spline::rbasis(int c, double t, int npts,
-                                      const std::vector<double>& x,
-                                      const std::vector<double>& h) {
 
-    int const nplusc = npts + c;
-
-    std::vector<double> temp(nplusc,0.);
-
-    // calculate the first order nonrational basis functions n[i]
-    for (int i = 0; i< nplusc-1; i++)
-        if ((t >= x[i]) && (t < x[i+1])) temp[i] = 1;
-
-    /* calculate the higher order nonrational basis functions */
-
-    for (int k = 2; k <= c; k++) {
-        for (int i = 0; i < nplusc-k; i++) {
-            // if the lower order basis function is zero skip the calculation
-            if (temp[i] != 0)
-                temp[i] = ((t-x[i])*temp[i])/(x[i+k-1]-x[i]);
-            // if the lower order basis function is zero skip the calculation
-            if (temp[i+1] != 0)
-                temp[i] += ((x[i+k]-t)*temp[i+1])/(x[i+k]-x[i+1]);
-        }
-    }
-
-    // pick up last point
-    if (t >= x[nplusc-1]) temp[npts-1] = 1;
-
-    // calculate sum for denominator of rational basis functions
-    double sum = 0.;
-    for (int i = 0; i < npts; i++) {
-        sum += temp[i]*h[i];
-    }
-
-    std::vector<double> r(npts, 0);
-    // form rational basis functions and put in r vector
-    if (sum != 0) {
-        for (int i = 0; i < npts; i++)
-            r[i] = (temp[i]*h[i])/sum;
-    }
-    return r;
-}
-
-RS_Vector RS_Spline::evaluateNURBS(const RS_SplineData& data, double t) {
-    size_t numControlPoints = data.controlPoints.size();
-    size_t splineOrder = data.degree + 1;
-    auto knotVector = data.knotslist;
-    auto weightVector = data.weights;
-    auto basisFunctions = rbasis(static_cast<int>(splineOrder), t, static_cast<int>(numControlPoints), knotVector, weightVector);
-    RS_Vector point(0.0, 0.0);
-    for (size_t basisIndex = 0; basisIndex < numControlPoints; basisIndex++) {
-        point += data.controlPoints[basisIndex] * basisFunctions[basisIndex];
-    }
-    return point;
-}
-
-/** Find knot span */
-int RS_Spline::findSpan(int n, int p, double u, const std::vector<double>& U) {
-    if (u >= U[n + 1]) return n;
-    if (u <= U[p]) return p;
-
-    int low = p;
-    int high = n + 1;
-    int mid = (low + high) / 2;
-
-    while (u < U[mid] || u >= U[mid + 1]) {
-        if (u < U[mid]) high = mid;
-        else low = mid;
-        mid = (low + high) / 2;
-    }
-    return mid;
-}
-
-/** Compute basis functions non-recursively */
-std::vector<double> RS_Spline::basisFunctions(int i, double u, int p, const std::vector<double>& U) {
-    std::vector<double> N(p + 1, 0.0);
-    std::vector<double> left(p + 1, 0.0);
-    std::vector<double> right(p + 1, 0.0);
-    N[0] = 1.0;
-
-    for (int j = 1; j <= p; ++j) {
-        left[j] = u - U[i + 1 - j];
-        right[j] = U[i + j] - u;
-        double saved = 0.0;
-        for (int r = 0; r < j; ++r) {
-            double den = right[r + 1] + left[j - r];
-            if (std::abs(den) < RS_TOLERANCE) continue; // Skip zero den
-            double temp = N[r] / den;
-            N[r] = saved + right[r + 1] * temp;
-            saved = left[j - r] * temp;
-        }
-        N[j] = saved;
-    }
-    return N;
-}
-
-/** Validate the spline data integrity */
-bool RS_Spline::validate() const {
-    size_t unwrappedCount = getUnwrappedSize();
-    size_t splineOrder = data.degree + 1;
-    if (data.knotslist.size() != data.controlPoints.size() + splineOrder) return false;
-    if (data.weights.size() != data.controlPoints.size()) return false;
-    if (data.type == RS_SplineData::SplineType::WrappedClosed) {
-        if (data.controlPoints.size() != unwrappedCount + data.degree) return false;
-    } else {
-        if (data.controlPoints.size() != unwrappedCount) return false;
-    }
-    if (data.degree < 1 || data.degree > 3) return false;
-    for (size_t knotIndex = 1; knotIndex < data.knotslist.size(); ++knotIndex) {
-        if (data.knotslist[knotIndex] < data.knotslist[knotIndex - 1] - RS_TOLERANCE) return false;
-    }
-    return true;
-}
