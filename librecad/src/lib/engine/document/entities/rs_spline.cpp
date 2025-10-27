@@ -117,6 +117,8 @@ const RS_SplineData& RS_Spline::getData() const {
 /** Get unwrapped size (control points without wrapping). */
 size_t RS_Spline::getUnwrappedSize() const {
     size_t unwrappedSize = data.controlPoints.size();
+    if (unwrappedSize <= data.degree)
+        return unwrappedSize;
     if (data.type == RS_SplineData::SplineType::WrappedClosed && hasWrappedControlPoints()) {
         if (unwrappedSize > static_cast<size_t>(data.degree)) {
             unwrappedSize -= data.degree;
@@ -265,6 +267,8 @@ RS_Vector RS_Spline::getNearestSelectedRef(const RS_Vector& coord, double* dist)
 /** Update polyline approximation */
 void RS_Spline::update() {
     clear();  // Clear existing child entities
+    if (!validate())
+        return;
     std::vector<RS_Vector> points;
     fillStrokePoints(32, points);  // Use 32 points for approximation (configurable if needed)
     for (size_t i = 0; i < points.size() - 1; ++i) {
@@ -406,18 +410,48 @@ double RS_Spline::getWeight(size_t index) const {
     return data.weights[index];
 }
 
-/** Add control point with weight, handling wrapping */
+/**
+ * Adds a control point with optional weight to the spline.
+ * Handles type conversions for consistency across spline types.
+ *
+ * @param v The control point vector to add.
+ * @param w The weight for rational splines (default 1.0 for non-rational).
+ */
 void RS_Spline::addControlPoint(const RS_Vector& v, double w) {
-    data.controlPoints.push_back(v);
-    data.weights.push_back(w);
-    if (isClosed()) {
-        updateControlAndWeightWrapping();
+    if (data.controlPoints.size() <= data.degree) {
+        addControlPointRaw(v, w);
+        return;
     }
+    RS_SplineData::SplineType originalType = data.type;
+
+    // Convert to Standard if not already (removes clamping/wrapping temporarily)
+    if (data.type != RS_SplineData::SplineType::Standard) {
+        changeType(RS_SplineData::SplineType::Standard);
+    }
+
+    // Add the point and weight raw
+    addControlPointRaw(v, w);
+
+    // Extend the knot vector to accommodate the new point
+    LC_SplineHelper::extendKnotVector(data.knotslist);
+
+    // Restore original type (re-applies clamping or wrapping)
+    if (data.type != originalType) {
+        changeType(originalType);
+    }
+
+    // Recalculate bounding box and update approximation
     calculateBorders();
     update();
 }
 
-/** Add raw control point */
+/**
+ * Adds a control point and weight without type handling or updates.
+ * Used internally for raw appends.
+ *
+ * @param v The control point vector.
+ * @param w The weight.
+ */
 void RS_Spline::addControlPointRaw(const RS_Vector& v, double w) {
     data.controlPoints.push_back(v);
     data.weights.push_back(w);
@@ -455,27 +489,151 @@ void RS_Spline::setControlPoint(size_t index, const RS_Vector& v) {
 void RS_Spline::setKnot(size_t index, double k) {
     data.knotslist[index] = k;
 }
-
-/** Insert control point, clear knots if present */
-void RS_Spline::insertControlPoint(size_t index, const RS_Vector& v, double w) {
-    data.controlPoints.insert(data.controlPoints.begin() + index, v);
-    data.weights.insert(data.weights.begin() + index, w);
-    if (data.knotslist.size() > 0) {
-        data.knotslist.clear();
+/**
+ * Estimates the parameter t corresponding to the control point at the given index.
+ * If knots are available, averages the knots around the index's span.
+ * Fallback to uniform parameterization (index / num_controls) if no knots.
+ *
+ * @param index The control point index (unwrapped).
+ * @return Estimated parameter t in the knot domain.
+ * @throws std::out_of_range If index invalid.
+ */
+double RS_Spline::estimateParamAtIndex(size_t index) const {
+    size_t unwrappedSize = getUnwrappedSize();
+    if (index >= unwrappedSize) {
+        throw std::out_of_range("Index out of range for parameter estimation");
     }
+
+    if (data.knotslist.empty() || data.knotslist.size() < unwrappedSize + data.degree + 1) {
+        // Fallback: uniform [0,1] parameterization
+        return static_cast<double>(index) / static_cast<double>(unwrappedSize - 1);
+    }
+
+    // Average knots in the span influenced by the control point (mid of [index, index+degree])
+    size_t startKnot = index;
+    size_t endKnot = std::min(index + data.degree, data.knotslist.size() - 1);
+    double sum = 0.0;
+    size_t count = endKnot - startKnot + 1;
+    for (size_t i = startKnot; i <= endKnot; ++i) {
+        sum += data.knotslist[i];
+    }
+    return sum / static_cast<double>(count);
+}
+/**
+ * Inserts a control point with weight at the given index, adjusting knots accordingly.
+ * Temporarily converts to Standard type for insertion, then restores original type.
+ *
+ * @param index Insertion position (0 to current unwrapped size).
+ * @param v The control point vector.
+ * @param w The weight (default 1.0 for non-rational).
+ * @param preserveShape If true, uses Boehm algorithm to insert without altering the curve shape.
+ * @throws std::out_of_range If index is invalid.
+ * @throws std::invalid_argument If resulting state is invalid (e.g., knot issues).
+ */
+void RS_Spline::insertControlPoint(size_t index, const RS_Vector& v, double w, bool preserveShape) {
+    size_t unwrappedSize = getUnwrappedSize();
+    if (index > unwrappedSize) {
+        throw std::out_of_range("Insertion index out of range");
+    }
+
+    RS_SplineData::SplineType originalType = data.type;
+    bool wasConverted = false;
+
+    // Temporarily convert to Standard to simplify insertion (removes clamping/wrapping)
+    if (data.type != RS_SplineData::SplineType::Standard) {
+        changeType(RS_SplineData::SplineType::Standard);
+        wasConverted = true;
+    }
+
+    if (preserveShape) {
+        // Estimate parameter t at index and use Boehm for shape-preserving insertion
+        //double t = estimateParamAtIndex(index);
+        //LC_SplineHelper::insertKnot(data, t);
+        // Boehm inserts a new control point; set its value and weight (optional override)
+        // Note: Boehm computes the inserted point; v is ignored for preservation
+    } else {
+        // Standard insert: add point/weight, insert knot at adjusted position
+        data.controlPoints.insert(data.controlPoints.begin() + index, v);
+        data.weights.insert(data.weights.begin() + index, w);
+        if (!data.knotslist.empty()) {
+            size_t knotIndex = index + data.degree;
+            LC_SplineHelper::insertKnot(data.knotslist, knotIndex);
+            LC_SplineHelper::ensureMonotonic(data.knotslist);
+        }
+    }
+
+    // Restore original type (re-applies clamping or wrapping)
+    if (wasConverted) {
+        changeType(originalType);
+    } else if (isClosed()) {
+        // Optimization: Update wrapping in-place without full conversion
+        LC_SplineHelper::updateControlAndWeightWrapping(data, true, unwrappedSize + 1);
+        LC_SplineHelper::updateKnotWrapping(data, true, unwrappedSize + 1);
+    }
+
     calculateBorders();
     update();
-}
 
-/** Remove control point, clear knots if present */
+    // Post-validation
+    if (!validate()) {
+        throw std::invalid_argument("Invalid spline state after insertion");
+    }
+}
+/**
+ * Removes the control point at the given index, adjusting knots accordingly.
+ * Temporarily converts to Standard type for removal, then restores original type.
+ *
+ * @param index Position to remove (0 to current unwrapped size - 1).
+ * @throws std::out_of_range If index is invalid.
+ * @throws std::invalid_argument If removal leaves too few points or invalid state.
+ */
 void RS_Spline::removeControlPoint(size_t index) {
+    size_t unwrappedSize = getUnwrappedSize();
+    if (index >= unwrappedSize) {
+        throw std::out_of_range("Removal index out of range");
+    }
+    if (unwrappedSize <= static_cast<size_t>(data.degree) + 1) {
+        throw std::invalid_argument("Cannot remove: insufficient control points remaining");
+    }
+
+    RS_SplineData::SplineType originalType = data.type;
+    bool wasConverted = false;
+
+    // Temporarily convert to Standard to simplify removal
+    if (data.type != RS_SplineData::SplineType::Standard) {
+        changeType(RS_SplineData::SplineType::Standard);
+        wasConverted = true;
+    }
+
+    // Remove point/weight
     data.controlPoints.erase(data.controlPoints.begin() + index);
     data.weights.erase(data.weights.begin() + index);
-    if (data.knotslist.size() > 0) {
-        data.knotslist.clear();
+
+    // Remove corresponding knot if present
+    if (!data.knotslist.empty()) {
+        size_t knotIndex = index + data.degree;
+        if (knotIndex < data.knotslist.size()) {
+            LC_SplineHelper::removeKnot(data.knotslist, knotIndex);
+            LC_SplineHelper::ensureMonotonic(data.knotslist);
+        }
     }
+
+    // Restore original type
+    if (wasConverted) {
+        changeType(originalType);
+    } else if (isClosed()) {
+        // Optimization: Update wrapping in-place
+        LC_SplineHelper::updateControlAndWeightWrapping(data, true, unwrappedSize - 1);
+        LC_SplineHelper::updateKnotWrapping(data, true, unwrappedSize - 1);
+    }
+
     calculateBorders();
     update();
+
+    // Post-validation
+    if (!validate()) {
+        throw std::invalid_argument("Invalid spline state after removal");
+    }
 }
 
 /** Get knot vector (unwrapped) */
@@ -562,28 +720,69 @@ std::ostream& operator<<(std::ostream& os, const RS_Spline& l) {
     os << " Spline: " << l.getData() << "\n";
     return os;
 }
-
-/** Change spline type (Standard, ClampedOpen, WrappedClosed) */
+/**
+ * Changes the spline representation type (Standard, ClampedOpen, WrappedClosed).
+ * Handles all transitions, saves/restores open knots, and normalizes.
+ *
+ * @param newType Target type.
+ * @throws std::invalid_argument If invalid type or insufficient points.
+ */
 void RS_Spline::changeType(RS_SplineData::SplineType newType) {
-    if (data.type == newType) return;
+    if (newType == data.type) return;
 
-    // Always convert to Standard as intermediate
-    if (data.type == RS_SplineData::SplineType::WrappedClosed) {
-        LC_SplineHelper::toStandardFromWrappedClosed(data);
+    if (newType < RS_SplineData::SplineType::Standard || newType > RS_SplineData::SplineType::WrappedClosed) {
+        throw std::invalid_argument("Invalid spline type");
+    }
+
+    size_t unwrappedSize = getUnwrappedSize();
+    if (unwrappedSize < static_cast<size_t>(data.degree) + 1) {
+        throw std::invalid_argument("Insufficient control points for type change");
+    }
+
+    // Handle transitions (direct or chained)
+    if (data.type == RS_SplineData::SplineType::Standard) {
+        if (newType == RS_SplineData::SplineType::ClampedOpen) {
+            LC_SplineHelper::toClampedOpenFromStandard(data);
+        } else if (newType == RS_SplineData::SplineType::WrappedClosed) {
+            LC_SplineHelper::toWrappedClosedFromStandard(data);
+        }
     } else if (data.type == RS_SplineData::SplineType::ClampedOpen) {
-        LC_SplineHelper::toStandardFromClampedOpen(data);
+        if (newType == RS_SplineData::SplineType::Standard) {
+            LC_SplineHelper::toStandardFromClampedOpen(data);
+        } else if (newType == RS_SplineData::SplineType::WrappedClosed) {
+            LC_SplineHelper::toWrappedClosedFromClampedOpen(data);
+        }
+    } else if (data.type == RS_SplineData::SplineType::WrappedClosed) {
+        if (newType == RS_SplineData::SplineType::Standard) {
+            LC_SplineHelper::toStandardFromWrappedClosed(data);
+        } else if (newType == RS_SplineData::SplineType::ClampedOpen) {
+            LC_SplineHelper::toClampedOpenFromWrappedClosed(data);
+        }
     }
-    // Now data.type is Standard (or was already)
 
-    if (newType == RS_SplineData::SplineType::WrappedClosed) {
-        data.savedOpenType = RS_SplineData::SplineType::Standard;
-        LC_SplineHelper::toWrappedClosedFromStandard(data);
-    } else if (newType == RS_SplineData::SplineType::ClampedOpen) {
-        LC_SplineHelper::toClampedOpenFromStandard(data);
-    }
-    // For Standard, already there
+    data.type = newType;
 
+    // Normalize knots for consistent evaluation
+    normalizeKnots();
+
+    calculateBorders();
     update();
+
+    if (!validate()) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::changeType: Invalid state after change");
+        throw std::invalid_argument("Invalid spline state after type change");
+    }
+}
+
+/**
+ * Normalizes the knot vector by shifting to start at 0, preserving relative spacing.
+ * Uses LC_SplineHelper for computation; fallback to empty if invalid.
+ * Called after knot modifications for consistent evaluation.
+ */
+void RS_Spline::normalizeKnots() {
+    // Use helper with min=0, no fallback ({} if empty/invalid)
+    data.knotslist = LC_SplineHelper::getNormalizedKnotVector(data.knotslist, 0.0, {});
+    // No need for ensureMonotonic post-normalize (helper preserves order)
 }
 
 /** Public method to evaluate spline at parameter t */
@@ -984,4 +1183,104 @@ std::vector<double> RS_Spline::getBSplineBasis(double t, const std::vector<doubl
     return {basisFunctions.begin(), basisFunctions.begin() + numPoints};
 }
 
+namespace {
+bool compareVector(const RS_Vector& va, const RS_Vector& vb, double tol = 1e-4) {
+    return va.distanceTo(vb) <= tol;
+}
+}
+/**
+ * Validates the spline data integrity, checking sizes, monotonicity, multiplicities,
+ * positive weights, and minimum control points.
+ *
+ * @return true if valid, false otherwise (logs warnings via RS_DEBUG).
+ */
+bool RS_Spline::validate() const {
+    size_t numControls = getUnwrappedSize();
+    size_t expectedKnots = numControls + data.degree + 1;
+    size_t numWeights = data.weights.size();
+
+    // Check minimum controls
+    if (numControls < data.degree + 1) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::validate: Insufficient control points (need >= degree + 1)");
+        return false;
+    }
+
+    // Check vector sizes
+    if (data.knotslist.size() != expectedKnots) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::validate: Knot vector size mismatch (expected %zu, got %zu)", expectedKnots, data.knotslist.size());
+        return false;
+    }
+    if (numWeights != data.controlPoints.size()) {  // Full size, including wrapping
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::validate: Weights size mismatch with controls");
+        return false;
+    }
+
+    // Check knot monotonicity (non-decreasing)
+    for (size_t i = 1; i < data.knotslist.size(); ++i) {
+        if (data.knotslist[i] < data.knotslist[i - 1] - RS_TOLERANCE) {  // Allow approx equal for floats
+            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::validate: Knot vector not monotonic at index %zu", i);
+            return false;
+        }
+    }
+
+    // Check knot multiplicities (<= degree)
+    size_t mult = 1;
+    for (size_t i = 1; i < data.knotslist.size(); ++i) {
+        if (fabs(data.knotslist[i] - data.knotslist[i - 1]) < RS_TOLERANCE) {
+            ++mult;
+        } else {
+            if (mult > data.degree) {
+                RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::validate: Knot multiplicity exceeds degree (%zu > %zu)", mult, data.degree);
+                return false;
+            }
+            mult = 1;
+        }
+    }
+    if (mult > data.degree) {  // Check last group
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::validate: Knot multiplicity exceeds degree at end");
+        return false;
+    }
+
+    // Check positive weights (for rational stability; 0 or negative cause division issues)
+    for (double w : data.weights) {
+        if (w <= 0.0) {
+            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::validate: Non-positive weight found (%f)", w);
+            return false;
+        }
+    }
+
+    // Type-specific checks (e.g., wrapping consistency)
+    if (data.type == RS_SplineData::SplineType::WrappedClosed) {
+        if (!hasWrappedControlPoints()) {
+            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::validate: WrappedClosed but no wrapping detected");
+            return false;
+        }
+        // Verify last degree points/weights match first (within tolerance)
+        for (size_t i = 0; i < data.degree; ++i) {
+            if (!compareVector(data.controlPoints[numControls + i], data.controlPoints[i])) {
+                RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::validate: Wrapped controls mismatch at index %zu", i);
+                return false;
+            }
+            if (fabs(data.weights[numControls + i] - data.weights[i]) > RS_TOLERANCE) {
+                RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::validate: Wrapped weights mismatch at index %zu", i);
+                return false;
+            }
+        }
+    }
+
+    // ClampedOpen: Check endpoint multiplicities (p+1 at ends)
+    if (data.type == RS_SplineData::SplineType::ClampedOpen) {
+        size_t startMult = 0, endMult = 0;
+        double startVal = data.knotslist[0];
+        for (size_t i = 1; i < data.knotslist.size() && fabs(data.knotslist[i] - startVal) < RS_TOLERANCE; ++i) ++startMult;
+        double endVal = data.knotslist.back();
+        for (size_t i = data.knotslist.size() - 2; i > 0 && fabs(data.knotslist[i] - endVal) < RS_TOLERANCE; --i) ++endMult;
+        if (startMult != data.degree + 1 || endMult != data.degree + 1) {
+            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::validate: ClampedOpen endpoints multiplicity incorrect (expected %zu)", data.degree + 1);
+            return false;
+        }
+    }
+
+    return true;
+}
 

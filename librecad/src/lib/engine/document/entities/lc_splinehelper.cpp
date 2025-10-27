@@ -366,3 +366,129 @@ void LC_SplineHelper::ensureMonotonic(std::vector<double>& knots) {
         }
     }
 }
+/**
+ * Inserts a knot using Boehm's algorithm, refining the spline without changing its shape.
+ * Updates control points, weights, and knot vector.
+ *
+ * @param data The spline data to modify (in/out).
+ * @param t The parameter t where to insert the knot.
+ * @throws std::invalid_argument If t out of domain or invalid data.
+ */
+/**
+ * Inserts a knot (with multiplicity mult=1 by default) using Boehm's algorithm,
+ * refining the spline without changing its shape. Updates controls, weights, and knots.
+ *
+ * @param data The spline data to modify (in/out).
+ * @param t The parameter t where to insert the knot.
+ * @param mult The multiplicity to insert (default 1, max degree).
+ * @throws std::invalid_argument If t out of domain, mult invalid, or state invalid.
+ */
+void LC_SplineHelper::insertKnotBoehm(RS_SplineData& data, double t, int mult) {
+    if (mult < 1 || mult > static_cast<int>(data.degree)) {
+        throw std::invalid_argument("Invalid multiplicity (1 to degree)");
+    }
+
+    size_t n = data.controlPoints.size() - 1;  // Highest control index
+    size_t p = data.degree;
+    auto& U = data.knotslist;
+    auto& P = data.controlPoints;
+    auto& W = data.weights;
+
+    // Find insertion span
+    int k = findSpan(n, p, t, U);
+    int s = 0;  // Existing multiplicity at t
+    for (int i = k; i > 0 && fabs(U[i] - t) < RS_TOLERANCE; --i) ++s;
+    if (t < U[p] || t > U[n + 1]) {
+        throw std::invalid_argument("Insertion parameter t out of domain");
+    }
+    if (s + mult > static_cast<int>(p)) {
+        throw std::invalid_argument("Total multiplicity exceeds degree");
+    }
+
+    // Allocate new arrays (grow by mult)
+    std::vector<RS_Vector> Q(n + mult + 1);
+    std::vector<double> Qw(n + mult + 1);
+    std::vector<double> Uk(U.size() + mult);
+
+    // Copy unchanged knots
+    for (int i = 0; i <= k; ++i) Uk[i] = U[i];
+    for (int i = k + 1; i < U.size(); ++i) Uk[i + mult] = U[i];
+    // Insert t, mult times
+    for (int i = 1; i <= mult; ++i) Uk[k + i] = t;
+
+    // Boehm refinement: iterative convex combos
+    // For rational: work in homogeneous coords (Pw = P * w, insert on Pw and w, dehomogenize Pw_new / w_new)
+    std::vector<RS_Vector> Pw(n + 1);  // Homogeneous points
+    for (size_t i = 0; i <= n; ++i) Pw[i] = P[i] * W[i];
+
+    for (int r = 1; r <= mult; ++r) {  // For each insertion level
+        int L = k - p + r;
+        for (int j = k; j >= k - r + 1; --j) {
+            double alpha = (t - U[j]) / (U[j + p - r + 1] - U[j]);
+            Pw[j] = alpha * Pw[j] + (1.0 - alpha) * Pw[j - 1];
+            W[j] = alpha * W[j] + (1.0 - alpha) * W[j - 1];
+        }
+        // Handle ends if needed (for s>0 existing mult, but simplified for new insert)
+    }
+
+    // Copy unchanged controls
+    for (int i = 0; i <= k - p; ++i) {
+        Q[i] = Pw[i] / W[i];  // Dehomogenize
+        Qw[i] = W[i];
+    }
+    for (int i = k - s; i <= n; ++i) {
+        Q[i + mult] = Pw[i] / W[i];
+        Qw[i + mult] = W[i];
+    }
+
+    // Assign inserted (from temp Pw/W)
+    for (int r = 0; r <= p - s - mult; ++r) {  // Unchanged middle
+        Q[k - p + r] = Pw[k - p + r] / W[k - p + r];
+        Qw[k - p + r] = W[k - p + r];
+    }
+    int L = k - p + mult;
+    for (int r = 0; r <= s - 1; ++r) {  // Inserted segment
+        Q[L + r] = Pw[k - s + r] / W[k - s + r];
+        Qw[L + r] = W[k - s + r];
+    }
+
+    // Update data
+    data.controlPoints = Q;
+    data.weights = Qw;
+    data.knotslist = Uk;
+
+    ensureMonotonic(data.knotslist);
+}
+
+/**
+ * Finds the knot span index i where U[i] <= u < U[i+1].
+ * Uses binary search for efficiency O(log n).
+ *
+ * @param n Number of control points - 1 (highest index).
+ * @param p Spline degree.
+ * @param u Parameter value to find span for.
+ * @param U Knot vector (non-decreasing).
+ * @return The span index i.
+ * @throws std::invalid_argument If U not monotonic or u out of [U[p], U[n+1]] (optional in improved).
+ */
+int LC_SplineHelper::findSpan(int n, int p, double u, const std::vector<double>& U) {
+    // Edge cases: u at start or end
+    if (u <= U[p] + RS_TOLERANCE) return p;  // First span (clamped start)
+    if (u >= U[n + 1] - RS_TOLERANCE) return n;  // Last span (clamped end)
+
+    // Binary search
+    int low = p;
+    int high = n + 1;
+    int mid = (low + high) / 2;
+
+    while (u < U[mid] || u >= U[mid + 1]) {
+        if (u < U[mid]) {
+            high = mid;
+        } else {
+            low = mid;
+        }
+        mid = (low + high) / 2;
+    }
+
+    return mid;
+}

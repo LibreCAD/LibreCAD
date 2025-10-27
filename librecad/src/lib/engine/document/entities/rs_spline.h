@@ -231,7 +231,7 @@ public:
     void setKnot(size_t index, double k);
 
     /** Insert control point, clear knots if present */
-    void insertControlPoint(size_t index, const RS_Vector& v, double w = 1.);
+    void insertControlPoint(size_t index, const RS_Vector& v, double w = 1., bool preserveShape = false);
 
     /** Remove control point, clear knots if present */
     void removeControlPoint(size_t index);
@@ -317,6 +317,8 @@ private:
     double bisectDerivativeZero(double a, double b, double fa, bool isX) const;
 
     void resetBorders();
+    void normalizeKnots();
+    double estimateParamAtIndex(size_t index) const;
 };
 
 #endif
