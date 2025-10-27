@@ -11,6 +11,12 @@
     </description>
     <launchable type="desktop-id">librecad.desktop</launchable>
     <url type="homepage">https://librecad.org/</url>
+    <url type="vcs-browser">https://github.com/LibreCAD/LibreCAD</url>
+    <url type="bugtracker">https://github.com/LibreCAD/LibreCAD/issues</url>
+    <url type="translate">https://librecad.org/translate.html</url>
+    <url type="contribute">https://github.com/LibreCAD/LibreCAD/wiki/Becoming-a-developer</url>
+    <url type="faq">https://dokuwiki.librecad.org/doku.php/usage:faq</url>
+    <url type="donation">https://librecad.org/#sponsors</url>
     <screenshots>
         <screenshot type="default">
             <image>https://dokuwiki.librecad.org/lib/exe/fetch.php/librecad_screeshot_2.2.png</image>
