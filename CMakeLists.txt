@@ -807,6 +807,8 @@ set(SOURCES
         librecad/src/lib/engine/document/entities/rs_solid.h
         librecad/src/lib/engine/document/entities/rs_spline.cpp
         librecad/src/lib/engine/document/entities/rs_spline.h
+        librecad/src/lib/engine/document/entities/lc_splinehelper.cpp
+        librecad/src/lib/engine/document/entities/lc_splinehelper.h
         librecad/src/lib/engine/rs_system.cpp
         librecad/src/lib/engine/rs_system.h
         librecad/src/lib/engine/document/entities/rs_text.cpp
@@ -1759,6 +1761,8 @@ if(BUILD_TESTS)
     add_executable(librecad_tests
         librecad/src/lib/math/tests/rs_math_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_ellipse_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/rs_spline_tests.cpp
+        #librecad/src/lib/engine/document/entities/tests/lc_splinehelper_tests.cpp
         ${SOURCES}
     )
 

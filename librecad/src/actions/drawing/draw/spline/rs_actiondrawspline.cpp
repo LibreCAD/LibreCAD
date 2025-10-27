@@ -142,6 +142,7 @@ void RS_ActionDrawSpline::onCoordinateEvent(int status,  [[maybe_unused]]bool is
             if (!m_actionData->spline){
                 m_actionData->spline = new RS_Spline(m_container, m_actionData->data);
                 m_actionData->spline->addControlPoint(mouse);
+                m_actionData->spline->update();
             }
             setStatus(SetNextPoint);
             moveRelativeZero(mouse);
@@ -153,6 +154,7 @@ void RS_ActionDrawSpline::onCoordinateEvent(int status,  [[maybe_unused]]bool is
             m_actionData->history.append(mouse);
             if (m_actionData->spline){
                 m_actionData->spline->addControlPoint(mouse);
+                m_actionData->spline->update();
                 deletePreview();
                 drawSnapper();
             }
@@ -296,14 +298,14 @@ int RS_ActionDrawSpline::getDegree(){
 }
 
 void RS_ActionDrawSpline::setClosed(bool c){
-    m_actionData->data.closed = c;
+    m_actionData->data.setClosed(c);
     if (m_actionData->spline){
         m_actionData->spline->setClosed(c);
     }
 }
 
 bool RS_ActionDrawSpline::isClosed(){
-    return m_actionData->data.closed;
+    return m_actionData->data.isClosed();
 }
 
 LC_ActionOptionsWidget* RS_ActionDrawSpline::createOptionsWidget(){

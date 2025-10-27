@@ -689,8 +689,8 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
 {
     std::vector<double> ans(0,0.);
     if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
-        DEBUG_HEADER
-                std::cout<<"expected array size=4, got "<<ce.size()<<std::endl;
+        DEBUG_HEADER;
+        std::cout<<"expected array size=4, got "<<ce.size()<<std::endl;
     }
     if(ce.size() != 4) return ans;
     if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
@@ -711,8 +711,8 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
     double q= ce[2] + ce[0]*((1./8)*a2 - 0.5*ce[1]);
     double r= ce[3] - shift*ce[2] + (ce[1] - 3.*shift2)*shift2;
     if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
-        DEBUG_HEADER
-                std::cout<<"x^4+("<<p<<")*x^2+("<<q<<")*x+("<<r<<")==0"<<std::endl;
+        DEBUG_HEADER;
+        std::cout<<"x^4+("<<p<<")*x^2+("<<q<<")*x+("<<r<<")==0"<<std::endl;
     }
     if (q*q <= 1.e-4*RS_TOLERANCE*std::abs(p*r)) {// Biquadratic equations
         double discriminant= 0.25*p*p -r;
