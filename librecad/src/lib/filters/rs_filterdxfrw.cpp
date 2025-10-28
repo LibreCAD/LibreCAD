@@ -24,6 +24,8 @@
 **********************************************************************/
 
 #include<cstdlib>
+#include<utility>
+
 #include <QRegularExpression>
 #include <QStringList>
 #include <QStringConverter>
@@ -78,6 +80,10 @@
 #include "lc_graphicviewport.h"
 
 #endif
+
+namespace {
+RS_Arc* createArcFromBulge(const RS_Vector& p1, const RS_Vector& p2, double bulge);
+}
 
 /**
  * Default constructor.

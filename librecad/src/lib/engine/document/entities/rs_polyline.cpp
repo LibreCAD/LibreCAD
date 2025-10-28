@@ -628,7 +628,6 @@ void RS_Polyline::scale(const RS_Vector& center, const RS_Vector& factor) {
                 ellipse->setPen(RS_Pen(RS2::FlagInvalid));
                 ellipse->setLayer(nullptr);
                 setEntityAt(i, ellipse);
-                delete arc;
             }
         }
     }
