@@ -28,7 +28,13 @@
 #pragma once
 #ifndef RS_Polyline_INCLUDE_H
 
+#include <utility>
+
 #include "rs_entitycontainer.h"
+
+class RS_Arc;
+class RS_Ellipse;
+
 /**
  * Holds the data that defines a polyline.
  */
@@ -62,6 +68,10 @@ public:
 
     /** @return Copy of data that defines the polyline. */
     RS_PolylineData getData() const{
+        return data;
+    }
+
+    RS_PolylineData& getData() {
         return data;
     }
 
@@ -133,6 +143,10 @@ public:
     void drawAsChild(RS_Painter *painter) override;
     friend std::ostream &operator<<(std::ostream &os, const RS_Polyline &l);
     RS_Vector getRefPointAdjacentDirection(bool previousSegment, RS_Vector& refPoint);
+    static RS_Ellipse* convertToEllipse(const std::pair<RS_Arc*, double>& arcPair);
+    static std::pair<RS_Arc*, double> convertToArcPair(const RS_Ellipse* ellipse);
+
+
 protected:
     std::unique_ptr<RS_Entity> createVertex(
         const RS_Vector &v,

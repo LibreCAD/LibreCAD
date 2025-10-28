@@ -33,6 +33,7 @@
 #include "rs_arc.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_ellipse.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_ellipse.h"
 #include "rs_information.h"
@@ -613,11 +614,23 @@ void RS_Polyline::rotate(const RS_Vector& center, const RS_Vector& angleVector) 
 }
 
 void RS_Polyline::scale(const RS_Vector& center, const RS_Vector& factor) {
-    // fixme - Umgh.... is it really nice design to mix UI logic to entity? It seems that the check and message should be outside of this....
-    // todo - it seems that either proper scaling is needed, or at least message should be moved to the place of invocation (that might be tough)
-    // fixme - check this
-    if (containsArc() && !RS_Math::equal(factor.x, factor.y)) {
-        RS_DIALOGFACTORY->commandMessage(QObject::tr("Polyline contains arc segments, and scaling by different xy-factors will generate incorrect results"));
+    if (!RS_Math::equal(factor.x, factor.y)) {
+        for (int i = 0; i < count(); ++i) {
+            RS_Entity* e = entityAt(i);
+            if (e->rtti() == RS2::EntityArc) {
+                RS_Arc* arc = static_cast<RS_Arc*>(e);
+                RS_Vector majorP(arc->getRadius(), 0.0);
+                RS_EllipseData ed{arc->getCenter(), majorP, 1.0,
+                                  arc->getAngle1(), arc->getAngle2(),
+                                  arc->isReversed()};
+                RS_Ellipse* ellipse = new RS_Ellipse(this, ed);
+                ellipse->setSelected(arc->isSelected());
+                ellipse->setPen(RS_Pen(RS2::FlagInvalid));
+                ellipse->setLayer(nullptr);
+                setEntityAt(i, ellipse);
+                delete arc;
+            }
+        }
     }
     RS_EntityContainer::scale(center, factor);
     data.startpoint.scale(center, factor);
@@ -681,6 +694,72 @@ void RS_Polyline::draw(RS_Painter* painter) {
 
 void RS_Polyline::drawAsChild(RS_Painter *painter) {
     painter->drawEntityPolyline(this);
+}
+
+RS_Ellipse* RS_Polyline::convertToEllipse(const std::pair<RS_Arc*, double>& arcPair) {
+    RS_Arc* arc = arcPair.first;
+    double scaleRatio = arcPair.second;
+    double radius = arc->getRadius();
+    double major, ratio;
+    RS_Vector majorP;
+    bool reversed = arc->isReversed();
+    if (scaleRatio >= 1.0) {
+        // Major along y
+        major = radius * scaleRatio;
+        ratio = 1.0 / scaleRatio;
+        majorP = RS_Vector(0.0, major);
+    } else {
+        // Major along x
+        major = radius;
+        ratio = scaleRatio;
+        majorP = RS_Vector(major, 0.0);
+    }
+
+    RS_EllipseData d{arc->getCenter(), majorP, ratio,
+                     arc->getAngle1(), arc->getAngle2(), reversed};
+
+    RS_Ellipse* ellipse = new RS_Ellipse(arc->getParent(), d);
+    ellipse->setSelected(arc->isSelected());
+    ellipse->setPen(RS_Pen(RS2::FlagInvalid));
+    ellipse->setLayer(nullptr);
+
+    return ellipse;
+}
+
+std::pair<RS_Arc*, double> RS_Polyline::convertToArcPair(const RS_Ellipse* ellipse) {
+    double elRatio = ellipse->getRatio();
+    RS_Vector elMajorP = ellipse->getMajorP();
+    double majorRadius = elMajorP.magnitude();
+    double angle = elMajorP.angle();
+    bool alongX = (fabs(angle) < RS_TOLERANCE || fabs(angle - M_PI) < RS_TOLERANCE);
+    bool alongY = (fabs(angle - M_PI_2) < RS_TOLERANCE || fabs(angle - 3 * M_PI_2) < RS_TOLERANCE);
+
+    if (!alongX && !alongY) {
+        // Not axis-aligned, cannot convert simply
+        RS_DEBUG->print(RS_Debug::D_WARNING, "convertToArcPair: Ellipse not axis-aligned");
+        return {nullptr, 0.0};
+    }
+
+    double scaleRatio;
+    double arcRadius;
+    if (alongX) {
+        arcRadius = majorRadius;
+        scaleRatio = elRatio;
+    } else { // alongY
+        arcRadius = majorRadius * elRatio; // since minor is along x, arcRadius as x semi
+        scaleRatio = 1.0 / elRatio;
+    }
+
+    RS_ArcData d(ellipse->getCenter(), arcRadius,
+                 ellipse->getAngle1(), ellipse->getAngle2(),
+                 ellipse->isReversed());
+
+    RS_Arc* arc = new RS_Arc(ellipse->getParent(), d);
+    arc->setSelected(ellipse->isSelected());
+    arc->setPen(RS_Pen(RS2::FlagInvalid));
+    arc->setLayer(nullptr);
+
+    return {arc, scaleRatio};
 }
 
 /**
