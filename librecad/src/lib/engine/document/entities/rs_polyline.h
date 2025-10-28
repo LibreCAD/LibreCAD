@@ -151,7 +151,20 @@ protected:
     std::unique_ptr<RS_Entity> createVertex(
         const RS_Vector &v,
         double bulge = 0.0, bool prepend = false);
+
 private:
+    /**
+     * @brief Converts all circular arc (RS_Arc) segments to equivalent elliptic arcs (RS_Ellipse)
+     *        to correctly handle non-uniform scaling (factor.x != factor.y).
+     *        Computes scaleRatio = |factor.y / factor.x| and replaces each arc with an
+     *        axis-aligned ellipse that matches the arc's geometry when stretched.
+     *        Preserves entity order/index in the container. No-op if uniform scaling.
+     * @param factor Scaling factor vector used to determine y/x scale ratio.
+     * @note Called from scale() before applying the transformation.
+     * @note Relies on static convertToEllipse() for per-arc conversion.
+     */
+    void convertArcsToElliptic(const RS_Vector &factor);
+
     // whether the polyline is used in fonts(RS2::EntityFontChar
     bool isFont() const;
     RS_PolylineData data;
