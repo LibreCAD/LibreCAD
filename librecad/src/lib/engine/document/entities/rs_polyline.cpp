@@ -791,13 +791,6 @@ RS_Vector RS_Polyline::getRefPointAdjacentDirection(bool previousSegment, RS_Vec
     return previous;
 }
 
-bool RS_Polyline::isFont() const{
-    // fixme - sand - temporary disabled elliptic arcs until painting for them is fixed and save is solved
-    // const RS_EntityContainer* parent = getParent();
-    // return parent != nullptr && parent->rtti() == RS2::EntityFontChar;
-    return false;
-}
-
 RS_Arc* RS_Polyline::arcFromBulge(const RS_Vector& start, const RS_Vector& end, double bulge) {
     if (std::abs(bulge) < RS_TOLERANCE || std::abs(bulge) >= RS_MAXDOUBLE) {
         return nullptr;
@@ -814,7 +807,8 @@ RS_Arc* RS_Polyline::arcFromBulge(const RS_Vector& start, const RS_Vector& end, 
     RS_Vector center = middle + RS_Vector::polar(h, angleNew);
     double a1 = center.angleTo(start);
     double a2 = center.angleTo(end);
-    if (reversed) std::swap(a1, a2);
+    if (reversed)
+        std::swap(a1, a2);
     RS_ArcData d(center, radius, a1, a2, reversed);
     return new RS_Arc(nullptr, d);
 }

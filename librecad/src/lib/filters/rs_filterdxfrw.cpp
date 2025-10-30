@@ -81,10 +81,6 @@
 
 #endif
 
-namespace {
-RS_Arc* createArcFromBulge(const RS_Vector& p1, const RS_Vector& p2, double bulge);
-}
-
 /**
  * Default constructor.
  *
@@ -764,7 +760,7 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
             is_elliptic = true;
         }
         if (is_elliptic) {
-            RS_Arc* arc = createArcFromBulge(prev_pos, curr_pos, bulge);
+            RS_Arc* arc = RS_Polyline::arcFromBulge(prev_pos, curr_pos, bulge);
             if (arc) {
                 double radius = arc->getRadius();
                 double scale_ratio = y_radius / radius;
@@ -807,7 +803,7 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
         RS_Vector curr_pos = polyline->getStartpoint();
         RS_Vector prev_pos = polyline->getEndpoint();
         if (is_elliptic) {
-            RS_Arc* arc = createArcFromBulge(prev_pos, curr_pos, bulge);
+            RS_Arc* arc = RS_Polyline::arcFromBulge(prev_pos, curr_pos, bulge);
             if (arc) {
                 double radius = arc->getRadius();
                 double scale_ratio = y_radius / radius;
@@ -5888,37 +5884,3 @@ void RS_FilterDXFRW::applyParsedDimStyleExtData(LC_DimStyle* dimStyle, const QSt
 
 #endif
 
-namespace {
-RS_Arc* createArcFromBulge(const RS_Vector& p1, const RS_Vector& p2, double bulge) {
-    if (std::abs(bulge)<RS_TOLERANCE || std::abs(bulge) >= RS_MAXDOUBLE) {
-        return nullptr;
-    }
-    bool reversed = std::signbit(bulge);
-    double alpha = std::atan(std::abs(bulge)) * 4.0;
-
-    RS_Vector middle = (p1 + p2)/2.0;
-    double dist = p1.distanceTo(p2)/2.0;
-    double angle = p1.angleTo(p2);
-
-    // alpha can't be 0.0 at this point
-    double const radius = std::abs(dist / std::sin(alpha/2.0));
-
-    double const wu = std::abs(radius*radius - dist*dist);
-    double h = (std::abs(alpha)>M_PI) ? -std::sqrt(wu) : std::sqrt(wu);
-
-    double angleNew = reversed ? angle - M_PI_2 : angle + M_PI_2;
-
-    RS_Vector center = RS_Vector::polar(h, angleNew);
-    center += middle;
-    double a1 = center.angleTo(p1);
-    double a2 = center.angleTo(p2);
-
-    if (reversed) std::swap(a1, a2);
-
-    RS_ArcData const d(center, radius,
-                       a1, a2,
-                       reversed);
-
-    return new RS_Arc(nullptr, d);
-}
-}

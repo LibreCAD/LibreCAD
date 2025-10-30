@@ -165,8 +165,6 @@ private:
      */
     void convertArcsToElliptic(const RS_Vector &factor);
 
-    // whether the polyline is used in fonts(RS2::EntityFontChar
-    bool isFont() const;
     RS_PolylineData data;
     RS_Entity *m_closingEntity = nullptr;
     double m_nextBulge = 0.;
