@@ -717,10 +717,79 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline& data) {
 void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
     RS_DEBUG->print("RS_FilterDXFRW::addPolyline");
     if (data.flags & 0x10) {
-        return; // the polyline is a polygon mesh, not handled
+        // the polyline is a polygon mesh
+        int M = data.vertexcount;
+        int N = data.facecount;
+        if (M <= 0 || N <= 0 || data.vertlist.size() != static_cast<size_t>(M * N)) {
+            return; // invalid mesh
+        }
+        if (data.curvetype != 0) {
+            return; // smooth surfaces not handled
+        }
+        bool closedM = (data.flags & 0x1);  // closed in M direction
+        bool closedN = (data.flags & 0x20); // closed in N direction
+
+        // Add row polylines (along N direction)
+        for (int i = 0; i < M; i++) {
+            RS_PolylineData pd(RS_Vector(), RS_Vector(), closedN);
+            RS_Polyline *pl = new RS_Polyline(m_currentContainer, pd);
+            setEntityAttributes(pl, &data);
+            for (int j = 0; j < N; j++) {
+                auto v = data.vertlist.at(i * N + j);
+                RS_Vector pos(v->basePoint.x, v->basePoint.y);
+                pl->addVertex(pos, 0.0, false);
+            }
+            m_currentContainer->addEntity(pl);
+        }
+
+        // Add column polylines (along M direction)
+        for (int j = 0; j < N; j++) {
+            RS_PolylineData pd(RS_Vector(), RS_Vector(), closedM);
+            RS_Polyline *pl = new RS_Polyline(m_currentContainer, pd);
+            setEntityAttributes(pl, &data);
+            for (int i = 0; i < M; i++) {
+                auto v = data.vertlist.at(i * N + j);
+                RS_Vector pos(v->basePoint.x, v->basePoint.y);
+                pl->addVertex(pos, 0.0, false);
+            }
+            m_currentContainer->addEntity(pl);
+        }
+        return;
     }
+
     if (data.flags & 0x40) {
-        return; // the polyline is a poliface mesh, TODO convert
+        // the polyline is a polyface mesh
+        std::vector<RS_Vector> vertices;
+        for (auto const& v : data.vertlist) {
+            if ((v->flags & 0x40) == 0) { // vertex
+                vertices.emplace_back(v->basePoint.x, v->basePoint.y);
+            }
+        }
+        // add faces as closed polylines
+        for (auto const& f : data.vertlist) {
+            if ((f->flags & 0x40) != 0) { // face
+                std::vector<int> indices = {f->vindex1, f->vindex2, f->vindex3, f->vindex4};
+                int num_points = (f->vindex4 == 0) ? 3 : 4;
+                RS_PolylineData pd(RS_Vector(), RS_Vector(), true); // closed
+                RS_Polyline *pl = new RS_Polyline(m_currentContainer, pd);
+                setEntityAttributes(pl, &data);
+                bool valid = true;
+                for (int k = 0; k < num_points; ++k) {
+                    int idx = abs(indices[k]);
+                    if (idx < 1 || idx > static_cast<int>(vertices.size())) {
+                        valid = false;
+                        break;
+                    }
+                    pl->addVertex(vertices[idx - 1], 0.0);
+                }
+                if (valid) {
+                    m_currentContainer->addEntity(pl);
+                } else {
+                    delete pl;
+                }
+            }
+        }
+        return;
     }
 
     RS_PolylineData d(RS_Vector{}, RS_Vector{}, data.flags & 0x1);
