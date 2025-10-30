@@ -2559,9 +2559,13 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
         exportVersion = DRW::AC1018;
         m_version = 1018;
         m_exactColor = true;
-    } else {
+    } else if (type==RS2::FormatDXFRW){
         exportVersion = DRW::AC1021;
         m_version = 1021;
+        m_exactColor = true;
+    } else {
+        exportVersion = DRW::AC1032;
+        m_version = 1032;
         m_exactColor = true;
     }
     /**
@@ -5402,6 +5406,8 @@ QString RS_FilterDXFRW::printDwgVersion(int v){
             return "dwg version 2010";
         case DRW::AC1027:
             return "dwg version 2013";
+        case DRW::AC1032:
+            return "dwg version 2018";
         default:
             return "unknown";
     }
