@@ -73,13 +73,12 @@
 #include "lc_tolerance.h"
 
 #ifdef DWGSUPPORT
+#include "lc_graphicviewport.h"
+#include "lc_ucs.h"
+#include "lc_view.h"
 #include "libdwgr.h"
 #include "rs_debug.h"
-#include "lc_view.h"
-#include "lc_ucs.h"
-#include "lc_graphicviewport.h"
-
-#endif
+#endif // DWGSUPPORT
 
 /**
  * Default constructor.
@@ -93,14 +92,14 @@ RS_FilterDXFRW::RS_FilterDXFRW()
     m_graphic = nullptr;
 // Init hash to change the QCAD "normal" style to the more correct ISO-3059
 // or draftsight symbol (AR*.shx) to sy*.lff
+    m_fontList["arastro"] = "syastro";
+    m_fontList["armap"] = "symap";
+    m_fontList["armeteo"] = "symeteo";
+    m_fontList["armusic"] = "symusic";
+    m_fontList["math"] = "symath";
     m_fontList["normal"] = "iso";
     m_fontList["normallatin1"] = "iso";
     m_fontList["normallatin2"] = "iso";
-    m_fontList["arastro"] = "syastro";
-    m_fontList["armap"] = "symap";
-    m_fontList["math"] = "symath";
-    m_fontList["armeteo"] = "symeteo";
-    m_fontList["armusic"] = "symusic";
 
     RS_DEBUG->print("RS_FilterDXFRW::RS_FilterDXFRW(): OK");
 }
@@ -666,7 +665,6 @@ void RS_FilterDXFRW::addTolerance(const DRW_Tolerance& data) {
 
     QString text = toNativeString(QString::fromUtf8(data.text.c_str()));
 
-
     QString sty = QString::fromUtf8(data.dimStyleName.c_str());
     if (sty.isEmpty()) {
         sty = m_dimStyle;
@@ -766,7 +764,7 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
             }
         }
         // add faces as closed polylines
-        for (auto const& f : data.vertlist) {
+        for (const std::shared_ptr<DRW_Vertex>& f : data.vertlist) {
             if ((f->flags & 0x40) != 0) { // face
                 std::vector<int> indices = {f->vindex1, f->vindex2, f->vindex3, f->vindex4};
                 int num_points = (f->vindex4 == 0) ? 3 : 4;
