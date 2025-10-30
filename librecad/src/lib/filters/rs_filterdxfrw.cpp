@@ -5275,31 +5275,27 @@ bool RS_FilterDXFRW::isVariableTwoDimensional(const QString& var) {
 }
 
 void RS_FilterDXFRW::addPolylineSegment(RS_Polyline* polyline, RS_Vector prev_pos, RS_Vector curr_pos, double bulge, const std::vector<std::shared_ptr<DRW_Variant>>& extData, bool isClosedSegment) {
-    bool is_lc_data = false;
-    double y_radius = 0.0;
-    bool is_elliptic = false;
+    bool isLcData = false;
+    double yRadius = 0.0;
+    bool isElliptic = false;
 
     for (const auto& var : extData) {
         if (var->code() == 1001) {
-            if (*(var->content.s) == "LibreCad") {
-                is_lc_data = true;
-            } else {
-                is_lc_data = false;
-            }
-        } else if (is_lc_data && var->code() == 1040) {
-            y_radius = var->content.d;
+            isLcData = *(var->content.s) == "LibreCad";
+        } else if (isLcData && var->code() == 1040) {
+            yRadius = var->content.d;
         }
     }
-    if (y_radius > RS_TOLERANCE) {
-        is_elliptic = true;
+    if (yRadius > RS_TOLERANCE) {
+        isElliptic = true;
     }
 
-    if (is_elliptic) {
-        RS_Arc* arc = RS_Polyline::arcFromBulge(prev_pos, curr_pos, bulge);
-        if (arc) {
+    if (isElliptic) {
+        std::unique_ptr<RS_Arc> arc{ RS_Polyline::arcFromBulge(prev_pos, curr_pos, bulge)};
+        if (arc != nullptr) {
             double radius = arc->getRadius();
-            double scale_ratio = y_radius / radius;
-            RS_Ellipse* ellipse = RS_Polyline::convertToEllipse(std::make_pair(arc, scale_ratio));
+            double scale_ratio = yRadius / radius;
+            RS_Ellipse* ellipse = RS_Polyline::convertToEllipse(std::make_pair(arc.get(), scale_ratio));
             if (ellipse) {
                 ellipse->setParent(polyline);
                 ellipse->setSelected(polyline->isSelected());
@@ -5308,7 +5304,6 @@ void RS_FilterDXFRW::addPolylineSegment(RS_Polyline* polyline, RS_Vector prev_po
                 polyline->addEntity(ellipse);
                 polyline->getData().endpoint = curr_pos;
             }
-            delete arc;
         }
     } else {
         polyline->addVertex(curr_pos, bulge, false);
