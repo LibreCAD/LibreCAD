@@ -234,23 +234,12 @@ std::unique_ptr<RS_Entity> RS_Polyline::createVertex(const RS_Vector& v, double 
 
         // Issue #1946: always create Ellipse for fonts
         // Issue #2067: limit elliptic segments for fonts
-        if (isFont()) {
-            RS_EllipseData const d{
-                center,
-                RS_Vector{radius, 0.},
-                1.,
-                startAngle, endAngle,
-                reversed};
 
-            entity = std::make_unique<RS_Ellipse>(this, d);
-        }
-        else{
-            RS_ArcData const d(center, radius,
-                               startAngle, endAngle,
-                               reversed);
+        RS_ArcData const d(center, radius,
+                           startAngle, endAngle,
+                           reversed);
 
-            entity = std::make_unique<RS_Arc>(this, d);
-        }
+        entity = std::make_unique<RS_Arc>(this, d);
     }
     entity->setSelected(isSelected());
     entity->setPen(RS_Pen(RS2::FlagInvalid));
@@ -807,4 +796,25 @@ bool RS_Polyline::isFont() const{
     // const RS_EntityContainer* parent = getParent();
     // return parent != nullptr && parent->rtti() == RS2::EntityFontChar;
     return false;
+}
+
+RS_Arc* RS_Polyline::arcFromBulge(const RS_Vector& start, const RS_Vector& end, double bulge) {
+    if (std::abs(bulge) < RS_TOLERANCE || std::abs(bulge) >= RS_MAXDOUBLE) {
+        return nullptr;
+    }
+    bool reversed = std::signbit(bulge);
+    double alpha = std::atan(std::abs(bulge)) * 4.0;
+    RS_Vector middle = (start + end) / 2.0;
+    double dist = start.distanceTo(end) / 2.0;
+    double angle = start.angleTo(end);
+    double radius = std::abs(dist / std::sin(alpha / 2.0));
+    double wu = std::abs(radius * radius - dist * dist);
+    double h = (std::abs(alpha) > M_PI) ? -std::sqrt(wu) : std::sqrt(wu);
+    double angleNew = reversed ? angle - M_PI_2 : angle + M_PI_2;
+    RS_Vector center = middle + RS_Vector::polar(h, angleNew);
+    double a1 = center.angleTo(start);
+    double a2 = center.angleTo(end);
+    if (reversed) std::swap(a1, a2);
+    RS_ArcData d(center, radius, a1, a2, reversed);
+    return new RS_Arc(nullptr, d);
 }

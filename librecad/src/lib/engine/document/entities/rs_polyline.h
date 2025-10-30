@@ -145,7 +145,7 @@ public:
     RS_Vector getRefPointAdjacentDirection(bool previousSegment, RS_Vector& refPoint);
     static RS_Ellipse* convertToEllipse(const std::pair<RS_Arc*, double>& arcPair);
     static std::pair<RS_Arc*, double> convertToArcPair(const RS_Ellipse* ellipse);
-
+    static RS_Arc* arcFromBulge(const RS_Vector& start, const RS_Vector& end, double bulge);
 
 protected:
     std::unique_ptr<RS_Entity> createVertex(
