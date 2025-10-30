@@ -1,0 +1,40 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": { "major": 3, "minor": 21 },
+    "configurePresets": [
+        {
+            "name": "x64-debug",
+            "displayName": "Debug-x64",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+        },
+        {
+            "name": "x64-relwithdebug",
+            "displayName": "Rel-DbgInfo-x64",
+            "inherits": "x64-debug",
+            "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
+        },
+        {
+            "name": "x64-release",
+            "displayName": "Rel-x64",
+            "inherits": "x64-debug",
+            "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "x64-debug",
+            "configurePreset": "x64-debug",
+            "jobs": 8
+        },
+        {
+            "name": "x64-relwithdebug",
+            "configurePreset": "x64-relwithdebug"
+        },
+        {
+            "name": "x64-release",
+            "configurePreset": "x64-release"
+        }
+    ]
+}
