@@ -106,6 +106,7 @@ namespace RS2 {
     enum FormatType {
         FormatUnknown,       /**< Unknown / unsupported format. */
         FormatDXF1,          /**< QCad 1 compatibility DXF format. */
+        FormatDXFRW2018,           /**< DXF format. v2018. */
         FormatDXFRW,           /**< DXF format. v2007. */
         FormatDXFRW2004,           /**< DXF format. v2004. */
         FormatDXFRW2000,           /**< DXF format. v2000. */

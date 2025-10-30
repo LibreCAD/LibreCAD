@@ -242,39 +242,40 @@ private:
 #endif
 
 private:
-    /** Pointer to the graphic we currently operate on. */
-    RS_Graphic* graphic;
+    /** Pointer to the m_graphic we currently operate on. */
+    RS_Graphic* m_graphic = nullptr;
     /** File name. Used to find out the full path of images. */
-    QString file;
+    QString m_file;
     /** Pointer to current entity container (either block or graphic) */
-    RS_EntityContainer* currentContainer;
-    /** File codePage. Used to find the text coder. */
-    QString codePage;
+    RS_EntityContainer* m_currentContainer = nullptr;
+    /** File m_codePage. Used to find the text coder. */
+    QString m_codePage;
     /** File version. */
-    QString versionStr;
-    int version;
+    QString m_versionStr;
+    int m_version = 0;
     /** Library File version. */
 #define LIBDXFRW_VERSION(version,release,patch) (((version) << 16) | ((release) << 8) | (patch))
-    bool isLibDxfRw {false};
-    uint libDxfRwVersion;
+    bool m_isLibDxfRw {false};
+    uint m_libDxfRwVersion = 0;
     /** dimension style. */
-    QString dimStyle;
+    QString m_dimStyle;
     /** text style. */
-    QString textStyle;
+    QString m_textStyle;
     /** Temporary list to handle unnamed blocks to write R12 dxf. */
-    QHash <RS_Entity*, QString> noNameBlock;
-    QHash <QString, QString> fontList;
-    bool oldMText;
-    dxfRW *dxfW {nullptr};
-    dxfRW *dxfR {nullptr};
+    QHash <RS_Entity*, QString> m_noNameBlock;
+    QHash <QString, QString> m_fontList;
+    bool m_oldMText = false;
+    dxfRW *m_dxfW {nullptr};
+    dxfRW *m_dxfR {nullptr};
     /** If saved version are 2004 or above can save color in RGB value. */
-    bool exactColor;
+    bool m_exactColor = false;
     /** hash of block containers and handleBlock numbers to read dwg files */
-    QHash<int, RS_EntityContainer*> blockHash;
+    QHash<int, RS_EntityContainer*> m_blockHash;
     /** Pointer to entity container to store possible orphan entities like paper space */
-    RS_EntityContainer* dummyContainer;
+    RS_EntityContainer* m_dummyContainer = nullptr;
     void applyParsedDimStyleExtData(LC_DimStyle* dimStyle, const QString& appName, const std::vector<DRW_Variant>& vector);
     LC_DimStyle *createDimStyle(const DRW_Dimstyle &s);
+    void addPolylineSegment(RS_Polyline* polyline, RS_Vector prev_pos, RS_Vector curr_pos, double bulge, const std::vector<std::shared_ptr<DRW_Variant>>& extData, bool isClosedSegment);
 };
 
 #endif
