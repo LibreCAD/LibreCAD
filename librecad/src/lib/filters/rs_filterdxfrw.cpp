@@ -3761,13 +3761,13 @@ void RS_FilterDXFRW::writePolyline(RS_Polyline* p) {
         } else if (e->rtti() == RS2::EntityArc) {
             bulge = ((RS_Arc*)e)->getBulge();
         } else if (e->rtti() == RS2::EntityEllipse) {
+            // Issue #1946: prepare to write elliptic arcs as RS_Arc
             RS_Ellipse* ellipse = static_cast<RS_Ellipse*>(e);
             auto pair = RS_Polyline::convertToArcPair(ellipse);
-            RS_Arc* arc = pair.first;
+            std::unique_ptr<RS_Arc> arc{ pair.first };
             bulge = arc->getBulge();
             y_radius = arc->getRadius() * pair.second;
             is_elliptic = true;
-            delete arc;
         } else {
             continue;
         }
@@ -3790,14 +3790,14 @@ void RS_FilterDXFRW::writePolyline(RS_Polyline* p) {
         } else if (ae->rtti() == RS2::EntityEllipse) {
             RS_Ellipse* ellipse = static_cast<RS_Ellipse*>(ae);
             auto pair = RS_Polyline::convertToArcPair(ellipse);
-            RS_Arc* arc = pair.first;
+            std::unique_ptr<RS_Arc> arc{ pair.first };
             bulge = arc->getBulge();
             y_radius = arc->getRadius() * pair.second;
             is_elliptic = true;
-            delete arc;
         }
         pol.addVertex( DRW_Vertex(ae->getEndpoint().x,
                                  ae->getEndpoint().y, 0.0, bulge));
+        // Issue #1946, add Flag and
         if (is_elliptic) {
             pol.vertlist.back()->extData.push_back(std::make_shared<DRW_Variant>(1001, "LibreCad"));
             pol.vertlist.back()->extData.push_back(std::make_shared<DRW_Variant>(1040, y_radius));
@@ -5350,6 +5350,9 @@ void RS_FilterDXFRW::addPolylineSegment(RS_Polyline* polyline, RS_Vector prev_po
     double yRadius = 0.0;
     bool isElliptic = false;
 
+    // Issue #1946: LibreCAD may use elliptic arcs internally, but dxf file saving
+    // uses arcs only. Minor radius of elliptic is saved as DRW_Variant::content
+    // The content is flagged as "LibreCAD"
     for (const auto& var : extData) {
         if (var->code() == 1001) {
             isLcData = *(var->content.s) == "LibreCad";
