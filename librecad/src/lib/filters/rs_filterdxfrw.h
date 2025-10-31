@@ -275,7 +275,7 @@ private:
     RS_EntityContainer* m_dummyContainer = nullptr;
     void applyParsedDimStyleExtData(LC_DimStyle* dimStyle, const QString& appName, const std::vector<DRW_Variant>& vector);
     LC_DimStyle *createDimStyle(const DRW_Dimstyle &s);
-    void addPolylineSegment(RS_Polyline* polyline, RS_Vector prev_pos, RS_Vector curr_pos, double bulge, const std::vector<std::shared_ptr<DRW_Variant>>& extData, bool isClosedSegment);
+    void addPolylineSegment(RS_Polyline& polyline, RS_Vector prev_pos, RS_Vector curr_pos, double bulge, const std::vector<std::shared_ptr<DRW_Variant>>& extData, bool isClosedSegment);
 };
 
 #endif

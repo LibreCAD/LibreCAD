@@ -730,27 +730,27 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
         // Add row polylines (along N direction)
         for (int i = 0; i < M; i++) {
             RS_PolylineData pd(RS_Vector(), RS_Vector(), closedN);
-            RS_Polyline *pl = new RS_Polyline(m_currentContainer, pd);
-            setEntityAttributes(pl, &data);
+            auto pl = std::make_unique<RS_Polyline>(m_currentContainer, pd);
+            setEntityAttributes(pl.get(), &data);
             for (int j = 0; j < N; j++) {
                 auto v = data.vertlist.at(i * N + j);
                 RS_Vector pos(v->basePoint.x, v->basePoint.y);
                 pl->addVertex(pos, 0.0, false);
             }
-            m_currentContainer->addEntity(pl);
+            m_currentContainer->addEntity(pl.release());
         }
 
         // Add column polylines (along M direction)
         for (int j = 0; j < N; j++) {
             RS_PolylineData pd(RS_Vector(), RS_Vector(), closedM);
-            RS_Polyline *pl = new RS_Polyline(m_currentContainer, pd);
-            setEntityAttributes(pl, &data);
+            auto pl = std::make_unique<RS_Polyline>(m_currentContainer, pd);
+            setEntityAttributes(pl.get(), &data);
             for (int i = 0; i < M; i++) {
                 auto v = data.vertlist.at(i * N + j);
                 RS_Vector pos(v->basePoint.x, v->basePoint.y);
                 pl->addVertex(pos, 0.0, false);
             }
-            m_currentContainer->addEntity(pl);
+            m_currentContainer->addEntity(pl.release());
         }
         return;
     }
@@ -758,7 +758,7 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
     if (data.flags & 0x40) {
         // the polyline is a polyface mesh
         std::vector<RS_Vector> vertices;
-        for (auto const& v : data.vertlist) {
+        for (const std::shared_ptr<DRW_Vertex>& v : data.vertlist) {
             if ((v->flags & 0x40) == 0) { // vertex
                 vertices.emplace_back(v->basePoint.x, v->basePoint.y);
             }
@@ -766,14 +766,14 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
         // add faces as closed polylines
         for (const std::shared_ptr<DRW_Vertex>& f : data.vertlist) {
             if ((f->flags & 0x40) != 0) { // face
-                std::vector<int> indices = {f->vindex1, f->vindex2, f->vindex3, f->vindex4};
+                std::vector<int> indices = {{f->vindex1, f->vindex2, f->vindex3, f->vindex4}};
                 int num_points = (f->vindex4 == 0) ? 3 : 4;
                 RS_PolylineData pd(RS_Vector(), RS_Vector(), true); // closed
-                RS_Polyline *pl = new RS_Polyline(m_currentContainer, pd);
-                setEntityAttributes(pl, &data);
+                auto pl = std::make_unique<RS_Polyline>(m_currentContainer, pd);
+                setEntityAttributes(pl.get(), &data);
                 bool valid = true;
                 for (int k = 0; k < num_points; ++k) {
-                    int idx = abs(indices[k]);
+                    int idx = std::abs(indices[k]);
                     if (idx < 1 || idx > static_cast<int>(vertices.size())) {
                         valid = false;
                         break;
@@ -781,21 +781,19 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
                     pl->addVertex(vertices[idx - 1], 0.0);
                 }
                 if (valid) {
-                    m_currentContainer->addEntity(pl);
-                } else {
-                    delete pl;
+                    m_currentContainer->addEntity(pl.release());
                 }
             }
         }
         return;
     }
 
-    RS_PolylineData d(RS_Vector{}, RS_Vector{}, data.flags & 0x1);
-    auto polyline = new RS_Polyline(m_currentContainer, d);
-    setEntityAttributes(polyline, &data);
+    RS_PolylineData pd(RS_Vector{}, RS_Vector{}, data.flags & 0x1);
+    auto polyline = std::make_unique<RS_Polyline>(m_currentContainer, pd);
+    setEntityAttributes(polyline.get(), &data);
 
     if (data.vertlist.empty()) {
-        m_currentContainer->addEntity(polyline);
+        m_currentContainer->addEntity(polyline.release());
         return;
     }
 
@@ -817,7 +815,7 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
         const auto& extData = data.vertlist[bulge_idx]->extData;
 
         bool is_closed_seg = closed && (i == num_segments - 1);
-        addPolylineSegment(polyline, prev_pos, curr_pos, bulge, extData, is_closed_seg);
+        addPolylineSegment(*polyline, prev_pos, curr_pos, bulge, extData, is_closed_seg);
 
         prev_pos = curr_pos;
     }
@@ -830,7 +828,7 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
         polyline->endPolyline();
     }
 
-    m_currentContainer->addEntity(polyline);
+    m_currentContainer->addEntity(polyline.release());
 }
 
 /**
@@ -3735,72 +3733,54 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
  * Writes the given polyline entity to the file (old style).
  */
 void RS_FilterDXFRW::writePolyline(RS_Polyline* p) {
+    if (p == nullptr)
+        return;
+
     DRW_Polyline pol;
-    RS_Entity* currEntity = 0;
-    RS_Entity* nextEntity = 0;
-    RS_AtomicEntity* ae = nullptr;
-    double bulge=0.0;
+    if (p->isClosed()) {
+        pol.flags = 1;
+    }
 
-    for (RS_Entity* e=p->firstEntity(RS2::ResolveNone);
-         e; e=nextEntity) {
-
-        currEntity = e;
+    RS_Entity* nextEntity = nullptr;
+    for (RS_Entity* e=p->firstEntity(RS2::ResolveNone); e != nullptr; e=nextEntity) {
         nextEntity = p->nextEntity(RS2::ResolveNone);
 
         if (!e->isAtomic()) {
             continue;
         }
-        ae = (RS_AtomicEntity*)e;
+        RS_AtomicEntity* ae = static_cast<RS_AtomicEntity*>(e);
 
         // Write vertex:
-        bulge = 0.0;
-        bool is_elliptic = false;
-        double y_radius = 0.0;
-        if (e->rtti() == RS2::EntityLine) {
-            bulge = 0.0;
-        } else if (e->rtti() == RS2::EntityArc) {
+        double bulge=0.0;
+        bool isElliptic = false;
+        double yRadius = 0.0;
+        switch(e->rtti()) {
+        case RS2::EntityLine:
+            break;
+        case RS2::EntityArc:
             bulge = ((RS_Arc*)e)->getBulge();
-        } else if (e->rtti() == RS2::EntityEllipse) {
+            break;
+        case RS2::EntityEllipse: {
             // Issue #1946: prepare to write elliptic arcs as RS_Arc
             RS_Ellipse* ellipse = static_cast<RS_Ellipse*>(e);
             auto pair = RS_Polyline::convertToArcPair(ellipse);
             std::unique_ptr<RS_Arc> arc{ pair.first };
             bulge = arc->getBulge();
-            y_radius = arc->getRadius() * pair.second;
-            is_elliptic = true;
-        } else {
+            yRadius = arc->getRadius() * pair.second;
+            isElliptic = true;
+        }
+            break;
+        default:
+            // should not happen: unknown entity type
             continue;
         }
         pol.addVertex( DRW_Vertex(ae->getStartpoint().x,
                                  ae->getStartpoint().y, 0.0, bulge));
-        if (is_elliptic) {
+        if (isElliptic) {
+            // Add flag to indicate the vertex should be elliptic
             pol.vertlist.back()->extData.push_back(std::make_shared<DRW_Variant>(1001, "LibreCad"));
-            pol.vertlist.back()->extData.push_back(std::make_shared<DRW_Variant>(1040, y_radius));
-        }
-    }
-    if (p->isClosed()) {
-        pol.flags = 1;
-    } else {
-        ae = (RS_AtomicEntity*)currEntity;
-        bulge = 0.0;
-        bool is_elliptic = false;
-        double y_radius = 0.0;
-        if (ae->rtti() == RS2::EntityArc) {
-            bulge = ((RS_Arc*)ae)->getBulge();
-        } else if (ae->rtti() == RS2::EntityEllipse) {
-            RS_Ellipse* ellipse = static_cast<RS_Ellipse*>(ae);
-            auto pair = RS_Polyline::convertToArcPair(ellipse);
-            std::unique_ptr<RS_Arc> arc{ pair.first };
-            bulge = arc->getBulge();
-            y_radius = arc->getRadius() * pair.second;
-            is_elliptic = true;
-        }
-        pol.addVertex( DRW_Vertex(ae->getEndpoint().x,
-                                 ae->getEndpoint().y, 0.0, bulge));
-        // Issue #1946, add Flag and
-        if (is_elliptic) {
-            pol.vertlist.back()->extData.push_back(std::make_shared<DRW_Variant>(1001, "LibreCad"));
-            pol.vertlist.back()->extData.push_back(std::make_shared<DRW_Variant>(1040, y_radius));
+            // Keep to ellipse minor radius to allow elliptic creation at loading
+            pol.vertlist.back()->extData.push_back(std::make_shared<DRW_Variant>(1040, yRadius));
         }
     }
     getEntityAttributes(&pol, p);
@@ -5345,46 +5325,43 @@ bool RS_FilterDXFRW::isVariableTwoDimensional(const QString& var) {
     }
 }
 
-void RS_FilterDXFRW::addPolylineSegment(RS_Polyline* polyline, RS_Vector prev_pos, RS_Vector curr_pos, double bulge, const std::vector<std::shared_ptr<DRW_Variant>>& extData, bool isClosedSegment) {
+void RS_FilterDXFRW::addPolylineSegment(RS_Polyline& polyline, RS_Vector prev_pos, RS_Vector curr_pos, double bulge, const std::vector<std::shared_ptr<DRW_Variant>>& extData, bool isClosedSegment) {
     bool isLcData = false;
     double yRadius = 0.0;
-    bool isElliptic = false;
 
     // Issue #1946: LibreCAD may use elliptic arcs internally, but dxf file saving
     // uses arcs only. Minor radius of elliptic is saved as DRW_Variant::content
     // The content is flagged as "LibreCAD"
-    for (const auto& var : extData) {
+    for (const std::shared_ptr<DRW_Variant>& var : extData) {
         if (var->code() == 1001) {
             isLcData = *(var->content.s) == "LibreCad";
         } else if (isLcData && var->code() == 1040) {
             yRadius = var->content.d;
         }
     }
-    if (yRadius > RS_TOLERANCE) {
-        isElliptic = true;
-    }
+    bool isElliptic = yRadius > RS_TOLERANCE;
 
     if (isElliptic) {
         std::unique_ptr<RS_Arc> arc{ RS_Polyline::arcFromBulge(prev_pos, curr_pos, bulge)};
-        if (arc != nullptr) {
+        if (arc != nullptr && arc->getRadius() >= RS_TOLERANCE) {
             double radius = arc->getRadius();
-            double scale_ratio = yRadius / radius;
-            RS_Ellipse* ellipse = RS_Polyline::convertToEllipse(std::make_pair(arc.get(), scale_ratio));
-            if (ellipse) {
-                ellipse->setParent(polyline);
-                ellipse->setSelected(polyline->isSelected());
+            double scaleRatio = yRadius / radius;
+            RS_Ellipse* ellipse = RS_Polyline::convertToEllipse(std::make_pair(arc.get(), scaleRatio));
+            if (ellipse != nullptr) {
+                ellipse->setParent(&polyline);
+                ellipse->setSelected(polyline.isSelected());
                 ellipse->setPen(RS_Pen(RS2::FlagInvalid));
                 ellipse->setLayer(nullptr);
-                polyline->addEntity(ellipse);
-                polyline->getData().endpoint = curr_pos;
+                polyline.addEntity(ellipse);
+                polyline.getData().endpoint = curr_pos;
             }
         }
     } else {
-        polyline->addVertex(curr_pos, bulge, false);
+        polyline.addVertex(curr_pos, bulge, false);
     }
 
     if (isClosedSegment) {
-        polyline->setNextBulge(bulge);
+        polyline.setNextBulge(bulge);
     }
 }
 
