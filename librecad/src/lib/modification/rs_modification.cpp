@@ -211,7 +211,25 @@ namespace {
        bool result = point1.distanceTo(candidate) < RS_TOLERANCE || point2.distanceTo(candidate) < RS_TOLERANCE;
        return result;
     }
-}
+
+    /**
+ * @brief getUniqueBlockName - Generates unique block name like "PASTE_0"
+ * @param graphic - Target graphic
+ * @param baseName - Base ("PASTE" default)
+ * @return Unique name
+ */
+    QString getUniqueBlockName(RS_Graphic* graphic, const QString& baseName = QStringLiteral("PASTE")) {
+        if (!graphic) return baseName;
+        RS_BlockList* bl = graphic->getBlockList();
+        if (!bl) return baseName;
+        int i = 0;
+        QString candidate;
+        do {
+            candidate = QString("%1_%2").arg(baseName).arg(i++);
+        } while (bl->find(candidate) != nullptr);
+        return candidate;
+    }
+} // namespace
 
 
 RS_PasteData::RS_PasteData(RS_Vector _insertionPoint,
@@ -503,6 +521,11 @@ void RS_Modification::copyEntity(RS_Entity* e, const RS_Vector& ref, const bool 
         return;
     }
 
+    // Ensure the insert is updated before copying to populate the container with transformed entities
+    if (e->rtti() == RS2::EntityInsert) {
+        dynamic_cast<RS_Insert*>(e)->update();
+    }
+
     // add entity to clipboard:
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: to clipboard: %s", getIdFlagString(e).c_str());
     RS_Entity* c = e->clone();
@@ -552,8 +575,6 @@ void RS_Modification::copyEntity(RS_Entity* e, const RS_Vector& ref, const bool 
     viewport->notifyChanged();
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: OK");
 }
-
-
 
 /**
  * Copies all layers of the given entity to the clipboard.
@@ -653,115 +674,92 @@ void RS_Modification::copyBlocks(RS_Entity* e) {
  *      is the clipboard.
  */
 void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste:");
 
-    RS_DEBUG->print(RS_Debug::D_INFORMATIONAL, "RS_Modification::paste");
-
-	if (!graphic) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::paste: graphic is nullptr");
+    if (container == nullptr || container->isLocked() || !container->isVisible()) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::paste: invalid container");
         return;
     }
 
-    // scale factor as vector
-    RS_Vector vfactor = getPasteScale(data, source, *graphic);
-    // select source for paste
-    if (source == nullptr) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::%s(): line %d: no source found", __func__, __LINE__);
+    RS_Graphic* src = (source != nullptr) ? source : RS_CLIPBOARD->getGraphic();
+    if (src == nullptr) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::paste: no source");
         return;
     }
 
-    // default insertion point for container
-    RS_Vector ip = data.insertionPoint;
+    // Scale (units)
+    RS_Graphic* srcRef = source;
+    RS_Vector scaleV = getPasteScale(data, srcRef, *graphic);
+    src = srcRef;
 
-    // remember active layer before inserting absent layers
-    RS_Layer *layer = graphic->getActiveLayer();
+    src->calculateBorders();
+    RS_Vector center = (src->getMin() + src->getMax()) * 0.5;
+    RS_Vector offset = data.insertionPoint - center;
 
-    // insert absent layers from source to graphic
-    if (!pasteLayers(source)) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::paste: unable to copy due to absence of needed layers");
-        return;
-    }
+    LC_UndoSection undo(document, viewport, handleUndo);
 
-    if (layer == nullptr) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::paste: unable to select layer to paste in");
-        return;
-    }
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: selected layer: %s", layer->getName().toLatin1().data());
-    graphic->activateLayer(layer);
+    if (data.asInsert) {
+        // === BLOCK: Bake → angle=0 ===
+        QString bname = data.blockName.isEmpty() ? getUniqueBlockName(graphic) : data.blockName;
+        RS_Block* block = addNewBlock(bname, *graphic);
 
-    // hash for renaming duplicated blocks
-    QHash<QString, QString> blocksDict;
-
-    // fixme - perf - is it really necessary to do something based on blocks for ordinary copy-paste?
-    // create block to paste entities as a whole
-    QString name_old = (data.blockName != nullptr) ? data.blockName : "paste-block";
-    QString name_new = (graphic->findBlock(name_old) != nullptr) ? graphic->getBlockList()->newName(name_old) : name_old;
-    if (graphic->findBlock(name_old) != nullptr) {
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: paste block name: %s", name_new.toLatin1().data());
-    }
-    blocksDict[name_old] = name_new;
-
-    // create block
-    RS_Block* b = addNewBlock(name_new, *graphic);
-
-    // create insert object for the paste block
-    RS_InsertData di = RS_InsertData(b->getName(), ip, vfactor, data.angle, 1, 1, RS_Vector(0.0,0.0));
-    auto* i = new RS_Insert(document, di);
-    i->setLayerToActive();
-    i->setPenToActive();
-    i->reparent(document);
-    document->addEntity(i);
-
-    // copy sub-blocks, inserts and entities from source to the paste block
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: copy content to the paste block");
-    for(auto e: *source) {
-
-        if (!e) {
-            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::paste: nullptr entity in source");
-            continue;
+        auto entities = lc::LC_ContainerTraverser{*src, RS2::ResolveAll}.entities();
+        for (RS_Entity* e : entities) {
+            if (e == nullptr || e->isUndone()) continue;
+            RS_Entity* clone = e->clone();
+            // Bake: center→0 → scale/rot → block@0
+            clone->move(-center);
+            clone->scale(RS_Vector{}, scaleV);
+            clone->rotate(RS_Vector{}, data.angle);
+            block->addByBlockEntity(clone);  // **ByBlock** 👌
         }
 
-        // paste subcontainers
-        if (e->rtti() == RS2::EntityInsert) {
-            if (!pasteContainer(e, b, blocksDict, RS_Vector(0.0, 0.0))) {
-                RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::paste: unable to paste due to subcontainer paste error");
-                return;
-            }
-            // clear selection due to the following processing of selected entities
-            e->setSelected(false);
-        } else {
-            // paste individual entities including Polylines, etc.
-            if (!pasteEntity(e, b)) {
-                RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::paste: unable to paste due to entity paste error");
-                return;
-            }
-            // clear selection due to the following processing of selected entities
-            e->setSelected(false);
+        // Insert (baked, **angle=0**)
+        RS_InsertData idata(bname, data.insertionPoint, {1., 1.}, 0.0, 1, 1, {});
+        RS_Insert* insert = new RS_Insert(container, idata);
+        insert->reparent(container);
+        container->addEntity(insert);
+
+        // Props (inherit)
+        RS_Entity* first = src->firstEntity(RS2::ResolveNone);
+        if (first) {
+            insert->setLayer(first->getLayer());
+            insert->setPen(first->getPen(true));
         }
-    }
+        insert->setSelected(true);
+        insert->update();
 
-    // update insert
-    i->update();
-    i->setSelected(false);
+        undo.addUndoable(block);
+        undo.addUndoable(insert);
 
-    // unblock all entities if not pasting as a new block by demand
-    LC_UndoSection undo(document,viewport, handleUndo);
-    if (!data.asInsert) {
-        // no inserts should be selected except from paste block and insert
-        container->setSelected(false);
-        i->setSelected(true);
-        explode(false, true);
-        document->removeEntity(i);
-        b->clear();
-        // if this call a destructor for the block?
-        graphic->removeBlock(b);
+        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "paste: block '%s'", bname.toLatin1().data());
+
     } else {
-        undo.addUndoable(i);
+        // === EXPLODED ===
+        std::vector<RS_Entity*> newEnts;
+        auto entities = lc::LC_ContainerTraverser{*src, RS2::ResolveAll}.entities();
+        for (RS_Entity* e : entities) {
+            if (e == nullptr || e->isUndone()) continue;
+            RS_Entity* clone = e->clone();
+            // **Symmetric**: scale/rot **around center** → move
+            clone->scale(center, scaleV);
+            clone->rotate(center, data.angle);
+            clone->move(offset);
+            clone->setSelected(true);
+            newEnts.push_back(clone);
+        }
+        // Add (match explode/moveRef)
+        for (RS_Entity* ne : newEnts) {
+            ne->reparent(container);
+            container->addEntity(ne);
+            undo.addUndoable(ne);
+        }
     }
 
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: OK");
+    graphic->updateInserts();
+    viewport->notifyChanged();
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "paste: OK ✅");
 }
-
-
 
 /**
  * Create layers in destination graphic corresponding to entity to be copied
