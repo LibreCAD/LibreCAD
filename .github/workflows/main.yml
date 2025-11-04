@@ -1,55 +1,47 @@
-name: Build LibreCAD for HarmonyOS NEXT
+name: Build CADCore for HarmonyOS NEXT
 
 on:
   push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
-  build-harmonyos:
+  build:
     runs-on: ubuntu-22.04
-
     env:
-      BUILD_DIR: build_harmonyos
       OHOS_NDK_VERSION: 4.0.11.3
-      OHOS_ARCH: arm64-v8a
+      BUILD_DIR: build_harmonyos
 
     steps:
-      - name: 🧱 Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: 🧰 Setup Dependencies
+      - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake ninja-build clang git
+          sudo apt-get install -y cmake ninja-build clang unzip wget
 
-      - name: 📦 Download HarmonyOS NDK
+      - name: Download HarmonyOS NDK
         run: |
-          wget https://repo.harmonyos.com/ndk/${{ env.OHOS_NDK_VERSION }}/ohos-sdk-linux-${{ env.OHOS_NDK_VERSION }}.zip -O ohos-ndk.zip
-          unzip -q ohos-ndk.zip -d $HOME/ohos-sdk
+          wget https://repo.harmonyos.com/ndk/${{ env.OHOS_NDK_VERSION }}/ohos-sdk-linux-${{ env.OHOS_NDK_VERSION }}.zip -O ndk.zip
+          unzip -q ndk.zip -d $HOME/ohos-sdk
           echo "OHOS_NDK=$HOME/ohos-sdk" >> $GITHUB_ENV
 
-      - name: ⚙️ Configure Build
+      - name: Configure
         run: |
           mkdir -p ${{ env.BUILD_DIR }}
           cd ${{ env.BUILD_DIR }}
-          cmake .. \
-            -DCMAKE_BUILD_TYPE=Release \
+          cmake ../cadcore \
             -DCMAKE_TOOLCHAIN_FILE=../harmony/ohos.toolchain.cmake \
-            -DOHOS_ARCH=${{ env.OHOS_ARCH }} \
-            -DBUILD_SHARED_LIBS=ON \
-            -DLIBREC_LIBRARY_ONLY=ON \
+            -DCMAKE_BUILD_TYPE=Release \
             -GNinja
 
-      - name: 🏗️ Build LibreCAD .so
+      - name: Build
         run: |
           cd ${{ env.BUILD_DIR }}
           ninja
 
-      - name: 📦 Upload Artifacts
+      - name: Upload .so
         uses: actions/upload-artifact@v4
         with:
-          name: librecad-harmonyos
-          path: ${{ env.BUILD_DIR }}/lib*/lib*.so
+          name: cadcore-harmonyos
+          path: ${{ env.BUILD_DIR }}/libcadcore.so
