@@ -1738,13 +1738,13 @@ librecad/ts/librecad_zh_tw.ts
 qt_add_translations(librecad TS_FILE_DIR ${TS_DIR} TS_FILES ${TS_FILES})
 install(TARGETS librecad RUNTIME DESTINATION bin)
 
-if(NOT WIN32)
+if(FREETYPE_FOUND AND NOT WIN32)
 add_executable(ttf2lff
-	tools/ttf2lff/main.cpp)
+    tools/ttf2lff/main.cpp)
 target_link_libraries(ttf2lff ${FREETYPE_LIBRARIES})
 target_include_directories(ttf2lff PRIVATE
-	${FREETYPE_INCLUDE_DIRS})
-endif(NOT WIN32)
+    ${FREETYPE_INCLUDE_DIRS})
+endif()
 
 add_subdirectory(libraries/lciconengine)
 add_subdirectory(plugins)
