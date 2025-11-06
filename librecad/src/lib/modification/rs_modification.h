@@ -283,13 +283,12 @@ private:
     void copyBlocks(RS_Entity* e);
     bool pasteLayers(RS_Graphic* source);
     bool pasteContainer(RS_Entity* entity, RS_EntityContainer* container, QHash<QString, QString>blocksDict, RS_Vector insertionPoint);
-    bool pasteEntity(RS_Entity* entity, RS_EntityContainer* container);
+    void pasteEntity(RS_Entity* entity, RS_EntityContainer* container);
     void deselectOriginals(bool remove);
 	void addNewEntities(std::vector<RS_Entity*>& addList);
 	bool explodeTextIntoLetters(RS_MText* text, std::vector<RS_Entity*>& addList);
 	bool explodeTextIntoLetters(RS_Text* text, std::vector<RS_Entity*>& addList);
 
-protected:
     RS_EntityContainer* container =nullptr;
     RS_Graphic* graphic = nullptr;
     RS_Document* document = nullptr;
