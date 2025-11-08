@@ -2,8 +2,8 @@
  *
  This file is part of the LibreCAD project, a 2D CAD program
 
- Copyright (C) 2024 LibreCAD.org
- Copyright (C) 2024 sand1024
+ Copyright (C) 2025 LibreCAD.org
+ Copyright (C) 2025 sand1024
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License
@@ -19,14 +19,17 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
+#include <memory>
+
+#include <QClipboard>
+#include <QLabel>
+#include <QMimeData>
+#include <QPainter>
+#include <QTextDocument>
 
 #include <boost/version.hpp>
 
 #include "lc_dlgabout.h"
-
-#include <QClipboard>
-#include <QPainter>
-
 #include "main.h"
 #include "qc_applicationwindow.h"
 #include "ui_lc_dlgabout.h"
@@ -44,19 +47,19 @@ void aboutImageLabels(QLabel* label)
 
     QString versionLabel = LCReleaseLabel();
     label->setPixmap(QPixmap{":images/librecad01_" + versionLabel.toLower() + ".png"});
-    auto pixmap = label->pixmap();
+    QPixmap pixmap = label->pixmap();  // Create a mutable copy
 
     QPainter painter(&pixmap);
-    const double factorX = pixmap.width()/551.;
-    const double factorY = pixmap.height()/171.;
+    const double factorX = pixmap.width() / 551.;
+    const double factorY = pixmap.height() / 171.;
     painter.setPen(QColor(255, 0, 0, 128));
-    QRectF labelRect{QPointF{280.*factorX, 125.*factorY}, QPointF{480.*factorX, 165.*factorY}};
+    QRectF labelRect{QPointF{280. * factorX, 125. * factorY}, QPointF{480. * factorX, 165. * factorY}};
     QFont font;
     font.setPixelSize(int(labelRect.height()) - 2);
     painter.setFont(font);
-    painter.drawText(labelRect,Qt::AlignRight, versionLabel);
-    painter.end();
-    label->setPixmap(pixmap);
+    painter.drawText(labelRect, Qt::AlignRight, versionLabel);
+
+    label->setPixmap(pixmap);  // Set the modified pixmap back
 }
 }
 
@@ -70,17 +73,17 @@ LC_DlgAbout::LC_DlgAbout(QWidget *parent)
     // Src/qtbase/src/corelib/global/qcompilerdetection.h
 
     m_info = QString(
-            tr("Version: <b>%1</b>").arg(XSTR(LC_VERSION)) + "<br/>" +
-            #if defined(Q_CC_CLANG)
-            tr("Compiler: Clang %1.%2.%3").arg(__clang_major__).arg(__clang_minor__).arg(__clang_patchlevel__) + "<br/>" +
-            #elif defined(Q_CC_GNU)
-            tr("Compiler: GNU GCC %1.%2.%3").arg(__GNUC__).arg(__GNUC_MINOR__).arg(__GNUC_PATCHLEVEL__) + "<br/>" +
-            #elif defined(Q_CC_MSVC)
-            tr("Compiler: Microsoft Visual C++") + "<br/>" +
-            #endif
-            tr("Compiled on: %1").arg(__DATE__) + "<br/>" +
-            tr("Qt Version: %1").arg(qVersion()) + "<br/>" +
-            tr("Boost Version: %1.%2.%3").arg(BOOST_VERSION / 100000).arg(BOOST_VERSION / 100 % 1000).arg(BOOST_VERSION % 100)
+        tr("Version: <b>%1</b>").arg(XSTR(LC_VERSION)) + "<br/>" +
+#if defined(Q_CC_CLANG)
+        tr("Compiler: Clang %1.%2.%3").arg(__clang_major__).arg(__clang_minor__).arg(__clang_patchlevel__) + "<br/>" +
+#elif defined(Q_CC_GNU)
+        tr("Compiler: GNU GCC %1.%2.%3").arg(__GNUC__).arg(__GNUC_MINOR__).arg(__GNUC_PATCHLEVEL__) + "<br/>" +
+#elif defined(Q_CC_MSVC)
+        tr("Compiler: Microsoft Visual C++") + "<br/>" +
+#endif
+        tr("Compiled on: %1").arg(__DATE__) + "<br/>" +
+        tr("Qt Version: %1").arg(qVersion()) + "<br/>" +
+        tr("Boost Version: %1.%2.%3").arg(BOOST_VERSION / 100000).arg(BOOST_VERSION / 100 % 1000).arg(BOOST_VERSION % 100)
         );
     ui->lVersionInfo->setText(m_info);
 
@@ -103,17 +106,17 @@ LC_DlgAbout::LC_DlgAbout(QWidget *parent)
 LC_DlgAbout::~LC_DlgAbout() = default;
 
 void LC_DlgAbout::copyInfo(){
-    QString text = m_info;
-#if QT_VERSION >= 0x050400
-    text += "\n" + tr("System") + ": " + QSysInfo::prettyProductName();
-#endif
-    QClipboard* clipboard = QApplication::clipboard();
-    text.replace("<br>", "\n").replace("<b>","").replace("</b>",""); // one time code so it's ok
-    clipboard->setText(text, QClipboard::Clipboard);
+    QString htmlText = ui->lVersionInfo->text() + "<br>" + tr("System") + ": " + QSysInfo::prettyProductName();
+    QTextDocument doc;
+    doc.setHtml(htmlText);
+    QString plainText = doc.toPlainText();
 
-    if (clipboard->supportsSelection()) {
-        clipboard->setText(text, QClipboard::Selection);
-    }
+    QMimeData* mimeData = new QMimeData();
+    mimeData->setText(plainText);
+    mimeData->setHtml(htmlText);
+
+    QClipboard* clipboard = QApplication::clipboard();
+    clipboard->setMimeData(mimeData);
 
 #if defined(Q_OS_LINUX)
     QThread::msleep(1); //workaround for copied text not being available...
