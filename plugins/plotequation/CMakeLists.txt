@@ -20,6 +20,11 @@ set_target_properties(
     AUTOUIC ON
 )
 
+ target_compile_definitions(${PLUGIN_NAME} PRIVATE
+ DWGSUPPORT
+ MUPARSER_STATIC
+)
+
 target_link_libraries(
     ${PLUGIN_NAME}
     PRIVATE
