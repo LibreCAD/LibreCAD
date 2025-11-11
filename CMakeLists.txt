@@ -1529,6 +1529,7 @@ set(MUPARSER_SOURCES
 
 # Static library from shared sources
 qt_add_library(librecad_lib STATIC 
+	${MUPARSER_SOURCES}
 	${SHARED_SOURCES}
 )
 target_compile_definitions(librecad_lib PRIVATE
@@ -1567,14 +1568,9 @@ set(MAIN_SOURCES
 # Main executable
 qt_add_executable(librecad
 	${MAIN_SOURCES}
-	${MUPARSER_SOURCES}
 )
 target_include_directories(librecad PRIVATE
         ${SHARED_INCLUDES}
-)
-target_compile_definitions(librecad PRIVATE
-    DWGSUPPORT
-    MUPARSER_STATIC
 )
 
 target_link_libraries(librecad PRIVATE
@@ -1680,10 +1676,6 @@ if(BUILD_TESTS)
         librecad/src/lib/math/tests/rs_math_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_ellipse_tests.cpp
     )
-    target_compile_definitions(librecad_tests PRIVATE
-        DWGSUPPORT
-        MUPARSER_STATIC
-     )
 
     # Include directories for rs_math.h and other dependencies
     target_include_directories(librecad_tests PRIVATE
