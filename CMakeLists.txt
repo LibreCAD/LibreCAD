@@ -1530,7 +1530,6 @@ set(MUPARSER_SOURCES
 # Static library from shared sources
 qt_add_library(librecad_lib STATIC 
 	${SHARED_SOURCES}
-	${MUPARSER_SOURCES}
 )
 target_compile_definitions(librecad_lib PRIVATE
     DWGSUPPORT
@@ -1562,6 +1561,7 @@ set(MAIN_SOURCES
     librecad/src/main/console_dxf2png.h
     librecad/src/ui/dialogs/main/qg_dlginitial.cpp
     librecad/src/ui/dialogs/main/qg_dlginitial.h
+    ${MUPARSER_SOURCES}
 )
 
 # Main executable
@@ -1670,6 +1670,7 @@ if(BUILD_TESTS)
 	# this is needed to allow testing methods used by main()
 	# main() is excluded when BUILD_TEST=ON
 	${MAIN_SOURCES}
+        ${MUPARSER_SOURCES}
 	### The actual tests
         librecad/src/lib/math/tests/rs_math_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_ellipse_tests.cpp
