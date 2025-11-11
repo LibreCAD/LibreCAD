@@ -1567,6 +1567,7 @@ set(MAIN_SOURCES
 # Main executable
 qt_add_executable(librecad
 	${MAIN_SOURCES}
+	${MUPARSER_SOURCES}
 )
 target_include_directories(librecad PRIVATE
         ${SHARED_INCLUDES}
