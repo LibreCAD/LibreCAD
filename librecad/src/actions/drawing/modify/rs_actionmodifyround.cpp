@@ -194,7 +194,7 @@ void RS_ActionModifyRound::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                     bool trim = m_actionData->data.trim;
 //                    pPoints->data.trim = false;
                     RS_Modification m(*m_preview, m_viewport, false);
-                    LC_RoundResult *roundResult = m.round(mouse,
+                    std::unique_ptr<LC_RoundResult> roundResult = m.round(mouse,
                                                           m_actionData->coord1,
                                                           (RS_AtomicEntity *) tmp1,
                                                           coord2,

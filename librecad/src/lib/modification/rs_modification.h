@@ -26,6 +26,7 @@
 
 #ifndef RS_MODIFICATION_H
 #define RS_MODIFICATION_H
+#include <memory>
 #include <QString>
 
 #include "rs_pen.h"
@@ -329,11 +330,11 @@ public:
         const RS_Vector& secondCorner,
         const RS_Vector& offset,
         bool removeOriginals);
-    LC_BevelResult* bevel(
+    std::unique_ptr<LC_BevelResult> bevel(
         const RS_Vector& coord1, RS_AtomicEntity* entity1,
         const RS_Vector& coord2, RS_AtomicEntity* entity2,
         RS_BevelData& data, bool previewOnly);
-    LC_RoundResult* round(
+    std::unique_ptr<LC_RoundResult> round(
         const RS_Vector& coord,
         const RS_Vector& coord1,
         RS_AtomicEntity* entity1,

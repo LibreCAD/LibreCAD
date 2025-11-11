@@ -2634,7 +2634,7 @@ bool RS_Modification::stretch(const RS_Vector& firstCorner,
  * @param entity2 Second entity of the corner.
  * @param data Lengths and trim flag.
  */
-LC_BevelResult* RS_Modification::bevel(
+std::unique_ptr<LC_BevelResult> RS_Modification::bevel(
     const RS_Vector &coord1, RS_AtomicEntity *entity1,
     const RS_Vector &coord2, RS_AtomicEntity *entity2,
     RS_BevelData &data,
@@ -2662,7 +2662,7 @@ LC_BevelResult* RS_Modification::bevel(
 
     // find out whether we're bevelling within a polyline:
 
-    auto* result = new LC_BevelResult();
+    auto result = std::make_unique<LC_BevelResult>();
 
     //fixme - that check should be in action too
     if (entity1->getParent() && entity1->getParent()->rtti() == RS2::EntityPolyline){
@@ -2818,7 +2818,7 @@ LC_BevelResult* RS_Modification::bevel(
 
     // add bevel line:
     RS_DEBUG->print("RS_Modification::bevel: add bevel line");
-    RS_Line *bevel;
+    RS_Line *bevel = nullptr;
 
     if (previewOnly){
         bevel = new RS_Line(nullptr, bp1, bp2);
@@ -2918,7 +2918,7 @@ LC_BevelResult* RS_Modification::bevel(
  * @param entity2 Second entity of the corner.
  * @param data Radius and trim flag.
  */
-LC_RoundResult* RS_Modification::round(const RS_Vector& coord,
+std::unique_ptr<LC_RoundResult> RS_Modification::round(const RS_Vector& coord,
                             const RS_Vector& coord1,
                             RS_AtomicEntity* entity1,
                             const RS_Vector& coord2,
@@ -2937,7 +2937,7 @@ LC_RoundResult* RS_Modification::round(const RS_Vector& coord,
         return nullptr;
     }
 
-    auto* result = new LC_RoundResult();
+    auto result = std::make_unique<LC_RoundResult>();
 
     RS_EntityContainer *baseContainer = container;
     bool isPolyline = false;
@@ -2982,8 +2982,8 @@ LC_RoundResult* RS_Modification::round(const RS_Vector& coord,
 
     // create 2 tmp parallels
     RS_Creation creation(nullptr, nullptr);
-    RS_Entity *par1 = creation.createParallel(coord, data.radius, 1, entity1);
-    RS_Entity *par2 = creation.createParallel(coord, data.radius, 1, entity2);
+    std::unique_ptr<RS_Entity> par1 { creation.createParallel(coord, data.radius, 1, entity1)};
+    std::unique_ptr<RS_Entity> par2 { creation.createParallel(coord, data.radius, 1, entity2)};
 
     if ((par1 == nullptr) || (par2 == nullptr)) {
         result->error = LC_RoundResult::NO_PARALLELS;
@@ -2994,7 +2994,7 @@ LC_RoundResult* RS_Modification::round(const RS_Vector& coord,
         RS_Information::getIntersection(entity1, entity2, false);
 
     RS_VectorSolutions sol =
-        RS_Information::getIntersection(par1, par2, false);
+        RS_Information::getIntersection(par1.get(), par2.get(), false);
 
     if (sol.getNumber() == 0){
         result->error = LC_RoundResult::ERR_NO_INTERSECTION;
@@ -3008,13 +3008,14 @@ LC_RoundResult* RS_Modification::round(const RS_Vector& coord,
     double ang1 = is.angleTo(p1);
     double ang2 = is.angleTo(p2);
     bool reversed = (RS_Math::getAngleDifference(ang1, ang2) > M_PI);
-    auto *arc = new RS_Arc(baseContainer,
+    bool isTrimming = data.radius <= RS_TOLERANCE;
+    auto arc = std::make_unique<RS_Arc>(baseContainer,
                              RS_ArcData(is,
                                         data.radius,
                                         ang1, ang2,
                                         reversed));
 
-    result->round = arc;
+    result->round = isTrimming ? nullptr : arc.get();
 
     RS_AtomicEntity *trimmed1 = nullptr;
     RS_AtomicEntity *trimmed2 = nullptr;
@@ -3082,7 +3083,8 @@ LC_RoundResult* RS_Modification::round(const RS_Vector& coord,
 
     // add rounding:
     if (!isPolyline){
-        baseContainer->addEntity(arc);
+        if (!isTrimming)
+            baseContainer->addEntity(arc.get());
     } else {
         // find out which base entity is before the rounding:
         int idx1 = baseContainer->findEntity(trimmed1);
@@ -3109,12 +3111,14 @@ LC_RoundResult* RS_Modification::round(const RS_Vector& coord,
             if (trimmed1->getEndpoint().distanceTo(arc->getStartpoint()) > 1.0e-4){
                 arc->reverse();
             }
-            baseContainer->insertEntity(idx1 + 1, arc);
+            if (!isTrimming)
+                baseContainer->insertEntity(idx1 + 1, arc.get());
         } else {
             if (trimmed2->getEndpoint().distanceTo(arc->getStartpoint()) > 1.0e-4){
                 arc->reverse();
             }
-            baseContainer->insertEntity(idx2 + 1, arc);
+            if (!isTrimming)
+                baseContainer->insertEntity(idx2 + 1, arc.get());
         }
     }
 
@@ -3137,12 +3141,12 @@ LC_RoundResult* RS_Modification::round(const RS_Vector& coord,
         }
 
         if (!isPolyline){
-            undo.addUndoable(arc);
+            undo.addUndoable(arc.release());
         }
     }
 
-    delete par1;
-    delete par2;
+    if (!isTrimming)
+        arc.release();
 
     viewport->notifyChanged();
     return result;
