@@ -1539,6 +1539,7 @@ target_compile_definitions(librecad_lib PRIVATE
 )
 target_include_directories(librecad_lib PRIVATE
     ${SHARED_INCLUDES}
+    ${MUPARSER_SOURCES}
 )
 
 target_link_libraries(librecad_lib PRIVATE
@@ -1561,7 +1562,6 @@ set(MAIN_SOURCES
     librecad/src/main/console_dxf2png.h
     librecad/src/ui/dialogs/main/qg_dlginitial.cpp
     librecad/src/ui/dialogs/main/qg_dlginitial.h
-    ${MUPARSER_SOURCES}
 )
 
 # Main executable
@@ -1572,6 +1572,11 @@ qt_add_executable(librecad
 target_include_directories(librecad PRIVATE
         ${SHARED_INCLUDES}
 )
+target_compile_definitions(librecad PRIVATE
+    DWGSUPPORT
+    MUPARSER_STATIC
+)
+
 target_link_libraries(librecad PRIVATE
    librecad_lib
    Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg Qt6::Network
@@ -1667,15 +1672,18 @@ if(BUILD_TESTS)
     add_subdirectory(externals/Catch2)
 
     # Define test executable
-    add_executable(librecad_tests
+    qt_add_executable(librecad_tests
 	# this is needed to allow testing methods used by main()
 	# main() is excluded when BUILD_TEST=ON
 	${MAIN_SOURCES}
-        ${MUPARSER_SOURCES}
 	### The actual tests
         librecad/src/lib/math/tests/rs_math_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_ellipse_tests.cpp
     )
+    target_compile_definitions(librecad_tests PRIVATE
+        DWGSUPPORT
+        MUPARSER_STATIC
+     )
 
     # Include directories for rs_math.h and other dependencies
     target_include_directories(librecad_tests PRIVATE
