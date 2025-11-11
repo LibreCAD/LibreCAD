@@ -288,7 +288,6 @@ set(SHARED_SOURCES
     libraries/libdxfrw/src/libdxfrw.cpp
     libraries/libdxfrw/src/libdxfrw.h
     libraries/libdxfrw/src/main_doc.h
-    libraries/muparser/include/muParser.h
     librecad/src/actions/dock_widgets/block/rs_actionblocksadd.cpp
     librecad/src/actions/dock_widgets/block/rs_actionblocksadd.h
     librecad/src/actions/dock_widgets/block/rs_actionblocksattributes.cpp
@@ -1506,6 +1505,7 @@ set(SHARED_SOURCES
 )
 
 set(MUPARSER_SOURCES
+    libraries/muparser/include/muParser.h
     libraries/muparser/include/muParserBase.h
     libraries/muparser/include/muParserBytecode.h
     libraries/muparser/include/muParserCallback.h
