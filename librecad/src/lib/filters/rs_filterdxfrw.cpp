@@ -24,16 +24,14 @@
 **********************************************************************/
 
 #include<cstdlib>
+#include <stack>
 #include<utility>
 
 #include <QRegularExpression>
 #include <QStringList>
 #include <QStringConverter>
-
-
 #include <QFile>
 #include <QFileInfo>
-#include <stack>
 
 #include "rs_filterdxfrw.h"
 #include "lc_containertraverser.h"
@@ -900,8 +898,8 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
             spline->addControlPoint({vert->x, vert->y});
     }
     // ensure that the spline is really closed
-    if (spline->data.closed and !spline->hasWrappedControlPoints()) {
-        spline->data.closed = 0;
+    if (spline->data.isClosed() and !spline->hasWrappedControlPoints()) {
+        spline->data.setClosed(false);
     }
 
     spline->update();

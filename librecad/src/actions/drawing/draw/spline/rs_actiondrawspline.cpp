@@ -296,14 +296,14 @@ int RS_ActionDrawSpline::getDegree(){
 }
 
 void RS_ActionDrawSpline::setClosed(bool c){
-    m_actionData->data.closed = c;
+    m_actionData->data.setClosed(c);
     if (m_actionData->spline){
         m_actionData->spline->setClosed(c);
     }
 }
 
 bool RS_ActionDrawSpline::isClosed(){
-    return m_actionData->data.closed;
+    return m_actionData->data.isClosed();
 }
 
 LC_ActionOptionsWidget* RS_ActionDrawSpline::createOptionsWidget(){

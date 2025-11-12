@@ -738,6 +738,8 @@ set(SHARED_SOURCES
     librecad/src/lib/engine/document/entities/lc_parabola.cpp
     librecad/src/lib/engine/document/entities/lc_rect.cpp
     librecad/src/lib/engine/document/entities/lc_rect.h
+    librecad/src/lib/engine/document/entities/lc_splinehelper.cpp
+    librecad/src/lib/engine/document/entities/lc_splinehelper.h
     librecad/src/lib/engine/document/entities/lc_splinepoints.cpp
     librecad/src/lib/engine/document/entities/lc_splinepoints.h
     librecad/src/lib/engine/document/entities/lc_tolerance.cpp

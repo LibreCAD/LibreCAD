@@ -53,6 +53,11 @@ public:
 //!
     explicit operator bool() const;
 
+    bool isValid() const
+    {
+        return valid;
+    }
+
     void set(double angle); // set to unit vector by the direction of angle
     void set(double vx, double vy, double vz=0.0);
     void plus(const RS_Vector& other);
@@ -137,7 +142,7 @@ public:
     bool operator != (bool valid) const;
 
     static bool isValid(const RS_Vector& v) {
-        return v == true;
+        return v.valid;
     }
 
     static RS_Vector minimum(const RS_Vector& v1, const RS_Vector& v2);
@@ -152,6 +157,7 @@ public:
     /** switch x,y for all vectors */
     RS_Vector flipXY(void) const;
 
+    friend RS_Vector operator * (double scale, const RS_Vector& vp);
     friend std::ostream& operator << (std::ostream&, const RS_Vector& v);
 
 #ifdef RS_TEST

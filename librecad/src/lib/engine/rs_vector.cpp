@@ -376,6 +376,10 @@ RS_Vector& RS_Vector::shear(double k)
     return *this;
 }
 
+RS_Vector operator * (double scale, const RS_Vector& vp) {
+    return vp * scale;
+}
+
 /**
  * Streams the vector components to stdout. e.g.: "1/4/0"
  */
