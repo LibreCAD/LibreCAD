@@ -339,7 +339,9 @@ double RS_Polyline::getClosingBulge() const{
 }
 
 bool RS_Polyline::isClosed() const {
-    return data.getFlag(RS2::FlagClosed);
+    // Issue #2360, test coincidence of end points for closed polylines
+    return (count() > 2 && getStartpoint() == getEndpoint())
+        || data.getFlag(RS2::FlagClosed);
 }
 
 void RS_Polyline::setClosed(bool cl) {

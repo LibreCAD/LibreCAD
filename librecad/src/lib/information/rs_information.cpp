@@ -355,11 +355,12 @@ bool RS_Information::isTrimmable(RS_Entity *e1, RS_Entity *e2){
                 RS_Polyline* pl = static_cast<RS_Polyline *>(e1->getParent());
                 int idx1 = pl->findEntity(e1);
                 int idx2 = pl->findEntity(e2);
-                RS_DEBUG->print("RS_Information::isTrimmable: "
-                                "idx1: %d, idx2: %d", idx1, idx2);
-                bool adjacentSegments = abs(idx1 - idx2) == 1;
+                int length = pl->count();
+                LC_LOG<<"RS_Information::isTrimmable: "
+                          "idx1: "<<idx1<<" idx2:"<<idx2<<", length: "<<length;
+                bool adjacentSegments = std::abs(idx1 - idx2) == 1;
                 if (adjacentSegments ||
-                    (pl->isClosed() && abs(idx1 - idx2) == int(pl->count() - 1))){
+                    (pl->isClosed() && std::abs(idx1 - idx2) == length - 1)){
                     // directly following entities
                     return true;
                 } else {

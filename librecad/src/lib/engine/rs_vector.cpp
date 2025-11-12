@@ -560,9 +560,9 @@ RS_Vector RS_Vector::operator /= (double s) {
 bool RS_Vector::operator == (const RS_Vector& v) const {
     return valid
            && v.valid
-           && RS_Math::equal(x, v.x)
-           && RS_Math::equal(y, v.y)
-           && RS_Math::equal(z, v.z);
+           && RS_Math::equal(x, v.x, RS_TOLERANCE)
+           && RS_Math::equal(y, v.y, RS_TOLERANCE)
+           && RS_Math::equal(z, v.z, RS_TOLERANCE);
 }
 
 bool RS_Vector::operator == (bool valid) const
