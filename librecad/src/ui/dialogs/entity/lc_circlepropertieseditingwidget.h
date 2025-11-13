@@ -41,6 +41,9 @@ public:
 protected slots:
     void onCenterEditingFinished();
     void onRadiusEditingFinished();
+    void onDiameterEditingFinished();
+    void onRadiusTextChanged(const QString &text);
+    void onDiameterTextChanged(const QString &text);
 public:
     void setupInteractiveInputWidgets() override;
 private:

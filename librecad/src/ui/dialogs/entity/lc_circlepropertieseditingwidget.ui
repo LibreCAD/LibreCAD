@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>766</width>
-    <height>120</height>
+    <height>145</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -113,7 +113,7 @@
        </widget>
       </item>
       <item row="2" column="0">
-       <widget class="QLabel" name="lEndX">
+       <widget class="QLabel" name="lRadius">
         <property name="text">
          <string>Radius:</string>
         </property>
@@ -131,7 +131,7 @@
          </size>
         </property>
         <property name="toolTip">
-         <string>Radius of cricle</string>
+         <string>Radius of circle</string>
         </property>
        </widget>
       </item>
@@ -150,6 +150,43 @@
        </widget>
       </item>
       <item row="3" column="0">
+       <widget class="QLabel" name="lDiameter">
+        <property name="text">
+         <string>Diameter:</string>
+        </property>
+        <property name="wordWrap">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="leDiameter">
+        <property name="minimumSize">
+         <size>
+          <width>64</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Diameter of circle</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QToolButton" name="tbPickDiameter">
+        <property name="toolTip">
+         <string>Pick diameter value from drawing</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../res/icons/icons.qrc">
+          <normaloff>:/icons/interactive_pick_distance.lci</normaloff>:/icons/interactive_pick_distance.lci</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
        <spacer name="spacer58">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
