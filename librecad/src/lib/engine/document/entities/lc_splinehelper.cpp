@@ -281,6 +281,65 @@ void LC_SplineHelper::toStandardFromWrappedClosed(RS_SplineData& splineData, siz
 }
 
 /**
+ * Convert from WrappedClosed to ClampedOpen via Standard.
+ */
+void LC_SplineHelper::toClampedOpenFromWrappedClosed(RS_SplineData& splineData, size_t unwrappedSize) {
+    // Pre-conversion validation: Full integrity check including sizes
+    if (!validate(splineData, unwrappedSize)) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "Pre-conversion validation failed: inconsistent sizes or integrity");
+        return;  // Skip conversion to preserve original state
+    }
+
+    auto savedKnots = splineData.knotslist;
+    auto savedType = splineData.type;
+    auto savedControls = splineData.controlPoints;
+    auto savedWeights = splineData.weights;
+
+    toStandardFromWrappedClosed(splineData, unwrappedSize);
+    toClampedOpenFromStandard(splineData);
+
+    // Post-conversion validation: Ensure sizes and integrity after conversion
+    if (!validate(splineData, unwrappedSize)) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "Post-conversion validation failed: inconsistent sizes or integrity");
+        // Revert changes
+        splineData.controlPoints = savedControls;
+        splineData.weights = savedWeights;
+        splineData.knotslist = savedKnots;
+        splineData.type = savedType;
+    }
+}
+
+/**
+ * Convert from ClampedOpen to WrappedClosed via Standard.
+ */
+void LC_SplineHelper::toWrappedClosedFromClampedOpen(RS_SplineData& splineData) {
+    // Pre-conversion validation: Full integrity check including sizes
+    size_t unwrappedSize = splineData.controlPoints.size();
+    if (!validate(splineData, unwrappedSize)) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "Pre-conversion validation failed: inconsistent sizes or integrity");
+        return;  // Skip conversion to preserve original state
+    }
+
+    auto savedKnots = splineData.knotslist;
+    auto savedType = splineData.type;
+    auto savedControls = splineData.controlPoints;
+    auto savedWeights = splineData.weights;
+
+    toStandardFromClampedOpen(splineData);
+    toWrappedClosedFromStandard(splineData);
+
+    // Post-conversion validation: Ensure sizes and integrity after conversion
+    if (!validate(splineData, unwrappedSize)) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "Post-conversion validation failed: inconsistent sizes or integrity");
+        // Revert changes
+        splineData.controlPoints = savedControls;
+        splineData.weights = savedWeights;
+        splineData.knotslist = savedKnots;
+        splineData.type = savedType;
+    }
+}
+
+/**
  * Add wrapping to control points and weights for closed splines.
  */
 void LC_SplineHelper::addWrapping(RS_SplineData& splineData) {
