@@ -1,8 +1,8 @@
 #ifndef LC_SPLINEHELPER_H
 #define LC_SPLINEHELPER_H
 
-#include <vector>
 #include <cstddef>
+#include <vector>
 #include "rs_spline.h"
 
 /**
@@ -31,10 +31,8 @@ public:
     // Type conversions (non-uniform preserving)
     static void toClampedOpenFromStandard(RS_SplineData& splineData);
     static void toStandardFromClampedOpen(RS_SplineData& splineData);
-    static void toWrappedClosedFromClampedOpen(RS_SplineData& splineData);
-    static void toClampedOpenFromWrappedClosed(RS_SplineData& splineData);
     static void toWrappedClosedFromStandard(RS_SplineData& splineData);
-    static void toStandardFromWrappedClosed(RS_SplineData& splineData);
+    static void toStandardFromWrappedClosed(RS_SplineData& splineData, size_t unwrappedSize);
 
     // Wrapping
     static void addWrapping(RS_SplineData& splineData);
@@ -51,9 +49,9 @@ public:
     static void insertKnot(std::vector<double>& knots, size_t knot_index);
     static void removeKnot(std::vector<double>& knots, size_t knot_index);
     static void ensureMonotonic(std::vector<double>& knots);
-    static void insertKnotBoehm(RS_SplineData& data, double t, int mult=1);
-    static int findSpan(int n, int p, double u, const std::vector<double>& U);
 
+    // Validation
+    static bool validate(const RS_SplineData& data, size_t unwrappedSize);
 
 private:
 };

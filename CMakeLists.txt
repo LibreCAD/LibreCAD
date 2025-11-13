@@ -1675,8 +1675,9 @@ if(BUILD_TESTS)
 	# main() is excluded when BUILD_TEST=ON
 	${MAIN_SOURCES}
 	### The actual tests
-        librecad/src/lib/math/tests/rs_math_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_splinehelper_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_ellipse_tests.cpp
+        librecad/src/lib/math/tests/rs_math_tests.cpp
     )
 
     # Include directories for rs_math.h and other dependencies
