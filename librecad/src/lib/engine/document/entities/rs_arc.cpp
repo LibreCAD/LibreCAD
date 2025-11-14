@@ -71,7 +71,7 @@ void RS_Arc::setRadius(double radius) {
 
 void RS_Arc::setAngle1(double a1) {
     if (RS_Math::notEqual(data.angle1, a1)) {
-        data.angle1 = a1;
+        data.angle1 = RS_Math::correctAngle(a1);
         calculateBorders();
     }
 }
@@ -79,7 +79,7 @@ void RS_Arc::setAngle1(double a1) {
 /** Sets new end angle. */
 void RS_Arc::setAngle2(double a2) {
     if (RS_Math::notEqual(data.angle2, a2)) {
-        data.angle2 = a2;
+        data.angle2 = RS_Math::correctAngle(a2);
         calculateBorders();
     }
 }
@@ -87,6 +87,7 @@ void RS_Arc::setAngle2(double a2) {
 void RS_Arc::setReversed(bool r) {
     if (data.reversed != r) {
         data.reversed = r;
+        std::swap(data.angle1, data.angle2);
         std::swap(m_startPoint, m_endPoint);
     }
 }
@@ -990,7 +991,8 @@ double RS_Arc::getAngleLength() const {
     double a = getAngle1();
     double b = getAngle2();
 
-    if (isReversed()) std::swap(a, b);
+    if (isReversed())
+        std::swap(a, b);
     double ret = RS_Math::correctAngle(b - a);
     // full circle:
     if (std::abs(std::remainder(ret, 2. * M_PI)) < RS_TOLERANCE_ANGLE) {

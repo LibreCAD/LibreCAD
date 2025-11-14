@@ -32,23 +32,36 @@ namespace Ui {
 class LC_ArcPropertiesEditingWidget;
 }
 
-class LC_ArcPropertiesEditingWidget : public LC_EntityPropertiesEditorWidget{
+class LC_ArcPropertiesEditingWidget : public LC_EntityPropertiesEditorWidget {
     Q_OBJECT
 public:
-    explicit LC_ArcPropertiesEditingWidget(QWidget *parent = nullptr);
+    explicit LC_ArcPropertiesEditingWidget(QWidget* parent = nullptr);
     ~LC_ArcPropertiesEditingWidget() override;
     void setEntity(RS_Entity* entity) override;
 protected slots:
     void onCenterEditingFinished();
     void onRadiusEditingFinished();
+    void onDiameterEditingFinished();
+    void onArcLengthEditingFinished();
+    void onSweepAngleEditingFinished();
+    void onBulgeEditingFinished();
     void onAngle1EditingFinished();
     void onAngle2EditingFinished();
     void onReversedToggled(bool checked);
+    void onRadiusTextChanged(const QString &text);
+    void onDiameterTextChanged(const QString &text);
+    void onArcLengthTextChanged(const QString &text);
+    void onSweepAngleTextChanged(const QString &text);
+    void onBulgeTextChanged(const QString &text);
+    void onAngle1TextChanged(const QString &text);
+    void onAngle2TextChanged(const QString &text);
 public:
     void setupInteractiveInputWidgets() override;
 private:
-    Ui::LC_ArcPropertiesEditingWidget *ui;
-    RS_Arc* m_entity;
+    void updateDerivedFields(double radius, double theta);
+    void updateUI();
+    Ui::LC_ArcPropertiesEditingWidget* ui = nullptr;
+    RS_Arc* m_entity = nullptr;
 };
 
 #endif // LC_ARCPROPERTIESEDITINGWIDGET_H
