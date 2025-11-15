@@ -281,6 +281,12 @@ public:
     /** Robust NURBS evaluation using de Boor */
     static RS_Vector evaluateNURBS(const RS_SplineData& data, double t);
 
+    /** Get tangent vector at t */
+    RS_Vector getTangentAt(double t) const;
+
+    /** Validate the spline data integrity */
+    bool validate() const;
+
     friend class RS_FilterDXFRW;
 
 private:
@@ -297,14 +303,14 @@ private:
     /** Compute basis functions non-recursively */
     static std::vector<double> basisFunctions(int i, double u, int p, const std::vector<double>& U);
 
+    /** Compute basis derivatives (from NURBS book A2.3) */
+    static void dersBasisFunctions(int span, double u, int p, int derOrder, const std::vector<double>& U, std::vector<std::vector<double>>& ders);
+
     /** Get non-rational B-spline basis functions */
     std::vector<double> getBSplineBasis(double t,
                                         const std::vector<double>& knots,
                                         int degree,
                                         size_t numControls) const;
-
-    /** Validate the spline data integrity */
-    bool validate() const;
 
     /** Approximate derivative at t */
     double getDerivative(double t, bool isX) const;
