@@ -234,9 +234,9 @@ void RS_Spline::setClosed(bool c) {
 
 /** Adjust knot vector to open clamped form */
 std::vector<double> RS_Spline::adjustToOpenClamped(const std::vector<double>& knots,
-                                                   size_t num_control,
-                                                   size_t order,
-                                                   bool is_natural) const {
+                                            size_t num_control,
+                                            size_t order,
+                                            bool is_natural) const {
     return LC_SplineHelper::clampKnotVector(knots, num_control, order);
 }
 
@@ -1006,4 +1006,3 @@ std::vector<double> RS_Spline::rbasis(int c, double t, int npts,
     }
     return nbasis;
 }
-

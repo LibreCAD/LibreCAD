@@ -46,7 +46,7 @@ std::vector<double> LC_SplineHelper::convertClosedToOpenKnotVector(const std::ve
     const size_t m = splineDegree;
     if (closedKnotVector.size() < n + 2 * m + 1
         || n < m + 1) {
-        return getNormalizedKnotVector(knot(m, m + 1), 0., {});
+        return {};
     }
     std::vector<double> openKnotVector(n + m + 1, 0.);
     std::copy(closedKnotVector.begin() + m, closedKnotVector.begin() + n + m + 1, openKnotVector.begin() + m);
@@ -58,16 +58,13 @@ std::vector<double> LC_SplineHelper::convertClosedToOpenKnotVector(const std::ve
     for(size_t i=0; i <= m ; ++i)
         openKnotVector[n + i] = closedKnotVector[n + m + i] - deltaEnd;
     return getNormalizedKnotVector(openKnotVector, 0.0, {});
-}
-
-/**
+}/**
  * Convert open knot vector to closed (periodic) form.
  */
 std::vector<double> LC_SplineHelper::convertOpenToClosedKnotVector(const std::vector<double>& openKnots, size_t n, size_t m) {
     if (openKnots.size() <= n)
         return {};
 
-    // Detect if clamped using tolerance
     bool isClamped = false;
     if (openKnots.size() >= 2 * (m + 1)) {
         double startValue = openKnots[0];
@@ -93,24 +90,29 @@ std::vector<double> LC_SplineHelper::convertOpenToClosedKnotVector(const std::ve
 
     double period = openKnots.back() - openKnots.front();
     if (period <= 0.0) {
-        // Invalid period; return empty vector
         return {};
     }
 
     size_t startIdx = isClamped ? m + 1 : 0;
     size_t lastIdx = n;
-    if (startIdx + m > n || startIdx >= lastIdx) {
-        // Not enough knots to append from startIdx
+    if (startIdx > lastIdx) {
         return {};
     }
     std::vector<double> closedKnots(openKnots.begin() + startIdx, openKnots.begin() + lastIdx + 1);
-    if (closedKnots.size() < 2)
-        return {};
+    if (closedKnots.empty()) return {};
+
+    size_t initial_size = closedKnots.size();
     const size_t newSize = n + 2 * m + 1;
     double current = closedKnots.back();
     size_t j = 1;
     while (closedKnots.size() < newSize) {
-        double delta = (j < closedKnots.size()) ? closedKnots[j] - closedKnots[j - 1] : 1.0;
+        double delta;
+        if (initial_size <= 1) {
+            delta = 0.0;
+        } else {
+            size_t jj = (j - 1) % (initial_size - 1) + 1;
+            delta = closedKnots[jj] - closedKnots[jj - 1];
+        }
         current += delta;
         closedKnots.push_back(current);
         j++;
@@ -118,7 +120,6 @@ std::vector<double> LC_SplineHelper::convertOpenToClosedKnotVector(const std::ve
 
     return closedKnots;
 }
-
 /**
  * Normalize knot vector by shifting to newMinimum (no scaling).
  */
@@ -416,13 +417,19 @@ std::vector<double> LC_SplineHelper::generateOpenUniformKnotVector(size_t contro
  */
 void LC_SplineHelper::extendKnotVector(std::vector<double>& knots) {
     double delta = RS_TOLERANCE * 10;
-    if (knots.size() >= 2) {
-        delta = knots.back() - knots[knots.size() - 2];
+    double last = 0.0;
+    if (!knots.empty()) {
+        last = knots.back();
+        if (knots.size() >= 2) {
+            double prev_delta = last - knots[knots.size() - 2];
+            if (prev_delta > 0.0) {
+                delta = prev_delta;
+            }
+        }
     }
-    double new_knot = knots.back() + std::max(delta, RS_TOLERANCE);
+    double new_knot = last + delta;
     knots.push_back(new_knot);
 }
-
 /**
  * Insert a knot at the specified index.
  */

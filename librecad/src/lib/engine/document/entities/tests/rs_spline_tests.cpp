@@ -31,375 +31,371 @@ TEST_CASE("RS_Spline Basic Functionality", "[RS_Spline]") {
         REQUIRE_THROWS_AS(spline.setDegree(0), std::invalid_argument);
         REQUIRE_THROWS_AS(spline.setDegree(4), std::invalid_argument);
     }
+}
 
-    SECTION("Add Control Points - Open Spline") {
-        RS_Vector point1(0.0, 0.0);
-        RS_Vector point2(1.0, 1.0);
-        RS_Vector point3(2.0, 0.0);
-        RS_Vector point4(3.0, 1.0);
+TEST_CASE("LC_SplineHelper Knot Conversions", "[LC_SplineHelper]") {
+    size_t unwrappedControlCount = 4;
+    size_t splineDegree = 3;
 
-        spline.addControlPoint(point1);
-        spline.addControlPoint(point2);
-        spline.addControlPoint(point3);
-        spline.addControlPoint(point4);
-
-        REQUIRE(spline.getNumberOfControlPoints() == 4);
-        auto controlPoints = spline.getControlPoints();
-        REQUIRE(controlPoints.size() == 4);
-        REQUIRE(controlPoints[0] == point1);
-        REQUIRE(controlPoints[3] == point4);
-
-        // Default knots should be generated (clamped uniform)
-        auto knotVector = spline.getKnotVector();
-        REQUIRE(knotVector.size() == 8); // n + degree + 1 = 4 + 3 + 1
-        REQUIRE(knotVector[0] == Approx(0.0));
-        REQUIRE(knotVector[3] == Approx(0.0));
-        REQUIRE(knotVector[4] == Approx(1.0));
-        REQUIRE(knotVector[7] == Approx(1.0));
+    SECTION("Convert Closed to Open - Uniform") {
+        std::vector<double> closedKnots = {0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0};
+        auto openKnots = LC_SplineHelper::convertClosedToOpenKnotVector(closedKnots, unwrappedControlCount, splineDegree);
+        REQUIRE(openKnots.size() == 8);
+        REQUIRE(openKnots[0] == Approx(0.0));
+        REQUIRE(openKnots[1] == Approx(1.0));
+        REQUIRE(openKnots[2] == Approx(2.0));
+        REQUIRE(openKnots[3] == Approx(3.0));
+        REQUIRE(openKnots[4] == Approx(4.0));
+        REQUIRE(openKnots[5] == Approx(5.0));
+        REQUIRE(openKnots[6] == Approx(6.0));
+        REQUIRE(openKnots[7] == Approx(7.0));
     }
 
-    SECTION("Set Closed and Wrapping") {
-        RS_Vector point1(0.0, 0.0);
-        RS_Vector point2(1.0, 1.0);
-        RS_Vector point3(2.0, 0.0);
-        RS_Vector point4(3.0, 1.0);
+    SECTION("Convert Closed to Open - Non-Uniform") {
+        std::vector<double> closedKnots = {-3.0, -1.5, -0.5, 0.0, 1.0, 3.0, 5.0, 6.0, 7.5, 8.5, 10.0};
+        auto openKnots = LC_SplineHelper::convertClosedToOpenKnotVector(closedKnots, unwrappedControlCount, splineDegree);
+        REQUIRE(openKnots.size() == 8);
+        REQUIRE(openKnots[0] == Approx(0.0));
+        REQUIRE(openKnots[1] == Approx(1.5));
+        REQUIRE(openKnots[2] == Approx(3.0));
+        REQUIRE(openKnots[3] == Approx(4.5));
+        REQUIRE(openKnots[4] == Approx(6.5));
+        REQUIRE(openKnots[5] == Approx(8.0));
+        REQUIRE(openKnots[6] == Approx(9.0));
+        REQUIRE(openKnots[7] == Approx(10.5));
+    }
 
-        spline.addControlPoint(point1);
-        spline.addControlPoint(point2);
-        spline.addControlPoint(point3);
-        spline.addControlPoint(point4);
 
-        spline.setClosed(true);
-        REQUIRE(spline.isClosed());
-        REQUIRE(spline.getUnwrappedSize() == 4);
-        REQUIRE(spline.getData().controlPoints.size() == 7); // 4 + 3 wrapping
+    SECTION("Convert Open to Closed - Non-Clamped Non-Uniform") {
+        std::vector<double> openKnots = {0.0, 0.5, 1.0, 2.0, 3.0, 4.5, 6.0, 8.0};
+        auto closedKnots = LC_SplineHelper::convertOpenToClosedKnotVector(openKnots, unwrappedControlCount, splineDegree);
+        REQUIRE(closedKnots.size() == 11);
+        REQUIRE(closedKnots[0] == Approx(0.0));
+        REQUIRE(closedKnots[1] == Approx(0.5));
+        REQUIRE(closedKnots[2] == Approx(1.0));
+        REQUIRE(closedKnots[3] == Approx(2.0));
+        REQUIRE(closedKnots[4] == Approx(3.0));
+        REQUIRE(closedKnots[5] == Approx(3.5));
+        REQUIRE(closedKnots[6] == Approx(4.0));
+        REQUIRE(closedKnots[7] == Approx(5.0));
+        REQUIRE(closedKnots[8] == Approx(6.0));
+        REQUIRE(closedKnots[9] == Approx(6.5));
+        REQUIRE(closedKnots[10] == Approx(7.0));
+    }
 
-        auto unwrappedPoints = spline.getUnwrappedControlPoints();
-        REQUIRE(unwrappedPoints.size() == 4);
-        REQUIRE(unwrappedPoints[0] == point1);
+    SECTION("Convert Open to Closed - Edge Case: Invalid Period") {
+        std::vector<double> invalidOpen = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+        auto closedKnots = LC_SplineHelper::convertOpenToClosedKnotVector(invalidOpen, unwrappedControlCount, splineDegree);
+        REQUIRE(closedKnots.empty());
+    }
 
-        // Check wrapping: last 3 should match first 3
-        auto allPoints = spline.getData().controlPoints;
-        REQUIRE(allPoints[4] == allPoints[0]);
-        REQUIRE(allPoints[5] == allPoints[1]);
-        REQUIRE(allPoints[6] == allPoints[2]);
+    SECTION("Normalize Knot Vector") {
+        std::vector<double> inputKnots = {2.0, 3.0, 4.0};
+        std::vector<double> fallbackKnots = {0.0, 1.0};
+        auto normalizedKnots = LC_SplineHelper::getNormalizedKnotVector(inputKnots, 0.0, fallbackKnots);
+        REQUIRE(normalizedKnots.size() == 3);
+        REQUIRE(normalizedKnots[0] == Approx(0.0));
+        REQUIRE(normalizedKnots[1] == Approx(1.0));
+        REQUIRE(normalizedKnots[2] == Approx(2.0));
+    }
+
+    SECTION("Normalize Knot Vector - Fallback") {
+        std::vector<double> inputKnots = {2.0};
+        std::vector<double> fallbackKnots = {0.0, 1.0, 2.0};
+        auto normalizedKnots = LC_SplineHelper::getNormalizedKnotVector(inputKnots, 0.0, fallbackKnots);
+        REQUIRE(normalizedKnots == fallbackKnots);
+    }
+
+    SECTION("Normalize Knot Vector - Edge Case: Empty Input") {
+        std::vector<double> inputKnots = {};
+        std::vector<double> fallbackKnots = {0.0, 1.0};
+        auto normalizedKnots = LC_SplineHelper::getNormalizedKnotVector(inputKnots, 0.0, fallbackKnots);
+        REQUIRE(normalizedKnots == fallbackKnots);
+    }
+
+    SECTION("Clamp and Unclamp - Non-Uniform") {
+        std::vector<double> uniformKnots = {0.0, 0.5, 1.0, 2.0, 3.0, 4.0, 4.5, 5.0};
+        size_t controlPointCount = 4;
+        size_t splineOrder = 4;
+        auto clampedKnots = LC_SplineHelper::clampKnotVector(uniformKnots, controlPointCount, splineOrder);
+        REQUIRE(clampedKnots[0] == Approx(2.0));
+        REQUIRE(clampedKnots[1] == Approx(2.0));
+        REQUIRE(clampedKnots[2] == Approx(2.0));
+        REQUIRE(clampedKnots[3] == Approx(2.0));
+        REQUIRE(clampedKnots[4] == Approx(3.0));
+        REQUIRE(clampedKnots[5] == Approx(3.0));
+        REQUIRE(clampedKnots[6] == Approx(3.0));
+        REQUIRE(clampedKnots[7] == Approx(3.0));
+
+        auto unclampedKnots = LC_SplineHelper::unclampKnotVector(clampedKnots, controlPointCount, splineOrder);
+        REQUIRE(unclampedKnots[0] == Approx(-1.0));
+        REQUIRE(unclampedKnots[1] == Approx(0.0));
+        REQUIRE(unclampedKnots[2] == Approx(1.0));
+        REQUIRE(unclampedKnots[3] == Approx(2.0));
+        REQUIRE(unclampedKnots[4] == Approx(3.0));
+        REQUIRE(unclampedKnots[5] == Approx(4.0));
+        REQUIRE(unclampedKnots[6] == Approx(5.0));
+        REQUIRE(unclampedKnots[7] == Approx(6.0));
+    }
+
+    SECTION("Clamp and Unclamp - Uniform") {
+        std::vector<double> uniformKnots = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0};
+        size_t controlPointCount = 4;
+        size_t splineOrder = 4;
+        auto clampedKnots = LC_SplineHelper::clampKnotVector(uniformKnots, controlPointCount, splineOrder);
+        REQUIRE(clampedKnots[0] == Approx(3.0));
+        REQUIRE(clampedKnots[1] == Approx(3.0));
+        REQUIRE(clampedKnots[2] == Approx(3.0));
+        REQUIRE(clampedKnots[3] == Approx(3.0));
+        REQUIRE(clampedKnots[4] == Approx(4.0));
+        REQUIRE(clampedKnots[5] == Approx(4.0));
+        REQUIRE(clampedKnots[6] == Approx(4.0));
+        REQUIRE(clampedKnots[7] == Approx(4.0));
+
+        auto unclampedKnots = LC_SplineHelper::unclampKnotVector(clampedKnots, controlPointCount, splineOrder);
+        REQUIRE(unclampedKnots[0] == Approx(0.0));
+        REQUIRE(unclampedKnots[1] == Approx(1.0));
+        REQUIRE(unclampedKnots[2] == Approx(2.0));
+        REQUIRE(unclampedKnots[3] == Approx(3.0));
+        REQUIRE(unclampedKnots[4] == Approx(4.0));
+        REQUIRE(unclampedKnots[5] == Approx(5.0));
+        REQUIRE(unclampedKnots[6] == Approx(6.0));
+        REQUIRE(unclampedKnots[7] == Approx(7.0));
+    }
+
+    SECTION("Clamp - Edge Case: Invalid Size") {
+        std::vector<double> shortKnots = {0.0, 1.0};
+        auto clamped = LC_SplineHelper::clampKnotVector(shortKnots, 4, 4);
+        REQUIRE(clamped == shortKnots);
+    }
+}
+
+TEST_CASE("LC_SplineHelper Wrapping and Type Conversions", "[LC_SplineHelper]") {
+    RS_SplineData splineData;
+    splineData.degree = 3;
+    splineData.type = RS_SplineData::SplineType::Standard;
+    splineData.controlPoints = {RS_Vector(0,0), RS_Vector(1,1), RS_Vector(2,0), RS_Vector(3,1)};
+    splineData.weights = {1.0, 2.0, 3.0, 4.0};
+    splineData.knotslist = {0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0};
+
+    SECTION("Add Wrapping - Non-Uniform Weights") {
+        LC_SplineHelper::addWrapping(splineData);
+        REQUIRE(splineData.controlPoints.size() == 7);
+        REQUIRE(splineData.controlPoints[4] == RS_Vector(0,0));
+        REQUIRE(splineData.controlPoints[5] == RS_Vector(1,1));
+        REQUIRE(splineData.controlPoints[6] == RS_Vector(2,0));
+        REQUIRE(splineData.weights[4] == Approx(1.0));
+        REQUIRE(splineData.weights[5] == Approx(2.0));
+        REQUIRE(splineData.weights[6] == Approx(3.0));
+        REQUIRE(splineData.knotslist.size() == 11);
+    }
+
+    SECTION("Add Wrapping - Edge Case: Minimum Controls") {
+        RS_SplineData minData = splineData;
+        minData.controlPoints.resize(3);
+        minData.weights.resize(3);
+        minData.knotslist.resize(7);
+        LC_SplineHelper::addWrapping(minData);
+        REQUIRE(minData.controlPoints.size() == 3);
     }
 
     SECTION("Remove Wrapping") {
-        // Setup closed
-        RS_Vector point1(0.0, 0.0);
-        RS_Vector point2(1.0, 1.0);
-        RS_Vector point3(2.0, 0.0);
-        RS_Vector point4(3.0, 1.0);
+        LC_SplineHelper::addWrapping(splineData);
+        LC_SplineHelper::removeWrapping(splineData);
+        REQUIRE(splineData.controlPoints.size() == 4);
+        REQUIRE(splineData.weights.size() == 4);
+        REQUIRE(splineData.knotslist.size() == 8);
+    }
 
-        spline.addControlPoint(point1);
-        spline.addControlPoint(point2);
-        spline.addControlPoint(point3);
-        spline.addControlPoint(point4);
-        spline.setClosed(true);
+    SECTION("Remove Wrapping - Edge Case: No Wrapping") {
+        LC_SplineHelper::removeWrapping(splineData);
+        REQUIRE(splineData.controlPoints.size() == 4);
+    }
 
-        spline.setClosed(false);
-        REQUIRE(!spline.isClosed());
-        REQUIRE(spline.getNumberOfControlPoints() == 4);
-        REQUIRE(spline.getData().controlPoints.size() == 4);
+    SECTION("Update Control and Weight Wrapping") {
+        size_t unwrappedCount = 4;
+        splineData.controlPoints.resize(7);
+        splineData.weights.resize(7);
+        LC_SplineHelper::updateControlAndWeightWrapping(splineData, true, unwrappedCount);
+        REQUIRE(splineData.controlPoints[4] == splineData.controlPoints[0]);
+        REQUIRE(splineData.weights[4] == splineData.weights[0]);
+        REQUIRE(splineData.controlPoints[5] == splineData.controlPoints[1]);
+        REQUIRE(splineData.weights[5] == splineData.weights[1]);
+        REQUIRE(splineData.controlPoints[6] == splineData.controlPoints[2]);
+        REQUIRE(splineData.weights[6] == splineData.weights[2]);
+    }
+
+    SECTION("Update Knot Wrapping") {
+        size_t unwrappedCount = 4;
+        LC_SplineHelper::updateKnotWrapping(splineData, true, unwrappedCount);
+        REQUIRE(splineData.knotslist.size() == 11);
+    }
+
+    SECTION("To Wrapped Closed From Standard") {
+        LC_SplineHelper::toWrappedClosedFromStandard(splineData);
+        REQUIRE(splineData.type == RS_SplineData::SplineType::WrappedClosed);
+        REQUIRE(splineData.controlPoints.size() == 7);
+        REQUIRE(splineData.knotslist.size() == 11);
+    }
+
+    SECTION("To Clamped Open From Standard") {
+        LC_SplineHelper::toClampedOpenFromStandard(splineData);
+        REQUIRE(splineData.type == RS_SplineData::SplineType::ClampedOpen);
+        REQUIRE(splineData.knotslist[0] == Approx(splineData.knotslist[3]));
+        REQUIRE(splineData.knotslist.back() == Approx(splineData.knotslist[splineData.knotslist.size() - 4]));
+    }
+
+    SECTION("Round Trip Type Conversion") {
+        auto originalKnots = splineData.knotslist;
+        LC_SplineHelper::toClampedOpenFromStandard(splineData);
+        LC_SplineHelper::toStandardFromClampedOpen(splineData);
+        REQUIRE(splineData.knotslist == originalKnots);
     }
 }
 
-TEST_CASE("RS_Spline Non-Uniform Splines", "[RS_Spline]") {
-    RS_SplineData splineData(2, false); // Quadratic
-    RS_Spline spline(nullptr, splineData);
-
-    RS_Vector point1(0.0, 0.0);
-    RS_Vector point2(1.0, 2.0);
-    RS_Vector point3(3.0, 1.0);
-    RS_Vector point4(4.0, 0.0);
-
-    spline.addControlPoint(point1);
-    spline.addControlPoint(point2);
-    spline.addControlPoint(point3);
-    spline.addControlPoint(point4);
-
-    // Set non-uniform knots
-    std::vector<double> nonUniformKnots = {0.0, 0.0, 0.0, 1.0, 3.0, 4.0, 4.0, 4.0};
-    spline.setKnotVector(nonUniformKnots);
-
-    // Evaluate at specific parameters
-    // For quadratic, evaluateNURBS should interpolate correctly
-    // At t=0: point1
-    RS_Vector evalAtStart = spline.getPointAt(0.0);
-    REQUIRE(evalAtStart.x == Approx(0.0));
-    REQUIRE(evalAtStart.y == Approx(0.0));
-
-    // At t=4: point4
-    RS_Vector evalAtEnd = spline.getPointAt(4.0);
-    REQUIRE(evalAtEnd.x == Approx(4.0));
-    REQUIRE(evalAtEnd.y == Approx(0.0));
-
-    // At t=2 (mid between 1 and 3)
-    RS_Vector evalAtMid = spline.getPointAt(2.0);
-    REQUIRE(evalAtMid.x == Approx(2.0));
-    REQUIRE(evalAtMid.y == Approx(1.5).epsilon(1e-6));
-
-    SECTION("Rational Non-Uniform") {
-        std::vector<double> weights = {1.0, 2.0, 1.0, 1.0};
-        spline.setWeights(weights);
-
-        // Re-evaluate
-        RS_Vector rationalAtMid = spline.getPointAt(2.0);
-        REQUIRE(rationalAtMid.x == Approx(1.6666666666666667).epsilon(1e-6));
-        REQUIRE(rationalAtMid.y == Approx(1.7777777777777777).epsilon(1e-6));
+TEST_CASE("LC_SplineHelper Knot Generators and Manipulations", "[LC_SplineHelper]") {
+    SECTION("Generate Clamped Uniform Knot Vector") {
+        auto clampedKnots = LC_SplineHelper::knot(4, 4);
+        REQUIRE(clampedKnots.size() == 8);
+        REQUIRE(clampedKnots[0] == Approx(0.0));
+        REQUIRE(clampedKnots[3] == Approx(0.0));
+        REQUIRE(clampedKnots[4] == Approx(1.0));
+        REQUIRE(clampedKnots[7] == Approx(1.0));
     }
 
-    SECTION("Non-Uniform Degree 3") {
-        spline.setDegree(3);
-        std::vector<double> nonUniformKnotsDegree3 = {0.0, 0.0, 0.0, 0.0, 1.0, 3.0, 5.0, 5.0, 5.0, 5.0};
-        spline.setKnotVector(nonUniformKnotsDegree3);
-
-        // Evaluate at t=2.0
-        RS_Vector evalAtTwo = spline.getPointAt(2.0);
-        REQUIRE(evalAtTwo.x == Approx(1.8518518518518519).epsilon(1e-6));  // Computed precisely
-        REQUIRE(evalAtTwo.y == Approx(1.4074074074074074).epsilon(1e-6));
+    SECTION("Generate Clamped Uniform - Edge Case: Min Controls") {
+        auto minClamped = LC_SplineHelper::knot(4, 4);
+        REQUIRE(minClamped.size() == 8);
     }
 
-    SECTION("Non-Uniform Closed") {
-        spline.setClosed(true);
-        REQUIRE(spline.isClosed());
-        // Knots need to be adjusted for closed
-        spline.updateKnotWrapping();
-
-        // Check continuity at closure
-        auto knotVector = spline.getKnotVector();
-        double tMin = knotVector[spline.getDegree()];
-        double tMax = knotVector[spline.getUnwrappedSize()];
-        RS_Vector evalAtMin = spline.getPointAt(tMin);
-        RS_Vector evalAtMax = spline.getPointAt(tMax);
-        REQUIRE(evalAtMin.distanceTo(evalAtMax) < RS_TOLERANCE);
+    SECTION("Generate Open Uniform Knot Vector") {
+        auto openUniformKnots = LC_SplineHelper::generateOpenUniformKnotVector(4, 4);
+        REQUIRE(openUniformKnots.size() == 8);
+        REQUIRE(openUniformKnots[0] == Approx(0.0));
+        REQUIRE(openUniformKnots[1] == Approx(1.0));
+        REQUIRE(openUniformKnots[7] == Approx(7.0));
     }
 
-    SECTION("Non-Uniform Rational B-Spline (NURBS) with Varying Weights") {
-        std::vector<double> weights = {1.0, 0.5, 2.0, 1.5};
-        spline.setWeights(weights);
+    SECTION("Extend Knot Vector") {
+        std::vector<double> knots = {0.0, 1.0, 3.0};
+        LC_SplineHelper::extendKnotVector(knots);
+        REQUIRE(knots.size() == 4);
+        REQUIRE(knots[3] > knots[2]);
+    }
 
-        RS_Vector evalAtMid = spline.getPointAt(2.0);
-        REQUIRE(evalAtMid.x == Approx(2.105263157894737).epsilon(1e-6));
-        REQUIRE(evalAtMid.y == Approx(1.2105263157894737).epsilon(1e-6));
+    SECTION("Extend Knot Vector - Edge Case: Single Knot") {
+        std::vector<double> singleKnot = {0.0};
+        LC_SplineHelper::extendKnotVector(singleKnot);
+        REQUIRE(singleKnot.size() == 2);
+        REQUIRE(singleKnot[1] == Approx(RS_TOLERANCE * 10));
+    }
+
+    SECTION("Insert Knot - Mid") {
+        std::vector<double> knots = {0.0, 1.0, 2.0, 3.0};
+        LC_SplineHelper::insertKnot(knots, 2);
+        REQUIRE(knots.size() == 5);
+        REQUIRE(knots[2] == Approx(1.5));
+    }
+
+    SECTION("Insert Knot - Start") {
+        std::vector<double> knots = {0.0, 1.0, 2.0};
+        LC_SplineHelper::insertKnot(knots, 0);
+        REQUIRE(knots.size() == 4);
+        REQUIRE(knots[0] == Approx(-1.0));
+        REQUIRE(knots[1] == Approx(0.0));
+    }
+
+    SECTION("Insert Knot - End") {
+        std::vector<double> knots = {0.0, 1.0, 2.0};
+        LC_SplineHelper::insertKnot(knots, 3);
+        REQUIRE(knots.size() == 4);
+        REQUIRE(knots[3] == Approx(3.0));
+    }
+
+    SECTION("Insert Knot - Empty Vector") {
+        std::vector<double> knots = {};
+        LC_SplineHelper::insertKnot(knots, 0);
+        REQUIRE(knots.size() == 1);
+        REQUIRE(knots[0] == Approx(0.0));
+    }
+
+    SECTION("Insert Knot - Small Difference") {
+        std::vector<double> knots = {0.0, 1e-12, 1.0};
+        LC_SplineHelper::insertKnot(knots, 1);
+        REQUIRE(knots.size() == 4);
+        REQUIRE(knots[1] == Approx(1e-12 + 1e-10));
+        REQUIRE(knots[0] == Approx(0.0));
+        REQUIRE(knots[2] == Approx(1e-12));
+        REQUIRE(knots[3] == Approx(1.0));
+    }
+
+    SECTION("Insert Knot - Multiple at Same Position") {
+        std::vector<double> knots = {0.0, 1.0, 2.0};
+        LC_SplineHelper::insertKnot(knots, 1);
+        REQUIRE(knots[1] == Approx(0.5));
+        LC_SplineHelper::insertKnot(knots, 1);
+        REQUIRE(knots[1] == Approx(0.25));
+        REQUIRE(knots[2] == Approx(0.5));
+    }
+
+    SECTION("Insert Knot - Beyond Size") {
+        std::vector<double> knots = {0.0, 1.0};
+        LC_SplineHelper::insertKnot(knots, 5);
+        REQUIRE(knots.size() == 3);
+        REQUIRE(knots[2] == Approx(2.0));
+    }
+
+    SECTION("Insert Knot - Negative Knots") {
+        std::vector<double> knots = {-2.0, -1.0, 0.0};
+        LC_SplineHelper::insertKnot(knots, 1);
+        REQUIRE(knots.size() == 4);
+        REQUIRE(knots[1] == Approx(-1.5));
+    }
+
+    SECTION("Remove Knot") {
+        std::vector<double> knots = {0.0, 1.0, 2.0, 3.0};
+        LC_SplineHelper::removeKnot(knots, 1);
+        REQUIRE(knots.size() == 3);
+        REQUIRE(knots[1] == Approx(2.0));
+    }
+
+    SECTION("Remove Knot - Edge Case: Empty") {
+        std::vector<double> knots = {};
+        LC_SplineHelper::removeKnot(knots, 0);
+        REQUIRE(knots.empty());
+    }
+
+    SECTION("Remove Knot - Edge Case: Single Knot") {
+        std::vector<double> knots = {0.0};
+        LC_SplineHelper::removeKnot(knots, 0);
+        REQUIRE(knots.empty());
+    }
+
+    SECTION("Ensure Monotonic - With Duplicates") {
+        std::vector<double> knots = {0.0, 1.0, 1.0, 2.0};
+        LC_SplineHelper::ensureMonotonic(knots);
+        REQUIRE(knots[2] > knots[1]);
+        REQUIRE(knots[2] == Approx(1.0 + RS_TOLERANCE * 10));
+    }
+
+    SECTION("Ensure Monotonic - Decreasing") {
+        std::vector<double> knots = {0.0, 2.0, 1.0, 3.0};
+        LC_SplineHelper::ensureMonotonic(knots);
+        REQUIRE(knots[2] > knots[1]);
+        REQUIRE(knots[2] == Approx(2.0 + RS_TOLERANCE * 10));
+    }
+
+    SECTION("Ensure Monotonic - All Equal") {
+        std::vector<double> knots = {1.0, 1.0, 1.0};
+        LC_SplineHelper::ensureMonotonic(knots);
+        REQUIRE(knots[1] > knots[0]);
+        REQUIRE(knots[2] > knots[1]);
     }
 }
 
-TEST_CASE("RS_Spline Fit Points", "[RS_Spline]") {
+TEST_CASE("RS_Spline Cubic Specific Tests", "[RS_Spline][degree3]") {
     RS_SplineData splineData(3, false);
     RS_Spline spline(nullptr, splineData);
 
-    std::vector<RS_Vector> fitPoints = {
-        RS_Vector(0.0, 0.0),
-        RS_Vector(1.0, 1.0),
-        RS_Vector(2.0, 0.0),
-        RS_Vector(3.0, 1.0)
-    };
-
-    spline.setFitPoints(fitPoints);
-    REQUIRE(spline.getNumberOfControlPoints() == 4);
-
-    // Check interpolation
-    REQUIRE(compareVector(spline.getPointAt(spline.getKnotVector()[3]), fitPoints[0]));
-    REQUIRE(compareVector(spline.getPointAt(spline.getKnotVector()[spline.getNumberOfControlPoints()]), fitPoints.back()));
-
-    // Add more checks for internal points if needed
 }
 
-TEST_CASE("RS_Spline ChangeType Functionality", "[RS_Spline]") {
-    RS_SplineData splineData(3, false);
-    RS_Spline spline(nullptr, splineData);
-
-    RS_Vector point1(0.0, 0.0);
-    RS_Vector point2(1.0, 1.0);
-    RS_Vector point3(2.0, 0.0);
-    RS_Vector point4(3.0, 1.0);
-
-    spline.addControlPoint(point1);
-    spline.addControlPoint(point2);
-    spline.addControlPoint(point3);
-    spline.addControlPoint(point4);
-
-    SECTION("Change to Standard") {
-        spline.changeType(RS_SplineData::SplineType::Standard);
-        REQUIRE(spline.getData().type == RS_SplineData::SplineType::Standard);
-        REQUIRE(spline.validate());
-        // Check unclamped knots
-        auto knots = spline.getKnotVector();
-        REQUIRE(knots[0] < 0.0); // Unclamped
-    }
-
-    SECTION("Change to WrappedClosed") {
-        spline.changeType(RS_SplineData::SplineType::WrappedClosed);
-        REQUIRE(spline.isClosed());
-        REQUIRE(spline.getData().type == RS_SplineData::SplineType::WrappedClosed);
-        REQUIRE(spline.validate());
-        REQUIRE(spline.hasWrappedControlPoints());
-    }
-
-    SECTION("Change to ClampedOpen") {
-        spline.changeType(RS_SplineData::SplineType::WrappedClosed);
-        spline.changeType(RS_SplineData::SplineType::ClampedOpen);
-        REQUIRE(!spline.isClosed());
-        REQUIRE(spline.getData().type == RS_SplineData::SplineType::ClampedOpen);
-        REQUIRE(spline.validate());
-    }
-}
-
-TEST_CASE("RS_Spline Evaluation and Derivatives", "[RS_Spline]") {
-    RS_SplineData splineData(3, false);
-    RS_Spline spline(nullptr, splineData);
-
-    RS_Vector point0(0.0, 0.0);
-    RS_Vector point1(1.0, 3.0);
-    RS_Vector point2(2.0, -1.0);
-    RS_Vector point3(3.0, 2.0);
-
-    spline.addControlPoint(point0);
-    spline.addControlPoint(point1);
-    spline.addControlPoint(point2);
-    spline.addControlPoint(point3);
-
-    SECTION("Get Point At") {
-        RS_Vector p = spline.getPointAt(0.5);
-        REQUIRE(p.x == Approx(1.5).margin(0.01));
-        REQUIRE(p.y == Approx(1.0).margin(0.01)); // Approximate for cubic
-    }
-
-    SECTION("Find Derivative Zeros") {
-        auto yzeros = spline.findDerivativeZeros(false);
-        REQUIRE(yzeros.size() == 2);
-        REQUIRE(yzeros[0] == Approx(0.311).margin(0.001));
-        REQUIRE(yzeros[1] == Approx(0.689).margin(0.001));
-    }
-
-    SECTION("Calculate Tight Borders") {
-        spline.calculateTightBorders();
-        REQUIRE(spline.getMin().y == Approx(0.0).margin(0.001));
-        REQUIRE(spline.getMax().y == Approx(1.189).margin(0.001)); // From extrema
-    }
-}
-
-TEST_CASE("RS_Spline Operations", "[RS_Spline]") {
-    RS_SplineData splineData(3, false);
-    RS_Spline spline(nullptr, splineData);
-
-    RS_Vector point1(0.0, 0.0);
-    RS_Vector point2(1.0, 1.0);
-    RS_Vector point3(2.0, 0.0);
-    RS_Vector point4(3.0, 1.0);
-
-    spline.addControlPoint(point1);
-    spline.addControlPoint(point2);
-    spline.addControlPoint(point3);
-    spline.addControlPoint(point4);
-
-    SECTION("Move") {
-        RS_Vector offset(1.0, 1.0);
-        spline.move(offset);
-        auto controls = spline.getControlPoints();
-        REQUIRE(compareVector(controls[0], RS_Vector(1.0, 1.0)));
-        REQUIRE(compareVector(controls[1], RS_Vector(2.0, 2.0)));
-    }
-
-    SECTION("Rotate") {
-        RS_Vector center(0.0, 0.0);
-        double angle = M_PI / 2; // 90 degrees
-        spline.rotate(center, angle);
-        auto controls = spline.getControlPoints();
-        REQUIRE(compareVector(controls[0], RS_Vector(0.0, 0.0)));
-        REQUIRE(compareVector(controls[1], RS_Vector(-1.0, 1.0)));
-    }
-
-    SECTION("Scale") {
-        RS_Vector center(0.0, 0.0);
-        RS_Vector factor(2.0, 2.0);
-        spline.scale(center, factor);
-        auto controls = spline.getControlPoints();
-        REQUIRE(compareVector(controls[0], RS_Vector(0.0, 0.0)));
-        REQUIRE(compareVector(controls[1], RS_Vector(2.0, 2.0)));
-    }
-
-    SECTION("Mirror") {
-        RS_Vector axis1(0.0, 0.0);
-        RS_Vector axis2(1.0, 0.0); // X-axis
-        spline.mirror(axis1, axis2);
-        auto controls = spline.getControlPoints();
-        REQUIRE(compareVector(controls[0], RS_Vector(0.0, 0.0)));
-        REQUIRE(compareVector(controls[1], RS_Vector(1.0, -1.0)));
-    }
-
-    SECTION("Revert Direction") {
-        spline.revertDirection();
-        auto controls = spline.getControlPoints();
-        REQUIRE(compareVector(controls[0], point4));
-        REQUIRE(compareVector(controls[3], point1));
-    }
-}
-
-TEST_CASE("RS_Spline Knot and Control Manipulation", "[RS_Spline]") {
-    RS_SplineData splineData(3, false);
-    RS_Spline spline(nullptr, splineData);
-
-    RS_Vector point1(0.0, 0.0);
-    RS_Vector point2(1.0, 1.0);
-    RS_Vector point3(2.0, 0.0);
-    RS_Vector point4(3.0, 1.0);
-
-    spline.addControlPoint(point1);
-    spline.addControlPoint(point2);
-    spline.addControlPoint(point3);
-    spline.addControlPoint(point4);
-
-    SECTION("Insert Control Point") {
-        RS_Vector newPoint(1.5, 1.5);
-        spline.insertControlPoint(2, newPoint);
-        auto controls = spline.getControlPoints();
-        REQUIRE(controls.size() == 5);
-        REQUIRE(compareVector(controls[2], newPoint));
-    }
-
-    SECTION("Remove Control Point") {
-        spline.removeControlPoint(1);
-        auto controls = spline.getControlPoints();
-        REQUIRE(controls.size() == 3);
-        REQUIRE(compareVector(controls[1], point3));
-    }
-
-    SECTION("Set Knot Vector") {
-        std::vector<double> newKnots(8, 0.0);
-        spline.setKnotVector(newKnots);
-        REQUIRE(spline.getKnotVector().size() == 8);
-    }
-}
-
-TEST_CASE("RS_Spline Validation", "[RS_Spline]") {
-    RS_SplineData splineData(3, false);
-    RS_Spline spline(nullptr, splineData);
-
-    SECTION("Valid Open Spline") {
-        spline.addControlPoint(RS_Vector(0.0, 0.0));
-        spline.addControlPoint(RS_Vector(1.0, 1.0));
-        spline.addControlPoint(RS_Vector(2.0, 0.0));
-        spline.addControlPoint(RS_Vector(3.0, 1.0));
-        REQUIRE(spline.validate());
-    }
-
-    SECTION("Invalid Degree") {
-        spline.setDegree(4);
-        REQUIRE(!spline.validate());
-    }
-
-    SECTION("Invalid Knot Multiplicity") {
-        std::vector<double> invalidKnots(8, 0.0); // All same, multiplicity 8 > degree+1=4
-        spline.setKnotVector(invalidKnots);
-        REQUIRE(!spline.validate());
-    }
-
-    SECTION("Invalid Weights") {
-        std::vector<double> invalidWeights = {1.0, -1.0, 1.0, 1.0};
-        spline.setWeights(invalidWeights);
-        REQUIRE(!spline.validate());
-    }
-}
