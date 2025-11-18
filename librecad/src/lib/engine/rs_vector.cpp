@@ -219,6 +219,12 @@ RS_Vector& RS_Vector::normalize()
     return *this;
 }
 
+RS_Vector RS_Vector::crossP(const RS_Vector& vp) const
+{
+    return crossP(*this, vp);
+}
+
+
 /**
  *
  */

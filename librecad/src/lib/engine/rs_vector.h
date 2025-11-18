@@ -112,6 +112,8 @@ public:
     RS_Vector normalized() const;
     RS_Vector& normalize();
 
+    RS_Vector crossP(const RS_Vector& vp) const;
+
     RS_Vector operator + (const RS_Vector& v) const;
     RS_Vector operator + (double d) const;
     RS_Vector operator - (const RS_Vector& v) const;

@@ -53,6 +53,12 @@ struct RS_SplineData {
 
     /** Spline type */
     SplineType type = SplineType::ClampedOpen;
+
+    /** Saved open type for round-trip */
+    SplineType savedOpenType = SplineType::ClampedOpen;
+
+    /** Saved open knots for round-trip */
+    std::vector<double> savedOpenKnots;
 };
 
 /**
@@ -287,6 +293,15 @@ public:
     /** Validate the spline data integrity */
     bool validate() const;
 
+    /** Inserts a knot at parameter u with given multiplicity. */
+    void insertKnot(double u, size_t multiplicity = 1);
+
+    /** Removes a knot at parameter u up to the given multiplicity, if possible within tolerance. */
+    size_t removeKnot(double u, size_t multiplicity = 1, double tol = RS_TOLERANCE);
+
+    /** Split spline at parameter t into two sub-splines. */
+    std::pair<RS_Spline*, RS_Spline*> splitAt(double t) const;
+
     friend class RS_FilterDXFRW;
 
 private:
@@ -319,6 +334,10 @@ private:
     double bisectDerivativeZero(double a, double b, double fa, bool isX) const;
 
     void resetBorders();
+
+    void tessellate(std::vector<RS_Vector>& points, double minParam, double maxParam, double tol);
+
+    void recursiveTessellate(std::vector<RS_Vector>& points, double a, double b, double tol, int depth = 0);
 };
 
 #endif
