@@ -1,7 +1,7 @@
 name: librecad
 version: '2.2.2-alpha'
 grade: stable
-base: core22
+base: core24
 confinement: strict
 license: GPL-2.0
 summary: "librecad: is a 2D open source CAD"
@@ -33,8 +33,8 @@ apps:
       QTCHOOSER_NO_GLOBAL_DIR: 1
       QT_SELECT: snappy-qt6
       HOME: $SNAP_USER_DATA
-      QTDIR: /snap/kde-qt6-core22-sdk/current/qt6
-      QT_PLUGIN_PATH: /snap/kde-qt6-core22-sdk/current/qt6/plugins
+      QTDIR: /snap/kde-qt6-core24-sdk/current/qt6
+      QT_PLUGIN_PATH: /snap/kde-qt6-core24-sdk/current/qt6/plugins
 
     extensions:
       - kde-neon-6
@@ -115,9 +115,6 @@ parts:
       #pwd
       cmake ../../..
       make -r -j$(nproc)
-      #/snap/kde-qt6-core22-sdk/33/usr/bin/qt6/qmake6 -r 'QMAKESPEC=/snap/kde-qt6-core22-sdk/current/usr/lib/x86_64-linux-gnu/qt6/mkspecs QMAKE_CFLAGS+=-isystem $CRAFT_STAGE/usr/include' 'QMAKE_CXXFLAGS+=-isystem $CRAFT_STAGE/usr/include' 'QMAKE_LFLAGS+=-L$CRAFT_STAGE/lib -L$CRAFT_STAGE/usr/lib -L$CRAFT_STAGE/usr/lib/x86_64-linux-gnu'
-      #/snap/kf6-core22/current/usr/bin/qt6/qmake -r 'QMAKE_CC=clang QMAKE_CXX=clang++ QMAKE_CFLAGS+=-isystem $CRAFT_STAGE/usr/include' 'QMAKE_CXXFLAGS+=-isystem $CRAFT_STAGE/usr/include' 'QMAKE_LFLAGS+=-L$CRAFT_STAGE/lib -L$CRAFT_STAGE/usr/lib -L$CRAFT_STAGE/usr/lib/x86_64-linux-gnu'
-      #make -r -j$(nproc)
 
     #stage-packages:
       #- libfreetype6
