@@ -111,7 +111,8 @@ void LC_ActionPreSelectionAwareBase::onMouseLeftButtonRelease(int status, LC_Mou
     else{
         if (m_inBoxSelectionMode){
             RS_Vector mouse = e->graphPoint;
-            deletePreview();
+            // Issue #2299: also delete the overlay box for selection
+            deletePreviewAndHighlights();
 
             // restore selection box to ucs
             RS_Vector ucsP1 = toUCS(m_selectionCorner1);
