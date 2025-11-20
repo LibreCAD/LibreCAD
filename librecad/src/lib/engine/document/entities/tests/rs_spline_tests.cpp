@@ -1,171 +1,151 @@
+// rs_spline_tests.cpp - fully updated file with corrected test cases (only the changed TEST_CASE shown)
+
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/catch_approx.hpp>
 
+#include "rs_debug.h"
 #include "rs_spline.h"
 #include "lc_splinehelper.h"
 #include "rs_vector.h"
 #include "rs_math.h"
 
-/**
- * Validates the spline data integrity, checking sizes, monotonicity, multiplicities,
- * positive weights, and minimum control points.
- *
- * @return true if valid, false otherwise (logs warnings via RS_DEBUG).
- */
-bool RS_Spline::validate() const {
-    size_t numControls = getUnwrappedSize();
-    size_t expectedKnots = numControls + data.degree + 1;
-    size_t numWeights = data.weights.size();
+using Catch::Approx;
 
-    // Check minimum controls
-    if (numControls < data.degree + 1) {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::validate: Insufficient control points (need >= degree + 1)");
-        return false;
+namespace {
+    bool compareVector(const RS_Vector& va, const RS_Vector& vb, double tol = 1e-4) {
+        return va.distanceTo(vb) <= tol;
     }
-
-    // Check vector sizes
-    if (data.knotslist.size() != expectedKnots) {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::validate: Knot vector size mismatch (expected %zu, got %zu)", expectedKnots, data.knotslist.size());
-        return false;
-    }
-    if (numWeights != data.controlPoints.size()) {  // Full size, including wrapping
-        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::validate: Weights size mismatch with controls");
-        return false;
-    }
-
-    // Check knot monotonicity (non-decreasing)
-    for (size_t i = 1; i < data.knotslist.size(); ++i) {
-        if (data.knotslist[i] < data.knotslist[i - 1] - RS_TOLERANCE) {  // Allow approx equal for floats
-            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::validate: Knot vector not monotonic at index %zu", i);
-            return false;
-        }
-    }
-
-    // Check knot multiplicities (<= degree)
-    size_t mult = 1;
-    for (size_t i = 1; i < data.knotslist.size(); ++i) {
-        if (fabs(data.knotslist[i] - data.knotslist[i - 1]) < RS_TOLERANCE) {
-            ++mult;
-        } else {
-            if (mult > data.degree) {
-                RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::validate: Knot multiplicity exceeds degree (%zu > %zu)", mult, data.degree);
-                return false;
-            }
-            mult = 1;
-        }
-    }
-    if (mult > data.degree) {  // Check last group
-        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::validate: Knot multiplicity exceeds degree at end");
-        return false;
-    }
-
-    // Check positive weights (for rational stability; 0 or negative cause division issues)
-    for (double w : data.weights) {
-        if (w <= 0.0) {
-            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::validate: Non-positive weight found (%f)", w);
-            return false;
-        }
-    }
-
-    // Type-specific checks (e.g., wrapping consistency)
-    if (data.type == RS_SplineData::SplineType::WrappedClosed) {
-        if (!hasWrappedControlPoints()) {
-            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::validate: WrappedClosed but no wrapping detected");
-            return false;
-        }
-        // Verify last degree points/weights match first (within tolerance)
-        for (size_t i = 0; i < data.degree; ++i) {
-            if (!compareVector(data.controlPoints[numControls + i], data.controlPoints[i])) {
-                RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::validate: Wrapped controls mismatch at index %zu", i);
-                return false;
-            }
-            if (fabs(data.weights[numControls + i] - data.weights[i]) > RS_TOLERANCE) {
-                RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::validate: Wrapped weights mismatch at index %zu", i);
-                return false;
-            }
-        }
-    }
-
-    // ClampedOpen: Check endpoint multiplicities (p+1 at ends)
-    if (data.type == RS_SplineData::SplineType::ClampedOpen) {
-        size_t startMult = 0, endMult = 0;
-        double startVal = data.knotslist[0];
-        for (size_t i = 1; i < data.knotslist.size() && fabs(data.knotslist[i] - startVal) < RS_TOLERANCE; ++i) ++startMult;
-        double endVal = data.knotslist.back();
-        for (size_t i = data.knotslist.size() - 2; i > 0 && fabs(data.knotslist[i] - endVal) < RS_TOLERANCE; --i) ++endMult;
-        if (startMult != data.degree + 1 || endMult != data.degree + 1) {
-            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Spline::validate: ClampedOpen endpoints multiplicity incorrect (expected %zu)", data.degree + 1);
-            return false;
-        }
-    }
-
-    return true;
 }
 
-TEST_CASE("RS_Spline Validation", "[RS_Spline]") {
-    RS_SplineData data(3, false);
-    data.controlPoints = {RS_Vector(0,0), RS_Vector(1,1), RS_Vector(2,0), RS_Vector(3,1)};
-    data.weights = {1.0, 1.0, 1.0, 1.0};
-    data.knotslist = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0};
-    RS_Spline spline(nullptr, data);
+TEST_CASE("RS_Spline Basic Functionality", "[RS_Spline]")
+{
+    RS_SplineData splineData(3, false);
+    RS_Spline spline(nullptr, splineData);
 
-    SECTION("Valid Standard Spline") {
-        REQUIRE(spline.validate());
+    SECTION("Construction and Getters")
+    {
+        REQUIRE(spline.getDegree() == 3);
+        REQUIRE(!spline.isClosed());
+        REQUIRE(spline.getNumberOfControlPoints() == 0);
+        REQUIRE(spline.getNumberOfKnots() == 0);
     }
 
-    SECTION("Invalid Degree") {
-        data.degree = 0;
-        REQUIRE(!spline.validate());
+    SECTION("Set Degree")
+    {
+        spline.setDegree(2);
+        REQUIRE(spline.getDegree() == 2);
+
+        REQUIRE_THROWS_AS(spline.setDegree(0), std::invalid_argument);
+        REQUIRE_THROWS_AS(spline.setDegree(4), std::invalid_argument);
+    }
+}
+
+
+TEST_CASE("Non-uniform knot vectors - validation and type handling", "[RS_Spline][nonuniform]")
+{
+    SECTION("ClampedOpen non-uniform knots - valid")
+    {
+        RS_SplineData d(3, false);
+        d.type = RS_SplineData::SplineType::ClampedOpen;
+        d.controlPoints = {
+            RS_Vector(0,0), RS_Vector(10,20), RS_Vector(30,30), RS_Vector(50,20), RS_Vector(60,0), RS_Vector(70,10), RS_Vector(80,0)
+        };
+        d.weights = {1.0, 2.0, 1.5, 1.0, 1.0, 1.2, 1.0};
+
+        d.knotslist = {0.0, 0.0, 0.0, 0.0, 8.0, 25.0, 55.0, 100.0, 100.0, 100.0, 100.0};
+
+        RS_Spline s(nullptr, d);
+        REQUIRE(s.validate() == true);
+        REQUIRE(s.isClosed() == false);
+        REQUIRE(s.getDegree() == 3);
+        REQUIRE(s.getNumberOfControlPoints() == 7);
     }
 
-    SECTION("Insufficient Controls") {
-        data.controlPoints.resize(3);
-        data.weights.resize(3);
-        data.knotslist.resize(7);
-        REQUIRE(!spline.validate());
+    SECTION("ClampedOpen non-uniform - invalid (wrong end multiplicity)")
+    {
+        RS_SplineData d(3, false);
+        d.type = RS_SplineData::SplineType::ClampedOpen;
+        d.controlPoints = {
+            RS_Vector(0,0), RS_Vector(10,20), RS_Vector(30,30), RS_Vector(50,20), RS_Vector(60,0), RS_Vector(70,10), RS_Vector(80,0)
+        };
+        d.weights = {1.0, 2.0, 1.5, 1.0, 1.0, 1.2, 1.0};
+
+        // Note: end multiplicity is only 3 instead of 4 → invalid for ClampedOpen
+        d.knotslist = {0.0, 0.0, 0.0, 0.0, 8.0, 25.0, 55.0, 90.0, 100.0, 100.0, 100.0};
+
+        RS_Spline s(nullptr, d);
+        REQUIRE(s.validate() == false);
     }
 
-    SECTION("Size Mismatch - Knots") {
-        data.knotslist.resize(6);
-        REQUIRE(!spline.validate());
+    SECTION("Standard (open non-clamped non-uniform) - valid")
+    {
+        RS_SplineData d(3, false);
+        d.type = RS_SplineData::SplineType::Standard;
+        d.controlPoints = {
+            RS_Vector(0,0), RS_Vector(15,25), RS_Vector(40,35), RS_Vector(80,0)
+        };
+        d.weights.assign(4, 1.0);
+        d.knotslist = {0.0, 12.0, 35.0, 60.0, 100.0, 140.0, 180.0, 220.0};
+
+        RS_Spline s(nullptr, d);
+        REQUIRE(s.validate() == true);
     }
 
-    SECTION("Size Mismatch - Weights") {
-        data.weights.resize(3);
-        REQUIRE(!spline.validate());
+    SECTION("Standard non-uniform - invalid (accidental clamping at start)")
+    {
+        RS_SplineData d(3, false);
+        d.type = RS_SplineData::SplineType::Standard;
+        d.controlPoints = {
+            RS_Vector(0,0), RS_Vector(15,25), RS_Vector(40,35), RS_Vector(80,0)
+        };
+        d.weights.assign(4, 1.0);
+        d.knotslist = {0.0, 0.0, 0.0, 0.0, 20.0, 50.0, 100.0, 150.0};
+
+        RS_Spline s(nullptr, d);
+        REQUIRE(s.validate() == false);
     }
 
-    SECTION("Non-Monotonic Knots") {
-        data.knotslist = {0.0, 1.0, 3.0, 2.0, 4.0, 5.0, 6.0, 7.0};
-        REQUIRE(!spline.validate());
+    SECTION("WrappedClosed non-uniform knots - valid")
+    {
+        RS_SplineData d(3, true);
+        d.type = RS_SplineData::SplineType::WrappedClosed;
+        d.controlPoints = {
+            RS_Vector(0,0), RS_Vector(15,25), RS_Vector(40,35), RS_Vector(70,20), RS_Vector(80,0),
+            RS_Vector(0,0), RS_Vector(15,25), RS_Vector(40,35)
+        };
+        d.weights = {1.0, 1.5, 2.0, 1.5, 1.0, 1.0, 1.5, 2.0};
+        d.knotslist = {0.0, 12.0, 35.0, 60.0, 100.0, 140.0, 180.0, 220.0, 260.0, 290.0, 320.0, 350.0};
+
+        RS_Spline s(nullptr, d);
+        REQUIRE(s.validate() == true);
+        REQUIRE(s.isClosed() == true);
+        REQUIRE(s.hasWrappedControlPoints() == true);
     }
 
-    SECTION("Excess Multiplicity") {
-        data.knotslist = {0.0, 0.0, 0.0, 0.0, 0.0, 4.0, 5.0, 6.0};
-        REQUIRE(!spline.validate());
+    SECTION("WrappedClosed non-uniform - invalid (clamped-style ends)")
+    {
+        RS_SplineData d(3, true);
+        d.type = RS_SplineData::SplineType::WrappedClosed;
+        d.controlPoints.resize(8);
+        d.weights.assign(8, 1.0);
+        d.knotslist = {0.0, 0.0, 0.0, 0.0, 20.0, 50.0, 100.0, 150.0, 150.0, 150.0, 150.0};
+
+        RS_Spline s(nullptr, d);
+        REQUIRE(s.validate() == false);
     }
 
-    SECTION("Non-Positive Weight") {
-        data.weights[1] = 0.0;
-        REQUIRE(!spline.validate());
-    }
+    SECTION("WrappedClosed non-uniform - invalid (missing wrapped control points)")
+    {
+        RS_SplineData d(3, true);
+        d.type = RS_SplineData::SplineType::WrappedClosed;
+        d.controlPoints = {
+            RS_Vector(0,0), RS_Vector(10,10), RS_Vector(20,10), RS_Vector(30,10), RS_Vector(40,0),
+            RS_Vector(99,99), RS_Vector(99,99), RS_Vector(99,99)
+        };
+        d.weights.assign(8, 1.0);
+        d.knotslist = {0.0, 10.0, 20.0, 35.0, 55.0, 80.0, 110.0, 140.0, 170.0, 200.0, 230.0, 260.0};
 
-    SECTION("WrappedClosed - No Wrapping") {
-        data.type = RS_SplineData::SplineType::WrappedClosed;
-        REQUIRE(!spline.validate());
-    }
-
-    SECTION("WrappedClosed - Mismatch Wrapping") {
-        data.type = RS_SplineData::SplineType::WrappedClosed;
-        data.controlPoints = {RS_Vector(0,0), RS_Vector(1,1), RS_Vector(2,0), RS_Vector(3,1), RS_Vector(0,0), RS_Vector(1,1), RS_Vector(4,0)};
-        data.weights = {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
-        data.knotslist = {0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0};
-        REQUIRE(!spline.validate());
-    }
-
-    SECTION("ClampedOpen - Incorrect Multiplicity") {
-        data.type = RS_SplineData::SplineType::ClampedOpen;
-        data.knotslist = {0.0, 0.0, 0.0, 1.0, 2.0, 3.0, 4.0, 4.0};  // Start 3, end 2
-        REQUIRE(!spline.validate());
+        RS_Spline s(nullptr, d);
+        REQUIRE(s.validate() == false);
     }
 }

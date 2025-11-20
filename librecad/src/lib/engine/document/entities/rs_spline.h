@@ -287,6 +287,9 @@ public:
     /** Robust NURBS evaluation using de Boor */
     static RS_Vector evaluateNURBS(const RS_SplineData& data, double t);
 
+    /** Validate the spline data integrity */
+    bool validate() const;
+
     friend class RS_FilterDXFRW;
 
 private:
@@ -309,8 +312,6 @@ private:
                                         int degree,
                                         size_t numControls) const;
 
-    /** Validate the spline data integrity */
-    bool validate() const;
 
     /** Approximate derivative at t */
     double getDerivative(double t, bool isX) const;

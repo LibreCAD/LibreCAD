@@ -237,10 +237,10 @@ void RS_Spline::update() {
 
 /** Stroke points */
 void RS_Spline::fillStrokePoints(int segments, std::vector<RS_Vector> &points) {
-  size_t n = data.controlPoints.size();
   const auto &kv = data.knotslist;
   double tmin = kv[data.degree];
-  double tmax = kv[n - data.degree - 1];
+  // Fixed: correct tmax that works for both open and wrapped-closed splines
+  double tmax = data.knotslist[data.knotslist.size() - data.degree - 1];
   double step = (tmax - tmin) / segments;
   for (int i = 0; i <= segments; ++i)
     points.push_back(getPointAt(tmin + i * step));
@@ -745,6 +745,10 @@ std::vector<double> RS_Spline::getBSplineBasis(double t,
 }
 
 /** Validate */
+// rs_spline.cpp - only the changed part of validate() function (ClampedOpen block)
+
+// rs_spline.cpp - only the changed validate() function (full function shown for clarity)
+
 bool RS_Spline::validate() const
 {
   const size_t degree = data.degree;
@@ -772,17 +776,18 @@ bool RS_Spline::validate() const
     if (data.knotslist[i] < data.knotslist[i - 1] - RS_TOLERANCE)
       return false;
 
-         // Maximum multiplicity anywhere ≤ degree+1 (required for ClampedOpen at ends)
-  size_t mult = 1;
-  for (size_t i = 1; i < data.knotslist.size(); ++i) {
-    if (fabs(data.knotslist[i] - data.knotslist[i - 1]) < RS_TOLERANCE) {
-      ++mult;
-      if (mult > degree + 1) return false;
-    } else {
-      mult = 1;
+         // Maximum multiplicity anywhere ≤ degree+1
+  {
+    size_t mult = 1;
+    for (size_t i = 1; i < data.knotslist.size(); ++i) {
+      if (fabs(data.knotslist[i] - data.knotslist[i - 1]) < RS_TOLERANCE) {
+        ++mult;
+        if (mult > degree + 1) return false;
+      } else {
+        mult = 1;
+      }
     }
   }
-  if (mult > degree + 1) return false;
 
          // ---------------------- Type-specific validation ----------------------
 
@@ -791,23 +796,27 @@ bool RS_Spline::validate() const
     const double k_start = data.knotslist.front();
     const double k_end   = data.knotslist.back();
 
-    size_t mult_start = 1;
-    for (size_t i = 1; i < data.knotslist.size(); ++i) {
-      if (fabs(data.knotslist[i] - k_start) < RS_TOLERANCE) ++mult_start;
-      else break;
+    size_t mult_start = 0;
+    for (size_t j = 0; j < data.knotslist.size(); ++j) {
+      if (fabs(data.knotslist[j] - k_start) < RS_TOLERANCE)
+        ++mult_start;
+      else
+        break;
     }
 
-    size_t mult_end = 1;
-    for (size_t i = data.knotslist.size() - 2; i != size_t(-1); --i) {  // safe reverse
-      if (fabs(data.knotslist[i] - k_end) < RS_TOLERANCE) ++mult_end;
-      else break;
+    size_t mult_end = 0;
+    for (int j = static_cast<int>(data.knotslist.size()) - 1; j >= 0; --j) {
+      if (fabs(data.knotslist[j] - k_end) < RS_TOLERANCE)
+        ++mult_end;
+      else
+        break;
     }
 
     if (mult_start != degree + 1 || mult_end != degree + 1)
       return false;
   }
   else if (data.type == RS_SplineData::SplineType::Standard) {
-    // Standard (non-clamped uniform/open) must NOT have repeated knots at the ends
+    // Standard (non-clamped) must NOT have repeated knots at the ends
     const double k_start = data.knotslist.front();
     const double k_end   = data.knotslist.back();
 
