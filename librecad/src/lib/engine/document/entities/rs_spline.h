@@ -231,7 +231,7 @@ public:
     void setKnot(size_t index, double k);
 
     /** Insert control point, clear knots if present */
-    void insertControlPoint(size_t index, const RS_Vector& v, double w = 1.);
+    void insertControlPoint(size_t index, const RS_Vector& v, double w = 1., bool preserveShape = false);
 
     /** Remove control point, clear knots if present */
     void removeControlPoint(size_t index);
@@ -287,21 +287,6 @@ public:
     /** Robust NURBS evaluation using de Boor */
     static RS_Vector evaluateNURBS(const RS_SplineData& data, double t);
 
-    /** Get tangent vector at t */
-    RS_Vector getTangentAt(double t) const;
-
-    /** Validate the spline data integrity */
-    bool validate() const;
-
-    /** Inserts a knot at parameter u with given multiplicity. */
-    void insertKnot(double u, size_t multiplicity = 1);
-
-    /** Removes a knot at parameter u up to the given multiplicity, if possible within tolerance. */
-    size_t removeKnot(double u, size_t multiplicity = 1, double tol = RS_TOLERANCE);
-
-    /** Split spline at parameter t into two sub-splines. */
-    std::pair<RS_Spline*, RS_Spline*> splitAt(double t) const;
-
     friend class RS_FilterDXFRW;
 
 private:
@@ -318,14 +303,14 @@ private:
     /** Compute basis functions non-recursively */
     static std::vector<double> basisFunctions(int i, double u, int p, const std::vector<double>& U);
 
-    /** Compute basis derivatives (from NURBS book A2.3) */
-    static void dersBasisFunctions(int span, double u, int p, int derOrder, const std::vector<double>& U, std::vector<std::vector<double>>& ders);
-
     /** Get non-rational B-spline basis functions */
     std::vector<double> getBSplineBasis(double t,
                                         const std::vector<double>& knots,
                                         int degree,
                                         size_t numControls) const;
+
+    /** Validate the spline data integrity */
+    bool validate() const;
 
     /** Approximate derivative at t */
     double getDerivative(double t, bool isX) const;
@@ -334,10 +319,9 @@ private:
     double bisectDerivativeZero(double a, double b, double fa, bool isX) const;
 
     void resetBorders();
-
-    void tessellate(std::vector<RS_Vector>& points, double minParam, double maxParam, double tol);
-
-    void recursiveTessellate(std::vector<RS_Vector>& points, double a, double b, double tol, int depth = 0);
+    void normalizeKnots();
+    double estimateParamAtIndex(size_t index) const;
+    void insertKnot(double u);
 };
 
 #endif
