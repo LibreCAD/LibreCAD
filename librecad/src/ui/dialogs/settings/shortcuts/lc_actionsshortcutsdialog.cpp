@@ -24,6 +24,7 @@
 
 #include <QMessageBox>
 #include <QScrollBar>
+#include <QShortcut>
 
 #include "lc_actiongroupmanager.h"
 #include "lc_filenameselectionservice.h"
@@ -60,6 +61,13 @@ LC_ActionsShortcutsDialog::LC_ActionsShortcutsDialog(
     connect(ui->pbImport, &QPushButton::clicked, this, &LC_ActionsShortcutsDialog::onImportClicked);
     connect(ui->pbExport, &QPushButton::clicked, this, &LC_ActionsShortcutsDialog::onExportClicked);
 
+    // Enter key starts recording (fixes most of #2333)
+    connect(ui->tvMappingsTree, &QTreeView::activated,
+            this, &LC_ActionsShortcutsDialog::onTreeDoubleClicked);
+
+    // Ctrl+F jumps to filter box (completes #2333)
+    new QShortcut(QKeySequence::Find, this, [this]() { ui->leFilter->setFocus(); });
+
 
     ui->lblMessage->setTextFormat(Qt::RichText);
     QPalette palette = ui->lblMessage->palette();
@@ -86,7 +94,8 @@ void LC_ActionsShortcutsDialog::initTreeView(){
     treeView->setAlternatingRowColors(false);
     treeView->setSelectionMode(QAbstractItemView::NoSelection);
     treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    treeView->setFocusPolicy(Qt::NoFocus);
+    // Issue #2333: restores arrow keys, PageUp/Down, Home/End
+    treeView->setFocusPolicy(Qt::StrongFocus);
     treeView->setMinimumHeight(180);
 
     treeView->setDragDropMode(QAbstractItemView::NoDragDrop);
@@ -152,7 +161,8 @@ bool LC_ActionsShortcutsDialog::obtainFileName(QString& fileName, bool forRead) 
 
 void LC_ActionsShortcutsDialog::onImportClicked() {
     QString fileName;
-    if (!obtainFileName(fileName, true)) {
+    // Issue #2333: proper saving: false=Save Dialog
+    if (!obtainFileName(fileName, false)) {
         return;
     }
     QMap<QString, QKeySequence> shortcutsMap;
