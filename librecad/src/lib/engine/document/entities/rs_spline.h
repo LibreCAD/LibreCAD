@@ -30,7 +30,7 @@ struct RS_SplineData {
         return type == SplineType::WrappedClosed;
     }
     void setClosed(bool closed) {
-        type = SplineType::WrappedClosed;
+        type = closed ? SplineType::WrappedClosed : SplineType::ClampedOpen;
     }
 
     /** Stream output operator */
