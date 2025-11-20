@@ -3807,7 +3807,7 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
     }
 
     // version 12 do not support Spline write as polyline
-    if (version==1009) {
+    if (m_version==1009) {
         DRW_Polyline pol;
         for(RS_Entity* e: lc::LC_ContainerTraverser{*s, RS2::ResolveNone}.entities()) {
             pol.addVertex( DRW_Vertex(e->getStartpoint().x,
@@ -3819,7 +3819,7 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
             pol.addVertex( DRW_Vertex(s->getEndpoint().x,s->getEndpoint().y, 0.0, 0.0));
         }
         getEntityAttributes(&pol, s);
-        dxfW->writePolyline(&pol);
+        m_dxfW->writePolyline(&pol);
         return;
     }
 
@@ -3843,7 +3843,7 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
     sp.nknots = sp.knotslist.size();
 
     getEntityAttributes(&sp, s);
-    dxfW->writeSpline(&sp);
+    m_dxfW->writeSpline(&sp);
 }
 
 /**
