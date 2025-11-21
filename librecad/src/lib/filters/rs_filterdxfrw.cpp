@@ -885,7 +885,7 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
         // Currently all open splines are clamped at start/end points
         // Closed/periodic are initially read as open, and control point wrapping
         // will be added with extended knots
-        d.type = isClosed ? RS_SplineData::SplineType::Standard : RS_SplineData::SplineType::Standard;
+        d.type = isClosed ? RS_SplineData::SplineType::Standard : RS_SplineData::SplineType::ClampedOpen;
         spline = new RS_Spline(m_currentContainer, d);
         setEntityAttributes(spline, data);
 

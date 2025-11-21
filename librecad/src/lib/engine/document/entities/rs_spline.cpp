@@ -157,15 +157,19 @@ void RS_Spline::setClosed(bool c) {
     return;
   }
   if (c) {
-    data.savedOpenType = data.type;
-    (data.type == RS_SplineData::SplineType::ClampedOpen
-         ? LC_SplineHelper::toWrappedClosedFromClampedOpen
-         : LC_SplineHelper::toWrappedClosedFromStandard)(data);
+    if (data.type == RS_SplineData::SplineType::ClampedOpen)
+      LC_SplineHelper::toWrappedClosedFromClampedOpen(data);
+    else if (data.type == RS_SplineData::SplineType::Standard)
+          LC_SplineHelper::toWrappedClosedFromStandard(data);
+    else
+      assert(false && "unknown spline type for closing");
   } else {
-    LC_SplineHelper::toStandardFromWrappedClosed(data);
-    if (data.savedOpenType == RS_SplineData::SplineType::ClampedOpen)
-      LC_SplineHelper::toClampedOpenFromStandard(data);
-    data.savedOpenType = RS_SplineData::SplineType::ClampedOpen;
+    if (data.type == RS_SplineData::SplineType::WrappedClosed)
+      LC_SplineHelper::toClampedOpenFromWrappedClosed(data);
+    else if (data.type == RS_SplineData::SplineType::Standard)
+          LC_SplineHelper::toClampedOpenFromStandard(data);
+    else
+      assert(false && "unknown spline type for closing");
   }
   update();
 }
