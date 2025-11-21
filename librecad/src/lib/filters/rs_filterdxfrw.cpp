@@ -871,6 +871,8 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
     }
 
     // ordinary spline
+    // bit coded: 1: closed; 2: periodic; 4: rational; 8: planar; 16:linear
+    const bool isClosed = (data->flags & 0x2);
     RS_Spline* spline = nullptr;
     if (data->degree >= 1 && data->degree <= 3) {
         RS_SplineData d(data->degree, ((data->flags&0x1)==0x1));
@@ -880,6 +882,10 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
                 d.knotslist.push_back( RS_Math::round(k, tolknot));
             }
         }
+        // Currently all open splines are clamped at start/end points
+        // Closed/periodic are initially read as open, and control point wrapping
+        // will be added with extended knots
+        d.type = isClosed ? RS_SplineData::SplineType::Standard : RS_SplineData::SplineType::ClampedOpen;
         spline = new RS_Spline(m_currentContainer, d);
         setEntityAttributes(spline, data);
 
@@ -904,10 +910,11 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
         for (auto const& vert: data->fitlist)
             spline->addControlPointRaw({vert->x, vert->y});
     }
-    // ensure that the spline is really closed
-    // if (spline->getData().closed and !spline->hasWrappedControlPoints()) {
-    //     spline->getData().closed = 0;
-    // }
+
+    if (isClosed) {
+        // closed: add control point wrapping with extended knots
+        spline->setClosed(true);
+    }
 
     spline->update();
 }
@@ -3827,7 +3834,7 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
 
     // dxf spline group code=70
     // bit coded: 1: closed; 2: periodic; 4: rational; 8: planar; 16:linear
-    sp.flags = (s->isClosed()) ? 0x1011 : 0x1000;
+    sp.flags = (s->isClosed()) ? 0b1011 : 0b1000;
 
     // write spline control points:
     for (const RS_Vector& v: s->getUnwrappedControlPoints()) {
