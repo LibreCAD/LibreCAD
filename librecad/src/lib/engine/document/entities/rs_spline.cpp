@@ -149,25 +149,26 @@ bool RS_Spline::isClosed() const {
 
 /** Set closed */
 void RS_Spline::setClosed(bool c) {
-  if (c == (data.type == RS_SplineData::SplineType::WrappedClosed))
+  if (c == isClosed())
     return;
-  if (getUnwrappedSize() < data.degree + 1) {
+  if (getUnwrappedSize() <= data.degree) {
     RS_DEBUG->print(RS_Debug::D_WARNING,
                     "RS_Spline::setClosed: insufficient points");
+    data.type = c ? RS_SplineData::SplineType::WrappedClosed : RS_SplineData::SplineType::ClampedOpen;
     return;
   }
   if (c) {
     if (data.type == RS_SplineData::SplineType::ClampedOpen)
       LC_SplineHelper::toWrappedClosedFromClampedOpen(data);
     else if (data.type == RS_SplineData::SplineType::Standard)
-          LC_SplineHelper::toWrappedClosedFromStandard(data);
+      LC_SplineHelper::toWrappedClosedFromStandard(data);
     else
       assert(false && "unknown spline type for closing");
   } else {
     if (data.type == RS_SplineData::SplineType::WrappedClosed)
       LC_SplineHelper::toClampedOpenFromWrappedClosed(data);
     else if (data.type == RS_SplineData::SplineType::Standard)
-          LC_SplineHelper::toClampedOpenFromStandard(data);
+      LC_SplineHelper::toClampedOpenFromStandard(data);
     else
       assert(false && "unknown spline type for closing");
   }
@@ -182,20 +183,20 @@ void RS_Spline::changeType(RS_SplineData::SplineType newType) {
   if (data.controlPoints.size() < data.degree + 1) {
     RS_DEBUG->print(RS_Debug::D_WARNING,
                     "RS_Spline::changeType: insufficient points");
-      data.type = newType;
+    data.type = newType;
     return;
   }
 
   if (newType == RS_SplineData::SplineType::Standard) {
-      if (oldType == RS_SplineData::SplineType::ClampedOpen)
-        LC_SplineHelper::toStandardFromClampedOpen(data);
-      else if (oldType == RS_SplineData::SplineType::WrappedClosed)
-        LC_SplineHelper::toStandardFromWrappedClosed(data);
+    if (oldType == RS_SplineData::SplineType::ClampedOpen)
+      LC_SplineHelper::toStandardFromClampedOpen(data);
+    else if (oldType == RS_SplineData::SplineType::WrappedClosed)
+      LC_SplineHelper::toStandardFromWrappedClosed(data);
   } else if (newType == RS_SplineData::SplineType::ClampedOpen) {
-      if (oldType == RS_SplineData::SplineType::Standard)
-        LC_SplineHelper::toClampedOpenFromStandard(data);
-      else if (oldType == RS_SplineData::SplineType::WrappedClosed)
-        LC_SplineHelper::toClampedOpenFromWrappedClosed(data);
+    if (oldType == RS_SplineData::SplineType::Standard)
+      LC_SplineHelper::toClampedOpenFromStandard(data);
+    else if (oldType == RS_SplineData::SplineType::WrappedClosed)
+      LC_SplineHelper::toClampedOpenFromWrappedClosed(data);
   } else if (newType == RS_SplineData::SplineType::WrappedClosed) {
     if (oldType == RS_SplineData::SplineType::Standard)
       LC_SplineHelper::toWrappedClosedFromStandard(data);
@@ -203,7 +204,7 @@ void RS_Spline::changeType(RS_SplineData::SplineType newType) {
       LC_SplineHelper::toWrappedClosedFromClampedOpen(data);
   }
 
-  // even if LC_SplineHelper fails to change the type, still change the enum
+         // even if LC_SplineHelper fails to change the type, still change the enum
   data.type = newType;
 }
 
