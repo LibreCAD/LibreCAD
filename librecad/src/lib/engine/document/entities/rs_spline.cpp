@@ -227,7 +227,7 @@ void RS_Spline::changeType(RS_SplineData::SplineType newType) {
     return;
   RS_SplineData::SplineType oldType = data.type;
   if (data.controlPoints.size() < data.degree + 1) {
-    RS_DEBUG->print(RS_Debug::D_WARNING,
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING,
                     "RS_Spline::changeType: insufficient points");
     data.type = newType;
     return;
