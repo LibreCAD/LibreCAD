@@ -108,12 +108,19 @@ std::vector<double> RS_Spline::getUnwrappedKnotVector() const {
 }
 
 /** Wrapping helpers */
-void RS_Spline::removeWrapping() { LC_SplineHelper::removeWrapping(data); }
-void RS_Spline::addWrapping() { LC_SplineHelper::addWrapping(data); }
+void RS_Spline::removeWrapping() {
+  LC_SplineHelper::removeWrapping(data);
+}
+
+void RS_Spline::addWrapping() {
+  LC_SplineHelper::addWrapping(data);
+}
+
 void RS_Spline::updateControlAndWeightWrapping() {
   LC_SplineHelper::updateControlAndWeightWrapping(data, isClosed(),
                                                   getUnwrappedSize());
 }
+
 void RS_Spline::updateKnotWrapping() {
   LC_SplineHelper::updateKnotWrapping(data, isClosed(), getUnwrappedSize());
 }
@@ -540,18 +547,39 @@ RS_Vector RS_Spline::getPointAt(double t) const {
 /** Derivative zeros */
 std::vector<double> RS_Spline::findDerivativeZeros(bool isX) const {
   std::vector<double> zeros;
-  double tmin = data.knotslist[data.degree];
-  double tmax = data.knotslist[data.controlPoints.size() - data.degree - 1];
-  int steps = 100;
-  double step = (tmax - tmin) / steps;
-  double prev = getDerivative(tmin, isX);
-  for (int i = 1; i <= steps; ++i) {
-    double t = tmin + i * step;
-    double curr = getDerivative(t, isX);
-    if (prev * curr < 0.0 || std::abs(curr) < RS_TOLERANCE)
-      zeros.push_back(bisectDerivativeZero(t - step, t, prev, isX));
-    prev = curr;
+  const auto& U = data.knotslist;
+  size_t p = data.degree;
+  size_t n = data.controlPoints.size() - 1;
+  if (n < p)
+    return zeros;
+
+  auto d = [this, isX](double t){ return getDerivative(t, isX); };
+
+  auto add_if = [&](double a, double b, double fa, double fb){
+    if ((fa * fb <= 0.0 || std::abs(fa) < 1e-9 || std::abs(fb) < 1e-9) && b - a > 1e-12)
+      zeros.push_back(bisectDerivativeZero(a, b, fa, isX));
+  };
+
+  double f0 = d(U[p]);
+  for (size_t i = p; i <= n; ++i) {
+    double t1 = U[i + 1];
+    double fm = d((U[i] + t1) * 0.5);
+    double f1 = d(t1);
+
+    add_if(U[i],   t1, f0, fm);   // left half (f0 reused from previous)
+    add_if(t1, t1, fm, f1);      // right half
+
+    f0 = f1;                       // chain for next span
   }
+
+         // endpoints if derivative ≈ 0
+  if (std::abs(d(U[p]))   < 1e-9) zeros.push_back(U[p]);
+  if (std::abs(d(U[n+1])) < 1e-9) zeros.push_back(U[n+1]);
+
+  std::sort(zeros.begin(), zeros.end());
+  zeros.erase(std::unique(zeros.begin(), zeros.end(), [](double a, double b){
+                return std::abs(a - b) < 1e-8; }), zeros.end());
+
   return zeros;
 }
 
@@ -762,21 +790,26 @@ bool RS_Spline::validate() const
 
          // Basic checks
   const size_t num_cp = data.controlPoints.size();           // total (wrapped if closed)
-  if (num_cp < degree + 1) return false;
+  if (num_cp < degree + 1)
+    return false;
 
   const bool closed = isClosed();                             // WrappedClosed
   const size_t extra_cp = closed ? degree : 0;
   const size_t unwrapped_cp = num_cp - extra_cp;
 
-  if (unwrapped_cp < degree + 1) return false;
+  if (unwrapped_cp < degree + 1)
+    return false;
 
   const size_t expected_knots = num_cp + degree + 1;          // works for open and wrapped closed
-  if (data.knotslist.size() != expected_knots) return false;
-  if (data.weights.size() != num_cp) return false;
+  if (data.knotslist.size() != expected_knots)
+    return false;
+  if (data.weights.size() != num_cp)
+    return false;
 
          // Weights must be positive
   for (double w : data.weights)
-    if (w <= 0.0) return false;
+    if (w <= 0.0)
+      return false;
 
          // Knots must be non-decreasing
   for (size_t i = 1; i < data.knotslist.size(); ++i)
@@ -789,7 +822,8 @@ bool RS_Spline::validate() const
     for (size_t i = 1; i < data.knotslist.size(); ++i) {
       if (std::abs(data.knotslist[i] - data.knotslist[i - 1]) < RS_TOLERANCE) {
         ++mult;
-        if (mult > degree + 1) return false;
+        if (mult > degree + 1)
+          return false;
       } else {
         mult = 1;
       }
@@ -827,8 +861,10 @@ bool RS_Spline::validate() const
     const double k_start = data.knotslist.front();
     const double k_end   = data.knotslist.back();
 
-    if (std::abs(data.knotslist[1] - k_start) < RS_TOLERANCE) return false;     // mult ≥ 2 at start
-    if (std::abs(data.knotslist[data.knotslist.size() - 2] - k_end) < RS_TOLERANCE) return false;
+    if (std::abs(data.knotslist[1] - k_start) < RS_TOLERANCE)
+      return false;     // mult ≥ 2 at start
+    if (std::abs(data.knotslist[data.knotslist.size() - 2] - k_end) < RS_TOLERANCE)
+      return false;
   }
   else if (data.type == RS_SplineData::SplineType::WrappedClosed) {
     // Must really be wrapped (control points + weights)
@@ -839,12 +875,15 @@ bool RS_Spline::validate() const
     const double k_start = data.knotslist.front();
     const double k_end   = data.knotslist.back();
 
-    if (std::abs(data.knotslist[1] - k_start) < RS_TOLERANCE) return false;
-    if (std::abs(data.knotslist[data.knotslist.size() - 2] - k_end) < RS_TOLERANCE) return false;
+    if (std::abs(data.knotslist[1] - k_start) < RS_TOLERANCE)
+      return false;
+    if (std::abs(data.knotslist[data.knotslist.size() - 2] - k_end) < RS_TOLERANCE)
+      return false;
   }
 
   return true;
 }
+
 /** Derivative approximation */
 double RS_Spline::getDerivative(double t, bool isX) const {
   double d = 1e-8;
@@ -854,31 +893,31 @@ double RS_Spline::getDerivative(double t, bool isX) const {
 }
 
 /** Bisection for zero */
-double RS_Spline::bisectDerivativeZero(double a, double b, double fa,
-                                       bool isX) const {
-  double low  = a;
-  double high = b;
-  double f_low  = fa;
+/** Robust bracketed root finding with bisection + safe midpoint (no overflow, early exact-zero exit) */
+double RS_Spline::bisectDerivativeZero(double low, double high, double f_low, bool isX) const {
+  double f_high = getDerivative(high, isX);
 
-         // Use while loop instead of fixed iterations – stops as soon as tolerance is reached
-         // and avoids potential overflow with large parameter values by using low + (high-low)/2
-  while (high - low > RS_TOLERANCE) {
-    double mid = (high - low) * 0.5 + low;
+         // Ensure bracketing (caller guarantees sign change or near-zero, but be defensive)
+  if (f_low * f_high > 0.0 && std::abs(f_low) >= RS_TOLERANCE && std::abs(f_high) >= RS_TOLERANCE)
+    return low + (high - low) * 0.5; // no root → return midpoint
+
+  while (high - low > RS_TOLERANCE * (1.0 + std::abs(low + high))) { // relative + absolute tolerance
+    double mid = low + (high - low) * 0.5;
     double f_mid = getDerivative(mid, isX);
 
-    if (RS_Math::equal(f_mid, 0.0, RS_TOLERANCE)) {  // exact zero → early exit (rare but nice)
-      return mid;
-    }
+    if (f_mid == 0.0)
+      return mid;                                 // exact zero → instant win
 
-    if (f_low * f_mid <= 0.0) {  // sign change (or zero) in [low, mid]
-      high   = mid;
-    } else {                     // sign change in [mid, high]
-      low    = mid;
-      f_low  = f_mid;
+    if (std::signbit(f_low) != std::signbit(f_mid)) {
+      high = mid;
+    } else {
+      low = mid;
+      f_low = f_mid;
     }
   }
 
-  return (high - low) * 0.5 + low;  // or simply return low (or high) since interval is tiny
+         // Return the endpoint with smaller |f| (best approximation when finite-difference noise exists)
+  return std::abs(f_low) < std::abs(f_high) ? low : high;
 }
 
 void RS_Spline::resetBorders() {
