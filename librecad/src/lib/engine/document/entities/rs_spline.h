@@ -293,6 +293,18 @@ public:
     friend class RS_FilterDXFRW;
 
 private:
+    /**
+     * Container for position + exact analytical 1st + 2nd derivatives
+     * returned by evaluateWithDerivs().
+     */
+    struct SplineDerivs {
+      RS_Vector pos;   // curve point  C(t)
+      RS_Vector der1;  // first derivative  C'(t)
+      RS_Vector der2;  // second derivative C''(t)
+
+      SplineDerivs() : pos(0.0, 0.0), der1(0.0, 0.0), der2(0.0, 0.0) {}
+    };
+
     static std::vector<double> rbasis(int c, double t, int npts,
                                       const std::vector<double>& x,
                                       const std::vector<double>& h);
@@ -323,6 +335,13 @@ private:
     void normalizeKnots();
     double estimateParamAtIndex(size_t index) const;
     void insertKnot(double u);
+    RS_Spline::SplineDerivs evaluateWithDerivs(double t) const;
+    double getSecondDerivative(double t, bool isX) const;
+    double getCurvature(double t) const;
+    double getSignedCurvature(double t) const;
+
+
+
 };
 
 #endif
