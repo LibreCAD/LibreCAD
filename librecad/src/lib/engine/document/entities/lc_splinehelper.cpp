@@ -27,14 +27,11 @@
 #include <algorithm>
 #include <cassert>
 #include <cmath>
-#include <iostream>
 #include <numeric>
-#include <stdexcept>
-#include <string>
 
+#include "lc_splinehelper.h"
 #include "rs_debug.h"
 #include "rs_math.h"
-#include "lc_splinehelper.h"
 #include "rs_vector.h"
 
 /**
@@ -66,10 +63,6 @@ std::vector<double> LC_SplineHelper::convertClosedToOpenKnotVector(const std::ve
     }
     return getNormalizedKnotVector(openKnotVector, 0.0, {});
 }
-
-
-
-
 
 /**
  * Convert open knot vector to closed (periodic) form.
@@ -133,6 +126,7 @@ std::vector<double> LC_SplineHelper::convertOpenToClosedKnotVector(const std::ve
 
     return closedKnots;
 }
+
 /**
  * Normalize knot vector by shifting to newMinimum (no scaling).
  */

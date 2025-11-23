@@ -301,10 +301,10 @@ private:
     RS_SplineData data;
 
     /** Find knot span */
-    static int findSpan(int n, int p, double u, const std::vector<double>& U);
+    static size_t findSpan(size_t n, size_t p, double u, const std::vector<double>& U);
 
     /** Compute basis functions non-recursively */
-    static std::vector<double> basisFunctions(int i, double u, int p, const std::vector<double>& U);
+    static std::vector<double> basisFunctions(size_t i, double u, size_t p, const std::vector<double>& U);
 
     /** Get non-rational B-spline basis functions */
     std::vector<double> getBSplineBasis(double t,
