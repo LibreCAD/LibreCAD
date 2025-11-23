@@ -1495,13 +1495,6 @@ set(SHARED_SOURCES
     librecad/src/ui/view/lc_printpreviewview.h
     librecad/src/ui/view/qg_graphicview.cpp
     librecad/src/ui/view/qg_graphicview.h
-    librecad/res/arrows/arrows.qrc
-    librecad/res/controls/controls.qrc
-    librecad/res/dxf/dxf.qrc
-    librecad/res/gdt/gdt.qrc
-    librecad/res/icons/icons.qrc
-    librecad/res/images/images.qrc
-    licenses/licenses.qrc
 )
 
 set(MUPARSER_SOURCES
@@ -1563,6 +1556,13 @@ set(MAIN_SOURCES
     librecad/src/main/console_dxf2png.h
     librecad/src/ui/dialogs/main/qg_dlginitial.cpp
     librecad/src/ui/dialogs/main/qg_dlginitial.h
+    librecad/res/arrows/arrows.qrc
+    librecad/res/controls/controls.qrc
+    librecad/res/dxf/dxf.qrc
+    librecad/res/gdt/gdt.qrc
+    librecad/res/icons/icons.qrc
+    librecad/res/images/images.qrc
+    licenses/licenses.qrc
 )
 
 # Main executable
