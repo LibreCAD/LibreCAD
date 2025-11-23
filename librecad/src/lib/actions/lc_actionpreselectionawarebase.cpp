@@ -138,6 +138,7 @@ void LC_ActionPreSelectionAwareBase::onMouseLeftButtonRelease(int status, LC_Mou
                 s.selectWindow(m_catchForSelectionEntityTypes, wcsP1, wcsP2, performSelection, selectIntersecting);
             }
             updateSelectionWidget();
+            deletePreviewAndHighlights();
         }
         else{
             RS_Entity* entityToSelect = catchEntityByEvent(e, m_catchForSelectionEntityTypes);

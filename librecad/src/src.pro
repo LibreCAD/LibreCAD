@@ -344,6 +344,7 @@ HEADERS += \
     lib/engine/document/entities/lc_extentitydata.h \
     lib/engine/document/container/lc_containertraverser.h \
     lib/engine/document/entities/lc_mleader.h \
+    lib/engine/document/entities/lc_splinehelper.h \
     lib/engine/document/entities/lc_tolerance.h \
     lib/engine/document/entities/support/lc_arrow_box.h \
     lib/engine/document/entities/support/lc_arrow_circle.h \
@@ -655,6 +656,7 @@ SOURCES += \
     lib/engine/document/entities/lc_extentitydata.cpp \
     lib/engine/document/container/lc_containertraverser.cpp \
     lib/engine/document/entities/lc_mleader.cpp \
+    lib/engine/document/entities/lc_splinehelper.cpp \
     lib/engine/document/entities/lc_tolerance.cpp \
     lib/engine/document/entities/support/lc_arrow_box.cpp \
     lib/engine/document/entities/support/lc_arrow_circle.cpp \

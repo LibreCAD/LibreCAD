@@ -26,10 +26,11 @@
 **********************************************************************/
 
 
+#include<algorithm>
+#include<array>
 #include<iostream>
 #include "rs_solid.h"
 
-#include <array>
 
 #include "rs_debug.h"
 #include "rs_information.h"
@@ -60,7 +61,8 @@ bool isInternalPoint(const RS_Vector& point, const RS_VectorSolutions& contour){
     RS_VectorSolutions sol;
 
     // ignore invalid points
-    std::copy_if(contour.begin(), contour.end(), std::back_inserter(sol), RS_Vector::isValid);
+    std::copy_if(contour.begin(), contour.end(), std::back_inserter(sol),
+                 [](const RS_Vector& vp){return vp.valid;});
 
     switch (sol.size()) {
         case 0:

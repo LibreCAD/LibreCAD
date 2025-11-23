@@ -1166,7 +1166,7 @@ QString LC_QuickInfoEntityData::prepareSplineDescription(RS_Spline *spline, RS2:
     RS_SplineData data = spline->getData();
     appendInt(result, tr("Degree"), data.degree);
     appendInt(result, tr("Control Points"), data.controlPoints.size());
-    appendValue(result, tr("Closed"), data.closed? tr("Yes"): tr("No"));
+    appendValue(result, tr("Closed"), data.isClosed()? tr("Yes"): tr("No"));
     if (level != RS2::EntityDescriptionLevel::DescriptionCatched){
         appendLinear(result, tr("Length"), spline->getLength());
     }
@@ -1182,7 +1182,7 @@ void LC_QuickInfoEntityData::collectSplineProperties(RS_Spline *spline){
     const RS_SplineData &data = spline->getData();
     addLinearProperty(tr("Length"), spline->getLength());
     addProperty(tr("Degree"), formatInt(data.degree), OTHER);
-    addProperty(tr("Closed"), data.closed? tr("Yes"): tr("No"), OTHER);
+    addProperty(tr("Closed"), data.isClosed()? tr("Yes"): tr("No"), OTHER);
     size_t size = data.controlPoints.size();
     for (size_t i = 0; i < size; i++){
         RS_Vector cp = data.controlPoints.at(i);

@@ -24,16 +24,14 @@
 **********************************************************************/
 
 #include<cstdlib>
+#include <stack>
 #include<utility>
 
 #include <QRegularExpression>
 #include <QStringList>
 #include <QStringConverter>
-
-
 #include <QFile>
 #include <QFileInfo>
-#include <stack>
 
 #include "rs_filterdxfrw.h"
 #include "lc_containertraverser.h"
@@ -873,6 +871,8 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
     }
 
     // ordinary spline
+    // bit coded: 1: closed; 2: periodic; 4: rational; 8: planar; 16:linear
+    const bool isClosed = (data->flags & 0x2);
     RS_Spline* spline = nullptr;
     if (data->degree >= 1 && data->degree <= 3) {
         RS_SplineData d(data->degree, ((data->flags&0x1)==0x1));
@@ -882,6 +882,10 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
                 d.knotslist.push_back( RS_Math::round(k, tolknot));
             }
         }
+        // Currently all open splines are clamped at start/end points
+        // Closed/periodic are initially read as open, and control point wrapping
+        // will be added with extended knots
+        d.type = isClosed ? RS_SplineData::SplineType::Standard : RS_SplineData::SplineType::ClampedOpen;
         spline = new RS_Spline(m_currentContainer, d);
         setEntityAttributes(spline, data);
 
@@ -892,16 +896,25 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
                         "Accepted values are 1..3.", data->degree);
         return;
     }
-    for (auto const& vert: data->controllist) {
-        spline->addControlPoint({vert->x, vert->y});
+    assert(data->controllist.size() == data->weightlist.size());
+    if (data->controllist.size() != data->weightlist.size()) {
+        return;
+    }
+    for (size_t i=0; i < data->controllist.size(); ++i) {
+        const std::shared_ptr<DRW_Coord>& vert = data->controllist[i];
+        const double weight = data->weightlist[i];
+        spline->addControlPointRaw({vert->x, vert->y}, weight);
     }
     if (data->ncontrol== 0 && data->degree != 2){
+        std::vector<RS_Vector> fitPoints;
         for (auto const& vert: data->fitlist)
-            spline->addControlPoint({vert->x, vert->y});
+            fitPoints.emplace_back(vert->x, vert->y);
+        spline->setFitPoints(fitPoints);
     }
-    // ensure that the spline is really closed
-    if (spline->data.closed and !spline->hasWrappedControlPoints()) {
-        spline->data.closed = 0;
+
+    if (isClosed) {
+        // closed: add control point wrapping with extended knots
+        spline->setClosed(true);
     }
 
     spline->update();
@@ -3797,7 +3810,7 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
 
     if (s->getNumberOfControlPoints() < size_t(s->getDegree()+1)) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_FilterDXF::writeSpline: "
-                        "Discarding spline: not enough control points given.");
+                                           "Discarding spline: not enough control points given.");
         return;
     }
 
@@ -3806,7 +3819,7 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
         DRW_Polyline pol;
         for(RS_Entity* e: lc::LC_ContainerTraverser{*s, RS2::ResolveNone}.entities()) {
             pol.addVertex( DRW_Vertex(e->getStartpoint().x,
-                                      e->getStartpoint().y, 0.0, 0.0));
+                                     e->getStartpoint().y, 0.0, 0.0));
         }
         if (s->isClosed()) {
             pol.flags = 1;
@@ -3822,18 +3835,19 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
 
     // dxf spline group code=70
     // bit coded: 1: closed; 2: periodic; 4: rational; 8: planar; 16:linear
-    sp.flags = (s->isClosed()) ? 0x1011 : 0x1000;
+    sp.flags = (s->isClosed()) ? 0b1011 : 0b1000;
 
     // write spline control points:
-    for (const RS_Vector& v: s->getControlPoints()) {
+    for (const RS_Vector& v: s->getUnwrappedControlPoints()) {
         sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
     }
+    sp.weightlist = s->getUnwrappedWeights();
 
     sp.ncontrol = sp.controllist.size();
     sp.degree = s->getDegree();
 
     // knot vector from RS_Spline
-    sp.knotslist = (s->isClosed()) ? s->knotu(sp.ncontrol, sp.degree + 1) : s->knot(sp.ncontrol, sp.degree + 1);
+    sp.knotslist = s->getUnwrappedKnotVector();
     sp.nknots = sp.knotslist.size();
 
     getEntityAttributes(&sp, s);
