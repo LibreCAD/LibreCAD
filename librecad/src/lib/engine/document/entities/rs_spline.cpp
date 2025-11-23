@@ -540,14 +540,16 @@ void RS_Spline::rbsplinu(size_t npts, size_t k, size_t numPoints,
 
 /** Wrapped check */
 bool RS_Spline::hasWrappedControlPoints() const {
-  size_t total = data.controlPoints.size();
-  if (total <= data.degree ||
-      data.type != RS_SplineData::SplineType::WrappedClosed)
+  size_t s = data.controlPoints.size();
+  size_t deg = data.degree;
+  if (s <= deg)
     return false;
-  size_t unwrapped = total - data.degree;
-  for (size_t i = 0; i < data.degree; ++i) {
-    if (!compareVector(data.controlPoints[unwrapped + i],
-                       data.controlPoints[i]))
+  for (size_t i = 0; i < deg; ++i) {
+    if (data.controlPoints[s - deg + i] != data.controlPoints[i])
+      return false;
+  }
+  for (size_t i = 0; i < deg; ++i) {
+    if (!RS_Math::equal(data.weights[s - deg + i], data.weights[i], RS_TOLERANCE))
       return false;
   }
   return true;
@@ -820,8 +822,7 @@ bool RS_Spline::validate() const
 
          // Basic checks
   const size_t num_cp = data.controlPoints.size();           // total (wrapped if closed)
-  if (num_cp < degree + 1)
-    return false;
+  if (num_cp < degree + 1) return false;
 
   const bool closed = isClosed();                             // WrappedClosed
   const size_t extra_cp = closed ? degree : 0;
@@ -831,15 +832,12 @@ bool RS_Spline::validate() const
     return false;
 
   const size_t expected_knots = num_cp + degree + 1;          // works for open and wrapped closed
-  if (data.knotslist.size() != expected_knots)
-    return false;
-  if (data.weights.size() != num_cp)
-    return false;
+  if (data.knotslist.size() != expected_knots) return false;
+  if (data.weights.size() != num_cp) return false;
 
          // Weights must be positive
   for (double w : data.weights)
-    if (w <= 0.0)
-      return false;
+    if (w <= 0.0) return false;
 
          // Knots must be non-decreasing
   for (size_t i = 1; i < data.knotslist.size(); ++i)
@@ -850,10 +848,9 @@ bool RS_Spline::validate() const
   {
     size_t mult = 1;
     for (size_t i = 1; i < data.knotslist.size(); ++i) {
-      if (std::abs(data.knotslist[i] - data.knotslist[i - 1]) < RS_TOLERANCE) {
+      if (fabs(data.knotslist[i] - data.knotslist[i - 1]) < RS_TOLERANCE) {
         ++mult;
-        if (mult > degree + 1)
-          return false;
+        if (mult > degree + 1) return false;
       } else {
         mult = 1;
       }
@@ -861,7 +858,6 @@ bool RS_Spline::validate() const
   }
 
          // ---------------------- Type-specific validation ----------------------
-
   if (data.type == RS_SplineData::SplineType::ClampedOpen) {
     // Must have exactly degree+1 knots at start AND at end
     const double k_start = data.knotslist.front();
@@ -869,7 +865,7 @@ bool RS_Spline::validate() const
 
     size_t mult_start = 0;
     for (size_t j = 0; j < data.knotslist.size(); ++j) {
-      if (std::abs(data.knotslist[j] - k_start) < RS_TOLERANCE)
+      if (fabs(data.knotslist[j] - k_start) < RS_TOLERANCE)
         ++mult_start;
       else
         break;
@@ -877,7 +873,7 @@ bool RS_Spline::validate() const
 
     size_t mult_end = 0;
     for (int j = static_cast<int>(data.knotslist.size()) - 1; j >= 0; --j) {
-      if (std::abs(data.knotslist[j] - k_end) < RS_TOLERANCE)
+      if (fabs(data.knotslist[j] - k_end) < RS_TOLERANCE)
         ++mult_end;
       else
         break;
@@ -891,14 +887,13 @@ bool RS_Spline::validate() const
     const double k_start = data.knotslist.front();
     const double k_end   = data.knotslist.back();
 
-    if (std::abs(data.knotslist[1] - k_start) < RS_TOLERANCE)
-      return false;     // mult ≥ 2 at start
-    if (std::abs(data.knotslist[data.knotslist.size() - 2] - k_end) < RS_TOLERANCE)
-      return false;
+    if (fabs(data.knotslist[1] - k_start) < RS_TOLERANCE) return false;     // mult ≥ 2 at start
+    if (fabs(data.knotslist[data.knotslist.size() - 2] - k_end) < RS_TOLERANCE) return false;
   }
   else if (data.type == RS_SplineData::SplineType::WrappedClosed) {
     // Must really be wrapped (control points + weights)
-    if (!hasWrappedControlPoints()) return false;
+    if (!hasWrappedControlPoints())
+      return false;
 
            // Periodic splines normally have multiplicity = 1 everywhere
            // (allow up to degree to be tolerant, but disallow clamping-style degree+1 at the artificial ends)

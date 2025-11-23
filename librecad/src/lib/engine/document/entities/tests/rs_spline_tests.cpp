@@ -134,7 +134,7 @@ TEST_CASE("Non-uniform knot vectors - validation and type handling", "[RS_Spline
         REQUIRE(s.validate() == false);
     }
 
-    SECTION("WrappedClosed non-uniform - invalid (missing wrapped control points)")
+    SECTION("WrappedClosed non-uniform - valid (missing wrapped control points)")
     {
         RS_SplineData d(3, true);
         d.type = RS_SplineData::SplineType::WrappedClosed;
@@ -145,7 +145,8 @@ TEST_CASE("Non-uniform knot vectors - validation and type handling", "[RS_Spline
         d.weights.assign(8, 1.0);
         d.knotslist = {0.0, 10.0, 20.0, 35.0, 55.0, 80.0, 110.0, 140.0, 170.0, 200.0, 230.0, 260.0};
 
+        // contor will add control point wrapping
         RS_Spline s(nullptr, d);
-        REQUIRE(s.validate() == false);
+        REQUIRE(s.validate());
     }
 }
