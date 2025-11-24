@@ -66,22 +66,17 @@ LC_SplinePropertiesEditingWidget::LC_SplinePropertiesEditingWidget(QWidget *pare
             this, &LC_SplinePropertiesEditingWidget::showControlPointsContextMenu);
 }
 
-LC_SplinePropertiesEditingWidget::~LC_SplinePropertiesEditingWidget()
-{
-}
+LC_SplinePropertiesEditingWidget::~LC_SplinePropertiesEditingWidget() = default;
 
 void LC_SplinePropertiesEditingWidget::setEntity(RS_Entity *entity) {
-    RS_Spline* spline = dynamic_cast<RS_Spline*>(entity);
-    if (spline) {
-        m_entity = spline;
+    m_entity = dynamic_cast<RS_Spline*>(entity);
+    if (m_entity != nullptr) {
         updateUI();
-    } else {
-        m_entity = nullptr;
     }
 }
 
 void LC_SplinePropertiesEditingWidget::updateUI() {
-    if (!m_entity) {
+    if (m_entity == nullptr) {
         ui->tableControlPoints->setRowCount(0);
         ui->tableKnots->setRowCount(0);
         ui->cbClosed->setChecked(false);
@@ -131,7 +126,7 @@ void LC_SplinePropertiesEditingWidget::onClosedToggled(bool checked) {
 }
 
 void LC_SplinePropertiesEditingWidget::onDegreeIndexChanged(int index) {
-    if (m_entity) {
+    if (m_entity != nullptr) {
         try {
             m_entity->setDegree(index + 1);
             m_entity->update();
@@ -153,7 +148,7 @@ void LC_SplinePropertiesEditingWidget::onControlPointChanged(QTableWidgetItem *i
     // Ignore index column (non-editable)
     if (col == 0 || row < 0 || static_cast<size_t>(row) >= m_entity->getNumberOfControlPoints()) return;
 
-    bool ok;
+    bool ok = false;
     double val = item->text().toDouble(&ok);
     if (!ok) {
         if (col == 1) {
@@ -213,7 +208,7 @@ void LC_SplinePropertiesEditingWidget::onKnotChanged(QTableWidgetItem *item) {
     if (col != 1 || row < 0)
         return;
 
-    bool ok;
+    bool ok = false;
     double val = item->text().toDouble(&ok);
     if (!ok) {
         item->setText(QString::number(m_entity->getKnotVector()[row]));
