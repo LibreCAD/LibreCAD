@@ -316,7 +316,7 @@ double RS_Math::convert_unit(const QRegularExpressionMatch& match, const QString
  * Note: only the gui cares about units, so all matched symbols are used naively.
  */
 QString RS_Math::derationalize(const QString& expr) {
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Math::derationalize: expr = '%s'", expr.toLatin1().data());
+    //RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Math::derationalize: expr = '%s'", expr.toLatin1().data());
 
     QRegularExpressionMatch match = unitreg.match(expr);
     if (match.hasMatch()){
@@ -687,15 +687,13 @@ std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
 **/
 std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
 {
+
     std::vector<double> ans(0,0.);
-    if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
-        DEBUG_HEADER
-                std::cout<<"expected array size=4, got "<<ce.size()<<std::endl;
+    if(ce.size() != 4) {
+        LC_ERR<<"expected array size=4, got "<<ce.size();
+        return ans;
     }
-    if(ce.size() != 4) return ans;
-    if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
-        std::cout<<"x^4+("<<ce[0]<<")*x^3+("<<ce[1]<<")*x^2+("<<ce[2]<<")*x+("<<ce[3]<<")==0"<<std::endl;
-    }
+    //LC_LOG<<"x^4+("<<ce[0]<<")*x^3+("<<ce[1]<<")*x^2+("<<ce[2]<<")*x+("<<ce[3]<<")==0";
 
     // x^4 + a x^3 + b x^2 +c x + d = 0
     // depressed quartic, x= t - a/4
@@ -710,10 +708,8 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
     double p= ce[1] - (3./8)*a2;
     double q= ce[2] + ce[0]*((1./8)*a2 - 0.5*ce[1]);
     double r= ce[3] - shift*ce[2] + (ce[1] - 3.*shift2)*shift2;
-    if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
-        DEBUG_HEADER
-                std::cout<<"x^4+("<<p<<")*x^2+("<<q<<")*x+("<<r<<")==0"<<std::endl;
-    }
+    //LC_LOG<<"x^4+("<<p<<")*x^2+("<<q<<")*x+("<<r<<")==0";
+
     if (q*q <= 1.e-4*RS_TOLERANCE*std::abs(p*r)) {// Biquadratic equations
         double discriminant= 0.25*p*p -r;
         if (discriminant < -1.e3*RS_TOLERANCE) {
@@ -836,8 +832,7 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
 std::vector<double> RS_Math::quarticSolverFull(const std::vector<double>& ce)
 {
     if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
-        DEBUG_HEADER
-                std::cout<<ce[4]<<"*y^4+("<<ce[3]<<")*y^3+("<<ce[2]<<"*y^2+("<<ce[1]<<")*y+("<<ce[0]<<")==0"<<std::endl;
+      LC_LOG<<ce[4]<<"*y^4+("<<ce[3]<<")*y^3+("<<ce[2]<<"*y^2+("<<ce[1]<<")*y+("<<ce[0]<<")==0";
     }
 
     std::vector<double> roots(0,0.);
@@ -873,8 +868,7 @@ std::vector<double> RS_Math::quarticSolverFull(const std::vector<double>& ce)
         ce2[2]=ce[1]/ce[4];
         ce2[3]=ce[0]/ce[4];
         if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
-            DEBUG_HEADER
-                    std::cout<<"ce2[4]={ "<<ce2[0]<<' '<<ce2[1]<<' '<<ce2[2]<<' '<<ce2[3]<<" }\n";
+            LC_LOG<< "ce2[4]={ "<<ce2[0]<<' '<<ce2[1]<<' '<<ce2[2]<<' '<<ce2[3]<<" }";
         }
         if(std::abs(ce2[3])<= RS_TOLERANCE15) {
             //constant term is zero, factor 0 out, solve a cubic equation

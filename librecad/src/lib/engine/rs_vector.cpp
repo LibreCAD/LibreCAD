@@ -219,6 +219,12 @@ RS_Vector& RS_Vector::normalize()
     return *this;
 }
 
+RS_Vector RS_Vector::crossP(const RS_Vector& vp) const
+{
+    return crossP(*this, vp);
+}
+
+
 /**
  *
  */
@@ -374,6 +380,10 @@ RS_Vector& RS_Vector::shear(double k)
 {
     x += k * y;
     return *this;
+}
+
+RS_Vector operator * (double scale, const RS_Vector& vp) {
+    return vp * scale;
 }
 
 /**
