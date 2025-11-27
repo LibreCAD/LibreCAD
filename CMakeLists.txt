@@ -1582,7 +1582,7 @@ target_link_libraries(librecad PRIVATE
 install(TARGETS librecad RUNTIME DESTINATION bin)
 
 # Translations
-set(TS_DIR ../librecad/ts)
+set(TS_DIR librecad/ts)
 set(TS_FILES
     librecad/ts/librecad_ar.ts
     librecad/ts/librecad_ca.ts
