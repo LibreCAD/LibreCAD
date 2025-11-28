@@ -224,8 +224,19 @@ set(SHARED_INCLUDES
     librecad/src/ui/view
 )
 
+set(LIBRECAD_RES
+    librecad/res/arrows/arrows.qrc
+    librecad/res/controls/controls.qrc
+    librecad/res/dxf/dxf.qrc
+    librecad/res/gdt/gdt.qrc
+    librecad/res/icons/icons.qrc
+    librecad/res/images/images.qrc
+    licenses/licenses.qrc
+)
+
 # Shared sources: All from SOURCES except main, consoles, and tests
 set(SHARED_SOURCES
+    ${LIBRECAD_RES}
     libraries/jwwlib/src/dl_attributes.h
     libraries/jwwlib/src/dl_codes.h
     libraries/jwwlib/src/dl_creationinterface.h
@@ -1558,13 +1569,7 @@ set(MAIN_SOURCES
     librecad/src/main/console_dxf2png.h
     librecad/src/ui/dialogs/main/qg_dlginitial.cpp
     librecad/src/ui/dialogs/main/qg_dlginitial.h
-    librecad/res/arrows/arrows.qrc
-    librecad/res/controls/controls.qrc
-    librecad/res/dxf/dxf.qrc
-    librecad/res/gdt/gdt.qrc
-    librecad/res/icons/icons.qrc
-    librecad/res/images/images.qrc
-    licenses/licenses.qrc
+    ${LIBRECAD_RES}
 )
 
 # Main executable
