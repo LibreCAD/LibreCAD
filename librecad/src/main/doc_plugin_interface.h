@@ -132,6 +132,15 @@ public:
     //method to handle undo in Plugin_Entity 
     bool addToUndo(RS_Entity* current, RS_Entity* modified, DPI::Disposition how);
 private:
+    // Helper for performing entity selection (API-like interface):
+    // - Handles both general and typed selection via typeToSelect parameter.
+    // - Returns true if selection completed successfully with non-empty results.
+    // - Optional clearSel: Clears sel list before collection (default: true) to avoid stale data.
+    // - Robust error handling: Validates inputs, checks action installation, always cleans up.
+    // Usage: Call with QC_ActionGetSelect instance, type, message, and sel list.
+    // Example: performSelect(a, RS2::EntityType::EntityLine, "Select lines", sel);
+    bool  performSelect(RS2::EntityType typeToSelect, const QString& message, QList<Plug_Entity *>* sel, bool clearSel = true);
+
     RS_Document *doc;
     RS_Graphic *docGr;
     RS_GraphicView *gView;

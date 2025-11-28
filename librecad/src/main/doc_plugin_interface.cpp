@@ -39,10 +39,13 @@
 #include "lc_splinepoints.h"
 #include "lc_undosection.h"
 #include "rs_actioninterface.h"
+#include "rs_actionselectsingle.h"
 #include "rs_arc.h"
 #include "rs_block.h"
 #include "rs_circle.h"
 #include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_ellipse.h"
 #include "rs_graphicview.h"
 #include "rs_image.h"
@@ -1247,78 +1250,70 @@ Plug_Entity *Doc_plugin_interface::getEnt(const QString& message){
     return e;
 }
 
-bool Doc_plugin_interface::getSelect(QList<Plug_Entity *> *sel, const QString& message){
-    bool status = false;
-    auto a = std::make_shared<QC_ActionGetSelect>(m_actionContext);
-    if (a) {
-        if (!(message.isEmpty()) )
-            a->setMessage(message);
-        gView->killAllActions();
-        gView->setCurrentAction(a);
-        QEventLoop ev;
-        while (!a->isCompleted())
-        {
-            ev.processEvents ();
-            if (!gView->hasAction())
-                break;
-        }
-        // qDebug() << "getSelect: passed event loop";
-    }
-//    check if a are cancelled by the user issue #349
-    if (gView->isCurrentActionRunning(a.get())) {
-        a->getSelected(sel, this);
-        status = true;
-    }
+bool  Doc_plugin_interface::performSelect(RS2::EntityType typeToSelect, const QString& message, QList<Plug_Entity *>* sel, bool clearSel) {
+  auto a =std::make_shared<QC_ActionGetSelect> (typeToSelect, m_actionContext);
+  if (a == nullptr || sel == nullptr || gView == nullptr)
+    return false;
+  if (clearSel)
+    sel->clear();  // Optional: Reset list before collection
+  if (!message.isEmpty()) {
+    a->setMessage(message);
+    RS_DIALOGFACTORY->commandMessage(message);
+  }
+  auto inner = (typeToSelect == RS2::EntityType::EntityUnknown)
+                   ? std::make_shared<RS_ActionSelectSingle>(m_actionContext, a.get())
+                   : std::make_shared<RS_ActionSelectSingle>(typeToSelect, m_actionContext, a.get());
+  if (inner == nullptr)
+    return false;  // Rare shared_ptr fail
+  gView->killAllActions();
+  gView->setCurrentAction(inner);
+  if (!gView->hasAction()) {  // Robustness: Verify set succeeded
     gView->killAllActions();
-    return status;
+    return false;
+  }
+  inner->init(0);
+  a->init(0);
+  QEventLoop ev;
+  while (!a->isCompleted()) {
+    ev.processEvents();
+    if (!gView->hasAction())
+      break;
+  }
+  bool completed = a->isCompleted();
+  gView->killAllActions();  // Always cleanup
+  if (completed) {
+    a->getSelected(sel, this);
+    return !sel->isEmpty();
+  }
+  return false;
+}
 
+bool Doc_plugin_interface::getSelect(QList<Plug_Entity *> *sel, const QString& message){
+  return performSelect(RS2::EntityType::EntityUnknown, message, sel, false);
 }
 
 bool Doc_plugin_interface::getSelectByType(QList<Plug_Entity *> *sel, enum DPI::ETYPE type, const QString& message){
-    bool status = false;
-    RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
-    if(type==DPI::LINE){
-        typeToSelect = RS2::EntityType::EntityLine;
-    } else if(type==DPI::POINT){
-        typeToSelect = RS2::EntityType::EntityPoint;
-    } else if (type==DPI::POLYLINE){
-        typeToSelect = RS2::EntityType::EntityPolyline;
-    } else {
-        //Unhandled case
-    }
-    
-    gView->setTypeToSelect(typeToSelect);
-    auto a =std::make_shared<QC_ActionGetSelect> (typeToSelect, m_actionContext);
+  RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
+  if(type==DPI::LINE){
+    typeToSelect = RS2::EntityType::EntityLine;
+  } else if(type==DPI::POINT){
+    typeToSelect = RS2::EntityType::EntityPoint;
+  } else if (type==DPI::POLYLINE){
+    typeToSelect = RS2::EntityType::EntityPolyline;
+  } else {
+    //Unhandled case
+  }
 
-    if (a) {
-        if (!(message.isEmpty()) )
-            a->setMessage(message);
-        gView->killAllActions();
-        gView->setCurrentAction(a);
-        QEventLoop ev;
-        while (!a->isCompleted())
-        {
-            ev.processEvents ();
-            if (!gView->hasAction()){
-                break;
-            }
-
-        }
-    }
-    //check if a are cancelled by the user issue #349
-    if (gView->isCurrentActionRunning(a.get()) ) {
-        a->getSelected(sel, this);
-        status = true;
-    }
-    gView->killAllActions();
-    gView->setTypeToSelect(RS2::EntityType::EntityUnknown);
-    return status;
+  gView->setTypeToSelect(typeToSelect);
+  bool status = performSelect(typeToSelect, message, sel, false);
+  gView->setTypeToSelect(RS2::EntityType::EntityUnknown);
+  return status;
 }
 
 bool Doc_plugin_interface::getAllEntities(QList<Plug_Entity *> *sel, bool visible){
     bool status = false;
 
-	for(auto e: *doc){
+        for(auto e: *doc){
 
         if (e->isVisible() || !visible) {
             auto *pe = new Plugin_Entity(e, this);
