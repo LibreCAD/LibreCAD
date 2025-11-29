@@ -236,7 +236,6 @@ set(LIBRECAD_RES
 
 # Shared sources: All from SOURCES except main, consoles, and tests
 set(SHARED_SOURCES
-    ${LIBRECAD_RES}
     libraries/jwwlib/src/dl_attributes.h
     libraries/jwwlib/src/dl_codes.h
     libraries/jwwlib/src/dl_creationinterface.h
@@ -1679,6 +1678,7 @@ if(BUILD_TESTS)
 	# this is needed to allow testing methods used by main()
 	# main() is excluded when BUILD_TEST=ON
 	${MAIN_SOURCES}
+        ${LIBRECAD_RES}
 	### The actual tests
         librecad/src/lib/engine/document/entities/tests/lc_splinehelper_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_ellipse_tests.cpp

@@ -57,6 +57,10 @@
 #include "rs_settings.h"
 #include "rs_system.h"
 
+// default version: if not supplied by during building
+#ifndef LC_VERSION
+#define LC_VERSION "2.2.2-alpha"
+#endif
 
 // fixme - sand - files - complete refactoring
 namespace
@@ -474,7 +478,6 @@ QStringList handleArgs(int argc, char** argv, const QList<int>& argClean){
 
 QString LCReleaseLabel(){
     QString version{XSTR(LC_VERSION)};
-    QString label;
     const std::map<QString, QString> labelMap = {
         {"rc", QObject::tr("Release Candidate")},
         {"beta", QObject::tr("BETA")},
@@ -482,11 +485,12 @@ QString LCReleaseLabel(){
     };
     for (const auto& [key, value]: labelMap) {
         if (version.contains(key, Qt::CaseInsensitive)) {
-            label=value;
-            break;
+            return value;
         }
     }
-    return label;
+
+    // Issue #2371: default version to alpha
+    return QObject::tr("ALPHA");
 }
 
 namespace {
