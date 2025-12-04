@@ -262,6 +262,9 @@ public:
         return 3000;
     }
 
+    void drawEllipseBySplinePointsUI(const RS_Ellipse& ellipse, QPainterPath &path);
+
+
 protected:
     /**
      * Current drawing mode.

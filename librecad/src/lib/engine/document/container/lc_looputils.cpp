@@ -41,6 +41,7 @@
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_math.h"
+#include "rs_painter.h"
 #include "rs_pattern.h"
 #include "rs_vector.h"
 #include "rs.h"
@@ -95,6 +96,194 @@ struct DoublePredicate {
         return a < b; // Otherwise, use standard less-than comparison
     }
 };
+
+/**
+ * @brief PathBuilder is a utility class to build a QPainterPath by appending RS_Entity objects.
+ * All appendages are transformed to UI coordinates using the provided RS_Painter.
+ * Handles common entity types: Line, Arc, Circle, Ellipse, Spline.
+ * Supports moveTo for starting new subpaths and ensures continuity where possible.
+ */
+class PathBuilder {
+public:
+  /**
+   * @brief Constructor.
+   * @param painter RS_Painter for UI coordinate transformations (required for UI mode).
+   */
+  explicit PathBuilder(RS_Painter* painter = nullptr);
+
+  /**
+   * @brief Appends the given entity to the path, transforming to UI coordinates.
+   * Handles startpoint continuity; moves to start if needed.
+   * @param entity The RS_Entity to append.
+   */
+  void append(RS_Entity* entity);
+
+  /**
+   * @brief Moves to the given position (in WCS; transformed to UI).
+   * Starts a new subpath.
+   * @param pos The position in WCS.
+   */
+  void moveTo(const RS_Vector& pos);
+  void lineTo(const RS_Vector& pos);
+
+  /**
+   * @brief Closes the current subpath.
+   */
+  void closeSubpath();
+
+  /**
+   * @brief Gets the built path.
+   * @return Reference to the QPainterPath.
+   */
+  QPainterPath& getPath() { return m_path; }
+  const QPainterPath& getPath() const { return m_path; }
+
+  /**
+   * @brief Clears the path.
+   */
+  void clear();
+  QPointF toGuiPoint(const RS_Vector& vp) const
+  {
+    RS_Vector guiVp = m_painter->toGui(vp);
+    return {guiVp.x, guiVp.y};
+  }
+
+private:
+  /**
+   * @brief Appends a line in UI coordinates.
+   * @param line The RS_Line.
+   * @param ensureMove If true, move to start if not continuous.
+   */
+  void appendLine(RS_Line* line);
+
+  /**
+   * @brief Appends an arc using cubic Bezier approximation in UI coordinates.
+   * Follows entity direction (reversed or not).
+   * @param arc The RS_Arc.
+   * @param ensureMove If true, move to start if not continuous.
+   */
+  void appendArc(RS_Arc* arc);
+
+  /**
+   * @brief Appends a circle as a full arc in UI coordinates.
+   * @param circle The RS_Circle.
+   * @param ensureMove If true, move to start if not continuous.
+   */
+  void appendCircle(RS_Circle* circle);
+
+  /**
+   * @brief Appends an ellipse arc in UI coordinates using Bezier approximation.
+   * @param ellipse The RS_Ellipse.
+   * @param ensureMove If true, move to start if not continuous.
+   */
+  void appendEllipse(RS_Ellipse* ellipse);
+
+
+
+  RS_Painter* m_painter = nullptr;
+  QPainterPath m_path;
+  RS_Vector m_lastPoint{};  ///< Last point in WCS for continuity check.
+};
+
+PathBuilder::PathBuilder(RS_Painter* painter)
+    : m_painter(painter){
+  assert(m_painter != nullptr);
+  m_path.setFillRule(Qt::OddEvenFill);
+}
+
+void PathBuilder::append(RS_Entity* entity) {
+  if (!entity || entity->isUndone()) return;
+
+  RS2::EntityType type = entity->rtti();
+
+  switch (type) {
+  case RS2::EntityLine:
+    appendLine(static_cast<RS_Line*>(entity));
+    break;
+  case RS2::EntityArc:
+    appendArc(static_cast<RS_Arc*>(entity));
+    break;
+  case RS2::EntityCircle:
+    appendCircle(static_cast<RS_Circle*>(entity));
+    break;
+  case RS2::EntityEllipse:
+    appendEllipse(static_cast<RS_Ellipse*>(entity));
+    break;
+  default:
+    RS_DEBUG->print(RS_Debug::D_WARNING, "PathBuilder::append: Unsupported entity type %d", static_cast<int>(type));
+    break;
+  }
+
+  m_lastPoint = entity->getEndpoint();
+}
+
+void PathBuilder::moveTo(const RS_Vector& pos) {
+    QPointF uiPos = toGuiPoint(pos);
+    m_path.moveTo(uiPos);
+  m_lastPoint = pos;
+}
+
+void PathBuilder::lineTo(const RS_Vector& pos) {
+  QPointF uiPos = toGuiPoint(pos);
+  m_path.lineTo(uiPos);
+  m_lastPoint = pos;
+}
+
+void PathBuilder::closeSubpath() {
+  m_path.closeSubpath();
+  m_lastPoint = RS_Vector(0., 0.);  // Reset for next
+}
+
+void PathBuilder::clear() {
+  m_path = QPainterPath();
+  m_lastPoint = RS_Vector(0., 0.);
+}
+
+void PathBuilder::appendLine(RS_Line* line) {
+  if (!line)
+    return;
+
+  QPointF uiEnd = toGuiPoint(line->getEndpoint());
+
+  m_path.lineTo(uiEnd);
+  m_lastPoint = line->getEndpoint();
+}
+
+void PathBuilder::appendArc(RS_Arc* arc) {
+  if (!arc || !m_painter) return;
+
+  double startAngle = arc->getAngle1();
+  double endAngle = arc->getAngle2();
+  if (arc->isReversed())
+    endAngle = startAngle - RS_Math::correctAngle(startAngle - endAngle);
+  else
+    endAngle = startAngle + RS_Math::correctAngle(endAngle - startAngle);
+
+  double startDeg = RS_Math::rad2deg(startAngle);
+  double sweepDeg = RS_Math::rad2deg(endAngle - startAngle);
+
+  QPointF center = toGuiPoint(arc->getCenter());
+  double radiusX = m_painter->toGuiDX(arc->getRadius());
+  double radiusY = m_painter->toGuiDY(arc->getRadius());
+  QPointF halfSize{radiusX, radiusY};
+  QRectF arcRect{center - halfSize, center + halfSize};
+
+  m_path.arcTo(arcRect, startDeg, sweepDeg);
+}
+
+void PathBuilder::appendEllipse(RS_Ellipse* ellipse) {
+  if (!ellipse || !m_painter) return;
+
+  m_painter->drawEllipseBySplinePointsUI(*ellipse, m_path);
+  }
+
+void PathBuilder::appendCircle(RS_Circle* circle) {
+  if (!circle || !m_painter) return;
+
+
+  RS_Arc arc{nullptr, {circle->getCenter(), circle->getRadius(), 0., 2. * M_PI, false}};
+  appendArc(&arc);
+}
 
 }
 
@@ -524,12 +713,12 @@ int LC_Loops::getContainingDepth(const RS_Vector& point) const {
  * @brief Builds hierarchical QPainterPath: Outer path (reversed if odd level), add children recursively.
  * Applies OddEvenFill for holes.
  */
-QPainterPath LC_Loops::getPainterPath(int level) const {
-    QPainterPath path = buildPathFromLoop(*m_loop);
+QPainterPath LC_Loops::getPainterPath(RS_Painter* painter, int level) const {
+    QPainterPath path = buildPathFromLoop(painter, *m_loop);
     if (level % 2 == 1)
         path = path.toReversed();  // Reverse for hole winding
     for (const auto& child : m_children) {
-        QPainterPath childPath = child.getPainterPath(level + 1);
+        QPainterPath childPath = child.getPainterPath(painter, level + 1);
         path.addPath(childPath);
     }
     path.setFillRule(Qt::OddEvenFill);
@@ -607,65 +796,23 @@ void LC_Loops::addEllipticArc(QPainterPath& path, const RS_Vector& center, doubl
  * @brief Converts container entities to QPainterPath, handling lines, arcs, circles, ellipses, splines, and parabolas.
  * Closes the subpath; skips unsupported types.
  */
-QPainterPath LC_Loops::buildPathFromLoop(const RS_EntityContainer& cont) const {
-    QPainterPath path;
+QPainterPath LC_Loops::buildPathFromLoop(RS_Painter* painter, const RS_EntityContainer& cont) const {
+  PathBuilder builder{painter};
+  QPainterPath& path = builder.getPath();
     if (cont.count() == 0)
-        return path;
+        return builder.getPath();
+    builder.moveTo(cont.first()->getStartpoint());
     for (RS_Entity* e : cont) {
         if (e->isAtomic()) {
             RS_Vector start = e->getStartpoint();
             // avoid small gaps due to rounding errors
-            if ((path.currentPosition() - QPointF{start.x, start.y}).manhattanLength() >= RS_TOLERANCE * 100.) {
-                path.moveTo(start.x, start.y);
-            } else {
-                path.lineTo(start.x, start.y);
+            if ((path.currentPosition() - builder.toGuiPoint({start.x, start.y})).manhattanLength() >= 3.) {
+              LC_ERR<<__func__<<"(): added line at "<<start.x<<", "<<start.y;
             }
-            RS_Vector end = e->getEndpoint();
-            switch (e->rtti()) {
-            case RS2::EntityLine: {
-                path.lineTo(end.x, end.y);
-            }
-            break;
-            case RS2::EntityArc: {
-                RS_Arc* arc = static_cast<RS_Arc*>(e);
-                double r = arc->getRadius();
-                addEllipticArc(path, arc->getCenter(), r, r, 0.0, arc->getAngle1(), arc->getAngle2());
-            }
-            break;
-            case RS2::EntityCircle: {
-                RS_Circle* circle = static_cast<RS_Circle*>(e);
-                double r = circle->getRadius();
-                addEllipticArc(path, circle->getCenter(), r, r, 0.0, 0.0, 2 * M_PI);
-            }
-            break;
-            case RS2::EntityEllipse: {
-                RS_Ellipse* ellipse = static_cast<RS_Ellipse*>(e);
-                addEllipticArc(path, ellipse->getCenter(), ellipse->getMajorRadius(), ellipse->getMinorRadius(), ellipse->getAngle(), ellipse->getAngle1(), ellipse->getAngle2());
-            }
-            break;
-            case RS2::EntitySpline:
-            case RS2::EntityParabola: {  // IMPROVED: Adaptive strokes for splines and parabolas
-                LC_SplinePoints* curve = static_cast<LC_SplinePoints*>(e);  // Parabola inherits from SplinePoints
-                int segments = 20;  // Base density
-                double len = curve->getLength();
-                if (len > 0) segments = std::max(20, static_cast<int>(len / 0.1));  // ~0.1 unit per segment
-                std::vector<RS_Vector> points;
-                curve->fillStrokePoints(segments, points);
-                if (!points.empty()) {
-                    // Start already connected; draw segments
-                    for (size_t i = 1; i < points.size(); ++i) {
-                        path.lineTo(points[i].x, points[i].y);
-                    }
-                }
-            }
-            break;
-            default:
-                RS_DEBUG->print("LC_Loops::buildPathFromLoop: Unsupported entity type");
-                break;
-            }
+            builder.append(e);
         }
     }
-    path.closeSubpath();
+    builder.closeSubpath();
     return path;
 }
 

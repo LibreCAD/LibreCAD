@@ -33,6 +33,7 @@ class QPainterPath;
 class RS_AtomicEntity;
 class RS_Entity;
 class RS_EntityContainer;
+class RS_Painter;
 class RS_Pattern;
 class RS_Vector;
 class RS_VectorSolutions;
@@ -94,7 +95,7 @@ public:
      * @param level Recursion level for path building (default: 0).
      * @return The combined QPainterPath with OddEvenFill rule.
      */
-    QPainterPath getPainterPath(int level = 0) const;
+    QPainterPath getPainterPath(RS_Painter* painter, int level = 0) const;
     /**
      * @brief Trims pattern entities to the boundaries of this loop hierarchy.
      * @param pattern The pattern to trim.
@@ -140,7 +141,7 @@ private:
      * @param cont The entity container.
      * @return The resulting path.
      */
-    QPainterPath buildPathFromLoop(const RS_EntityContainer& cont) const;
+    QPainterPath buildPathFromLoop(RS_Painter* painter, const RS_EntityContainer& cont) const;
     /**
      * @brief Collects all descendant loops recursively.
      * @param loops Output vector of loop pointers.
