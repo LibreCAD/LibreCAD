@@ -203,7 +203,7 @@ private:
    * Assumes current position is at startpoint; uses quadTo for each quadratic segment.
    * @param spline The LC_SplinePoints.
    */
-  void appendSpline(LC_SplinePoints* spline);
+  void appendSplinePoints(LC_SplinePoints* spline);
 
   /**
    * @brief Appends a parabola (LC_Parabola) by sampling stroke points in UI coordinates.
@@ -250,7 +250,7 @@ void PathBuilder::append(RS_Entity* entity) {
     appendEllipse(static_cast<RS_Ellipse*>(entity));
     break;
   case RS2::EntitySpline:
-    appendSpline(static_cast<LC_SplinePoints*>(entity));
+    appendSplinePoints(static_cast<LC_SplinePoints*>(entity));
     break;
   case RS2::EntityParabola:
     appendParabola(static_cast<LC_Parabola*>(entity));
@@ -299,6 +299,7 @@ void PathBuilder::appendLine(RS_Line* line) {
 }
 
 void PathBuilder::appendArc(RS_Arc* arc) {
+  // TODO: need pixel level precision: issue #2035
   if (!arc || !m_painter)
     return;
 
@@ -324,12 +325,14 @@ void PathBuilder::appendArc(RS_Arc* arc) {
 void PathBuilder::appendEllipse(RS_Ellipse* ellipse) {
   if (!ellipse || !m_painter) return;
 
+  // TODO: need pixel level precision: issue #2035
   m_painter->drawEllipseBySplinePointsUI(*ellipse, m_path);
 }
 
 void PathBuilder::appendCircle(RS_Circle* circle) {
   if (!circle || !m_painter) return;
 
+  // TODO: need pixel level precision: issue #2035
   QPointF center = toGuiPoint(circle->getCenter());
   double radiusX = m_painter->toGuiDX(circle->getRadius());
   double radiusY = m_painter->toGuiDY(circle->getRadius());
@@ -339,7 +342,7 @@ void PathBuilder::appendCircle(RS_Circle* circle) {
   m_path.addEllipse(circleRect);
 }
 
-void PathBuilder::appendSpline(LC_SplinePoints* spline) {
+void PathBuilder::appendSplinePoints(LC_SplinePoints* spline) {
   if (!spline || !m_painter) return;
 
   const auto& points = spline->getPoints();
@@ -372,7 +375,7 @@ void PathBuilder::appendParabola(LC_Parabola* parabola) {
   if (!parabola) return;
 
          // Inherit from LC_SplinePoints for quadratic Bezier handling
-  appendSpline(parabola);
+  appendSplinePoints(parabola);
 }
 
 }
