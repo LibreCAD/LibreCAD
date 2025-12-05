@@ -744,7 +744,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
             // **Symmetric**: scale/rot **around center** → move
             clone->scale(center, scaleV);
             clone->rotate(center, data.angle);
-            clone->move(offset);
+            clone->move(offset + center);
             clone->setSelected(true);
             newEnts.push_back(clone);
         }
