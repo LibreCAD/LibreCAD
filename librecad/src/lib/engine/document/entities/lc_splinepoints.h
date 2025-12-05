@@ -77,8 +77,6 @@ private:
     int GetNearestQuad(const RS_Vector& coord, double* dist, double* dt) const;
     RS_Vector GetSplinePointAtDist(double dDist, int iStartSeg, double dStartT,
                                    int *piSeg, double *pdt) const;
-    int GetQuadPoints(int iSeg, RS_Vector *pvStart, RS_Vector *pvControl,
-                      RS_Vector *pvEnd) const;
 
     bool offsetCut(const RS_Vector& coord, const double& distance);
     bool offsetSpline(const RS_Vector& coord, const double& distance);
@@ -250,6 +248,9 @@ public:
  * @author Dongxu Li
  */
     double areaLineIntegral() const override;
+
+    int GetQuadPoints(int iSeg, RS_Vector *pvStart, RS_Vector *pvControl,
+                      RS_Vector *pvEnd) const;
 };
 
 #endif

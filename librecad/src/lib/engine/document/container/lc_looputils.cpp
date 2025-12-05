@@ -111,6 +111,12 @@ bool isClosed(const RS_Entity& en) {
     [[fallthrough]];
   case RS2::EntityArc:
     return en.getStartpoint() == en.getEndpoint();
+  case RS2::EntitySpline: {
+    const LC_SplinePoints& spline = static_cast<const LC_SplinePoints&>(en);
+    return spline.isClosed();
+  }
+  case RS2::EntityParabola:
+    return false; // Parabolas are open curves
   }
   return false;
 }
@@ -118,7 +124,7 @@ bool isClosed(const RS_Entity& en) {
 /**
  * @brief PathBuilder is a utility class to build a QPainterPath by appending RS_Entity objects.
  * All appendages are transformed to UI coordinates using the provided RS_Painter.
- * Handles common entity types: Line, Arc, Circle, Ellipse, Spline.
+ * Handles common entity types: Line, Arc, Circle, Ellipse, Spline, Parabola.
  * Supports moveTo for starting new subpaths and ensures continuity where possible.
  */
 class PathBuilder {
@@ -170,7 +176,6 @@ private:
   /**
    * @brief Appends a line in UI coordinates.
    * @param line The RS_Line.
-   * @param ensureMove If true, move to start if not continuous.
    */
   void appendLine(RS_Line* line);
 
@@ -178,39 +183,56 @@ private:
    * @brief Appends an arc using cubic Bezier approximation in UI coordinates.
    * Follows entity direction (reversed or not).
    * @param arc The RS_Arc.
-   * @param ensureMove If true, move to start if not continuous.
    */
   void appendArc(RS_Arc* arc);
 
   /**
    * @brief Appends a circle as a full arc in UI coordinates.
    * @param circle The RS_Circle.
-   * @param ensureMove If true, move to start if not continuous.
    */
   void appendCircle(RS_Circle* circle);
 
   /**
    * @brief Appends an ellipse arc in UI coordinates using Bezier approximation.
    * @param ellipse The RS_Ellipse.
-   * @param ensureMove If true, move to start if not continuous.
    */
   void appendEllipse(RS_Ellipse* ellipse);
 
+  /**
+   * @brief Appends a spline (LC_SplinePoints) by appending quadratic Bezier segments in UI coordinates.
+   * Assumes current position is at startpoint; uses quadTo for each quadratic segment.
+   * @param spline The LC_SplinePoints.
+   */
+  void appendSpline(LC_SplinePoints* spline);
 
+  /**
+   * @brief Appends a parabola (LC_Parabola) by sampling stroke points in UI coordinates.
+   * Assumes current position is at startpoint; uses lineTo for polyline approximation.
+   * @param parabola The LC_Parabola.
+   */
+  void appendParabola(LC_Parabola* parabola);
 
   RS_Painter* m_painter = nullptr;
   QPainterPath m_path;
   RS_Vector m_lastPoint{};  ///< Last point in WCS for continuity check.
+  bool m_hasLastPoint = false;  ///< Flag indicating if m_lastPoint is valid.
 };
 
 PathBuilder::PathBuilder(RS_Painter* painter)
     : m_painter(painter){
   assert(m_painter != nullptr);
   m_path.setFillRule(Qt::OddEvenFill);
+  m_hasLastPoint = false;
 }
 
 void PathBuilder::append(RS_Entity* entity) {
   if (!entity || entity->isUndone()) return;
+
+  RS_Vector startp = entity->getStartpoint();
+  const double tol = 1e-6;
+  if (!m_hasLastPoint || m_lastPoint.distanceTo(startp) > tol) {
+    moveTo(startp);
+  }
 
   RS2::EntityType type = entity->rtti();
 
@@ -227,34 +249,44 @@ void PathBuilder::append(RS_Entity* entity) {
   case RS2::EntityEllipse:
     appendEllipse(static_cast<RS_Ellipse*>(entity));
     break;
+  case RS2::EntitySpline:
+    appendSpline(static_cast<LC_SplinePoints*>(entity));
+    break;
+  case RS2::EntityParabola:
+    appendParabola(static_cast<LC_Parabola*>(entity));
+    break;
   default:
     RS_DEBUG->print(RS_Debug::D_WARNING, "PathBuilder::append: Unsupported entity type %d", static_cast<int>(type));
     break;
   }
 
   m_lastPoint = entity->getEndpoint();
+  m_hasLastPoint = true;
 }
 
 void PathBuilder::moveTo(const RS_Vector& pos) {
   QPointF uiPos = toGuiPoint(pos);
   m_path.moveTo(uiPos);
   m_lastPoint = pos;
+  m_hasLastPoint = true;
 }
 
 void PathBuilder::lineTo(const RS_Vector& pos) {
   QPointF uiPos = toGuiPoint(pos);
   m_path.lineTo(uiPos);
   m_lastPoint = pos;
+  m_hasLastPoint = true;
 }
 
 void PathBuilder::closeSubpath() {
   m_path.closeSubpath();
-  m_lastPoint = RS_Vector(0., 0.);  // Reset for next
+  // Do not reset m_hasLastPoint; keep for potential next append
 }
 
 void PathBuilder::clear() {
   m_path = QPainterPath();
   m_lastPoint = RS_Vector(0., 0.);
+  m_hasLastPoint = false;
 }
 
 void PathBuilder::appendLine(RS_Line* line) {
@@ -264,7 +296,6 @@ void PathBuilder::appendLine(RS_Line* line) {
   QPointF uiEnd = toGuiPoint(line->getEndpoint());
 
   m_path.lineTo(uiEnd);
-  m_lastPoint = line->getEndpoint();
 }
 
 void PathBuilder::appendArc(RS_Arc* arc) {
@@ -306,6 +337,42 @@ void PathBuilder::appendCircle(RS_Circle* circle) {
   QRectF circleRect{center - halfSize, center + halfSize};
 
   m_path.addEllipse(circleRect);
+}
+
+void PathBuilder::appendSpline(LC_SplinePoints* spline) {
+  if (!spline || !m_painter) return;
+
+  const auto& points = spline->getPoints();
+  if (points.empty()) return;
+
+  size_t n_points = points.size();
+  size_t num_segs = spline->isClosed() ? n_points : n_points - 1;
+  if (num_segs == 0) {
+    // Degenerate case: connect to endpoint
+    lineTo(spline->getEndpoint());
+    return;
+  }
+
+         // Assume current path position is at the startpoint of the first segment
+  for (size_t i = 0; i < num_segs; ++i) {
+    int seg_idx = static_cast<int>(i);
+    RS_Vector start, ctrl, end;
+    if (spline->GetQuadPoints(seg_idx, &start, &ctrl, &end) != 0) {
+      QPointF ui_ctrl = toGuiPoint(ctrl);
+      QPointF ui_end = toGuiPoint(end);
+      m_path.quadTo(ui_ctrl, ui_end);
+    } else {
+      // Fallback: line to end if quad points unavailable
+      lineTo(end);
+    }
+  }
+}
+
+void PathBuilder::appendParabola(LC_Parabola* parabola) {
+  if (!parabola) return;
+
+         // Inherit from LC_SplinePoints for quadratic Bezier handling
+  appendSpline(parabola);
 }
 
 }
@@ -388,8 +455,8 @@ std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract() {
 }
 
 /**
- * @brief Validates a loop for proper closure based on entity count and types.
- * Special handling for single closed entities like circles or full ellipses.
+ * @brief Validates the current loop for closure.
+ * @return True if valid.
  */
 bool LoopExtractor::validate() const {
   if (m_loop->count() == 0) return false;
@@ -417,8 +484,8 @@ bool LoopExtractor::validate() const {
 }
 
 /**
- * @brief Finds the first edge using a ray-casting heuristic (closest to a leftward ray).
- * Selects an edge likely on the outer boundary.
+ * @brief Finds the first edge to start a loop.
+ * @return Starting entity or nullptr.
  */
 RS_Entity* LoopExtractor::findFirst() const {
   if (m_data->unprocessed.empty()) return nullptr;
@@ -445,7 +512,7 @@ RS_Entity* LoopExtractor::findFirst() const {
 
 /**
  * @brief Finds and adds the next connected edge to the loop.
- * Selects outermost if multiple connections; clones and reverses direction if needed.
+ * @return True if found.
  */
 bool LoopExtractor::findNext() const {
   std::vector<RS_Entity*> connected = getConnected();
@@ -472,7 +539,8 @@ bool LoopExtractor::findNext() const {
 }
 
 /**
- * @brief Returns unprocessed entities connected to the current endpoint within tolerance.
+ * @brief Gets entities connected to the current endpoint.
+ * @return Vector of connected entities.
  */
 std::vector<RS_Entity*> LoopExtractor::getConnected() const {
   std::vector<RS_Entity*> ret;
@@ -485,8 +553,9 @@ std::vector<RS_Entity*> LoopExtractor::getConnected() const {
 }
 
 /**
- * @brief Selects the "outermost" edge from connected ones using tangent angle differences.
- * Uses a small circle for intersection and prefers left turns (largest positive diff) for CCW outer boundary.
+ * @brief Selects the outermost (preferred direction) from connected edges.
+ * @param edges Connected edges.
+ * @return Selected entity.
  */
 RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const {
   double radius = 1e-6;
@@ -592,7 +661,7 @@ void LoopSorter::sortAndBuild() {
   std::vector<RS_EntityContainer*> forest;
   while (!orderedLoops.empty()) {
     RS_EntityContainer* child = orderedLoops.begin()->second;
-    findParent2(child, orderedLoops);  // Assign immediate parent
+    findParent(child, orderedLoops);  // Assign immediate parent
     if (child->getParent() == nullptr) {
       forest.push_back(child);  // Root if no parent
     }
@@ -627,28 +696,7 @@ void LoopSorter::init() {
  * @brief Assigns the smallest enclosing parent using bbox inclusion and point-in-contour test.
  * Processes small-to-large to ensure immediate (direct) parent.
  */
-void LoopSorter::findParent(RS_EntityContainer* loop, const std::vector<RS_EntityContainer*>& sorted) {
-  LC_Rect childBox{loop->getMin(), loop->getMax()};
-  double childArea = std::abs(loop->areaLineIntegral());
-  RS_Vector testPoint = (loop->getMin() + loop->getMax()) / 2.0;  // Use bbox center for containment test
-  for (auto it = sorted.begin(); it != sorted.end(); ++it) {  // Iterate small to large
-    auto* potentialParent = *it;
-    if (potentialParent == loop) continue;
-    double parentArea = std::abs(potentialParent->areaLineIntegral());
-    if (parentArea <= childArea + RS_TOLERANCE) continue;  // Skip smaller or equal
-    LC_Rect parentBox{potentialParent->getMin(), potentialParent->getMax()};
-    if (childBox.numCornersInside(parentBox) != 4) continue;  // Quick bbox containment
-    bool onContour = false;
-    if (RS_Information::isPointInsideContour(testPoint, potentialParent, &onContour)) {
-      loop->setParent(potentialParent);  // Track hierarchy via parent pointer only
-      RS_DEBUG->print("LoopSorter: Assigned parent for loop with area %f", childArea);  // Log assignment
-      return;
-    }
-  }
-  RS_DEBUG->print("LoopSorter: No parent found for loop with area %f", childArea);  // Log orphan
-}
-
-void LoopSorter::findParent2(RS_EntityContainer* loop, const std::map<double, RS_EntityContainer*>& sorted) {
+void LoopSorter::findParent(RS_EntityContainer* loop, const std::map<double, RS_EntityContainer*>& sorted) {
   if (sorted.size() == 1)
     return;
   LC_Rect childBox{loop->getMin(), loop->getMax()};
@@ -660,7 +708,7 @@ void LoopSorter::findParent2(RS_EntityContainer* loop, const std::map<double, RS
       continue;
     double parentArea = it->first;
 
-    // Skip smaller or equal
+           // Skip smaller or equal
     if (parentArea <= childArea + RS_TOLERANCE)
       continue;
     LC_Rect parentBox{potentialParent->getMin(), potentialParent->getMax()};
@@ -670,7 +718,7 @@ void LoopSorter::findParent2(RS_EntityContainer* loop, const std::map<double, RS
     bool onContour = false;
     if (RS_Information::isPointInsideContour(testPoint, potentialParent, &onContour)) {
       loop->setParent(potentialParent);  // Track hierarchy via parent pointer only
-      RS_DEBUG->print("LoopSorter: Assigned parent for loop with area %f", childArea);  // Log assignment
+      RS_DEBUG->print("LoopSorter: Assigned parent for loop with area %f", childArea);
       return;
     }
   }
@@ -895,7 +943,7 @@ LC_Rect LC_Loops::getBoundingBox() const {
 }
 
 /**
- * @brief Convenience alias for isInside.
+ * @brief Alias for isInside (odd-even rule).
  */
 bool LC_Loops::isPointInside(const RS_Vector& p) const {
   return getContainingDepth(p) % 2 == 1;
