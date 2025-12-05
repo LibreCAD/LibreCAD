@@ -578,26 +578,25 @@ LoopSorter::~LoopSorter() = default;
  * Builds forest of roots and converts to LC_Loops.
  */
 void LoopSorter::sortAndBuild() {
-  std::vector<RS_EntityContainer*> sorted;
+  std::map<double, RS_EntityContainer*> orderedLoops;
   for (auto& p : m_data->loops) {
     p->setParent(nullptr);  // Reset parents
+    p->forcedCalculateBorders();
     double area = std::abs(p->areaLineIntegral());
     if (area < RS_TOLERANCE) {
       RS_DEBUG->print("LoopSorter: Skipping degenerate zero-area loop");
       continue;
     }
-    sorted.push_back(p.get());
+    orderedLoops.emplace(area, p.get());
   }
-  std::sort(sorted.begin(), sorted.end(), AreaPredicate());
-  std::vector<RS_EntityContainer*> unprocessed = sorted;
   std::vector<RS_EntityContainer*> forest;
-  while (!unprocessed.empty()) {
-    RS_EntityContainer* child = unprocessed[0];
-    findParent(child, sorted);  // Assign immediate parent
+  while (!orderedLoops.empty()) {
+    RS_EntityContainer* child = orderedLoops.begin()->second;
+    findParent2(child, orderedLoops);  // Assign immediate parent
     if (child->getParent() == nullptr) {
       forest.push_back(child);  // Root if no parent
     }
-    unprocessed.erase(unprocessed.begin());
+    orderedLoops.erase(orderedLoops.begin());
   }
   m_data->results = forestToLoops(forest);
 }
@@ -639,6 +638,35 @@ void LoopSorter::findParent(RS_EntityContainer* loop, const std::vector<RS_Entit
     if (parentArea <= childArea + RS_TOLERANCE) continue;  // Skip smaller or equal
     LC_Rect parentBox{potentialParent->getMin(), potentialParent->getMax()};
     if (childBox.numCornersInside(parentBox) != 4) continue;  // Quick bbox containment
+    bool onContour = false;
+    if (RS_Information::isPointInsideContour(testPoint, potentialParent, &onContour)) {
+      loop->setParent(potentialParent);  // Track hierarchy via parent pointer only
+      RS_DEBUG->print("LoopSorter: Assigned parent for loop with area %f", childArea);  // Log assignment
+      return;
+    }
+  }
+  RS_DEBUG->print("LoopSorter: No parent found for loop with area %f", childArea);  // Log orphan
+}
+
+void LoopSorter::findParent2(RS_EntityContainer* loop, const std::map<double, RS_EntityContainer*>& sorted) {
+  if (sorted.size() == 1)
+    return;
+  LC_Rect childBox{loop->getMin(), loop->getMax()};
+  double childArea = std::abs(loop->areaLineIntegral());
+  RS_Vector testPoint = (loop->getMin() + loop->getMax()) / 2.0;  // Use bbox center for containment test
+  for (auto it = sorted.begin(); ++it != sorted.end();) {  // Iterate small to large
+    auto* potentialParent = it->second;
+    if (potentialParent == loop)
+      continue;
+    double parentArea = it->first;
+
+    // Skip smaller or equal
+    if (parentArea <= childArea + RS_TOLERANCE)
+      continue;
+    LC_Rect parentBox{potentialParent->getMin(), potentialParent->getMax()};
+
+    if (childBox.numCornersInside(parentBox) != 4)
+      continue;  // Quick bbox containment
     bool onContour = false;
     if (RS_Information::isPointInsideContour(testPoint, potentialParent, &onContour)) {
       loop->setParent(potentialParent);  // Track hierarchy via parent pointer only

@@ -26,6 +26,7 @@
 #ifndef LC_LOOPUTILS_H
 #define LC_LOOPUTILS_H
 
+#include <map>
 #include <memory>
 #include <vector>
 
@@ -346,6 +347,7 @@ private:
      * @param sorted Sorted list of all loops.
      */
     void findParent(RS_EntityContainer* loop, const std::vector<RS_EntityContainer*>& sorted);
+    void findParent2(RS_EntityContainer* loop, const std::map<double, RS_EntityContainer*>& sorted);
     /**
      * @brief Converts a forest of containers to LC_Loops trees.
      * @param forest Vector of root containers.
