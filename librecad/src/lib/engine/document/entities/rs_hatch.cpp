@@ -294,12 +294,12 @@ void RS_Hatch::update() {
 void RS_Hatch::updateSolidHatch([[maybe_unused]] RS_Layer* layer, [[maybe_unused]] const RS_Pen& pen) {
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::updateSolidHatch");
 
-    // Transform loops into painter paths
-    std::transform(m_orderedLoops->begin(), m_orderedLoops->end(),
-                   std::back_inserter(*m_solidPath),
-                   [](const LC_LoopUtils::LC_Loops& loop) {
-                       return loop.getPainterPath();
-                   });
+    // // Transform loops into painter paths
+    // std::transform(m_orderedLoops->begin(), m_orderedLoops->end(),
+    //                std::back_inserter(*m_solidPath),
+    //                [](const LC_LoopUtils::LC_Loops &loop) {
+    //                  return loop.getPainterPath();
+    //                });
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::updateSolidHatch: Cached %zu paths",
                     m_solidPath->size());
@@ -430,11 +430,12 @@ void RS_Hatch::draw(RS_Painter* painter) {
  * Helper: Draws solid fill using cached QPainterPaths.
  */
 void RS_Hatch::drawSolidFill(RS_Painter* painter) {
-    if (!m_solidPath || m_solidPath->empty()) {
+    if (!m_orderedLoops || m_orderedLoops->empty()) {
         LC_ERR << __func__ << "(): No cached paths for solid fill";
         return;
     }
 
+    painter->save();
     QBrush originalBrush = painter->brush();
     RS_Pen originalPen = painter->getPen();
 
@@ -444,16 +445,20 @@ void RS_Hatch::drawSolidFill(RS_Painter* painter) {
     fillBrush.setStyle(Qt::SolidPattern);
 
     painter->setBrush(fillBrush);
-
-    QTransform transform = painter->getToGuiTransform();
-    painter->setTransform(transform, false);
+    // Transform loops into painter paths
+    m_solidPath->clear();
+    std::transform(m_orderedLoops->begin(), m_orderedLoops->end(),
+                   std::back_inserter(*m_solidPath),
+                   [painter](const LC_LoopUtils::LC_Loops& loop) {
+                     return loop.getPainterPath(painter);
+                   });
 
     for (const QPainterPath& path : *m_solidPath) {
         painter->drawPath(path);
     }
 
     // Restore original
-    painter->setBrush(originalBrush);
+    painter->restore();
 }
 
 /**

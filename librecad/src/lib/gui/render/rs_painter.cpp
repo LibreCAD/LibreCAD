@@ -806,11 +806,11 @@ void RS_Painter::drawEllipseSegmentBySplinePointsUI(const RS_Vector& uiRadii, do
     // deviation of an arc from its parabola fitting
     const double dParam = std::pow(1./32. / r, 1. / 4.);
     int numSegments = std::max(1, int(std::ceil(std::abs(lenRad) / dParam)));
+  // Avoid performance issue: too many points when zoomed in
+  // The maximum rendering error is relaxed
+    numSegments = std::min(24, numSegments);
     // Don't duplicate first point for closed
     int numPoints = closed ? numSegments : numSegments + 1;
-    if (closed) {
-        numPoints = numSegments;
-    }
     double delta = lenRad / numSegments;
 
     LC_SplinePointsData data;
@@ -826,6 +826,41 @@ void RS_Painter::drawEllipseSegmentBySplinePointsUI(const RS_Vector& uiRadii, do
 
     LC_SplinePoints spline(nullptr, data);
     addSplinePointsToPath(spline.getData().controlPoints, closed, path);
+}
+
+
+void RS_Painter::drawEllipseBySplinePointsUI(const RS_Ellipse& ellipse, QPainterPath &path)
+{
+  RS_Vector uiRadii{toGuiDX(ellipse.getMajorRadius()), toGuiDY(ellipse.getMinorRadius())};
+  double r = std::max(uiRadii.x, uiRadii.y);
+  // maximum angular step size: using this angular step size keeps the maximum
+  // deviation of an arc from its parabola fitting
+  const double dParam = std::pow(1./32. / r, 1. / 4.);
+  double lenRad = ellipse.getAngleLength();
+  int numSegments = std::max(1, int(std::ceil(std::abs(lenRad) / dParam)));
+  // Avoid performance issue: too many points when zoomed in
+  // The maximum rendering error is relaxed
+  numSegments = std::min(numSegments, 24);
+  // Don't duplicate first point for closed
+  const bool closed = !ellipse.isEllipticArc();
+  int numPoints = closed ? numSegments : numSegments + 1;
+  double delta = lenRad / numSegments;
+
+  LC_SplinePointsData data;
+  data.closed = closed;
+
+  double param = ellipse.isReversed() ? ellipse.getAngle1(): ellipse.getAngle2();
+  RS_Vector rotation{- ellipse.getMajorP().angle()};
+  RS_Vector uiCenter = toGui(ellipse.getCenter());
+
+  const RS_Vector scaleXY{uiRadii.x, - uiRadii.y};
+  for (int i = 0; i < numPoints; ++i) {
+    data.splinePoints.push_back(RS_Vector{param}.scale(scaleXY).rotate(rotation).move(uiCenter));
+    param += delta;
+  }
+
+  LC_SplinePoints spline(nullptr, data);
+  addSplinePointsToPath(spline.getData().controlPoints, ellipse.isEllipticArc(), path);
 }
 
 void RS_Painter::addSplinePointsToPath(const std::vector<RS_Vector> &uiControlPoints, bool closed, QPainterPath &path) const
