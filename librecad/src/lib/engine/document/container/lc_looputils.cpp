@@ -738,13 +738,9 @@ int LC_Loops::getContainingDepth(const RS_Vector& point) const {
  */
 QPainterPath LC_Loops::getPainterPath(RS_Painter* painter, int level) const {
   QPainterPath path = buildPathFromLoop(painter, *m_loop);
-  double angle = path.angleAtPercent(0.1);
-  bool clockwise = std::signbit(angle);
-  if ((level % 2 == 1) != clockwise)
-    path = path.toReversed();  // Reverse for hole winding
   for (const auto& child : m_children) {
     QPainterPath childPath = child.getPainterPath(painter, level + 1);
-    path.addPath(childPath);
+    path -= childPath;
   }
   path.setFillRule(Qt::OddEvenFill);
   return path;
