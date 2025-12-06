@@ -90,6 +90,7 @@ RS_Entity::RS_Entity(const RS_Entity& other):
                                                , m_layer {other.m_layer}
                                                , updateEnabled {other.updateEnabled}
                                                , m_pImpl{std::make_unique<Impl>(*other.m_pImpl)}{
+  setFlag(RS2::FlagVisible);
   initId();
 }
 
@@ -101,6 +102,7 @@ RS_Entity& RS_Entity::operator = (const RS_Entity& other){
     m_layer  = other.m_layer;
     updateEnabled = other.updateEnabled;
     m_pImpl = std::make_unique<Impl>(*other.m_pImpl);
+    setFlag(RS2::FlagVisible);
     initId();
   }
   return *this;
@@ -113,6 +115,7 @@ RS_Entity::RS_Entity(RS_Entity&& other):
                                           , m_layer {other.m_layer}
                                           , updateEnabled {other.updateEnabled}
                                           , m_pImpl{std::move(other.m_pImpl)}{
+  setFlag(RS2::FlagVisible);
   initId();
 }
 
@@ -124,6 +127,7 @@ RS_Entity& RS_Entity::operator = (RS_Entity&& other){
     m_layer  = other.m_layer;
     updateEnabled = other.updateEnabled;
     m_pImpl = std::move(other.m_pImpl);
+    setFlag(RS2::FlagVisible);
     initId();
   }
   return *this;
