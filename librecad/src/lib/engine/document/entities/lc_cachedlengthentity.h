@@ -7,17 +7,39 @@ class LC_CachedLengthEntity:public RS_AtomicEntity{
 public:
     explicit LC_CachedLengthEntity(RS_EntityContainer* parent = nullptr);
 
-    explicit LC_CachedLengthEntity(const RS_Entity& entity)
-        : RS_AtomicEntity{entity} {
-    }
+  LC_CachedLengthEntity(const LC_CachedLengthEntity& entity)
+      : RS_AtomicEntity{entity}
+        , cachedLength{entity.cachedLength}
+  {
+  }
 
-    explicit LC_CachedLengthEntity(RS_Entity&& entity)
-        : RS_AtomicEntity{entity} {
+  LC_CachedLengthEntity& operator = (const LC_CachedLengthEntity& other)
+  {
+    if (this != &other) {
+      RS_AtomicEntity::operator=(other);
+      cachedLength = other.cachedLength;
     }
+    return *this;
+  }
 
-    double getLength() const override{
-        return cachedLength;
+  LC_CachedLengthEntity(LC_CachedLengthEntity&& entity)
+      : RS_AtomicEntity{std::move(entity)}
+        , cachedLength{entity.cachedLength}
+  {
+  }
+
+  LC_CachedLengthEntity& operator = (LC_CachedLengthEntity&& other)
+  {
+    if (this != &other) {
+      RS_AtomicEntity::operator=(std::move(other));
+      cachedLength = other.cachedLength;
     }
+    return *this;
+  }
+
+  double getLength() const override{
+    return cachedLength;
+  }
 
 protected:
 

@@ -54,14 +54,6 @@ class RS_Line : public LC_CachedLengthEntity {
 public:
     RS_Line() = default;
 
-    explicit RS_Line(const RS_Entity& entity)
-        : LC_CachedLengthEntity{entity} {
-    }
-
-    explicit RS_Line(RS_Entity&& entity)
-        : LC_CachedLengthEntity{entity} {
-    }
-
     RS_Line(RS_EntityContainer* parent,const RS_LineData& d);
     RS_Line(RS_EntityContainer* parent, const RS_Vector& pStart, const RS_Vector& pEnd);
     RS_Line(const RS_Vector& pStart, const RS_Vector& pEnd);

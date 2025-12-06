@@ -25,6 +25,7 @@
 **
 **********************************************************************/
 
+#include <random>
 
 #include "rs_information.h"
 
@@ -950,180 +951,74 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseLine(RS_Line* line,
  * @param onContour Will be set to true if the given point it exactly
  *         on the contour.
  */
+/**
+ * Checks if the given coordinate is inside the given contour.
+ *
+ * @param point Coordinate to check.
+ * @param contour One or more entities which shape a contour.
+ * If the given contour is not closed, the result is undefined.
+ * The entities don't need to be in a specific order.
+ * @param onContour Will be set to true if the given point it exactly
+ * on the contour.
+ */
+/**
+ * Checks if the given coordinate is inside the given contour.
+ *
+ * @param point Coordinate to check.
+ * @param contour One or more entities which shape a contour.
+ * If the given contour is not closed, the result is undefined.
+ * The entities don't need to be in a specific order.
+ * @param onContour Will be set to true if the given point it exactly
+ * on the contour.
+ */
+/**
+ * Checks if the given coordinate is inside the given contour.
+ *
+ * @param point Coordinate to check.
+ * @param contour One or more entities which shape a contour.
+ * If the given contour is not closed, the result is undefined.
+ * The entities don't need to be in a specific order.
+ * @param onContour Will be set to true if the given point it exactly
+ * on the contour.
+ */
 bool RS_Information::isPointInsideContour(const RS_Vector& point,
-        RS_EntityContainer* contour, bool* onContour) {
+                                          RS_EntityContainer* contour, bool* onContour) {
 
-	if (!contour) {
-        RS_DEBUG->print(RS_Debug::D_WARNING,
-						"RS_Information::isPointInsideContour: contour is nullptr");
-        return false;
+  if (contour == nullptr || !LC_Rect{contour->getMin(), contour->getMax()}.inArea(point))
+    return false;
+
+  const double onTol = 1.0e-4;
+  for (RS_Entity* e : lc::LC_ContainerTraverser{*contour, RS2::ResolveAll}.entities()) {
+    if (e->isPointOnEntity(point, onTol)) {
+      if (onContour != nullptr)
+        *onContour = true;
+      return true;
     }
+  }
 
-    if (point.x < contour->getMin().x || point.x > contour->getMax().x ||
-            point.y < contour->getMin().y || point.y > contour->getMax().y) {
-        return false;
+  double width = contour->getSize().magnitude() + 1.0;
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_real_distribution<double> dist(0.0, 2.0 * M_PI);
+
+  auto intersections = [&]() {
+    RS_Vector vector = RS_Vector::polar(width, dist(gen));
+    RS_Line ray{point, point + vector};
+    size_t counter=0;
+    for (RS_Entity* en: lc::LC_ContainerTraverser{*contour, RS2::ResolveAll}.entities()) {
+        RS_VectorSolutions sol = getIntersection(en, &ray, true);
+      if (sol.isTangent())
+          counter += sol.size() + 1;
+      else
+          counter += sol.size();
     }
+    return counter;
+  };
 
-    double width = contour->getSize().x+1.0;
+  // use two random rays to find the minimum intersections
+  size_t counter = std::min(intersections(), intersections());
 
-    bool sure;
-    int counter;
-    int tries = 0;
-    double rayAngle = 0.0;
-    do {
-        sure = true;
-
-        // create ray:
-		RS_Vector v = RS_Vector::polar(width*10.0, rayAngle);
-		RS_Line ray{point, point+v};
-        counter = 0;
-        RS_VectorSolutions sol;
-
-		if (onContour) {
-            *onContour = false;
-        }
-
-        for(RS_Entity* e: lc::LC_ContainerTraverser{*contour, RS2::ResolveAll}.entities()) {
-            // intersection(s) from ray with contour entity:
-            sol = RS_Information::getIntersection(&ray, e, true);
-
-            for (int i=0; i<=1; ++i) {
-                RS_Vector p = sol.get(i);
-
-                if (p.valid) {
-                    // point is on the contour itself
-                    if (p.distanceTo(point)<1.0e-5) {
-						if (onContour) {
-                            *onContour = true;
-                        }
-                    } else {
-                        if (e->rtti()==RS2::EntityLine) {
-                            auto line = static_cast<RS_Line*>(e);
-
-                            // ray goes through startpoint of line:
-                            if (p.distanceTo(line->getStartpoint())<1.0e-4) {
-                                if (RS_Math::correctAngle(line->getAngle1())<M_PI) {
-                                    sure = false;
-                                }
-                            }
-
-                            // ray goes through endpoint of line:
-                            else if (p.distanceTo(line->getEndpoint())<1.0e-4) {
-                                if (RS_Math::correctAngle(line->getAngle2())<M_PI) {
-                                    sure = false;
-                                }
-                            }
-                            // else: ray goes through the line
-
-
-                                counter++;
-                            
-                        } else if (e->rtti()==RS2::EntityArc) {
-                            auto arc = static_cast<RS_Arc*>(e);
-
-                            if (p.distanceTo(arc->getStartpoint())<1.0e-4) {
-                                double dir = arc->getDirection1();
-                                if ((dir<M_PI && dir>=1.0e-5) ||
-                                        ((dir>2*M_PI-1.0e-5 || dir<1.0e-5) &&
-                                         arc->getCenter().y>p.y)) {
-                                    counter++;
-                                    sure = false;
-                                }
-                            }
-                            else if (p.distanceTo(arc->getEndpoint())<1.0e-4) {
-                                double dir = arc->getDirection2();
-                                if ((dir<M_PI && dir>=1.0e-5) ||
-                                        ((dir>2*M_PI-1.0e-5 || dir<1.0e-5) &&
-                                         arc->getCenter().y>p.y)) {
-                                    counter++;
-                                    sure = false;
-                                }
-                            } else {
-                                counter++;
-                            }
-                        } else if (e->rtti()==RS2::EntityCircle) {
-                            // tangent:
-                            if (i==0 && sol.get(1).valid==false) {
-                                if (!sol.isTangent()) {
-                                    counter++;
-                                } else {
-                                    sure = false;
-                                }
-                            } else if (i==1 || sol.get(1).valid==true) {
-                                counter++;
-                            }
-                        } else if (e->rtti()==RS2::EntityEllipse) {
-                            auto* ellipse=static_cast<RS_Ellipse*>(e);
-                            if(ellipse->isArc()){
-                                if (p.distanceTo(ellipse->getStartpoint())<1.0e-4) {
-                                    double dir = ellipse->getDirection1();
-                                    if ((dir<M_PI && dir>=1.0e-5) ||
-                                            ((dir>2*M_PI-1.0e-5 || dir<1.0e-5) &&
-                                             ellipse->getCenter().y>p.y)) {
-                                        counter++;
-                                        sure = false;
-                                    }
-                                }
-                                else if (p.distanceTo(ellipse->getEndpoint())<1.0e-4) {
-                                    double dir = ellipse->getDirection2();
-                                    if ((dir<M_PI && dir>=1.0e-5) ||
-                                            ((dir>2*M_PI-1.0e-5 || dir<1.0e-5) &&
-                                             ellipse->getCenter().y>p.y)) {
-                                        counter++;
-                                        sure = false;
-                                    }
-                                } else {
-                                    counter++;
-                                }
-                            }else{
-                                // tangent:
-                                if (i==0 && sol.get(1).valid==false) {
-                                    if (!sol.isTangent()) {
-                                        counter++;
-                                    } else {
-                                        sure = false;
-                                    }
-                                } else if (i==1 || sol.get(1).valid==true) {
-                                    counter++;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        rayAngle+=0.02;
-        tries++;
-    }
-    while (!sure && rayAngle<2*M_PI && tries<6);
-
-    // remove double intersections:
-    /*
-       QList<RS_Vector> is2;
-       bool done;
-    RS_Vector* av;
-       do {
-           done = true;
-           double minDist = RS_MAXDOUBLE;
-           double dist;
-		av = nullptr;
-		   for (RS_Vector* v = is.first(); v; v = is.next()) {
-               dist = point.distanceTo(*v);
-               if (dist<minDist) {
-                   minDist = dist;
-                   done = false;
-                        av = v;
-               }
-           }
-
-		if (!done && av) {
-                is2.append(*av);
-        }
-       } while (!done);
-    */
-
-    return ((counter%2)==1);
+  return counter%2 == 1;
 }
 
 RS_VectorSolutions RS_Information::createQuadrilateral(const RS_EntityContainer& container){

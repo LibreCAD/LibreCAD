@@ -49,13 +49,13 @@ std::ostream& operator << (std::ostream& os, const RS_LineData& ld) {
 RS_Line::RS_Line(RS_EntityContainer* parent,
                  const RS_LineData& d)
     :LC_CachedLengthEntity(parent), data(d) {
-    calculateBorders();
+    RS_Line::calculateBorders();
 }
 
 ////construct a line from two endpoints
 RS_Line::RS_Line(RS_EntityContainer* parent, const RS_Vector& pStart, const RS_Vector& pEnd)
 	:LC_CachedLengthEntity(parent), data({pStart,pEnd}) {
-    calculateBorders();
+    RS_Line::calculateBorders();
 }
 
 ////construct a line from two endpoints, to be used for construction
