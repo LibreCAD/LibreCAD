@@ -26,7 +26,6 @@
 
 #include <algorithm>
 #include <cmath>
-#include <map>
 #include <set>
 #include <QPen>
 #include <QPainterPath>
@@ -650,7 +649,7 @@ LoopSorter::~LoopSorter() = default;
  * Builds forest of roots and converts to LC_Loops.
  */
 void LoopSorter::sortAndBuild() {
-  std::map<double, RS_EntityContainer*> orderedLoops;
+  std::multimap<double, RS_EntityContainer*> orderedLoops;
   for (auto& p : m_data->loops) {
     p->setParent(nullptr);  // Reset parents
     p->forcedCalculateBorders();
@@ -699,7 +698,7 @@ void LoopSorter::init() {
  * @brief Assigns the smallest enclosing parent using bbox inclusion and point-in-contour test.
  * Processes small-to-large to ensure immediate (direct) parent.
  */
-void LoopSorter::findParent(RS_EntityContainer* loop, const std::map<double, RS_EntityContainer*>& sorted) {
+void LoopSorter::findParent(RS_EntityContainer* loop, const std::multimap<double, RS_EntityContainer*>& sorted) {
   if (sorted.size() == 1)
     return;
   LC_Rect childBox{loop->getMin(), loop->getMax()};

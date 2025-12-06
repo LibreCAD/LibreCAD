@@ -346,7 +346,7 @@ private:
    * @param loop The child loop.
    * @param sorted Sorted list of all loops.
    */
-  void findParent(RS_EntityContainer* loop, const std::map<double, RS_EntityContainer*>& sorted);
+  void findParent(RS_EntityContainer* loop, const std::multimap<double, RS_EntityContainer*>& sorted);
   /**
    * @brief Converts a forest of containers to LC_Loops trees.
    * @param forest Vector of root containers.
