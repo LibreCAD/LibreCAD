@@ -23,8 +23,6 @@
 
 #include "lc_dimarrowblock.h"
 
-#include "rs_pen.h"
-
 void LC_DimArrow::move(const RS_Vector& offset) {
     // this is just ugly construction that is needed to avoid direct invocation of protected fields.
     // So an additional boilerplate and performance overhead should be created in order to satisfy generic logic
@@ -48,7 +46,7 @@ void LC_DimArrow::move(const RS_Vector& offset) {
 void LC_DimArrow::doMove([[maybe_unused]]const RS_Vector& offset) {
 }
 
-void LC_DimArrow::doRotate([[maybe_unused]]const RS_Vector& center, [[maybe_unused]]RS_Vector angleVector) {
+void LC_DimArrow::doRotate([[maybe_unused]]const RS_Vector& center, [[maybe_unused]]const RS_Vector& angleVector) {
 }
 
 void LC_DimArrow::rotate(const RS_Vector& center, double angle) {

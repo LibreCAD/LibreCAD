@@ -37,10 +37,6 @@ RS_DimDiametricData::RS_DimDiametricData():
 	leader(0.0) {
 }
 
-RS_DimDiametricData::RS_DimDiametricData(const RS_DimDiametricData& other) :
-    definitionPoint{other.definitionPoint}, leader{other.leader} {
-}
-
 /**
  * Constructor with initialisation.
  *

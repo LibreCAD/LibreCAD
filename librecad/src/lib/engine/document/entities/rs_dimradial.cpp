@@ -29,18 +29,11 @@
 
 #include "rs_debug.h"
 #include "rs_graphic.h"
-#include "rs_line.h"
-#include "rs_settings.h"
 #include "rs_units.h"
 
 RS_DimRadialData::RS_DimRadialData():
 	definitionPoint(false),
 	leader(0.0) {
-}
-
-RS_DimRadialData::RS_DimRadialData(const RS_DimRadialData &other):
-   definitionPoint{other.definitionPoint},
-   leader{other.leader} {
 }
 
 /**

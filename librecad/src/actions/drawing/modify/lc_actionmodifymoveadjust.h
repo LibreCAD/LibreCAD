@@ -47,7 +47,7 @@ public:
     };
 
     LC_ActionModifyMoveAdjust(LC_ActionContext *actionContext, MovementInfo info);
-    void onSelectionCompleted(bool singleEntity, bool fromInit);
+    void onSelectionCompleted(bool singleEntity, bool fromInit) override;
     ~LC_ActionModifyMoveAdjust() override = default;
     bool isSupportsPredecessorAction() override {return true;};
 protected:

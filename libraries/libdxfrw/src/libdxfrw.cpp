@@ -1019,7 +1019,7 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent) {
     }
     writeInt16(70, ent->flags);
 
-    DRW_Dimstyle::ValueHolder var;
+    //DRW_Dimstyle::ValueHolder var;
 
     writeUtf8String(3, ent, "$DIMPOST");
     writeUtf8String(4, ent, "$DIMAPOST");

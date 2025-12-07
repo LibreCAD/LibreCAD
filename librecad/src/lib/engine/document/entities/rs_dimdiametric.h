@@ -46,7 +46,6 @@ struct RS_DimDiametricData {
      */
     RS_DimDiametricData(const RS_Vector &definitionPoint,double leader);
 
-    RS_DimDiametricData(const RS_DimDiametricData & other);
     /** Definition point. */
     RS_Vector definitionPoint;
     /** Leader length. */

@@ -57,7 +57,7 @@ public:
 protected:
     void setDistPtr(double* dist, double value) const;
     virtual void doMove(const RS_Vector& offset);
-    virtual void doRotate(const RS_Vector& center, RS_Vector angleVector);
+    virtual void doRotate(const RS_Vector& center, const RS_Vector& angleVector);
     virtual void doScale(const RS_Vector& center, const RS_Vector& factor);
     virtual void doMirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
     virtual void doCalculateBorders();

@@ -50,7 +50,7 @@ private:
     QList<LC_MenuActivator*>* m_activators;
     QElapsedTimer m_doubleClickTimer;
 
-    bool eventFilter(QObject *object, QEvent *event);
+    bool eventFilter(QObject *object, QEvent *event) override;
 
     void updateShortcutView();
     QString findMenuForActivator();

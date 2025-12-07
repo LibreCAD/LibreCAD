@@ -35,7 +35,7 @@ protected:
     void positionFromZero();
     void doCalculateBorders() override;
     void doMove(const RS_Vector& offset) override;
-    auto doRotate(const RS_Vector& center, const RS_Vector& angleVector) -> void;
+    void doRotate(const RS_Vector& center, const RS_Vector& angleVector) override;
     void doScale(const RS_Vector& center, const RS_Vector& factor) override;
     void doMirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
     void initVertexes(int size){m_vertices.resize(size);}

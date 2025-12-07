@@ -115,9 +115,9 @@ bool isClosed(const RS_Entity& en) {
     return spline.isClosed();
   }
   case RS2::EntityParabola:
-    return false; // Parabolas are open curves
+  default:
+    return false;
   }
-  return false;
 }
 
 /**

@@ -33,6 +33,7 @@
 #include "lc_splinepoints.h"
 #include "lc_undosection.h"
 #include "rs_arc.h"
+#include "rs_atomicentity.h"
 #include "rs_block.h"
 #include "rs_circle.h"
 #include "rs_clipboard.h"
@@ -121,20 +122,20 @@ namespace {
         return sol;
     }
 
-    RS_Arc *trimCircle(RS_Circle *circle, const RS_Vector &trimCoord, const RS_VectorSolutions &sol){
+    RS_Arc *trimCircle(RS_Circle& circle, const RS_Vector &trimCoord, const RS_VectorSolutions &sol){
         double aStart = 0.;
         double aEnd = 2. * M_PI;
         switch (sol.size()) {
             case 0:
                 break;
             case 1:
-                aStart = circle->getCenter().angleTo(sol.at(0));
+                aStart = circle.getCenter().angleTo(sol.at(0));
                 aEnd = aStart + 2. * M_PI;
                 break;
             default:
             case 2:
                 //trim according to intersections
-                const RS_Vector& center0 = circle->getCenter();
+                const RS_Vector& center0 = circle.getCenter();
                 std::vector<double> angles { {center0.angleTo(sol[0]), center0.angleTo(sol[1])}};
                 const double a0 = center0.angleTo(trimCoord);
                 aStart = angles.front();
@@ -144,12 +145,12 @@ namespace {
                 }
                 break;
         }
-        RS_ArcData arcData(circle->getCenter(),
-                           circle->getRadius(),
+        RS_ArcData arcData(circle.getCenter(),
+                           circle.getRadius(),
                            aStart,
                            aEnd,
                            false);
-        return new RS_Arc(circle->getParent(), arcData);
+        return new RS_Arc(circle.getParent(), arcData);
     }
 
 /**
@@ -170,7 +171,7 @@ namespace {
         if (entity->rtti() != RS2::EntityEllipse) {
             return entity;
         }
-        auto ellipse = dynamic_cast<RS_Ellipse *>(entity);
+        auto* ellipse = static_cast<RS_Ellipse *>(entity);
         if (ellipse->isEllipticArc()) {
             return entity;
         }
@@ -202,7 +203,7 @@ namespace {
         RS_Vector opposite = arcFillet.getCenter() + (arcFillet.getCenter() - middle).normalized() * entity->getRadius() * 0.01;
         RS_Vector trimCoord = entity->getNearestPointOnEntity(opposite, true);
         RS_VectorSolutions sol = RS_Information::getIntersection(entity, &line, false);
-        RS_Arc *arc = trimCircle(dynamic_cast<RS_Circle *>(entity), trimCoord, sol);
+        RS_Arc *arc = trimCircle(*static_cast<RS_Circle *>(entity), trimCoord, sol);
         delete entity;
         return arc;
     }
@@ -392,17 +393,15 @@ bool RS_Modification::changeAttributes(RS_AttributesData& data, const std::vecto
 
     }
 
-    for (auto block: blocks) {
+    for (const auto& block: std::as_const(blocks)) {
         for (auto en: *block) {
-            if (en == nullptr) {
-                continue;
-            }
-            en->setSelected(true);
+            if (en != nullptr)
+                en->setSelected(true);
         }
         changeAttributes(data, block, keepSelected);
     }
 
-    for (auto cl: clones) {
+    for (const auto& cl: std::as_const(clones)) {
         RS2::EntityType rtti = cl->rtti();
         if (RS2::isDimensionalEntity(rtti)) {
             cl->update();
@@ -1398,7 +1397,7 @@ RS_Polyline *RS_Modification::deletePolylineNodesBetween(
             auto ae = dynamic_cast<RS_AtomicEntity *>(e);
             if (ae->rtti() == RS2::EntityArc){
                 RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: arc segment");
-                auto arc = dynamic_cast<RS_Arc *>(ae);
+                auto* arc = static_cast<RS_Arc *>(ae);
                 bulge = arc->getBulge();
             } else {
                 RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: line segment");
@@ -1643,7 +1642,7 @@ RS_Polyline *RS_Modification::polylineTrim(
                 double bulge = 0.0;
                 if (ae->rtti() == RS2::EntityArc){
                     RS_DEBUG->print("RS_Modification::polylineTrim: arc segment");
-                    auto arc = dynamic_cast<RS_Arc *>(ae);
+                    auto* arc = static_cast<RS_Arc *>(ae);
                     bulge = arc ->getBulge();
                 } else {
                     RS_DEBUG->print("RS_Modification::polylineTrim: line segment");
@@ -2248,13 +2247,14 @@ LC_TrimResult RS_Modification::trim(const RS_Vector& trimCoord,
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::trim: limitEntity is not atomic");
     }
-    if(trimEntity->isLocked()|| !trimEntity->isVisible()) return result;
+    if(trimEntity->isLocked()|| !trimEntity->isVisible())
+      return result;
 
     RS_VectorSolutions sol = findIntersection(*trimEntity, *limitEntity);
 
 //if intersection are in start or end point can't trim/extend in this point, remove from solution. sf.net #3537053
     if (trimEntity->rtti()==RS2::EntityLine){
-        auto *lin = dynamic_cast<RS_Line *>(trimEntity);
+        auto *lin = static_cast<RS_Line *>(trimEntity);
         for (unsigned int i=0; i< sol.size(); i++) {
             RS_Vector v = sol.at(i);
             if (v == lin->getStartpoint()) {
@@ -2267,7 +2267,7 @@ LC_TrimResult RS_Modification::trim(const RS_Vector& trimCoord,
     }
 
     if (!sol.hasValid()) {
-        return both ? trim( limitCoord, (RS_AtomicEntity*)limitEntity, trimCoord, trimEntity, false, forPreview) : result;
+        return both ? trim( limitCoord, static_cast<RS_AtomicEntity*>(limitEntity), trimCoord, trimEntity, false, forPreview) : result;
     }
 
     RS_AtomicEntity* trimmed1 = nullptr;
@@ -2277,9 +2277,9 @@ LC_TrimResult RS_Modification::trim(const RS_Vector& trimCoord,
 
     if (trimEntity->rtti()==RS2::EntityCircle) {
         // convert a circle into a trimmable arc, need to start from intersections
-        trimmed1 = trimCircle(dynamic_cast<RS_Circle*>(trimEntity), trimCoord, sol);
+        trimmed1 = trimCircle(*static_cast<RS_Circle*>(trimEntity), trimCoord, sol);
     } else {
-        trimmed1 = (RS_AtomicEntity*)trimEntity->clone();
+        trimmed1 = static_cast<RS_AtomicEntity*>(trimEntity->clone());
         trimmed1->setHighlighted(false);
     }
 
@@ -2874,7 +2874,7 @@ std::unique_ptr<LC_BevelResult> RS_Modification::bevel(
     result->trimmed2 = trimmed2;
 
     if (isPolyline){
-        auto* polyline = dynamic_cast<RS_Polyline *>(baseContainer);
+        auto* polyline = static_cast<RS_Polyline *>(baseContainer);
         polyline->updateEndpoints();
         result->polyline = polyline;
     }

@@ -44,14 +44,14 @@ protected:
     };
     CoordinateType m_coordinatesType{POS_ABSOLUTE};
 
-    void doTrigger();
-    void onMouseMoveEvent(int status, LC_MouseEvent* e);
+    void doTrigger() override;
+    void onMouseMoveEvent(int status, LC_MouseEvent* e) override;
     void updateInfoCursor(const RS_Vector& mouse, const RS_Vector& relZero);
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent* e);
-    void onMouseRightButtonRelease(int status, LC_MouseEvent* e);
-    void onCoordinateEvent(int status, bool isZero, const RS_Vector& mouse);
-    void updateMouseButtonHints();
-    RS2::CursorType doGetMouseCursor(int status);
+    void onMouseLeftButtonRelease(int status, LC_MouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, LC_MouseEvent* e) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector& mouse) override;
+    void updateMouseButtonHints() override;
+    RS2::CursorType doGetMouseCursor(int status) override;
 };
 
 #endif // LC_ACTIONINFOPOINT_H
