@@ -1,6 +1,24 @@
-/****************************************************************************
-** lc_hyperbola.h – final, const-correct, LibreCAD-ready
-****************************************************************************/
+/*******************************************************************************
+ *
+ This file is part of the LibreCAD project, a 2D CAD program
+
+Copyright (C) 2025 LibreCAD.org
+Copyright (C) 2025 sand1024
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+******************************************************************************/
 
 #ifndef LC_HYPERBOLA_H
 #define LC_HYPERBOLA_H
@@ -21,7 +39,6 @@ struct LC_HyperbolaData {
                    double angle2 = 0.0,
                    bool reversed = false);
 
-  /** Construct from foci and a point on the hyperbola */
   LC_HyperbolaData(const RS_Vector& focus0,
                    const RS_Vector& focus1,
                    const RS_Vector& point);
@@ -37,13 +54,12 @@ struct LC_HyperbolaData {
 std::ostream& operator<<(std::ostream& os, const LC_HyperbolaData& d);
 
 /**
- * Hyperbola entity – clipped spline rendering, arc length, nearest points
+ * Hyperbola entity – full analytical support
  */
 class LC_Hyperbola : public RS_AtomicEntity {
 public:
   LC_Hyperbola() = default;
   LC_Hyperbola(RS_EntityContainer* parent, const LC_HyperbolaData& d);
-
   LC_Hyperbola(const RS_Vector& focus0, const RS_Vector& focus1, const RS_Vector& point);
 
   bool createFromQuadratic(const LC_Quadratic& q);
@@ -71,6 +87,17 @@ public:
   RS_Vector getNearestDist(double distance,
                            const RS_Vector& coord,
                            double* dist = nullptr) const override;
+
+         // Tangent methods
+  double getDirection1() const override;
+  double getDirection2() const override;
+
+  RS_Vector getTangentDirection(const RS_Vector& point) const override;
+  RS_VectorSolutions getTangentPoint(const RS_Vector& point) const override;
+
+  RS_Vector getNearestOrthTan(const RS_Vector& coord,
+                              const RS_Line& normal,
+                              bool onEntity = false) const override;
 
   bool isReversed() const { return data.reversed; }
   void setReversed(bool r) { data.reversed = r; }
@@ -113,9 +140,6 @@ public:
 
   LC_Quadratic getQuadratic() const override;
 
-  double getDirection1() const override { return 0.0; }
-  double getDirection2() const override { return 0.0; }
-
 protected:
   LC_HyperbolaData data;
   bool m_bValid = false;
@@ -123,7 +147,7 @@ protected:
 private:
   struct Segment { RS_Vector p1, p2; };
 
-         // Point evaluation (const-safe)
+         // Point evaluation
   RS_Vector getPoint(double phi, bool useReversed) const;
   RS_Vector getPoint(double phi) const;
 
@@ -141,7 +165,6 @@ private:
   void drawFullApproximation(RS_Painter* painter);
 
   double segmentLength(double phiStart, double phiEnd, bool branchReversed, int samples = 1000) const;
-
   RS_Vector pointAtDistance(double distance) const;
 
   void samplePhis(std::vector<double>& phis, double minPhi, double maxPhi, int n = 12) const;

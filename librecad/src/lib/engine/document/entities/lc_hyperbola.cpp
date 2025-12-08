@@ -1,6 +1,24 @@
-/****************************************************************************
-** lc_hyperbola.cpp – final, const-correct, LibreCAD-ready
-****************************************************************************/
+/*******************************************************************************
+ *
+ This file is part of the LibreCAD project, a 2D CAD program
+
+Copyright (C) 2025 LibreCAD.org
+Copyright (C) 2025 Dongxu Li (github.com/dxli)
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+******************************************************************************/
 
 #include <algorithm>
 #include <cmath>
@@ -9,6 +27,7 @@
 #include "lc_hyperbola.h"
 #include "lc_quadratic.h"
 #include "rs_debug.h"
+#include "rs_line.h"
 #include "rs_math.h"
 #include "rs_painter.h"
 
@@ -66,7 +85,7 @@ RS_VectorSolutions LC_Hyperbola::getRefPoints() const
   RS_VectorSolutions ret;
   ret.push_back(data.center);
   RS_VectorSolutions foci = getFoci();
-  for (int i = 0; i < foci.getNumber(); ++i)
+  for (size_t i = 0; i < foci.getNumber(); ++i)
     ret.push_back(foci.get(i));
   return ret;
 }
@@ -76,7 +95,119 @@ RS_Vector LC_Hyperbola::getEndpoint() const   { return getPoint(data.angle2); }
 RS_Vector LC_Hyperbola::getMiddlePoint() const { return RS_Vector(false); }
 
 //=====================================================================
-// Rendering – clipped, const-correct
+// Tangent methods
+//=====================================================================
+
+double LC_Hyperbola::getDirection1() const
+{
+  RS_Vector p = getStartpoint();
+  if (!p.valid) return 0.0;
+  return getTangentDirection(p).angle();
+}
+
+double LC_Hyperbola::getDirection2() const
+{
+  RS_Vector p = getEndpoint();
+  if (!p.valid) return 0.0;
+  return getTangentDirection(p).angle();
+}
+
+RS_Vector LC_Hyperbola::getTangentDirection(const RS_Vector& point) const
+{
+  if (!m_bValid || !point.valid) return RS_Vector(false);
+
+  const double a = getMajorRadius();
+  const double b = getMinorRadius();
+  if (a < RS_TOLERANCE || b < RS_TOLERANCE) return RS_Vector(false);
+
+  RS_Vector local = (point - data.center).rotate(-getAngle());
+  double x = local.x, y = local.y;
+  bool rev = data.reversed;
+  if (rev) { x = -x; y = -y; }
+
+  double phi = atan2(y * a, x * b);
+  if (rev) phi += M_PI;
+
+  double cp = cos(phi), sp = sin(phi);
+  if (fabs(cp) < RS_TOLERANCE) return RS_Vector(false);
+
+  double dx_dphi = a * sp / (cp * cp);
+  double dy_dphi = b / cp;
+
+  RS_Vector tangent_local(dx_dphi, dy_dphi);
+  tangent_local.rotate(getAngle());
+  return tangent_local.normalized();
+}
+
+RS_VectorSolutions LC_Hyperbola::getTangentPoint(const RS_Vector& point) const
+{
+  if (!m_bValid || !point.valid) return RS_VectorSolutions();
+
+  const double a = getMajorRadius();
+  const double b = getMinorRadius();
+  RS_Vector d = point - data.center;
+  d.rotate(-getAngle());
+
+  double px = d.x, py = d.y;
+  double a2 = a*a, b2 = b*b;
+
+  double A = px*px/a2 + py*py/b2 - 1.0;
+  double B = -2.0 * (px/a2 + py*py/(b2*px));
+  double C = 1.0/a2 + py*py/(b2*px*px);
+
+  double disc = B*B - 4.0*A*C;
+  if (disc < -RS_TOLERANCE) return RS_VectorSolutions();
+  disc = std::max(0.0, disc);
+
+  RS_VectorSolutions sol;
+  double sqrtD = sqrt(disc);
+  for (double sign : {-1.0, 1.0}) {
+    double lambda = (-B + sign * sqrtD) / (2.0 * A);
+    if (std::isnan(lambda) || std::isinf(lambda)) continue;
+
+    double x = a2 / (px + lambda);
+    double y = (b2 * py * x) / (a2 * px);
+
+    RS_Vector local(x, y);
+    local.rotate(getAngle());
+    RS_Vector world = data.center + local;
+
+    if (isPointOnEntity(world, RS_TOLERANCE * 10))
+      sol.push_back(world);
+  }
+  return sol;
+}
+
+RS_Vector LC_Hyperbola::getNearestOrthTan(const RS_Vector& coord,
+                                          const RS_Line& normal,
+                                          bool onEntity) const
+{
+  if (!m_bValid) return RS_Vector(false);
+
+  RS_Vector n = normal.getTangentDirection({});
+
+  auto f = [&](double phi, bool rev) -> double {
+    RS_Vector t = getTangentDirection(getPoint(phi, rev));
+    return t.valid ? RS_Vector::dotP(t, n) : 1e10;
+  };
+
+  double phi = 0.0;
+  for (int i = 0; i < 20; ++i) {
+    double val = f(phi, data.reversed);
+    if (fabs(val) < 1e-8) break;
+    double eps = 1e-6;
+    double deriv = (f(phi + eps, data.reversed) - f(phi - eps, data.reversed)) / (2.0 * eps);
+    if (fabs(deriv) < 1e-10) break;
+    phi -= val / deriv;
+  }
+
+  RS_Vector p = getPoint(phi);
+  if (!p.valid || (onEntity && !isPointOnEntity(p))) return RS_Vector(false);
+  return p;
+}
+
+//=====================================================================
+// Rendering – analytic curvature adaptive sampling
 //=====================================================================
 
 void LC_Hyperbola::draw(RS_Painter* painter)
@@ -90,10 +221,8 @@ void LC_Hyperbola::draw(RS_Painter* painter)
     return;
   }
 
-  const double xmin = vp.minP().x;
-  const double xmax = vp.maxP().x;
-  const double ymin = vp.minP().y;
-  const double ymax = vp.maxP().y;
+  const double xmin = vp.minP().x, xmax = vp.maxP().x;
+  const double ymin = vp.minP().y, ymax = vp.maxP().y;
 
   const LC_Quadratic q = getQuadratic();
   if (!q.isValid()) return;
@@ -117,10 +246,6 @@ void LC_Hyperbola::draw(RS_Painter* painter)
   }
 }
 
-//=====================================================================
-// Clipped branch drawing
-//=====================================================================
-
 void LC_Hyperbola::drawClippedBranch(RS_Painter* painter,
                                      const std::vector<double>& m,
                                      const std::vector<Segment>& vpSeg,
@@ -128,10 +253,9 @@ void LC_Hyperbola::drawClippedBranch(RS_Painter* painter,
                                      double phiMin, double phiMax,
                                      bool branchReversed) const
 {
-  std::vector<std::pair<double,double>> visibleRanges;
-  visibleRanges.emplace_back(phiMin, phiMax);
+  std::vector<double> phis = {phiMin, phiMax};
 
-         // Intersect hyperbola with each viewport edge
+         // Intersect with viewport edges
   for (const auto& seg : vpSeg) {
     const RS_Vector d = seg.p2 - seg.p1;
     const double dx = d.x, dy = d.y;
@@ -141,75 +265,45 @@ void LC_Hyperbola::drawClippedBranch(RS_Painter* painter,
     const double B = 2.0*(m[0]*x0*dx + m[1]*(x0*dy + y0*dx) + m[2]*y0*dy) + m[3]*dx + m[4]*dy;
     const double C = m[0]*x0*x0 + m[1]*x0*y0 + m[2]*y0*y0 + m[3]*x0 + m[4]*y0 + m[5];
 
-    std::vector<double> intersections;
-
     if (fabs(A) < RS_TOLERANCE) {
       if (fabs(B) < RS_TOLERANCE) continue;
       const double s = -C/B;
       if (s >= -RS_TOLERANCE && s <= 1.0 + RS_TOLERANCE) {
         const RS_Vector ip = seg.p1 + d * std::clamp(s, 0.0, 1.0);
         const double phi = getParamFromPoint(ip, branchReversed);
-        if (isValidPhi(phi, phiMin, phiMax)) intersections.push_back(phi);
+        if (isValidPhi(phi, phiMin, phiMax)) phis.push_back(phi);
       }
-    } else {
-      const double disc = std::max(0.0, B*B - 4.0*A*C);
-      const double sd = sqrt(disc);
-      for (double s : {(-B - sd)/(2.0*A), (-B + sd)/(2.0*A)}) {
-        if (s >= -RS_TOLERANCE && s <= 1.0 + RS_TOLERANCE) {
-          s = std::clamp(s, 0.0, 1.0);
-          const RS_Vector ip = seg.p1 + d * s;
-          const double phi = getParamFromPoint(ip, branchReversed);
-          if (isValidPhi(phi, phiMin, phiMax)) intersections.push_back(phi);
-        }
-      }
+      continue;
     }
 
-           // Split existing ranges at intersection points
-    if (!intersections.empty()) {
-      std::vector<std::pair<double,double>> newRanges;
-      for (auto [lo, hi] : visibleRanges) {
-        std::vector<double> splits = {lo};
-        for (double phi : intersections)
-          if (phi > lo + RS_TOLERANCE && phi < hi - RS_TOLERANCE)
-            splits.push_back(phi);
-        splits.push_back(hi);
-
-        for (size_t i = 0; i + 1 < splits.size(); ++i) {
-          double a = splits[i], b = splits[i+1];
-          // Midpoint test for visibility
-          const RS_Vector mid = getPoint(0.5*(a + b), branchReversed);
-          if (mid.valid && isInClipRect(mid, xmin,xmax,ymin,ymax))
-            newRanges.emplace_back(a, b);
-        }
+    const double disc = std::max(0.0, B*B - 4.0*A*C);
+    const double sd = sqrt(disc);
+    for (double s : {(-B - sd)/(2.0*A), (-B + sd)/(2.0*A)}) {
+      if (s >= -RS_TOLERANCE && s <= 1.0 + RS_TOLERANCE) {
+        s = std::clamp(s, 0.0, 1.0);
+        const RS_Vector ip = seg.p1 + d * s;
+        const double phi = getParamFromPoint(ip, branchReversed);
+        if (isValidPhi(phi, phiMin, phiMax)) phis.push_back(phi);
       }
-      visibleRanges = std::move(newRanges);
     }
   }
 
-         // Draw only visible ranges
-  for (const auto [p1, p2] : visibleRanges) {
+  if (phis.size() < 3) samplePhis(phis, phiMin, phiMax, 12);
+  std::sort(phis.begin(), phis.end());
+  phis.erase(std::unique(phis.begin(), phis.end(),
+                         [](double a,double b){return fabs(a-b)<2.0*RS_TOLERANCE;}), phis.end());
+
+  for (size_t i = 0; i + 1 < phis.size(); ++i) {
+    const double p1 = phis[i], p2 = phis[i+1];
     if (fabs(p2 - p1) < RS_TOLERANCE) continue;
+
+    const RS_Vector mid = getPoint(0.5*(p1 + p2), branchReversed);
+    if (!mid.valid || !isInClipRect(mid, xmin,xmax,ymin,ymax)) continue;
+
     drawSplineSegment(painter, p1, p2, branchReversed, xmin,xmax,ymin,ymax);
   }
 }
 
-//=====================================================================
-// Spline segment rendering
-//=====================================================================
-/**
- * drawSplineSegment – Adaptive spline rendering with analytic curvature control
- *
- * Guarantees ≤1 pixel maximum deviation from the true hyperbola
- * using mathematically exact curvature of the parametric form:
- *
- *     x = a / cos φ    (right branch, reversed = false)
- *     y = b tan φ
- *
- * Curvature formula: κ(φ) = a·b / (b² cos²φ + a² sin²φ)^(3/2)
- *
- * Uses sagitta error bound: e ≈ κ L³ / 24 → L_max = ∛(24 e / κ)
- * to compute required sampling density.
- */
 void LC_Hyperbola::drawSplineSegment(RS_Painter* painter,
                                      double phiStart, double phiEnd,
                                      bool branchReversed,
@@ -217,82 +311,47 @@ void LC_Hyperbola::drawSplineSegment(RS_Painter* painter,
 {
   if (!painter || fabs(phiEnd - phiStart) < RS_TOLERANCE) return;
 
-         // Target: maximum 1 pixel deviation in screen space
   const double maxPixelError = 1.0;
-
-         // Current GUI scale: pixels per world unit
   const double scaleX = fabs(painter->toGuiDX(1.0));
   const double scaleY = fabs(painter->toGuiDY(1.0));
   const double scale = std::min(scaleX, scaleY);
-  if (scale < 1e-8) return;  // safety
+  if (scale < 1e-8) return;
 
-         // Convert pixel error → world units
   const double worldTol = maxPixelError / scale;
 
   const double a = getMajorRadius();
   const double b = getMinorRadius();
-  if (a < RS_TOLERANCE || b < RS_TOLERANCE) return;
 
-         // -----------------------------------------------------------------
-         // Analytic curvature of hyperbola: κ(φ) = a b / (b² cos²φ + a² sin²φ)^(3/2)
-         // We find maximum curvature in [phiStart, phiEnd] to be conservative
-         // -----------------------------------------------------------------
   auto curvatureAt = [&](double phi) -> double {
     if (branchReversed) phi += M_PI;
     phi = fmod(phi + 4.0*M_PI, 2.0*M_PI) - 2.0*M_PI;
-
-    const double cp = cos(phi), sp = sin(phi);
-    const double denom = b*b*cp*cp + a*a*sp*sp;
-    if (denom < RS_TOLERANCE2) return 1e10;  // near asymptote
+    double cp = cos(phi), sp = sin(phi);
+    double denom = b*b*cp*cp + a*a*sp*sp;
+    if (denom < RS_TOLERANCE2) return 1e10;
     return (a * b) / pow(denom, 1.5);
   };
 
-         // Sample curvature at 50 points → find maximum
   double maxK = 0.0;
-  const int steps = 50;
-  for (int i = 0; i <= steps; ++i) {
-    double t = i / double(steps);
-    double phi = phiStart + t * (phiEnd - phiStart);
-    double k = curvatureAt(phi);
+  for (int i = 0; i <= 50; ++i) {
+    double t = i / 50.0;
+    double k = curvatureAt(phiStart + t * (phiEnd - phiStart));
     if (k > maxK) maxK = k;
   }
 
-         // If near asymptote, curvature goes to infinity → use fallback
-  if (maxK > 1e8) maxK = 1e8;
-
-         // -----------------------------------------------------------------
-         // Sagitta error bound: e ≈ κ L³ / 24
-         // Solve for maximum safe chord length: L_max = ∛(24 e / κ)
-         // -----------------------------------------------------------------
-  double Lmax = (maxK > 1e-10) ? cbrt(24.0 * worldTol / maxK) : 1e6;  // flat → large
-
-         // Estimate total arc length in this interval
+  double Lmax = (maxK > 1e-10) ? cbrt(24.0 * worldTol / maxK) : 1e6;
   double arcLen = segmentLength(phiStart, phiEnd, branchReversed, 100);
+  int samples = std::max(4, std::min(256, static_cast<int>(ceil(arcLen / Lmax)) + 1));
 
-         // Required number of samples
-  int samples = static_cast<int>(ceil(arcLen / Lmax)) + 1;
-  samples = std::max(4, std::min(samples, 256));  // clamp [4, 256]
-
-         // -----------------------------------------------------------------
-         // Final sampling and rendering
-         // -----------------------------------------------------------------
   std::vector<RS_Vector> pts;
   const double delta = (phiEnd - phiStart) / (samples - 1);
-
   for (int i = 0; i < samples; ++i) {
-    double phi = phiStart + i * delta;
-    RS_Vector p = getPoint(phi, branchReversed);
+    RS_Vector p = getPoint(phiStart + i * delta, branchReversed);
     if (p.valid && isInClipRect(p, xmin,xmax,ymin,ymax))
       pts.push_back(p);
   }
-
   if (pts.size() >= 2)
     painter->drawSplinePointsWCS(pts, false);
 }
-
-//=====================================================================
-// Full fallback
-//=====================================================================
 
 void LC_Hyperbola::drawFullApproximation(RS_Painter* painter)
 {
@@ -302,7 +361,7 @@ void LC_Hyperbola::drawFullApproximation(RS_Painter* painter)
 }
 
 //=====================================================================
-// Arc length – const-correct
+// Arc length & point at distance
 //=====================================================================
 
 double LC_Hyperbola::segmentLength(double phiStart, double phiEnd, bool branchReversed, int samples) const
@@ -335,10 +394,6 @@ double LC_Hyperbola::getLength() const
   if (data.reversed) { a1 += M_PI; a2 += M_PI; }
   return segmentLength(std::min(a1,a2), std::max(a1,a2), data.reversed, samples);
 }
-
-//=====================================================================
-// Point at distance – const-correct
-//=====================================================================
 
 RS_Vector LC_Hyperbola::pointAtDistance(double distance) const
 {
@@ -408,7 +463,7 @@ RS_Vector LC_Hyperbola::getNearestDist(double distance,
 }
 
 //=====================================================================
-// Point evaluation – const-safe
+// Point evaluation
 //=====================================================================
 
 RS_Vector LC_Hyperbola::getPoint(double phi, bool useReversed) const
@@ -436,7 +491,7 @@ RS_Vector LC_Hyperbola::getPoint(double phi) const
 }
 
 //=====================================================================
-// Helpers – all const
+// Helpers
 //=====================================================================
 
 double LC_Hyperbola::getParamFromPoint(const RS_Vector& p, bool branchReversed) const
@@ -473,7 +528,7 @@ bool LC_Hyperbola::isInClipRect(const RS_Vector& p,
 }
 
 //=====================================================================
-// Minimal required overrides (no override keyword)
+// Minimal overrides
 //=====================================================================
 
 RS_Vector LC_Hyperbola::getNearestEndpoint(const RS_Vector&, double*) const { return RS_Vector(false); }
