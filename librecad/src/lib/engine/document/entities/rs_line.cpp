@@ -512,7 +512,18 @@ void RS_Line::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
     }
 }
 
+#include "lc_hyperbola.h"
+
 void RS_Line::draw(RS_Painter* painter) {
+
+  LC_HyperbolaData hD{{50., 100.}, {150., 100.}, {200., 150.}};
+  auto* hb = new LC_Hyperbola(nullptr, hD);
+  hb->setFlag(RS2::FlagVisible);
+  hb->setLayerToActive();
+  hb->setPenToActive();
+  hb->setAngle1(-0.1);
+  hb->setAngle2(0.15);
+  hb->draw(painter);
     if (isConstruction()) {
         // draw construction lines as infinite lines
         painter->drawInfiniteWCS(data.startpoint, data.endpoint);

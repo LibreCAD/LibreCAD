@@ -122,6 +122,10 @@ Area(coord, {coord.x + width, coord.y + height})
 		return _maxP.y - _minP.y;
 	}
 
+        bool LC_Rect::isEmpty(double tolerance) const {
+          return std::min(width(), height()) < tolerance;
+        }
+
 	/**
 	  * @brief Test of a specific point lies within an area
 	  * @param point Point to test against
