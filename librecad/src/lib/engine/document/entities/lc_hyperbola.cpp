@@ -25,10 +25,10 @@
 #include <cmath>
 
 #include "lc_hyperbola.h"
+#include "lc_quadratic.h"
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_painter.h"
-#include "lc_quadratic.h"
 
 using std::cosh, std::sinh, std::atan2, std::cos, std::sin, std::atan;
 
@@ -67,8 +67,22 @@ RS_Vector LC_Hyperbola::getPointExact(double phi) const {
   if (!m_bValid) return {};
   double a = getMajorRadius(), b = getMinorRadius();
   if (a < RS_TOLERANCE) return {};
-  double c = cosh(phi), s = sinh(phi);
-  RS_Vector p(a * (data.reversed ? -c : c), b * s);
+
+         // Safe handling for very large |phi| (prevent NaN/inf)
+  if (std::abs(phi) > 700.0) {  // Near double overflow limit
+    double sign = data.reversed ? -1.0 : 1.0;
+    double exp_phi = std::exp(phi);
+    double exp_neg = std::exp(-phi);
+    double ch = 0.5 * (exp_phi + exp_neg);
+    double sh = 0.5 * (exp_phi - exp_neg);
+    RS_Vector p(a * sign * ch, b * sh);
+    p.rotate(getAngle());
+    return data.center + p;
+  }
+
+  double ch = std::cosh(phi);
+  double sh = std::sinh(phi);
+  RS_Vector p(a * (data.reversed ? -ch : ch), b * sh);
   p.rotate(getAngle());
   return data.center + p;
 }
