@@ -48,6 +48,7 @@
 #include "lc_actiondrawmidline.h"
 #include "lc_actiondrawparabola4points.h"
 #include "lc_actiondrawparabolaFD.h"
+#include "lc_actiondrawhyperbolafpp.h"
 #include "lc_actiondrawpointslattice.h"
 #include "lc_actiondrawrectangle1point.h"
 #include "lc_actiondrawrectangle2points.h"
@@ -594,6 +595,9 @@ namespace InnerFactory{
             }
             case RS2::ActionDrawParabolaFD: {
                 return new LC_ActionDrawParabolaFD(ctx);
+            }
+            case RS2::ActionDrawHyperbolaFPP: {
+              return new LC_ActionDrawHyperbolaFPP(ctx);
             }
             case RS2::ActionDrawEllipseFociPoint: {
                 return new RS_ActionDrawEllipseFociPoint(ctx);

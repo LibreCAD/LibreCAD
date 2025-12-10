@@ -254,7 +254,7 @@ const boost::numeric::ublas::matrix<double>& LC_Quadratic::getQuad() const
     return m_mQuad;
 }
 
-double const& LC_Quadratic::constTerm()const
+double LC_Quadratic::constTerm()const
 {
     return m_dConst;
 }
@@ -627,7 +627,7 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
    cos x, sin x
    -sin x, cos x
    */
-boost::numeric::ublas::matrix<double> LC_Quadratic::rotationMatrix(const double& angle)
+boost::numeric::ublas::matrix<double> LC_Quadratic::rotationMatrix(double angle)
 {
     boost::numeric::ublas::matrix<double> ret(2,2);
     ret(0,0)=cos(angle);

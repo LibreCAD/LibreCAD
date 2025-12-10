@@ -89,7 +89,7 @@ public:
 	 const boost::numeric::ublas::vector<double>& getLinear() const;
 	 boost::numeric::ublas::matrix<double>& getQuad();
 	 const boost::numeric::ublas::matrix<double>& getQuad() const;
-	 double const& constTerm()const;
+         double constTerm()const;
 	 double& constTerm();
 
     /** switch x,y coordinates */
@@ -105,7 +105,7 @@ public:
     LC_Quadratic getDualCurve() const;
 
     /** the matrix of rotation by angle **/
-    static boost::numeric::ublas::matrix<double> rotationMatrix(const double& angle);
+    static boost::numeric::ublas::matrix<double> rotationMatrix(double angle);
 
     static RS_VectorSolutions getIntersection(const LC_Quadratic& l1, const LC_Quadratic& l2);
 

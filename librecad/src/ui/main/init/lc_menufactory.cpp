@@ -994,7 +994,8 @@ QMenu* LC_MenuFactory::createGraphicViewDefaultPopupMenu(QG_GraphicView* graphic
                        "DrawSpline",
                        "DrawSplinePoints",
                        "DrawParabola4Points",
-                       "DrawParabolaFD"
+                       "DrawParabolaFD",
+                       "DrawHyerbolaFPP"
                    });
 
         auto ellipseGroup = m_actionGroupManager->getActionGroup("ellipse");
