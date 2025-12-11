@@ -48,11 +48,12 @@ cp -r unix/resources/qm appdir/usr/share/librecad/
 
 cp desktop/librecad.desktop appdir/usr/share/applications/
 cp desktop/org.librecad.librecad.appdata.xml appdir/usr/share/metainfo/
-
 cp -r librecad/support/doc/* appdir/usr/share/doc/librecad/
 cp -r librecad/support/fonts appdir/usr/share/librecad/
 cp -r librecad/support/library appdir/usr/share/librecad/
 cp -r librecad/support/patterns appdir/usr/share/librecad/
+mkdir -p appdir/usr/lib/aarch64-linux-gnu/qt5/plugins
+cp -r /usr/lib/aarch64-linux-gnu/qt5/plugins/* appdir/usr/lib/aarch64-linux-gnu/qt5/plugins
 
 cp CI/librecad.svg appdir/usr/share/icons/hicolor/scalable/apps/
 convert -resize 256x256 CI/librecad.svg appdir/usr/share/icons/hicolor/256x256/apps/librecad.png
