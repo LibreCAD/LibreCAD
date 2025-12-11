@@ -125,29 +125,59 @@ void LC_ActionDrawHyperbolaFPP::onMouseMoveEvent(int status, LC_MouseEvent* e) {
     preparePreview();
 }
 
-void LC_ActionDrawHyperbolaFPP::onMouseLeftButtonRelease(int status, LC_MouseEvent* e) {
-    RS_Vector snapped = e->snapPoint;
+// lc_actiondrawhyperbolafpp.cpp - implementation of corrected onCoordinateEvent
 
-    switch (getStatus()) {
-    case SetFocus1:
-        focus1 = snapped;
-        setStatus(SetFocus2);
-        break;
-    case SetFocus2:
-        if (focus1.distanceTo(snapped) > RS_TOLERANCE) {
-            focus2 = snapped;
-            setStatus(SetStartPoint);
-        }
-        break;
-    case SetStartPoint:
-        startPoint = snapped;
-        setStatus(SetEndPoint);
-        break;
-    case SetEndPoint:
-        endPoint = snapped;
-        trigger();
-        break;
+void LC_ActionDrawHyperbolaFPP::onCoordinateEvent(int status, bool isZero, const RS_Vector& pos)
+{
+  if (!pos.valid) return;
+
+         // Handle relative zero
+  if (isZero) {
+    moveRelativeZero(pos);
+  }
+
+  switch (status) {
+  case SetFocus1:
+    focus1 = pos;
+    moveRelativeZero(focus1);
+    setStatus(SetFocus2);
+    break;
+
+  case SetFocus2:
+    if (focus1.distanceTo(pos) > RS_TOLERANCE) {
+      focus2 = pos;
+      moveRelativeZero(focus2);
+      setStatus(SetStartPoint);
     }
+    break;
+
+  case SetStartPoint:
+    startPoint = pos;
+    setStatus(SetEndPoint);
+    break;
+
+  case SetEndPoint:
+    endPoint = pos;
+    trigger();
+    break;
+  }
+
+  updateMouseButtonHints();
+  m_graphicView->redraw(RS2::RedrawOverlay);
+}
+
+void LC_ActionDrawHyperbolaFPP::onMouseLeftButtonRelease(int status, LC_MouseEvent* e)
+{
+  // Snap the point according to current snap mode
+  RS_Vector snapped = e->snapPoint;
+  if (!snapped.valid) return;
+
+         // Forward to coordinate event handler
+         // isZero = false (not from command line zero input)
+  onCoordinateEvent(status, false, snapped);
+
+         // Redraw overlay (preview, crosshair, etc.)
+  m_graphicView->redraw(RS2::RedrawOverlay);
 }
 
 void LC_ActionDrawHyperbolaFPP::onMouseRightButtonRelease(int status, LC_MouseEvent* e) {

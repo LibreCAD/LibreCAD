@@ -45,6 +45,7 @@ public:
     void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
     void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector& pos) override;
     void updateMouseButtonHints() override;
     RS2::CursorType doGetMouseCursor(int status) override;
 
