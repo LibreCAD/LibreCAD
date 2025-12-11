@@ -108,6 +108,7 @@ LC_Hyperbola* LC_ActionDrawHyperbolaFPP::preparePreview() {
 void LC_ActionDrawHyperbolaFPP::onMouseMoveEvent(int status, LC_MouseEvent* e) {
     RS_Vector mouse = e->snapPoint;
 
+      drawSnapper();
     switch (getStatus()) {
     case SetFocus1:
         break;

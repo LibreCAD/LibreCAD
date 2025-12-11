@@ -450,7 +450,7 @@ bool LC_Hyperbola::isInClipRect(const RS_Vector& p,
 //=====================================================================
 // Rendering - supports full hyperbola with selectable branches
 //=====================================================================
-    void LC_Hyperbola::draw(RS_Painter* painter)
+void LC_Hyperbola::draw(RS_Painter* painter)
 {
   if (!painter || !isValid()) return;
 
@@ -466,21 +466,16 @@ bool LC_Hyperbola::isInClipRect(const RS_Vector& p,
   RS_Vector center = getCenter();
   double angle = getAngle();
 
-         // Maximum error in world coordinates corresponding to 1 GUI pixel
-  double guiPixelPerUnitX = painter->toGuiDX(1.0);
-  double guiPixelPerUnitY = painter->toGuiDY(1.0);
-  double guiPixelPerUnit = std::min(guiPixelPerUnitX, guiPixelPerUnitY);
-  double maxWorldError = 1.0 / guiPixelPerUnit;  // 1 pixel in world units
-
-  std::vector<RS_Vector> pts;
-  pts.reserve(300);
+         // 1 GUI pixel in world units → target max error
+  double guiPixel = std::min(painter->toGuiDX(1.0), painter->toGuiDY(1.0));
+  double maxWorldError = 1.0 / guiPixel;
 
   bool isFull = (data.angle1 == 0.0 && data.angle2 == 0.0);
 
-  auto processBranch = [&](bool rev) {
+         // Process one branch (right or left)
+  auto drawBranch = [&](bool rev) {
+    // 1. Find intersections with viewport borders
     std::vector<double> params;
-
-           // Viewport border intersections
     RS_Line borders[4] = {
         RS_Line(nullptr, RS_LineData(RS_Vector(xmin, ymin), RS_Vector(xmax, ymin))),
         RS_Line(nullptr, RS_LineData(RS_Vector(xmax, ymin), RS_Vector(xmax, ymax))),
@@ -499,37 +494,53 @@ bool LC_Hyperbola::isInClipRect(const RS_Vector& p,
       }
     }
 
+           // 2. Handle fully inside case
     if (params.empty()) {
       RS_Vector test = getPoint(0.0, rev);
       if (test.valid && isInClipRect(test, xmin, xmax, ymin, ymax)) {
-        params = {-M_PI*1.5, M_PI*1.5};
+        params = {-M_PI * 1.5, M_PI * 1.5};  // full visible range
       } else {
-        return;
+        return;  // branch completely outside
       }
     } else {
       std::sort(params.begin(), params.end());
+      auto last = std::unique(params.begin(), params.end(),
+                              [](double a, double b){ return fabs(a-b) < RS_TOLERANCE_ANGLE; });
+      params.erase(last, params.end());
+      // Extend intervals slightly
       params.front() -= 0.5;
       params.back() += 0.5;
     }
 
-    for (size_t i = 0; i + 1 < params.size(); i += 2) {
-      double start = params[i];
-      double end = params[i + 1];
-      adaptiveSample(pts, start, end, rev, maxWorldError, center, angle, a, b);
+           // 3. Split into segments and test visibility at midpoint
+    for (size_t i = 0; i + 1 < params.size(); ++i) {
+      double phi1 = params[i];
+      double phi2 = params[i + 1];
+      double phiMid = (phi1 + phi2) * 0.5;
+
+      RS_Vector midPoint = getPoint(phiMid, rev);
+      if (!midPoint.valid || !isInClipRect(midPoint, xmin, xmax, ymin, ymax))
+        continue;  // segment not visible
+
+             // 4. Create one LC_SplinePoints for this visible segment
+      std::vector<RS_Vector> segmentPoints;
+      adaptiveSample(segmentPoints, phi1, phi2, rev,
+                     maxWorldError, center, angle, a, b);
+
+      if (segmentPoints.size() >= 2) {
+        painter->drawSplinePointsWCS(segmentPoints, false);
+      }
     }
   };
 
+         // Execute for required branches
   if (isFull) {
-    if (data.branchMode == 0 || data.branchMode == 1) processBranch(false);
-    if (data.branchMode == 0 || data.branchMode == 2) processBranch(true);
+    if (data.branchMode == 0 || data.branchMode == 1) drawBranch(false);  // right
+    if (data.branchMode == 0 || data.branchMode == 2) drawBranch(true);   // left
   } else {
-    processBranch(data.reversed);
+    drawBranch(data.reversed);
   }
-
-  if (pts.size() >= 2)
-    painter->drawSplinePointsWCS(pts, false);
 }
-
 // adaptiveSample() - error in world (graph) coordinates
 
 // Fixed adaptiveSample() - ensure points are ordered by increasing hyperbola angle
