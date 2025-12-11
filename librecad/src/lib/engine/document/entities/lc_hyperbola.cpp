@@ -362,6 +362,82 @@ double LC_Hyperbola::getParamFromPoint(const RS_Vector& p, bool branchReversed) 
   return phi;
 }
 
+// Simplified and accurate calculateBorders() using extremal points
+
+void LC_Hyperbola::calculateBorders()
+{
+  minV = RS_Vector(RS_MAXDOUBLE, RS_MAXDOUBLE);
+  maxV = RS_Vector(RS_MINDOUBLE, RS_MINDOUBLE);
+
+  if (!m_bValid) return;
+
+         // Full unbounded hyperbola
+  if (data.angle1 == 0.0 && data.angle2 == 0.0) {
+    minV = RS_Vector(-RS_MAXDOUBLE, -RS_MAXDOUBLE);
+    maxV = RS_Vector(RS_MAXDOUBLE, RS_MAXDOUBLE);
+    return;
+  }
+
+         // Limited arc on single branch
+  double phi1 = std::min(data.angle1, data.angle2);
+  double phi2 = std::max(data.angle1, data.angle2);
+
+         // Normalize and apply branch offset
+  phi1 = RS_Math::correctAngle(phi1);
+  phi2 = RS_Math::correctAngle(phi2);
+  if (phi2 < phi1) phi2 += 2.0 * M_PI;
+
+  double offset = data.reversed ? M_PI : 0.0;
+  phi1 += offset;
+  phi2 += offset;
+
+         // Directions of principal axes (major and minor)
+  RS_Vector dirMajor(cos(data.majorP.angle()), sin(data.majorP.angle()));
+  RS_Vector dirMinor{-dirMajor.y, dirMajor.x};
+
+         // Extrema along principal axes
+  auto addExtremum = [&](const RS_Vector& dir) {
+    // Solve for parameter where tangent is perpendicular to dir
+    // ∇Q · dir = 0
+    double dx = dir.x, dy = dir.y;
+    double denom = dx*dx/(getMajorRadius()*getMajorRadius()) - dy*dy/(getMinorRadius()*getMinorRadius());
+    if (fabs(denom) < RS_TOLERANCE) return;
+
+    double t = 1.0 / denom;
+    RS_Vector local(dx * t, dy * t);
+    local.rotate(data.majorP.angle());
+    RS_Vector p = data.center + local;
+
+    double phi = getParamFromPoint(p, data.reversed);
+    if (phi >= phi1 - RS_TOLERANCE && phi <= phi2 + RS_TOLERANCE) {
+      minV = RS_Vector::minimum(minV, p);
+      maxV = RS_Vector::maximum(maxV, p);
+    }
+  };
+
+  addExtremum(dirMajor);
+  addExtremum(-dirMajor);
+  addExtremum(dirMinor);
+  addExtremum(-dirMinor);
+
+         // Endpoints
+  RS_Vector start = getPoint(phi1);
+  RS_Vector end = getPoint(phi2);
+  if (start.valid) {
+    minV = RS_Vector::minimum(minV, start);
+    maxV = RS_Vector::maximum(maxV, start);
+  }
+  if (end.valid) {
+    minV = RS_Vector::minimum(minV, end);
+    maxV = RS_Vector::maximum(maxV, end);
+  }
+
+         // Safety expansion
+  double expand = RS_TOLERANCE * 100.0;
+  minV -= RS_Vector(expand, expand);
+  maxV += RS_Vector(expand, expand);
+}
+
 // Clip rectangle test
 bool LC_Hyperbola::isInClipRect(const RS_Vector& p,
                                 double xmin, double xmax, double ymin, double ymax) const
@@ -374,9 +450,7 @@ bool LC_Hyperbola::isInClipRect(const RS_Vector& p,
 //=====================================================================
 // Rendering - supports full hyperbola with selectable branches
 //=====================================================================
-
-// Main drawing routine
-void LC_Hyperbola::draw(RS_Painter* painter)
+    void LC_Hyperbola::draw(RS_Painter* painter)
 {
   if (!painter || !isValid()) return;
 
@@ -392,61 +466,87 @@ void LC_Hyperbola::draw(RS_Painter* painter)
   RS_Vector center = getCenter();
   double angle = getAngle();
 
-         // Adaptive tolerance based on screen pixels
+         // Maximum error in world coordinates corresponding to 1 GUI pixel
   double guiPixelPerUnitX = painter->toGuiDX(1.0);
   double guiPixelPerUnitY = painter->toGuiDY(1.0);
   double guiPixelPerUnit = std::min(guiPixelPerUnitX, guiPixelPerUnitY);
-  double pixelTol = 0.8 / guiPixelPerUnit;
-  double bezierErrorTol = pixelTol * 0.5;
+  double maxWorldError = 1.0 / guiPixelPerUnit;  // 1 pixel in world units
 
   std::vector<RS_Vector> pts;
-  pts.reserve(240);
+  pts.reserve(300);
 
   bool isFull = (data.angle1 == 0.0 && data.angle2 == 0.0);
 
-  if (!isFull) {
-    // Limited arc on single branch
-    double phi1 = RS_Math::correctAngle(std::min(data.angle1, data.angle2));
-    double phi2 = RS_Math::correctAngle(std::max(data.angle1, data.angle2));
-    if (phi2 < phi1) phi2 += 2.0 * M_PI;
+  auto processBranch = [&](bool rev) {
+    std::vector<double> params;
 
-    double offset = data.reversed ? M_PI : 0.0;
-    phi1 += offset;
-    phi2 += offset;
+           // Viewport border intersections
+    RS_Line borders[4] = {
+        RS_Line(nullptr, RS_LineData(RS_Vector(xmin, ymin), RS_Vector(xmax, ymin))),
+        RS_Line(nullptr, RS_LineData(RS_Vector(xmax, ymin), RS_Vector(xmax, ymax))),
+        RS_Line(nullptr, RS_LineData(RS_Vector(xmax, ymax), RS_Vector(xmin, ymax))),
+        RS_Line(nullptr, RS_LineData(RS_Vector(xmin, ymax), RS_Vector(xmin, ymin)))
+    };
 
-    phi1 -= 0.5;
-    phi2 += 0.5;
+    for (const auto& line : borders) {
+      RS_VectorSolutions sol = LC_Quadratic::getIntersection(getQuadratic(), line.getQuadratic());
+      for (size_t i = 0; i < sol.getNumber(); ++i) {
+        RS_Vector p = sol.get(i);
+        if (isInClipRect(p, xmin, xmax, ymin, ymax)) {
+          double phi = getParamFromPoint(p, rev);
+          if (!std::isnan(phi)) params.push_back(phi);
+        }
+      }
+    }
 
-    approximateSegmentWithBeziers(pts, phi1, phi2, false, painter, bezierErrorTol, center, angle, a, b);
+    if (params.empty()) {
+      RS_Vector test = getPoint(0.0, rev);
+      if (test.valid && isInClipRect(test, xmin, xmax, ymin, ymax)) {
+        params = {-M_PI*1.5, M_PI*1.5};
+      } else {
+        return;
+      }
+    } else {
+      std::sort(params.begin(), params.end());
+      params.front() -= 0.5;
+      params.back() += 0.5;
+    }
+
+    for (size_t i = 0; i + 1 < params.size(); i += 2) {
+      double start = params[i];
+      double end = params[i + 1];
+      adaptiveSample(pts, start, end, rev, maxWorldError, center, angle, a, b);
+    }
+  };
+
+  if (isFull) {
+    if (data.branchMode == 0 || data.branchMode == 1) processBranch(false);
+    if (data.branchMode == 0 || data.branchMode == 2) processBranch(true);
   } else {
-    // Infinite hyperbola - respect branchMode
-    const double phiLimit = 15.0;
-
-    if (data.branchMode == 0 || data.branchMode == 1) {
-      double start = -phiLimit;
-      double end = phiLimit;
-      approximateSegmentWithBeziers(pts, start, end, false, painter, bezierErrorTol, center, angle, a, b);
-    }
-    if (data.branchMode == 0 || data.branchMode == 2) {
-      double start = -phiLimit + M_PI;
-      double end = phiLimit + M_PI;
-      approximateSegmentWithBeziers(pts, start, end, false, painter, bezierErrorTol, center, angle, a, b);
-    }
+    processBranch(data.reversed);
   }
 
   if (pts.size() >= 2)
     painter->drawSplinePointsWCS(pts, false);
 }
 
-// Quadratic Bezier approximation with algebraic error control
-void LC_Hyperbola::approximateSegmentWithBeziers(std::vector<RS_Vector>& out,
-                                                 double phiStart, double phiEnd, bool /*rev*/,
-                                                 RS_Painter*, double errorTol,
-                                                 const RS_Vector& center, double angle,
-                                                 double a, double b) const
+// adaptiveSample() - error in world (graph) coordinates
+
+// Fixed adaptiveSample() - ensure points are ordered by increasing hyperbola angle
+
+// Optimized adaptiveSample() – reserve vector + final sort (fastest practical approach)
+
+void LC_Hyperbola::adaptiveSample(std::vector<RS_Vector>& out,
+                                  double phiStart, double phiEnd, bool rev,
+                                  double maxError,
+                                  const RS_Vector& center, double angle,
+                                  double a, double b) const
 {
-  // Local point evaluation
+  // Ensure monotonic direction
+  if (phiStart > phiEnd) std::swap(phiStart, phiEnd);
+
   auto point = [&](double phi) -> RS_Vector {
+    if (rev) phi += M_PI;
     double cp = std::cos(phi), sp = std::sin(phi);
     double denom = cp*cp/(a*a) - sp*sp/(b*b);
     if (denom <= RS_TOLERANCE2) return RS_Vector(false);
@@ -456,39 +556,25 @@ void LC_Hyperbola::approximateSegmentWithBeziers(std::vector<RS_Vector>& out,
     return center + local;
   };
 
-         // Recursive subdivision
-  std::function<void(double, double)> subdiv = [&](double pa, double pb) {
-    if (pb - pa < 0.02) return;
+         // Use vector of (angle, point) pairs – much faster than std::map
+  std::vector<std::pair<double, RS_Vector>> points;
+  points.reserve(256);  // typical upper bound
 
+  std::function<void(double, double)> subdiv = [&](double pa, double pb) {
     RS_Vector A = point(pa);
     RS_Vector B = point(pb);
     if (!A.valid || !B.valid) return;
 
     double pm = (pa + pb) * 0.5;
     RS_Vector M = point(pm);
+    if (!M.valid) return;
 
-           // Parabolic Bezier control point
-    RS_Vector C = M * 2.0 - (A + B) * 0.5;
+    double sagitta = (M - (A + B) * 0.5).magnitude();
+    double estimatedMaxError = sagitta * 1.15;
 
-           // Sample error at multiple points
-    auto bezierP = [&](double t) {
-      return A * (1.0 - t)*(1.0 - t) + C * 2.0 * t * (1.0 - t) + B * t * t;
-    };
-
-    double maxErr = 0.0;
-    for (double t : {0.25, 0.5, 0.75}) {
-      RS_Vector bez = bezierP(t);
-      double phi_t = pa + (pb - pa) * t;
-      RS_Vector trueP = point(phi_t);
-      if (trueP.valid) maxErr = std::max(maxErr, (trueP - bez).magnitude());
-    }
-
-           // Accept or subdivide
-    if (maxErr < errorTol || (pb - pa) < 0.08) {
-      if (out.empty() || out.back().distanceTo(A) > RS_TOLERANCE)
-        out.push_back(A);
-      out.push_back(C);
-      out.push_back(B);
+    if (estimatedMaxError < maxError || (pb - pa) < 0.05) {
+      points.emplace_back(pa, A);
+      points.emplace_back(pb, B);
       return;
     }
 
@@ -496,7 +582,24 @@ void LC_Hyperbola::approximateSegmentWithBeziers(std::vector<RS_Vector>& out,
     subdiv(pm, pb);
   };
 
+         // Start with first point
+  RS_Vector first = point(phiStart);
+  if (first.valid) points.emplace_back(phiStart, first);
+
+         // Recurse
   subdiv(phiStart, phiEnd);
+
+         // Sort by angle (only once, at the end – fastest)
+  std::sort(points.begin(), points.end(),
+            [](const auto& a, const auto& b) { return a.first < b.first; });
+
+         // Transfer to output (remove duplicates)
+  out.reserve(out.size() + points.size());
+  for (const auto& kv : points) {
+    if (out.empty() || out.back().distanceTo(kv.second) > RS_TOLERANCE) {
+      out.push_back(kv.second);
+    }
+  }
 }
 
 //=====================================================================
@@ -706,11 +809,215 @@ void LC_Hyperbola::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoin
 //=====================================================================
 // Minimal overrides
 //=====================================================================
+// Nearest endpoint - for limited arcs only
+RS_Vector LC_Hyperbola::getNearestEndpoint(const RS_Vector& coord,
+                                           double* dist) const
+{
+  if (dist) *dist = RS_MAXDOUBLE;
 
-RS_Vector LC_Hyperbola::getNearestEndpoint(const RS_Vector&, double*) const { return RS_Vector(false); }
-RS_Vector LC_Hyperbola::getNearestPointOnEntity(const RS_Vector&, bool, double*, RS_Entity**) const { return RS_Vector(false); }
-double LC_Hyperbola::getDistanceToPoint(const RS_Vector&, RS_Entity**, RS2::ResolveLevel, double) const { return RS_MAXDOUBLE; }
-bool LC_Hyperbola::isPointOnEntity(const RS_Vector&, double) const { return false; }
+  if (!m_bValid || !coord.valid) {
+    return RS_Vector(false);
+  }
+
+         // Full hyperbola has no endpoints
+  if (data.angle1 == 0.0 && data.angle2 == 0.0) {
+    return RS_Vector(false);
+  }
+
+  RS_Vector start = getStartpoint();
+  RS_Vector end = getEndpoint();
+
+  if (!start.valid && !end.valid) {
+    return RS_Vector(false);
+  }
+
+  RS_Vector nearest(false);
+  double minDist = RS_MAXDOUBLE;
+
+  if (start.valid) {
+    double d = start.distanceTo(coord);
+    if (d < minDist) {
+      minDist = d;
+      nearest = start;
+    }
+  }
+
+  if (end.valid) {
+    double d = end.distanceTo(coord);
+    if (d < minDist) {
+      minDist = d;
+      nearest = end;
+    }
+  }
+
+  if (dist) *dist = minDist;
+  return nearest;
+}
+// lc_hyperbola.cpp - refactored for readability
+
+// lc_hyperbola.cpp - getNearestPointOnEntity() using quartic solver for candidates + Newton refinement
+
+RS_Vector LC_Hyperbola::getNearestPointOnEntity(const RS_Vector& coord,
+                                                bool /*onEntity*/,
+                                                double* dist,
+                                                RS_Entity** entity) const
+{
+  if (dist) *dist = RS_MAXDOUBLE;
+  if (entity) *entity = nullptr;
+  if (!m_bValid || !coord.valid) return RS_Vector(false);
+
+  auto coef = getQuadratic().getCoefficients();
+  double A = coef[0], B = coef[1], C = coef[2];
+  double D = coef[3], E = coef[4], F = coef[5];
+
+  double qx = coord.x, qy = coord.y;
+
+         // Normal condition: (P - Q) parallel to ∇Q(P)
+         // (x - qx)(Bx + 2Cy + E) - (y - qy)(2Ax + By + D) = 0
+  std::vector<double> quartic(5, 0.0);
+
+  quartic[4] = B;                                 // x²
+  quartic[2] = -B;                                // y²
+  quartic[3] = 2.0 * (C - A);                     // xy
+  quartic[1] = E - qx * B + 2.0 * qy * A;         // x
+  quartic[0] = -D - 2.0 * qx * C + qy * B;         // y
+  quartic[0] += -qx * E + qy * D;                 // constant
+
+         // Solve quartic → candidate λ values (scaled)
+  std::vector<double> roots = RS_Math::quarticSolverFull(quartic);
+
+  RS_Vector best(false);
+  double bestD = RS_MAXDOUBLE;
+
+  const int maxIter = 20;
+  const double tol = RS_TOLERANCE * 0.1;
+
+  auto refine = [&](RS_Vector p) -> RS_Vector {
+    for (int i = 0; i < maxIter; ++i) {
+      double Q = A*p.x*p.x + B*p.x*p.y + C*p.y*p.y + D*p.x + E*p.y + F;
+      RS_Vector g(2*A*p.x + B*p.y + D, B*p.x + 2*C*p.y + E);
+      if (!g.valid || g.squared() < RS_TOLERANCE2) break;
+
+      double lambda = -2.0 * RS_Vector::dotP(p - coord, g) / g.squared();
+      RS_Vector up = g * lambda;
+      p += up;
+
+      if (up.squared() < tol*tol) {
+        if (fabs(Q) > tol) p -= g * (Q / g.squared());
+        return p;
+      }
+    }
+    return RS_Vector(false);
+  };
+
+         // Use quartic roots to generate starting points
+  for (double r : roots) {
+    // Perturb center with root-based direction
+    RS_Vector start = data.center + RS_Vector(r, r * 0.5);
+    if (RS_Vector cand = refine(start); cand.valid) {
+      double d = cand.distanceTo(coord);
+      if (d < bestD) {
+        bestD = d;
+        best = cand;
+      }
+    }
+  }
+
+         // Additional robust starts
+  for (auto start : {data.center, coord}) {
+    if (RS_Vector cand = refine(start); cand.valid) {
+      double d = cand.distanceTo(coord);
+      if (d < bestD) {
+        bestD = d;
+        best = cand;
+      }
+    }
+  }
+
+         // Fallback sampling
+  if (!best.valid) {
+    auto sample = [&](bool rev) {
+      const int n = 300;
+      double step = 30.0 / n;
+      for (int i = 0; i <= n; ++i) {
+        double phi = -15.0 + step * i + (rev ? M_PI : 0.0);
+        if (auto p = getPoint(phi, rev); p.valid) {
+          double d = p.distanceTo(coord);
+          if (d < bestD) {
+            bestD = d;
+            best = p;
+          }
+        }
+      }
+    };
+    if (data.angle1 == 0.0 && data.angle2 == 0.0) {
+      if (data.branchMode == 0 || data.branchMode == 1) sample(false);
+      if (data.branchMode == 0 || data.branchMode == 2) sample(true);
+    } else sample(data.reversed);
+  }
+
+         // Angular range filter
+  if (best.valid && data.angle1 != 0.0 && data.angle2 != 0.0) {
+    double phi = getParamFromPoint(best, data.reversed);
+    double p1 = std::min(data.angle1, data.angle2) + (data.reversed ? M_PI : 0.0);
+    double p2 = std::max(data.angle1, data.angle2) + (data.reversed ? M_PI : 0.0);
+    if (phi < p1 || phi > p2) best = RS_Vector(false), bestD = RS_MAXDOUBLE;
+  }
+
+  if (best.valid && dist) *dist = bestD;
+  if (entity) *entity = const_cast<LC_Hyperbola*>(this);
+  return best;
+}
+
+// Distance to point - use quadratic distance
+// Fixed getDistanceToPoint() - ignore ResolveLevel, always resolve on entity
+
+double LC_Hyperbola::getDistanceToPoint(const RS_Vector& coord,
+                                        RS_Entity** entity,
+                                        RS2::ResolveLevel /*level*/,
+                                        double /*solidDist*/) const
+{
+  if (entity) *entity = nullptr;
+
+  if (!m_bValid || !coord.valid) {
+    return RS_MAXDOUBLE;
+  }
+
+  double dist = RS_MAXDOUBLE;
+  // Always resolve on entity for hyperbola (ignore level)
+  getNearestPointOnEntity(coord, true, &dist, entity);
+
+         // Set entity pointer if a valid point was found
+  if (entity && *entity == nullptr && dist < RS_MAXDOUBLE) {
+    *entity = const_cast<LC_Hyperbola*>(this);
+  }
+
+  return dist;
+}
+
+// Point on entity test - use quadratic evaluation
+bool LC_Hyperbola::isPointOnEntity(const RS_Vector& coord,
+                                   double tolerance) const
+{
+  if (!m_bValid || !coord.valid) return false;
+
+         // Manual evaluation of the quadratic form Q(x,y) = 0
+  auto coef = getQuadratic().getCoefficients();
+  double value = coef[0]*coord.x*coord.x + coef[1]*coord.x*coord.y + coef[2]*coord.y*coord.y +
+                 coef[3]*coord.x + coef[4]*coord.y + coef[5];
+
+  bool onCurve = fabs(value) <= tolerance * tolerance;
+
+         // For limited arcs, check parametric range on the selected branch
+  if (onCurve && data.angle1 != 0.0 && data.angle2 != 0.0) {
+    double phi = getParamFromPoint(coord, data.reversed);
+    double phiMin = std::min(data.angle1, data.angle2) + (data.reversed ? M_PI : 0.0);
+    double phiMax = std::max(data.angle1, data.angle2) + (data.reversed ? M_PI : 0.0);
+    onCurve = (phi >= phiMin - tolerance && phi <= phiMax + tolerance);
+  }
+
+  return onCurve;
+}
 
 // Return algebraic quadratic form
 LC_Quadratic LC_Hyperbola::getQuadratic() const

@@ -139,7 +139,7 @@ public:
   double getMajorRadius() const { return data.majorP.magnitude(); }
   double getMinorRadius() const { return getMajorRadius() * data.ratio; }
 
-  void calculateBorders() override {}
+  void calculateBorders() override;
 
   RS_Vector getNearestEndpoint(const RS_Vector& coord, double* dist = nullptr) const override;
   RS_Vector getNearestPointOnEntity(const RS_Vector& coord, bool onEntity = true,
@@ -175,11 +175,12 @@ private:
                     double xmin, double xmax, double ymin, double ymax) const;
 
          // Bezier approximation for a parametric segment
-  void approximateSegmentWithBeziers(std::vector<RS_Vector>& out,
-                                     double phiStart, double phiEnd, bool rev,
-                                     RS_Painter* painter, double errorTol,
-                                     const RS_Vector& center, double angle,
-                                     double a, double b) const;
+
+  void adaptiveSample(std::vector<RS_Vector>& out,
+                                    double phiStart, double phiEnd, bool rev,
+                                    double maxError,  // now in world units
+                                    const RS_Vector& center, double angle,
+                                    double a, double b) const;
 };
 
 #endif // LC_HYPERBOLA_H
