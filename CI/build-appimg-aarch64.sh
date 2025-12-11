@@ -72,6 +72,6 @@ wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/lin
 wget https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-aarch64.AppImage
 chmod +x *.AppImage
 #ARCH=aarch64 ./appimagetool-*.AppImage deploy appdir/usr/share/applications/librecad.desktop
-ARCH=aarch64 ./linuxdeploy-aarch64.AppImage --appdir appdir -e appdir/usr/bin/librecad -d appdir/usr/share/applications/librecad.desktop
 ARCH=aarch64 ./linuxdeploy-plugin-qt-aarch64.AppImage --appdir appdir
+ARCH=aarch64 ./linuxdeploy-aarch64.AppImage --appdir appdir -e appdir/usr/bin/librecad -d appdir/usr/share/applications/librecad.desktop
 VERSION=`git describe --always` ARCH=aarch64 ./appimagetool-*.AppImage appdir/
