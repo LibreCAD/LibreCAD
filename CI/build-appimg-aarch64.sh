@@ -43,6 +43,15 @@ strip unix/resources/plugins/*.so
 
 # copy executables and binary resources
 cp unix/librecad appdir/usr/bin/
+
+# <<< FORCE BUNDLED QT PLUGINS >>>
+# Add qt.conf next to the executable to force Qt to load plugins only from the bundled location
+cat > appdir/usr/bin/qt.conf <<EOF
+[Paths]
+Plugins = ../plugins
+EOF
+# <<< END >>>
+
 cp unix/resources/plugins/*.so appdir/usr/lib/librecad/
 cp -r unix/resources/qm appdir/usr/share/librecad/
 
@@ -54,6 +63,8 @@ cp -r librecad/support/library appdir/usr/share/librecad/
 cp -r librecad/support/patterns appdir/usr/share/librecad/
 mkdir -p appdir/usr/lib/aarch64-linux-gnu/qt5/plugins
 cp -r /usr/lib/aarch64-linux-gnu/qt5/plugins/* appdir/usr/lib/aarch64-linux-gnu/qt5/plugins
+mkdir -p appdir/usr/plugins/
+cp -r /usr/lib/aarch64-linux-gnu/qt5/plugins/* appdir/usr/plugins/
 
 cp CI/librecad.svg appdir/usr/share/icons/hicolor/scalable/apps/
 convert -resize 256x256 CI/librecad.svg appdir/usr/share/icons/hicolor/256x256/apps/librecad.png
@@ -64,7 +75,7 @@ ls -l appdir/usr/share/icons/hicolor/256x256/apps/librecad.png
 ls -l appdir/usr/share/icons/hicolor/scalable/apps/
 ls -l appdir/usr/share/applications/librecad.desktop
 
-export QMAKE=$(which qmake6)
+export QMAKE=$(which qmake)
 export EXTRA_QT_MODULES=svg
 
 wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-aarch64.AppImage" | head -n 1 | cut -d '"' -f 2)
