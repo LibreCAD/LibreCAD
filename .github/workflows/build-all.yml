@@ -112,8 +112,8 @@ jobs:
           retention-days: 2
 
   BuildSnap:
-      runs-on: ubuntu-22.04
-      steps:
+    runs-on: ubuntu-22.04
+    steps:
       - name: Checkout code
         uses: actions/checkout@main
         with:
@@ -139,7 +139,7 @@ jobs:
           retention-days: 2
 
   BuildMacOS:
-    runs-on: macos-13
+    runs-on: macos-15-intel
     steps:
       - name: Checkout code
         uses: actions/checkout@main
@@ -179,6 +179,45 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: macOSAssets
+          path: ${{github.workspace}}/LibreCAD*.dmg
+          retention-days: 2
+
+  BuildMacOSArm64:
+    runs-on: macos-15
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@main
+        with:
+          fetch-depth: 0
+          ref: 2.2.1
+          
+      - name: Install dependencies
+        run: |
+          rm -f /usr/local/bin/2to3
+          brew install boost qt@5
+          echo "/opt/homebrew/opt/qt@5/bin" >> $GITHUB_PATH
+
+      - name: update Qt5
+        run: |
+          sed -i'' -e 's:isEmpty(QMAKE_DEFAULT_LIBDIRS)|isEmpty(QMAKE_DEFAULT_INCDIRS):isEmpty("H"):' /opt/homebrew/opt/qt@5/mkspecs/features/toolchain.prf
+          sed -i'' -e 's:error("failed to parse default search paths from compiler output"):LIBRECAD_SDK=:' /opt/homebrew/opt/qt@5/mkspecs/features/toolchain.prf
+
+      - name: Kill XProtectBehaviorService
+        run: |
+          echo Killing XProtect.
+          sudo pkill -9 XProtect >/dev/null || true
+      
+      - name: Build and packaging
+        env:
+          QMAKE_OPTS: QMAKE_APPLE_DEVICE_ARCHS=arm64
+        run: |
+          scripts/build-osx.sh
+          mv LibreCAD.dmg LibreCAD-`git describe --always`-arm64.dmg
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: macOSArm64Assets
           path: ${{github.workspace}}/LibreCAD*.dmg
           retention-days: 2
 
@@ -332,7 +371,7 @@ jobs:
 
   UpdateAssets:
     if: github.repository_owner == 'LibreCAD'
-    needs: [BuildLinux, BuildLinuxAarch64, BuildMacOS, BuildWindows, BuildWindows64, BuildSnap]
+    needs: [BuildLinux, BuildLinuxAarch64, BuildMacOS, BuildMacOSArm64, BuildWindows, BuildWindows64, BuildSnap]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -356,6 +395,7 @@ jobs:
             linuxAssets/LibreCAD*.AppImage
             linuxAarch64Assets/LibreCAD*.AppImage
             macOSAssets/LibreCAD*.dmg
+            macOSArm64Assets/LibreCAD*.dmg
             win*Assets/LibreCAD*.exe
             snapAssets/LibreCAD*.snap
             LICENSE
