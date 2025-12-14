@@ -27,7 +27,9 @@ if NOT exist windows\LibreCAD.exe (
     exit /b 1
 )
 
-windeployqt.exe windows\LibreCAD.exe --release
+rem Improved windeployqt: verbose, force copy, standard plugin subdirs
+windeployqt.exe windows\LibreCAD.exe --release --verbose 2 --force
+
 popd
 
 call build-win-setup.bat
