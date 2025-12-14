@@ -165,10 +165,6 @@ jobs:
           rm -f /usr/local/bin/2to3
           brew install boost
           
-      # XProtect can cause random failures if it decides that the DMG we create
-      # during the packaging phase is malware.
-      # TODO: Do it in a cleaner way
-      # Inspiration: https://github.com/servo/servo/pull/30779
       - name: Kill XProtectBehaviorService
         run: |
           echo Killing XProtect.
@@ -195,25 +191,23 @@ jobs:
           fetch-depth: 0
           ref: 2.2.1
 
-      - name: Uninstall incorrect mingw
-        run: |
-          choco uninstall mingw --force
-          choco uninstall strawberryperl --force
+      - name: Setup MSVC developer environment (32-bit)
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x86
 
-      - name: Install Qt-5.15
+      - name: Install Qt-5.15 (MSVC 2019 32-bit)
         uses: jurplel/install-qt-action@v3
         with:
           version: '5.15.*'
           host: 'windows'
           target: 'desktop'
-          arch: 'win32_mingw81'
+          arch: 'win32_msvc2019'
           dir: '..'
           install-deps: 'true'
           cache: 'false'
-          cache-key-prefix: 'install-qt-action'
           setup-python: 'true'
           set-env: 'true'
-          tools-only: 'false'
           aqtversion: '==3.1.*'
           py7zrversion: '==0.20.*'
           extra: '--external 7z'
@@ -225,11 +219,6 @@ jobs:
           7z x -o. -y boost.7z
           mv boost_1_87_0 ../boost
           rm boost.7z
-          
-      - name: install mingw-32
-        shell: cmd
-        run: |
-          aqt install-tool windows desktop tools_mingw qt.tools.win32_mingw810
 
       - name: Debugging
         if: ${{always()}}
@@ -237,37 +226,28 @@ jobs:
         run: |
           set
           echo.
-          dir c:\
-          echo.
-          dir d:\
-          echo.
-          dir d:\a
-          echo.
-          dir
-          echo.
-          dir ..
-          echo.
-          dir ..\boost
-          echo.
           dir ..\Qt
           echo.
-          dir ..\Qt\5.15.2
+          dir ..\boost
 
-      - name: Build
+      - name: Build with MSVC
+        shell: cmd
         run: |
-          set PATH=${{github.workspace}}\Tools\mingw810_32\bin;%PATH%
           copy CI\custom-win.pri custom.pri
           copy CI\custom-win.nsh scripts\postprocess-windows\custom.nsh
-          echo SET:
-          set
+          "../Qt/5.15.2/msvc2019/bin/qmake.exe" -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
+          nmake release
+
+      - name: Packaging (run postprocess script)
+        shell: cmd
+        run: |
           pushd "${{github.workspace}}\scripts"
           build-windows.bat
-        shell: cmd
 
       - name: Rename installer
-        run: |
-          mv generated/LibreCAD-Installer.exe LibreCAD-`git describe --always`.exe
         shell: bash
+        run: |
+          mv generated/LibreCAD-Installer.exe LibreCAD-`git describe --always`-msvc.exe
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -285,34 +265,26 @@ jobs:
           fetch-depth: 0
           ref: 2.2.1
 
-      - name: Uninstall incorrect mingw
-        run: |
-          choco uninstall mingw --force
-          choco uninstall strawberryperl --force
+      - name: Setup MSVC developer environment (64-bit)
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
 
-      #- name: Install MinGW8.1 64-bit
-      #  uses: msys2/setup-msys2@v2
-      #  with:
-      #    msystem: MINGW64
-
-      - name: Install Qt-5.15
+      - name: Install Qt-5.15 (MSVC 2019 64-bit)
         uses: jurplel/install-qt-action@v3
         with:
           version: '5.15.*'
           host: 'windows'
           target: 'desktop'
-          arch: 'win64_mingw81'
+          arch: 'win64_msvc2019_64'
           dir: '..'
           install-deps: 'true'
           cache: 'false'
-          cache-key-prefix: 'install-qt-action'
           setup-python: 'true'
           set-env: 'true'
-          tools-only: 'false'
           aqtversion: '==3.1.*'
           py7zrversion: '==0.20.*'
           extra: '--external 7z'
-          tools: 'tools_mingw,qt.tools.win64_mingw810 tools_qtcreator,qt.tools.qtcreator'
 
       - name: Install boost
         shell: bash
@@ -328,36 +300,28 @@ jobs:
         run: |
           set
           echo.
-          dir c:\
-          echo.
-          dir d:\
-          echo.
-          dir d:\a
-          echo.
-          dir
-          echo.
-          dir ..
+          dir ..\Qt
           echo.
           dir ..\boost
-          echo.
-          dir /b /s ..\Qt
-          echo.
 
-      - name: Build
+      - name: Build with MSVC
+        shell: cmd
         run: |
-          #set PATH=C:\msys64\mingw64\bin;%PATH%
           copy CI\custom-win.pri custom.pri
           copy CI\custom-win-x64.nsh scripts\postprocess-windows\custom.nsh
-          echo SET:
-          set
+          "../Qt/5.15.2/msvc2019_64/bin/qmake.exe" -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
+          nmake release
+
+      - name: Packaging (run postprocess script)
+        shell: cmd
+        run: |
           pushd "${{github.workspace}}\scripts"
           build-windows.bat
-        shell: cmd
 
       - name: Rename installer
-        run: |
-          mv generated/LibreCAD-Installer.exe LibreCAD-`git describe --always`-win64.exe
         shell: bash
+        run: |
+          mv generated/LibreCAD-Installer.exe LibreCAD-`git describe --always`-win64-msvc.exe
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -384,7 +348,7 @@ jobs:
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{secrets.GITHUB_TOKEN}}"
-          automatic_release_tag: "2.2.1.1_rc-latest"
+          automatic_release_tag: "2.2.1.3_rc-latest"
           prerelease: true
           draft: false
           title: "Release Candidate"
@@ -395,5 +359,3 @@ jobs:
             win*Assets/LibreCAD*.exe
             snapAssets/LibreCAD*.snap
             LICENSE
-
-
