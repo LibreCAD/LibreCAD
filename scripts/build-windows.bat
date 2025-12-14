@@ -11,7 +11,7 @@ if %errorlevel% equ 0 (
     if not _%1==_NoClean (
         nmake clean
     )
-    nmake -f Makefile.Release
+    nmake release
 ) else (
     echo Building with MinGW
     qmake.exe librecad.pro -r -spec win32-g++
