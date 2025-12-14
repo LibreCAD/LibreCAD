@@ -1,8 +1,8 @@
 ;NSIS Modern User Interface
-;Basic Example Script
+;Updated for MSVC support in GitHub Actions CI (works with both MinGW and MSVC builds)
 
 ;--------------------------------
-;Include custom settings if exists
+;Include custom settings if exists (e.g., custom-win.nsh or custom-win-x64.nsh copied by CI)
   !include /NONFATAL "custom.nsh"
 
 ;--------------------------------
@@ -40,9 +40,8 @@
   ;Get installation folder from registry if available
   InstallDirRegKey HKCU "Software\${AppKeyName}" ""
 
-  ;Request application privileges for Windows Vista
+  ;Request application privileges for Windows Vista and later
   RequestExecutionLevel admin
-  ;TargetMinimalOS 5.1
 
 ;--------------------------------
 ;Interface Settings
@@ -64,30 +63,28 @@
 
   !insertmacro MUI_LANGUAGE "English"
 
-
-
 Function .onInit
 
   Push $R0
   Push $R1
   Push $R2
 
-; get account info into $R2
+  ; Get account type
   userInfo::getAccountType
-  pop $0
+  Pop $0
   StrCpy $R2 $0 5
 
-${If} ${IsWin2000}
-    strCmp $R2 "Admin" lbl_checkok
-    messageBox MB_OK "I am sorry, this installer needs Admin privileges, Please login as an administrator and install the software."
+  ${If} ${IsWin2000}
+    StrCmp $R2 "Admin" lbl_checkok
+    MessageBox MB_OK "Sorry, this installer requires Administrator privileges. Please log in as an administrator."
     Quit
-${EndIf}
+  ${EndIf}
 
-${If} ${IsWinXP}
-    strCmp $R2 "Admin" lbl_checkok
-    messageBox MB_OK "I am sorry, this installer needs Admin privileges, Please login as an administrator and install the software."
+  ${If} ${IsWinXP}
+    StrCmp $R2 "Admin" lbl_checkok
+    MessageBox MB_OK "Sorry, this installer requires Administrator privileges. Please log in as an administrator."
     Quit
-${EndIf}
+  ${EndIf}
 
   lbl_checkok:
   Pop $R2
@@ -96,50 +93,65 @@ ${EndIf}
 
 FunctionEnd
 
-;--- define Qt folders if not already defined in custom-5.3.nsi
+;--------------------------------
+; Dynamic Qt path detection for GitHub Actions CI (MSVC builds)
+; In local builds, these can be overridden in custom.nsh if desired
+
 !ifndef Qt_Dir
-    !define Qt_Dir 	"C:\Qt\Qt5.15.2"
+    !define Qt_Dir "..\\Qt"
 !endif
 !ifndef Qt_Version
-    !define Qt_Version 	"5.15.2"
+    !define Qt_Version "5.15.2"
 !endif
-!ifndef Mingw_Ver
-    !define Mingw_Ver 	"mingw81_64"
+
+; Detect architecture and MSVC variant (set by CI workflow)
+!ifndef Arch_Suffix
+    !ifdef WIN64
+        !define Arch_Suffix "_64"
+    !else
+        !define Arch_Suffix ""
+    !endif
 !endif
-;--- folder contains mingw32-make.exe
-!define MINGW_DIR 	"${Qt_Dir}\Tools\${Mingw_Ver}\bin"
-!define QTCREATOR_DIR 	"${Qt_Dir}\Tools\QtCreator\bin"
-!define QTMINGW_DIR 	"${Qt_Dir}\${Qt_Version}\${Mingw_Ver}"
-;--- folder contains qmake.exe
-!define QMAKE_DIR 	"${QTMINGW_DIR}\bin"
-!define PLUGINS_DIR 	"${QTMINGW_DIR}\plugins"
-!define TRANSLATIONS_DIR	"${QTMINGW_DIR}\translations"
+!ifndef MSVC_Ver
+    !define MSVC_Ver "msvc2019${Arch_Suffix}"
+!endif
+
+; Qt binary, plugin, and translation directories (same structure for MSVC and MinGW Qt packages)
+!define QT_BIN_DIR     "${Qt_Dir}\${Qt_Version}\${MSVC_Ver}\bin"
+!define PLUGINS_DIR    "${Qt_Dir}\${Qt_Version}\${MSVC_Ver}\plugins"
+!define TRANSLATIONS_DIR "${Qt_Dir}\${Qt_Version}\${MSVC_Ver}\translations"
 
 ;--------------------------------
 ;Installer Sections
 
 Section "Install Section" SecInstall
+
   SetOutPath "$INSTDIR"
+  ; Copy all built files from the windows/ directory (populated by windeployqt)
   File /r "..\..\windows\*.*"
+
+  ; Copy Qt translation files if available
   SetOutPath "$INSTDIR\resources\qm"
-  File /NONFATAL "${TRANSLATIONS_DIR}\qt*.qm"
+  File /NONFATAL "${TRANSLATIONS_DIR}\qt_*.qm"
+  File /NONFATAL "${TRANSLATIONS_DIR}\qtbase_*.qm"
+
   SetOutPath "$INSTDIR"
 
-  ;Store installation folder
+  ; Store installation folder
   WriteRegStr HKCU "Software\LibreCAD" "" $INSTDIR
 
-  ;Create uninstaller
+  ; Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 
-  ; create shortcuts
-  createShortCut "$DESKTOP\LibreCAD.lnk" "$INSTDIR\LibreCAD.exe"
+  ; Desktop shortcut
+  CreateShortCut "$DESKTOP\LibreCAD.lnk" "$INSTDIR\LibreCAD.exe"
 
-  ; Startmenu shortcuts
-  createDirectory "$SMPROGRAMS\LibreCAD\"
-  createShortCut "$SMPROGRAMS\LibreCAD\LibreCAD.lnk" "$INSTDIR\LibreCAD.exe"
-  createShortCut "$SMPROGRAMS\LibreCAD\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
+  ; Start Menu shortcuts
+  CreateDirectory "$SMPROGRAMS\LibreCAD"
+  CreateShortCut "$SMPROGRAMS\LibreCAD\LibreCAD.lnk" "$INSTDIR\LibreCAD.exe"
+  CreateShortCut "$SMPROGRAMS\LibreCAD\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
 
-  ; create add/remove software entries
+  ; Add/Remove Programs entry
   WriteRegStr HKLM "${UNINSTKEY}" "DisplayName" "${APPNAME}"
   WriteRegStr HKLM "${UNINSTKEY}" "DisplayIcon" "$INSTDIR\LibreCAD.exe"
   WriteRegStr HKLM "${UNINSTKEY}" "DisplayVersion" "${SCMREVISION}"
@@ -147,43 +159,39 @@ Section "Install Section" SecInstall
   WriteRegStr HKLM "${UNINSTKEY}" "Version" "2.2.1"
   WriteRegStr HKLM "${UNINSTKEY}" "HelpLink" "https://librecad.org/"
   WriteRegStr HKLM "${UNINSTKEY}" "InstallLocation" "$INSTDIR"
-  WriteRegStr HKLM "${UNINSTKEY}" "URLInfoAbout" "http://librecad.org/"
+  WriteRegStr HKLM "${UNINSTKEY}" "URLInfoAbout" "https://librecad.org/"
   WriteRegStr HKLM "${UNINSTKEY}" "Comments" "LibreCAD - Open Source 2D-CAD"
   WriteRegStr HKLM "${UNINSTKEY}" "UninstallString" "$INSTDIR\Uninstall.exe"
-  WriteRegDWORD HKLM "${UNINSTKEY}" "VersionMinor" "2"
-  WriteRegDWORD HKLM "${UNINSTKEY}" "VersionMajor" "2"
-  WriteRegDWORD HKLM "${UNINSTKEY}" "NoModify" "1"
-  WriteRegDWORD HKLM "${UNINSTKEY}" "NoRepair" "1"
+  WriteRegDWORD HKLM "${UNINSTKEY}" "VersionMajor" 2
+  WriteRegDWORD HKLM "${UNINSTKEY}" "VersionMinor" 2
+  WriteRegDWORD HKLM "${UNINSTKEY}" "NoModify" 1
+  WriteRegDWORD HKLM "${UNINSTKEY}" "NoRepair" 1
 
-  ; Open Donate URL
+  ; Optional: Open donation page (skip if silent install)
   IfSilent +2
-  Exec "rundll32 url.dll,FileProtocolHandler http://librecad.org/donate.html"
+    Exec "rundll32.exe url.dll,FileProtocolHandler https://librecad.org/donate.html"
 
 SectionEnd
 
 ;--------------------------------
-;Descriptions
+;Descriptions (optional)
 
-  ;Language strings
-  LangString DESC_SecInstall ${LANG_ENGLISH} "A test section."
+  LangString DESC_SecInstall ${LANG_ENGLISH} "Main LibreCAD application files."
 
 ;--------------------------------
 ;Uninstaller Section
 
 Section "Uninstall"
 
-  ;ADD YOUR OWN FILES HERE...
-
   Delete "$INSTDIR\Uninstall.exe"
   Delete "$DESKTOP\LibreCAD.lnk"
-  RMDir /r "$SMPROGRAMS\LibreCAD\"
-  RMDir /r $INSTDIR
+  RMDir /r "$SMPROGRAMS\LibreCAD"
+  RMDir /r "$INSTDIR"
 
+  ; Remove empty parent directory if exists
   RMDir "$INSTDIR"
 
   DeleteRegKey /ifempty HKCU "Software\${AppKeyName}"
   DeleteRegKey HKLM "${UNINSTKEY}"
 
 SectionEnd
-
-
