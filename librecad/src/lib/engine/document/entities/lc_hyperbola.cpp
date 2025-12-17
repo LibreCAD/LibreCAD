@@ -389,9 +389,6 @@ void LC_Hyperbola::draw(RS_Painter* painter)
   double a = getMajorRadius(), b = getMinorRadius();
   if (a < RS_TOLERANCE || b < RS_TOLERANCE) return;
 
-  RS_Vector center = getCenter();
-  double angle = getAngle();
-
   double guiPixel = std::min(painter->toGuiDX(1.0), painter->toGuiDY(1.0));
   double maxWorldError = 1.0 / guiPixel;
 
@@ -412,11 +409,12 @@ void LC_Hyperbola::draw(RS_Painter* painter)
 
     for (const auto& line : borders) {
       RS_VectorSolutions sol = LC_Quadratic::getIntersection(getQuadratic(), line.getQuadratic());
-      for (size_t i = 0; i < sol.getNumber(); ++i) {
-        RS_Vector p = sol.get(i);
-        if (isInClipRect(p, xmin, xmax, ymin, ymax)) {
-          double phi = getParamFromPoint(p, rev);
-          if (!std::isnan(phi)) params.push_back(phi);
+      for (const RS_Vector& intersection: sol) {
+        double phiCur = getParamFromPoint(intersection);
+        if (std::isnan(phiCur) || phiCur < data.angle1 || phiCur > data.angle2)
+          continue;
+        if (isInClipRect(intersection, xmin, xmax, ymin, ymax)) {
+          params.push_back(phiCur);
         }
       }
     }
@@ -424,23 +422,23 @@ void LC_Hyperbola::draw(RS_Painter* painter)
     if (params.empty()) {
       RS_Vector test = getPoint(0.0, rev);
       if (test.valid && isInClipRect(test, xmin, xmax, ymin, ymax)) {
-        params = {-M_PI*1.5, M_PI*1.5};
+        params = {data.angle1, data.angle2};
       } else {
         return;
       }
     } else {
       std::sort(params.begin(), params.end());
       auto last = std::unique(params.begin(), params.end(),
-                              [](double a, double b){ return fabs(a-b) < RS_TOLERANCE_ANGLE; });
+                              [](double a, double b){ return std::abs(a-b) < RS_TOLERANCE_ANGLE; });
       params.erase(last, params.end());
-      params.front() -= 0.5;
-      params.back() += 0.5;
     }
 
     for (size_t i = 0; i + 1 < params.size(); i += 2) {
       double start = params[i];
       double end = params[i + 1];
-      adaptiveSample(pts, start, end, rev, maxWorldError);
+      RS_Vector middle = getPoint((start + end) * 0.5, rev);
+      if (isInClipRect(middle, xmin, xmax, ymin, ymax))
+          adaptiveSample(pts, start, end, rev, maxWorldError);
     }
   };
 

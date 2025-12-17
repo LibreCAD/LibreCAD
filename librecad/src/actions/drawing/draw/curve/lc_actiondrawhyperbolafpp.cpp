@@ -172,12 +172,7 @@ void LC_ActionDrawHyperbolaFPP::onMouseMoveEvent(int status, LC_MouseEvent* even
     break;
   case SetStartPoint: {
     startPoint = mouse;
-    auto center = (focus1 + focus2) * 0.5;
-    double a = (focus1 - focus2).angle();
-    auto vp = (startPoint - center).rotate( -a);
-    vp.y = - vp.y;
-    vp.rotate(a);
-    endPoint = center + vp;
+    endPoint.valid = false;
   }
     break;
   case SetEndPoint:
