@@ -67,11 +67,11 @@ LC_HyperbolaData::LC_HyperbolaData(const RS_Vector& f0, const RS_Vector& f1, con
     return;
   }
 
-  majorP = fartherFocus - center;
+  majorP = closerFocus - center;
 
   ratio = dc / dd;
   majorP /= ratio;
-  ratio = sqrt(ratio * ratio - 1.0);
+  ratio = std::sqrt(ratio * ratio - 1.0);
   LC_ERR<<__LINE__<<": "<<majorP.x<<" "<<majorP.y<<", r="<<ratio<<", dd="<<dd<<", dc="<<dc;
 }
 
