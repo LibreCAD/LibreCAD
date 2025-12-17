@@ -44,22 +44,17 @@ struct LC_HyperbolaData {
                    const RS_Vector& focus1,
                    const RS_Vector& point);
 
+  RS_Vector getFocus1()const;
+  RS_Vector getFocus2()const;
   RS_Vector center{};
   RS_Vector majorP{};
   double ratio = 0.0;
   // Angular range:
-  // - If angle1 == angle2 == 0.0: full (infinite) hyperbola
-  //   Branch drawing controlled by branchMode
+  // - If angle1 == angle2 == 0.0: full (infinite) hyperbola (both branches)
   // - Otherwise: limited arc on the branch selected by 'reversed'
   double angle1 = 0.0;
   double angle2 = 0.0;
-  bool reversed = false;  // for limited arcs: false = right branch, true = left branch
-
-         // For full infinite hyperbola:
-         // 0 = both branches (default)
-         // 1 = right branch only
-         // 2 = left branch only
-  int branchMode = 0;
+  bool reversed = false;  // false = right branch (x >= a), true = left branch (x <= -a)
 };
 
 std::ostream& operator<<(std::ostream& os, const LC_HyperbolaData& d);
@@ -80,9 +75,6 @@ public:
          // Factory methods
   bool createFromQuadratic(const LC_Quadratic& q);
   bool createFromQuadratic(const std::vector<double>& coeffs);
-
-         // Optional convenience setter for branch mode
-  void setBranchMode(int mode);  // 0=both, 1=right only, 2=left only
 
   RS_Entity* clone() const override;
 
@@ -167,20 +159,17 @@ protected:
   bool m_bValid = false;
 
 private:
-  // Point evaluation
+  // Point evaluation - hyperbolic parametrization (stable for all phi)
   RS_Vector getPoint(double phi, bool useReversed) const;
   RS_Vector getPoint(double phi) const;
 
   bool isInClipRect(const RS_Vector& p,
                     double xmin, double xmax, double ymin, double ymax) const;
 
-         // Bezier approximation for a parametric segment
-
+         // Adaptive sampling with screen-space error control
   void adaptiveSample(std::vector<RS_Vector>& out,
-                                    double phiStart, double phiEnd, bool rev,
-                                    double maxError,  // now in world units
-                                    const RS_Vector& center, double angle,
-                                    double a, double b) const;
+                      double phiStart, double phiEnd, bool rev,
+                      double maxError) const;
 };
 
 #endif // LC_HYPERBOLA_H
