@@ -457,6 +457,7 @@ HEADERS += \
     lib/engine/rs_vector.h \
     lib/fileio/rs_fileio.h \
     lib/fileio/lc_filenameselectionservice.h \
+    lib/filters/lc_hyperbolaspline.h \
     lib/filters/rs_filtercxf.h \
     lib/filters/rs_filterdxfrw.h \
     lib/filters/rs_filterdxf1.h \
@@ -689,6 +690,7 @@ SOURCES += \
     lib/engine/settings/lc_settingsexporter.cpp \
     lib/engine/undo/lc_undoablerelzero.cpp \
     lib/engine/utils/lc_rectregion.cpp \
+    lib/filters/lc_hyperbolaspline.cpp \
     lib/generators/layers/lc_layersexporter.cpp \
     lib/generators/image/lc_imageexporter.cpp \
     lib/gui/lc_coordinates_parser.cpp \

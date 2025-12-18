@@ -46,6 +46,7 @@ struct LC_HyperbolaData {
 
   RS_Vector getFocus1()const;
   RS_Vector getFocus2()const;
+  bool isValid() const;
   RS_Vector center{};
   RS_Vector majorP{};
   double ratio = 0.0;
@@ -154,6 +155,7 @@ public:
          // Public parametric utilities
   double getParamFromPoint(const RS_Vector& p, bool branchReversed = false) const;
   void updateLength() override;
+  RS_Vector getPoint(double phi, bool useReversed) const;
 
 protected:
   LC_HyperbolaData data;
@@ -161,7 +163,6 @@ protected:
 
 private:
   // Point evaluation - hyperbolic parametrization (stable for all phi)
-  RS_Vector getPoint(double phi, bool useReversed) const;
   RS_Vector getPoint(double phi) const;
 
   bool isInClipRect(const RS_Vector& p,

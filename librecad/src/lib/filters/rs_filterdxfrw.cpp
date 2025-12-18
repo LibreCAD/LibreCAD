@@ -35,6 +35,8 @@
 
 #include "rs_filterdxfrw.h"
 #include "lc_containertraverser.h"
+#include "lc_hyperbola.h"
+#include "lc_hyperbolaspline.h"
 #include "lc_parabola.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
@@ -869,6 +871,18 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
             return;
         }
     }
+
+    // Hyperbola support: detect and convert special rational quadratic SPLINEs
+    // Hyperbola support via exact rational quadratic SPLINE
+        if (LC_HyperbolaSpline::isHyperbolaSpline(*data)) {
+            LC_HyperbolaData hd = LC_HyperbolaSpline::splineToHyperbola(*data);
+            if (hd.isValid()) {
+                LC_Hyperbola* entity = new LC_Hyperbola(m_currentContainer, hd);
+                setEntityAttributes(entity, data);
+                m_currentContainer->addEntity(entity);
+                return;  // Handled as hyperbola – do not create generic spline
+            }
+        }
 
     // ordinary spline
     // bit coded: 1: closed; 2: periodic; 4: rational; 8: planar; 16:linear
@@ -3580,6 +3594,8 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
     case RS2::EntityEllipse:
         writeEllipse(static_cast<RS_Ellipse*>(e));
         break;
+    case RS2::EntityHyperbola:
+        writeHyperbola(static_cast<LC_Hyperbola*>(e));
     case RS2::EntityPolyline:
         writeLWPolyline(static_cast<RS_Polyline*>(e));
         break;
@@ -3957,6 +3973,24 @@ void RS_FilterDXFRW::writeEllipse(RS_Ellipse* s) {
         el.endparam = s->getAngle2();
     }
     m_dxfW->writeEllipse(&el);
+}
+
+/**
+ * Write a hyperbola entity as an exact rational quadratic SPLINE.
+ *
+ * Uses LC_HyperbolaSpline to create the standard SPLINE representation.
+ */
+void RS_FilterDXFRW::writeHyperbola(LC_Hyperbola* h) {
+    if (h == nullptr || !h->isValid() || m_dxfW == nullptr) {
+        return;
+    }
+
+    DRW_Spline spl;
+    getEntityAttributes(&spl, h);
+
+    if (LC_HyperbolaSpline::createSplineFromHyperbola(h->getData(), spl)) {
+        m_dxfW->writeSpline(&spl);
+    }
 }
 
 /**

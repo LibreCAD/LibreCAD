@@ -72,7 +72,13 @@ LC_HyperbolaData::LC_HyperbolaData(const RS_Vector& f0, const RS_Vector& f1, con
   ratio = dc / dd;
   majorP /= ratio;
   ratio = std::sqrt(ratio * ratio - 1.0);
-  LC_ERR<<__LINE__<<": "<<majorP.x<<" "<<majorP.y<<", r="<<ratio<<", dd="<<dd<<", dc="<<dc;
+  // LC_ERR<<__LINE__<<": "<<majorP.x<<" "<<majorP.y<<", r="<<ratio<<", dd="<<dd<<", dc="<<dc;
+}
+
+bool LC_HyperbolaData::isValid() const
+{
+  LC_Hyperbola tempHb{nullptr, *this};
+  return tempHb.isValid();
 }
 
 RS_Vector LC_HyperbolaData::getFocus1() const
@@ -106,6 +112,7 @@ LC_Hyperbola::LC_Hyperbola(RS_EntityContainer* parent, const LC_Quadratic& q)
 {
   createFromQuadratic(q);
 }
+
 
 //=====================================================================
 // Factory methods from quadratic
