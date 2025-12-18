@@ -20,14 +20,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
+#include <algorithm>
+#include <cmath>
+
 #include "lc_hyperbolaspline.h"
 #include "lc_hyperbola.h"
 #include "lc_quadratic.h"
 #include "lc_linemath.h"
+#include "rs_debug.h"
 #include "rs_math.h"
 #include "drw_entities.h"
-#include <cmath>
-#include <algorithm>
 
 namespace {
 constexpr double kTolerance = 1e-10;
@@ -35,6 +37,8 @@ constexpr double kDefaultPhiRange = 4.0;
 }
 
 bool LC_HyperbolaSpline::isHyperbolaSpline(const DRW_Spline& s) {
+  if (s.weightlist.size() == 3)
+    LC_ERR<<s.weightlist.at(0)<<" "<<s.weightlist.at(1)<<" "<<s.weightlist.at(2);
   return (s.degree == 2 &&
           s.controllist.size() == 3 &&
           s.weightlist.size() == 3 &&
@@ -116,6 +120,7 @@ LC_Hyperbola* LC_HyperbolaSpline::splineToHyperbola(const DRW_Spline& s, RS_Enti
 
   return new LC_Hyperbola(parent, hd);
 }
+
 bool LC_HyperbolaSpline::hyperbolaToRationalQuadratic(const LC_HyperbolaData& hd,
                                                       std::vector<RS_Vector>& ctrlPts,
                                                       std::vector<double>& weights) {
@@ -143,7 +148,7 @@ bool LC_HyperbolaSpline::hyperbolaToRationalQuadratic(const LC_HyperbolaData& hd
   }
 
          // Use LC_LineMath for line-line intersection (existing utility in LibreCAD)
-  RS_Vector shoulder = LC_LineMath::getIntersectionLineLine(pStart, pEnd, tStart, tEnd);
+  RS_Vector shoulder = LC_LineMath::getIntersectionLineLine(pStart, pStart + tStart, pEnd, pEnd + tEnd);
 
   if (!shoulder.valid) {
     return false;  // No intersection → degenerate case
@@ -156,8 +161,8 @@ bool LC_HyperbolaSpline::hyperbolaToRationalQuadratic(const LC_HyperbolaData& hd
   double lenEnd   = vEnd.magnitude();
   if (lenStart < kTolerance || lenEnd < kTolerance) return false;
 
-  double cosTheta = (vStart / lenStart).dotP(vEnd / lenEnd);
-  double wMiddle = std::fabs(cosTheta);
+  double cosTheta = vStart.normalized().dotP(vEnd.normalized());
+  double wMiddle = std::abs(cosTheta);
 
   if (wMiddle < kTolerance) return false;
   if (cosTheta < 0.0) wMiddle = 1.0 / wMiddle;
