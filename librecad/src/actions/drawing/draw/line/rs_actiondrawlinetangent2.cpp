@@ -42,7 +42,9 @@ struct RS_ActionDrawLineTangent2::ActionData {
 
 namespace {
     //list of entity types supported by current action
-    const auto g_circleType = EntityTypeList{RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityParabola};
+    const auto g_circleType = EntityTypeList{RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse,
+                                         RS2::EntityHyperbola,
+                                         RS2::EntityParabola};
 
     double linePointDist(const RS_Line &line, const RS_Vector &point){
         return point.distanceTo(line.getNearestPointOnEntity(point));
