@@ -87,22 +87,22 @@ RS_Vector LC_HyperbolaData::getFocus2() const
 }
 
 LC_Hyperbola::LC_Hyperbola(RS_EntityContainer* parent, const LC_HyperbolaData& d)
-    : RS_AtomicEntity(parent), data(d), m_bValid(d.majorP.squared() >= RS_TOLERANCE2)
+    : LC_CachedLengthEntity(parent), data(d), m_bValid(d.majorP.squared() >= RS_TOLERANCE2)
 {
-  calculateBorders();
+  LC_Hyperbola::calculateBorders();
 }
 
 LC_Hyperbola::LC_Hyperbola(const RS_Vector& f0, const RS_Vector& f1, const RS_Vector& p)
     : LC_Hyperbola(nullptr, LC_HyperbolaData(f0, f1, p)) {}
 
 LC_Hyperbola::LC_Hyperbola(RS_EntityContainer* parent, const std::vector<double>& coeffs)
-    : RS_AtomicEntity(parent), m_bValid(false)
+    : LC_CachedLengthEntity(parent), m_bValid(false)
 {
   createFromQuadratic(coeffs);
 }
 
 LC_Hyperbola::LC_Hyperbola(RS_EntityContainer* parent, const LC_Quadratic& q)
-    : RS_AtomicEntity(parent), m_bValid(false)
+    : LC_CachedLengthEntity(parent), m_bValid(false)
 {
   createFromQuadratic(q);
 }
@@ -397,7 +397,7 @@ void LC_Hyperbola::draw(RS_Painter* painter)
 
   bool isFull = (data.angle1 == 0.0 && data.angle2 == 0.0);
 
-  auto processBranch = [&](bool rev) {
+  auto processBranch = [&, painter](bool rev) {
     std::vector<double> params;
 
     RS_Line borders[4] = {
@@ -420,25 +420,30 @@ void LC_Hyperbola::draw(RS_Painter* painter)
     }
 
     if (params.empty()) {
-      RS_Vector test = getPoint(0.0, rev);
+      RS_Vector test = getPoint((data.angle1 + data.angle2) * 0.5, rev);
       if (test.valid && isInClipRect(test, xmin, xmax, ymin, ymax)) {
         params = {data.angle1, data.angle2};
       } else {
         return;
       }
     } else {
+      params.push_back(data.angle1);
+      params.push_back(data.angle2);
       std::sort(params.begin(), params.end());
       auto last = std::unique(params.begin(), params.end(),
                               [](double a, double b){ return std::abs(a-b) < RS_TOLERANCE_ANGLE; });
       params.erase(last, params.end());
     }
 
-    for (size_t i = 0; i + 1 < params.size(); i += 2) {
+    for (size_t i = 0; i + 1 < params.size(); ++i) {
       double start = params[i];
       double end = params[i + 1];
       RS_Vector middle = getPoint((start + end) * 0.5, rev);
-      if (isInClipRect(middle, xmin, xmax, ymin, ymax))
+      pts.clear();
+      if (isInClipRect(middle, xmin, xmax, ymin, ymax)) {
           adaptiveSample(pts, start, end, rev, maxWorldError);
+          painter->drawSplinePointsWCS(pts, false);
+      }
     }
   };
 
@@ -448,9 +453,6 @@ void LC_Hyperbola::draw(RS_Painter* painter)
   } else {
     processBranch(data.reversed);
   }
-
-  if (pts.size() >= 2)
-    painter->drawSplinePointsWCS(pts, false);
 }
 
 void LC_Hyperbola::adaptiveSample(std::vector<RS_Vector>& out,
@@ -879,5 +881,10 @@ double LC_Hyperbola::getLength() const
   phi1 += offset;
   phi2 += offset;
 
-  return 0.0;  // Placeholder
+  return 10.0;  // Placeholder
+}
+
+void LC_Hyperbola::updateLength()
+{
+    cachedLength = getLength();
 }

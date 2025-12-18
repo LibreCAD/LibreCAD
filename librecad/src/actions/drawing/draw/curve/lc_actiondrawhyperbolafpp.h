@@ -49,7 +49,7 @@ public:
   ~LC_ActionDrawHyperbolaFPP() override = default;
 
   void init(int status) override;
-  void trigger() override;
+  void doTrigger() override;
 
   void onMouseLeftButtonRelease(int status, LC_MouseEvent* e) override;
   void onMouseMoveEvent(int status, LC_MouseEvent* event) override;

@@ -135,21 +135,21 @@ void LC_ActionDrawHyperbolaFPP::createHyperbola()
   data.angle2 = std::max(phiStart, phiEnd);
   data.reversed = rev;
 
-  LC_Hyperbola* hyperbola = new LC_Hyperbola(m_document, data);
-  if (hyperbola && hyperbola->isValid()) {
-    m_document->startUndoCycle();
-    m_document->addEntity(hyperbola);
-    m_document->endUndoCycle();
-    m_graphicView->redraw(RS2::RedrawAll);
-  } else {
-    delete hyperbola;
+  auto hyperbola = std::make_unique<LC_Hyperbola>(m_container, data);
+  if (hyperbola != nullptr && hyperbola->isValid()) {
+    moveRelativeZero(hyperbola->getCenter());
+    hyperbola->calculateBorders();
+    hyperbola->setFlag(RS2::FlagVisible);
+    setPenAndLayerToActive(hyperbola.get());
+    undoCycleAdd(hyperbola.release());
   }
 
-  reset();
 }
-void LC_ActionDrawHyperbolaFPP::trigger()
+
+void LC_ActionDrawHyperbolaFPP::doTrigger()
 {
   createHyperbola();
+  setStatus(SetFocus1);
 }
 
 void LC_ActionDrawHyperbolaFPP::onMouseLeftButtonRelease(int status, LC_MouseEvent* e)

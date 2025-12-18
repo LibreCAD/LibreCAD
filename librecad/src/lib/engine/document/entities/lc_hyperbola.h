@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_HYPERBOLA_H
 #define LC_HYPERBOLA_H
 
-#include "rs_atomicentity.h"
+#include "lc_cachedlengthentity.h"
 
 class LC_Quadratic;
 
@@ -62,7 +62,7 @@ std::ostream& operator<<(std::ostream& os, const LC_HyperbolaData& d);
 /**
  * Hyperbola entity – full analytical support
  */
-class LC_Hyperbola : public RS_AtomicEntity {
+class LC_Hyperbola : public LC_CachedLengthEntity {
 public:
   LC_Hyperbola() = default;
   LC_Hyperbola(RS_EntityContainer* parent, const LC_HyperbolaData& d);
@@ -153,6 +153,7 @@ public:
 
          // Public parametric utilities
   double getParamFromPoint(const RS_Vector& p, bool branchReversed = false) const;
+  void updateLength() override;
 
 protected:
   LC_HyperbolaData data;
