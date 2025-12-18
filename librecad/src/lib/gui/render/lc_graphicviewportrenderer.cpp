@@ -89,15 +89,10 @@ bool LC_GraphicViewportRenderer::isOutsideOfBoundingClipRect(RS_Entity* e, bool 
     switch (e->rtti()){
         /* case RS2::EntityGraphic:
              break;*/
-    case RS2::EntityHyperbola:{
-      return false;
-    }
-    break;
-
         case RS2::EntityLine:{
             if (constructionEntity){
                 if (!LC_LineMath::hasIntersectionLineRect(e->getMin(), e->getMax(), renderBoundingClipRect.minP(), renderBoundingClipRect.maxP())){
-                return false;;
+                    return true;
                 }
             }
             else{ // normal line

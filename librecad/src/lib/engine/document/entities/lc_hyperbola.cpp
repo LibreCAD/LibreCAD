@@ -795,6 +795,8 @@ LC_Quadratic LC_Hyperbola::getQuadratic() const
   return q;
 }
 
+// lc_hyperbola.cpp - fixed calculateBorders() for hyperbolic parameter range
+
 void LC_Hyperbola::calculateBorders()
 {
   minV = RS_Vector(RS_MAXDOUBLE, RS_MAXDOUBLE);
@@ -802,39 +804,41 @@ void LC_Hyperbola::calculateBorders()
 
   if (!m_bValid) return;
 
+         // Full unbounded hyperbola → infinite bounds
   if (data.angle1 == 0.0 && data.angle2 == 0.0) {
     minV = RS_Vector(-RS_MAXDOUBLE, -RS_MAXDOUBLE);
     maxV = RS_Vector(RS_MAXDOUBLE, RS_MAXDOUBLE);
     return;
   }
 
-  double phi1 = std::min(data.angle1, data.angle2);
-  double phi2 = std::max(data.angle1, data.angle2);
+         // Limited arc on single branch
+  double phiStart = data.angle1;
+  double phiEnd   = data.angle2;
 
-  phi1 = RS_Math::correctAngle(phi1);
-  phi2 = RS_Math::correctAngle(phi2);
-  if (phi2 < phi1) phi2 += 2.0 * M_PI;
+         // No normalization needed — hyperbolic φ is over all real numbers
+         // Ensure start ≤ end for consistent processing
+  if (phiStart > phiEnd) std::swap(phiStart, phiEnd);
 
-  double offset = data.reversed ? M_PI : 0.0;
-  phi1 += offset;
-  phi2 += offset;
+         // Branch offset handled in getPoint() — use raw angles here
 
+         // Analytical extrema along global X and Y axes
   double rot = getAngle();
   RS_Vector dirX(cos(rot), sin(rot));
   RS_Vector dirY(-sin(rot), cos(rot));
 
-  auto addGlobalExtrema = [&](const RS_Vector& dir) {
+  auto addExtrema = [&](const RS_Vector& dir) {
     double dx = dir.x, dy = dir.y;
     if (fabs(dx) < RS_TOLERANCE && fabs(dy) < RS_TOLERANCE) return;
 
     double tanh_phi = - (getMinorRadius() * dy) / (getMajorRadius() * dx);
-    if (fabs(tanh_phi) >= 1.0) return;
+    if (fabs(tanh_phi) >= 1.0) return;  // no real solution
 
     double phi = std::atanh(tanh_phi);
+    // Check both solutions (phi and phi + π) — but only one will be on the correct branch
     for (int sign = 0; sign < 2; ++sign) {
       double phi_cand = phi + sign * M_PI;
-      if (phi_cand >= phi1 - RS_TOLERANCE && phi_cand <= phi2 + RS_TOLERANCE) {
-        RS_Vector p = getPoint(phi_cand, false);
+      if (phi_cand >= phiStart - RS_TOLERANCE && phi_cand <= phiEnd + RS_TOLERANCE) {
+        RS_Vector p = getPoint(phi_cand, data.reversed);
         if (p.valid) {
           minV = RS_Vector::minimum(minV, p);
           maxV = RS_Vector::maximum(maxV, p);
@@ -843,11 +847,12 @@ void LC_Hyperbola::calculateBorders()
     }
   };
 
-  addGlobalExtrema(RS_Vector(1.0, 0.0));
-  addGlobalExtrema(RS_Vector(0.0, 1.0));
+  addExtrema(RS_Vector(1.0, 0.0));  // global X
+  addExtrema(RS_Vector(0.0, 1.0));  // global Y
 
-  RS_Vector start = getPoint(phi1, false);
-  RS_Vector end = getPoint(phi2, false);
+         // Endpoints
+  RS_Vector start = getPoint(phiStart, data.reversed);
+  RS_Vector end   = getPoint(phiEnd,   data.reversed);
   if (start.valid) {
     minV = RS_Vector::minimum(minV, start);
     maxV = RS_Vector::maximum(maxV, start);
@@ -857,33 +862,78 @@ void LC_Hyperbola::calculateBorders()
     maxV = RS_Vector::maximum(maxV, end);
   }
 
+         // Safety expansion
   double expand = RS_TOLERANCE * 100.0;
   minV -= RS_Vector(expand, expand);
   maxV += RS_Vector(expand, expand);
 }
 
+// lc_hyperbola.cpp - getLength() implementation
+
 double LC_Hyperbola::getLength() const
 {
   if (!m_bValid) return 0.0;
 
+         // Full unbounded hyperbola → infinite length
   if (data.angle1 == 0.0 && data.angle2 == 0.0) {
     return 0.0;
   }
 
+         // Limited arc on single branch
   double phi1 = std::min(data.angle1, data.angle2);
   double phi2 = std::max(data.angle1, data.angle2);
 
-  phi1 = RS_Math::correctAngle(phi1);
-  phi2 = RS_Math::correctAngle(phi2);
-  if (phi2 < phi1) phi2 += 2.0 * M_PI;
+         // No normalization needed for hyperbolic parameter
+         // Ensure correct order
+  if (phi1 > phi2) std::swap(phi1, phi2);
 
-  double offset = data.reversed ? M_PI : 0.0;
-  phi1 += offset;
-  phi2 += offset;
+         // Apply branch offset (handled in getPoint, but parameter is raw)
+         // For length, sign flip doesn't affect magnitude
 
-  return 10.0;  // Placeholder
+  double a = getMajorRadius();
+  double b = getMinorRadius();
+
+         // Arc length integral: ∫ sqrt(a² sinh²φ + b² cosh²φ) dφ from phi1 to phi2
+         // = ∫ sqrt((a² + b²) cosh²φ - a²) dφ
+         // No closed form → Gauss-Legendre quadrature
+
+  const int n = 32;  // high accuracy
+  static const double nodes[32] = {
+      -0.9972638618, -0.9856115115, -0.9647629092, -0.9349069599,
+      -0.8963211559, -0.8493676137, -0.7944837960, -0.7321821186,
+      -0.6630442669, -0.5877157572, -0.5068999089, -0.4213512761,
+      -0.3318686022, -0.2392873623, -0.1444719616, -0.0483076588,
+      0.0483076588,  0.1444719616,  0.2392873623,  0.3318686022,
+      0.4213512761,  0.5068999089,  0.5877157572,  0.6630442669,
+      0.7321821186,  0.7944837960,  0.8493676137,  0.8963211559,
+      0.9349069599,  0.9647629092,  0.9856115115,  0.9972638618
+  };
+  static const double weights[32] = {
+      0.0070186100, 0.0162743947, 0.0253920653, 0.0342738621,
+      0.0428350334, 0.0509980593, 0.0586840935, 0.0658222228,
+      0.0723457948, 0.0781938958, 0.0833119242, 0.0876520930,
+      0.0911738787, 0.0938443991, 0.0956387201, 0.0965400885,
+      0.0965400885, 0.0956387201, 0.0938443991, 0.0911738787,
+      0.0876520930, 0.0833119242, 0.0781938958, 0.0723457948,
+      0.0658222228, 0.0586840935, 0.0509980593, 0.0428350334,
+      0.0342738621, 0.0253920653, 0.0162743947, 0.0070186100
+  };
+
+  double halfr = (phi2 - phi1) * 0.5;
+  double mid   = (phi2 + phi1) * 0.5;
+
+  double length = 0.0;
+  for (int i = 0; i < n; ++i) {
+    double phi = mid + halfr * nodes[i];
+    double ch = std::cosh(phi);
+    double sh = std::sinh(phi);
+    double speed = std::sqrt(a*a * sh*sh + b*b * ch*ch);
+    length += weights[i] * speed;
+  }
+  length *= halfr;
+
+  return length;
 }
-
 void LC_Hyperbola::updateLength()
 {
     cachedLength = getLength();
