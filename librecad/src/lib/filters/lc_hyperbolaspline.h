@@ -24,10 +24,12 @@
 #define LC_HYPERBOLASPLINE_H
 
 #include <vector>
+#include "rs_vector.h"
 
-// Forward declarations to minimize dependencies
-class RS_Vector;
+// Forward declarations
+class RS_EntityContainer;
 struct DRW_Spline;
+class LC_Hyperbola;
 struct LC_HyperbolaData;
 
 /**
@@ -40,49 +42,35 @@ struct LC_HyperbolaData;
  *   - weights: 1.0, w > 1.0, 1.0
  *   - clamped uniform knots {0,0,0,1,1,1}
  *
- * This provides exact geometry preservation and full compatibility with
- * standard DXF readers (AutoCAD, etc.).
+ * This provides exact geometry preservation and full compatibility with standard DXF readers.
  */
+class LC_HyperbolaSpline {
+public:
+  /**
+   * Detect whether a SPLINE entity represents a rational quadratic hyperbola.
+   */
+  static bool isHyperbolaSpline(const DRW_Spline& s);
 
-namespace LC_HyperbolaSpline {
-    /**
-     * Detect whether a SPLINE entity represents a rational quadratic hyperbola.
-     *
-     * The criteria are:
-     *  - degree == 2
-     *  - exactly 3 control points
-     *  - exactly 3 weights
-     *  - endpoint weights == 1.0
-     *  - middle weight > 1.0 (characteristic of hyperbola branch)
-     */
-    bool isHyperbolaSpline(const DRW_Spline& s);
+  /**
+   * Convert a rational quadratic SPLINE to LC_Hyperbola entity.
+   * @param s      Input SPLINE
+   * @param parent Parent container for the new entity
+   * @return Pointer to new LC_Hyperbola on success, nullptr on failure
+   */
+  static LC_Hyperbola* splineToHyperbola(const DRW_Spline& s, RS_EntityContainer* parent);
 
-    /**
-     * Convert a rational quadratic SPLINE (detected as hyperbola) back to LC_HyperbolaData.
-     *
-     * Uses exact implicitization into general conic form, then classifies via
-     * LC_Hyperbola::createFromQuadratic().
-     */
-    LC_HyperbolaData splineToHyperbola(const DRW_Spline& s);
+  /**
+   * Convert a single hyperbola branch to exact rational quadratic control points/weights.
+   */
+  static bool hyperbolaToRationalQuadratic(const LC_HyperbolaData& hd,
+                                           std::vector<RS_Vector>& ctrlPts,
+                                           std::vector<double>& weights);
 
-    /**
-     * Convert a single hyperbola branch to exact rational quadratic control points/weights.
-     *
-     * Always exports the right branch geometry aligned with positive majorP direction.
-     * Left branch (reversed=true) is flipped to match standard orientation.
-     */
-    bool hyperbolaToRationalQuadratic(const LC_HyperbolaData& hd,
-                                             std::vector<RS_Vector>& ctrlPts,
-                                             std::vector<double>& weights);
-
-    /**
-     * Create a DRW_Spline representing the hyperbola branch (exact rational quadratic).
-     *
-     * Returns true on success and fills the provided DRW_Spline.
-     * The spline is ready for writing via dxfW->writeSpline().
-     */
-    bool createSplineFromHyperbola(const LC_HyperbolaData& hd, DRW_Spline& spl);
-
+  /**
+   * Create a DRW_Spline representing the hyperbola branch (exact rational quadratic).
+   * @return true on success
+   */
+  static bool createSplineFromHyperbola(const LC_HyperbolaData& hd, DRW_Spline& spl);
 };
 
 #endif // LC_HYPERBOLASPLINE_H

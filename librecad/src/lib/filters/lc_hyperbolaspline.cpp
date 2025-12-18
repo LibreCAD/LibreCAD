@@ -22,32 +22,30 @@
 
 #include "lc_hyperbolaspline.h"
 #include "lc_hyperbola.h"
-#include "lc_linemath.h"
 #include "lc_quadratic.h"
+#include "lc_linemath.h"
 #include "rs_math.h"
 #include "drw_entities.h"
 #include <cmath>
 #include <algorithm>
 
 namespace {
-constexpr double g_kTolerance = 1e-10;
-constexpr double g_kDefaultPhiRange = 4.0;  // ±4 covers asymptotic behavior well
+constexpr double kTolerance = 1e-10;
+constexpr double kDefaultPhiRange = 4.0;
 }
 
 bool LC_HyperbolaSpline::isHyperbolaSpline(const DRW_Spline& s) {
   return (s.degree == 2 &&
           s.controllist.size() == 3 &&
           s.weightlist.size() == 3 &&
-          std::fabs(s.weightlist.at(0) - 1.0) <= g_kTolerance &&
-          std::fabs(s.weightlist.at(2) - 1.0) <= g_kTolerance &&
-          s.weightlist.at(1) > 1.0 + g_kTolerance);
+          std::fabs(s.weightlist.at(0) - 1.0) <= kTolerance &&
+          std::fabs(s.weightlist.at(2) - 1.0) <= kTolerance &&
+          s.weightlist.at(1) > 1.0 + kTolerance);
 }
 
-LC_HyperbolaData LC_HyperbolaSpline::splineToHyperbola(const DRW_Spline& s) {
-  LC_HyperbolaData hyperbolaData;
-
+LC_Hyperbola* LC_HyperbolaSpline::splineToHyperbola(const DRW_Spline& s, RS_EntityContainer* parent) {
   if (!isHyperbolaSpline(s)) {
-    return hyperbolaData;
+    return nullptr;
   }
 
   const auto& c0 = s.controllist[0];
@@ -60,63 +58,74 @@ LC_HyperbolaData LC_HyperbolaSpline::splineToHyperbola(const DRW_Spline& s) {
 
   double k = s.weightlist[1];
 
-  double dx0 = pStart.x - pShoulder.x;
-  double dy0 = pStart.y - pShoulder.y;
-  double dx2 = pShoulder.x - pEnd.x;
-  double dy2 = pShoulder.y - pEnd.y;
+  double xStart = pStart.x, yStart = pStart.y;
+  double xShoulder = pShoulder.x, yShoulder = pShoulder.y;
+  double xEnd = pEnd.x, yEnd = pEnd.y;
 
-  double coeffXX = dy0*dy0 + k*dy2*dy2 - (dy0 + dy2)*(dy0 + dy2);
-  double coeffXY = -2.0 * (dx0*dy0 + k*dx2*dy2 - (dx0 + dx2)*(dy0 + dy2));
-  double coeffYY = dx0*dx0 + k*dx2*dx2 - (dx0 + dx2)*(dx0 + dx2);
-  double coeffX  = 2.0 * (pShoulder.x*(dy0 + dy2) - pStart.x*dy0 - pEnd.x*dy2);
-  double coeffY  = -2.0 * (pShoulder.y*(dx0 + dx2) - pStart.y*dx0 - pEnd.y*dx2);
-  double coeffConst = pStart.x*pEnd.x - pStart.x*pShoulder.x - pEnd.x*pShoulder.x +
-                      k*pShoulder.x*pShoulder.x;
+  double coeffXX = (yStart - yShoulder)*(yStart - yShoulder) +
+                   k*(yShoulder - yEnd)*(yShoulder - yEnd) -
+                   (yStart - yEnd)*(yStart - yEnd);
+
+  double coeffXY = -2.0 * ((xStart - xShoulder)*(yStart - yShoulder) +
+                           k*(xShoulder - xEnd)*(yShoulder - yEnd) -
+                           (xStart - xEnd)*(yStart - yEnd));
+
+  double coeffYY = (xStart - xShoulder)*(xStart - xShoulder) +
+                   k*(xShoulder - xEnd)*(xShoulder - xEnd) -
+                   (xStart - xEnd)*(xStart - xEnd);
+
+  double coeffX = 2.0 * (xShoulder*(yStart - yEnd) - xStart*(yShoulder - yEnd) +
+                         k*(xShoulder*(yEnd - yStart) + xEnd*(yShoulder - yStart)));
+
+  double coeffY = 2.0 * (yShoulder*(xStart - xEnd) - yStart*(xShoulder - xEnd) +
+                         k*(yShoulder*(xEnd - xStart) + yEnd*(xShoulder - xStart)));
+
+  double coeffConst = xStart*(xEnd - xShoulder) + xShoulder*(xStart - xEnd) +
+                      k*xShoulder*(xShoulder - xStart - xEnd) + xEnd*(xShoulder - xStart);
 
   double maxCoeff = std::max({std::fabs(coeffXX), std::fabs(coeffXY), std::fabs(coeffYY),
-                              std::fabs(coeffX),  std::fabs(coeffY),  std::fabs(coeffConst), g_kTolerance});
+                              std::fabs(coeffX), std::fabs(coeffY), std::fabs(coeffConst), kTolerance});
 
-  if (maxCoeff < g_kTolerance) {
-    return hyperbolaData;  // Degenerate case
+  if (maxCoeff < kTolerance) {
+    return nullptr;
   }
 
-  std::vector<double> coeffs = {
-      coeffXX / maxCoeff,
-      coeffXY / maxCoeff,
-      coeffYY / maxCoeff,
-      coeffX  / maxCoeff,
-      coeffY  / maxCoeff,
-      coeffConst / maxCoeff
-  };
+  coeffXX /= maxCoeff; coeffXY /= maxCoeff; coeffYY /= maxCoeff;
+  coeffX  /= maxCoeff; coeffY  /= maxCoeff; coeffConst /= maxCoeff;
+
+  std::vector<double> coeffs = {coeffXX, coeffXY, coeffYY, coeffX, coeffY, coeffConst};
 
   LC_Quadratic quadratic(coeffs);
-  LC_Hyperbola tempEntity(nullptr, hyperbolaData);
+  LC_HyperbolaData hd;
+  LC_Hyperbola temp(nullptr, hd);
 
-  if (tempEntity.createFromQuadratic(quadratic)) {
-    hyperbolaData = tempEntity.getData();
-
-    RS_Vector chordMid = (pStart + pEnd) * 0.5;
-    RS_Vector vecShoulder = pShoulder - chordMid;
-    RS_Vector vecCenter = hyperbolaData.center - chordMid;
-
-    if (vecShoulder.squared() > g_kTolerance * g_kTolerance) {
-      hyperbolaData.reversed = (vecCenter.dotP(vecShoulder) < 0.0);
-    }
+  if (!temp.createFromQuadratic(quadratic)) {
+    return nullptr;
   }
 
-  return hyperbolaData;
-}
+  hd = temp.getData();
 
+  RS_Vector chordMid = (pStart + pEnd) * 0.5;
+  RS_Vector vecShoulder = pShoulder - chordMid;
+  RS_Vector vecCenter = hd.center - chordMid;
+
+  if (vecShoulder.squared() > kTolerance * kTolerance) {
+    double crossZ = vecCenter.crossP(vecShoulder).z;
+    hd.reversed = (crossZ < 0.0);
+  }
+
+  return new LC_Hyperbola(parent, hd);
+}
 bool LC_HyperbolaSpline::hyperbolaToRationalQuadratic(const LC_HyperbolaData& hd,
                                                       std::vector<RS_Vector>& ctrlPts,
                                                       std::vector<double>& weights) {
-  if (hd.ratio <= 0.0) return false;
+  if (!hd.isValid() || hd.ratio <= 0.0) return false;
 
   double phiStart = hd.angle1;
   double phiEnd   = hd.angle2;
-  if (std::abs(phiStart) < g_kTolerance && std::abs(phiEnd) < g_kTolerance) {
-    phiStart = -g_kDefaultPhiRange;
-    phiEnd   =  g_kDefaultPhiRange;
+  if (std::abs(phiStart) < kTolerance && std::abs(phiEnd) < kTolerance) {
+    phiStart = -kDefaultPhiRange;
+    phiEnd   =  kDefaultPhiRange;
   }
 
   LC_Hyperbola tempHyperbola(nullptr, hd);
@@ -133,22 +142,24 @@ bool LC_HyperbolaSpline::hyperbolaToRationalQuadratic(const LC_HyperbolaData& hd
     tEnd   = -tEnd;
   }
 
+         // Use LC_LineMath for line-line intersection (existing utility in LibreCAD)
   RS_Vector shoulder = LC_LineMath::getIntersectionLineLine(pStart, pEnd, tStart, tEnd);
-  if (! shoulder.valid)
-    return false;
 
+  if (!shoulder.valid) {
+    return false;  // No intersection → degenerate case
+  }
 
   RS_Vector vStart = pStart - shoulder;
-  RS_Vector vEnd   = pEnd   - shoulder;
+  RS_Vector vEnd   = pEnd - shoulder;
 
   double lenStart = vStart.magnitude();
   double lenEnd   = vEnd.magnitude();
-  if (lenStart < g_kTolerance || lenEnd < g_kTolerance) return false;
+  if (lenStart < kTolerance || lenEnd < kTolerance) return false;
 
   double cosTheta = (vStart / lenStart).dotP(vEnd / lenEnd);
   double wMiddle = std::fabs(cosTheta);
 
-  if (wMiddle < g_kTolerance) return false;
+  if (wMiddle < kTolerance) return false;
   if (cosTheta < 0.0) wMiddle = 1.0 / wMiddle;
 
   ctrlPts = {pStart, shoulder, pEnd};
