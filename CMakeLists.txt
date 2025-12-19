@@ -381,6 +381,8 @@ set(SHARED_SOURCES
     librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.h
     librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.cpp
     librecad/src/actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.h
+    librecad/src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp
+    librecad/src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp
     librecad/src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp
     librecad/src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp
     librecad/src/actions/drawing/draw/curve/rs_actiondrawarc.cpp

@@ -1,4 +1,4 @@
-// lc_actiondrawhyperbolafpp.cpp
+// lc_ActionDrawHyperbolaFP.cpp
 /*******************************************************************************
  *
  This file is part of the LibreCAD project, a 2D CAD program
@@ -21,33 +21,32 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ******************************************************************************/
 
-#include "lc_actiondrawhyperbolafpp.h"
+#include "lc_actiondrawhyperbolafp.h"
 #include "lc_hyperbola.h"
-#include "rs_coordinateevent.h"
 #include "rs_graphic.h"
-#include "rs_preview.h"   /
+#include "rs_preview.h"
 #include "qg_graphicview.h"
 
-LC_ActionDrawHyperbolaFPP::LC_ActionDrawHyperbolaFPP(LC_ActionContext* actionContext)
+LC_ActionDrawHyperbolaFP::LC_ActionDrawHyperbolaFP(LC_ActionContext* actionContext)
     : RS_PreviewActionInterface("Draw Hyperbola by Foci and Two Points",
-                                actionContext, RS2::ActionDrawHyperbolaFPP)
+                                actionContext, RS2::ActionDrawHyperbolaFP)
 {
   reset();
 }
 
-void LC_ActionDrawHyperbolaFPP::init(int status)
+void LC_ActionDrawHyperbolaFP::init(int status)
 {
   RS_PreviewActionInterface::init(status);
   reset();
 }
 
-void LC_ActionDrawHyperbolaFPP::reset()
+void LC_ActionDrawHyperbolaFP::reset()
 {
   focus1 = focus2 = startPoint = endPoint = RS_Vector(false);
   setStatus(SetFocus1);
 }
 
-LC_Hyperbola* LC_ActionDrawHyperbolaFPP::preparePreview()
+LC_Hyperbola* LC_ActionDrawHyperbolaFP::preparePreview()
 {
   deletePreview();
 
@@ -88,9 +87,9 @@ LC_Hyperbola* LC_ActionDrawHyperbolaFPP::preparePreview()
   return hyperbola;
 }
 
-// lc_actiondrawhyperbolafpp.cpp - fixed createHyperbola() using temporary hyperbola
+// lc_ActionDrawHyperbolaFP.cpp - fixed createHyperbola() using temporary hyperbola
 
-void LC_ActionDrawHyperbolaFPP::createHyperbola()
+void LC_ActionDrawHyperbolaFP::createHyperbola()
 {
   if (!focus1.valid || !focus2.valid || !startPoint.valid || !endPoint.valid) {
     reset();
@@ -146,13 +145,13 @@ void LC_ActionDrawHyperbolaFPP::createHyperbola()
 
 }
 
-void LC_ActionDrawHyperbolaFPP::doTrigger()
+void LC_ActionDrawHyperbolaFP::doTrigger()
 {
   createHyperbola();
   setStatus(SetFocus1);
 }
 
-void LC_ActionDrawHyperbolaFPP::onMouseLeftButtonRelease(int status, LC_MouseEvent* e)
+void LC_ActionDrawHyperbolaFP::onMouseLeftButtonRelease(int status, LC_MouseEvent* e)
 {
   RS_Vector snapped = e->snapPoint;
   if (!snapped.valid) return;
@@ -160,7 +159,7 @@ void LC_ActionDrawHyperbolaFPP::onMouseLeftButtonRelease(int status, LC_MouseEve
   onCoordinateEvent(status, false, snapped);
 }
 
-void LC_ActionDrawHyperbolaFPP::onMouseMoveEvent(int status, LC_MouseEvent* event)
+void LC_ActionDrawHyperbolaFP::onMouseMoveEvent(int status, LC_MouseEvent* event)
 {
   if (!event) return;
 
@@ -186,13 +185,13 @@ void LC_ActionDrawHyperbolaFPP::onMouseMoveEvent(int status, LC_MouseEvent* even
   drawPreview();
 }
 
-void LC_ActionDrawHyperbolaFPP::onMouseRightButtonRelease(int status, LC_MouseEvent*)
+void LC_ActionDrawHyperbolaFP::onMouseRightButtonRelease(int status, LC_MouseEvent*)
 {
   deletePreview();
   initPrevious(status);
 }
 
-void LC_ActionDrawHyperbolaFPP::onCoordinateEvent(int status, bool isZero, const RS_Vector& pos)
+void LC_ActionDrawHyperbolaFP::onCoordinateEvent(int status, bool isZero, const RS_Vector& pos)
 {
   if (!pos.valid) return;
 
@@ -236,7 +235,7 @@ void LC_ActionDrawHyperbolaFPP::onCoordinateEvent(int status, bool isZero, const
   m_graphicView->redraw(RS2::RedrawOverlay);
 }
 
-void LC_ActionDrawHyperbolaFPP::updateMouseButtonHints()
+void LC_ActionDrawHyperbolaFP::updateMouseButtonHints()
 {
   switch (getStatus()) {
   case SetFocus1:
@@ -257,7 +256,7 @@ void LC_ActionDrawHyperbolaFPP::updateMouseButtonHints()
   }
 }
 
-RS2::CursorType LC_ActionDrawHyperbolaFPP::doGetMouseCursor(int status)
+RS2::CursorType LC_ActionDrawHyperbolaFP::doGetMouseCursor(int status)
 {
   return RS2::CadCursor;
 }

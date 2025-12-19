@@ -369,5 +369,6 @@
         <file alias="ui_corner_bottom.lci">ui_corner_bottom.svg</file>
         <file alias="ui_corner_top.lci">ui_corner_top.svg</file>
         <file alias="fullscreen.lci">fullscreen.svg</file>
+        <file alias="hyperbola_foci_point.lci">hyperbola_foci_point.svg</file>
     </qresource>
 </RCC>

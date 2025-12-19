@@ -1,4 +1,4 @@
-// lc_actiondrawhyperbolafpp.h
+// lc_ActionDrawHyperbolaFP.h
 /*******************************************************************************
  *
  This file is part of the LibreCAD project, a 2D CAD program
@@ -21,8 +21,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ******************************************************************************/
 
-#ifndef LC_ACTIONDRAWHYPERBOLAFPP_H
-#define LC_ACTIONDRAWHYPERBOLAFPP_H
+#ifndef LC_ACTIONDRAWHYPERBOLAFP_H
+#define LC_ACTIONDRAWHYPERBOLAFP_H
 
 #include "rs_previewactioninterface.h"
 
@@ -32,7 +32,7 @@ class LC_Hyperbola;
  * Draw hyperbola by two foci and two points on one branch
  * The two points become start/end points of the drawn arc
  */
-class LC_ActionDrawHyperbolaFPP : public RS_PreviewActionInterface {
+class LC_ActionDrawHyperbolaFP : public RS_PreviewActionInterface {
   Q_OBJECT
 public:
   /**
@@ -45,8 +45,8 @@ public:
     SetEndPoint     // Setting second point on branch (end point)
   };
 
-  LC_ActionDrawHyperbolaFPP(LC_ActionContext* actionContext);
-  ~LC_ActionDrawHyperbolaFPP() override = default;
+  LC_ActionDrawHyperbolaFP(LC_ActionContext* actionContext);
+  ~LC_ActionDrawHyperbolaFP() override = default;
 
   void init(int status) override;
   void doTrigger() override;
@@ -70,4 +70,4 @@ private:
   void createHyperbola();
 };
 
-#endif // LC_ACTIONDRAWHYPERBOLAFPP_H
+#endif // LC_ACTIONDRAWHYPERBOLAFP_H
