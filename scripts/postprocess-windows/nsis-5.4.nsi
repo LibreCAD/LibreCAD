@@ -1,5 +1,8 @@
 ;NSIS Modern User Interface
 ;Final version with explicit plugin copy to fix DLL loading issues
+;Updated: Multilingual installer UI + explicit LibreCAD .qm handling with error check
+
+!include "LogicLib.nsh"  ; Required for existence checks
 
 ;--------------------------------
 ;Include custom settings if exists
@@ -45,8 +48,28 @@
   !insertmacro MUI_UNPAGE_INSTFILES
 
 ;--------------------------------
-;Languages
-  !insertmacro MUI_LANGUAGE "English"
+;Languages (Multilingual support with auto-detection)
+  !insertmacro MUI_LANGUAGE "English"     ; Default/fallback
+  !insertmacro MUI_LANGUAGE "French"
+  !insertmacro MUI_LANGUAGE "German"
+  !insertmacro MUI_LANGUAGE "Spanish"
+  !insertmacro MUI_LANGUAGE "SpanishInternational"
+  !insertmacro MUI_LANGUAGE "SimpChinese"
+  !insertmacro MUI_LANGUAGE "TradChinese"
+  !insertmacro MUI_LANGUAGE "Japanese"
+  !insertmacro MUI_LANGUAGE "Korean"
+  !insertmacro MUI_LANGUAGE "Italian"
+  !insertmacro MUI_LANGUAGE "Dutch"
+  !insertmacro MUI_LANGUAGE "Russian"
+  !insertmacro MUI_LANGUAGE "Polish"
+  !insertmacro MUI_LANGUAGE "Portuguese"
+  !insertmacro MUI_LANGUAGE "PortugueseBR"
+  !insertmacro MUI_LANGUAGE "Czech"
+  !insertmacro MUI_LANGUAGE "Swedish"
+  !insertmacro MUI_LANGUAGE "Finnish"
+  !insertmacro MUI_LANGUAGE "Greek"
+  !insertmacro MUI_LANGUAGE "Turkish"
+  !insertmacro MUI_LANGUAGE "Arabic"      ; RTL support
 
 Function .onInit
   Push $R0
@@ -100,7 +123,7 @@ Section "Install Section" SecInstall
   SetOutPath "$INSTDIR"
   File /r "..\..\windows\*.*"
 
-  ; Explicit critical plugin copies to prevent "failed to extract data" issues
+  ; Explicit critical plugin copies
   SetOutPath "$INSTDIR\platforms"
   File /nonfatal "${PLUGINS_DIR}\platforms\qwindows.dll"
   File /nonfatal "${PLUGINS_DIR}\platforms\qminimal.dll"
@@ -119,6 +142,21 @@ Section "Install Section" SecInstall
   SetOutPath "$INSTDIR\resources\qm"
   File /nonfatal "${TRANSLATIONS_DIR}\qt_*.qm"
   File /nonfatal "${TRANSLATIONS_DIR}\qtbase_*.qm"
+
+  ;--- Explicit LibreCAD application translation files (.qm) ---
+  SetOutPath "$INSTDIR\ts"
+
+  ClearErrors
+  FindFirst $0 $1 "..\..\windows\ts\librecad_*.qm"
+  ${If} ${Errors}
+    MessageBox MB_OK|MB_ICONSTOP "ERROR: No LibreCAD translation files (.qm) found in build output!$\r$\n\
+      The lrelease step may have failed or been skipped.$\r$\n\
+      Installation cannot continue."
+    Abort "Missing LibreCAD translation files"
+  ${EndIf}
+  FindClose $0
+
+  File /r "..\..\windows\ts\*.qm"
 
   SetOutPath "$INSTDIR"
 
