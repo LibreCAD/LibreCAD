@@ -245,32 +245,17 @@ double LC_Hyperbola::getDirection2() const
 
 RS_Vector LC_Hyperbola::getTangentDirection(const RS_Vector& point) const
 {
-  if (!m_bValid || !point.valid) return RS_Vector(false);
+  double phi = getParamFromPoint(point, data.reversed);
+  double a = getMajorRadius();
+  double b = getMinorRadius();
 
-  const double a = getMajorRadius();
-  const double b = getMinorRadius();
-  if (a < RS_TOLERANCE || b < RS_TOLERANCE) return RS_Vector(false);
+  double dx = a * std::sinh(phi);
+  double dy = b * std::cosh(phi);
+  if (data.reversed) dx = -dx;
 
-  RS_Vector local = (point - data.center).rotate(-getAngle());
-  double x = local.x;
-  double y = local.y;
-
-  bool rev = data.reversed;
-  if (rev) {
-    x = -x;
-    y = -y;
-  }
-
-  double phi = std::atanh(y / b / std::sqrt(x*x/(a*a) - 1.0 + RS_TOLERANCE));
-  if (rev) phi += M_PI;
-
-  double cp = std::cosh(phi);
-  double sp = std::sinh(phi);
-
-  RS_Vector tangent_local(a * sp, b * cp);
-  tangent_local.rotate(getAngle());
-
-  return tangent_local.normalized();
+  RS_Vector tangent(dx, dy);
+  tangent.rotate(data.majorP.angle());
+  return tangent.normalized();
 }
 
 RS_VectorSolutions LC_Hyperbola::getTangentPoint(const RS_Vector& point) const
@@ -338,11 +323,6 @@ RS_Vector LC_Hyperbola::getPoint(double phi, bool useReversed) const
   RS_Vector local(useReversed ? -a * ch : a * ch, b * sh);
   local.rotate(getAngle());
   return data.center + local;
-}
-
-RS_Vector LC_Hyperbola::getPoint(double phi) const
-{
-  return getPoint(phi, data.reversed);
 }
 
 double LC_Hyperbola::getParamFromPoint(const RS_Vector& p, bool branchReversed) const
@@ -944,4 +924,150 @@ double LC_Hyperbola::getLength() const
 void LC_Hyperbola::updateLength()
 {
     cachedLength = getLength();
+}
+
+// lc_hyperbola.cpp - add implementations at the end of the file
+
+void LC_Hyperbola::setFocus1(const RS_Vector& f1)
+{
+  if (!f1.valid || !m_bValid) return;
+
+  RS_Vector f2 = data.getFocus2();
+  // Use a point on the current curve (vertex approximation at phi=0)
+  RS_Vector currentPoint = getPoint(0.0, data.reversed);
+  if (!currentPoint.valid) {
+    currentPoint = getPoint(0.0, !data.reversed); // try opposite branch
+  }
+  if (!currentPoint.valid) return;
+
+  LC_HyperbolaData newData(f1, f2, currentPoint);
+  if (newData.isValid()) {
+    data = newData;
+    m_bValid = true;
+    calculateBorders();
+    updateLength();
+  }
+}
+
+void LC_Hyperbola::setFocus2(const RS_Vector& f2)
+{
+  if (!f2.valid || !m_bValid) return;
+
+  RS_Vector f1 = data.getFocus1();
+  RS_Vector currentPoint = getPoint(0.0, data.reversed);
+  if (!currentPoint.valid) {
+    currentPoint = getPoint(0.0, !data.reversed);
+  }
+  if (!currentPoint.valid) return;
+
+  LC_HyperbolaData newData(f1, f2, currentPoint);
+  if (newData.isValid()) {
+    data = newData;
+    m_bValid = true;
+    calculateBorders();
+    updateLength();
+  }
+}
+
+void LC_Hyperbola::setPointOnCurve(const RS_Vector& p)
+{
+  if (!p.valid || !m_bValid) return;
+
+  RS_Vector f1 = data.getFocus1();
+  RS_Vector f2 = data.getFocus2();
+
+  LC_HyperbolaData newData(f1, f2, p);
+  if (newData.isValid()) {
+    data = newData;
+    m_bValid = true;
+    calculateBorders();
+    updateLength();
+  }
+}
+
+// lc_hyperbola.cpp - add these implementations (place with other property editing methods)
+
+// Direct ratio setter (b/a)
+void LC_Hyperbola::setRatio(double r)
+{
+  if (r <= 0.0 || !m_bValid) return;
+  data.ratio = r;
+  calculateBorders();
+  updateLength();
+}
+
+// Minor radius setter (b = a * ratio)
+void LC_Hyperbola::setMinorRadius(double b)
+{
+  if (b <= 0.0 || !m_bValid) return;
+  double a = getMajorRadius();
+  if (a > 0.0) {
+    data.ratio = b / a;
+    calculateBorders();
+    updateLength();
+  }
+}
+
+// Set the primary vertex (closest vertex on the selected branch)
+// This adjusts the major radius 'a' while keeping center and direction fixed
+void LC_Hyperbola::setPrimaryVertex(const RS_Vector& v)
+{
+  if (!v.valid || !m_bValid) return;
+
+  RS_Vector dir = data.majorP;
+  if (dir.squared() < RS_TOLERANCE2) return;
+  dir.normalize();
+
+  RS_Vector expectedVertex = data.reversed
+                                 ? data.center - dir * getMajorRadius()
+                                 : data.center + dir * getMajorRadius();
+
+  RS_Vector offset = v - expectedVertex;
+  double distanceAlongAxis = offset.dotP(dir);
+
+  double newA = std::abs(getMajorRadius() + distanceAlongAxis);
+  if (newA < RS_TOLERANCE) return;
+
+         // Adjust majorP magnitude
+  data.majorP = dir * newA;
+  if (data.reversed) data.majorP = -data.majorP;  // preserve direction for left branch
+
+  calculateBorders();
+  updateLength();
+}
+
+// Missing override - simple implementation treating center as main reference point
+void LC_Hyperbola::moveRef(const RS_Vector& ref, const RS_Vector& offset)
+{
+  if ((data.center - ref).squared() < RS_TOLERANCE2) {
+    move(offset);
+  } else {
+    // Fallback: just move the whole entity
+    move(offset);
+  }
+}
+
+// lc_hyperbola.cpp - implementation
+
+RS_Vector LC_Hyperbola::getPrimaryVertex() const
+{
+  if (!m_bValid) {
+    return RS_Vector(false);
+  }
+
+  double a = getMajorRadius();
+  if (a < RS_TOLERANCE) {
+    return RS_Vector(false);
+  }
+
+         // majorP already contains the vector from center to the right-branch vertex
+         // with magnitude = a and correct direction
+  RS_Vector vertex = data.center + data.majorP;
+
+  if (data.reversed) {
+    // For left branch, the primary vertex is on the opposite side
+    vertex = data.center - data.majorP;
+  }
+
+  return vertex;
 }

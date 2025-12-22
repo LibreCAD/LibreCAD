@@ -29,6 +29,7 @@
 #include "lc_dlgdimension.h"
 #include "lc_ellipsepropertieseditingwidget.h"
 #include "lc_entitypropertieseditorwidget.h"
+#include "lc_hyperbolapropertieseditingwidget.h"
 #include "lc_imagepropertieseditingwidget.h"
 #include "lc_insertpropertieseditingwidget.h"
 #include "lc_linepropertieseditingwidget.h"
@@ -194,6 +195,12 @@ void LC_DlgEntityProperties::prepareTypeSpecificUI(LC_EntityPropertiesEditorWidg
             windowTitle = tr("Ellipse Properties");
             dlgName = "DlgEllipseProperties";
             break;
+        }
+        case RS2::EntityHyperbola: {
+          primaryWidget = new LC_HyperbolaPropertiesEditingWidget(this);
+          windowTitle = tr("Hyperbola Properties");
+          dlgName = "DlgHyperbolaProperties";
+          break;
         }
         case RS2::EntityPolyline: {
             primaryWidget = new LC_PolylinePropertiesEditingWidget(this);

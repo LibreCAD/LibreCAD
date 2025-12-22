@@ -490,6 +490,7 @@ HEADERS += \
     ui/dialogs/entity/lc_entitypropertieseditor.h \
     ui/dialogs/entity/lc_entitypropertieseditorsupport.h \
     ui/dialogs/entity/lc_entitypropertieseditorwidget.h \
+    ui/dialogs/entity/lc_hyperbolapropertieseditingwidget.h \
     ui/dialogs/entity/lc_imagepropertieseditingwidget.h \
     ui/dialogs/entity/lc_insertpropertieseditingwidget.h \
     ui/dialogs/entity/lc_linepropertieseditingwidget.h \
@@ -717,6 +718,7 @@ SOURCES += \
     ui/dialogs/entity/lc_entitypropertieseditor.cpp \
     ui/dialogs/entity/lc_entitypropertieseditorsupport.cpp \
     ui/dialogs/entity/lc_entitypropertieseditorwidget.cpp \
+    ui/dialogs/entity/lc_hyperbolapropertieseditingwidget.cpp \
     ui/dialogs/entity/lc_imagepropertieseditingwidget.cpp \
     ui/dialogs/entity/lc_insertpropertieseditingwidget.cpp \
     ui/dialogs/entity/lc_linepropertieseditingwidget.cpp \
@@ -1742,6 +1744,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dialogs/entity/lc_dlgtolerance.ui \
        #ui/dialogs/entity/lc_dlgsplinepoints.ui \
        ui/dialogs/entity/lc_ellipsepropertieseditingwidget.ui \
+       ui/dialogs/entity/lc_hyperbolapropertieseditingwidget.ui \
        ui/dialogs/entity/lc_imagepropertieseditingwidget.ui \
        ui/dialogs/entity/lc_insertpropertieseditingwidget.ui \
        ui/dialogs/entity/lc_linepropertieseditingwidget.ui \

@@ -36,15 +36,51 @@ constexpr double kTolerance = 1e-10;
 constexpr double kDefaultPhiRange = 4.0;
 }
 
-bool LC_HyperbolaSpline::isHyperbolaSpline(const DRW_Spline& s) {
-  if (s.weightlist.size() == 3)
-    LC_ERR<<s.weightlist.at(0)<<" "<<s.weightlist.at(1)<<" "<<s.weightlist.at(2);
-  return (s.degree == 2 &&
-          s.controllist.size() == 3 &&
-          s.weightlist.size() == 3 &&
-          std::fabs(s.weightlist.at(0) - 1.0) <= kTolerance &&
-          std::fabs(s.weightlist.at(2) - 1.0) <= kTolerance &&
-          s.weightlist.at(1) > 1.0 + kTolerance);
+bool LC_HyperbolaSpline::isHyperbolaSpline(const DRW_Spline& s)
+{
+  constexpr double tol = 1e-8;
+
+         // Structural checks: single rational quadratic Bézier segment
+  if (s.degree != 2 || s.controllist.size() != 3 || s.weightlist.size() != 3 ||
+      s.knotslist.size() != 6)
+    return false;
+
+         // Standard open knot vector [0,0,0,1,1,1]
+  const auto& k = s.knotslist;
+  if (std::abs(k[0]) > tol || std::abs(k[1]) > tol || std::abs(k[2]) > tol ||
+      std::abs(k[3] - 1.0) > tol || std::abs(k[4] - 1.0) > tol || std::abs(k[5] - 1.0) > tol)
+    return false;
+
+         // Endpoint weights must be 1.0
+  if (std::abs(s.weightlist[0] - 1.0) > tol || std::abs(s.weightlist[2] - 1.0) > tol)
+    return false;
+
+  const double w = s.weightlist[1];
+  if (w <= 0.0) return false;
+
+         // Extract control points
+  const auto* p0 = s.controllist[0].get();
+  const auto* p1 = s.controllist[1].get();
+  const auto* p2 = s.controllist[2].get();
+
+  const double x0 = p0->x, y0 = p0->y;
+  const double x1 = p1->x, y1 = p1->y;
+  const double x2 = p2->x, y2 = p2->y;
+
+         // Degenerate check: collinear control points → line (not a proper conic)
+  const double area = (x1 - x0)*(y2 - y0) - (x2 - x0)*(y1 - y0);
+  if (std::abs(area) < tol) return false;
+
+         // Implicit quadratic coefficients A, B, C (only quadratic terms needed for discriminant)
+  const double A = w * (y0 * y2 - y1 * y1);
+  const double B = w * (2.0 * (x1 * (y0 + y2) - x0 * y1 - x2 * y1));
+  const double C = w * (x0 * x2 - x1 * x1);
+
+         // Conic discriminant B² - 4AC
+  const double discriminant = B * B - 4.0 * A * C;
+
+         // Hyperbola if discriminant > 0 (with tolerance for floating-point errors)
+  return discriminant > tol;
 }
 
 LC_Hyperbola* LC_HyperbolaSpline::splineToHyperbola(const DRW_Spline& s, RS_EntityContainer* parent) {
@@ -168,6 +204,9 @@ bool LC_HyperbolaSpline::hyperbolaToRationalQuadratic(const LC_HyperbolaData& hd
   if (cosTheta < 0.0) wMiddle = 1.0 / wMiddle;
 
   ctrlPts = {pStart, shoulder, pEnd};
+  if (wMiddle <= 1. + RS_TOLERANCE) {
+    LC_ERR<<wMiddle;
+  }
   weights = {1.0, wMiddle, 1.0};
 
   return true;

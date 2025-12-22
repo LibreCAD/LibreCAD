@@ -1276,6 +1276,8 @@ set(SHARED_SOURCES
     librecad/src/ui/dialogs/entity/lc_entitypropertieseditorsupport.h
     librecad/src/ui/dialogs/entity/lc_entitypropertieseditorwidget.cpp
     librecad/src/ui/dialogs/entity/lc_entitypropertieseditorwidget.h
+    librecad/src/ui/dialogs/entity/lc_hyperbolapropertieseditingwidget.h
+    librecad/src/ui/dialogs/entity/lc_hyperbolapropertieseditingwidget.cpp
     librecad/src/ui/dialogs/entity/lc_imagepropertieseditingwidget.cpp
     librecad/src/ui/dialogs/entity/lc_imagepropertieseditingwidget.h
     librecad/src/ui/dialogs/entity/lc_insertpropertieseditingwidget.cpp

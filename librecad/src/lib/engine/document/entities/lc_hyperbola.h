@@ -1,25 +1,27 @@
-// lc_hyperbola.h
-/*******************************************************************************
+// File: lc_hyperbola.h
+
+/*
+ * ********************************************************************************
+ * This file is part of the LibreCAD project, a 2D CAD program
  *
- This file is part of the LibreCAD project, a 2D CAD program
-
-Copyright (C) 2025 LibreCAD.org
-Copyright (C) 2025 Dongxu Li (github.com/dxli)
-
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-******************************************************************************/
+ * Copyright (C) 2025 LibreCAD.org
+ * Copyright (C) 2025 Dongxu Li (github.com/dxli)
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * ********************************************************************************
+ */
 
 #ifndef LC_HYPERBOLA_H
 #define LC_HYPERBOLA_H
@@ -44,36 +46,26 @@ struct LC_HyperbolaData {
                    const RS_Vector& focus1,
                    const RS_Vector& point);
 
-  RS_Vector getFocus1()const;
-  RS_Vector getFocus2()const;
+  RS_Vector getFocus1() const;
+  RS_Vector getFocus2() const;
   bool isValid() const;
+
   RS_Vector center{};
   RS_Vector majorP{};
-  double ratio = 0.0;
-  // Angular range:
-  // - If angle1 == angle2 == 0.0: full (infinite) hyperbola (both branches)
-  // - Otherwise: limited arc on the branch selected by 'reversed'
+  double ratio = 0.0;          // b/a
   double angle1 = 0.0;
   double angle2 = 0.0;
-  bool reversed = false;  // false = right branch (x >= a), true = left branch (x <= -a)
+  bool reversed = false;       // true = left branch
 };
 
-std::ostream& operator<<(std::ostream& os, const LC_HyperbolaData& d);
-
-/**
- * Hyperbola entity – full analytical support
- */
 class LC_Hyperbola : public LC_CachedLengthEntity {
 public:
   LC_Hyperbola() = default;
   LC_Hyperbola(RS_EntityContainer* parent, const LC_HyperbolaData& d);
   LC_Hyperbola(const RS_Vector& focus0, const RS_Vector& focus1, const RS_Vector& point);
-
-         // Constructors from quadratic form
   LC_Hyperbola(RS_EntityContainer* parent, const std::vector<double>& coeffs);
   LC_Hyperbola(RS_EntityContainer* parent, const LC_Quadratic& q);
 
-         // Factory methods
   bool createFromQuadratic(const LC_Quadratic& q);
   bool createFromQuadratic(const std::vector<double>& coeffs);
 
@@ -82,8 +74,33 @@ public:
   RS2::EntityType rtti() const override { return RS2::EntityHyperbola; }
   bool isValid() const { return m_bValid; }
 
-  LC_HyperbolaData getData() const { return data; }
+  LC_HyperbolaData& getData() { return data; }
+  const LC_HyperbolaData& getData() const { return data; }
+
+         // Core geometric accessors
   RS_VectorSolutions getFoci() const;
+  RS_Vector getFocus1() const { return data.getFocus1(); }
+  RS_Vector getFocus2() const { return data.getFocus2(); }
+
+  double getMajorRadius() const { return data.majorP.magnitude(); }
+  double getMinorRadius() const { return getMajorRadius() * data.ratio; }
+  double getRatio() const { return data.ratio; }
+  double getEccentricity() const { return std::sqrt(1.0 + data.ratio * data.ratio); }
+
+  RS_Vector getPrimaryVertex() const;
+
+  double getAngle1() const { return data.angle1; }
+  double getAngle2() const { return data.angle2; }
+
+         // Property editing support
+  void setFocus1(const RS_Vector& f1);
+  void setFocus2(const RS_Vector& f2);
+  void setPointOnCurve(const RS_Vector& p);
+  void setRatio(double r);
+  void setMinorRadius(double b);
+  void setAngle1(double a1) { data.angle1 = a1; }
+  void setAngle2(double a2) { data.angle2 = a2; }
+
   RS_VectorSolutions getRefPoints() const override;
 
   RS_Vector getStartpoint() const override;
@@ -91,6 +108,7 @@ public:
   RS_Vector getMiddlePoint() const override;
 
   double getLength() const override;
+  void updateLength() override;
 
   RS_Vector getNearestMiddle(const RS_Vector& coord,
                              double* dist = nullptr,
@@ -100,7 +118,6 @@ public:
                            const RS_Vector& coord,
                            double* dist = nullptr) const override;
 
-         // Tangent methods
   double getDirection1() const override;
   double getDirection2() const override;
 
@@ -115,22 +132,12 @@ public:
   void setReversed(bool r) { data.reversed = r; }
 
   double getAngle() const { return data.majorP.angle(); }
-  double getAngle1() const { return data.angle1; }
-  void setAngle1(double a) { data.angle1 = a; }
-  double getAngle2() const { return data.angle2; }
-  void setAngle2(double a) { data.angle2 = a; }
 
   RS_Vector getCenter() const override { return data.center; }
   void setCenter(const RS_Vector& c) { data.center = c; }
 
   RS_Vector getMajorP() const { return data.majorP; }
   void setMajorP(const RS_Vector& p) { data.majorP = p; }
-
-  double getRatio() const { return data.ratio; }
-  void setRatio(double r) { data.ratio = r; }
-
-  double getMajorRadius() const { return data.majorP.magnitude(); }
-  double getMinorRadius() const { return getMajorRadius() * data.ratio; }
 
   void calculateBorders() override;
 
@@ -142,6 +149,7 @@ public:
                             double solidDist = RS_MAXDOUBLE) const override;
   bool isPointOnEntity(const RS_Vector& coord, double tolerance = RS_TOLERANCE) const override;
 
+  void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
   void move(const RS_Vector& offset) override;
   void rotate(const RS_Vector& center, double angle) override;
   void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
@@ -152,26 +160,18 @@ public:
 
   LC_Quadratic getQuadratic() const override;
 
-         // Public parametric utilities
   double getParamFromPoint(const RS_Vector& p, bool branchReversed = false) const;
-  void updateLength() override;
   RS_Vector getPoint(double phi, bool useReversed) const;
-
-protected:
-  LC_HyperbolaData data;
-  bool m_bValid = false;
+  void setPrimaryVertex(const RS_Vector& v);
 
 private:
-  // Point evaluation - hyperbolic parametrization (stable for all phi)
-  RS_Vector getPoint(double phi) const;
+  bool isInClipRect(const RS_Vector& p, double xmin, double xmax, double ymin, double ymax) const;
 
-  bool isInClipRect(const RS_Vector& p,
-                    double xmin, double xmax, double ymin, double ymax) const;
-
-         // Adaptive sampling with screen-space error control
   void adaptiveSample(std::vector<RS_Vector>& out,
-                      double phiStart, double phiEnd, bool rev,
-                      double maxError) const;
+                                    double phiStart, double phiEnd, bool rev,
+                                    double maxError) const;
+  LC_HyperbolaData data;
+  bool m_bValid = false;
 };
 
 #endif // LC_HYPERBOLA_H

@@ -28,7 +28,7 @@
 
 // Forward declarations
 class RS_EntityContainer;
-struct DRW_Spline;
+class DRW_Spline;
 class LC_Hyperbola;
 struct LC_HyperbolaData;
 
