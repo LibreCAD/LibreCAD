@@ -153,6 +153,7 @@ bool LC_Hyperbola::createFromQuadratic(const LC_Quadratic& q)
   std::vector<double> cr = rotated.getCoefficients();
   double Ar = cr[0], Cr = cr[2], Fr = cr[5];
 
+  LC_ERR<<"Ar * Cr "<<Ar * Cr;
   if (Ar * Cr >= 0.0) return false;
 
   double a2 = -Fr / Ar;

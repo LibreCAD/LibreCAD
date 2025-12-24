@@ -846,7 +846,7 @@ bool RS_FilterDXFRW::handleQuadraticConicSpline(const DRW_Spline* data) {
     }
 
     // Try hyperbola first
-    RS_Entity* en = LC_HyperbolaSpline::splineToHyperbola(*data, m_currentContainer);
+    std::unique_ptr<RS_Entity> en = LC_HyperbolaSpline::splineToHyperbola(*data, m_currentContainer);
     if (en == nullptr) {
         // Fallback to parabola
         LC_ParabolaData pd{{
@@ -854,11 +854,11 @@ bool RS_FilterDXFRW::handleQuadraticConicSpline(const DRW_Spline* data) {
                 coordToVector(data->controllist.at(1)),
                 coordToVector(data->controllist.at(2))
                }};
-        en = new LC_Parabola(m_currentContainer, pd);
+        en = std::make_unique<LC_Parabola>(m_currentContainer, pd);
     }
-    setEntityAttributes(en, data);
+    setEntityAttributes(en.get(), data);
     en->update();
-    m_currentContainer->addEntity(en);
+    m_currentContainer->addEntity(en.release());
 
     return true;
 }
@@ -4008,7 +4008,7 @@ void RS_FilterDXFRW::writeHyperbola(LC_Hyperbola* h) {
     DRW_Spline spl;
     getEntityAttributes(&spl, h);
 
-    if (LC_HyperbolaSpline::createSplineFromHyperbola(h->getData(), spl)) {
+    if (LC_HyperbolaSpline::hyperbolaToSpline(h->getData(), spl)) {
         m_dxfW->writeSpline(&spl);
     }
 }
