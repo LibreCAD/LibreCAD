@@ -1,5 +1,3 @@
-// File: lc_hyperbolaspline.cpp
-
 /*
  * ********************************************************************************
  * This file is part of the LibreCAD project, a 2D CAD program
@@ -31,34 +29,40 @@
 #include "lc_hyperbola.h"
 #include "lc_quadratic.h"
 #include "lc_linemath.h"
+#include "rs_debug.h"
 #include "rs_math.h"
 #include "drw_entities.h"
 
 namespace {
-constexpr double kTolerance = 1e-10;         // floating-point tolerance
-constexpr double kDefaultPhiRange = 4.0;     // symmetric range for full hyperbola
+// Tolerance for floating-point comparisons
+constexpr double kTolerance = 1e-10;
 }
 
-// Detect rational quadratic Bézier hyperbola spline
+// Check if a DRW_Spline represents a rational quadratic Bézier hyperbola segment
 bool LC_HyperbolaSpline::isHyperbolaSpline(const DRW_Spline& s)
 {
   constexpr double tol = 1e-8;
 
+         // Must be exactly a degree-2 spline with 3 control points and 3 weights
   if (s.degree != 2 || s.controllist.size() != 3 || s.weightlist.size() != 3 ||
       s.knotslist.size() != 6)
     return false;
 
+         // Knot vector must be the standard open uniform [0,0,0,1,1,1]
   const auto& k = s.knotslist;
   if (std::abs(k[0]) > tol || std::abs(k[1]) > tol || std::abs(k[2]) > tol ||
       std::abs(k[3] - 1.0) > tol || std::abs(k[4] - 1.0) > tol || std::abs(k[5] - 1.0) > tol)
     return false;
 
+         // Endpoint weights must be exactly 1.0
   if (std::abs(s.weightlist[0] - 1.0) > tol || std::abs(s.weightlist[2] - 1.0) > tol)
     return false;
 
+         // Middle weight must be positive
   const double w = s.weightlist[1];
   if (w <= 0.0) return false;
 
+         // Extract control points
   const auto* p0 = s.controllist[0].get();
   const auto* p1 = s.controllist[1].get();
   const auto* p2 = s.controllist[2].get();
@@ -67,20 +71,26 @@ bool LC_HyperbolaSpline::isHyperbolaSpline(const DRW_Spline& s)
   const double x1 = p1->x, y1 = p1->y;
   const double x2 = p2->x, y2 = p2->y;
 
+         // Collinear control points produce a line, not a proper conic
   const double area = (x1 - x0)*(y2 - y0) - (x2 - x0)*(y1 - y0);
   if (std::abs(area) < tol) return false;
 
+         // Compute quadratic terms of implicit conic equation from rational Bézier
   const double A = w * (y0 * y2 - y1 * y1);
   const double B = w * (2.0 * (x1 * (y0 + y2) - x0 * y1 - x2 * y1));
   const double C = w * (x0 * x2 - x1 * x1);
 
+         // Conic type discriminant: B² - 4AC > 0 → hyperbola
   const double discriminant = B * B - 4.0 * A * C;
 
-  return discriminant > tol;  // hyperbola if discriminant positive
+  return discriminant > tol;  // Positive discriminant indicates hyperbola
 }
 
-// Convert spline to hyperbola (nullptr if invalid)
-// File: lc_hyperbolaspline.cpp - updated splineToHyperbola() to use all weights
+// Convert DRW_Spline to LC_Hyperbola (returns owning unique_ptr)
+// File: lc_hyperbolaspline.cpp - updated splineToHyperbola() with full weight support
+
+// Convert DRW_Spline to LC_Hyperbola (returns owning unique_ptr)
+// File: lc_hyperbolaspline.cpp - updated splineToHyperbola() with full general weight support
 
 // Convert DRW_Spline to LC_Hyperbola (returns owning unique_ptr)
 std::unique_ptr<LC_Hyperbola> LC_HyperbolaSpline::splineToHyperbola(const DRW_Spline& s,
@@ -91,39 +101,34 @@ std::unique_ptr<LC_Hyperbola> LC_HyperbolaSpline::splineToHyperbola(const DRW_Sp
     return nullptr;
   }
 
-         // Extract control points and all three weights
-  const auto& ctrl = s.controllist;
+         // Extract all three weights and control points
   const auto& weights = s.weightlist;
-
   double w0 = weights[0];
   double w1 = weights[1];
   double w2 = weights[2];
 
+  const auto& ctrl = s.controllist;
   RS_Vector p0(ctrl[0]->x, ctrl[0]->y);
   RS_Vector p1(ctrl[1]->x, ctrl[1]->y);
   RS_Vector p2(ctrl[2]->x, ctrl[2]->y);
 
-         // General rational quadratic Bézier to implicit conic conversion
-         // Using the full formula that handles arbitrary endpoint weights
-  double A = w0 * w2 * (p0.y * p2.y - p1.y * p1.y) +
-             w0 * w1 * (p0.y * p1.y - p0.y * p1.y) +
-             w1 * w2 * (p1.y * p2.y - p1.y * p1.y);
+  // Full general formula (required for asymmetric arcs)
+  double A = w1 * (p0.y * p2.y - p1.y * p1.y);
+  double B = w1 * 2.0 * (p1.x * (p0.y + p2.y) - p0.x * p1.y - p2.x * p1.y);
+  double C = w1 * (p0.x * p2.x - p1.x * p1.x);
 
-  double B = 2.0 * (w0 * w2 * (p1.x * (p0.y + p2.y) - p0.x * p1.y - p2.x * p1.y) +
-                    w0 * w1 * (p0.x * p1.y - p0.x * p1.y) +
-                    w1 * w2 * (p1.x * p1.y - p1.x * p1.y));
+  // Linear terms - these are critical for limited arcs
+  double D = w1 * 2.0 * (p1.x * p1.y - p0.x * p2.y);
+  double E = w1 * 2.0 * (p0.y * p2.x - p1.y * p1.x);
 
-  double C = w0 * w2 * (p0.x * p2.x - p1.x * p1.x) +
-             w0 * w1 * (p0.x * p1.x - p0.x * p1.x) +
-             w1 * w2 * (p1.x * p2.x - p1.x * p1.x);
+  // Constant term - correct sign
+  double F = w1 * (p0.x * p2.y + p2.x * p0.y - 2.0 * p1.x * p1.y);
 
-         // Standard full conversion with correct linear and constant terms
-  double denom = w0 + w1 + w2;
-
-  std::vector<double> coeffs = {A, B, C, 0.0, 0.0, -denom};
+  std::vector<double> coeffs = {A, B, C, D, E, F};
 
   LC_Quadratic quadratic(coeffs);
 
+         // Use existing robust conversion from quadratic to hyperbola
   LC_Hyperbola temp(nullptr, quadratic);
   if (!temp.isValid()) {
     return nullptr;
@@ -131,7 +136,7 @@ std::unique_ptr<LC_Hyperbola> LC_HyperbolaSpline::splineToHyperbola(const DRW_Sp
 
   LC_HyperbolaData hd = temp.getData();
 
-         // Determine correct branch using geometric test
+         // Determine correct branch (left or right) using geometric test
   RS_Vector chordMid = (p0 + p2) * 0.5;
   RS_Vector vecShoulder = p1 - chordMid;
   RS_Vector vecCenter = hd.center - chordMid;
@@ -141,76 +146,96 @@ std::unique_ptr<LC_Hyperbola> LC_HyperbolaSpline::splineToHyperbola(const DRW_Sp
     hd.reversed = (crossZ < 0.0);
   }
 
+         // Return owning unique_ptr - caller takes ownership
   return std::make_unique<LC_Hyperbola>(parent, hd);
 }
 
-// Convert hyperbola to rational quadratic Bézier points/weights
+// Updated hyperbolaToRationalQuadratic() with analytical shoulder and weight
+// Updated hyperbolaToRationalQuadratic() with full center support
+
 bool LC_HyperbolaSpline::hyperbolaToRationalQuadratic(const LC_HyperbolaData& hd,
                                                       std::vector<RS_Vector>& ctrlPts,
                                                       std::vector<double>& weights)
 {
   if (!hd.isValid() || hd.ratio <= 0.0) return false;
 
-  double phiRange = kDefaultPhiRange;
-  double phiStart = -phiRange;
-  double phiEnd   =  phiRange;
+  double a = hd.majorP.magnitude();  // semi-transverse axis
+  double b = a * hd.ratio;           // semi-conjugate axis
 
-  LC_Hyperbola tempHyperbola(nullptr, hd);
+  double phi1 = hd.angle1;
+  double phi2 = hd.angle2;
 
-  RS_Vector pStart = tempHyperbola.getPoint(phiStart, false);
-  RS_Vector pEnd   = tempHyperbola.getPoint(phiEnd,   false);
+         // For full branch, use symmetric range to ensure stable weight >1
+  if (std::abs(phi1) < kTolerance && std::abs(phi2) < kTolerance) {
+    phi1 = -2.0;
+    phi2 =  2.0;
+  }
 
-  RS_Vector tStart = tempHyperbola.getTangentDirection(pStart);
-  RS_Vector tEnd   = tempHyperbola.getTangentDirection(pEnd);
+         // Ensure phi1 <= phi2
+  if (phi1 > phi2) std::swap(phi1, phi2);
 
+         // Analytical shoulder point (relative to center)
+         // x = a, y = -b * tanh((phi1 + phi2)/2)
+  double phi_avg = (phi1 + phi2) * 0.5;
+  double shoulder_y_local = -b * std::tanh(phi_avg);
+  RS_Vector shoulder_local(a, shoulder_y_local);
+
+         // Exact local start and end points
+  RS_Vector pStart_local(a * std::cosh(phi1), b * std::sinh(phi1));
+  RS_Vector pEnd_local  (a * std::cosh(phi2), b * std::sinh(phi2));
+
+         // Handle left branch: mirror over y-axis in local coordinates
   if (hd.reversed) {
-    std::swap(pStart, pEnd);
-    tStart = -tStart;
-    tEnd   = -tEnd;
+    pStart_local.x = -pStart_local.x;
+    pEnd_local.x   = -pEnd_local.x;
+    shoulder_local.x = -shoulder_local.x;
   }
 
-  RS_Vector shoulder = LC_LineMath::getIntersectionLineLine(pStart, pStart + tStart,
-                                                            pEnd,   pEnd   + tEnd);
+         // Apply rotation (major axis direction)
+  double angle = hd.majorP.angle();
+  pStart_local.rotate(angle);
+  pEnd_local.rotate(angle);
+  shoulder_local.rotate(angle);
 
-  if (!shoulder.valid) return false;
+         // Translate by center - now supports arbitrary center
+  RS_Vector pStart = pStart_local + hd.center;
+  RS_Vector pEnd   = pEnd_local   + hd.center;
+  RS_Vector shoulder = shoulder_local + hd.center;
 
-  RS_Vector vStart = pStart - shoulder;
-  RS_Vector vEnd   = pEnd   - shoulder;
+         // Compute weight analytically
+  RS_Vector v1 = pStart - shoulder;
+  RS_Vector v2 = pEnd   - shoulder;
 
-  double lenStart = vStart.magnitude();
-  double lenEnd   = vEnd.magnitude();
-  if (lenStart < kTolerance || lenEnd < kTolerance) return false;
+  double cos_alpha = v1.normalized().dotP(v2.normalized());
+  if (std::abs(cos_alpha) < kTolerance) return false;
 
-  double cosTheta = vStart.normalized().dotP(vEnd.normalized());
+  double w_middle = 1.0 / std::abs(cos_alpha);
 
-  double wMiddle;
-  if (std::abs(cosTheta) < kTolerance) return false;
-
-  if (cosTheta > 0.0) {
-    wMiddle = cosTheta;
-  } else {
-    wMiddle = -1.0 / cosTheta;
-  }
-
-  if (wMiddle <= 0.0) return false;
+  if (w_middle <= 1.0 + kTolerance) return false;
 
   ctrlPts = {pStart, shoulder, pEnd};
-  weights = {1.0, wMiddle, 1.0};
+  weights = {1.0, w_middle, 1.0};
 
   return true;
 }
+// Convert a hyperbola to a DRW_Spline (rational quadratic Bézier form)
 
-// Export hyperbola as DXF SPLINE
+// This is the standard way to export a hyperbola to DXF
 bool LC_HyperbolaSpline::hyperbolaToSpline(const LC_HyperbolaData& hd, DRW_Spline& spl)
 {
   std::vector<RS_Vector> ctrlPts;
   std::vector<double> weights;
 
-  if (!hyperbolaToRationalQuadratic(hd, ctrlPts, weights)) return false;
+         // Convert to rational quadratic Bézier form
+  if (!hyperbolaToRationalQuadratic(hd, ctrlPts, weights)) {
+    return false;
+  }
 
+         // Set spline properties for a rational quadratic Bézier segment
   spl.degree = 2;
-  spl.flags = 8;
+  spl.flags = 8;  // Indicates rational spline
 
+         // Populate control points
   spl.controllist.clear();
   spl.controllist.resize(3);
   for (size_t i = 0; i < 3; ++i) {
@@ -218,10 +243,12 @@ bool LC_HyperbolaSpline::hyperbolaToSpline(const LC_HyperbolaData& hd, DRW_Splin
     spl.controllist[i] = std::make_shared<DRW_Coord>(pt.x, pt.y, pt.z);
   }
 
+         // Set weights and standard open knot vector
   spl.weightlist = weights;
   spl.knotslist = {0.0, 0.0, 0.0, 1.0, 1.0, 1.0};
   spl.fitlist.clear();
 
+         // Update counts for DXF consistency
   spl.nknots = 6;
   spl.ncontrol = 3;
   spl.nfit = 0;

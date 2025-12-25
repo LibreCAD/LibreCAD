@@ -118,62 +118,89 @@ LC_Hyperbola::LC_Hyperbola(RS_EntityContainer* parent, const LC_Quadratic& q)
 // Factory methods from quadratic
 //=====================================================================
 
+// In lc_hyperbola.cpp - improved createFromQuadratic() with robustness fixes
+
+// File: lc_hyperbola.cpp - improved createFromQuadratic() with robust center handling
+
 bool LC_Hyperbola::createFromQuadratic(const LC_Quadratic& q)
 {
   std::vector<double> ce = q.getCoefficients();
   if (ce.size() < 6) return false;
 
   double A = ce[0], B = ce[1], C = ce[2];
-  if (B*B - 4.0*A*C <= 0.0) return false;
-
   double D = ce[3], E = ce[4], F = ce[5];
 
-  double det = 4.0*A*C - B*B;
-  if (fabs(det) < RS_TOLERANCE) return false;
+         // Hyperbola discriminant B² - 4AC > 0
+  double disc = B * B - 4.0 * A * C;
+  if (disc <= 0.0) return false;
 
-  double cx = (B*E - 2.0*C*D) / det;
-  double cy = (B*D - 2.0*A*E) / det;
+         // Determinant for center: 4AC - B² = -disc
+  double det = 4.0 * A * C - B * B;  // negative for hyperbola
+  constexpr double tol = 1e-10;
+  if (std::abs(det) < tol) return false;
+
+         // Center coordinates - robust computation
+  double cx = (B * E - 2.0 * C * D) / det;
+  double cy = (B * D - 2.0 * A * E) / det;
 
   RS_Vector center(cx, cy);
 
+         // Translate quadratic to origin
   LC_Quadratic translated = q;
   translated.move(-center);
 
   std::vector<double> ct = translated.getCoefficients();
   double At = ct[0], Bt = ct[1], Ct = ct[2], Ft = ct[5];
 
+         // Rotation angle to eliminate xy term
   double theta = 0.0;
-  if (fabs(Bt) > RS_TOLERANCE) {
-    theta = 0.5 * atan2(Bt, At - Ct);
+  if (std::abs(Bt) > tol) {
+    theta = 0.5 * std::atan2(Bt, At - Ct);
   }
 
+         // Rotate to align axes
   LC_Quadratic rotated = translated;
   rotated.rotate(theta);
 
   std::vector<double> cr = rotated.getCoefficients();
   double Ar = cr[0], Cr = cr[2], Fr = cr[5];
 
-  LC_ERR<<"Ar * Cr "<<Ar * Cr;
-  if (Ar * Cr >= 0.0) return false;
+         // Hyperbola: opposite signs
+  if (Ar * Cr >= -tol) return false;  // allow small negative due to precision
 
+         // Compute a² and b²
   double a2 = -Fr / Ar;
   double b2 = -Fr / Cr;
-  if (a2 <= 0.0 || b2 <= 0.0) return false;
 
-  double a = sqrt(a2);
-  double b = sqrt(b2);
+         // Clamp tiny negative values from precision error
+  if (a2 <= -tol || b2 <= -tol) return false;
+  a2 = std::max(a2, 0.0);
+  b2 = std::max(b2, 0.0);
 
+  if (a2 < tol || b2 < tol) return false;
+
+  double a = std::sqrt(a2);
+  double b = std::sqrt(b2);
+
+         // Determine major axis orientation
   bool horizontal = (Ar > 0.0);
 
   RS_Vector majorP(a, 0.0);
   double finalAngle = theta;
   if (!horizontal) {
     std::swap(a, b);
-    finalAngle += M_PI/2.0;
+    finalAngle += M_PI / 2.0;
   }
   majorP.rotate(finalAngle);
 
-  data = LC_HyperbolaData(center, majorP, b/a, 0.0, 0.0, false);
+         // Build hyperbola data
+  data.center = center;
+  data.majorP = majorP;
+  data.ratio = b / a;
+  data.reversed = false;  // default right branch
+  data.angle1 = 0.0;
+  data.angle2 = 0.0;      // full branch
+
   m_bValid = true;
   calculateBorders();
   return true;
@@ -243,20 +270,25 @@ double LC_Hyperbola::getDirection2() const
   if (!p.valid) return 0.0;
   return getTangentDirection(p).angle();
 }
+RS_Vector LC_Hyperbola::getTangentDirectionParam(double parameter) const
+{
+  double a = getMajorRadius();
+  double b = getMinorRadius();
+
+  double dx = a * std::sinh(parameter);
+  double dy = b * std::cosh(parameter);
+  if (data.reversed)
+    dx = -dx;
+
+  RS_Vector tangent{dx, dy};
+  tangent.rotate(data.majorP.angle());
+  return tangent.normalized();
+}
 
 RS_Vector LC_Hyperbola::getTangentDirection(const RS_Vector& point) const
 {
   double phi = getParamFromPoint(point, data.reversed);
-  double a = getMajorRadius();
-  double b = getMinorRadius();
-
-  double dx = a * std::sinh(phi);
-  double dy = b * std::cosh(phi);
-  if (data.reversed) dx = -dx;
-
-  RS_Vector tangent(dx, dy);
-  tangent.rotate(data.majorP.angle());
-  return tangent.normalized();
+  return getTangentDirectionParam(phi);
 }
 
 RS_VectorSolutions LC_Hyperbola::getTangentPoint(const RS_Vector& point) const
@@ -1072,3 +1104,5 @@ RS_Vector LC_Hyperbola::getPrimaryVertex() const
 
   return vertex;
 }
+
+

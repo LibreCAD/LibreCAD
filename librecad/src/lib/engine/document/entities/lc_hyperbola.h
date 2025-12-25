@@ -121,6 +121,7 @@ public:
   double getDirection1() const override;
   double getDirection2() const override;
 
+  RS_Vector getTangentDirectionParam(double parameter) const;
   RS_Vector getTangentDirection(const RS_Vector& point) const override;
   RS_VectorSolutions getTangentPoint(const RS_Vector& point) const override;
 
