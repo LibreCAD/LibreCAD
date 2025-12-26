@@ -24,6 +24,7 @@
 #include <algorithm>
 #include <cmath>
 #include <memory>
+#include <vector>
 
 #include "lc_hyperbolaspline.h"
 #include "lc_hyperbola.h"
@@ -31,6 +32,7 @@
 #include "lc_linemath.h"
 #include "rs_debug.h"
 #include "rs_math.h"
+#include "rs_vector.h"
 #include "drw_entities.h"
 
 namespace {
@@ -126,25 +128,45 @@ std::unique_ptr<LC_Hyperbola> LC_HyperbolaSpline::splineToHyperbola(const DRW_Sp
   // the bezier point for bezier parameter 0.5
   RS_Vector S = (p0 + p1 * (2. * w1) + p2) / (2 * ( 1. + w1));
 
+  double w12 = w1 * w1;
 
-  RS_Vector Vd = (p2 - p1) * 0.5;
+  RS_Vector Vd = (p2 - p0) * 0.5;
 
-  double invs2 = 1./(w1*w1 - 1.);
 
   // center
-  RS_Vector C = (p1 * (w1*w1) - M) * invs2;
+  RS_Vector C = (p1 * (w1*w1) - M) / (w12 - 1.);
   RS_Vector p1c = p1 - C;
-  double wl2 = w1 * w1 * p1c.squared();
-  double j2s = Vd.squared() * invs2;
-  double d = p1c.dotP(Vd) * w1;
-  double q = std::sqrt( (wl2 + j2s) * (wl2 + j2s) - 4. * d * d * invs2);
-  double a = 0.5 * std::sqrt(wl2 - j2s + q);
+
+  double l2 = p1c.squared();
+  double j2 = Vd.squared();
+  double D = p1c.dotP(Vd);
+  double s2 = w12  - 1.;
+
+  double invs2 = 1./s2;
+  // Q
+
+  double w1l2 = w12 * l2;
+  double j2s = j2 * invs2;
+  double w1l2j2 = w12 * l2 + j2 * invs2;
+  double q = std::sqrt( w1l2j2 * w1l2j2 - 4. * D * D * w12 * invs2);
+
+  // major radius
+  double a = std::sqrt(0.5 * (w1l2 - j2s + q));
+  if (! (a >= RS_TOLERANCE))
+    return nullptr;
+
+  // minor radius
+  double b = std::sqrt(0.5 * (j2s - w1l2 + q));
+  if (! (b >= RS_TOLERANCE))
+    return nullptr;
 
   LC_HyperbolaData hd;
   hd.center = C;
-  hd.majorP = (M - C).normalized() * a;
-  p0.move(- C).rotate(- hd.majorP.angle());
-  double b = std::abs(p0.y * a)/std::sqrt(p0.x * p0.x - a * a);
+
+  // majorP
+  double d1 = (p1 - C).dotP(Vd);
+  RS_Vector Va = (p1 - C) * (a*a + j2s) - Vd * (d1*invs2);
+  hd.majorP = Va.normalized() * a;
   hd.ratio = b / a;
 
   auto hyperbola = std::make_unique<LC_Hyperbola>(nullptr, hd);
@@ -161,71 +183,6 @@ std::unique_ptr<LC_Hyperbola> LC_HyperbolaSpline::splineToHyperbola(const DRW_Sp
 // Updated hyperbolaToRationalQuadratic() with analytical shoulder and weight
 // Updated hyperbolaToRationalQuadratic() with full center support
 
-bool LC_HyperbolaSpline::hyperbolaToRationalQuadratic(const LC_HyperbolaData& hd,
-                                                      std::vector<RS_Vector>& ctrlPts,
-                                                      std::vector<double>& weights)
-{
-  if (!hd.isValid() || hd.ratio <= 0.0) return false;
-
-  double a = hd.majorP.magnitude();  // semi-transverse axis
-  double b = a * hd.ratio;           // semi-conjugate axis
-
-  double phi1 = hd.angle1;
-  double phi2 = hd.angle2;
-
-         // For full branch, use symmetric range to ensure stable weight >1
-  if (std::abs(phi1) < kTolerance && std::abs(phi2) < kTolerance) {
-    phi1 = -2.0;
-    phi2 =  2.0;
-  }
-
-         // Ensure phi1 <= phi2
-  if (phi1 > phi2) std::swap(phi1, phi2);
-
-         // Analytical shoulder point (relative to center)
-         // x = a, y = -b * tanh((phi1 + phi2)/2)
-  double phi_avg = (phi1 + phi2) * 0.5;
-  double shoulder_y_local = -b * std::tanh(phi_avg);
-  RS_Vector shoulder_local(a, shoulder_y_local);
-
-         // Exact local start and end points
-  RS_Vector pStart_local(a * std::cosh(phi1), b * std::sinh(phi1));
-  RS_Vector pEnd_local  (a * std::cosh(phi2), b * std::sinh(phi2));
-
-         // Handle left branch: mirror over y-axis in local coordinates
-  if (hd.reversed) {
-    pStart_local.x = -pStart_local.x;
-    pEnd_local.x   = -pEnd_local.x;
-    shoulder_local.x = -shoulder_local.x;
-  }
-
-         // Apply rotation (major axis direction)
-  double angle = hd.majorP.angle();
-  pStart_local.rotate(angle);
-  pEnd_local.rotate(angle);
-  shoulder_local.rotate(angle);
-
-         // Translate by center - now supports arbitrary center
-  RS_Vector pStart = pStart_local + hd.center;
-  RS_Vector pEnd   = pEnd_local   + hd.center;
-  RS_Vector shoulder = shoulder_local + hd.center;
-
-         // Compute weight analytically
-  RS_Vector v1 = pStart - shoulder;
-  RS_Vector v2 = pEnd   - shoulder;
-
-  double cos_alpha = v1.normalized().dotP(v2.normalized());
-  if (std::abs(cos_alpha) < kTolerance) return false;
-
-  double w_middle = 1.0 / std::abs(cos_alpha);
-
-  if (w_middle <= 1.0 + kTolerance) return false;
-
-  ctrlPts = {pStart, shoulder, pEnd};
-  weights = {1.0, w_middle, 1.0};
-
-  return true;
-}
 // Convert a hyperbola to a DRW_Spline (rational quadratic Bézier form)
 
 // This is the standard way to export a hyperbola to DXF

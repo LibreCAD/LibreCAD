@@ -27,9 +27,7 @@
 #define LC_HYPERBOLASPLINE_H
 
 #include <memory>
-#include <vector>
 
-#include "rs_vector.h"
 #include "drw_entities.h"
 
 // Forward declarations to avoid full includes
@@ -41,24 +39,18 @@ struct LC_HyperbolaData;   // Forward declaration
  * Utility for hyperbola ↔ DXF SPLINE conversion.
  * Hyperbolas are stored as rational quadratic Bézier splines in DXF.
  */
-class LC_HyperbolaSpline
+namespace LC_HyperbolaSpline
 {
-public:
   /** Detect if spline is a hyperbola segment */
-  static bool isHyperbolaSpline(const DRW_Spline& s);
+  bool isHyperbolaSpline(const DRW_Spline& s);
 
   /** Convert spline to hyperbola (nullptr if invalid) */
-  static std::unique_ptr<LC_Hyperbola> splineToHyperbola(const DRW_Spline& s,
+  std::unique_ptr<LC_Hyperbola> splineToHyperbola(const DRW_Spline& s,
                                                          RS_EntityContainer* parent = nullptr);
 
   /** Convert hyperbola to DXF spline */
-  static bool hyperbolaToSpline(const LC_HyperbolaData& hd, DRW_Spline& spl);
+  bool hyperbolaToSpline(const LC_HyperbolaData& hd, DRW_Spline& spl);
 
-private:
-  /** Helper: hyperbola → rational quadratic Bézier points/weights */
-  static bool hyperbolaToRationalQuadratic(const LC_HyperbolaData& hd,
-                                           std::vector<RS_Vector>& ctrlPts,
-                                           std::vector<double>& weights);
 };
 
 #endif // LC_HYPERBOLASPLINE_H
