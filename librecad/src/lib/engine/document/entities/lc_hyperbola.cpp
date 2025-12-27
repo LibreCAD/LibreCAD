@@ -742,7 +742,36 @@ void LC_Hyperbola::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoin
 // Minimal overrides
 //=====================================================================
 
-RS_Vector LC_Hyperbola::getNearestEndpoint(const RS_Vector&, double*) const { return RS_Vector(false); }
+// In lc_hyperbola.cpp – implemented getNearestEndpoint
+
+RS_Vector LC_Hyperbola::getNearestEndpoint(const RS_Vector& coord, double* dist) const
+{
+  if (dist)
+    *dist = RS_MAXDOUBLE;
+  if (!m_bValid || !coord.valid) {
+    return RS_Vector(false);
+  }
+
+         // For unbounded hyperbolas (full branch), there are no defined endpoints
+  if (!std::isnormal(data.angle1) && !std::isnormal(data.angle2)) {
+    return RS_Vector(false);
+  }
+
+  double distance = RS_MAXDOUBLE;
+  RS_Vector ret{false};
+  for(const RS_Vector& vp: {getStartpoint(), getEndpoint()}) {
+    if (vp.valid) {
+      double dvp = vp.distanceTo(coord);
+      if (dvp <= distance - RS_TOLERANCE) {
+        distance = dvp;
+        ret = vp;
+      }
+    }
+  }
+  if (dist != nullptr)
+    *dist = distance;
+  return ret;
+}
 
 RS_Vector LC_Hyperbola::getNearestPointOnEntity(const RS_Vector& coord, bool onEntity,
                                                 double* dist, RS_Entity** entity) const
