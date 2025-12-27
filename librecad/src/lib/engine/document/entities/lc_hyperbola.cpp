@@ -229,14 +229,41 @@ RS_VectorSolutions LC_Hyperbola::getFoci() const
   return sol;
 }
 
+// In lc_hyperbola.cpp – current getRefPoints() implementation
+
 RS_VectorSolutions LC_Hyperbola::getRefPoints() const
 {
-  RS_VectorSolutions ret;
-  ret.push_back(data.center);
-  RS_VectorSolutions foci = getFoci();
-  for (size_t i = 0; i < foci.getNumber(); ++i)
-    ret.push_back(foci.get(i));
-  return ret;
+  RS_VectorSolutions sol;
+
+  if (!m_bValid) {
+    return sol;
+  }
+
+         // Center (always included)
+  sol.push_back(data.center);
+
+         // Primary vertex (closest vertex on the selected branch)
+  RS_Vector primaryVertex = getPrimaryVertex();
+  if (primaryVertex.valid) {
+    sol.push_back(primaryVertex);
+  }
+
+         // Foci
+  RS_Vector f1 = data.getFocus1();
+  RS_Vector f2 = data.getFocus2();
+  if (f1.valid) sol.push_back(f1);
+  if (f2.valid) sol.push_back(f2);
+
+         // Start and end points (only for bounded arcs)
+  if (std::abs(data.angle1) >= RS_TOLERANCE || std::abs(data.angle2) >= RS_TOLERANCE) {
+    RS_Vector start = getStartpoint();
+    RS_Vector end   = getEndpoint();
+
+    if (start.valid) sol.push_back(start);
+    if (end.valid)   sol.push_back(end);
+  }
+
+  return sol;
 }
 
 RS_Vector LC_Hyperbola::getStartpoint() const
@@ -1106,15 +1133,108 @@ void LC_Hyperbola::setPrimaryVertex(const RS_Vector& v)
   updateLength();
 }
 
-// Missing override - simple implementation treating center as main reference point
+// In lc_hyperbola.cpp – current moveRef() implementation (latest version)
+
 void LC_Hyperbola::moveRef(const RS_Vector& ref, const RS_Vector& offset)
 {
-  if ((data.center - ref).squared() < RS_TOLERANCE2) {
-    move(offset);
-  } else {
-    // Fallback: just move the whole entity
-    move(offset);
+  if (!m_bValid || !ref.valid || !offset.valid) {
+    return;
   }
+
+         // 1. Center movement – translate entire hyperbola
+  if ((data.center - ref).squared() < RS_TOLERANCE2) {
+    data.center += offset;
+    calculateBorders();
+    updateLength();
+    return;
+  }
+
+         // 2. Primary vertex movement – constrained to major axis
+  RS_Vector primaryVertex = getPrimaryVertex();
+  if (primaryVertex.valid && (primaryVertex - ref).squared() < RS_TOLERANCE2) {
+    RS_Vector axisDir = data.majorP;
+    axisDir.normalize();
+    if (data.reversed) {
+      axisDir = -axisDir;
+    }
+
+    RS_Vector startPt = getStartpoint();
+    RS_Vector endPt = getEndpoint();
+    RS_Vector newVertexPos = primaryVertex + offset;
+    RS_Vector vecFromCenter = newVertexPos - data.center;
+    double projLength = vecFromCenter.dotP(axisDir);
+
+    double originalDistAlongAxis = (primaryVertex - data.center).dotP(axisDir);
+    if (originalDistAlongAxis * projLength < 0.0) {
+      projLength = RS_TOLERANCE;
+    }
+    if (projLength < RS_TOLERANCE) {
+      projLength = RS_TOLERANCE;
+    }
+
+    data.majorP = axisDir * projLength;
+
+    data.angle1 = getParamFromPoint(startPt);
+    data.angle2 = getParamFromPoint(endPt);
+    calculateBorders();
+    updateLength();
+    return;
+  }
+
+         // 3. Focus movement
+  RS_Vector f1 = data.getFocus1();
+  RS_Vector f2 = data.getFocus2();
+
+  if (f1.valid && (f1 - ref).squared() < RS_TOLERANCE2) {
+    setFocus1(f1 + offset);
+    return;
+  }
+  if (f2.valid && (f2 - ref).squared() < RS_TOLERANCE2) {
+    setFocus2(f2 + offset);
+    return;
+  }
+
+         // 4. Start/End point movement – only adjust parametric range (angle1/angle2)
+         //    Do NOT modify center, majorP, ratio, or branch
+  if (std::abs(data.angle1) >= RS_TOLERANCE || std::abs(data.angle2) >= RS_TOLERANCE) {
+    RS_Vector start = getStartpoint();
+    RS_Vector end   = getEndpoint();
+
+    if (start.valid && (start - ref).squared() < RS_TOLERANCE2) {
+      // Project new position onto the hyperbola and update angle1 only
+      RS_Vector newPos = start + offset;
+      RS_Vector projected = getNearestPointOnEntity(newPos, true);
+      if (!projected.valid) {
+        projected = newPos; // fallback
+      }
+      double newPhi = getParamFromPoint(projected, data.reversed);
+      if (!std::isnan(newPhi)) {
+        data.angle1 = newPhi;
+        calculateBorders();
+        updateLength();
+      }
+      return;
+    }
+
+    if (end.valid && (end - ref).squared() < RS_TOLERANCE2) {
+      // Project new position onto the hyperbola and update angle2 only
+      RS_Vector newPos = end + offset;
+      RS_Vector projected = getNearestPointOnEntity(newPos, true);
+      if (!projected.valid) {
+        projected = newPos;
+      }
+      double newPhi = getParamFromPoint(projected, data.reversed);
+      if (!std::isnan(newPhi)) {
+        data.angle2 = newPhi;
+        calculateBorders();
+        updateLength();
+      }
+      return;
+    }
+  }
+
+         // Fallback: translate entire entity
+  move(offset);
 }
 
 // lc_hyperbola.cpp - implementation
