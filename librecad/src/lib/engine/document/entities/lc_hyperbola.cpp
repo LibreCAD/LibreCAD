@@ -889,68 +889,105 @@ void LC_Hyperbola::calculateBorders()
 }
 
 // lc_hyperbola.cpp - getLength() implementation
+// In lc_hyperbola.cpp – highly optimized iterative adaptive Simpson with minimal stack usage
+
+#include <array>
+#include <cmath>
+#include <limits>
+
+namespace {
+// Inline speed function (critical path)
+inline double hyperbolaSpeed(double phi, double a2, double b2) noexcept {
+  const double sh = std::sinh(phi);
+  const double ch = std::cosh(phi);
+  return std::sqrt(a2 * sh * sh + b2 * ch * ch);
+}
+}
 
 double LC_Hyperbola::getLength() const
 {
   if (!m_bValid) return 0.0;
 
-         // Full unbounded hyperbola → infinite length
-  if (data.angle1 == 0.0 && data.angle2 == 0.0) {
-    return 0.0;
+  const double a = getMajorRadius();
+  const double b = getMinorRadius();
+  if (a < RS_TOLERANCE || b < RS_TOLERANCE) return 0.0;
+
+  if (std::abs(data.angle1) < RS_TOLERANCE && std::abs(data.angle2) < RS_TOLERANCE) {
+    return std::numeric_limits<double>::infinity();
   }
 
-         // Limited arc on single branch
-  double phi1 = std::min(data.angle1, data.angle2);
-  double phi2 = std::max(data.angle1, data.angle2);
+  double phiL = data.angle1;
+  double phiR = data.angle2;
+  if (phiL > phiR) std::swap(phiL, phiR);
 
-         // No normalization needed for hyperbolic parameter
-         // Ensure correct order
-  if (phi1 > phi2) std::swap(phi1, phi2);
+  const double a2 = a * a;
+  const double b2 = b * b;
 
-         // Apply branch offset (handled in getPoint, but parameter is raw)
-         // For length, sign flip doesn't affect magnitude
+  constexpr double eps_base = 1e-10;
+  constexpr int max_depth = 30;
 
-  double a = getMajorRadius();
-  double b = getMinorRadius();
+         // Fixed-size array instead of std::stack — avoids dynamic allocation entirely
+         // Worst-case: 2^30 intervals → impossible in practice; real usage < 1000
+         // Safe upper bound: 1024 intervals (more than enough for double precision)
+  static constexpr size_t MAX_INTERVALS = 1024;
 
-         // Arc length integral: ∫ sqrt(a² sinh²φ + b² cosh²φ) dφ from phi1 to phi2
-         // = ∫ sqrt((a² + b²) cosh²φ - a²) dφ
-         // No closed form → Gauss-Legendre quadrature
-
-  const int n = 32;  // high accuracy
-  static const double nodes[32] = {
-      -0.9972638618, -0.9856115115, -0.9647629092, -0.9349069599,
-      -0.8963211559, -0.8493676137, -0.7944837960, -0.7321821186,
-      -0.6630442669, -0.5877157572, -0.5068999089, -0.4213512761,
-      -0.3318686022, -0.2392873623, -0.1444719616, -0.0483076588,
-      0.0483076588,  0.1444719616,  0.2392873623,  0.3318686022,
-      0.4213512761,  0.5068999089,  0.5877157572,  0.6630442669,
-      0.7321821186,  0.7944837960,  0.8493676137,  0.8963211559,
-      0.9349069599,  0.9647629092,  0.9856115115,  0.9972638618
-  };
-  static const double weights[32] = {
-      0.0070186100, 0.0162743947, 0.0253920653, 0.0342738621,
-      0.0428350334, 0.0509980593, 0.0586840935, 0.0658222228,
-      0.0723457948, 0.0781938958, 0.0833119242, 0.0876520930,
-      0.0911738787, 0.0938443991, 0.0956387201, 0.0965400885,
-      0.0965400885, 0.0956387201, 0.0938443991, 0.0911738787,
-      0.0876520930, 0.0833119242, 0.0781938958, 0.0723457948,
-      0.0658222228, 0.0586840935, 0.0509980593, 0.0428350334,
-      0.0342738621, 0.0253920653, 0.0162743947, 0.0070186100
+  struct Interval {
+    double left, right;
+    double eps;
+    double whole;
+    int depth;
+    double f_left, f_mid, f_right;
   };
 
-  double halfr = (phi2 - phi1) * 0.5;
-  double mid   = (phi2 + phi1) * 0.5;
+  std::array<Interval, MAX_INTERVALS> intervals{};
+  size_t stack_size = 0;
+
+         // Initial interval
+  const double mid_init = 0.5 * (phiL + phiR);
+  const double fL = hyperbolaSpeed(phiL, a2, b2);
+  const double fR = hyperbolaSpeed(phiR, a2, b2);
+  const double fM = hyperbolaSpeed(mid_init, a2, b2);
+  const double whole_init = (fL + 4.0 * fM + fR) * (phiR - phiL) / 6.0;
+
+  intervals[stack_size++] = {phiL, phiR, eps_base, whole_init, max_depth, fL, fM, fR};
 
   double length = 0.0;
-  for (int i = 0; i < n; ++i) {
-    double phi = mid + halfr * nodes[i];
-    double ch = std::cosh(phi);
-    double sh = std::sinh(phi);
-    double speed = std::sqrt(a*a * sh*sh + b*b * ch*ch);
-    length += weights[i] * speed;
+
+  while (stack_size > 0) {
+    const Interval curr = intervals[--stack_size];
+
+    if (curr.depth <= 0) {
+      length += curr.whole;
+      continue;
+    }
+
+    const double cm = 0.5 * (curr.left + curr.right);
+    const double lm = 0.5 * (curr.left + cm);
+    const double rm = 0.5 * (curr.right + cm);
+
+    const double flm = hyperbolaSpeed(lm, a2, b2);
+    const double frm = hyperbolaSpeed(rm, a2, b2);
+
+    const double h_left  = (cm - curr.left);
+    const double h_right = (curr.right - cm);
+
+    const double left  = (curr.f_left + 4.0 * flm + curr.f_mid) * h_left / 6.0;
+    const double right = (curr.f_mid + 4.0 * frm + curr.f_right) * h_right / 6.0;
+    const double delta = left + right - curr.whole;
+
+    if (std::abs(delta) <= 15.0 * curr.eps) {
+      length += left + right + delta / 15.0;
+    } else if (stack_size + 2 < MAX_INTERVALS) {
+      // Push right first → left processed next (depth-first)
+      intervals[stack_size++] = {cm, curr.right, curr.eps * 0.5, right, curr.depth - 1,
+                                 curr.f_mid, frm, curr.f_right};
+      intervals[stack_size++] = {curr.left, cm, curr.eps * 0.5, left, curr.depth - 1,
+                                 curr.f_left, flm, curr.f_mid};
+    } else {
+      // Fallback: accept current approximation if stack exhausted (extremely rare)
+      length += curr.whole;
+    }
   }
-  length *= halfr;
 
   return length;
 }
