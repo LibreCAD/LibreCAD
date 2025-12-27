@@ -39,8 +39,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 LC_HyperbolaData::LC_HyperbolaData(const RS_Vector& c, const RS_Vector& m,
                                    double r, double a1, double a2, bool rev)
     : center(c), majorP(m), ratio(r), angle1(a1), angle2(a2), reversed(rev) {}
+// In lc_hyperbola.cpp – updated LC_HyperbolaData constructor (foci + point)
 
-LC_HyperbolaData::LC_HyperbolaData(const RS_Vector& f0, const RS_Vector& f1, const RS_Vector& p)
+LC_HyperbolaData::LC_HyperbolaData(const RS_Vector& f0,
+                                   const RS_Vector& f1,
+                                   const RS_Vector& p)
     : center((f0 + f1) * 0.5)
 {
   if (!p.valid || !f0.valid || !f1.valid) {
@@ -48,31 +51,41 @@ LC_HyperbolaData::LC_HyperbolaData(const RS_Vector& f0, const RS_Vector& f1, con
     return;
   }
 
-  double d1 = f0.distanceTo(p);
-  double d2 = f1.distanceTo(p);
-
-  bool pCloserToF1 = (d1 < d2);
-
-  RS_Vector fartherFocus = pCloserToF1 ? f1 : f0;
-  RS_Vector closerFocus  = pCloserToF1 ? f0 : f1;
-
-  double diff = fartherFocus.distanceTo(p) - closerFocus.distanceTo(p);
+  double d0 = f0.distanceTo(p);  // distance to focus1 (f0)
+  double d1 = f1.distanceTo(p);  // distance to focus2 (f1)
 
   double dc = f0.distanceTo(f1);
-  double dd = diff;
+  double diff = std::abs(d0 - d1);  // |d_far - d_near|
 
-  if (dc < RS_TOLERANCE || dd < RS_TOLERANCE) {
+  if (dc < RS_TOLERANCE || diff < RS_TOLERANCE) {
     majorP = RS_Vector(0, 0);
-  LC_ERR<<__LINE__<<": "<<majorP.x<<" "<<majorP.y<<", r="<<ratio<<", dd="<<dd<<", dc="<<dc;
     return;
   }
 
+         // Always use right branch (reversed = false)
+         // Choose majorP direction toward the closer focus
+         // This ensures the selected branch is always the "right" branch mathematically
+  RS_Vector closerFocus  = (d0 < d1) ? f0 : f1;
+
+         // Vector from center to closer focus (standard form has vertex toward closer focus)
+         // But we want vertex toward farther focus for right branch
+         // Standard hyperbola: (x/a)^2 - (y/b)^2 = 1 opens right/left
+         // We orient majorP toward the branch containing the point (closer focus side)
   majorP = closerFocus - center;
 
-  ratio = dc / dd;
-  majorP /= ratio;
-  ratio = std::sqrt(ratio * ratio - 1.0);
-  // LC_ERR<<__LINE__<<": "<<majorP.x<<" "<<majorP.y<<", r="<<ratio<<", dd="<<dd<<", dc="<<dc;
+         // Compute ratio = b/a
+         // |d1 - d2| = 2a
+  double a = diff * 0.5;
+  double c = dc * 0.5;  // distance from center to each focus
+  double b = std::sqrt(c * c - a * a);
+
+  if (b < RS_TOLERANCE) {
+    majorP = {};
+    return;
+  }
+
+  ratio = b / a;
+  majorP = majorP.normalized() * a;
 }
 
 bool LC_HyperbolaData::isValid() const
@@ -384,29 +397,45 @@ RS_Vector LC_Hyperbola::getPoint(double phi, bool useReversed) const
   local.rotate(getAngle());
   return data.center + local;
 }
+// In lc_hyperbola.cpp – updated getParamFromPoint() to respect majorP orientation
 
-double LC_Hyperbola::getParamFromPoint(const RS_Vector& p, bool branchReversed) const
+double LC_Hyperbola::getParamFromPoint(const RS_Vector& p, bool /*branchReversed*/) const
 {
-  if (!p.valid) return NAN;
+  if (!m_bValid || !p.valid) {
+    return std::numeric_limits<double>::quiet_NaN();
+  }
 
-  RS_Vector d = p - data.center;
-  if (d.squared() < RS_TOLERANCE2) return NAN;
+  const double a = getMajorRadius();
+  const double b = getMinorRadius();
 
-  RS_Vector local = d.rotate(-getAngle());
+  if (a < RS_TOLERANCE || b < RS_TOLERANCE) {
+    return std::numeric_limits<double>::quiet_NaN();
+  }
 
-  double x = local.x;
-  double y = local.y;
+         // Transform point to local coordinate system:
+         // - Translate so center is at origin
+         // - Rotate so majorP aligns with positive x-axis
+  RS_Vector local = p - data.center;
+  double rotationAngle = data.majorP.angle();
+  local.rotate(-rotationAngle);  // inverse rotation
 
-  double a = getMajorRadius();
-  double b = getMinorRadius();
+  double x_local = local.x;
+  double y_local = local.y;
 
-  if (std::fabs(x) < a - RS_TOLERANCE) return NAN;
+         // Standard right-branch hyperbola: x = a cosh(phi), y = b sinh(phi)
+         // Therefore: phi = asinh(y_local / b)
+  double phi = std::asinh(y_local / b);
 
-  double ya = y / b;
+         // Verify the point lies on the hyperbola (within tolerance)
+         // Reconstruct x from phi and compare
+  double x_calc = a * std::cosh(phi);
 
-  double phi = std::asinh(ya);
-
-  if (std::signbit(x) != branchReversed) return NAN;
+         // Since we oriented majorP toward the branch, x_local should be >= a (vertex)
+         // Allow small negative tolerance for numerical robustness
+  if (x_local < x_calc - RS_TOLERANCE * a) {
+    // Point not on this branch — return NaN
+    return std::numeric_limits<double>::quiet_NaN();
+  }
 
   return phi;
 }
