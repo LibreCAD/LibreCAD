@@ -1485,7 +1485,7 @@ RS_Vector LC_Hyperbola::prepareTrim(const RS_Vector& trimCoord,
   return bestSol;
 }
 
-RS2::Ending LC_Hyperbola::getTrimPoint(const RS_Vector& trimCoord,
+RS2::Ending LC_Hyperbola::getTrimPoint(const RS_Vector& /*trimCoord*/,
                                        const RS_Vector& trimPoint)
 {
   if (!m_bValid || !trimPoint.valid) {
