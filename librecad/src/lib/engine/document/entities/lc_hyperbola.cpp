@@ -1105,4 +1105,255 @@ RS_Vector LC_Hyperbola::getPrimaryVertex() const
   return vertex;
 }
 
+// lc_hyperbola.cpp – ADDED METHODS (place near other override implementations)
 
+//=====================================================================
+// Grip editing: move start/end points
+//=====================================================================
+
+void LC_Hyperbola::moveStartpoint(const RS_Vector& pos)
+{
+  if (!m_bValid || !pos.valid) return;
+
+         // Unbounded hyperbolas have no defined endpoints
+  if (std::abs(data.angle1) < RS_TOLERANCE && std::abs(data.angle2) < RS_TOLERANCE) {
+    RS_DEBUG->print(RS_Debug::D_WARNING,
+                    "LC_Hyperbola::moveStartpoint: ignored on unbounded hyperbola");
+    return;
+  }
+
+  RS_Vector newStart = getNearestPointOnEntity(pos, true);
+  if (!newStart.valid) return;
+
+  double newPhi1 = getParamFromPoint(newStart, data.reversed);
+  double delta = data.angle2 - data.angle1;
+
+  if (data.angle1 > data.angle2) {
+    // Reversed angular order
+    data.angle1 = newPhi1 + delta;
+    data.angle2 = newPhi1;
+  } else {
+    data.angle1 = newPhi1;
+    data.angle2 = newPhi1 + delta;
+  }
+
+  calculateBorders();
+  updateLength();
+}
+
+void LC_Hyperbola::moveEndpoint(const RS_Vector& pos)
+{
+  if (!m_bValid || !pos.valid) return;
+
+  if (std::abs(data.angle1) < RS_TOLERANCE && std::abs(data.angle2) < RS_TOLERANCE) {
+    RS_DEBUG->print(RS_Debug::D_WARNING,
+                    "LC_Hyperbola::moveEndpoint: ignored on unbounded hyperbola");
+    return;
+  }
+
+  RS_Vector newEnd = getNearestPointOnEntity(pos, true);
+  if (!newEnd.valid) return;
+
+  double newPhi2 = getParamFromPoint(newEnd, data.reversed);
+  double delta = data.angle2 - data.angle1;
+
+  if (data.angle1 > data.angle2) {
+    data.angle1 = newPhi2;
+    data.angle2 = newPhi2 - delta;
+  } else {
+    data.angle2 = newPhi2;
+  }
+
+  calculateBorders();
+  updateLength();
+}
+
+//=====================================================================
+// Area calculation support (Green's theorem)
+//=====================================================================
+
+/**
+ * @brief areaLineIntegral
+ * Computes ∮ x dy along the hyperbola arc.
+ * Used with Green's theorem for closed contour area: Area = ½ (∮ x dy - ∮ y dx)
+ * @return ∮ x dy (twice the signed area contribution when part of a closed path)
+ */
+double LC_Hyperbola::areaLineIntegral() const
+{
+  if (!m_bValid) return 0.0;
+
+         // Unbounded hyperbola → integral diverges
+  if (std::abs(data.angle1) < RS_TOLERANCE && std::abs(data.angle2) < RS_TOLERANCE) {
+    return 0.0;
+  }
+
+  const double a = getMajorRadius();
+  const double b = getMinorRadius();
+  if (a < RS_TOLERANCE || b < RS_TOLERANCE) return 0.0;
+
+  double phi1 = data.angle1;
+  double phi2 = data.angle2;
+  bool reverse = false;
+  if (phi1 > phi2) {
+    std::swap(phi1, phi2);
+    reverse = true;
+  }
+
+  const double cx = data.center.x;
+  const double theta = data.majorP.angle();
+  const double ct = std::cos(theta);
+  const double st = std::sin(theta);
+
+         // Coefficients for parametric form
+  const double A = a * ct;    // cosh term in x
+  const double B = -b * st;   // sinh term in x
+  const double C = a * st;    // cosh term in y
+  const double D = b * ct;    // sinh term in y
+
+         // Antiderivative of x(φ) * y'(φ)
+  auto F = [&](double phi) -> double {
+    const double ch = std::cosh(phi);
+    const double sh = std::sinh(phi);
+    const double ch2 = std::cosh(2.0 * phi);
+    const double sh2 = std::sinh(2.0 * phi);
+
+    return cx * (D * ch + C * sh) +
+           (A * D + B * C) * 0.5 * (ch2 + 1.0) +
+           (A * C + B * D) * 0.5 * sh2;
+  };
+
+  double integral = F(phi2) - F(phi1);
+
+  if (data.reversed) integral = -integral;
+  if (reverse) integral = -integral;
+
+  return integral;
+}
+
+// In lc_hyperbola.cpp – UPDATED prepareTrim implementation (replaces previous version)
+
+RS_Vector LC_Hyperbola::prepareTrim(const RS_Vector& trimCoord,
+                                    const RS_VectorSolutions& trimSol)
+{
+  if (!m_bValid || trimSol.empty()) {
+    return RS_Vector(false);
+  }
+
+         // Unbounded hyperbolas are not trimmable in the usual sense
+  if (std::abs(data.angle1) < RS_TOLERANCE && std::abs(data.angle2) < RS_TOLERANCE) {
+    return RS_Vector(false);
+  }
+
+  const RS_Vector start = getStartpoint();
+  const RS_Vector end   = getEndpoint();
+
+  if (!start.valid || !end.valid) {
+    return RS_Vector(false);
+  }
+
+         // Determine which endpoint the user clicked closer to
+  RS_Vector nearestOnEntity = getNearestPointOnEntity(trimCoord, true);
+  if (!nearestOnEntity.valid) {
+    nearestOnEntity = trimCoord; // fallback
+  }
+
+  RS2::Ending clickedSide = getTrimPoint(trimCoord, nearestOnEntity);
+
+         // Among valid intersection solutions, choose the one that:
+         // 1. Lies on the side the user clicked (start or end direction)
+         // 2. Is farthest in the direction away from the opposite endpoint
+         // This ensures the segment containing the clicked point is preserved.
+  RS_Vector bestSol(false);
+  double bestScore = -RS_MAXDOUBLE;
+
+  for (const RS_Vector& sol : trimSol) {
+    if (!sol.valid) continue;
+
+           // Project solution onto the hyperbola for robustness
+    RS_Vector proj = getNearestPointOnEntity(sol, true);
+    if (!proj.valid) proj = sol;
+
+    double phi = getParamFromPoint(proj, data.reversed);
+    if (std::isnan(phi)) continue;
+
+    bool onStartSide = (clickedSide == RS2::EndingStart)
+                           ? (phi <= data.angle1)
+                           : (phi >= data.angle2);
+
+           // Primary criterion: must be on the clicked side (extend or trim away from click)
+    if (!onStartSide) continue;
+
+           // Secondary: prefer the solution farthest from the kept endpoint
+    double score = (clickedSide == RS2::EndingStart)
+                       ? (data.angle1 - phi)   // larger difference = farther left
+                       : (phi - data.angle2);  // larger difference = farther right
+
+    if (score > bestScore) {
+      bestScore = score;
+      bestSol = proj;
+    }
+  }
+
+         // Fallback: if no solution on the clicked side, use closest valid intersection
+  if (!bestSol.valid) {
+    double minDist = RS_MAXDOUBLE;
+    for (const RS_Vector& sol : trimSol) {
+      if (!sol.valid) continue;
+      RS_Vector proj = getNearestPointOnEntity(sol, true);
+      if (!proj.valid) proj = sol;
+      double d = proj.distanceTo(nearestOnEntity);
+      if (d < minDist) {
+        minDist = d;
+        bestSol = proj;
+      }
+    }
+  }
+
+  if (!bestSol.valid) {
+    return RS_Vector(false);
+  }
+
+  double newPhi = getParamFromPoint(bestSol, data.reversed);
+
+         // Update only the endpoint on the clicked side
+  if (clickedSide == RS2::EndingStart) {
+    data.angle1 = newPhi;
+  } else {
+    data.angle2 = newPhi;
+  }
+
+  calculateBorders();
+  updateLength();
+
+  return bestSol;
+}
+
+RS2::Ending LC_Hyperbola::getTrimPoint(const RS_Vector& trimCoord,
+                                       const RS_Vector& trimPoint)
+{
+  if (!m_bValid || !trimPoint.valid) {
+    return RS2::EndingNone;
+  }
+
+         // For unbounded hyperbolas, treat as no defined ends
+  if (std::abs(data.angle1) < RS_TOLERANCE && std::abs(data.angle2) < RS_TOLERANCE) {
+    return RS2::EndingNone;
+  }
+
+  const RS_Vector start = getStartpoint();
+  const RS_Vector end   = getEndpoint();
+
+  if (!start.valid || !end.valid) {
+    return RS2::EndingNone;
+  }
+
+  const double distToStart = trimPoint.distanceTo(start);
+  const double distToEnd   = trimPoint.distanceTo(end);
+
+         // Use a small tolerance to avoid flickering when exactly midway
+  if (distToStart + RS_TOLERANCE < distToEnd) {
+    return RS2::EndingStart;
+  } else {
+    return RS2::EndingEnd;
+  }
+}

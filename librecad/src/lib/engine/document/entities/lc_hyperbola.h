@@ -120,6 +120,31 @@ public:
 
   double getDirection1() const override;
   double getDirection2() const override;
+  /**
+   * @brief getTrimPoint
+   * Determines which end of the hyperbola arc (start or end) is closer to the given trim point.
+   * Used during trim/extend operations to decide which endpoint should be moved.
+   *    * @param trimCoord  Current mouse/coordinate position (selection point)
+   * @param trimPoint  The point on the entity closest to trimCoord (intersection or projection)
+   * @return RS2::EndingStart if closer to start point, RS2::EndingEnd if closer to end point
+   */
+  RS2::Ending getTrimPoint(const RS_Vector& trimCoord,
+                           const RS_Vector& trimPoint) override;
+
+  /**
+   * @brief prepareTrim
+   * After a trim operation finds intersection points (trimSol), this selects the appropriate
+   * new endpoint for the hyperbola arc.
+   *    * Behavior:
+   * - If multiple solutions exist, chooses the one closest to the original trimPoint.
+   * - If only one solution, uses it.
+   * - Preserves the other endpoint and updates only the trimmed side.
+   *    * @param trimCoord  Mouse position during trim
+   * @param trimSol    Solution points from intersection calculation
+   * @return The new position for the trimmed endpoint
+   */
+  RS_Vector prepareTrim(const RS_Vector& trimCoord,
+                        const RS_VectorSolutions& trimSol) override;
 
   RS_Vector getTangentDirectionParam(double parameter) const;
   RS_Vector getTangentDirection(const RS_Vector& point) const override;
@@ -164,6 +189,45 @@ public:
   double getParamFromPoint(const RS_Vector& p, bool branchReversed = false) const;
   RS_Vector getPoint(double phi, bool useReversed) const;
   void setPrimaryVertex(const RS_Vector& v);
+
+    /**
+     * @brief moveStartpoint
+     * Moves the start point of the hyperbola arc to a new position.
+     * The new position is projected onto the hyperbola curve to ensure it lies exactly on the entity.
+     * The angular span (arc extent) is preserved, so the endpoint moves accordingly to maintain
+     * the same parametric length.
+     *
+     * For unbounded (full-branch) hyperbolas, the operation is ignored because no defined start point exists.
+     *
+     * @param pos Desired new position for the start point
+     */
+    void moveStartpoint(const RS_Vector& pos) override;
+
+    /**
+     * @brief moveEndpoint
+     * Moves the end point of the hyperbola arc to a new position.
+     * The new position is projected onto the hyperbola curve.
+     * The original start point is kept fixed, and only the end angle is updated.
+     *
+     * For unbounded hyperbolas, the operation is ignored.
+     *
+     * @param pos Desired new position for the end point
+     */
+    void moveEndpoint(const RS_Vector& pos) override;
+
+    /**
+     * @brief areaLineIntegral
+     * Computes the line integral ∮ x dy along the hyperbola arc.
+     *
+     * This is used for closed contour area calculation via Green's theorem:
+     *     Area = ½ (∮ x dy - ∮ y dx)
+     *
+     * The integral is evaluated analytically using the hyperbolic parametrization.
+     * Returns 0 for unbounded hyperbolas (where the integral diverges) or invalid entities.
+     *
+     * @return The value of ∮ x dy along the arc (twice the signed area contribution)
+     */
+    double areaLineIntegral() const override;
 
 private:
   bool isInClipRect(const RS_Vector& p, double xmin, double xmax, double ymin, double ymax) const;
