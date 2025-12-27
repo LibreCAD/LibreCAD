@@ -68,37 +68,12 @@ bool LC_HyperbolaSpline::isHyperbolaSpline(const DRW_Spline& s)
   }
 
          // Endpoint weights must be exactly 1.0
-  if (std::abs(s.weightlist[0] - 1.0) > tol || std::abs(s.weightlist[2] - 1.0) > tol) {
+  if (!RS_Math::equal(s.weightlist[0], 1.0) || !RS_Math::equal(s.weightlist[2], 1.0)) {
     return false;
   }
 
-         // Middle weight must be positive (and typically > 1 for hyperbolas)
-  const double w_middle = s.weightlist[1];
-  if (w_middle <= 0.0) {
-    return false;
-  }
-
-         // Extract control points
-  const RS_Vector p0(s.controllist[0]->x, s.controllist[0]->y);
-  const RS_Vector p1(s.controllist[1]->x, s.controllist[1]->y);
-  const RS_Vector p2(s.controllist[2]->x, s.controllist[2]->y);
-
-         // Collinear control points degenerate to a line segment → not a proper conic
-  const double area = (p1.x - p0.x) * (p2.y - p0.y) - (p2.x - p0.x) * (p1.y - p0.y);
-  if (std::abs(area) < tol) {
-    return false;
-  }
-
-         // Compute implicit conic coefficients from rational quadratic Bézier form
-  const double A = w_middle * (p0.y * p2.y - p1.y * p1.y);
-  const double B = w_middle * 2.0 * (p1.x * (p0.y + p2.y) - p0.y * p1.y - p2.y * p1.y);
-  const double C = w_middle * (p0.x * p2.x - p1.x * p1.x);
-
-         // Conic type discriminant: B² - 4AC
-         // > 0 → hyperbola, = 0 → parabola, < 0 → ellipse
-  const double discriminant = B * B - 4.0 * A * C;
-
-  return discriminant > tol; // Positive → hyperbola
+ // Middle weight must be positive (and typically > 1 for hyperbolas)
+  return s.weightlist[1] >= 1.0 + tol;
 }
 
 /**

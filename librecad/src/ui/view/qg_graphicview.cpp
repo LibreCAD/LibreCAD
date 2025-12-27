@@ -112,10 +112,6 @@ constexpr int g_hotspotXY=-1;
             && vpMin.x + 1e6 >= vpMax.x
             && vpMin.y + 1e6 >= vpMax.y;
     }
-
-    LC_Rect getGuiRect([[maybe_unused]]const LC_Rect& modelRect, [[maybe_unused]]const RS_Vector& model2GuiFactor) {
-        return {};
-    }
 }
 
 /**
