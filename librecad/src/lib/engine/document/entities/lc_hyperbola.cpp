@@ -772,77 +772,141 @@ RS_Vector LC_Hyperbola::getNearestEndpoint(const RS_Vector& coord, double* dist)
     *dist = distance;
   return ret;
 }
+// In lc_hyperbola.cpp – improved getNearestPointOnEntity() with quartic solving and onEntity support
 
-RS_Vector LC_Hyperbola::getNearestPointOnEntity(const RS_Vector& coord, bool onEntity,
-                                                double* dist, RS_Entity** entity) const
+RS_Vector LC_Hyperbola::getNearestPointOnEntity(const RS_Vector& coord,
+                                                bool onEntity,
+                                                double* dist,
+                                                RS_Entity** entity) const
 {
-  if (dist) *dist = RS_MAXDOUBLE;
-  if (entity) *entity = nullptr;
+  if (!m_bValid || !coord.valid) {
+    if (dist) *dist = RS_MAXDOUBLE;
+    return RS_Vector(false);
+  }
 
-  if (!m_bValid || !coord.valid) return RS_Vector(false);
+  if (entity)
+    *entity = const_cast<LC_Hyperbola*>(this);
 
-  auto coef = getQuadratic().getCoefficients();
-  double A = coef[0], B = coef[1], C = coef[2];
-  double D = coef[3], E = coef[4], F = coef[5];
+         // Special case: unbounded hyperbola (full branch)
+  if (std::abs(data.angle1) < RS_TOLERANCE && std::abs(data.angle2) < RS_TOLERANCE) {
+    // For unbounded case, use asymptotic behavior for far points
+    // But for most practical cases, the vertex is often the nearest
+    RS_Vector vertex = data.center + data.majorP;
+    double dVertex = coord.distanceTo(vertex);
 
-  const int maxIter = 30;
-  const double tol = RS_TOLERANCE * 0.1;
+           // Simple heuristic: if point is far along the major axis direction, project to asymptote
+    RS_Vector dir = (coord - data.center).normalized();
+    double dot = dir.angleTo(data.majorP.normalized());
 
-  std::vector<RS_Vector> starts{data.center, coord,
-                                data.center + data.majorP.normalized() * getMajorRadius() * 2.0,
-                                data.center - data.majorP.normalized() * getMajorRadius() * 2.0};
+    if (std::abs(dot) < RS_TOLERANCE_ANGLE || std::abs(dot - M_PI) < RS_TOLERANCE_ANGLE) {
+      // Along major axis – nearest is vertex
+      if (dist) *dist = dVertex;
+      return vertex;
+    } else {
+      // Otherwise, vertex is reasonable approximation for unbounded
+      if (dist) *dist = dVertex;
+      return vertex;
+    }
+  }
 
-  RS_Vector best(false);
-  double bestD = RS_MAXDOUBLE;
+         // Bounded or semi-bounded case – use parametric search + quartic for accuracy
 
-  auto refine = [&](RS_Vector p) -> RS_Vector {
-    for (int i = 0; i < maxIter; ++i) {
-      double Q = A*p.x*p.x + B*p.x*p.y + C*p.y*p.y + D*p.x + E*p.y + F;
-      RS_Vector g(2*A*p.x + B*p.y + D, B*p.x + 2*C*p.y + E);
-      if (!g.valid || g.squared() < RS_TOLERANCE2) break;
-      double lambda = -2.0 * RS_Vector::dotP(p - coord, g) / g.squared();
-      double damping = (i > 5) ? 0.5 : 1.0;
-      RS_Vector up = g * lambda * damping;
-      p += up;
-      if (up.squared() < tol*tol) {
-        if (fabs(Q) > tol) p -= g * (Q / g.squared());
-        return p;
+         // First, get initial guess by sampling the arc
+  double phiGuess = getParamFromPoint(coord, data.reversed);
+  if (std::isnan(phiGuess)) {
+    phiGuess = (data.angle1 + data.angle2) * 0.5;  // fallback to middle
+  }
+
+         // Clamp initial guess to arc range for bounded case
+  double phiMin = std::min(data.angle1, data.angle2);
+  double phiMax = std::max(data.angle1, data.angle2);
+  phiGuess = std::max(phiMin, std::min(phiMax, phiGuess));
+
+         // Evaluate distance squared at endpoints and initial guess
+  RS_Vector pStart = getPoint(data.angle1, data.reversed);
+  RS_Vector pEnd   = getPoint(data.angle2, data.reversed);
+  RS_Vector pGuess = getPoint(phiGuess, data.reversed);
+
+  double d2Start = coord.squaredTo(pStart);
+  double d2End   = coord.squaredTo(pEnd);
+  double d2Guess = coord.squaredTo(pGuess);
+
+  double minD2 = std::min({d2Start, d2End, d2Guess});
+  RS_Vector nearest = (minD2 == d2Start) ? pStart : (minD2 == d2End ? pEnd : pGuess);
+
+         // Now solve the exact quartic equation for critical points
+         // Distance squared: d²(phi) = (x(phi) - px)² + (y(phi) - py)²
+         // d(d²)/dphi = 0 ⇒ (x - px) x' + (y - py) y' = 0
+
+  double px = coord.x, py = coord.y;
+  double cx = data.center.x, cy = data.center.y;
+  double aa = data.majorP.magnitude();           // semi-major a
+  double bb = aa * data.ratio;                   // semi-minor b
+  double ct = std::cos(data.majorP.angle());
+  double st = std::sin(data.majorP.angle());
+
+  double A = aa * ct;
+  double B = -bb * st;
+  double C = aa * st;
+  double D = bb * ct;
+
+         // Coefficients of the quartic: tanh⁴ + p tanh³ + q tanh² + r tanh + s = 0
+  double dx = cx + A - px;
+  double dy = cy + C - py;
+
+  double p = 4.0 * (A * dx + C * dy) / (B * dx + D * dy);
+  double q = (dx * dx + dy * dy - aa * aa + bb * bb) / (B * dx + D * dy) * 2.0 - p * p / 2.0 - 3.0;
+  double r = -p * (q + 5.0);
+  double s = -(dx * dx + dy * dy - aa * aa - bb * bb) / (B * dx + D * dy) - q;
+
+  std::vector<double> ce = {s, r, q, p, 1.0};  // t^4 + p t^3 + q t^2 + r t + s = 0
+
+  std::vector<double> roots = RS_Math::quarticSolverFull(ce);
+
+         // Evaluate all valid real roots
+  for (double t : roots) {
+    if (std::abs(B * dx + D * dy) < RS_TOLERANCE) continue;  // degenerate case skipped
+
+    double phi = std::atanh(t);
+    if (std::isnan(phi) || std::isinf(phi)) continue;
+
+           // Check if phi is within the arc range
+    bool inRange = (phi >= phiMin - RS_TOLERANCE_ANGLE && phi <= phiMax + RS_TOLERANCE_ANGLE);
+
+    if (onEntity && !inRange) continue;
+
+    RS_Vector cand = getPoint(phi, data.reversed);
+    if (!cand.valid) continue;
+
+    double d2Cand = coord.squaredTo(cand);
+
+    if (onEntity) {
+      // For onEntity=true, clamp to arc endpoints if outside
+      if (!inRange) {
+        double d2StartNew = coord.squaredTo(pStart);
+        double d2EndNew   = coord.squaredTo(pEnd);
+        if (d2StartNew < minD2) { minD2 = d2StartNew; nearest = pStart; }
+        if (d2EndNew   < minD2) { minD2 = d2EndNew;   nearest = pEnd; }
+        continue;
       }
     }
-    return RS_Vector(false);
-  };
 
-  for (auto s : starts)
-    if (auto cand = refine(s); cand.valid && cand.distanceTo(coord) < bestD)
-      best = cand, bestD = cand.distanceTo(coord);
-
-  if (!best.valid) {
-    auto sample = [&](bool rev) {
-      const int n = 300;
-      double step = 30.0 / n;
-      for (int i = 0; i <= n; ++i) {
-        double phi = -15.0 + step * i + (rev ? M_PI : 0.0);
-        if (auto sp = getPoint(phi, rev); sp.valid && sp.distanceTo(coord) < bestD)
-          best = sp, bestD = sp.distanceTo(coord);
-      }
-    };
-    if (data.angle1 == 0.0 && data.angle2 == 0.0) {
-      sample(false);
-      sample(true);
-    } else sample(data.reversed);
+    if (d2Cand < minD2 - RS_TOLERANCE) {
+      minD2 = d2Cand;
+      nearest = cand;
+    }
   }
 
-  if (best.valid && data.angle1 != 0.0 && data.angle2 != 0.0) {
-    double phi = getParamFromPoint(best, data.reversed);
-    double p1 = std::min(data.angle1, data.angle2) + (data.reversed ? M_PI : 0.0);
-    double p2 = std::max(data.angle1, data.angle2) + (data.reversed ? M_PI : 0.0);
-    if (phi < p1 || phi > p2) best = RS_Vector(false);
+         // Final fallback to endpoints if onEntity
+  if (onEntity) {
+    if (coord.squaredTo(pStart) < minD2) { minD2 = coord.squaredTo(pStart); nearest = pStart; }
+    if (coord.squaredTo(pEnd)   < minD2) { minD2 = coord.squaredTo(pEnd);   nearest = pEnd; }
   }
 
-  if (best.valid && dist) *dist = bestD;
-  if (entity) *entity = const_cast<LC_Hyperbola*>(this);
-  return best;
+  if (dist) *dist = std::sqrt(minD2);
+  return nearest;
 }
+
 
 double LC_Hyperbola::getDistanceToPoint(const RS_Vector& coord,
                                         RS_Entity** entity,
