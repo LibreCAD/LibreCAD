@@ -888,16 +888,19 @@ bool LC_Hyperbola::isPointOnEntity(const RS_Vector& coord,
 
 LC_Quadratic LC_Hyperbola::getQuadratic() const
 {
-  std::vector<double> c(6, 0.0);
-  c[0] = data.majorP.squared();
-  c[2] = -data.ratio*data.ratio*c[0];
-  if (c[0] > RS_TOLERANCE2) c[0] = 1.0/c[0];
-  if (fabs(c[2]) > RS_TOLERANCE2) c[2] = 1.0/c[2];
-  c[5] = -1.0;
-  LC_Quadratic q(c);
-  q.rotate(data.majorP.angle());
-  q.move(data.center);
-  return q;
+  std::vector<double> ce(6,0.);
+  ce[0]=data.majorP.squared();
+  ce[2]= - data.ratio*data.ratio*ce[0];
+  if(ce[0]<RS_TOLERANCE2 && std::abs(ce[2]) < RS_TOLERANCE2){
+    return LC_Quadratic();
+  }
+  ce[0]=1./ce[0];
+  ce[2]=1./ce[2];
+  ce[5]=-1.;
+  LC_Quadratic ret(ce);
+  ret.rotate(getAngle());
+  ret.move(data.center);
+  return ret;
 }
 
 // lc_hyperbola.cpp - fixed calculateBorders() for hyperbolic parameter range
@@ -1571,4 +1574,28 @@ RS2::Ending LC_Hyperbola::getTrimPoint(const RS_Vector& /*trimCoord*/,
   } else {
     return RS2::EndingEnd;
   }
+}
+
+// In lc_hyperbola.cpp – fixed and improved dualLineTangentPoint() (analogous to ellipse)
+
+RS_Vector LC_Hyperbola::dualLineTangentPoint(const RS_Vector& line) const
+{
+  if (!m_bValid || !line.valid) {
+    return RS_Vector(false);
+  }
+  // u x + v y = 1
+  // coordinates : dual
+  // rotate (-a) : rotate(a)
+  RS_Vector uv = RS_Vector{line}.rotate(-data.majorP.angle());
+  // slope = (a sinh, b cosh)
+  // u a sinh + v b cosh = 0,
+  // phi = atanh(- (vb)/(ua))
+  if (std::abs(uv.x) < RS_TOLERANCE_ANGLE) {
+    return getCenter() + getMajorP();
+  }
+  double r = - getRatio() * uv.y / uv.x;
+  if (std::abs(r) > 1. - RS_TOLERANCE)
+    return RS_Vector{false};
+
+  return getPoint(std::atanh(r), false);
 }

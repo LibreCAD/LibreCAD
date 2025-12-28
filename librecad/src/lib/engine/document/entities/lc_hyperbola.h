@@ -190,6 +190,19 @@ public:
   RS_Vector getPoint(double phi, bool useReversed) const;
   void setPrimaryVertex(const RS_Vector& v);
 
+  /**
+   * @brief dualLineTangentPoint
+   * Returns the point of tangency on the hyperbola for the tangent line
+   * that is orthogonal to the line defined by the given point (pole-polar duality).
+   *    * This implements the dual conic correspondence:
+   * For a point (line) outside the hyperbola, there exists a unique polar line
+   * that is tangent to the hyperbola at this returned point.
+   *    * Used primarily for orth-tangent snapping (getNearestOrthTan) when a normal line is provided.
+   *    * @param line  A point defining the direction of the normal line (through origin or arbitrary)
+   * @return The point of tangency on the hyperbola, or invalid vector if no real tangent exists
+   */
+  RS_Vector dualLineTangentPoint(const RS_Vector& line) const override;
+
     /**
      * @brief moveStartpoint
      * Moves the start point of the hyperbola arc to a new position.

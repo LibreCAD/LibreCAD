@@ -60,6 +60,7 @@ namespace {
             return true;
         }
         switch (entity.rtti()) {
+            case RS2::EntityHyperbola:
             case RS2::EntityParabola:
                 return true;
             default:
