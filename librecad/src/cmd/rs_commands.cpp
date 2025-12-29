@@ -160,40 +160,49 @@ RS_Commands::RS_Commands() {
     for(auto const& [fullCmdList, aliasList, action]: g_commandList){
         //add full commands
         for(auto const& [fullCmd, cmdTranslation]: fullCmdList){
+	    // Create lowercase versions for map keys
+            QString fullCmdLower = fullCmd.toLower();
+            QString cmdTransLower = cmdTranslation.toLower();
+
             if (fullCmd == cmdTranslation)
                 continue;
             // use translated commands first
-            if (isCollisionFree(m_cmdTranslation, fullCmd, cmdTranslation))
-                m_cmdTranslation.emplace(fullCmd, cmdTranslation);
-            if (isCollisionFree(m_mainCommands, cmdTranslation, action, m_actionToCommand.count(action) ? m_actionToCommand[action] : QString{})) {
-                m_mainCommands.emplace(cmdTranslation, action);
+	    // Use lowercase for keys in m_cmdTranslation and m_mainCommands
+            if (isCollisionFree(m_cmdTranslation, fullCmdLower, cmdTranslation))
+                m_cmdTranslation.emplace(fullCmdLower, cmdTranslation);
+            if (isCollisionFree(m_mainCommands, cmdTransLower, action, m_actionToCommand.count(action) ? m_actionToCommand[action] : QString{})) {
+                m_mainCommands.emplace(cmdTransLower, action);
                 m_actionToCommand.emplace(action, cmdTranslation);
             }
         }
         for(auto const& [fullCmd, cmdTranslation]: fullCmdList){
-            if(isCollisionFree(m_mainCommands, fullCmd, action, m_actionToCommand.count(action) ? m_actionToCommand[action] : QString{})) {
+	    QString fullCmdLower = fullCmd.toLower();
+            if(isCollisionFree(m_mainCommands, fullCmdLower, action, m_actionToCommand.count(action) ? m_actionToCommand[action] : QString{})) {
                 // enable english commands, if no conflict is found
-                m_mainCommands.emplace(fullCmd, action);
+                m_mainCommands.emplace(fullCmdLower, action);
                 m_actionToCommand.emplace(action, fullCmd);
             }
         }
         //add short commands
         for(auto const& [alias, aliasTranslation]: aliasList){
+	    QString aliasLower = alias.toLower();
+            QString aliasTransLower = aliasTranslation.toLower();
             if (alias == aliasTranslation)
                 continue;
             // use translated alias first
-            if(isCollisionFree(m_cmdTranslation, alias, aliasTranslation))
-                m_cmdTranslation.emplace(alias, aliasTranslation);
-            if(isCollisionFree(m_shortCommands, aliasTranslation, action, m_actionToCommand.count(action) ? m_actionToCommand[action] : QString{})) {
-                m_shortCommands.emplace(aliasTranslation, action);
+            if(isCollisionFree(m_cmdTranslation, aliasLower, aliasTranslation))
+                m_cmdTranslation.emplace(aliasLower, aliasTranslation);
+            if(isCollisionFree(m_shortCommands, aliasTransLower, action, m_actionToCommand.count(action) ? m_actionToCommand[action] : QString{})) {
+                m_shortCommands.emplace(aliasTransLower, action);
                 if (m_actionToCommand.count(action) == 0)
                     m_actionToCommand.emplace(action, aliasTranslation);
             }
         }
         for(auto const& [alias, aliasTranslation]: aliasList){
-            if(isCollisionFree(m_shortCommands, alias, action, m_actionToCommand.count(action) ? m_actionToCommand[action] : QString{})) {
+	    QString aliasLower = alias.toLower();
+            if(isCollisionFree(m_shortCommands, aliasLower, action, m_actionToCommand.count(action) ? m_actionToCommand[action] : QString{})) {
                 // enable english short commands, if no conflict is found
-                m_shortCommands.emplace(alias, action);
+                m_shortCommands.emplace(aliasLower, action);
                 if (m_actionToCommand.count(action) == 0)
                     m_actionToCommand.emplace(action, aliasTranslation);
             }
@@ -202,14 +211,15 @@ RS_Commands::RS_Commands() {
 
     // translations, overriding existing translation
     for(auto const& [command, translation]: g_transList) {
-        m_cmdTranslation[command] = translation;
+        m_cmdTranslation[command.toLower()] = translation;
     }
 
     // prefer to use translated commands and aliases
     for (const auto& [command, translation]: m_cmdTranslation) {
-        m_revTranslation[translation] = command;
-        if (m_shortCommands.count(translation) == 1)
-            m_shortCommands[command] = m_shortCommands[translation];
+	QString transLower = translation.toLower();
+        m_revTranslation[transLower] = command;
+        if (m_shortCommands.count(transLower) == 1)
+            m_shortCommands[command.toLower()] = m_shortCommands[transLower];
     }
 
     // ensure action to command mapping is consistent
@@ -367,8 +377,8 @@ RS2::ActionType RS_Commands::cmdToAction(const QString& cmd, bool verbose) const
     // find command:
     for(const auto& table: {m_mainCommands, m_shortCommands})
     {
-        if (table.count(cmd)) {
-            ret = table.at(cmd);
+        if (table.count(full)) {
+            ret = table.at(full);
             break;
         }
     }
