@@ -32,6 +32,31 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_math.h"
 #include "rs_painter.h"
 
+namespace {
+LC_Hyperbola createTest() {
+ LC_HyperbolaData data;
+ data.center = RS_Vector(0.0, 0.0);
+ data.majorP = RS_Vector(3.0, 0.0);  // a = 3
+ data.ratio = 4.0 / 3.0;             // b = 4, standard 9x² - 16y² = 1
+ data.reversed = false;
+ data.angle1 = -2.0;
+ data.angle2 = 2.0;
+
+ LC_Hyperbola hb(nullptr, data);
+
+ LC_Quadratic q = hb.getQuadratic();
+
+ // Dual conic of hyperbola (x²/a² - y²/b² - 1 = 0) is (b² x² - a² y² - a² b² = 0)
+ LC_Quadratic dual = q.getDualCurve();
+ LC_Hyperbola qd{nullptr, dual};
+ bool isValid = qd.isValid();
+ LC_ERR<<isValid;
+ return qd;
+}
+
+LC_Hyperbola g_hyperbola = createTest();
+}
+
 //=====================================================================
 // Construction
 //=====================================================================
@@ -154,6 +179,8 @@ LC_Hyperbola::LC_Hyperbola(RS_EntityContainer* parent, const LC_Quadratic& q)
 
 // File: lc_hyperbola.cpp - improved createFromQuadratic() with robust center handling
 
+// In lc_hyperbola.cpp - improved createFromQuadratic() with robust center handling and degeneracy checks
+
 bool LC_Hyperbola::createFromQuadratic(const LC_Quadratic& q)
 {
   std::vector<double> ce = q.getCoefficients();
@@ -162,79 +189,115 @@ bool LC_Hyperbola::createFromQuadratic(const LC_Quadratic& q)
   double A = ce[0], B = ce[1], C = ce[2];
   double D = ce[3], E = ce[4], F = ce[5];
 
-         // Hyperbola discriminant B² - 4AC > 0
+         // === Step 1: Classify conic type using discriminant ===
   double disc = B * B - 4.0 * A * C;
-  if (disc <= 0.0) return false;
+  if (disc <= 0.0) return false;  // Not a hyperbola (ellipse or parabola)
 
-         // Determinant for center: 4AC - B² = -disc
-  double det = 4.0 * A * C - B * B;  // negative for hyperbola
-  constexpr double tol = 1e-10;
-  if (std::abs(det) < tol) return false;
+         // === Step 2: Degeneracy check using 3x3 determinant ===
+  double det = A * (C * F - E * E / 4.0) -
+               B / 2.0 * (B / 2.0 * F - D * E / 2.0) +
+               D / 2.0 * (B / 2.0 * E - D * C / 2.0);
 
-         // Center coordinates - robust computation
-  double cx = (B * E - 2.0 * C * D) / det;
-  double cy = (B * D - 2.0 * A * E) / det;
+  if (std::abs(det) < RS_TOLERANCE) return false;  // Degenerate (e.g., two lines)
 
-  RS_Vector center(cx, cy);
-
-         // Translate quadratic to origin
-  LC_Quadratic translated = q;
-  translated.move(-center);
-
-  std::vector<double> ct = translated.getCoefficients();
-  double At = ct[0], Bt = ct[1], Ct = ct[2], Ft = ct[5];
-
-         // Rotation angle to eliminate xy term
+         // === Step 3: Find rotation angle to eliminate xy term ===
   double theta = 0.0;
-  if (std::abs(Bt) > tol) {
-    theta = 0.5 * std::atan2(Bt, At - Ct);
+  if (std::abs(B) > RS_TOLERANCE) {
+    theta = 0.5 * std::atan2(B, A - C);
   }
 
-         // Rotate to align axes
-  LC_Quadratic rotated = translated;
-  rotated.rotate(theta);
+  double ct = std::cos(theta);
+  double st = std::sin(theta);
 
-  std::vector<double> cr = rotated.getCoefficients();
-  double Ar = cr[0], Cr = cr[2], Fr = cr[5];
+         // Rotate quadratic terms
+  double Ap = A * ct * ct + B * ct * st + C * st * st;
+  double Cp = A * st * st - B * ct * st + C * ct * ct;
+  double Bp = 2.0 * (A - C) * ct * st + B * (ct * ct - st * st);  // Should be ~0
 
-         // Hyperbola: opposite signs
-  if (Ar * Cr >= -tol) return false;  // allow small negative due to precision
+         // Rotate linear terms
+  double Dp = D * ct + E * st;
+  double Ep = -D * st + E * ct;
 
-         // Compute a² and b²
-  double a2 = -Fr / Ar;
-  double b2 = -Fr / Cr;
+         // === Step 4: Find center by solving partial derivatives ===
+         // 2 Ap x + Dp = 0
+         // 2 Cp y + Ep = 0
+  RS_Vector center;
+  if (std::abs(Ap) > RS_TOLERANCE) {
+    center.x = -Dp / (2.0 * Ap);
+  } else if (std::abs(Dp) > RS_TOLERANCE) {
+    return false;  // Unbounded in x → invalid for hyperbola
+  }
 
-         // Clamp tiny negative values from precision error
-  if (a2 <= -tol || b2 <= -tol) return false;
-  a2 = std::max(a2, 0.0);
-  b2 = std::max(b2, 0.0);
+  if (std::abs(Cp) > RS_TOLERANCE) {
+    center.y = -Ep / (2.0 * Cp);
+  } else if (std::abs(Ep) > RS_TOLERANCE) {
+    return false;  // Unbounded in y → invalid
+  }
 
-  if (a2 < tol || b2 < tol) return false;
+         // === Step 5: Translate to center and evaluate constant term ===
+  double Fp = A * center.x * center.x +
+              B * center.x * center.y +
+              C * center.y * center.y +
+              D * center.x +
+              E * center.y +
+              F;
+
+         // === Step 6: Normalize to standard form ===
+         // Ap (x')² + Cp (y')² + Fp = 0
+  double denom = -Fp;
+  if (std::abs(denom) < RS_TOLERANCE) return false;
+
+  double coeff_x = Ap / denom;
+  double coeff_y = Cp / denom;
+
+  double a2, b2;
+  bool transverse_x = (coeff_x > 0.0);
+
+  if (transverse_x) {
+    if (coeff_y >= 0.0) return false;  // Both positive → ellipse-like
+    a2 = 1.0 / coeff_x;
+    b2 = -1.0 / coeff_y;  // Make positive
+  } else {
+    if (coeff_x >= 0.0) return false;
+    a2 = 1.0 / coeff_y;
+    b2 = -1.0 / coeff_x;
+  }
+
+  if (a2 <= RS_TOLERANCE || b2 <= RS_TOLERANCE) return false;
 
   double a = std::sqrt(a2);
-  double b = std::sqrt(b2);
+  double ratio = std::sqrt(b2 / a2);
 
-         // Determine major axis orientation
-  bool horizontal = (Ar > 0.0);
-
-  RS_Vector majorP(a, 0.0);
-  double finalAngle = theta;
-  if (!horizontal) {
-    std::swap(a, b);
-    finalAngle += M_PI / 2.0;
+         // === Step 7: Determine major axis direction and branch ===
+  RS_Vector major_dir;
+  if (transverse_x) {
+    major_dir = RS_Vector(ct, st);         // Along rotated x'
+  } else {
+    major_dir = RS_Vector(-st, ct);        // Along rotated y' (perpendicular)
   }
-  majorP.rotate(finalAngle);
 
-         // Build hyperbola data
+         // Determine branch: evaluate sign at vertex
+  RS_Vector vertex = center + major_dir * a;
+  double sign_at_vertex = q.evaluateAt(vertex);
+  bool reversed = (sign_at_vertex < 0.0);
+
+         // For left branch, flip direction
+  if (reversed) {
+    major_dir = -major_dir;
+  }
+
+         // === Step 8: Set data ===
   data.center = center;
-  data.majorP = majorP;
-  data.ratio = b / a;
-  data.reversed = false;  // default right branch
+  data.majorP = major_dir * a;
+  data.ratio = ratio;
+  data.reversed = reversed;
   data.angle1 = 0.0;
-  data.angle2 = 0.0;      // full branch
+  data.angle2 = 0.0;  // Unbounded by default
 
   m_bValid = true;
   calculateBorders();
+  updateLength();
+
   return true;
 }
 

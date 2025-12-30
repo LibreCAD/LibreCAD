@@ -667,6 +667,25 @@ LC_Quadratic LC_Quadratic::getDualCurve() const
     return {dualCe};
 }
 
+// Evaluate the quadratic form at a given point (x, y)
+double LC_Quadratic::evaluateAt(const RS_Vector& p) const
+{
+  if (!p.valid) return 0.0;  // or NaN / throw — but consistent with project style
+
+  double x = p.x;
+  double y = p.y;
+
+         // General conic: A x² + B xy + C y² + D x + E y + F
+  double result = m_mQuad(0,0) * x * x +                  // A x²
+                  2.0 * m_mQuad(0,1) * x * y +            // B xy (since matrix stores B/2)
+                  m_mQuad(1,1) * y * y +                  // C y²
+                  m_vLinear(0) * x +                      // D x
+                  m_vLinear(1) * y +                      // E y
+                  m_dConst;                               // F
+
+  return result;
+}
+
 /**
  * Dumps the point's data to stdout.
  */

@@ -95,6 +95,14 @@ public:
     /** switch x,y coordinates */
     LC_Quadratic flipXY(void) const;
 
+         /**
+          * @brief evaluateAt Evaluate the quadratic form at a given point (x, y)
+
+          * @param p x/y values
+          * @return the quadratic form value at the input
+          */
+    double evaluateAt(const RS_Vector& p) const;
+
     /**
      * @brief getDualCurve: the dual curve of the current conic section
      * @return the quadratic of the dual curve, if the current curve is a conic section;
