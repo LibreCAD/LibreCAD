@@ -807,8 +807,10 @@ void LC_Hyperbola::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoin
   data.angle1 = getParamFromPoint(vp);
   vp = getEndpoint().mirror(axisPoint1, axisPoint2);
   data.angle2 = getParamFromPoint(vp);
+  if (data.angle1 > data.angle2)
+    std::swap(data.angle1, data.angle2);
 
-  calculateBorders();
+  LC_Hyperbola::calculateBorders();
 }
 
 //=====================================================================
