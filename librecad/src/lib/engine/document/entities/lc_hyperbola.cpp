@@ -105,6 +105,25 @@ RS_Vector LC_HyperbolaData::getFocus2() const
   return center - df;
 }
 
+/**
+ * Stream output operator for LC_HyperbolaData.
+ *
+ * Provides human-readable formatted output for debugging and logging.
+ * Example output:
+ *   HyperbolaData{center=(0,0), majorP=(5,0), ratio=1.5, angle1=0, angle2=0, reversed=false}
+ */
+std::ostream& operator<<(std::ostream& os, const LC_HyperbolaData& d) {
+  os << "HyperbolaData{"
+     << "center=" << d.center
+     << ", majorP=" << d.majorP
+     << ", ratio=" << d.ratio
+     << ", angle1=" << d.angle1
+     << ", angle2=" << d.angle2
+     << ", reversed=" << (d.reversed ? "true" : "false")
+     << "}";
+  return os;
+}
+
 LC_Hyperbola::LC_Hyperbola(RS_EntityContainer* parent, const LC_HyperbolaData& d)
     : LC_CachedLengthEntity(parent), data(d), m_bValid(d.majorP.squared() >= RS_TOLERANCE2)
 {
@@ -1647,16 +1666,20 @@ RS_Vector LC_Hyperbola::dualLineTangentPoint(const RS_Vector& line) const
   if (!m_bValid || !line.valid) {
     return RS_Vector(false);
   }
-  // u x + v y = 1
+  // u x + v y + 1 = 0
   // coordinates : dual
-  // rotate (-a) : rotate(a)
+  // real coordinates is rotated from canonical
+  // (u; v)^T (M X) + 1 =0
+  // Equivalent to rotation in dual coordinates, but opposite angle
+  // ( M^T (u; v)^T) X + 1 = 0
   RS_Vector uv = RS_Vector{line}.rotate(-data.majorP.angle());
   // slope = (a sinh, b cosh)
   // u a sinh + v b cosh = 0,
   // phi = atanh(- (vb)/(ua))
-  if (std::abs(uv.x) < RS_TOLERANCE_ANGLE) {
-    return getCenter() + getMajorP();
-  }
+
+  // No horizontal tangent lines for canonical form
+  if (std::abs(uv.x) < RS_TOLERANCE_ANGLE)
+    return RS_Vector{false};
   double r = - getRatio() * uv.y / uv.x;
   if (std::abs(r) > 1. - RS_TOLERANCE)
     return RS_Vector{false};

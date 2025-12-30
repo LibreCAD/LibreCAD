@@ -738,6 +738,8 @@ std::vector<std::unique_ptr<RS_Line>> RS_Creation::createTangent2(
         auto rsLine = std::make_unique<RS_Line>(nullptr, fromLineCoordinate(line));
         rsLine->setStartpoint(circle1->dualLineTangentPoint(line));
         rsLine->setEndpoint(circle2->dualLineTangentPoint(line));
+        if (!(rsLine->getStartpoint().isValid() && rsLine->getEndpoint().isValid()))
+          return nullptr;
         return std::unique_ptr<RS_Line>(std::move(rsLine));
     });
     // cleanup invalid lines

@@ -58,6 +58,22 @@ struct LC_HyperbolaData {
   bool reversed = false;       // true = left branch
 };
 
+std::ostream& operator<<(std::ostream& os, const LC_HyperbolaData& d);
+
+/**
+ * @brief Hyperbola entity – full analytical support
+ *
+ * Represents a hyperbola (single branch or limited arc) with exact mathematical operations.
+ * Supports:
+ * - Construction from center/major axis/ratio or foci + point
+ * - Conversion from general quadratic form (via LC_Quadratic)
+ * - Exact point/tangent evaluation using hyperbolic functions (cosh/sinh)
+ * - Precise intersection, offset, and geometric queries
+ * - Export as standard rational quadratic SPLINE (exact, no approximation)
+ *
+ * Stored as a single branch aligned with positive major axis direction.
+ * @author Dongxu Li
+ */
 class LC_Hyperbola : public LC_CachedLengthEntity {
 public:
   LC_Hyperbola() = default;
