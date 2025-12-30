@@ -22,7 +22,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ******************************************************************************/
 
 #include <algorithm>
+#include <array>
 #include <cmath>
+#include <limits>
 #include <vector>
 
 #include "lc_hyperbola.h"
@@ -33,28 +35,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_painter.h"
 
 namespace {
-LC_Hyperbola createTest() {
- LC_HyperbolaData data;
- data.center = RS_Vector(0.0, 0.0);
- data.majorP = RS_Vector(3.0, 0.0);  // a = 3
- data.ratio = 4.0 / 3.0;             // b = 4, standard 9x² - 16y² = 1
- data.reversed = false;
- data.angle1 = -2.0;
- data.angle2 = 2.0;
-
- LC_Hyperbola hb(nullptr, data);
-
- LC_Quadratic q = hb.getQuadratic();
-
- // Dual conic of hyperbola (x²/a² - y²/b² - 1 = 0) is (b² x² - a² y² - a² b² = 0)
- LC_Quadratic dual = q.getDualCurve();
- LC_Hyperbola qd{nullptr, dual};
- bool isValid = qd.isValid();
- LC_ERR<<isValid;
- return qd;
+// Inline speed function (critical path)
+inline double hyperbolaSpeed(double phi, double a2, double b2) noexcept {
+  const double sh = std::sinh(phi);
+  const double ch = std::cosh(phi);
+  return std::sqrt(a2 * sh * sh + b2 * ch * ch);
 }
-
-LC_Hyperbola g_hyperbola = createTest();
 }
 
 //=====================================================================
@@ -221,7 +207,7 @@ bool LC_Hyperbola::createFromQuadratic(const LC_Quadratic& q)
          // === Step 4: Find center by solving partial derivatives ===
          // 2 Ap x + Dp = 0
          // 2 Cp y + Ep = 0
-  RS_Vector center;
+  RS_Vector center{0., 0.};
   if (std::abs(Ap) > RS_TOLERANCE) {
     center.x = -Dp / (2.0 * Ap);
   } else if (std::abs(Dp) > RS_TOLERANCE) {
@@ -235,46 +221,41 @@ bool LC_Hyperbola::createFromQuadratic(const LC_Quadratic& q)
   }
 
          // === Step 5: Translate to center and evaluate constant term ===
-  double Fp = A * center.x * center.x +
-              B * center.x * center.y +
-              C * center.y * center.y +
-              D * center.x +
-              E * center.y +
-              F;
+  double Fp = LC_Quadratic{{A, B, C, D, E, F}}.evaluateAt(center);
 
          // === Step 6: Normalize to standard form ===
          // Ap (x')² + Cp (y')² + Fp = 0
   double denom = -Fp;
-  if (std::abs(denom) < RS_TOLERANCE) return false;
+  if (std::abs(denom) < RS_TOLERANCE)
+    return false;
 
   double coeff_x = Ap / denom;
   double coeff_y = Cp / denom;
 
-  double a2, b2;
+  double a2 = 0., b2 = 0.;
   bool transverse_x = (coeff_x > 0.0);
 
   if (transverse_x) {
-    if (coeff_y >= 0.0) return false;  // Both positive → ellipse-like
+    if (coeff_y >= 0.0)
+      return false;  // Both positive → ellipse-like
     a2 = 1.0 / coeff_x;
     b2 = -1.0 / coeff_y;  // Make positive
   } else {
-    if (coeff_x >= 0.0) return false;
+    if (coeff_x >= 0.0)
+      return false;
     a2 = 1.0 / coeff_y;
     b2 = -1.0 / coeff_x;
   }
 
-  if (a2 <= RS_TOLERANCE || b2 <= RS_TOLERANCE) return false;
+  if (a2 <= RS_TOLERANCE || b2 <= RS_TOLERANCE)
+    return false;
 
   double a = std::sqrt(a2);
   double ratio = std::sqrt(b2 / a2);
 
          // === Step 7: Determine major axis direction and branch ===
-  RS_Vector major_dir;
-  if (transverse_x) {
-    major_dir = RS_Vector(ct, st);         // Along rotated x'
-  } else {
-    major_dir = RS_Vector(-st, ct);        // Along rotated y' (perpendicular)
-  }
+  // Along rotated x' or y'
+  RS_Vector major_dir = transverse_x ? RS_Vector(ct, st) : RS_Vector(-st, ct);
 
          // Determine branch: evaluate sign at vertex
   RS_Vector vertex = center + major_dir * a;
@@ -295,15 +276,16 @@ bool LC_Hyperbola::createFromQuadratic(const LC_Quadratic& q)
   data.angle2 = 0.0;  // Unbounded by default
 
   m_bValid = true;
-  calculateBorders();
-  updateLength();
+  LC_Hyperbola::calculateBorders();
+  LC_Hyperbola::updateLength();
 
   return true;
 }
 
 bool LC_Hyperbola::createFromQuadratic(const std::vector<double>& coeffs)
 {
-  if (coeffs.size() < 6) return false;
+  if (coeffs.size() < 6)
+    return false;
   LC_Quadratic q(coeffs);
   return createFromQuadratic(q);
 }
@@ -316,7 +298,7 @@ RS_Entity* LC_Hyperbola::clone() const { return new LC_Hyperbola(*this); }
 
 RS_VectorSolutions LC_Hyperbola::getFoci() const
 {
-  double e = sqrt(1.0 + data.ratio * data.ratio);
+  double e = std::sqrt(1.0 + data.ratio * data.ratio);
   RS_Vector vp = data.majorP * e;
   RS_VectorSolutions sol;
   sol.push_back(data.center + vp);
@@ -363,13 +345,15 @@ RS_VectorSolutions LC_Hyperbola::getRefPoints() const
 
 RS_Vector LC_Hyperbola::getStartpoint() const
 {
-  if (data.angle1 == 0.0 && data.angle2 == 0.0) return RS_Vector(false);
+  if (data.angle1 == 0.0 && data.angle2 == 0.0)
+    return RS_Vector(false);
   return getPoint(data.angle1, data.reversed);
 }
 
 RS_Vector LC_Hyperbola::getEndpoint() const
 {
-  if (data.angle1 == 0.0 && data.angle2 == 0.0) return RS_Vector(false);
+  if (data.angle1 == 0.0 && data.angle2 == 0.0)
+    return RS_Vector(false);
   return getPoint(data.angle2, data.reversed);
 }
 
@@ -645,7 +629,8 @@ void LC_Hyperbola::adaptiveSample(std::vector<RS_Vector>& out,
   };
 
   RS_Vector first = getPoint(phiStart, rev);
-  if (first.valid) points.emplace_back(phiStart, first);
+  if (first.valid)
+    points.emplace_back(phiStart, first);
 
   subdiv(phiStart, phiEnd);
 
@@ -702,7 +687,7 @@ RS_Vector LC_Hyperbola::getNearestMiddle(const RS_Vector& coord,
 
 RS_Vector LC_Hyperbola::getNearestOrthTan(const RS_Vector& coord,
                                           const RS_Line& normal,
-                                          bool onEntity) const
+                                          [[maybe_unused]] bool onEntity) const
 {
   if (!m_bValid || !coord.valid ||
       !normal.getStartpoint().valid || !normal.getEndpoint().valid) {
@@ -710,7 +695,8 @@ RS_Vector LC_Hyperbola::getNearestOrthTan(const RS_Vector& coord,
   }
 
   RS_Vector normalDir = normal.getNormalVector();
-  if (!normalDir.valid) return RS_Vector(false);
+  if (!normalDir.valid)
+    return RS_Vector(false);
 
   RS_Vector tanDir(-normalDir.y, normalDir.x);
 
@@ -1122,21 +1108,6 @@ void LC_Hyperbola::calculateBorders()
   maxV += RS_Vector(expand, expand);
 }
 
-// lc_hyperbola.cpp - getLength() implementation
-// In lc_hyperbola.cpp – highly optimized iterative adaptive Simpson with minimal stack usage
-
-#include <array>
-#include <cmath>
-#include <limits>
-
-namespace {
-// Inline speed function (critical path)
-inline double hyperbolaSpeed(double phi, double a2, double b2) noexcept {
-  const double sh = std::sinh(phi);
-  const double ch = std::cosh(phi);
-  return std::sqrt(a2 * sh * sh + b2 * ch * ch);
-}
-}
 
 double LC_Hyperbola::getLength() const
 {
@@ -1225,9 +1196,10 @@ double LC_Hyperbola::getLength() const
 
   return length;
 }
+
 void LC_Hyperbola::updateLength()
 {
-    cachedLength = getLength();
+    cachedLength = LC_Hyperbola::getLength();
 }
 
 // lc_hyperbola.cpp - add implementations at the end of the file
