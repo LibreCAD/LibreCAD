@@ -794,15 +794,20 @@ void LC_Hyperbola::scale(const RS_Vector& center, const RS_Vector& factor)
 {
   data.center.scale(center, factor);
   data.majorP.scale(factor);
-  data.ratio *= fabs(factor.y / factor.x);
+  data.ratio *= std::abs(factor.y / factor.x);
 }
 
 void LC_Hyperbola::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2)
 {
   data.center.mirror(axisPoint1, axisPoint2);
   data.majorP.mirror(RS_Vector(0,0), axisPoint2 - axisPoint1);
-  data.reversed = !data.reversed;
+  //data.reversed = !data.reversed;
   m_bValid = data.majorP.squared() >= RS_TOLERANCE2;
+  RS_Vector vp = getStartpoint().mirror(axisPoint1, axisPoint2);
+  data.angle1 = getParamFromPoint(vp);
+  vp = getEndpoint().mirror(axisPoint1, axisPoint2);
+  data.angle2 = getParamFromPoint(vp);
+
   calculateBorders();
 }
 
