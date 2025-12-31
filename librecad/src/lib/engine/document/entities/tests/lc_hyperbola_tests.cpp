@@ -583,3 +583,168 @@ TEST_CASE("LC_Hyperbola getLength() accuracy", "[hyperbola][length]") {
     REQUIRE(doublesApproxEqual(length_rot, expected_ref, TOL));
   }
 }
+TEST_CASE("LC_Hyperbola getNearestDist() accuracy",
+          "[hyperbola][nearestdist]") {
+  constexpr double TOL = 1e-8;
+  constexpr double DIST_TOL = 1e-6; // Tolerance for distance checks
+
+  SECTION("Symmetric bounded arc around vertex - distance from start") {
+    LC_HyperbolaData data;
+    data.center = RS_Vector(0.0, 0.0);
+    data.majorP = RS_Vector(2.0, 0.0); // a = 2
+    data.ratio = 0.5;                  // b = 1
+    data.reversed = false;
+    data.angle1 = -1.0;
+    data.angle2 = 1.0;
+
+    LC_Hyperbola hb(nullptr, data);
+    REQUIRE(hb.isValid());
+
+    double total_length = hb.getLength();
+    // Reference from numerical integration: ~3.3078924645
+    REQUIRE(std::abs(total_length - 3.3078924645) < 1e-6);
+
+    RS_Vector coord = hb.getStartpoint() + RS_Vector(0.1, 0.1); // Near start
+
+    double test_dist = total_length * 0.3; // 30% from start
+
+    RS_Vector point = hb.getNearestDist(test_dist, coord);
+    REQUIRE(point.valid);
+
+    // Verify the arc length from start to this point ≈ test_dist
+    double phi_point = hb.getParamFromPoint(point);
+    double arc_to_point = hb.getArcLength(data.angle1, phi_point);
+
+    REQUIRE(std::abs(arc_to_point - test_dist) < DIST_TOL);
+  }
+
+  SECTION("Asymmetric arc - distance from end") {
+    LC_HyperbolaData data;
+    data.center = RS_Vector(0.0, 0.0);
+    data.majorP = RS_Vector(1.0, 0.0); // a = 1
+    data.ratio = 1.0;                  // b = 1, rectangular
+    data.reversed = false;
+    data.angle1 = 0.5;
+    data.angle2 = 2.0;
+
+    LC_Hyperbola hb(nullptr, data);
+    REQUIRE(hb.isValid());
+
+    double total_length = hb.getLength();
+    // Exact analytical: 4.084667883
+    REQUIRE(std::abs(total_length - 4.084667883) < 1e-8);
+
+    RS_Vector coord = hb.getEndpoint() + RS_Vector(0.05, -0.1); // Near end
+
+    double test_dist =
+        total_length * 0.4; // Measured from start, but click near end → should
+                            // interpret as from end
+
+    RS_Vector point = hb.getNearestDist(test_dist, coord);
+    REQUIRE(point.valid);
+
+    double phi_point = hb.getParamFromPoint(point);
+    double arc_from_start = hb.getArcLength(data.angle1, phi_point);
+    double dist_from_end = total_length - arc_from_start;
+
+    // Since clicked near end, getNearestDist should return point at test_dist
+    // from end
+    REQUIRE(std::abs(dist_from_end - test_dist) < DIST_TOL);
+  }
+
+  SECTION("Small arc near vertex - near-parabolic behavior") {
+    LC_HyperbolaData data;
+    data.center = RS_Vector(0.0, 0.0);
+    data.majorP = RS_Vector(5.0, 0.0); // a = 5
+    data.ratio = 0.1;                  // b = 0.5
+    data.reversed = false;
+    data.angle1 = -0.1;
+    data.angle2 = 0.1;
+
+    LC_Hyperbola hb(nullptr, data);
+    REQUIRE(hb.isValid());
+
+    double total_length = hb.getLength();
+    // Reference ~0.1149382977
+    REQUIRE(std::abs(total_length - 0.1149382977) < 1e-8);
+
+    RS_Vector coord = hb.getStartpoint();
+
+    double test_dist = total_length * 0.5;
+
+    RS_Vector point = hb.getNearestDist(test_dist, coord);
+    REQUIRE(point.valid);
+
+    double phi_point = hb.getParamFromPoint(point);
+    double arc_to_point = hb.getArcLength(data.angle1, phi_point);
+
+    REQUIRE(std::abs(arc_to_point - test_dist) < DIST_TOL);
+  }
+
+  SECTION("Rotated hyperbola - invariance") {
+    LC_HyperbolaData data;
+    data.center = RS_Vector(10.0, -5.0);
+    data.majorP = RS_Vector(3.0, 0.0).rotate(M_PI_6); // 30° rotation
+    data.ratio = 2.0 / 3.0;
+    data.reversed = false;
+    data.angle1 = -1.5;
+    data.angle2 = 1.0;
+
+    LC_Hyperbola hb(nullptr, data);
+    REQUIRE(hb.isValid());
+
+    double length_rot = hb.getLength();
+
+    // Reference unrotated
+    LC_HyperbolaData ref;
+    ref.center = RS_Vector(0.0, 0.0);
+    ref.majorP = RS_Vector(3.0, 0.0);
+    ref.ratio = 2.0 / 3.0;
+    ref.reversed = false;
+    ref.angle1 = -1.5;
+    ref.angle2 = 1.0;
+
+    LC_Hyperbola hb_ref(nullptr, ref);
+    double length_ref = hb_ref.getLength();
+
+    REQUIRE(std::abs(length_rot - length_ref) < TOL);
+
+    RS_Vector coord = hb.getEndpoint();
+
+    double test_dist = length_rot * 0.25;
+
+    RS_Vector point_rot = hb.getNearestDist(test_dist, coord);
+    REQUIRE(point_rot.valid);
+
+    // Corresponding point on reference should have same relative arc length
+    RS_Vector point_ref = hb_ref.getNearestDist(
+        test_dist, RS_Vector(0, 0)); // coord irrelevant for ref check
+    REQUIRE(point_ref.valid);
+
+    double phi_ref = hb_ref.getParamFromPoint(point_ref);
+    double arc_ref = hb_ref.getArcLength(ref.angle1, phi_ref);
+
+    double phi_rot = hb.getParamFromPoint(point_rot);
+    double arc_rot = hb.getArcLength(data.angle1, phi_rot);
+
+    REQUIRE(std::abs(arc_rot - arc_ref) < DIST_TOL);
+  }
+
+  SECTION("Invalid for unbounded hyperbola") {
+    LC_HyperbolaData data;
+    data.center = RS_Vector(0.0, 0.0);
+    data.majorP = RS_Vector(1.0, 0.0);
+    data.ratio = 0.5;
+    data.reversed = false;
+    data.angle1 = 0.0;
+    data.angle2 = 0.0; // unbounded
+
+    LC_Hyperbola hb(nullptr, data);
+    REQUIRE(hb.isValid());
+
+    REQUIRE(hb.getLength() == RS_MAXDOUBLE);
+
+    RS_Vector point = hb.getNearestDist(10.0, RS_Vector(0, 0));
+    REQUIRE(!point.valid);
+  }
+}

@@ -35,7 +35,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_math.h"
 #include "rs_painter.h"
 
-
 //=====================================================================
 // Construction
 //=====================================================================
@@ -189,7 +188,8 @@ bool LC_Hyperbola::createFromQuadratic(const LC_Quadratic &q) {
   // Rotate quadratic terms
   double Ap = A * ct * ct + B * ct * st + C * st * st;
   double Cp = A * st * st - B * ct * st + C * ct * ct;
-  //double Bp = 2.0 * (A - C) * ct * st + B * (ct * ct - st * st); // Should be ~0
+  // double Bp = 2.0 * (A - C) * ct * st + B * (ct * ct - st * st); // Should be
+  // ~0
 
   // Rotate linear terms
   double Dp = D * ct + E * st;
@@ -348,8 +348,48 @@ RS_Vector LC_Hyperbola::getEndpoint() const {
   return getPoint(data.angle2, data.reversed);
 }
 
-RS_Vector LC_Hyperbola::getMiddlePoint() const { return RS_Vector(false); }
+/**
+ * @brief getMiddlePoint
+ * Returns the true midpoint of the bounded hyperbola arc measured by arc length.
+ *
+ * This method computes the point exactly halfway along the curve (arc length L/2),
+ * not the Euclidean midpoint of the chord between endpoints.
+ *
+ * Use cases:
+ * - Placing dimension text/arrows at the center of the arc
+ * - Providing a symmetric grip point for stretching or modifying the hyperbola
+ * - Visual indicators (e.g., selection highlight) at the curve's middle
+ *
+ * Behavior:
+ * - For bounded arcs: returns the point at arc distance total_length / 2 from either endpoint
+ *   (uses getNearestDist() internally for high-precision location)
+ * - For unbounded hyperbolas (angle1 ≈ angle2 ≈ 0): returns RS_Vector(false)
+ *   because an infinite branch has no defined midpoint
+ * - Dummy coordinate (center) is passed to getNearestDist() because side selection
+ *   is irrelevant for the true midpoint
+ *
+ * @return Point at the arc-length midpoint, or RS_Vector(false) if unbounded or invalid
+ */
+RS_Vector LC_Hyperbola::getMiddlePoint() const
+{
+  if (!m_bValid) {
+    return RS_Vector(false);
+  }
 
+         // Unbounded hyperbola has infinite length → no meaningful midpoint
+  if (std::abs(data.angle1) < RS_TOLERANCE && std::abs(data.angle2) < RS_TOLERANCE) {
+    return RS_Vector(false);
+  }
+
+  double totalLength = getLength();
+  if (std::isinf(totalLength) || totalLength <= 0.0) {
+    return RS_Vector(false);
+  }
+
+         // Midpoint is at half the total arc length.
+         // Use the center as a dummy coordinate — side detection is not needed for the true midpoint.
+  return getNearestDist(totalLength * 0.5, data.center);
+}
 //=====================================================================
 // Tangent methods
 //=====================================================================
@@ -459,6 +499,24 @@ RS_Vector LC_Hyperbola::getPoint(double phi, bool useReversed) const {
 // In lc_hyperbola.cpp – updated getParamFromPoint() to respect majorP
 // orientation
 
+/**
+ * @brief getParamFromPoint
+ * Returns the hyperbolic parameter φ for a point lying on the hyperbola.
+ *
+ * For the standard form (right branch):
+ *   x = a * cosh(φ)
+ *   y = b * sinh(φ)
+ *
+ * Special exact solution for rectangular hyperbola (b/a ≈ 1.0, e = √2)
+ * using φ = artanh(y/x), which is numerically stable and avoids quartics.
+ *
+ * For general case, solves via substitution leading to a quartic in t =
+ * tanh(φ).
+ *
+ * @param p Point on the hyperbola
+ * @param branchReversed If true, treats as left branch (x → -x)
+ * @return φ (hyperbolic angle), or NaN if point not on curve or invalid
+ */
 double LC_Hyperbola::getParamFromPoint(const RS_Vector &p,
                                        bool /*branchReversed*/) const {
   if (!m_bValid || !p.valid) {
@@ -650,43 +708,100 @@ void LC_Hyperbola::adaptiveSample(std::vector<RS_Vector> &out, double phiStart,
 //=====================================================================
 // Nearest methods
 //=====================================================================
+/**
+ * @brief getNearestMiddle
+ * Returns the point on the hyperbola arc that is closest to the given coordinate
+ * when considering only the middle portion of the arc (by arc length).
+ *
+ * This method is used by the CAD engine to provide a "middle grip" or snap point
+ * that is biased toward the central part of the curve, rather than the endpoints.
+ * It prevents accidental snapping to endpoints when the user intends to select
+ * or modify the middle of a long hyperbola arc.
+ *
+ * Behavior:
+ * - Computes the total arc length L.
+ * - Defines the "middle zone" as the central 50% of the arc length
+ *   (i.e., from L*0.25 to L*0.75 measured from the startpoint).
+ * - Finds the point on the hyperbola closest to `coord`.
+ * - If that nearest point lies within the middle zone → returns it directly.
+ * - Otherwise, clamps to the nearest boundary of the middle zone
+ *   (L*0.25 or L*0.75 from start).
+ *
+ * This ensures the returned point is always in the true middle half of the arc,
+ * providing stable and predictable behavior for selection, stretching, and snapping.
+ *
+ * @param coord          Coordinate (usually mouse position) to measure closeness from
+ * @param dist           Optional: receives the Euclidean distance to the returned point
+ * @param middlePoints   Number of middle points requested (currently only 1 is supported)
+ * @return               Point in the middle 50% of the arc closest to `coord`,
+ *                       or RS_Vector(false) if hyperbola is invalid/unbounded
+ */
+RS_Vector LC_Hyperbola::getNearestMiddle(const RS_Vector& coord,
+                                         double* dist,
+                                         int middlePoints) const
+{
+  Q_UNUSED(middlePoints);  // Only one middle point is provided
 
-RS_Vector LC_Hyperbola::getNearestMiddle(const RS_Vector &coord, double *dist,
-                                         int middlePoints) const {
-  if (dist)
-    *dist = RS_MAXDOUBLE;
-
-  if (!m_bValid || middlePoints < 1 || !coord.valid) {
+  if (!m_bValid) {
+    if (dist) *dist = RS_MAXDOUBLE;
     return RS_Vector(false);
   }
 
-  if (data.angle1 != 0.0 || data.angle2 != 0.0) {
-    double phi1 = std::min(data.angle1, data.angle2);
-    double phi2 = std::max(data.angle1, data.angle2);
-    double phiRange = phi2 - phi1;
-
-    if (phiRange < RS_TOLERANCE) {
-      return RS_Vector(false);
-    }
-
-    double phiMid = phi1 + phiRange * 0.5;
-    RS_Vector midPoint = getPoint(phiMid, data.reversed);
-
-    if (midPoint.valid) {
-      double d = midPoint.distanceTo(coord);
-      if (dist)
-        *dist = d;
-      return midPoint;
-    }
+         // Unbounded hyperbola has no defined middle
+  if (std::abs(data.angle1) < RS_TOLERANCE && std::abs(data.angle2) < RS_TOLERANCE) {
+    if (dist) *dist = RS_MAXDOUBLE;
     return RS_Vector(false);
   }
 
-  RS_Vector vertex = data.center;
-  double d = vertex.distanceTo(coord);
-  if (dist)
-    *dist = d;
-  return vertex;
+  double totalLength = getLength();
+  if (std::isinf(totalLength) || totalLength <= 0.0) {
+    if (dist) *dist = RS_MAXDOUBLE;
+    return RS_Vector(false);
+  }
+
+         // Define middle zone: central 50% of arc length
+  double middleStart = totalLength * 0.25;
+  double middleEnd   = totalLength * 0.75;
+
+         // Find geometrically closest point on the entire arc
+  RS_Vector nearest = getNearestPointOnEntity(coord, true);
+  if (!nearest.valid) {
+    if (dist) *dist = RS_MAXDOUBLE;
+    return RS_Vector(false);
+  }
+
+         // Compute arc distance from startpoint to the nearest point
+  double phi_nearest = getParamFromPoint(nearest, data.reversed);
+  if (std::isnan(phi_nearest)) {
+    if (dist) *dist = RS_MAXDOUBLE;
+    return RS_Vector(false);
+  }
+
+  double arcToNearest = std::abs(getArcLength(data.angle1, phi_nearest));
+
+  double targetArcFromStart;
+  if (arcToNearest >= middleStart && arcToNearest <= middleEnd) {
+    // Nearest point is already in middle zone → use it
+    targetArcFromStart = arcToNearest;
+  } else if (arcToNearest < middleStart) {
+    // Too close to start → clamp to beginning of middle zone
+    targetArcFromStart = middleStart;
+  } else {
+    // Too close to end → clamp to end of middle zone
+    targetArcFromStart = middleEnd;
+  }
+
+         // Use existing high-precision method to get point at target arc distance
+         // Dummy coordinate (center) — side selection irrelevant since we specify exact distance
+  RS_Vector middlePoint = getNearestDist(targetArcFromStart, data.center);
+
+  if (dist) {
+    *dist = coord.distanceTo(middlePoint);
+  }
+
+  return middlePoint;
 }
+
 
 RS_Vector
 LC_Hyperbola::getNearestOrthTan(const RS_Vector &coord, const RS_Line &normal,
@@ -741,40 +856,181 @@ LC_Hyperbola::getNearestOrthTan(const RS_Vector &coord, const RS_Line &normal,
   return best;
 }
 
+// Directed arc length from phi1 to phi2 (signed based on order)
+double LC_Hyperbola::getArcLength(double phi1, double phi2) const {
+  if (!m_bValid)
+    return 0.0;
+
+  bool forward = phi2 > phi1;
+  double p_min = std::min(phi1, phi2);
+  double p_max = std::max(phi1, phi2);
+
+  double a = getMajorRadius();
+  double ecc = getEccentricity();
+  double ecc2 = ecc * ecc;
+
+  auto integrand = [a, ecc2](double phi) -> double {
+    double ch = std::cosh(phi);
+    double inner = std::max(0., ecc2 * ch * ch - 1.0);
+    return a * std::sqrt(inner);
+  };
+
+  double result = 0.0;
+  double abs_error = 0.0;
+
+  // Split at zero if interval contains the vertex (singularity point)
+  if (p_min < 0.0 && p_max > 0.0) {
+    double part1 =
+        boost::math::quadrature::gauss_kronrod<double, 61>::integrate(
+            integrand, p_min, 0.0, 0, 1e-12, &abs_error);
+    double part2 =
+        boost::math::quadrature::gauss_kronrod<double, 61>::integrate(
+            integrand, 0.0, p_max, 0, 1e-12, &abs_error);
+    result = part1 + part2;
+  } else {
+    result = boost::math::quadrature::gauss_kronrod<double, 61>::integrate(
+        integrand, p_min, p_max, 0, 1e-12, &abs_error);
+  }
+
+  return forward ? result : -result;
+}
+
+// // Override getLength() to use the new helper
+// double LC_Hyperbola::getLength() const {
+//   if (!m_bValid)
+//     return 0.0;
+//   if (std::abs(data.angle1) < RS_TOLERANCE &&
+//       std::abs(data.angle2) < RS_TOLERANCE)
+//     return RS_MAXDOUBLE;
+
+//   return std::abs(getArcLength(data.angle1, data.angle2));
+// }
+
+// Core implementation
 RS_Vector LC_Hyperbola::getNearestDist(double distance, const RS_Vector &coord,
                                        double *dist) const {
-  if (dist)
-    *dist = RS_MAXDOUBLE;
+  // Invalid or unbounded hyperbola → no meaningful distance point
+  if (!m_bValid) {
+    return RS_Vector(false);
+  }
+  if (std::abs(data.angle1) < RS_TOLERANCE &&
+      std::abs(data.angle2) < RS_TOLERANCE) {
+    return RS_Vector(false); // unbounded branch has infinite length
+  }
 
-  if (!m_bValid || distance < RS_TOLERANCE) {
+  // Total arc length of the bounded hyperbola arc
+  double totalLength = getLength();
+  if (std::isinf(totalLength) || totalLength <= 0.0) {
     return RS_Vector(false);
   }
 
-  if (data.angle1 == 0.0 && data.angle2 == 0.0) {
+  // Find the point on the hyperbola closest to the provided coordinate
+  RS_Vector nearest = getNearestPointOnEntity(coord, true);
+  if (!nearest.valid) {
     return RS_Vector(false);
   }
 
-  double phi1 = std::min(data.angle1, data.angle2);
-  double phi2 = std::max(data.angle1, data.angle2);
-  double phiRange = phi2 - phi1;
-
-  if (phiRange < RS_TOLERANCE) {
+  // Determine which endpoint the user is closer to → decides the reference side
+  RS2::Ending side =
+      const_cast<LC_Hyperbola *>(this)->getTrimPoint(coord, nearest);
+  if (side == RS2::EndingNone) {
     return RS_Vector(false);
   }
 
-  double fraction = distance / getLength();
-  if (fraction > 1.0) {
+  // Compute the target arc-length distance measured from the startpoint
+  double targetArcFromStart;
+  if (side == RS2::EndingStart) {
+    targetArcFromStart = distance; // from start toward end
+  } else {
+    targetArcFromStart = totalLength - distance; // from end toward start
+  }
+
+  // Validate the requested distance lies within the bounded arc
+  if (distance < 0.0 || targetArcFromStart < 0.0 ||
+      targetArcFromStart > totalLength + RS_TOLERANCE) {
     return RS_Vector(false);
   }
 
-  double phi = phi1 + fraction * phiRange;
-  RS_Vector p = getPoint(phi, data.reversed);
-
-  if (p.valid && dist) {
-    *dist = distance;
+  if (dist) {
+    *dist = targetArcFromStart;
   }
 
-  return p;
+  // === Newton-Raphson iteration to solve for φ ===
+  // We solve: arc_length(angle1, φ) == targetArcFromStart
+  // Let f(φ) = arc_length(angle1, φ) - targetArcFromStart = 0
+  // f'(φ) = ds/dφ = a * sqrt(e² cosh²(φ) - 1)  (the integrand itself, always >
+  // 0)
+
+  double a = getMajorRadius();
+  double ecc2 = getEccentricity() * getEccentricity();
+
+  // Initial guess: linear extrapolation using derivative at angle1
+  double ds_dphi_start =
+      a *
+      std::sqrt(ecc2 * std::cosh(data.angle1) * std::cosh(data.angle1) - 1.0);
+  double phi = data.angle1;
+  if (ds_dphi_start > RS_TOLERANCE) {
+    phi += targetArcFromStart / ds_dphi_start;
+  }
+
+  constexpr int maxIter = 20;
+  constexpr double tol = 1e-12;
+  bool converged = false;
+
+  for (int i = 0; i < maxIter; ++i) {
+    double s = getArcLength(data.angle1, phi); // current arc length
+    double ds_dphi =
+        a * std::sqrt(ecc2 * std::cosh(phi) * std::cosh(phi) - 1.0);
+
+    if (ds_dphi < RS_TOLERANCE) { // extremely unlikely on valid branch
+      break;
+    }
+
+    double delta = (targetArcFromStart - s) / ds_dphi;
+    phi += delta;
+
+    if (std::abs(delta) < tol) {
+      converged = true;
+      break;
+    }
+  }
+
+  // === Fallback to bisection if Newton did not converge (very rare) ===
+  if (!converged) {
+    double phiLow = std::min(data.angle1, data.angle2) - 30.0;
+    double phiHigh = std::max(data.angle1, data.angle2) + 30.0;
+
+    double sLow = getArcLength(data.angle1, phiLow);
+    double sHigh = getArcLength(data.angle1, phiHigh);
+
+    while (sLow > targetArcFromStart) {
+      phiLow -= 30.0;
+      sLow = getArcLength(data.angle1, phiLow);
+    }
+    while (sHigh < targetArcFromStart) {
+      phiHigh += 30.0;
+      sHigh = getArcLength(data.angle1, phiHigh);
+    }
+
+    for (int i = 0; i < 80; ++i) {
+      phi = 0.5 * (phiLow + phiHigh);
+      double s = getArcLength(data.angle1, phi);
+
+      if (std::abs(s - targetArcFromStart) < 1e-9 ||
+          std::abs(phiHigh - phiLow) < tol) {
+        break;
+      }
+
+      if (s < targetArcFromStart) {
+        phiLow = phi;
+      } else {
+        phiHigh = phi;
+      }
+    }
+  }
+
+  // Return the point on the hyperbola at the solved parameter
+  return getPoint(phi, data.reversed);
 }
 
 //=====================================================================

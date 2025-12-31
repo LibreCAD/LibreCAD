@@ -272,6 +272,7 @@ public:
    * contribution)
    */
   double areaLineIntegral() const override;
+  double getArcLength(double phi1, double phi2) const;
 
 private:
   bool isInClipRect(const RS_Vector &p, double xmin, double xmax, double ymin,
