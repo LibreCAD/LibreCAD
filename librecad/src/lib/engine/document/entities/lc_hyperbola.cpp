@@ -910,10 +910,20 @@ LC_Hyperbola::getNearestOrthTan(const RS_Vector &coord, const RS_Line &normal,
   return best;
 }
 
+bool LC_Hyperbola::isInfinite() const
+{
+  return RS_Math::equal(data.angle1, 0.) &&
+         RS_Math::equal(data.angle2, 0.);
+}
+
+
 // Directed arc length from phi1 to phi2 (signed based on order)
 double LC_Hyperbola::getArcLength(double phi1, double phi2) const {
   if (!m_bValid)
     return 0.0;
+
+  if (isInfinite())
+    return RS_MAXDOUBLE;
 
   bool forward = phi2 > phi1;
   double p_min = std::min(phi1, phi2);
@@ -1478,25 +1488,7 @@ double LC_Hyperbola::getLength() const {
   if (!m_bValid)
     return 0.0;
 
-  if (std::abs(data.angle1) < RS_TOLERANCE &&
-      std::abs(data.angle2) < RS_TOLERANCE) {
-    return RS_MAXDOUBLE; // unbounded
-  }
-
-  double phi1 = std::min(data.angle1, data.angle2);
-  double phi2 = std::max(data.angle1, data.angle2);
-
-  double a = data.majorP.magnitude();
-  double e2 = 1.0 + data.ratio * data.ratio;
-
-  auto integrand = [a, e2](double phi) -> double {
-    double ch = std::cosh(phi);
-    double inner = std::max(0., e2 * ch * ch - 1.0);
-    return a * std::sqrt(inner);
-  };
-
-  boost::math::quadrature::gauss_kronrod<double, 61> integrator;
-  return integrator.integrate(integrand, phi1, phi2);
+  return getArcLength(data.angle1, data.angle2);
 }
 
 void LC_Hyperbola::updateLength() { cachedLength = LC_Hyperbola::getLength(); }

@@ -274,6 +274,8 @@ public:
   double areaLineIntegral() const override;
   double getArcLength(double phi1, double phi2) const;
 
+  // both angle1 and angle2 at 0, assumed to be infinite
+  bool isInfinite() const;
   /**
    * @brief worldToLocal convert from world coordinates to the local coordinates
    *        the hyperbola is centered in local coordinates, and with majorP along
