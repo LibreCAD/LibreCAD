@@ -2,7 +2,7 @@
 call set-windows-env.bat
 
 if _%LC_NSIS_FILE%==_ (
-    set LC_NSIS_FILE=nsis-5.4.nsi
+    set LC_NSIS_FILE=nsis-msvc.nsi
 )
 
 pushd postprocess-windows

@@ -28,7 +28,8 @@ if NOT exist windows\LibreCAD.exe (
 )
 
 rem Improved windeployqt: verbose, force copy, standard plugin subdirs
-windeployqt.exe windows\LibreCAD.exe --release --verbose 2 --force
+windeployqt.exe --release ..\..\windows\LibreCAD.exe
+rem windeployqt.exe windows\LibreCAD.exe --release --verbose 2 --force
 
 popd
 
