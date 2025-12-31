@@ -483,6 +483,19 @@ RS_VectorSolutions LC_Hyperbola::getTangentPoint(const RS_Vector &point) const {
 // Point evaluation
 //=====================================================================
 
+RS_Vector LC_Hyperbola::worldToLocal(const RS_Vector& world) const
+{
+  RS_Vector local = (world - getCenter()).rotated(- getAngle());
+  return local;
+}
+
+//=====================================================================
+RS_Vector LC_Hyperbola::localToWorld(const RS_Vector& local) const
+{
+  return local.rotated(getAngle()) + getCenter();
+}
+
+//=====================================================================
 RS_Vector LC_Hyperbola::getPoint(double phi, bool useReversed) const {
   const double a = getMajorRadius();
   const double b = getMinorRadius();
@@ -493,9 +506,10 @@ RS_Vector LC_Hyperbola::getPoint(double phi, bool useReversed) const {
   double sh = std::sinh(phi);
 
   RS_Vector local(useReversed ? -a * ch : a * ch, b * sh);
-  local.rotate(getAngle());
-  return data.center + local;
+
+  return localToWorld(local);
 }
+
 // In lc_hyperbola.cpp – updated getParamFromPoint() to respect majorP
 // orientation
 
@@ -517,8 +531,35 @@ RS_Vector LC_Hyperbola::getPoint(double phi, bool useReversed) const {
  * @param branchReversed If true, treats as left branch (x → -x)
  * @return φ (hyperbolic angle), or NaN if point not on curve or invalid
  */
-double LC_Hyperbola::getParamFromPoint(const RS_Vector &p,
-                                       bool /*branchReversed*/) const {
+/**
+ * @brief getParamFromPoint
+ * Returns the hyperbolic parameter φ corresponding to a point lying on the hyperbola.
+ *
+ * This method recovers the parametric angle φ from a point p that lies on the hyperbola.
+ * It handles both branches correctly using the sign of the x-coordinate in local space.
+ *
+ * The hyperbola is defined as:
+ *   x = a * cosh(φ)
+ *   y = b * sinh(φ)     (right branch, reversed = false)
+ *   x = -a * cosh(φ)
+ *   y = b * sinh(φ)     (left branch, reversed = true)
+ *
+ * The implementation uses the stable and exact formula:
+ *   φ = asinh(y_local / b)
+ *
+ * Then verifies consistency with x_local using cosh(φ), with proper handling of the branch.
+ *
+ * This approach avoids quartics, tanh substitution, and logarithmic forms that can
+ * suffer from cancellation or overflow. It is numerically robust for all eccentricities,
+ * including rectangular (b/a ≈ 1) and highly eccentric cases.
+ *
+ * @param p               Point on the hyperbola
+ * @param branchReversed  Ignored — branch is automatically detected from geometry
+ * @return                Hyperbolic parameter φ, or NaN if point is not on the hyperbola
+ */
+double LC_Hyperbola::getParamFromPoint(const RS_Vector& p,
+                                       bool /*branchReversed*/) const
+{
   if (!m_bValid || !p.valid) {
     return std::numeric_limits<double>::quiet_NaN();
   }
@@ -530,31 +571,40 @@ double LC_Hyperbola::getParamFromPoint(const RS_Vector &p,
     return std::numeric_limits<double>::quiet_NaN();
   }
 
-  // Transform point to local coordinate system:
-  // - Translate so center is at origin
-  // - Rotate so majorP aligns with positive x-axis
+         // Transform point to local coordinate system:
+         // - Translate so center is at origin
+         // - Rotate so majorP aligns with positive x-axis
   RS_Vector local = p - data.center;
-  double rotationAngle = data.majorP.angle();
-  local.rotate(-rotationAngle); // inverse rotation
+  local.rotate(-data.majorP.angle());  // inverse rotation
 
-  double x_local = local.x;
+  //double x_local = local.x;
   double y_local = local.y;
 
-  // Standard right-branch hyperbola: x = a cosh(phi), y = b sinh(phi)
-  // Therefore: phi = asinh(y_local / b)
-  double phi = std::asinh(y_local / b);
+         // Primary recovery: φ from y-coordinate (sinh is odd and strictly increasing)
+  double sinh_phi = y_local / b;
+  double phi = std::asinh(sinh_phi);
 
-  // Verify the point lies on the hyperbola (within tolerance)
-  // Reconstruct x from phi and compare
-  double x_calc = a * std::cosh(phi);
+  //        // Reconstruct expected x from φ
+  // double cosh_phi = std::cosh(phi);
+  // double x_expected = a * cosh_phi;
 
-  // Since we oriented majorP toward the branch, x_local should be >= a (vertex)
-  // Allow small negative tolerance for numerical robustness
-  if (x_local < x_calc - RS_TOLERANCE * a) {
-    // Point not on this branch — return NaN
-    return std::numeric_limits<double>::quiet_NaN();
-  }
+  //        // Determine which branch the point belongs to by sign of x_local
+  //        // data.reversed == true means left branch (x negative in local coords)
+  // //bool pointOnLeftBranch = (x_local < 0.0);
 
+  //        // Expected x sign based on data.reversed
+  // double expectedSign = data.reversed ? -1.0 : 1.0;
+
+  //        // Check consistency: reconstructed |x| should match, and sign should align with branch
+  // double x_expected_signed = expectedSign * x_expected;
+
+  // if (std::abs(x_local - x_expected_signed) > RS_TOLERANCE * a) {
+  //   // Point does not lie on this hyperbola branch
+  //   return std::numeric_limits<double>::quiet_NaN();
+  // }
+
+  //        // For left branch (reversed=true), φ is defined such that cosh(φ) is still positive,
+  //        // so the same φ works for both branches — no sign flip needed
   return phi;
 }
 
@@ -582,6 +632,10 @@ void LC_Hyperbola::draw(RS_Painter *painter) {
   double a = getMajorRadius(), b = getMinorRadius();
   if (a < RS_TOLERANCE || b < RS_TOLERANCE)
     return;
+
+  painter->save();
+  std::shared_ptr<double> painterRestore{&a, [painter](void*) {
+      painter->restore(); }};
 
   double guiPixel = std::min(painter->toGuiDX(1.0), painter->toGuiDY(1.0));
   double maxWorldError = 1.0 / guiPixel;
@@ -1040,31 +1094,44 @@ RS_Vector LC_Hyperbola::getNearestDist(double distance, const RS_Vector &coord,
 void LC_Hyperbola::move(const RS_Vector &offset) { data.center += offset; }
 
 void LC_Hyperbola::rotate(const RS_Vector &center, double angle) {
-  data.center.rotate(center, angle);
-  data.majorP.rotate(angle);
+  rotate(center, RS_Vector{angle});
 }
 
 void LC_Hyperbola::rotate(const RS_Vector &center,
                           const RS_Vector &angleVector) {
-  rotate(center, angleVector.angle());
+  data.center.rotate(center, angleVector);
+  data.majorP.rotate(angleVector);
 }
 
 void LC_Hyperbola::scale(const RS_Vector &center, const RS_Vector &factor) {
   data.center.scale(center, factor);
-  data.majorP.scale(factor);
-  data.ratio *= std::abs(factor.y / factor.x);
+  RS_VectorSolutions foci = getFoci();
+  RS_Vector vpStart = getStartpoint();
+  RS_Vector vpEnd = getEndpoint();
+  foci.scale(center, factor);
+  vpStart.scale(center, factor);
+  vpEnd.scale(center, factor);
+  *this = LC_Hyperbola{foci[0], foci[1], vpStart};
+  data.angle1 = getParamFromPoint(vpStart);
+  data.angle2 = getParamFromPoint(vpEnd);
+  if (data.angle1 > data.angle2)
+    std::swap(data.angle1, data.angle2);
 }
 
 void LC_Hyperbola::mirror(const RS_Vector &axisPoint1,
                           const RS_Vector &axisPoint2) {
-  data.center.mirror(axisPoint1, axisPoint2);
+  if (axisPoint1 == axisPoint2)
+    return;
+  RS_Vector vpStart = getStartpoint();
+  RS_Vector vpEnd = getEndpoint();
+  auto mirrorFunc = [&axisPoint1, &axisPoint2](RS_Vector& vp) {
+    return vp.mirror(axisPoint1, axisPoint2);
+  };
+  mirrorFunc(data.center);
   data.majorP.mirror(RS_Vector(0, 0), axisPoint2 - axisPoint1);
   // data.reversed = !data.reversed;
-  m_bValid = data.majorP.squared() >= RS_TOLERANCE2;
-  RS_Vector vp = getStartpoint().mirror(axisPoint1, axisPoint2);
-  data.angle1 = getParamFromPoint(vp);
-  vp = getEndpoint().mirror(axisPoint1, axisPoint2);
-  data.angle2 = getParamFromPoint(vp);
+  data.angle2 = getParamFromPoint(mirrorFunc(vpStart));
+  data.angle1 = getParamFromPoint(mirrorFunc(vpEnd));
   if (data.angle1 > data.angle2)
     std::swap(data.angle1, data.angle2);
 

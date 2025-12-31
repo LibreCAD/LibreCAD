@@ -274,6 +274,16 @@ public:
   double areaLineIntegral() const override;
   double getArcLength(double phi1, double phi2) const;
 
+  /**
+   * @brief worldToLocal convert from world coordinates to the local coordinates
+   *        the hyperbola is centered in local coordinates, and with majorP along
+   *        the local x-axis direction
+   * @param world world coordinates
+   * @return local coordinates
+   */
+  RS_Vector worldToLocal(const RS_Vector& world) const;
+  RS_Vector localToWorld(const RS_Vector& local) const;
+
 private:
   bool isInClipRect(const RS_Vector &p, double xmin, double xmax, double ymin,
                     double ymax) const;
