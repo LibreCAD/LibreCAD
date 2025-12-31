@@ -1091,7 +1091,9 @@ RS_Vector LC_Hyperbola::getNearestDist(double distance, const RS_Vector &coord,
 // Transformations
 //=====================================================================
 
-void LC_Hyperbola::move(const RS_Vector &offset) { data.center += offset; }
+void LC_Hyperbola::move(const RS_Vector &offset) {
+  data.center += offset;
+}
 
 void LC_Hyperbola::rotate(const RS_Vector &center, double angle) {
   rotate(center, RS_Vector{angle});
