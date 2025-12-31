@@ -35,14 +35,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_math.h"
 #include "rs_painter.h"
 
-namespace {
-// Inline speed function (critical path)
-inline double hyperbolaSpeed(double phi, double a2, double b2) noexcept {
-  const double sh = std::sinh(phi);
-  const double ch = std::cosh(phi);
-  return std::sqrt(a2 * sh * sh + b2 * ch * ch);
-}
-} // namespace
 
 //=====================================================================
 // Construction
@@ -197,7 +189,7 @@ bool LC_Hyperbola::createFromQuadratic(const LC_Quadratic &q) {
   // Rotate quadratic terms
   double Ap = A * ct * ct + B * ct * st + C * st * st;
   double Cp = A * st * st - B * ct * st + C * ct * ct;
-  double Bp = 2.0 * (A - C) * ct * st + B * (ct * ct - st * st); // Should be ~0
+  //double Bp = 2.0 * (A - C) * ct * st + B * (ct * ct - st * st); // Should be ~0
 
   // Rotate linear terms
   double Dp = D * ct + E * st;
@@ -412,12 +404,12 @@ RS_VectorSolutions LC_Hyperbola::getTangentPoint(const RS_Vector &point) const {
   double polarB = (B / 2.0) * px + C * py + E / 2.0;
   double polarK = D / 2.0 * px + E / 2.0 * py + F;
 
-  if (fabs(polarA) < RS_TOLERANCE && fabs(polarB) < RS_TOLERANCE) {
+  if (std::abs(polarA) < RS_TOLERANCE && std::abs(polarB) < RS_TOLERANCE) {
     return RS_VectorSolutions();
   }
 
   RS_Vector p1, p2;
-  if (fabs(polarA) >= fabs(polarB)) {
+  if (std::abs(polarA) >= std::abs(polarB)) {
     p1 = RS_Vector(0.0, -polarK / polarB);
     p2 = RS_Vector(1.0, (-polarK - polarA) / polarB);
   } else {
@@ -439,7 +431,7 @@ RS_VectorSolutions LC_Hyperbola::getTangentPoint(const RS_Vector &point) const {
     RS_Vector radius = tp - point;
     RS_Vector tangentDir = getTangentDirection(tp);
     if (tangentDir.valid &&
-        fabs(RS_Vector::dotP(radius, tangentDir)) < RS_TOLERANCE * 10.0) {
+        std::abs(RS_Vector::dotP(radius, tangentDir)) < RS_TOLERANCE * 10.0) {
       tangents.push_back(tp);
     }
   }
@@ -725,7 +717,7 @@ LC_Hyperbola::getNearestOrthTan(const RS_Vector &coord, const RS_Line &normal,
       if (!tan.valid)
         continue;
 
-      double angleDiff = fabs(tan.angleTo(tanDir));
+      double angleDiff = std::abs(tan.angleTo(tanDir));
       if (angleDiff > M_PI / 2.0)
         angleDiff = M_PI - angleDiff;
 
@@ -1049,7 +1041,7 @@ bool LC_Hyperbola::isPointOnEntity(const RS_Vector &coord,
                  coef[2] * coord.y * coord.y + coef[3] * coord.x +
                  coef[4] * coord.y + coef[5];
 
-  bool onCurve = fabs(value) <= tolerance * tolerance;
+  bool onCurve = std::abs(value) <= tolerance * tolerance;
 
   if (onCurve && data.angle1 != 0.0 && data.angle2 != 0.0) {
     double phi = getParamFromPoint(coord, data.reversed);
@@ -1113,11 +1105,11 @@ void LC_Hyperbola::calculateBorders() {
 
   auto addExtrema = [&](const RS_Vector &dir) {
     double dx = dir.x, dy = dir.y;
-    if (fabs(dx) < RS_TOLERANCE && fabs(dy) < RS_TOLERANCE)
+    if (std::abs(dx) < RS_TOLERANCE && std::abs(dy) < RS_TOLERANCE)
       return;
 
     double tanh_phi = -(getMinorRadius() * dy) / (getMajorRadius() * dx);
-    if (fabs(tanh_phi) >= 1.0)
+    if (std::abs(tanh_phi) >= 1.0)
       return; // no real solution
 
     double phi = std::atanh(tanh_phi);
