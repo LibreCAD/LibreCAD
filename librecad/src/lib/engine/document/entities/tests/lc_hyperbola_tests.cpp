@@ -25,10 +25,13 @@
  * ********************************************************************************
  */
 
+#include <cmath>
 #include <iostream>
 
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
+
+#include <boost/math/quadrature/gauss_kronrod.hpp>
 
 #include "lc_hyperbola.h"
 #include "lc_hyperbolaspline.h"
@@ -36,6 +39,10 @@
 #include "rs_debug.h"
 #include "rs_math.h"
 #include "rs_vector.h"
+
+#ifndef M_PI_6
+#define M_PI_6 (M_PI / 6.)
+#endif
 
 namespace {
 constexpr double TOL = 1e-6;
@@ -471,5 +478,108 @@ TEST_CASE("LC_Hyperbola dual curve methods", "[hyperbola][dual][quadratic]") {
 
     REQUIRE(std::abs(tangentPoint.x - expectedPoint.x) < 1e-8);
     REQUIRE(std::abs(tangentPoint.y - expectedPoint.y) < 1e-8);
+  }
+}
+// In lc_hyperbola_tests.cpp - add unit tests for getLength()
+// In lc_hyperbola_tests.cpp - updated getLength() tests with precomputed
+// expected values
+
+TEST_CASE("LC_Hyperbola getLength() accuracy", "[hyperbola][length]") {
+  constexpr double TOL = 1e-8; // Absolute tolerance
+
+  SECTION("Symmetric bounded arc around vertex") {
+    LC_HyperbolaData data;
+    data.center = RS_Vector(0.0, 0.0);
+    data.majorP = RS_Vector(2.0, 0.0); // a = 2
+    data.ratio = 0.5;                  // b = 1
+    data.reversed = false;
+    data.angle1 = -1.0;
+    data.angle2 = 1.0;
+
+    LC_Hyperbola hb(nullptr, data);
+    REQUIRE(hb.isValid());
+
+    double length = hb.getLength();
+
+    // Precomputed reference value using high-precision quadrature (SciPy quad)
+    double expected = 3.3078924645266374;
+
+    REQUIRE(doublesApproxEqual(length, expected, TOL));
+  }
+
+  SECTION("Asymmetric arc - rectangular hyperbola") {
+    LC_HyperbolaData data;
+    data.center = RS_Vector(0.0, 0.0);
+    data.majorP = RS_Vector(1.0, 0.0); // a = 1
+    data.ratio = 1.0;                  // b = 1 (rectangular)
+    data.reversed = false;
+    data.angle1 = 0.5;
+    data.angle2 = 2.0;
+
+    LC_Hyperbola hb(nullptr, data);
+    REQUIRE(hb.isValid());
+
+    double length = hb.getLength();
+
+    double expected = 4.084667883160526;
+
+    REQUIRE(doublesApproxEqual(length, expected, TOL));
+  }
+
+  SECTION("Very small arc near vertex (near-parabolic behavior)") {
+    LC_HyperbolaData data;
+    data.center = RS_Vector(0.0, 0.0);
+    data.majorP = RS_Vector(5.0, 0.0); // a = 5, large
+    data.ratio = 0.1;                  // b = 0.5
+    data.reversed = false;
+    data.angle1 = -0.1;
+    data.angle2 = 0.1;
+
+    LC_Hyperbola hb(nullptr, data);
+    REQUIRE(hb.isValid());
+
+    double length = hb.getLength();
+
+    // Precomputed straight-line approximation between endpoints
+    double expected_approx = 0.11493829774467469;
+
+    // Allow slightly higher tolerance due to curvature
+    REQUIRE(doublesApproxEqual(length, expected_approx, 1e-6));
+  }
+
+  SECTION("Unbounded hyperbola returns infinite length") {
+    LC_HyperbolaData data;
+    data.center = RS_Vector(0.0, 0.0);
+    data.majorP = RS_Vector(1.0, 0.0);
+    data.ratio = 0.5;
+    data.reversed = false;
+    data.angle1 = 0.0;
+    data.angle2 = 0.0; // unbounded flag
+
+    LC_Hyperbola hb(nullptr, data);
+    REQUIRE(hb.isValid());
+
+    double length = hb.getLength();
+    REQUIRE(length == RS_MAXDOUBLE);
+  }
+
+  SECTION("Rotated and translated hyperbola (length invariant)") {
+    LC_HyperbolaData data;
+    data.center = RS_Vector(10.0, -5.0);
+    data.majorP = RS_Vector(3.0, 0.0).rotate(M_PI_6); // 30°
+    data.ratio = 2.0 / 3.0;
+    data.reversed = false;
+    data.angle1 = -1.5;
+    data.angle2 = 1.0;
+
+    LC_Hyperbola hb(nullptr, data);
+    REQUIRE(hb.isValid());
+
+    double length_rot = hb.getLength();
+
+    // Reference unrotated/untranslated (precomputed)
+    double expected_ref = 8.966998793851278;
+
+    REQUIRE(doublesApproxEqual(length_rot, expected_ref, TOL));
   }
 }

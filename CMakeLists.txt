@@ -13,7 +13,7 @@ set(CMAKE_AUTORCC ON)
 
 find_package(Qt6 COMPONENTS Gui Core Widgets PrintSupport Svg Network REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
-find_package(Boost REQUIRED COMPONENTS)
+find_package(Boost REQUIRED)
 find_package(Freetype)
 
 # Define all sources (as before)
@@ -1556,7 +1556,6 @@ target_include_directories(librecad_lib PRIVATE
 
 target_link_libraries(librecad_lib PRIVATE
     Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg Qt6::Network
-    ${Boost_LIBRARIES}
 )
 set_property(TARGET librecad_lib PROPERTY AUTOUIC_OPTIONS --connections string)
 
@@ -1702,7 +1701,6 @@ if(BUILD_TESTS)
     target_link_libraries(librecad_tests PRIVATE
         librecad_lib
         Catch2::Catch2WithMain
-        ${Boost_LIBRARIES}
         Qt6::Core
         Qt6::Gui
         Qt6::Network
