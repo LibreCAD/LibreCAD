@@ -101,7 +101,6 @@
  <layoutdefault spacing="6" margin="11"/>
  <resources>
   <include location="../../../../res/icons/icons.qrc"/>
-  <include location="../../../../res/icons/icons.qrc"/>
  </resources>
  <connections/>
 </ui>
