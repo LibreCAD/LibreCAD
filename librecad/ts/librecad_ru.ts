@@ -101,7 +101,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="416"/>
         <source>Specify size (width, height)</source>
-        <translation>Укажите размер (ширина,высота)</translation>
+        <translation>Укажите размер (ширина, высота)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="419"/>
@@ -124,7 +124,8 @@
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="428"/>
         <source>Specify edges mode
 [both|hor|vert]</source>
-        <translation>Укажите режим граней \n[both|hor|vert]</translation>
+        <translation>Укажите режим граней
+[both|hor|vert]</translation>
     </message>
 </context>
 <context>
@@ -132,12 +133,12 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="731"/>
         <source> is not divided as it is locked.</source>
-        <translation>не может быть разбит так как он заблокирован.</translation>
+        <translation> не может быть разбит, так как он заблокирован.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="739"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation>не может быть разбит так как это часть ломаной. Сначала разбейте ломаную.</translation>
+        <translation> не может быть разбит, так как это часть ломаной. Сначала разбейте ломаную.</translation>
     </message>
 </context>
 <context>
@@ -183,7 +184,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="192"/>
         <source>Specify dimension arc location</source>
-        <translation>Указать положение размерности дуги</translation>
+        <translation>Указать положение размерной надписи дуги</translation>
     </message>
 </context>
 <context>
@@ -313,7 +314,7 @@
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="108"/>
         <source>Angle:</source>
-        <translation>Центральный Угол:</translation>
+        <translation>Угол:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="71"/>
@@ -351,7 +352,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp" line="94"/>
         <source>Enter value of central angle</source>
-        <translation>Введите центральный угол</translation>
+        <translation>Введите значение центрального угла</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp" line="98"/>
@@ -456,7 +457,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawboundingbox.cpp" line="93"/>
         <source>Note: Bounding box was created for world coordinate system.</source>
-        <translation>Внимание: Охватывающий прямоугольник был создан для Мировой Системы Координат</translation>
+        <translation>Примечание: Охватывающий прямоугольник был создан для Мировой Системы Координат.</translation>
     </message>
 </context>
 <context>
@@ -610,25 +611,29 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="507"/>
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
-        <translation>Укажите конечную точку или \n [number|x|y|angle|p|edges|distance]</translation>
+        <translation>Укажите вторую точку
+или [number|x|y|angle|p|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="510"/>
         <source>Specify Second Point
 or [number]</source>
-        <translation>Укажите конечную точку точку или [number]</translation>
+        <translation>Укажите вторую точку
+или [number]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="514"/>
         <source>Specify line direction
 [x|y|angle|p|distance]</source>
-        <translation>Укажите режим направления прямой</translation>
+        <translation>Укажите направление линии
+[x|y|angle|p|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="517"/>
         <source>Specify line direction angle
 or [x|y|p|number|edges|distance]</source>
-        <translation>Укажите угол прямой</translation>
+        <translation>Укажите угол направления линии
+или [x|y|p|number|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="520"/>
@@ -16254,7 +16259,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="689"/>
         <source>Columns Count:</source>
-        <translation>Столбцы:</translation>
+        <translation>Количество столбцов:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="562"/>
@@ -16264,7 +16269,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="503"/>
         <source>For &quot;classic&quot; statusbar only. </source>
-        <translation>Только для &quot;классического&quot; режима</translation>
+        <translation>Только для &quot;классического&quot; режима строки состояния</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="113"/>
@@ -16291,12 +16296,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="275"/>
         <source>External Icons Directory:</source>
-        <translation>Папка внешних иконок: </translation>
+        <translation>Папка внешних иконок:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="423"/>
         <source>Accent Color:</source>
-        <translation>Цвет Акцента: </translation>
+        <translation>Цвет Акцента:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="369"/>
@@ -16321,12 +16326,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="247"/>
         <source>Color for accent elements (originally green)</source>
-        <translation>Цвет элементов акцента (оришинально - зеленый)</translation>
+        <translation>Цвет элементов акцента (оришинально - зелёный)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="302"/>
         <source>Color for main elements (originally black)</source>
-        <translation>Цвет основных элементов (оригинально - черный)</translation>
+        <translation>Цвет основных элементов (оригинально - чёрный)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="331"/>
@@ -16341,7 +16346,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="386"/>
         <source>Saved Icons Style:</source>
-        <translation>Сохраненные Стили: </translation>
+        <translation>Сохраненные Стили иконок:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="396"/>
@@ -16371,7 +16376,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="442"/>
         <source>If selected, title bar for docked dock widgets will be vertical. Otherwise, it will be horizontal.</source>
-        <translation>Если выбрано, используется вертикальный заголовок области стыковки. Иначе он горизонтальный. </translation>
+        <translation>Если выбрано, используется вертикальный заголовок области стыковки. Иначе он горизонтальный.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="445"/>
@@ -16448,7 +16453,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp" line="216"/>
         <source>Enter name of icons style:</source>
-        <translation>Введите или выберите имя стиля:  </translation>
+        <translation>Введите или выберите имя стиля:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp" line="227"/>
@@ -16478,7 +16483,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp" line="404"/>
         <source>Icons overrides directory changed. Please restart the application to apply.</source>
-        <translation>Папка с внешними иконками изменена. Перезапустите приложение что-бы изменения вступили в силу.</translation>
+        <translation>Папка с внешними иконками изменена. Перезапустите приложение, чтобы изменения вступили в силу.</translation>
     </message>
 </context>
 <context>
@@ -18634,7 +18639,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1510"/>
         <source>Arrow size:</source>
-        <translation>Величина стрелки:</translation>
+        <translation>Размер стрелки:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1717"/>
@@ -18649,7 +18654,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="34"/>
         <source>&amp;Paper</source>
-        <translation>&amp;Бумажный</translation>
+        <translation>&amp;Лист бумаги</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="123"/>
@@ -18744,7 +18749,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2056"/>
         <source>Number of line segments per spline patch:</source>
-        <translation>Количество сегментов по длине сплайна:</translation>
+        <translation>Количество сегментов линии на участок сплайна:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="170"/>
@@ -18852,7 +18857,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="378"/>
         <source>Units of measurements to use in drawing </source>
-        <translation>Единицы измерения координат чертежа</translation>
+        <translation>Единицы измерения координат чертежа </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="564"/>
@@ -18867,7 +18872,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="586"/>
         <source>Zero base angle:</source>
-        <translation>Угол нулевой точки отсчета углов:</translation>
+        <translation>Нулевая точка отсчёта углов:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="593"/>
@@ -18882,12 +18887,12 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="637"/>
         <source>Counterclockwise, 90 degrees is north.</source>
-        <translation>Против часовой стрелки, 90 градусов на севере</translation>
+        <translation>Против часовой стрелки, 90 градусов на север.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="666"/>
         <source>Clockwise, 90 degrees is sourth.</source>
-        <translation>По часовой стрелке, 90 градусов на юге</translation>
+        <translation>По часовой стрелке, 90 градусов на юг.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="753"/>
@@ -18912,7 +18917,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="804"/>
         <source>If checked, grid will be shown for this drawing</source>
-        <translation>Если выбрано, то для этого чертежа будет отрисовываться и сетка.</translation>
+        <translation>Если выбрано, то для этого чертежа будет отрисовываться и сетка</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="826"/>
@@ -18946,17 +18951,17 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="907"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1976"/>
         <source>TextLabel</source>
-        <translation></translation>
+        <translation>Текстовая метка</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="879"/>
         <source>Automatically Scale Grid:</source>
-        <translation>Автоматически масштабировать сетку</translation>
+        <translation>Автоматически масштабировать сетку:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="886"/>
         <source>Draw Meta Grid:</source>
-        <translation>Рисовать дополнительную сетку</translation>
+        <translation>Рисовать дополнительную сетку:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="917"/>
