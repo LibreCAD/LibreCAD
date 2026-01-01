@@ -712,7 +712,6 @@ RS_Vector RS_Circle::dualLineTangentPoint(const RS_Vector& line) const{
     auto lineEqu = [&line](const RS_Vector& vp) {
         return std::abs(line.dotP(vp) + 1.);
     };
-    LC_ERR<<     lineEqu(vp0) <<" circle: "<< lineEqu(vp1);
 
     return lineEqu(vp0) < lineEqu(vp1) ? vp0 : vp1;
 }

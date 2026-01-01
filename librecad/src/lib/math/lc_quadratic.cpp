@@ -636,37 +636,24 @@ boost::numeric::ublas::matrix<double> LC_Quadratic::rotationMatrix(double angle)
     ret(1,1)=ret(0,0);
     return ret;
 }
-
 /**
  * @brief getDualCurve
- * Returns the dual (polar reciprocal) conic of the current quadratic conic section.
+ * Returns the dual (polar reciprocal) conic using the line convention u x + v y + 1 = 0.
  *
- * The dual conic is the envelope of the polar lines of points on the primal conic
- * (or equivalently, the point conic of tangents to the primal).
+ * In projective geometry, the dual conic represents the envelope of polar lines.
+ * The standard adjugate gives coefficients for the dual equation in the form:
+ *   A' u² + B' u v + C' v² + D' u + E' v + F' = 0
  *
- * Given the primal conic in general form:
- *   A x² + B xy + C y² + D x + E y + F = 0
+ * However, many CAD/geometry systems (including LibreCAD's dualLineTangentPoint)
+ * adopt the normalized line form: u x + v y + 1 = 0
  *
- * The dual conic coefficients [A', B', C', D', E', F'] are computed from the
- * adjugate of the symmetric conic matrix:
+ * To match this convention, we scale the dual coefficients so that the constant term
+ * becomes +1 (corresponding to the +1 in the line equation).
  *
- *         [  A   B/2  D/2 ]
- *     C = [ B/2   C   E/2 ]
- *         [ D/2  E/2   F  ]
+ * If F' = 0 (degenerate case, e.g., parabola), the dual is at infinity and we return
+ * an invalid quadratic.
  *
- * The dual matrix is adj(C), which yields the correct coefficients:
- *   A' =  C F - E²/4
- *   B' =  D E - 2 B F
- *   C' =  A F - D²/4
- *   D' =  B E - 2 C D
- *   E' =  B D - 2 A E
- *   F' =  A C - B²/4
- *
- * This implementation uses these exact formulas and is valid for all non-degenerate
- * conics (ellipses, parabolas, hyperbolas).
- *
- * @return LC_Quadratic containing the dual conic coefficients [A', B', C', D', E', F']
- *         Returns invalid LC_Quadratic if the current conic is not quadratic.
+ * @return Dual conic with constant term normalized to +1, or invalid if degenerate
  */
 LC_Quadratic LC_Quadratic::getDualCurve() const
 {
@@ -674,24 +661,32 @@ LC_Quadratic LC_Quadratic::getDualCurve() const
     return LC_Quadratic{};
   }
 
-         // Extract primal coefficients
+         // Primal coefficients: A x² + B xy + C y² + D x + E y + F = 0
   std::vector<double> primal = getCoefficients();
-  double A = primal[0];  // x²
-  double B = primal[1];  // xy
-  double C = primal[2];  // y²
-  double D = primal[3];  // x
-  double E = primal[4];  // y
-  double F = primal[5];  // const
+  double A = primal[0];
+  double B = primal[1];
+  double C = primal[2];
+  double D = primal[3];
+  double E = primal[4];
+  double F = primal[5];
 
-         // Compute dual coefficients using adjugate of conic matrix
-  double A_prime = C * F - 0.25 * E * E;
-  double B_prime = D * E - 2.0 * B * F;
-  double C_prime = A * F - 0.25 * D * D;
-  double D_prime = B * E - 2.0 * C * D;
-  double E_prime = B * D - 2.0 * A * E;
-  double F_prime = A * C - 0.25 * B * B;
+         // Dual coefficients via adjugate of conic matrix
+  double A_prime = 4 * C * F - E * E;
+  double B_prime = 2 * D * E - 4 * B * F;
+  double C_prime = 4 * A * F - D * D;
+  double D_prime = 2 * B * E - 4 * C * D;
+  double E_prime = 2 * B * D - 4 * A * E;
+  double F_prime = 4 * A * C - B * B;
 
-  return LC_Quadratic({A_prime, B_prime, C_prime, D_prime, E_prime, F_prime});
+
+  return LC_Quadratic({
+      A_prime,
+      B_prime,
+      C_prime,
+      D_prime,
+      E_prime,
+      F_prime
+  });
 }
 
 // Evaluate the quadratic form at a given point (x, y)
