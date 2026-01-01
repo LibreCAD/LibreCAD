@@ -638,33 +638,60 @@ boost::numeric::ublas::matrix<double> LC_Quadratic::rotationMatrix(double angle)
 }
 
 /**
- * @description: Given a general conic section with homogeneous coordinates $[a,b,c,d,e,f]$:
-        $$ax^2+b x y+c y^2+d x + e y + f = 0 $$
-    The dual curve is:
-        $$
-        \begin{split}
-        (e^2-4 c f)A^2&+&(4b f-2 d e) A B&+&(d^2-4 a f)B^2 &\\
-        &+&(4c d -2 b e) A C&+&(4a e - 2b d) B C&\\
-        & & &+&(b^2 - 4 a c) C^2&= 0
-        \end{split}
-        $$
+ * @brief getDualCurve
+ * Returns the dual (polar reciprocal) conic of the current quadratic conic section.
+ *
+ * The dual conic is the envelope of the polar lines of points on the primal conic
+ * (or equivalently, the point conic of tangents to the primal).
+ *
+ * Given the primal conic in general form:
+ *   A x² + B xy + C y² + D x + E y + F = 0
+ *
+ * The dual conic coefficients [A', B', C', D', E', F'] are computed from the
+ * adjugate of the symmetric conic matrix:
+ *
+ *         [  A   B/2  D/2 ]
+ *     C = [ B/2   C   E/2 ]
+ *         [ D/2  E/2   F  ]
+ *
+ * The dual matrix is adj(C), which yields the correct coefficients:
+ *   A' =  C F - E²/4
+ *   B' =  D E - 2 B F
+ *   C' =  A F - D²/4
+ *   D' =  B E - 2 C D
+ *   E' =  B D - 2 A E
+ *   F' =  A C - B²/4
+ *
+ * This implementation uses these exact formulas and is valid for all non-degenerate
+ * conics (ellipses, parabolas, hyperbolas).
+ *
+ * @return LC_Quadratic containing the dual conic coefficients [A', B', C', D', E', F']
+ *         Returns invalid LC_Quadratic if the current conic is not quadratic.
  */
 LC_Quadratic LC_Quadratic::getDualCurve() const
 {
-    if (!isQuadratic())
-        return LC_Quadratic{};
-    auto getCes = [this]() -> std::array<double, 6>{
-        std::vector<double> cev = getCoefficients();
-        return {cev[0], cev[1], cev[2], cev[3], cev[4], cev[5]};
-    };
-    const auto& [a,b,c,d,e,f] = getCes();
+  if (!isQuadratic()) {
+    return LC_Quadratic{};
+  }
 
-    const std::vector<double> dualCe = {{
-        e*e - 4.*c*f, 4.*b*f - 2.*d*e, d*d - 4.*a*f,
-        4.*c*d-2.*b*e, 4.*a*e-2.*b*d,
-        b*b-4.*a*c
-    }};
-    return {dualCe};
+         // Extract primal coefficients
+  std::vector<double> primal = getCoefficients();
+  double A = primal[0];  // x²
+  double B = primal[1];  // xy
+  double C = primal[2];  // y²
+  double D = primal[3];  // x
+  double E = primal[4];  // y
+  double F = primal[5];  // const
+
+         // Compute dual coefficients using adjugate of conic matrix
+  double A_prime = C * F - 0.25 * E * E;
+  double B_prime = D * E - 2.0 * B * F;
+  double C_prime = A * F - 0.25 * D * D;
+  double D_prime = B * E - 2.0 * C * D;
+  double E_prime = B * D - 2.0 * A * E;
+  double F_prime = A * C - 0.25 * B * B;
+
+  return LC_Quadratic({A_prime, B_prime, C_prime, D_prime, E_prime, F_prime});
 }
 
 // Evaluate the quadratic form at a given point (x, y)

@@ -40,9 +40,6 @@ void LC_Highlight::addEntity(RS_Entity* entity, bool selected) {
     }
 
     entitiesMap.insert(entity, duplicatedEntity);
-    if (duplicatedEntity->rtti() == RS2::EntityHyperbola) {
-      LC_ERR<<"hover over: hyperbola: "<<entity->getId();
-    }
 //    entity->setTransparent(true);
     push_back(duplicatedEntity);
 }
