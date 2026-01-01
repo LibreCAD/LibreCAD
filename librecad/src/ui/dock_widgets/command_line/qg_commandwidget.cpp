@@ -221,34 +221,76 @@ void QG_CommandWidget::spacePressed() {
 // fixme - review ouptput to command widget
 //fixme - add generic help command (as TAB for empy)
 
+/**
+ * @brief Handles the Tab key press event to perform command auto-completion.
+ *
+ * This slot is triggered when the user presses the Tab key while the focus is
+ * on the command line input (leCommand). It attempts to complete the current
+ * text input by matching it against available context actions or global commands.
+ *
+ * @details
+ * The function performs the following steps:
+ * 1. Checks for context-specific commands via m_actionHandler.
+ * 2. If no context commands are found, falls back to the global RS_COMMANDS list.
+ * 3. Filters the command list for strings that start with the currently typed text (case-insensitive).
+ *
+ * Use cases:
+ * - **Single Match:** The input is auto-completed immediately to the full command.
+ * - **Multiple Matches:** The input is completed up to the longest common prefix
+ * (via getRootCommand), and the list of candidates is printed to the history output.
+ *
+ * @note This function assumes m_actionHandler and leCommand are initialized.
+ *
+ * @see QG_ActionHandler::getAvailableCommands
+ * @see RS_Commands::complete
+ * @see getRootCommand
+ */
 void QG_CommandWidget::tabPressed() {
-    if (m_actionHandler) {
-        QString typed = leCommand->text();
+    // Safety Check: Ensure pointers are valid before using them
+    if (!m_actionHandler || !leCommand) {
+        return;
+    }
 
-        // check current command:
-        QStringList choices = m_actionHandler->getAvailableCommands();
-        if (choices.empty()) {
-            choices = RS_COMMANDS->complete(typed);
-        }
+    // Get the string input from the user
+    const QString typed = leCommand->text();
 
-        QStringList reducedChoices;
-        std::copy_if(choices.cbegin(), choices.cend(), std::back_inserter(reducedChoices),
-                     [&typed](const QString& cmd) {
-                         return typed.isEmpty() || cmd.startsWith(typed, Qt::CaseInsensitive);
-                     });
+    // Get the available commands from the current action
+    QStringList choices = m_actionHandler->getAvailableCommands();
 
-        // command found:
-        if (reducedChoices.count() == 1) {
-            leCommand->setText(reducedChoices.first());
+    // Fallback: If no context actions, get global completion candidates
+    if (choices.empty()) {
+        choices = RS_COMMANDS->complete(typed);
+    }
+
+    // Filtering: Create the list of matches
+    QStringList reducedChoices;
+    for (const QString& cmd : choices) {
+        if (typed.isEmpty() || cmd.startsWith(typed, Qt::CaseInsensitive)) {
+            reducedChoices.append(cmd);
         }
-        else if (!reducedChoices.isEmpty()) {
-            const QString proposal = getRootCommand(reducedChoices, typed);
-            appendHistory(reducedChoices.join(", "));
-            const QString aliasFile = RS_Commands::getAliasFile();
-            if (!aliasFile.isEmpty())
-                appendHistory(tr("Command Alias File: %1").arg(aliasFile));
-            leCommand->setText(proposal);
-        }
+    }
+
+    // Handle results
+    if (reducedChoices.count() == 1) {
+	// Exact match found
+        leCommand->setText(reducedChoices.first());
+    }
+    else if (!reducedChoices.isEmpty()) {
+	// Multiple matches found (Ambiguous)
+
+	// Calculate the longest common prefix
+        const QString proposal = getRootCommand(reducedChoices, typed);
+        
+	// Show the user the available options
+	appendHistory(reducedChoices.join(", "));
+
+        const QString aliasFile = RS_Commands::getAliasFile();
+        if (!aliasFile.isEmpty()) {
+            appendHistory(tr("Command Alias File: %1").arg(aliasFile));
+	}
+
+	// Update text to the common prefix
+        leCommand->setText(proposal);
     }
 }
 
