@@ -1371,23 +1371,9 @@ bool LC_Hyperbola::isPointOnEntity(const RS_Vector &coord,
   if (!m_bValid || !coord.valid)
     return false;
 
-  auto coef = getQuadratic().getCoefficients();
-  double value = coef[0] * coord.x * coord.x + coef[1] * coord.x * coord.y +
-                 coef[2] * coord.y * coord.y + coef[3] * coord.x +
-                 coef[4] * coord.y + coef[5];
-
-  bool onCurve = std::abs(value) <= tolerance * tolerance;
-
-  if (onCurve && data.angle1 != 0.0 && data.angle2 != 0.0) {
-    double phi = getParamFromPoint(coord, data.reversed);
-    double phiMin =
-        std::min(data.angle1, data.angle2) + (data.reversed ? M_PI : 0.0);
-    double phiMax =
-        std::max(data.angle1, data.angle2) + (data.reversed ? M_PI : 0.0);
-    onCurve = (phi >= phiMin - tolerance && phi <= phiMax + tolerance);
-  }
-
-  return onCurve;
+  double dist = RS_MAXDOUBLE;
+  getNearestPointOnEntity(coord, true, &dist);
+  return dist <= tolerance;
 }
 
 LC_Quadratic LC_Hyperbola::getQuadratic() const {
