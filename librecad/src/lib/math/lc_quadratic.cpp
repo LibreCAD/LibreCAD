@@ -205,6 +205,14 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle, const RS_Vector& point
 
 
 bool LC_Quadratic::isQuadratic() const {
+  if (m_mQuad.size1() == 2 && m_mQuad.size2() == 2) {
+    if ( RS_Math::equal(m_mQuad(0,0), 0.)
+        && RS_Math::equal(m_mQuad(0,1), 0.)
+        && RS_Math::equal(m_mQuad(1,0), 0.)
+        && RS_Math::equal(m_mQuad(1,1), 0.)
+        )
+      return false;
+  }
     return m_bIsQuadratic;
 }
 
@@ -421,24 +429,46 @@ std::vector<double>  LC_Quadratic::getCoefficients() const
     return ret;
 }
 
-LC_Quadratic LC_Quadratic::move(const RS_Vector& v)
+// In lc_quadratic.cpp – Fixed move() transformation for linear terms
+
+/**
+ * @brief move
+ * Translates the conic by the given offset vector.
+ *
+ * For primal conic A x² + B xy + C y² + D x + E y + F = 0,
+ * translation by (dx, dy) transforms linear terms:
+ *   D' = D - 2 A dx - B dy
+ *   E' = E - B dx - 2 C dy
+ *   F' = F - D dx - E dy + A dx² + B dx dy + C dy²
+ *
+ * @param offset Translation vector (dx, dy)
+ * @return Translated LC_Quadratic
+ */
+LC_Quadratic& LC_Quadratic::move(const RS_Vector& offset)
 {
-    if(m_bValid && v.valid ) {
-
-        m_dConst -= m_vLinear(0) * v.x + m_vLinear(1)*v.y;
-
-        if(m_bIsQuadratic){
-            m_vLinear(0) -= 2.*m_mQuad(0,0)*v.x + (m_mQuad(0,1)+m_mQuad(1,0))*v.y;
-            m_vLinear(1) -= 2.*m_mQuad(1,1)*v.y + (m_mQuad(0,1)+m_mQuad(1,0))*v.x;
-            m_dConst += m_mQuad(0,0)*v.x*v.x + (m_mQuad(0,1)+m_mQuad(1,0))*v.x*v.y+ m_mQuad(1,1)*v.y*v.y ;
-        }
-    }
-
+  if (!isValid()) {
     return *this;
+  }
+
+  std::vector<double> coeffs = getCoefficients();
+  double A = coeffs[0];
+  double B = coeffs[1];
+  double C = coeffs[2];
+  double D = coeffs[3];
+  double E = coeffs[4];
+  double F = coeffs[5];
+
+  double dx = offset.x;
+  double dy = offset.y;
+
+  m_vLinear(0) = D - 2.0 * A * dx - B * dy;
+  m_vLinear(1) = E - B * dx - 2.0 * C * dy;
+  m_dConst = F + A * dx * dx + B * dx * dy + C * dy * dy - D * dx - E * dy;
+
+  return *this;
 }
 
-
-LC_Quadratic LC_Quadratic::rotate(double angle)
+LC_Quadratic& LC_Quadratic::rotate(double angle)
 {
     using namespace boost::numeric::ublas;
     matrix<double> m=rotationMatrix(angle);
@@ -451,7 +481,7 @@ LC_Quadratic LC_Quadratic::rotate(double angle)
     return *this;
 }
 
-LC_Quadratic LC_Quadratic::rotate(const RS_Vector& center, double angle)
+LC_Quadratic& LC_Quadratic::rotate(const RS_Vector& center, double angle)
 {
     move(-center);
     rotate(angle);
@@ -462,7 +492,7 @@ LC_Quadratic LC_Quadratic::rotate(const RS_Vector& center, double angle)
 /**
  * @author{Dongxu Li}
  */
-LC_Quadratic LC_Quadratic::shear(double k)
+LC_Quadratic& LC_Quadratic::shear(double k)
 {
     if(isQuadratic()){
         auto getCes = [this]() -> std::array<double, 6>{
@@ -475,11 +505,11 @@ LC_Quadratic LC_Quadratic::shear(double k)
             a, -2.*k*a + b, k*(k*a - b) + c,
             d, e - k*d, f
         }};
-        return {sheared};
+        *this = {sheared};
+        return *this;
     }
-    LC_Quadratic qf(*this);
-    qf.m_vLinear(1) -= k * qf.m_vLinear(0);
-    return qf;
+    m_vLinear(1) -= k * m_vLinear(0);
+    return *this;
 }
 
 /** switch x,y coordinates */
@@ -678,6 +708,10 @@ LC_Quadratic LC_Quadratic::getDualCurve() const
   double E_prime = 2 * B * D - 4 * A * E;
   double F_prime = 4 * A * C - B * B;
 
+  // Degenerate if F_prime == 0 (dual at infinity)
+  if (std::abs(F_prime) < RS_TOLERANCE) {
+    return LC_Quadratic{};
+  }
 
   return LC_Quadratic({
       A_prime,
