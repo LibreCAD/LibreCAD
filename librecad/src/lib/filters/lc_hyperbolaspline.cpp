@@ -99,9 +99,9 @@ std::unique_ptr<LC_Hyperbola> LC_HyperbolaSpline::splineToHyperbola(const DRW_Sp
   const RS_Vector p1(s.controllist[1]->x, s.controllist[1]->y); // shoulder (middle control point)
   const RS_Vector p2(s.controllist[2]->x, s.controllist[2]->y); // end
 
-  const double w0 = s.weightlist[0]; // always 1.0
+  //const double w0 = s.weightlist[0]; // always 1.0
   const double w1 = s.weightlist[1]; // middle weight (key parameter)
-  const double w2 = s.weightlist[2]; // always 1.0
+  //const double w2 = s.weightlist[2]; // always 1.0
 
          // Middle weight must be > 1 for a proper hyperbola segment
   if (w1 <= 1.0 + RS_TOLERANCE) {

@@ -37,29 +37,29 @@ void LC_HyperbolaPropertiesEditingWidget::updateUI()
   if (!m_entity) return;
   const LC_HyperbolaData& d = m_entity->getData();
 
-  auto set = [this](QLineEdit* le, double v) { le->setText(QString::number(v, 'f', 6)); };
+  auto setValue = [](QLineEdit* le, double v) { le->setText(QString::number(v, 'f', 10)); };
 
-  set(ui->leCenterX, d.center.x);
-  set(ui->leCenterY, d.center.y);
-  set(ui->leMajorRadius, m_entity->getMajorRadius());
-  set(ui->leMinorRadius, m_entity->getMinorRadius());
-  set(ui->leRatio, m_entity->getRatio());
-  set(ui->leAngle, RS_Math::rad2deg(d.majorP.angle()));
+  setValue(ui->leCenterX, d.center.x);
+  setValue(ui->leCenterY, d.center.y);
+  setValue(ui->leMajorRadius, m_entity->getMajorRadius());
+  setValue(ui->leMinorRadius, m_entity->getMinorRadius());
+  setValue(ui->leRatio, m_entity->getRatio());
+  setValue(ui->leAngle, RS_Math::rad2deg(d.majorP.angle()));
 
   ui->cbReversed->setChecked(d.reversed);
 
-  set(ui->leAngle1, d.angle1);
-  set(ui->leAngle2, d.angle2);
+  setValue(ui->leAngle1, d.angle1);
+  setValue(ui->leAngle2, d.angle2);
 
   RS_Vector f1 = m_entity->getFocus1();
   RS_Vector f2 = m_entity->getFocus2();
-  set(ui->leFocus1X, f1.x); set(ui->leFocus1Y, f1.y);
-  set(ui->leFocus2X, f2.x); set(ui->leFocus2Y, f2.y);
+  setValue(ui->leFocus1X, f1.x); setValue(ui->leFocus1Y, f1.y);
+  setValue(ui->leFocus2X, f2.x); setValue(ui->leFocus2Y, f2.y);
 
   RS_Vector v = m_entity->getPrimaryVertex();
-  set(ui->leVertexX, v.x); set(ui->leVertexY, v.y);
+  setValue(ui->leVertexX, v.x); setValue(ui->leVertexY, v.y);
 
-  set(ui->leEccentricity, m_entity->getEccentricity());
+  setValue(ui->leEccentricity, m_entity->getEccentricity());
 }
 
 void LC_HyperbolaPropertiesEditingWidget::updateEntityData()

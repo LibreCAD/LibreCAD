@@ -1278,7 +1278,7 @@ void QG_GraphicView::layerActivated(RS_Layer *layer) {
 
             graphic->startUndoCycle();
 
-            for (auto en: *container) { // fixme - sand - iterating all elements in container
+            for (auto en: std::as_const(*container)) { // fixme - sand - iterating all elements in container
                 if (en != nullptr) {
                     if (en->isSelected()) {
                         RS_Entity *cl = en->clone();
@@ -1293,7 +1293,7 @@ void QG_GraphicView::layerActivated(RS_Layer *layer) {
                 }
             }
 
-            for (auto cl: clones) {
+            for (auto cl: std::as_const(clones)) {
                 container->addEntity(cl);
                 graphic->addUndoable(cl);
             }

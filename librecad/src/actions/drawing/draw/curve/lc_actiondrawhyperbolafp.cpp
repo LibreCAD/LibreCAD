@@ -154,14 +154,16 @@ void LC_ActionDrawHyperbolaFP::doTrigger()
 void LC_ActionDrawHyperbolaFP::onMouseLeftButtonRelease(int status, LC_MouseEvent* e)
 {
   RS_Vector snapped = e->snapPoint;
-  if (!snapped.valid) return;
+  if (!snapped.valid)
+    return;
 
   onCoordinateEvent(status, false, snapped);
 }
 
 void LC_ActionDrawHyperbolaFP::onMouseMoveEvent(int status, LC_MouseEvent* event)
 {
-  if (!event) return;
+  if (!event)
+    return;
 
   RS_Vector mouse = event->snapPoint;
 
@@ -256,7 +258,7 @@ void LC_ActionDrawHyperbolaFP::updateMouseButtonHints()
   }
 }
 
-RS2::CursorType LC_ActionDrawHyperbolaFP::doGetMouseCursor(int status)
+RS2::CursorType LC_ActionDrawHyperbolaFP::doGetMouseCursor([[maybe_unused]] int status)
 {
   return RS2::CadCursor;
 }
