@@ -66,7 +66,7 @@ private:
   RS_Vector focus1{}, focus2{};
   RS_Vector startPoint{}, endPoint{};
 
-  LC_Hyperbola* preparePreview();
+  void preparePreview();
   void createHyperbola();
 };
 

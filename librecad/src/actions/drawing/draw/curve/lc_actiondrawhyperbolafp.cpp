@@ -21,9 +21,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ******************************************************************************/
 
+#include <cmath>
+#include <memory>
+
 #include "lc_actiondrawhyperbolafp.h"
 #include "lc_hyperbola.h"
-#include "rs_graphic.h"
 #include "rs_preview.h"
 #include "qg_graphicview.h"
 
@@ -46,32 +48,31 @@ void LC_ActionDrawHyperbolaFP::reset()
   setStatus(SetFocus1);
 }
 
-LC_Hyperbola* LC_ActionDrawHyperbolaFP::preparePreview()
+void LC_ActionDrawHyperbolaFP::preparePreview()
 {
   deletePreview();
 
-  if (!focus1.valid || !focus2.valid || !startPoint.valid) return nullptr;
+  if (!focus1.valid || !focus2.valid || !startPoint.valid)
+    return;
 
-  LC_Hyperbola* hyperbola = new LC_Hyperbola(m_preview.get(), LC_HyperbolaData{focus1, focus2, startPoint});
+  auto hyperbola = std::make_unique<LC_Hyperbola>(m_preview.get(), LC_HyperbolaData{focus1, focus2, startPoint});
   if (!hyperbola->isValid()) {
-    delete hyperbola;
-    return nullptr;
+    return;
   }
 
   bool rev = (startPoint.distanceTo(focus1) - startPoint.distanceTo(focus2) < 0.0);
 
   double phiStart = hyperbola->getParamFromPoint(startPoint, rev);
   if (std::isnan(phiStart)) {
-    delete hyperbola;
-    return nullptr;
+    return;
   }
 
   double phi1 = phiStart;
   double phi2 = phiStart;
 
   if (getStatus() == SetStartPoint) {
-    phi1 = -std::fabs(phiStart);
-    phi2 =  std::fabs(phiStart);
+    phi1 = -std::abs(phiStart);
+    phi2 =  std::abs(phiStart);
   } else if (getStatus() == SetEndPoint && endPoint.valid) {
     double phiEnd = hyperbola->getParamFromPoint(endPoint, rev);
     if (!std::isnan(phiEnd)) {
@@ -83,8 +84,7 @@ LC_Hyperbola* LC_ActionDrawHyperbolaFP::preparePreview()
   hyperbola->setAngle1(phi1);
   hyperbola->setAngle2(phi2);
 
-  previewEntity(hyperbola);
-  return hyperbola;
+  previewEntity(hyperbola.release());
 }
 
 // lc_ActionDrawHyperbolaFP.cpp - fixed createHyperbola() using temporary hyperbola
