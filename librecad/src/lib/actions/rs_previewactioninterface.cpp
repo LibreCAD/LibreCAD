@@ -300,15 +300,7 @@ RS_Point* RS_PreviewActionInterface::previewToCreatePoint(const RS_Vector &coord
     return result;
 }
 
-#include "lc_hyperbola.h"
 void RS_PreviewActionInterface::previewEntityToCreate(RS_Entity* en, bool addToPreview){
-
-  LC_HyperbolaData hD{{50., 100.}, {150., 100.}, {200., 150.}};
-  auto* hb = new LC_Hyperbola(nullptr, hD);
-  hb->setFlag(RS2::FlagVisible);
-  hb->setAngle1(-0.1);
-  hb->setAngle2(0.15);
-  previewEntity(hb);
     if (addToPreview) {
         previewEntity(en);
     }
