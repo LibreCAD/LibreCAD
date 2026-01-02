@@ -30,10 +30,8 @@ if NOT exist windows\LibreCAD.exe (
 rem Improved windeployqt: verbose, force copy, standard plugin subdirs
 echo windepolyqt: Current directory is: %CD%
 dir windows\
-dir librecad\ts\*.ts
 windeployqt.exe --release windows\LibreCAD.exe --verbose 2 --force
-lrelease.exe librecad\ts\*.ts -qm windows\ts\
-dir windows\ts\*.ts
+rem lrelease.exe librecad\ts\*.ts -qm windows\ts\
 rem windeployqt.exe windows\LibreCAD.exe --release --verbose 2 --force
 
 popd
