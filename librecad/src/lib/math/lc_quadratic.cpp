@@ -490,6 +490,68 @@ LC_Quadratic& LC_Quadratic::rotate(const RS_Vector& center, double angle)
 }
 
 /**
+ * @brief scale
+ * Scales the conic non-uniformly from the given center point (in-place).
+ *
+ * Modifies the current conic by applying non-uniform scaling by factors (sx, sy)
+ * from center (cx, cy):
+ *   x' = cx + sx (x - cx)
+ *   y' = cy + sy (y - cy)
+ *
+ * The transformation is applied directly to the coefficients.
+ *
+ * @param center Center of scaling
+ * @param factor Scaling factors (sx, sy)
+ * @return Reference to this (modified) LC_Quadratic
+ */
+LC_Quadratic& LC_Quadratic::scale(const RS_Vector& center, const RS_Vector& factor)
+{
+  if (!isValid() || factor.magnitude() < RS_TOLERANCE) {
+    m_bValid = false;
+    return *this;
+  }
+
+  double sx = factor.x;
+  double sy = factor.y;
+  double cx = center.x;
+  double cy = center.y;
+
+  if (std::abs(sx) < RS_TOLERANCE || std::abs(sy) < RS_TOLERANCE) {
+    m_bValid = false;
+    return *this;
+  }
+
+  double A = m_mQuad(0,0);
+  double B = 2.0 * m_mQuad(0,1);  // full B coefficient
+  double C = m_mQuad(1,1);
+  double D = m_vLinear(0);
+  double E = m_vLinear(1);
+  double F = m_dConst;
+
+         // Apply non-uniform scaling transformation
+  double A_new = A / (sx * sx);
+  double B_new = B / (sx * sy);
+  double C_new = C / (sy * sy);
+
+  double D_new = (D - 2.0 * A * cx - B * cy) / (sx * sx) + (B * cy) / (sx * sy);
+  double E_new = (E - B * cx - 2.0 * C * cy) / (sy * sy) + (B * cx) / (sx * sy);
+
+  double F_new = F + A * cx * cx + B * cx * cy + C * cy * cy
+                 - D * cx - E * cy;
+
+         // Update internal representation
+  m_mQuad(0,0) = A_new;
+  m_mQuad(0,1) = m_mQuad(1,0) = B_new * 0.5;
+  m_mQuad(1,1) = C_new;
+  m_vLinear(0) = D_new;
+  m_vLinear(1) = E_new;
+  m_dConst = F_new;
+
+  m_bValid = true;
+  return *this;
+}
+
+/**
  * @author{Dongxu Li}
  */
 LC_Quadratic& LC_Quadratic::shear(double k)

@@ -60,6 +60,8 @@ namespace {
             return true;
         }
         switch (entity.rtti()) {
+            case RS2::EntityCircle:
+            case RS2::EntityEllipse:
             case RS2::EntityHyperbola:
             case RS2::EntityParabola:
                 return true;
@@ -654,8 +656,43 @@ RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
                                      RS_Vector& altTangentPoint) {
     RS_Line* ret = nullptr;
     // check given entities:
-    if (!(circle != nullptr && point.valid)) {
+    if (!(circle != nullptr && point.valid && circle->isAtomic())) {
         return nullptr;
+    }
+
+    if (isArc(*circle)) {
+      // Find tangent lines through dual curves
+
+      // the dual line of the given point
+      LC_Quadratic dualLine{{point.x, point.y, 1.}};
+      LC_Quadratic dualCircle = circle->getQuadratic().getDualCurve();
+      // tangent lines by intersection of dual curves
+      RS_VectorSolutions dualSol = LC_Quadratic::getIntersection(dualLine, dualCircle);
+
+      if (dualSol.empty())
+        return nullptr;
+
+      // distance to coord
+      auto distCoord = [&coord](const RS_Vector& uv) {
+        return std::abs(uv.dotP(coord) + 1.);
+      };
+
+      if (dualSol.getNumber() == 2 && distCoord(dualSol[1]) < distCoord(dualSol[0]))
+        std::swap(dualSol[0], dualSol[1]);
+      if (dualSol.getNumber() == 2) {
+        altTangentPoint = circle->dualLineTangentPoint(dualSol[1]);
+      }
+      tangentPoint = circle->dualLineTangentPoint(dualSol[0]);
+
+      // in case the point is on circle
+      if (tangentPoint == point) {
+        tangentPoint.move(dualSol[0].rotate(M_PI/2.) * circle->getLength());
+      }
+      LC_UndoSection undo(m_document, m_viewport, handleUndo);
+      ret = new RS_Line{m_container, {point, tangentPoint}};
+      setupAndAddEntity(ret);
+
+      return ret;
     }
 
     // the two tangent points:
