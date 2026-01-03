@@ -34,7 +34,7 @@ mkdir windows\ts
 windeployqt.exe --release windows\LibreCAD.exe --verbose 2 --force
 dir librecad\ts\*.ts
     for %%f in (librecad\ts\*.ts plugins\ts\*.ts) do (
-      lrelease.exe "%%f" -qm windows\ts\
+      lrelease.exe "%%f" -qm ..\..\windows\ts\
     )
 rem lrelease.exe librecad\ts\*.ts -qm windows\ts\
 dir windows\ts
