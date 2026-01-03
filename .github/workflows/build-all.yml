@@ -274,7 +274,7 @@ jobs:
       - name: Rename installer
         shell: bash
         run: |
-          mv generated/LibreCAD-Installer.exe LibreCAD-`git describe --always`-msvc.exe
+          mv generated/LibreCAD-*.exe LibreCAD-`git describe --always`-msvc.exe
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -336,7 +336,7 @@ jobs:
       - name: Rename installer
         shell: bash
         run: |
-          mv generated/LibreCAD-Installer.exe LibreCAD-`git describe --always`-win64-msvc.exe
+          mv generated/LibreCAD-*.exe LibreCAD-`git describe --always`-win64-msvc.exe
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
