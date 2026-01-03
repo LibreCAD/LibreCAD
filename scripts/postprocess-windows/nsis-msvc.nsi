@@ -136,6 +136,7 @@ Section "Main Section" SecMain
     ClearErrors
     File /nonfatal /r "..\..\windows\translations\*.qm"
     File /nonfatal /r "..\..\windows\ts\*.qm"
+    ; File /nonfatal /r "..\..\windows\ts\*.qm"
     ${If} ${Errors}
         MessageBox MB_OK|MB_ICONSTOP "ERROR: No LibreCAD translation files (.qm) found in build output!$\r$\n$\r$\nRun 'lrelease' on the .ts files before building the installer.$\r$\n$\r$\nInstallation cannot continue."
         Abort
