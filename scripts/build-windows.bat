@@ -85,4 +85,3 @@ set NSIS_FLAGS=%NSIS_FLAGS% /DSCMREVISION="!SCMREVISION!"
 
 makensis.exe %NSIS_FLAGS% %LC_NSIS_FILE%
 popd
-call build-win-setup.bat
