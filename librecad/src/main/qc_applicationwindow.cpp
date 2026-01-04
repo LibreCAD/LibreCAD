@@ -171,7 +171,6 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     connect(this, &QC_ApplicationWindow::windowsChanged,
             pen_wiz, &LC_PenWizard::setEnabled);
     addDockWidget(Qt::RightDockWidgetArea, pen_wiz);
-    pen_wiz->setVisible(usePenWizard());
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init status bar");
     QStatusBar* status_bar = statusBar();
@@ -1110,6 +1109,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w, bool forced)
         slotPenChanged(penToolBar->getPen());
 
         pen_wiz->setMdiWindow(m);
+        pen_wiz->setVisible(usePenWizard());
         if (penPaletteWidget != nullptr){
          penPaletteWidget->setMdiWindow(m);
         }
