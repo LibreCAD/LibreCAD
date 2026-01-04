@@ -44,6 +44,8 @@
 #define M_PI_6 (M_PI / 6.)
 #endif
 
+using Catch::Approx;
+
 namespace {
 constexpr double TOL = 1e-6;
 constexpr double ANGLE_TOL = 1e-6;
@@ -747,4 +749,151 @@ TEST_CASE("LC_Hyperbola getNearestDist() accuracy",
     RS_Vector point = hb.getNearestDist(10.0, RS_Vector(0, 0));
     REQUIRE(!point.valid);
   }
+}
+
+TEST_CASE("LC_Hyperbola areaLineIntegral() analytical correctness", "[hyperbola][areaintegral]")
+{
+    constexpr double TOL = 1e-10;
+
+    // Helper to compute numerical ∫ x dy using Gauss-Kronrod (for validation)
+    auto numerical_area_integral = [](const LC_Hyperbola& hb) -> double {
+        if (!hb.isValid() || hb.isInfinite()) return 0.0;
+
+        double phi_min = std::min(hb.getData().angle1, hb.getData().angle2);
+        double phi_max = std::max(hb.getData().angle1, hb.getData().angle2);
+
+        double cx = hb.getData().center.x;
+        double cy = hb.getData().center.y;
+        double cos_th = std::cos(hb.getData().majorP.angle());
+        double sin_th = std::sin(hb.getData().majorP.angle());
+        double a = hb.getMajorRadius();
+        double b = hb.getMinorRadius();
+        int sign_x = hb.getData().reversed ? -1 : 1;
+
+        auto x_world = [cx, cos_th, sin_th, a, b, sign_x](double phi) {
+            double lx = sign_x * a * std::cosh(phi);
+            double ly = b * std::sinh(phi);
+            return cx + lx * cos_th - ly * sin_th;
+        };
+
+        auto dy_dphi = [cos_th, sin_th, a, b, sign_x](double phi) {
+            double dlx_dphi = sign_x * a * std::sinh(phi);
+            double dly_dphi = b * std::cosh(phi);
+            return dlx_dphi * sin_th + dly_dphi * cos_th;
+        };
+
+        auto integrand = [x_world, dy_dphi](double phi) {
+            return x_world(phi) * dy_dphi(phi);
+        };
+
+        double result = 0.0;
+        double abs_error = 0.0;
+
+        if (phi_min < -RS_TOLERANCE && phi_max > RS_TOLERANCE) {
+            result = boost::math::quadrature::gauss_kronrod<double, 61>::integrate(
+                integrand, phi_min, 0.0, 0, 1e-12, &abs_error) +
+                     boost::math::quadrature::gauss_kronrod<double, 61>::integrate(
+                integrand, 0.0, phi_max, 0, 1e-12, &abs_error);
+        } else {
+            result = boost::math::quadrature::gauss_kronrod<double, 61>::integrate(
+                integrand, phi_min, phi_max, 0, 1e-12, &abs_error);
+        }
+
+        return (hb.getData().angle2 >= hb.getData().angle1) ? result : -result;
+    };
+
+    SECTION("Centered, no rotation, ratio 0.5")
+    {
+        LC_HyperbolaData data;
+        data.center = RS_Vector(0.0, 0.0);
+        data.majorP = RS_Vector(3.0, 0.0);  // a=3
+        data.ratio = 0.5;                   // b=1.5
+        data.angle1 = -1.0;
+        data.angle2 = 1.5;
+        data.reversed = false;
+
+        LC_Hyperbola hb(nullptr, data);
+        REQUIRE(hb.isValid());
+
+        double analytical = hb.areaLineIntegral();
+        double numerical = numerical_area_integral(hb);
+
+        REQUIRE(analytical == Approx(numerical).epsilon(TOL));
+    }
+
+    SECTION("Non-centered, no rotation")
+    {
+        LC_HyperbolaData data;
+        data.center = RS_Vector(5.0, 2.0);
+        data.majorP = RS_Vector(3.0, 0.0);
+        data.ratio = 0.5;
+        data.angle1 = -1.0;
+        data.angle2 = 1.5;
+        data.reversed = false;
+
+        LC_Hyperbola hb(nullptr, data);
+        REQUIRE(hb.isValid());
+
+        double analytical = hb.areaLineIntegral();
+        double numerical = numerical_area_integral(hb);
+
+        REQUIRE(analytical == Approx(numerical).epsilon(TOL));
+    }
+
+    SECTION("Rotated 30 degrees, centered")
+    {
+        LC_HyperbolaData data;
+        data.center = RS_Vector(0.0, 0.0);
+        data.majorP = RS_Vector(3.0, 0.0).rotate(M_PI/6);  // 30°
+        data.ratio = 0.5;
+        data.angle1 = -1.0;
+        data.angle2 = 1.5;
+        data.reversed = false;
+
+        LC_Hyperbola hb(nullptr, data);
+        REQUIRE(hb.isValid());
+
+        double analytical = hb.areaLineIntegral();
+        double numerical = numerical_area_integral(hb);
+
+        REQUIRE(analytical == Approx(numerical).epsilon(TOL));
+    }
+
+    SECTION("Rotated 30 degrees, non-centered")
+    {
+        LC_HyperbolaData data;
+        data.center = RS_Vector(5.0, 2.0);
+        data.majorP = RS_Vector(3.0, 0.0).rotate(M_PI/6);
+        data.ratio = 0.5;
+        data.angle1 = -1.0;
+        data.angle2 = 1.5;
+        data.reversed = false;
+
+        LC_Hyperbola hb(nullptr, data);
+        REQUIRE(hb.isValid());
+
+        double analytical = hb.areaLineIntegral();
+        double numerical = numerical_area_integral(hb);
+
+        REQUIRE(analytical == Approx(numerical).epsilon(TOL));
+    }
+
+    SECTION("Rectangular hyperbola (ratio=1)")
+    {
+        LC_HyperbolaData data;
+        data.center = RS_Vector(5.0, 2.0);
+        data.majorP = RS_Vector(2.0, 0.0).rotate(M_PI/4);  // 45°
+        data.ratio = 1.0;
+        data.angle1 = 0.5;
+        data.angle2 = 2.0;
+        data.reversed = false;
+
+        LC_Hyperbola hb(nullptr, data);
+        REQUIRE(hb.isValid());
+
+        double analytical = hb.areaLineIntegral();
+        double numerical = numerical_area_integral(hb);
+
+        REQUIRE(analytical == Approx(numerical).epsilon(TOL));
+    }
 }

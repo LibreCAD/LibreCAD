@@ -1795,71 +1795,52 @@ void LC_Hyperbola::moveEndpoint(const RS_Vector &pos) {
 //=====================================================================
 // Area calculation support (Green's theorem)
 //=====================================================================
-
 /**
  * @brief areaLineIntegral
- * Computes ∮ x dy along the hyperbola arc.
- * Used with Green's theorem for closed contour area: Area = ½ (∮ x dy - ∮ y dx)
- * @return ∮ x dy (twice the signed area contribution when part of a closed
- * path)
+ * Computes ∮ x dy along the hyperbola arc using exact analytical formula.
+ *
+ * @return Signed line integral ∮ x dy
  */
-double LC_Hyperbola::areaLineIntegral() const {
-  if (!m_bValid)
-    return 0.0;
-
-  // Unbounded hyperbola → integral diverges
-  if (std::abs(data.angle1) < RS_TOLERANCE &&
-      std::abs(data.angle2) < RS_TOLERANCE) {
-    return 0.0;
-  }
-
-  const double a = getMajorRadius();
-  const double b = getMinorRadius();
-  if (a < RS_TOLERANCE || b < RS_TOLERANCE)
-    return 0.0;
+double LC_Hyperbola::areaLineIntegral() const
+{
+  if (!m_bValid || isInfinite()) return 0.0;
 
   double phi1 = data.angle1;
   double phi2 = data.angle2;
-  bool reverse = false;
-  if (phi1 > phi2) {
-    std::swap(phi1, phi2);
-    reverse = true;
-  }
 
-  const double cx = data.center.x;
-  const double theta = data.majorP.angle();
-  const double ct = std::cos(theta);
-  const double st = std::sin(theta);
+  double a = getMajorRadius();
+  double b = getMinorRadius();
+  double a2 = a*a;
+  double b2 = b*b;
+  double cx = data.center.x;
+  //double cy = data.center.y;
+  double cos_th = std::cos(data.majorP.angle());
+  double sin_th = std::sin(data.majorP.angle());
+  double cos2_th = cos_th*cos_th - sin_th*sin_th;
+  double sin2_th = 2. * cos_th*sin_th;
 
-  // Coefficients for parametric form
-  const double A = a * ct;  // cosh term in x
-  const double B = -b * st; // sinh term in x
-  const double C = a * st;  // cosh term in y
-  const double D = b * ct;  // sinh term in y
+  double R = a * sin_th;
+  double S = b * cos_th;
 
-  // Antiderivative of x(φ) * y'(φ)
-  auto F = [&](double phi) -> double {
-    const double ch = std::cosh(phi);
-    const double sh = std::sinh(phi);
-    const double ch2 = std::cosh(2.0 * phi);
-    const double sh2 = std::sinh(2.0 * phi);
+  double c1 = (a2 - b2)/8.;
+  double c2 = a * b / 4.;
+  double c3 = a * b /2.;
 
-    return cx * (D * ch + C * sh) + (A * D + B * C) * 0.5 * (ch2 + 1.0) +
-           (A * C + B * D) * 0.5 * sh2;
+  // The undetermined integral function for \(\int x\,dy\) is
+//  \(\mathbf{F(t)=}\frac{\mathbf{a}^{\mathbf{2}}\mathbf{-b}^{\mathbf{2}}}{\mathbf{8}}\sin \mathbf{(2\alpha )}\cosh \mathbf{(2t)+
+// }\frac{\mathbf{ab}}{\mathbf{4}}\cos \mathbf{(2\alpha )}\sinh \mathbf{(2t)+
+// }\frac{\mathbf{ab}}{\mathbf{2}}\mathbf{t+
+  //c}_{\mathbf{x}}\mathbf{(a}\sin \mathbf{\alpha }\cosh \mathbf{t+b}\cos \mathbf{\alpha }\sinh \mathbf{t)+C}\)
+  auto primitive = [&](double phi) -> double {
+    double c1Term = c1 * sin2_th * std::cosh(2. * phi);
+    double c2Term = c2 * cos2_th * std::sinh(2. * phi);
+    double cxTerm = cx * (R * std::cosh(phi) + S * std::sinh(phi));
+    return c1Term + c2Term + c3 * phi + cxTerm;
   };
 
-  double integral = F(phi2) - F(phi1);
+  return primitive(phi2) - primitive(phi1);
 
-  if (data.reversed)
-    integral = -integral;
-  if (reverse)
-    integral = -integral;
-
-  return integral;
 }
-
-// In lc_hyperbola.cpp – UPDATED prepareTrim implementation (replaces previous
-// version)
 
 RS_Vector LC_Hyperbola::prepareTrim(const RS_Vector &trimCoord,
                                     const RS_VectorSolutions &trimSol) {
