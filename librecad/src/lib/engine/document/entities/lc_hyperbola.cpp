@@ -492,7 +492,7 @@ RS_Vector LC_Hyperbola::worldToLocal(const RS_Vector& world) const
 //=====================================================================
 RS_Vector LC_Hyperbola::localToWorld(const RS_Vector& local) const
 {
-  return local.rotated(getAngle()) + data.center;
+  return local.rotated(getAngle()) + getCenter();
 }
 
 //=====================================================================
@@ -509,6 +509,9 @@ RS_Vector LC_Hyperbola::getPoint(double phi, bool useReversed) const {
 
   return localToWorld(local);
 }
+
+// In lc_hyperbola.cpp – updated getParamFromPoint() to respect majorP
+// orientation
 
 /**
  * @brief getParamFromPoint
@@ -561,20 +564,52 @@ double LC_Hyperbola::getParamFromPoint(const RS_Vector& p,
     return std::numeric_limits<double>::quiet_NaN();
   }
 
-  const RS_Vector local = worldToLocal(p);
+  const double a = getMajorRadius();
+  const double b = getMinorRadius();
+
+  if (a < RS_TOLERANCE || b < RS_TOLERANCE) {
+    return std::numeric_limits<double>::quiet_NaN();
+  }
+
+         // Transform point to local coordinate system:
+         // - Translate so center is at origin
+         // - Rotate so majorP aligns with positive x-axis
+  RS_Vector local = p - data.center;
+  local.rotate(-data.majorP.angle());  // inverse rotation
 
   //double x_local = local.x;
   double y_local = local.y;
 
          // Primary recovery: φ from y-coordinate (sinh is odd and strictly increasing)
-  double sinh_phi = y_local / getMinorRadius();
+  double sinh_phi = y_local / b;
   double phi = std::asinh(sinh_phi);
 
+  //        // Reconstruct expected x from φ
+  // double cosh_phi = std::cosh(phi);
+  // double x_expected = a * cosh_phi;
+
+  //        // Determine which branch the point belongs to by sign of x_local
+  //        // data.reversed == true means left branch (x negative in local coords)
+  // //bool pointOnLeftBranch = (x_local < 0.0);
+
+  //        // Expected x sign based on data.reversed
+  // double expectedSign = data.reversed ? -1.0 : 1.0;
+
+  //        // Check consistency: reconstructed |x| should match, and sign should align with branch
+  // double x_expected_signed = expectedSign * x_expected;
+
+  // if (std::abs(x_local - x_expected_signed) > RS_TOLERANCE * a) {
+  //   // Point does not lie on this hyperbola branch
+  //   return std::numeric_limits<double>::quiet_NaN();
+  // }
+
+  //        // For left branch (reversed=true), φ is defined such that cosh(φ) is still positive,
+  //        // so the same φ works for both branches — no sign flip needed
   return phi;
 }
 
 bool LC_Hyperbola::isInClipRect(const RS_Vector &p, const LC_Rect& rect) const {
-  return p.valid && rect.inArea(p, RS_TOLERANCE);
+  return p.valid && rect.inArea(p);
 }
 
 //=====================================================================
@@ -1805,141 +1840,9 @@ double LC_Hyperbola::areaLineIntegral() const
 
 }
 
-RS_Vector LC_Hyperbola::prepareTrim(const RS_Vector &trimCoord,
-                                    const RS_VectorSolutions &trimSol) {
-  if (!m_bValid || trimSol.empty()) {
-    return RS_Vector(false);
-  }
+// In lc_hyperbola.cpp – fixed and improved dualLineTangentPoint() (analogous to
+// ellipse)
 
-  // Unbounded hyperbolas are not trimmable in the usual sense
-  if (std::abs(data.angle1) < RS_TOLERANCE &&
-      std::abs(data.angle2) < RS_TOLERANCE) {
-    return RS_Vector(false);
-  }
-
-  const RS_Vector start = getStartpoint();
-  const RS_Vector end = getEndpoint();
-
-  if (!start.valid || !end.valid) {
-    return RS_Vector(false);
-  }
-
-  // Determine which endpoint the user clicked closer to
-  RS_Vector nearestOnEntity = getNearestPointOnEntity(trimCoord, true);
-  if (!nearestOnEntity.valid) {
-    nearestOnEntity = trimCoord; // fallback
-  }
-
-  RS2::Ending clickedSide = getTrimPoint(trimCoord, nearestOnEntity);
-
-  // Among valid intersection solutions, choose the one that:
-  // 1. Lies on the side the user clicked (start or end direction)
-  // 2. Is farthest in the direction away from the opposite endpoint
-  // This ensures the segment containing the clicked point is preserved.
-  RS_Vector bestSol(false);
-  double bestScore = -RS_MAXDOUBLE;
-
-  for (const RS_Vector &sol : trimSol) {
-    if (!sol.valid)
-      continue;
-
-    // Project solution onto the hyperbola for robustness
-    RS_Vector proj = getNearestPointOnEntity(sol, true);
-    if (!proj.valid)
-      proj = sol;
-
-    double phi = getParamFromPoint(proj, data.reversed);
-    if (std::isnan(phi))
-      continue;
-
-    bool onStartSide = (clickedSide == RS2::EndingStart) ? (phi <= data.angle1)
-                                                         : (phi >= data.angle2);
-
-    // Primary criterion: must be on the clicked side (extend or trim away from
-    // click)
-    if (!onStartSide)
-      continue;
-
-    // Secondary: prefer the solution farthest from the kept endpoint
-    double score =
-        (clickedSide == RS2::EndingStart)
-            ? (data.angle1 - phi)  // larger difference = farther left
-            : (phi - data.angle2); // larger difference = farther right
-
-    if (score > bestScore) {
-      bestScore = score;
-      bestSol = proj;
-    }
-  }
-
-  // Fallback: if no solution on the clicked side, use closest valid
-  // intersection
-  if (!bestSol.valid) {
-    double minDist = RS_MAXDOUBLE;
-    for (const RS_Vector &sol : trimSol) {
-      if (!sol.valid)
-        continue;
-      RS_Vector proj = getNearestPointOnEntity(sol, true);
-      if (!proj.valid)
-        proj = sol;
-      double d = proj.distanceTo(nearestOnEntity);
-      if (d < minDist) {
-        minDist = d;
-        bestSol = proj;
-      }
-    }
-  }
-
-  if (!bestSol.valid) {
-    return RS_Vector(false);
-  }
-
-  double newPhi = getParamFromPoint(bestSol, data.reversed);
-
-  // Update only the endpoint on the clicked side
-  if (clickedSide == RS2::EndingStart) {
-    data.angle1 = newPhi;
-  } else {
-    data.angle2 = newPhi;
-  }
-
-  calculateBorders();
-  updateLength();
-
-  return bestSol;
-}
-
-RS2::Ending LC_Hyperbola::getTrimPoint(const RS_Vector & /*trimCoord*/,
-                                       const RS_Vector &trimPoint) {
-  if (!m_bValid || !trimPoint.valid) {
-    return RS2::EndingNone;
-  }
-
-  // For unbounded hyperbolas, treat as no defined ends
-  if (std::abs(data.angle1) < RS_TOLERANCE &&
-      std::abs(data.angle2) < RS_TOLERANCE) {
-    return RS2::EndingNone;
-  }
-
-  const RS_Vector start = getStartpoint();
-  const RS_Vector end = getEndpoint();
-
-  if (!start.valid || !end.valid) {
-    return RS2::EndingNone;
-  }
-
-  const double distToStart = trimPoint.distanceTo(start);
-  const double distToEnd = trimPoint.distanceTo(end);
-
-  // Use a small tolerance to avoid flickering when exactly midway
-  if (distToStart + RS_TOLERANCE < distToEnd) {
-    return RS2::EndingStart;
-  } else {
-    return RS2::EndingEnd;
-  }
-}
-
-// find tangent point, given the dual line of a tangent
 RS_Vector LC_Hyperbola::dualLineTangentPoint(const RS_Vector &line) const {
   if (!m_bValid || !line.valid) {
     return RS_Vector(false);
@@ -1963,4 +1866,126 @@ RS_Vector LC_Hyperbola::dualLineTangentPoint(const RS_Vector &line) const {
     return RS_Vector{false};
 
   return getPoint(std::atanh(r), false);
+}
+
+//=====================================================================
+// Trim support – updated to match LC_Parabola behavior
+//=====================================================================
+/**
+ * @brief getTrimPoint
+ * Determines which endpoint to move for trimming, based on the click position
+ * relative to the chosen intersection point.
+ *
+ * Updated to match modern LibreCAD behavior (used by parabola, spline, etc.):
+ * - The click point (trimCoord) and the chosen intersection (from prepareTrim())
+ *   are used to decide whether to trim/extend the start or end.
+ * - Keeps the portion containing the click point.
+ *
+ * @param trimCoord  Click coordinate (user's mouse position)
+ * @param trimPoint  Chosen intersection point (returned by prepareTrim())
+ * @return EndingStart if trimming/extending start point, EndingEnd for end point,
+ *         EndingNone if invalid/unbounded
+ */
+RS2::Ending LC_Hyperbola::getTrimPoint(const RS_Vector& trimCoord,
+                                       const RS_Vector& trimPoint)
+{
+  if (!m_bValid || !trimPoint.valid || !trimCoord.valid || isInfinite()) {
+    return RS2::EndingNone;
+  }
+
+         // Project click point onto current hyperbola arc
+  RS_Vector nearest = getNearestPointOnEntity(trimCoord, true);
+  if (!nearest.valid) {
+    nearest = trimCoord;  // fallback
+  }
+
+  double phi_click = getParamFromPoint(nearest, data.reversed);
+  double phi_inter = getParamFromPoint(trimPoint, data.reversed);
+
+  if (std::isnan(phi_click) || std::isnan(phi_inter)) {
+    // Fallback to geometric distance if param recovery fails
+    RS_Vector start = getStartpoint();
+    RS_Vector end   = getEndpoint();
+    if (!start.valid || !end.valid) return RS2::EndingNone;
+
+    return (nearest.distanceTo(start) < nearest.distanceTo(end))
+               ? RS2::EndingStart : RS2::EndingEnd;
+  }
+
+         // Keep the side containing the click point
+         // If intersection is on the "start" side of click → move startpoint
+         // Otherwise → move endpoint
+  return (phi_inter < phi_click) ? RS2::EndingStart : RS2::EndingEnd;
+}
+
+/**
+ * @brief prepareTrim
+ * Selects the intersection point closest along the branch to the click position.
+ *
+ * Returns the chosen intersection so getTrimPoint() can use it to decide direction.
+ *
+ * @param trimCoord  Click coordinate
+ * @param trimSol    All intersection solutions
+ * @return Chosen intersection point (closest along parametric branch to click)
+ */
+RS_Vector LC_Hyperbola::prepareTrim(const RS_Vector& trimCoord,
+                                    const RS_VectorSolutions& trimSol)
+{
+  if (!m_bValid || trimSol.empty() || isInfinite()) {
+    return RS_Vector(false);
+  }
+
+         // Project click onto current arc to get reference parameter
+  RS_Vector nearest = getNearestPointOnEntity(trimCoord, false);
+  if (!nearest.valid) {
+    nearest = trimCoord;
+  }
+
+  double phi_ref = getParamFromPoint(nearest, data.reversed);
+  if (std::isnan(phi_ref)) {
+    return RS_Vector(false);
+  }
+
+  RS_Vector bestSol(false);
+  double minDeltaPhi = RS_MAXDOUBLE;
+
+         // Choose intersection with smallest |Δφ| from click position
+  for (const RS_Vector& intersect : trimSol) {
+    if (!intersect.valid)
+      continue;
+
+    // RS_Vector proj = getNearestPointOnEntity(sol, false);
+    // if (!proj.valid) proj = sol;
+
+    double phi = getParamFromPoint(intersect, data.reversed);
+    if (std::isnan(phi))
+      continue;
+
+    double deltaPhi = std::abs(phi - phi_ref);
+    if (deltaPhi < minDeltaPhi) {
+      minDeltaPhi = deltaPhi;
+      bestSol = intersect;
+    }
+  }
+
+  if (!bestSol.valid)
+    return RS_Vector(false);
+
+  double newPhi = getParamFromPoint(bestSol, data.reversed);
+
+         // Use getTrimPoint() with the chosen intersection to decide which end to move
+  RS2::Ending side = getTrimPoint(trimCoord, bestSol);
+
+  if (side == RS2::EndingStart) {
+    data.angle1 = newPhi;
+  } else if (side == RS2::EndingEnd) {
+    data.angle2 = newPhi;
+  } else {
+    return RS_Vector(false);
+  }
+
+  calculateBorders();
+  updateLength();
+
+  return bestSol;
 }

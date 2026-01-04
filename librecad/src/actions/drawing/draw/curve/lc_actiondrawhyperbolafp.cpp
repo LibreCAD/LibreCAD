@@ -193,18 +193,16 @@ void LC_ActionDrawHyperbolaFP::onMouseRightButtonRelease(int status, LC_MouseEve
   initPrevious(status);
 }
 
-void LC_ActionDrawHyperbolaFP::onCoordinateEvent(int status, bool isZero, const RS_Vector& pos)
+void LC_ActionDrawHyperbolaFP::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector& pos)
 {
-  if (!pos.valid) return;
+  if (!pos.valid)
+    return;
 
-  if (isZero) {
-    moveRelativeZero(pos);
-  }
+  moveRelativeZero(pos);
 
   switch (status) {
   case SetFocus1:
     focus1 = pos;
-    moveRelativeZero(focus1);
     setStatus(SetFocus2);
     break;
 
@@ -214,7 +212,6 @@ void LC_ActionDrawHyperbolaFP::onCoordinateEvent(int status, bool isZero, const 
       return;
     }
     focus2 = pos;
-    moveRelativeZero(focus2);
     setStatus(SetStartPoint);
     break;
 

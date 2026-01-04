@@ -134,6 +134,10 @@ public:
   double getLength() const override;
   void updateLength() override;
 
+  bool isEdge() const override {
+    return true;
+  }
+
   RS_Vector getNearestMiddle(const RS_Vector &coord, double *dist = nullptr,
                              int middlePoints = 1) const override;
 
