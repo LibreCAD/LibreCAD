@@ -492,7 +492,7 @@ RS_Vector LC_Hyperbola::worldToLocal(const RS_Vector& world) const
 //=====================================================================
 RS_Vector LC_Hyperbola::localToWorld(const RS_Vector& local) const
 {
-  return local.rotated(getAngle()) + getCenter();
+  return local.rotated(getAngle()) + data.center;
 }
 
 //=====================================================================
@@ -509,9 +509,6 @@ RS_Vector LC_Hyperbola::getPoint(double phi, bool useReversed) const {
 
   return localToWorld(local);
 }
-
-// In lc_hyperbola.cpp – updated getParamFromPoint() to respect majorP
-// orientation
 
 /**
  * @brief getParamFromPoint
@@ -564,54 +561,20 @@ double LC_Hyperbola::getParamFromPoint(const RS_Vector& p,
     return std::numeric_limits<double>::quiet_NaN();
   }
 
-  const double a = getMajorRadius();
-  const double b = getMinorRadius();
-
-  if (a < RS_TOLERANCE || b < RS_TOLERANCE) {
-    return std::numeric_limits<double>::quiet_NaN();
-  }
-
-         // Transform point to local coordinate system:
-         // - Translate so center is at origin
-         // - Rotate so majorP aligns with positive x-axis
-  RS_Vector local = p - data.center;
-  local.rotate(-data.majorP.angle());  // inverse rotation
+  const RS_Vector local = worldToLocal(p);
 
   //double x_local = local.x;
   double y_local = local.y;
 
          // Primary recovery: φ from y-coordinate (sinh is odd and strictly increasing)
-  double sinh_phi = y_local / b;
+  double sinh_phi = y_local / getMinorRadius();
   double phi = std::asinh(sinh_phi);
 
-  //        // Reconstruct expected x from φ
-  // double cosh_phi = std::cosh(phi);
-  // double x_expected = a * cosh_phi;
-
-  //        // Determine which branch the point belongs to by sign of x_local
-  //        // data.reversed == true means left branch (x negative in local coords)
-  // //bool pointOnLeftBranch = (x_local < 0.0);
-
-  //        // Expected x sign based on data.reversed
-  // double expectedSign = data.reversed ? -1.0 : 1.0;
-
-  //        // Check consistency: reconstructed |x| should match, and sign should align with branch
-  // double x_expected_signed = expectedSign * x_expected;
-
-  // if (std::abs(x_local - x_expected_signed) > RS_TOLERANCE * a) {
-  //   // Point does not lie on this hyperbola branch
-  //   return std::numeric_limits<double>::quiet_NaN();
-  // }
-
-  //        // For left branch (reversed=true), φ is defined such that cosh(φ) is still positive,
-  //        // so the same φ works for both branches — no sign flip needed
   return phi;
 }
 
-bool LC_Hyperbola::isInClipRect(const RS_Vector &p, double xmin, double xmax,
-                                double ymin, double ymax) const {
-  return p.valid && p.x >= xmin - RS_TOLERANCE && p.x <= xmax + RS_TOLERANCE &&
-         p.y >= ymin - RS_TOLERANCE && p.y <= ymax + RS_TOLERANCE;
+bool LC_Hyperbola::isInClipRect(const RS_Vector &p, const LC_Rect& rect) const {
+  return p.valid && rect.inArea(p, RS_TOLERANCE);
 }
 
 //=====================================================================
@@ -665,7 +628,7 @@ void LC_Hyperbola::draw(RS_Painter *painter) {
         double phiCur = getParamFromPoint(intersection);
         if (std::isnan(phiCur) || phiCur < data.angle1 || phiCur > data.angle2)
           continue;
-        if (isInClipRect(intersection, xmin, xmax, ymin, ymax)) {
+        if (isInClipRect(intersection, clip)) {
           params.push_back(phiCur);
         }
       }
@@ -673,7 +636,7 @@ void LC_Hyperbola::draw(RS_Painter *painter) {
 
     if (params.empty()) {
       RS_Vector test = getPoint((data.angle1 + data.angle2) * 0.5, rev);
-      if (test.valid && isInClipRect(test, xmin, xmax, ymin, ymax)) {
+      if (test.valid && isInClipRect(test, clip)) {
         params = {data.angle1, data.angle2};
       } else {
         return;
@@ -694,7 +657,7 @@ void LC_Hyperbola::draw(RS_Painter *painter) {
       double end = params[i + 1];
       RS_Vector middle = getPoint((start + end) * 0.5, rev);
       pts.clear();
-      if (isInClipRect(middle, xmin, xmax, ymin, ymax)) {
+      if (isInClipRect(middle, clip)) {
         adaptiveSample(pts, start, end, rev, maxWorldError);
         painter->drawSplinePointsWCS(pts, false);
       }
@@ -1976,9 +1939,7 @@ RS2::Ending LC_Hyperbola::getTrimPoint(const RS_Vector & /*trimCoord*/,
   }
 }
 
-// In lc_hyperbola.cpp – fixed and improved dualLineTangentPoint() (analogous to
-// ellipse)
-
+// find tangent point, given the dual line of a tangent
 RS_Vector LC_Hyperbola::dualLineTangentPoint(const RS_Vector &line) const {
   if (!m_bValid || !line.valid) {
     return RS_Vector(false);

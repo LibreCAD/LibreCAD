@@ -31,6 +31,14 @@
 
 class LC_Quadratic;
 
+namespace lc {
+namespace geo {
+class Area;
+}
+}
+
+using LC_Rect = lc::geo::Area;
+
 /**
  * Data structure for hyperbola (one or both branches)
  */
@@ -287,8 +295,7 @@ public:
   RS_Vector localToWorld(const RS_Vector& local) const;
 
 private:
-  bool isInClipRect(const RS_Vector &p, double xmin, double xmax, double ymin,
-                    double ymax) const;
+  bool isInClipRect(const RS_Vector &p, const LC_Rect& rect) const;
 
   void adaptiveSample(std::vector<RS_Vector> &out, double phiStart,
                       double phiEnd, bool rev, double maxError) const;

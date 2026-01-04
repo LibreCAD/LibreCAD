@@ -1277,9 +1277,9 @@ LC_ExtEntityData* RS_FilterDXFRW::extractEntityExtData(const std::vector<std::sh
     int currentValType = -1;
     std::stack<LC_ExtDataTag*> tagStack;
     bool expectType = false;
-    int listLevel = 0;
+    [[maybe_unused]] int listLevel = 0;
     bool inTagsList = false;
-    for (auto v: extData) {
+    for (auto& v: extData) {
         int code = v->code();
         switch (code) {
             case 1001: { // application name
