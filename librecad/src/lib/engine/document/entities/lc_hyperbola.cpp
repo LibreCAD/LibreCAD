@@ -1593,8 +1593,7 @@ void LC_Hyperbola::setPrimaryVertex(const RS_Vector &v) {
   updateLength();
 }
 
-// In lc_hyperbola.cpp – current moveRef() implementation (latest version)
-
+// ==========================================================================
 void LC_Hyperbola::moveRef(const RS_Vector &ref, const RS_Vector &offset) {
   if (!m_bValid || !ref.valid || !offset.valid) {
     return;
