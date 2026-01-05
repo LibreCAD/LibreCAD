@@ -9,6 +9,7 @@
    inkscape:version="1.4.2 (ebf0e940, 2025-05-08)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <defs
@@ -24,13 +25,14 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:zoom="3.4222863"
      inkscape:cx="118.48804"
-     inkscape:cy="111.47518"
+     inkscape:cy="111.47519"
      inkscape:window-width="1728"
-     inkscape:window-height="976"
+     inkscape:window-height="974"
      inkscape:window-x="0"
      inkscape:window-y="34"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg6" />
+     inkscape:current-layer="svg6"
+     showgrid="false" />
   <g
      stroke="#000000"
      id="g6"
@@ -64,6 +66,12 @@
            cy="10.159968"
            r="5.6444449"
            id="circle4" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#circle2"
+           id="start"
+           transform="translate(52.860701,23.008012)" />
       </g>
     </g>
   </g>
