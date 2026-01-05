@@ -35,6 +35,12 @@ $ librecad dxf2svg foo.dxf
 - [Releases and Prereleases](https://github.com/LibreCAD/LibreCAD/releases)
 - [Milestones](https://github.com/LibreCAD/LibreCAD/milestones)
 
+  For macOS arm64 builds, the app is __NOT__ signed. To workaround the "damaged" error ([#2162](https://github.com/LibreCAD/LibreCAD/issues/2162)):
+  ```bash
+  xattr -rc LibreCAD.app
+  sudo codesign --force --deep --sign - LibreCAD.app
+  ```
+
 
 ## Built with libdxfrw
 [`libdxfrw`](https://github.com/LibreCAD/libdxfrw) is an associated project that allows LibreCAD to read DXF and DWG files.
