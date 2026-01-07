@@ -1624,7 +1624,9 @@ void LC_LayerTreeWidget::doCreateLayersCopy(QModelIndex sourceIndex, bool duplic
  */
 void LC_LayerTreeWidget::duplicateLayerEntities(RS_Layer *sourceLayer, RS_Layer *copyLayer){
     // TODO - what about UNDO?
-    for (auto en: *document) {
+    for (RS_Entity* en: std::as_const(*document)) {
+        if (en == nullptr)
+            continue;
         RS_Layer *l = en->getLayer(true);
         if (l != nullptr && l == sourceLayer){
             RS_Entity *duplicateEntity = en->clone();
