@@ -267,6 +267,7 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
             double a = RS_Math::eval(c, &ok);
             if (ok) {
 				data->angle1 = RS_Math::deg2rad(a);
+                LC_ERR<<getStatus()<<" c = "<<a;
                 e->accept();
                 setStatus(SetAngle2);
 			} else
@@ -282,6 +283,7 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
             } else {
                 bool ok = false;
                 double a = RS_Math::eval(c, &ok);
+                LC_ERR<<getStatus()<<" c = "<<a;
                 if (ok) {
 					data->angle2 = RS_Math::deg2rad(a);
                     e->accept();
