@@ -982,18 +982,11 @@ RS_Vector LC_Hyperbola::getNearestDist(double distance,
   double ecc2 = getEccentricity() * getEccentricity();
 
          // Initial guess from nearest point on curve
-  double phi_guess = data.angle1 + targetArcFromStart / totalLength * (data.angle2 - data.angle1);
-  if (std::isnan(phi_guess))
-    phi_guess = data.angle1;
 
-         // Direction: forward from start side, backward from end side
-  double direction = fromStart ? 1.0 : -1.0;
-
-  double ds_dphi = a * std::sqrt(ecc2 * std::cosh(phi_guess) * std::cosh(phi_guess) - 1.0);
-  if (ds_dphi < RS_TOLERANCE)
-    ds_dphi = 1.0;
-
-  double phi = phi_guess + direction * (targetArcFromStart / ds_dphi);
+  using std::asinh, std::cosh, std::sinh;
+  double phi = asinh(sinh(data.angle1) + targetArcFromStart / totalLength * (sinh(data.angle2) - sinh(data.angle1)));
+  if (std::isnan(phi))
+    phi = data.angle1;
 
   constexpr int maxIter = 30;
   constexpr double tol = 1e-12;
@@ -1001,14 +994,14 @@ RS_Vector LC_Hyperbola::getNearestDist(double distance,
   bool converged = false;
   for (int i = 0; i < maxIter; ++i) {
     double s = getArcLength(data.angle1, phi);
-    double ds_dphi_current = a * std::sqrt(ecc2 * std::cosh(phi) * std::cosh(phi) - 1.0);
+    double ds_dphi_current = a * std::sqrt(ecc2 * cosh(phi) * cosh(phi) - 1.0);
     if (ds_dphi_current < RS_TOLERANCE) break;
 
     double residual = targetArcFromStart - s;
     double delta = residual / ds_dphi_current;
     phi += delta;
 
-    //LC_LOG<<__func__<<"(): "<<i<<": phi="<<phi<<", "<<s<<"("<<targetArcFromStart<<"): "<<residual;
+    LC_LOG<<__func__<<"(): "<<i<<": phi="<<phi<<", "<<s<<"("<<targetArcFromStart<<"): "<<residual;
     if (std::abs(delta) < tol) {
       converged = true;
       break;
