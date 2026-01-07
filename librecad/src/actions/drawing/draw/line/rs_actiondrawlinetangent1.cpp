@@ -36,6 +36,7 @@ namespace {
     const auto g_supportedEntityTypes = EntityTypeList{ RS2::EntityArc,
                                                       RS2::EntityCircle,
                                                       RS2::EntityEllipse,
+                                                      RS2::EntityHyperbola,
                                                       RS2::EntityParabola,
                                                       RS2::EntitySplinePoints };
 }
@@ -108,36 +109,33 @@ void RS_ActionDrawLineTangent1::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             break;
         }
         case SetCircle: {
-            deleteSnapper();
+          deleteSnapper();
 
-            RS_Entity *en = catchAndDescribe(e, g_supportedEntityTypes, RS2::ResolveAll);
-            if (en != nullptr) {
-                auto rtti = en->rtti();
-                if (en->isArc() || rtti == RS2::EntityParabola || rtti == RS2::EntitySplinePoints) {
-                    if (m_setCircleFirst) {
-                        highlightHover(en);
-                        m_entity = en;
-                    }
-                    else {
-                        RS_Vector tangentPoint;
-                        RS_Vector altTangentPoint;
-                        RS_Creation creation(nullptr, nullptr);
-                        auto* tangentLine = creation.createTangent1(mouse, *m_point, en, tangentPoint, altTangentPoint);
-                        m_tangent.reset(tangentLine);
-
-                        if (tangentLine != nullptr) {
-                            highlightHover(en);
-                            previewEntityToCreate(m_tangent->clone(), true);
-                            previewRefSelectablePoint(tangentPoint);
-                            previewRefSelectablePoint(altTangentPoint);
-                            if (m_showRefEntitiesOnPreview) {
-                                previewRefPoint(*m_point);
-                            }
-                        }
-                    }
-                }
+          RS_Entity *en = catchAndDescribe(e, g_supportedEntityTypes, RS2::ResolveAll);
+          if (en != nullptr) {
+            if (m_setCircleFirst) {
+              highlightHover(en);
+              m_entity = en;
             }
-            break;
+            else {
+              RS_Vector tangentPoint;
+              RS_Vector altTangentPoint;
+              RS_Creation creation(nullptr, nullptr);
+              auto* tangentLine = creation.createTangent1(mouse, *m_point, en, tangentPoint, altTangentPoint);
+              m_tangent.reset(tangentLine);
+
+              if (tangentLine != nullptr) {
+                highlightHover(en);
+                previewEntityToCreate(m_tangent->clone(), true);
+                previewRefSelectablePoint(tangentPoint);
+                previewRefSelectablePoint(altTangentPoint);
+                if (m_showRefEntitiesOnPreview) {
+                  previewRefPoint(*m_point);
+                }
+              }
+            }
+          }
+          break;
         }
         default:
             break;

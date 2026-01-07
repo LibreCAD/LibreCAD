@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   height="256"
+   viewBox="0 0 72.248892 72.248892"
+   width="256"
+   version="1.1"
+   id="svg6"
+   sodipodi:docname="hyperbola_foci_point.svg"
+   inkscape:version="1.4.2 (ebf0e940, 2025-05-08)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs6" />
+  <sodipodi:namedview
+     id="namedview6"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="3.4222863"
+     inkscape:cx="118.48804"
+     inkscape:cy="111.47519"
+     inkscape:window-width="1728"
+     inkscape:window-height="974"
+     inkscape:window-x="0"
+     inkscape:window-y="34"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg6"
+     showgrid="false" />
+  <g
+     stroke="#000000"
+     id="g6"
+     transform="rotate(90,35.779146,36.322864)">
+    <g
+       stroke-linecap="square"
+       id="g5">
+      <path
+         d="m 9.5320512,13.672222 c 5.3874578,9.492169 10.7747598,18.984066 15.8771508,23.720331 5.102392,4.736264 9.919514,4.717167 15.192674,-0.24847 C 45.875038,32.178445 51.604278,22.26658 57.33368,12.354438"
+         fill="none"
+         stroke-width="2.08457"
+         id="path2" />
+      <g
+         fill="#00ff7f"
+         stroke-dashoffset="8"
+         stroke-width="2.25778"
+         transform="rotate(-90)"
+         id="g4">
+        <circle
+           cx="-64.714043"
+           cy="32.871979"
+           r="5.6444449"
+           id="circle2" />
+        <circle
+           cx="-28.222223"
+           cy="33.30217"
+           r="5.6444449"
+           id="circle3" />
+        <circle
+           cx="-13.546676"
+           cy="10.159968"
+           r="5.6444449"
+           id="circle4" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#circle2"
+           id="start"
+           transform="translate(52.860701,23.008012)" />
+      </g>
+    </g>
+  </g>
+</svg>

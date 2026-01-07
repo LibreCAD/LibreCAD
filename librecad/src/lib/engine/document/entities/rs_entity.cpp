@@ -1027,6 +1027,7 @@ bool RS_Entity::trimmable() const{
     case RS2::EntityArc:
     case RS2::EntityCircle: // fixme - check whether prepareTrim() is supported there?
     case RS2::EntityEllipse:
+    case RS2::EntityHyperbola:
     case RS2::EntityLine:
     case RS2::EntityParabola:
     case RS2::EntitySplinePoints: // fixme - check whether prepareTrim() is supported there?

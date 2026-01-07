@@ -61,10 +61,11 @@ public:
 
     LC_Quadratic(std::vector<double> ce);
     std::vector<double> getCoefficients() const;
-    LC_Quadratic move(const RS_Vector& v);
-    LC_Quadratic rotate(double a);
-    LC_Quadratic rotate(const RS_Vector& center, double a);
-    LC_Quadratic shear(double k);
+    LC_Quadratic& move(const RS_Vector& v);
+    LC_Quadratic& rotate(double a);
+    LC_Quadratic& rotate(const RS_Vector& center, double a);
+    LC_Quadratic& scale(const RS_Vector& center, const RS_Vector& factor);
+    LC_Quadratic& shear(double k);
 	/** \brief whether it's quadratic or linear
       @return true, if quadratic;
       return false, if linear
@@ -89,11 +90,19 @@ public:
 	 const boost::numeric::ublas::vector<double>& getLinear() const;
 	 boost::numeric::ublas::matrix<double>& getQuad();
 	 const boost::numeric::ublas::matrix<double>& getQuad() const;
-	 double const& constTerm()const;
+         double constTerm()const;
 	 double& constTerm();
 
     /** switch x,y coordinates */
     LC_Quadratic flipXY(void) const;
+
+         /**
+          * @brief evaluateAt Evaluate the quadratic form at a given point (x, y)
+
+          * @param p x/y values
+          * @return the quadratic form value at the input
+          */
+    double evaluateAt(const RS_Vector& p) const;
 
     /**
      * @brief getDualCurve: the dual curve of the current conic section
@@ -105,7 +114,7 @@ public:
     LC_Quadratic getDualCurve() const;
 
     /** the matrix of rotation by angle **/
-    static boost::numeric::ublas::matrix<double> rotationMatrix(const double& angle);
+    static boost::numeric::ublas::matrix<double> rotationMatrix(double angle);
 
     static RS_VectorSolutions getIntersection(const LC_Quadratic& l1, const LC_Quadratic& l2);
 

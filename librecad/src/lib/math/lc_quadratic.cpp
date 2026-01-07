@@ -205,6 +205,14 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle, const RS_Vector& point
 
 
 bool LC_Quadratic::isQuadratic() const {
+  if (m_mQuad.size1() == 2 && m_mQuad.size2() == 2) {
+    if ( RS_Math::equal(m_mQuad(0,0), 0.)
+        && RS_Math::equal(m_mQuad(0,1), 0.)
+        && RS_Math::equal(m_mQuad(1,0), 0.)
+        && RS_Math::equal(m_mQuad(1,1), 0.)
+        )
+      return false;
+  }
     return m_bIsQuadratic;
 }
 
@@ -254,7 +262,7 @@ const boost::numeric::ublas::matrix<double>& LC_Quadratic::getQuad() const
     return m_mQuad;
 }
 
-double const& LC_Quadratic::constTerm()const
+double LC_Quadratic::constTerm()const
 {
     return m_dConst;
 }
@@ -421,24 +429,46 @@ std::vector<double>  LC_Quadratic::getCoefficients() const
     return ret;
 }
 
-LC_Quadratic LC_Quadratic::move(const RS_Vector& v)
+// In lc_quadratic.cpp – Fixed move() transformation for linear terms
+
+/**
+ * @brief move
+ * Translates the conic by the given offset vector.
+ *
+ * For primal conic A x² + B xy + C y² + D x + E y + F = 0,
+ * translation by (dx, dy) transforms linear terms:
+ *   D' = D - 2 A dx - B dy
+ *   E' = E - B dx - 2 C dy
+ *   F' = F - D dx - E dy + A dx² + B dx dy + C dy²
+ *
+ * @param offset Translation vector (dx, dy)
+ * @return Translated LC_Quadratic
+ */
+LC_Quadratic& LC_Quadratic::move(const RS_Vector& offset)
 {
-    if(m_bValid && v.valid ) {
-
-        m_dConst -= m_vLinear(0) * v.x + m_vLinear(1)*v.y;
-
-        if(m_bIsQuadratic){
-            m_vLinear(0) -= 2.*m_mQuad(0,0)*v.x + (m_mQuad(0,1)+m_mQuad(1,0))*v.y;
-            m_vLinear(1) -= 2.*m_mQuad(1,1)*v.y + (m_mQuad(0,1)+m_mQuad(1,0))*v.x;
-            m_dConst += m_mQuad(0,0)*v.x*v.x + (m_mQuad(0,1)+m_mQuad(1,0))*v.x*v.y+ m_mQuad(1,1)*v.y*v.y ;
-        }
-    }
-
+  if (!isValid()) {
     return *this;
+  }
+
+  std::vector<double> coeffs = getCoefficients();
+  double A = coeffs[0];
+  double B = coeffs[1];
+  double C = coeffs[2];
+  double D = coeffs[3];
+  double E = coeffs[4];
+  double F = coeffs[5];
+
+  double dx = offset.x;
+  double dy = offset.y;
+
+  m_vLinear(0) = D - 2.0 * A * dx - B * dy;
+  m_vLinear(1) = E - B * dx - 2.0 * C * dy;
+  m_dConst = F + A * dx * dx + B * dx * dy + C * dy * dy - D * dx - E * dy;
+
+  return *this;
 }
 
-
-LC_Quadratic LC_Quadratic::rotate(double angle)
+LC_Quadratic& LC_Quadratic::rotate(double angle)
 {
     using namespace boost::numeric::ublas;
     matrix<double> m=rotationMatrix(angle);
@@ -451,7 +481,7 @@ LC_Quadratic LC_Quadratic::rotate(double angle)
     return *this;
 }
 
-LC_Quadratic LC_Quadratic::rotate(const RS_Vector& center, double angle)
+LC_Quadratic& LC_Quadratic::rotate(const RS_Vector& center, double angle)
 {
     move(-center);
     rotate(angle);
@@ -460,9 +490,71 @@ LC_Quadratic LC_Quadratic::rotate(const RS_Vector& center, double angle)
 }
 
 /**
+ * @brief scale
+ * Scales the conic non-uniformly from the given center point (in-place).
+ *
+ * Modifies the current conic by applying non-uniform scaling by factors (sx, sy)
+ * from center (cx, cy):
+ *   x' = cx + sx (x - cx)
+ *   y' = cy + sy (y - cy)
+ *
+ * The transformation is applied directly to the coefficients.
+ *
+ * @param center Center of scaling
+ * @param factor Scaling factors (sx, sy)
+ * @return Reference to this (modified) LC_Quadratic
+ */
+LC_Quadratic& LC_Quadratic::scale(const RS_Vector& center, const RS_Vector& factor)
+{
+  if (!isValid() || factor.magnitude() < RS_TOLERANCE) {
+    m_bValid = false;
+    return *this;
+  }
+
+  double sx = factor.x;
+  double sy = factor.y;
+  double cx = center.x;
+  double cy = center.y;
+
+  if (std::abs(sx) < RS_TOLERANCE || std::abs(sy) < RS_TOLERANCE) {
+    m_bValid = false;
+    return *this;
+  }
+
+  double A = m_mQuad(0,0);
+  double B = 2.0 * m_mQuad(0,1);  // full B coefficient
+  double C = m_mQuad(1,1);
+  double D = m_vLinear(0);
+  double E = m_vLinear(1);
+  double F = m_dConst;
+
+         // Apply non-uniform scaling transformation
+  double A_new = A / (sx * sx);
+  double B_new = B / (sx * sy);
+  double C_new = C / (sy * sy);
+
+  double D_new = (D - 2.0 * A * cx - B * cy) / (sx * sx) + (B * cy) / (sx * sy);
+  double E_new = (E - B * cx - 2.0 * C * cy) / (sy * sy) + (B * cx) / (sx * sy);
+
+  double F_new = F + A * cx * cx + B * cx * cy + C * cy * cy
+                 - D * cx - E * cy;
+
+         // Update internal representation
+  m_mQuad(0,0) = A_new;
+  m_mQuad(0,1) = m_mQuad(1,0) = B_new * 0.5;
+  m_mQuad(1,1) = C_new;
+  m_vLinear(0) = D_new;
+  m_vLinear(1) = E_new;
+  m_dConst = F_new;
+
+  m_bValid = true;
+  return *this;
+}
+
+/**
  * @author{Dongxu Li}
  */
-LC_Quadratic LC_Quadratic::shear(double k)
+LC_Quadratic& LC_Quadratic::shear(double k)
 {
     if(isQuadratic()){
         auto getCes = [this]() -> std::array<double, 6>{
@@ -475,11 +567,11 @@ LC_Quadratic LC_Quadratic::shear(double k)
             a, -2.*k*a + b, k*(k*a - b) + c,
             d, e - k*d, f
         }};
-        return {sheared};
+        *this = {sheared};
+        return *this;
     }
-    LC_Quadratic qf(*this);
-    qf.m_vLinear(1) -= k * qf.m_vLinear(0);
-    return qf;
+    m_vLinear(1) -= k * m_vLinear(0);
+    return *this;
 }
 
 /** switch x,y coordinates */
@@ -627,7 +719,7 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
    cos x, sin x
    -sin x, cos x
    */
-boost::numeric::ublas::matrix<double> LC_Quadratic::rotationMatrix(const double& angle)
+boost::numeric::ublas::matrix<double> LC_Quadratic::rotationMatrix(double angle)
 {
     boost::numeric::ublas::matrix<double> ret(2,2);
     ret(0,0)=cos(angle);
@@ -636,35 +728,80 @@ boost::numeric::ublas::matrix<double> LC_Quadratic::rotationMatrix(const double&
     ret(1,1)=ret(0,0);
     return ret;
 }
-
 /**
- * @description: Given a general conic section with homogeneous coordinates $[a,b,c,d,e,f]$:
-        $$ax^2+b x y+c y^2+d x + e y + f = 0 $$
-    The dual curve is:
-        $$
-        \begin{split}
-        (e^2-4 c f)A^2&+&(4b f-2 d e) A B&+&(d^2-4 a f)B^2 &\\
-        &+&(4c d -2 b e) A C&+&(4a e - 2b d) B C&\\
-        & & &+&(b^2 - 4 a c) C^2&= 0
-        \end{split}
-        $$
+ * @brief getDualCurve
+ * Returns the dual (polar reciprocal) conic using the line convention u x + v y + 1 = 0.
+ *
+ * In projective geometry, the dual conic represents the envelope of polar lines.
+ * The standard adjugate gives coefficients for the dual equation in the form:
+ *   A' u² + B' u v + C' v² + D' u + E' v + F' = 0
+ *
+ * However, many CAD/geometry systems (including LibreCAD's dualLineTangentPoint)
+ * adopt the normalized line form: u x + v y + 1 = 0
+ *
+ * To match this convention, we scale the dual coefficients so that the constant term
+ * becomes +1 (corresponding to the +1 in the line equation).
+ *
+ * If F' = 0 (degenerate case, e.g., parabola), the dual is at infinity and we return
+ * an invalid quadratic.
+ *
+ * @return Dual conic with constant term normalized to +1, or invalid if degenerate
  */
 LC_Quadratic LC_Quadratic::getDualCurve() const
 {
-    if (!isQuadratic())
-        return LC_Quadratic{};
-    auto getCes = [this]() -> std::array<double, 6>{
-        std::vector<double> cev = getCoefficients();
-        return {cev[0], cev[1], cev[2], cev[3], cev[4], cev[5]};
-    };
-    const auto& [a,b,c,d,e,f] = getCes();
+  if (!isQuadratic()) {
+    return LC_Quadratic{};
+  }
 
-    const std::vector<double> dualCe = {{
-        e*e - 4.*c*f, 4.*b*f - 2.*d*e, d*d - 4.*a*f,
-        4.*c*d-2.*b*e, 4.*a*e-2.*b*d,
-        b*b-4.*a*c
-    }};
-    return {dualCe};
+         // Primal coefficients: A x² + B xy + C y² + D x + E y + F = 0
+  std::vector<double> primal = getCoefficients();
+  double A = primal[0];
+  double B = primal[1];
+  double C = primal[2];
+  double D = primal[3];
+  double E = primal[4];
+  double F = primal[5];
+
+         // Dual coefficients via adjugate of conic matrix
+  double A_prime = 4 * C * F - E * E;
+  double B_prime = 2 * D * E - 4 * B * F;
+  double C_prime = 4 * A * F - D * D;
+  double D_prime = 2 * B * E - 4 * C * D;
+  double E_prime = 2 * B * D - 4 * A * E;
+  double F_prime = 4 * A * C - B * B;
+
+  // Degenerate if F_prime == 0 (dual at infinity)
+  if (std::abs(F_prime) < RS_TOLERANCE) {
+    return LC_Quadratic{};
+  }
+
+  return LC_Quadratic({
+      A_prime,
+      B_prime,
+      C_prime,
+      D_prime,
+      E_prime,
+      F_prime
+  });
+}
+
+// Evaluate the quadratic form at a given point (x, y)
+double LC_Quadratic::evaluateAt(const RS_Vector& p) const
+{
+  if (!p.valid) return 0.0;  // or NaN / throw — but consistent with project style
+
+  double x = p.x;
+  double y = p.y;
+
+         // General conic: A x² + B xy + C y² + D x + E y + F
+  double result = m_mQuad(0,0) * x * x +                  // A x²
+                  2.0 * m_mQuad(0,1) * x * y +            // B xy (since matrix stores B/2)
+                  m_mQuad(1,1) * y * y +                  // C y²
+                  m_vLinear(0) * x +                      // D x
+                  m_vLinear(1) * y +                      // E y
+                  m_dConst;                               // F
+
+  return result;
 }
 
 /**

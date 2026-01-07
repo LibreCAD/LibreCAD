@@ -302,6 +302,7 @@ HEADERS += \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.h \
     actions/drawing/draw/curve/lc_actiondrawarc2pointslength.h \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.h \
+    actions/drawing/draw/curve/lc_actiondrawhyperbolafp.h \
     actions/drawing/draw/dimensions/lc_actiondimordinate.h \
     actions/drawing/draw/dimensions/lc_actiondimordinaterebase.h \
     actions/drawing/draw/dimensions/lc_actiondimstyleapply.h \
@@ -456,6 +457,7 @@ HEADERS += \
     lib/engine/rs_vector.h \
     lib/fileio/rs_fileio.h \
     lib/fileio/lc_filenameselectionservice.h \
+    lib/filters/lc_hyperbolaspline.h \
     lib/filters/rs_filtercxf.h \
     lib/filters/rs_filterdxfrw.h \
     lib/filters/rs_filterdxf1.h \
@@ -488,6 +490,7 @@ HEADERS += \
     ui/dialogs/entity/lc_entitypropertieseditor.h \
     ui/dialogs/entity/lc_entitypropertieseditorsupport.h \
     ui/dialogs/entity/lc_entitypropertieseditorwidget.h \
+    ui/dialogs/entity/lc_hyperbolapropertieseditingwidget.h \
     ui/dialogs/entity/lc_imagepropertieseditingwidget.h \
     ui/dialogs/entity/lc_insertpropertieseditingwidget.h \
     ui/dialogs/entity/lc_linepropertieseditingwidget.h \
@@ -621,6 +624,7 @@ SOURCES += \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp \
     actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp \
     actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.cpp \
+    actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp \
     actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp \
     actions/drawing/draw/dimensions/lc_actiondrawgdtfeaturecontrolframe.cpp \
     actions/drawing/draw/dimensions/lc_actiondimordinate.cpp \
@@ -687,6 +691,7 @@ SOURCES += \
     lib/engine/settings/lc_settingsexporter.cpp \
     lib/engine/undo/lc_undoablerelzero.cpp \
     lib/engine/utils/lc_rectregion.cpp \
+    lib/filters/lc_hyperbolaspline.cpp \
     lib/generators/layers/lc_layersexporter.cpp \
     lib/generators/image/lc_imageexporter.cpp \
     lib/gui/lc_coordinates_parser.cpp \
@@ -713,6 +718,7 @@ SOURCES += \
     ui/dialogs/entity/lc_entitypropertieseditor.cpp \
     ui/dialogs/entity/lc_entitypropertieseditorsupport.cpp \
     ui/dialogs/entity/lc_entitypropertieseditorwidget.cpp \
+    ui/dialogs/entity/lc_hyperbolapropertieseditingwidget.cpp \
     ui/dialogs/entity/lc_imagepropertieseditingwidget.cpp \
     ui/dialogs/entity/lc_insertpropertieseditingwidget.cpp \
     ui/dialogs/entity/lc_linepropertieseditingwidget.cpp \
@@ -1738,6 +1744,7 @@ FORMS = ui/action_options/circle/lc_circlebyarcoptions.ui \
        ui/dialogs/entity/lc_dlgtolerance.ui \
        #ui/dialogs/entity/lc_dlgsplinepoints.ui \
        ui/dialogs/entity/lc_ellipsepropertieseditingwidget.ui \
+       ui/dialogs/entity/lc_hyperbolapropertieseditingwidget.ui \
        ui/dialogs/entity/lc_imagepropertieseditingwidget.ui \
        ui/dialogs/entity/lc_insertpropertieseditingwidget.ui \
        ui/dialogs/entity/lc_linepropertieseditingwidget.ui \
