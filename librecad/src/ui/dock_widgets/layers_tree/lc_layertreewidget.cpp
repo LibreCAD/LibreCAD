@@ -1596,15 +1596,18 @@ void LC_LayerTreeWidget::doCreateLayersCopy(const QModelIndex &sourceIndex, bool
  */
 void LC_LayerTreeWidget::duplicateLayerEntities(RS_Layer *sourceLayer, RS_Layer *copyLayer){
     // TODO - what about UNDO?
-    for (auto entity: *m_document) {
-        RS_Layer *layer = entity->getLayer(true);
-        if (layer != nullptr && layer == sourceLayer){
-            RS_Entity *duplicateEntity = entity->clone();
-            duplicateEntity->setLayer(copyLayer);
-            m_document->addEntity(duplicateEntity);
-        }
+  for (RS_Entity* entity: std::as_const(*m_document)) {
+    if (entity == nullptr)
+      continue;
+    RS_Layer *layer = entity->getLayer(true);
+    if (layer != nullptr && layer == sourceLayer){
+      RS_Entity *duplicateEntity = entity->clone();
+      duplicateEntity->setLayer(copyLayer);
+      m_document->addEntity(duplicateEntity);
     }
+  }
 }
+
 /**
  * Utility method that copies attributes of source layer to its copy
  * @param copyLayer layer to which attributes should be copied

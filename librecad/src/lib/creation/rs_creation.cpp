@@ -501,16 +501,25 @@ std::unique_ptr<RS_Line> RS_Creation::createLineOrthTan(const RS_Vector& coord,
     if (!(circle != nullptr && normal != nullptr)) {
         return {};
     }
+    
+    // Allow construction of a tangent normal to a given line using getTangentDirection()
+    RS_Vector const& tangent = circle->getNearestOrthTan(coord,*normal,false);
+    if (tangent.valid) {
+      double tangentDirection = circle->getTangentDirection(tangent).angle();
+      double normalDirection = normal->getDirection1();
+      if (RS_Math::equal(RS_Math::correctAngle0ToPi(tangentDirection - normalDirection), M_PI/2, RS_TOLERANCE_ANGLE)) {
+          RS_Vector linePoint = normal->getNearestPointOnEntity(tangent, false);
+        return std::make_unique<RS_Line>(m_container, RS_LineData{linePoint, tangent});
+      }
+    }
+
     RS2::EntityType rtti = circle->rtti();
-    if (!(circle->isArc() || rtti == RS2::EntityParabola)) {
+    if (!(circle->isArc())) {
         return {};
     }
-    //if( normal->getLength()<RS_TOLERANCE) return ret;//line too short
-    
-//    RS_Vector const& t0 = circle->getNearestOrthTan(coord,*normal,false);
+
     RS_Vector  tangentPoint0;
     RS_Vector  t1;
-    // todo - potentially, it's possible to move this fragment to appropriate implementations of  getNearestOrthTan - and expand it for returning all tangent points instead of nearest one
     switch (rtti){
         case RS2::EntityCircle: {
             auto *cir = dynamic_cast<RS_Circle *>(circle);

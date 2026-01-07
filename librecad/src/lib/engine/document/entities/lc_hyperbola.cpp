@@ -848,51 +848,76 @@ RS_Vector LC_Hyperbola::getNearestMiddle(const RS_Vector& coord,
  * @param onEntity Restrict to bounded arc if true
  * @return Point of tangency on hyperbola, or invalid if no real tangent
  */
-RS_Vector LC_Hyperbola::getNearestOrthTan(const RS_Vector& coord,
+/**
+ * @brief getNearestOrthTan
+ * Returns the point on the hyperbola where the tangent is orthogonal to the given normal line.
+ *
+ * Uses conic pole-polar duality:
+ * - The normal line is interpreted as a point in dual space.
+ * - The polar line of this point w.r.t. the hyperbola is computed using the dual conic.
+ * - The polar line is tangent to the hyperbola.
+ * - The point of tangency is found using the existing dualLineTangentPoint() method.
+ *
+ * The dual conic is normalized to constant term +1 to match the line form u x + v y + 1 = 0
+ * used in dualLineTangentPoint().
+ *
+ * @param coord   Coordinate (usually mouse position) — not used directly
+ * @param normal  Normal line (direction defines the required tangent orientation)
+ * @param onEntity Restrict to bounded arc if true (handled by dualLineTangentPoint)
+ * @return Point of tangency on hyperbola, or invalid if no real tangent
+ */
+/**
+ * @brief getNearestOrthTan
+ * Returns the point on the hyperbola where the tangent is orthogonal to the given normal line.
+
+* Uses analytical parametric solution:
+* - The tangent direction at φ is (dx/dφ, dy/dφ)
+* - Solve for φ where tangent direction ⊥ normal direction, i.e., dx/dφ * nx + dy/dφ * ny = 0
+* - Leads to tanh φ = - M / K, with M, K derived from rotation and a/b
+* - Exact and efficient (no iteration)
+
+ * Restricts to bounded arc if onEntity=true.
+ *
+ * @param coord   Unused (compatibility)
+ * @param normal  Line whose direction is the desired normal at the point
+ * @param onEntity Restrict to bounded arc
+ * @return Tangent point, or invalid if no real solution or outside bounds
+ */
+RS_Vector LC_Hyperbola::getNearestOrthTan(const RS_Vector& /*coord*/,
                                           const RS_Line& normal,
-                                          [[maybe_unused]] bool onEntity) const
+                                          bool onEntity) const
 {
-  Q_UNUSED(coord);  // Not needed — direction is from normal line
+  if (!m_bValid)
+    return RS_Vector(false);
 
-  if (!m_bValid) return RS_Vector(false);
+  RS_Vector n{normal.getDirection1()};
 
-         // Get full implicit quadratic of the hyperbola
-  LC_Quadratic primal = getQuadratic();
-  if (!primal.isValid()) return RS_Vector(false);
+  n = n.normalized();
 
-         // Compute dual conic (normalized for line form u x + v y + 1 = 0)
-  LC_Quadratic dualConic = primal.getDualCurve();
-  if (!dualConic.isValid()) return RS_Vector(false);
+  double cos_th = std::cos(data.majorP.angle());
+  double sin_th = std::sin(data.majorP.angle());
+  double a = getMajorRadius();
+  double b = getMinorRadius();
+  int sign_x = data.reversed ? -1 : 1;
 
-         // Normal line direction vector (from origin to coord or use normal direction)
-  RS_Vector direction = normal.getTangentDirection({}).normalized();
+  double K = sign_x * a * (cos_th * n.x + sin_th * n.y);
+  double M = b * (-sin_th * n.x + cos_th * n.y);
 
-         // The line in dual space: u x + v y + 1 = 0 → point (u, v) = direction
-  RS_Vector dualPoint = direction;
+  if (std::abs(K) < RS_TOLERANCE) return RS_Vector(false);  // no solution
 
-         // Evaluate dual conic at this point to get polar line coefficients
-  std::vector<double> dualCoeffs = dualConic.getCoefficients();
-  double A = dualCoeffs[0];
-  double B = dualCoeffs[1];
-  double C = dualCoeffs[2];
-  double D = dualCoeffs[3];
-  double E = dualCoeffs[4];
-  double F = dualCoeffs[5];  // should be +1.0
+  double tanh_phi = - M / K;
 
-  double u = dualPoint.x;
-  double v = dualPoint.y;
+  if (std::abs(tanh_phi) >= 1.0 - RS_TOLERANCE) return RS_Vector(false);
 
-         // Polar line: (2 A u + B v + D) x + (B u + 2 C v + E) y + (D u + E v + 2 F) = 0
-         // But since F=1 and normalized, simplified:
-  double px = 2.0 * A * u + B * v + D;
-  double py = B * u + 2.0 * C * v + E;
-  double pc = D * u + E * v + 2.0 * F;
+  double phi = std::atanh(tanh_phi);
 
-         // The polar line in primal space
-  RS_Vector polarLine(px, py, pc);
+  if (onEntity && !isInfinite()) {
+    double phi_min = std::min(data.angle1, data.angle2);
+    double phi_max = std::max(data.angle1, data.angle2);
+    if (phi < phi_min - RS_TOLERANCE || phi > phi_max + RS_TOLERANCE) return RS_Vector(false);
+  }
 
-         // Find tangent point using existing dualLineTangentPoint
-  return dualLineTangentPoint(polarLine);
+  return getPoint(phi, data.reversed);
 }
 
 bool LC_Hyperbola::isInfinite() const
