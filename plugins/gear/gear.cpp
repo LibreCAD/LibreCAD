@@ -107,17 +107,17 @@ lc_Geardlg::lc_Geardlg(QWidget *parent) :
             j++; if (j >= 2) { j = 0; i++; }                     \
         } while(0)
 
-    QDSB(rotateBox,               tr("Rotation angle"), -360.0, 360.0, 1.0, 6);
-    QSB (nteethBox,               tr("Number of teeth"), 1, 2000, 1);
-    QDSB(modulusBox,              tr("Modulus"), 1.0E-10, 1.0E+10, 0.1, 6); 
-    QDSB(pressureBox,             tr("Pressure angle (deg)"), 0.1, 89.9, 1.0, 5);
+    QSB (nteethBox,               tr("z, Number of teeth"), 5, 1000, 1);
+    QDSB(modulusBox,              tr("mₙ, Normal module"), 0.5, 70, 1, 3); 
+    QDSB(pressureBox,             tr("αₙ, Normal pressure angle (deg)"), 0.1, 89.9, 1.0, 5);
     QDSB(addendumBox,             tr("Addendum (rel. to modulus)"), 0.0, 5.0, 0.1, 5);
     QDSB(dedendumBox,             tr("Dedendum (rel. to modulus)"), 0.0, 5.0, 0.1, 5);
     QSB (n1Box,                   tr("Number of segments to draw (dedendum)"), 1, 1024, 8);
     QSB (n2Box,                   tr("Number of segments to draw (addendum)"), 1, 1024, 8);
+    QDSB(rotateBox,               tr("Rotation angle"), -360.0, 360.0, 1.0, 6);
+
     QCB (drawAllTeethBox,         tr("Draw all teeth?"));
     QCB (drawBothSidesOfToothBox, tr("Draw symmetric face?"));
-
     QCB (useLayersBox,            tr("Use layers?")); RST();
     QCB (drawAddendumCircleBox,   tr("Draw addendum circle?"));
     QCB (drawPitchCircleBox,      tr("Draw pitch circle?"));
@@ -125,7 +125,6 @@ lc_Geardlg::lc_Geardlg(QWidget *parent) :
     QCB (drawRootCircleBox,       tr("Draw root circle?"));
     QCB (drawPressureLineBox,     tr("Draw pressure line?"));
     QCB (drawPressureLimitBox,    tr("Draw pressure limits?"));
-
     QCB (calcInterferenceBox,     tr("Calculate interference?"));
     QSB (n3Box,                   tr("Number of segments to draw (interference)"), 1, 1024,     8);
 
