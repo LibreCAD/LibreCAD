@@ -114,6 +114,7 @@ lc_Geardlg::lc_Geardlg(QWidget *parent) :
     QDSB(dedendumBox,             tr("Dedendum (rel. to modulus)"), 0.0, 5.0, 0.1, 5);
     QSB (n1Box,                   tr("Number of segments to draw (dedendum)"), 1, 1024, 8);
     QSB (n2Box,                   tr("Number of segments to draw (addendum)"), 1, 1024, 8);
+    QSB (n3Box,                   tr("Number of segments to draw (interference)"), 1, 1024, 8);
     QDSB(rotateBox,               tr("Rotation angle"), -360.0, 360.0, 1.0, 6);
 
     QCB (drawAllTeethBox,         tr("Draw all teeth?"));
@@ -126,7 +127,6 @@ lc_Geardlg::lc_Geardlg(QWidget *parent) :
     QCB (drawPressureLineBox,     tr("Draw pressure line?"));
     QCB (drawPressureLimitBox,    tr("Draw pressure limits?"));
     QCB (calcInterferenceBox,     tr("Calculate interference?"));
-    QSB (n3Box,                   tr("Number of segments to draw (interference)"), 1, 1024,     8);
 
     QPushButton *acceptbut = new QPushButton(tr("Accept"), this);
     QPushButton *cancelbut = new QPushButton(tr("Cancel"), this);
