@@ -205,6 +205,54 @@ jobs:
           path: LibreCAD*.dmg
           retention-days: 2
 
+  BuildMacOSArm64:
+    runs-on: macos-14
+    outputs:
+      output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@main
+        with:
+          fetch-depth: 0
+
+      - name: uninstall p7zip
+        run: |
+          brew uninstall p7zip
+
+      - name: Install Qt6
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.9.*'
+          modules: 'qt5compat'
+          arch: 'clang_64'
+
+      - name: Install boost dependencies
+        run: |
+          brew install boost
+
+      # XProtect can cause random failures if it decides that the DMG we create
+      # during the packaging phase is malware.
+      # TODO: Do it in a cleaner way
+      # Inspiration: https://github.com/servo/servo/pull/30779
+      - name: Kill XProtectBehaviorService
+        run: |
+          echo Killing XProtect.; sudo pkill -9 XProtect >/dev/null || true;
+
+      - name: Build and packaging
+        env:
+          QMAKE_OPTS: QMAKE_APPLE_DEVICE_ARCHS=arm64
+        run: |
+          scripts/build-osx.sh
+          mv LibreCAD.dmg LibreCAD-`git describe --always`-arm64.dmg
+
+      - name: Upload artifact
+        id: artifact-upload-step
+        uses: actions/upload-artifact@main
+        with:
+          name: macOSArm64Assets
+          path: LibreCAD*.dmg
+          retention-days: 2
+
   BuildWindows64:
     runs-on: windows-2022
     outputs:
@@ -389,7 +437,7 @@ jobs:
 
   UpdateAssets:
     if: github.repository_owner == 'LibreCAD'
-    needs: [BuildLinux, BuildLinuxAarch64, BuildMacOS, BuildWindows64, BuildWindowsARM64, BuildSnap]
+    needs: [BuildLinux, BuildLinuxAarch64, BuildMacOS, BuildMacOSArm64, BuildWindows64, BuildWindowsARM64, BuildSnap]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -416,6 +464,7 @@ jobs:
             linuxAssets/LibreCAD*.AppImage
             linuxAssetsAarch64/LibreCAD*.AppImage
             macOSAssets/LibreCAD*.dmg
+            macOSArm64Assets/LibreCAD*.dmg
             win64Assets/LibreCAD*.exe
             winARM64Assets/LibreCAD*.exe
             snapAssets/LibreCAD*.snap

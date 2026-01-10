@@ -13,12 +13,13 @@ it under the terms of the [GNU General Public License version 2](https://www.gnu
 as published by the Free Software Foundation.  
 Please read the [LICENSE](LICENSE) file for additional information.
 
-The master branch represents the latest pre-release code,
-and now requires Qt 6.4.0 or newer.  
+The master branch represents the latest pre-release code.
+The 2.2.2 branch requires Qt 6.4.0 or newer.
 The 2.2.1 branch requires Qt 5.15.0 or newer.
 The 2.2 branch requires Qt 5.2.1 or newer.
 The 2.1 branch will be the last to support Qt4.  
-The 2.0 branch will be the last to support the QCAD toolbar. [![Build Status](https://travis-ci.org/LibreCAD/LibreCAD.svg?branch=2.0)](https://travis-ci.org/LibreCAD/LibreCAD) 
+The 2.0 branch will be the last to support the QCAD toolbar.
+![Build Status](https://travis-ci.org/LibreCAD/LibreCAD.svg?branch=2.0)](https://travis-ci.org/LibreCAD/LibreCAD) 
 
 ## DXF Converter
 
@@ -34,6 +35,12 @@ $ librecad dxf2svg foo.dxf
 
 - [Releases and Prereleases](https://github.com/LibreCAD/LibreCAD/releases)
 - [Milestones](https://github.com/LibreCAD/LibreCAD/milestones)
+
+  For macOS arm64 builds, the app is __NOT__ signed. To workaround the "damaged" error ([#2162](https://github.com/LibreCAD/LibreCAD/issues/2162)):
+  ```bash
+  xattr -rc LibreCAD.app
+  sudo codesign --force --deep --sign - LibreCAD.app
+  ```
 
 
 ## Built with libdxfrw

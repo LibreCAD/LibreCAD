@@ -141,6 +141,7 @@ void RS_ActionModifyEntity::doTrigger() {
                 case RS2::EntityArc:
                 case RS2::EntityCircle:
                 case RS2::EntityEllipse:
+                case RS2::EntityHyperbola:
                 case RS2::EntityParabola:
                 case RS2::EntitySpline:
                 case RS2::EntitySplinePoints:

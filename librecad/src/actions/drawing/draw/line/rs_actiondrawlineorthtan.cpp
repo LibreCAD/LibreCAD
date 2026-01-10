@@ -29,7 +29,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 namespace {
     //this holds a list of entity types which supports tangent
     const auto g_supportedCircleEntityTypes = EntityTypeList{
-        {RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityParabola}
+        {RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityHyperbola, RS2::EntityParabola}
     };
 }
 
@@ -87,6 +87,9 @@ void RS_ActionDrawLineOrthTan::doTrigger() {
     RS_Vector altTangentPosition;
     auto tangent = creation.createLineOrthTan(m_actionData->mousePosition,
         m_actionData->normal, m_actionData->circle, altTangentPosition);
+
+    if (tangent == nullptr)
+      return;
 
     if (m_actionData->altMode) {
         tangent.reset();

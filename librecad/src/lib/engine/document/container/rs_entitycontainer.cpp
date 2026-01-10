@@ -629,7 +629,7 @@ unsigned RS_EntityContainer::countSelected(bool deep, QList<RS2::EntityType> con
 
 void RS_EntityContainer::collectSelected(std::vector<RS_Entity*> &collect, bool deep, QList<RS2::EntityType> const &types) {    
     std::set<RS2::EntityType> type{types.cbegin(), types.cend()};
-    for (RS_Entity *e: m_entities) {
+    for (RS_Entity *e: std::as_const(m_entities)) {
         if (e != nullptr) {
             if (e->isSelected()) {
                 if (types.empty() || type.count(e->rtti())) {
@@ -857,7 +857,7 @@ void RS_EntityContainer::updateInserts() {
             static_cast<RS_Insert*>(e)->update();
 
             RS_DEBUG->print("RS_EntityContainer::updateInserts: updated ID/type: %s", idTypeId.c_str());
-        } else if (e->isContainer()) {
+        } else if (e != nullptr && e->isContainer()) {
             if (e->rtti() == RS2::EntityHatch) {
                 RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_EntityContainer::updateInserts: skip hatch ID/type: %s",
                                 idTypeId.c_str());
@@ -1656,7 +1656,7 @@ bool RS_EntityContainer::optimizeContours() {
     //    std::cout<<"RS_EntityContainer::optimizeContours: 1"<<std::endl;
 
     /** remove unsupported entities */
-    for (RS_Entity *it: enList) {
+    for (RS_Entity *it: std::as_const(enList)) {
         removeEntity(it);
     }
 
@@ -2047,10 +2047,10 @@ std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() 
     }
     std::vector<std::unique_ptr<RS_EntityContainer>> loops;
     RS_EntityContainer edges(nullptr, false);
-    for(RS_Entity* e1: *this){
-        if (e1 != nullptr && e1->isContainer()){
-            if (e1->isContainer()){
-                auto subLoops = static_cast<RS_EntityContainer*>(e1)->getLoops();
+    for(RS_Entity* en: *this){
+        if (en != nullptr && en->isContainer()){
+            if (en->isContainer()){
+                auto subLoops = static_cast<RS_EntityContainer*>(en)->getLoops();
                 for (auto& subLoop: subLoops) {
                     loops.push_back(std::move(subLoop));
                 }
@@ -2058,26 +2058,26 @@ std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() 
             continue;
         }
 
-        if (!e1->isEdge()) {
+        if (en == nullptr || !en->isEdge()) {
             continue;
         }
 
         //detect circles and whole ellipses
-        switch (e1->rtti()) {
+        switch (en->rtti()) {
             case RS2::EntityEllipse:
-                if (static_cast<RS_Ellipse*>(e1)->isEllipticArc()) {
-                    edges.addEntity(e1);
+                if (static_cast<RS_Ellipse*>(en)->isEllipticArc()) {
+                    edges.addEntity(en);
                     break;
                 }
                 [[fallthrough]];
             case RS2::EntityCircle: {
                 auto ec = std::make_unique<RS_EntityContainer>(nullptr, false);
-                ec->addEntity(e1);
+                ec->addEntity(en);
                 loops.push_back(std::move(ec));
                 break;
             }
             default:
-                edges.addEntity(e1);
+                edges.addEntity(en);
         }
     }
     //find loops

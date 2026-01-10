@@ -60,6 +60,9 @@ namespace {
             return true;
         }
         switch (entity.rtti()) {
+            case RS2::EntityCircle:
+            case RS2::EntityEllipse:
+            case RS2::EntityHyperbola:
             case RS2::EntityParabola:
                 return true;
             default:
@@ -498,16 +501,25 @@ std::unique_ptr<RS_Line> RS_Creation::createLineOrthTan(const RS_Vector& coord,
     if (!(circle != nullptr && normal != nullptr)) {
         return {};
     }
+    
+    // Allow construction of a tangent normal to a given line using getTangentDirection()
+    RS_Vector const& tangent = circle->getNearestOrthTan(coord,*normal,false);
+    if (tangent.valid) {
+      double tangentDirection = circle->getTangentDirection(tangent).angle();
+      double normalDirection = normal->getDirection1();
+      if (RS_Math::equal(RS_Math::correctAngle0ToPi(tangentDirection - normalDirection), M_PI/2, RS_TOLERANCE_ANGLE)) {
+          RS_Vector linePoint = normal->getNearestPointOnEntity(tangent, false);
+        return std::make_unique<RS_Line>(m_container, RS_LineData{linePoint, tangent});
+      }
+    }
+
     RS2::EntityType rtti = circle->rtti();
-    if (!(circle->isArc() || rtti == RS2::EntityParabola)) {
+    if (!(circle->isArc())) {
         return {};
     }
-    //if( normal->getLength()<RS_TOLERANCE) return ret;//line too short
-    
-//    RS_Vector const& t0 = circle->getNearestOrthTan(coord,*normal,false);
+
     RS_Vector  tangentPoint0;
     RS_Vector  t1;
-    // todo - potentially, it's possible to move this fragment to appropriate implementations of  getNearestOrthTan - and expand it for returning all tangent points instead of nearest one
     switch (rtti){
         case RS2::EntityCircle: {
             auto *cir = dynamic_cast<RS_Circle *>(circle);
@@ -653,8 +665,43 @@ RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
                                      RS_Vector& altTangentPoint) {
     RS_Line* ret = nullptr;
     // check given entities:
-    if (!(circle != nullptr && point.valid)) {
+    if (!(circle != nullptr && point.valid && circle->isAtomic())) {
         return nullptr;
+    }
+
+    if (isArc(*circle)) {
+      // Find tangent lines through dual curves
+
+      // the dual line of the given point
+      LC_Quadratic dualLine{{point.x, point.y, 1.}};
+      LC_Quadratic dualCircle = circle->getQuadratic().getDualCurve();
+      // tangent lines by intersection of dual curves
+      RS_VectorSolutions dualSol = LC_Quadratic::getIntersection(dualLine, dualCircle);
+
+      if (dualSol.empty())
+        return nullptr;
+
+      // distance to coord
+      auto distCoord = [&coord](const RS_Vector& uv) {
+        return std::abs(uv.dotP(coord) + 1.);
+      };
+
+      if (dualSol.getNumber() == 2 && distCoord(dualSol[1]) < distCoord(dualSol[0]))
+        std::swap(dualSol[0], dualSol[1]);
+      if (dualSol.getNumber() == 2) {
+        altTangentPoint = circle->dualLineTangentPoint(dualSol[1]);
+      }
+      tangentPoint = circle->dualLineTangentPoint(dualSol[0]);
+
+      // in case the point is on circle
+      if (tangentPoint == point) {
+        tangentPoint.move(dualSol[0].rotate(M_PI/2.) * circle->getLength());
+      }
+      LC_UndoSection undo(m_document, m_viewport, handleUndo);
+      ret = new RS_Line{m_container, {point, tangentPoint}};
+      setupAndAddEntity(ret);
+
+      return ret;
     }
 
     // the two tangent points:
@@ -737,6 +784,8 @@ std::vector<std::unique_ptr<RS_Line>> RS_Creation::createTangent2(
         auto rsLine = std::make_unique<RS_Line>(nullptr, fromLineCoordinate(line));
         rsLine->setStartpoint(circle1->dualLineTangentPoint(line));
         rsLine->setEndpoint(circle2->dualLineTangentPoint(line));
+        if (!(rsLine->getStartpoint().isValid() && rsLine->getEndpoint().isValid()))
+          return nullptr;
         return std::unique_ptr<RS_Line>(std::move(rsLine));
     });
     // cleanup invalid lines

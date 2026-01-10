@@ -112,10 +112,6 @@ constexpr int g_hotspotXY=-1;
             && vpMin.x + 1e6 >= vpMax.x
             && vpMin.y + 1e6 >= vpMax.y;
     }
-
-    LC_Rect getGuiRect([[maybe_unused]]const LC_Rect& modelRect, [[maybe_unused]]const RS_Vector& model2GuiFactor) {
-        return {};
-    }
 }
 
 /**
@@ -1282,7 +1278,7 @@ void QG_GraphicView::layerActivated(RS_Layer *layer) {
 
             graphic->startUndoCycle();
 
-            for (auto en: *container) { // fixme - sand - iterating all elements in container
+            for (auto en: std::as_const(*container)) { // fixme - sand - iterating all elements in container
                 if (en != nullptr) {
                     if (en->isSelected()) {
                         RS_Entity *cl = en->clone();
@@ -1297,7 +1293,7 @@ void QG_GraphicView::layerActivated(RS_Layer *layer) {
                 }
             }
 
-            for (auto cl: clones) {
+            for (auto cl: std::as_const(clones)) {
                 container->addEntity(cl);
                 graphic->addUndoable(cl);
             }

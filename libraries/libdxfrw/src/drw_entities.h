@@ -847,7 +847,6 @@ public:
     std::vector<std::shared_ptr<DRW_Coord>> controllist;  /*!< control points list, code 10, 20 & 30 */
     std::vector<std::shared_ptr<DRW_Coord>> fitlist;      /*!< fit points list, code 11, 21 & 31 */
 
-private:
     std::shared_ptr<DRW_Coord> controlpoint;   /*!< current control point to add data */
     std::shared_ptr<DRW_Coord> fitpoint;       /*!< current fit point to add data */
 };

@@ -36,6 +36,7 @@
 #include "libdxfrw.h"
 
 class LC_DimStyle;
+class LC_Hyperbola;
 class RS_Point;
 class RS_Line;
 class RS_Circle;
@@ -175,6 +176,7 @@ public:
     void writeCircle(RS_Circle* c);
     void writeArc(RS_Arc* a);
     void writeEllipse(RS_Ellipse* s);
+    void writeHyperbola(LC_Hyperbola* h);
     void writeSolid(RS_Solid* s);
     void writeLWPolyline(RS_Polyline* l);
     void writeSpline(RS_Spline* s);
@@ -276,6 +278,11 @@ private:
     void applyParsedDimStyleExtData(LC_DimStyle* dimStyle, const QString& appName, const std::vector<DRW_Variant>& vector);
     LC_DimStyle *createDimStyle(const DRW_Dimstyle &s);
     void addPolylineSegment(RS_Polyline& polyline, RS_Vector prev_pos, RS_Vector curr_pos, double bulge, const std::vector<std::shared_ptr<DRW_Variant>>& extData, bool isClosedSegment);
+    /**
+     * Handle degree-2 SPLINE with exactly 3 control points (rational quadratic conic).
+     * @return true if a conic entity (hyperbola or parabola) was created and handled
+     */
+    bool handleQuadraticConicSpline(const DRW_Spline* data);
 };
 
 #endif
