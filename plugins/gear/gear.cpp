@@ -45,7 +45,7 @@ void LC_Gear::execComm([[maybe_unused]] Document_Interface *doc,
                         QWidget *parent, [[maybe_unused]] QString cmd)
 {
     QPointF center;
-    if (!doc->getPoint(&center, QString("select center"))) {
+    if (!doc->getPoint(&center, tr("Select center of gear"))) {
         return;
     }
 
@@ -67,9 +67,7 @@ lc_Geardlg::lc_Geardlg(QWidget *parent) :
     QDialog(parent),
     settings(QSettings::IniFormat, QSettings::UserScope, "LibreCAD", "gear_plugin")
 {
-    const char *windowTitle = "Draw a gear";
-
-    setWindowTitle(tr(windowTitle));
+    setWindowTitle(tr("Option for gear (ISO 1328)"));
 
     QLabel *label;
     QGridLayout *mainLayout = new QGridLayout(this);
