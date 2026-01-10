@@ -247,7 +247,7 @@ int main(int argc, char** argv) {
 
 #    else
 
-    QT_REQUIRE_VERSION(argc, argv, "5.2.1");
+    QT_REQUIRE_VERSION(argc, argv, "6.4");
 
     // Check first two arguments in order to decide if we want to run librecad
     // as console dxf2pdf or dxf2png tools. On Linux we can create a link to
