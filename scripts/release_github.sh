@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 # Fully Automated LibreCAD GitHub Release Script (with gh CLI)
 # Usage: ./release_github.sh <new_version> [rc|stable] [--assets-dir <path>] [--draft] [--dry-run]
 #
@@ -69,6 +69,8 @@ while [[ $# -gt 0 ]]; do
     esac
     shift
 done
+
+export GPG_TTY=$(tty)
 
 # Validate version format (e.g., 2.2.1 or 2.2.1.1)
 if ! [[ "$NEW_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(\.[0-9]+)?$ ]]; then
@@ -187,10 +189,10 @@ run_cmd "git add CMakeLists.txt common.pri librecad.pro || true"  # Ignore if no
 if git diff --cached --quiet; then
     echo "No changes to commit - proceeding without new commit."
 else
-    run_cmd "git commit -m \"$COMMIT_MSG\" -S || true"  # true to continue if empty
+    run_cmd "git commit -m \"$COMMIT_MSG\" -s || true"  # true to continue if empty
 fi
 
-run_cmd "git tag -a \"$TAG\" -m \"Release $NEW_VERSION\" -S"
+run_cmd "git tag -a \"$TAG\" -m \"Release $NEW_VERSION\" -s"
 run_cmd "git push origin HEAD"
 run_cmd "git push origin \"$TAG\""
 
