@@ -11,9 +11,11 @@
     </description>
     <launchable type="desktop-id">librecad.desktop</launchable>
     <url type="homepage">https://librecad.org/</url>
+    <url type="vcs-browser">https://github.com/LibreCAD/LibreCAD</url>
     <screenshots>
         <screenshot type="default">
             <image>https://dokuwiki.librecad.org/lib/exe/fetch.php/librecad_screeshot_2.2.png</image>
+            <caption>Main Window</caption>
         </screenshot>
     </screenshots>
     <provides>
