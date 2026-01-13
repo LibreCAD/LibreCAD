@@ -917,7 +917,7 @@ or [%2]</source>
     </message>
     <message>
         <source>New From &amp;Template</source>
-        <translation type="unfinished">Novo à partir do &amp;modelo</translation>
+        <translation type="unfinished">Novo a partir do &amp;modelo</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
