@@ -2646,7 +2646,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="592"/>
         <source>New From &amp;Template</source>
-        <translation type="unfinished">Novo à partir do &amp;modelo</translation>
+        <translation type="unfinished">Novo a partir do &amp;modelo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="593"/>
