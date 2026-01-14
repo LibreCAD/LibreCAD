@@ -13,7 +13,8 @@ DEFINES -= JWW_WRITE_SUPPORT
 LC_VERSION="2.2.2.6-alpha"
 LC_PRERELEASE = "true";
 
-VERSION=$${LC_VERSION}
+DEFINES += LC_VERSION=\"$${LC_VERSION}\"
+DEFINES += LC_PRERELEASE=\"$${LC_PRERELEASE}\"
 
 # Store intermedia stuff somewhere else
 GENERATED_DIR = ../../generated/librecad
@@ -91,9 +92,6 @@ win32 {
         QMAKE_POST_LINK = "$$_PRO_FILE_PWD_/../../scripts/postprocess-win.bat" $$LC_VERSION
     }
 }
-
-DEFINES += LC_VERSION=\"$$LC_VERSION\"
-DEFINES += LC_PRERELEASE=\"$$LC_PRERELEASE\"
 
 # Additional libraries to load
 LIBS += -L../../generated/lib  \
