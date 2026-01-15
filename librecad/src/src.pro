@@ -14,6 +14,7 @@ LC_VERSION="2.2.2.6-alpha"
 LC_PRERELEASE = "true";
 
 VERSION=$${LC_VERSION}
+DEFINES += VERSION=\"$${VERSION}\"
 
 # Store intermedia stuff somewhere else
 GENERATED_DIR = ../../generated/librecad
