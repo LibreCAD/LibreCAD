@@ -73,7 +73,7 @@ LC_DlgAbout::LC_DlgAbout(QWidget *parent)
     // Src/qtbase/src/corelib/global/qcompilerdetection.h
 
     m_info = QString(
-        tr("Version: <b>%1</b>").arg(XSTR(LC_VERSION)) + "<br/>" +
+        tr("Version: <b>%1</b>").arg(XSTR(VERSION)) + "<br/>" +
 #if defined(Q_CC_CLANG)
         tr("Compiler: Clang %1.%2.%3").arg(__clang_major__).arg(__clang_minor__).arg(__clang_patchlevel__) + "<br/>" +
 #elif defined(Q_CC_GNU)
