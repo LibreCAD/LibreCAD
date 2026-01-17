@@ -13,8 +13,8 @@ DEFINES -= JWW_WRITE_SUPPORT
 LC_VERSION="2.2.2.6-alpha"
 LC_PRERELEASE = "true";
 
-VERSION=$${LC_VERSION}
-DEFINES += VERSION=\"$${VERSION}\"
+# For About window only
+DEFINES += ABOUT_VERSION=\"$${LC_VERSION}\"
 
 # Store intermedia stuff somewhere else
 GENERATED_DIR = ../../generated/librecad
