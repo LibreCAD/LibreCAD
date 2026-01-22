@@ -127,9 +127,11 @@ Section "Main Section" SecMain
     SetOutPath "$INSTDIR\resources\qm"
     File /nonfatal "${TRANSLATIONS_DIR}\qt_*.qm"
     File /nonfatal "${TRANSLATIONS_DIR}\qtbase_*.qm"
+    File /nonfatal "${TRANSLATIONS_DIR}\qtbase_*.qm"
+    File /nonfatal "..\..\generated\*.qm"
     ; LibreCAD translations - non-fatal (warnings only)
-    SetOutPath "$INSTDIR\ts"
-    File /nonfatal /r "..\..\windows\ts\*.qm"
+    ; SetOutPath "$INSTDIR\ts"
+    ; File /nonfatal /r "..\..\windows\ts\*.qm"
     ; === Package LFF fonts ===
     SetOutPath "$INSTDIR\resources\fonts"
     File /r "..\..\librecad\support\fonts\*.lff"
