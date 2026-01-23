@@ -600,11 +600,11 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
     if(!p1->isQuadratic()){
         std::swap(p1,p2);
     }
-    if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
-        DEBUG_HEADER;
-        std::cout<<*p1<<std::endl;
-        std::cout<<*p2<<std::endl;
-    }
+    // if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
+    //     DEBUG_HEADER;
+    //     std::cout<<*p1<<std::endl;
+    //     std::cout<<*p2<<std::endl;
+    // }
     if(!p1->isQuadratic()){
         //two lines
         std::vector<std::vector<double> > ce(2,std::vector<double>(3,0.));
@@ -677,11 +677,7 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
     }
     std::vector<std::vector<double> >  ce = { p1->getCoefficients(),
                                             p2->getCoefficients()};
-    if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
-        DEBUG_HEADER
-                std::cout<<*p1<<std::endl;
-        std::cout<<*p2<<std::endl;
-    }
+
     auto sol= RS_Math::simultaneousQuadraticSolverFull(ce);
     bool valid= sol.size()>0;
     for(auto & v: sol){
@@ -692,10 +688,10 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
         const std::vector<double> xyi = {v.x * v.x, v.x * v.y, v.y * v.y, v.x, v.y, 1.};
         const double e0 = std::inner_product(xyi.cbegin(), xyi.cend(), ce.front().cbegin(), 0.);
         const double e1 = std::inner_product(xyi.cbegin(), xyi.cend(), ce.back().cbegin(), 0.);
-        LC_LOG<<__func__<<"(): "<<v.x<<","<<v.y<<": equ0= "<<e0;
-        LC_LOG<<__func__<<"(): "<<v.x<<","<<v.y<<": equ1= "<<e1;
     }
-    if(valid) return sol;
+    LC_ERR<<__LINE__;
+    if(valid)
+      return sol;
     ce.clear();
     ce.push_back(p1->getCoefficients());
     ce.push_back(p2->getCoefficients());
