@@ -357,12 +357,10 @@ void PathBuilder::appendSplinePoints(LC_SplinePoints* spline) {
 
          // Assume current path position is at the startpoint of the first segment
   for (size_t i = 0; i < num_segs; ++i) {
-    int seg_idx = static_cast<int>(i);
     RS_Vector start, ctrl, end;
-    if (spline->GetQuadPoints(seg_idx, &start, &ctrl, &end) != 0) {
-      QPointF ui_ctrl = toGuiPoint(ctrl);
-      QPointF ui_end = toGuiPoint(end);
-      m_path.quadTo(ui_ctrl, ui_end);
+    if (spline->GetQuadPoints(int(i), &start, &ctrl, &end) != 0) {
+      m_path.moveTo(toGuiPoint(start));
+      m_path.quadTo(toGuiPoint(ctrl), toGuiPoint(end));
     } else {
       // Fallback: line to end if quad points unavailable
       lineTo(end);

@@ -1026,7 +1026,7 @@ RS_Vector LC_Hyperbola::getNearestDist(double distance,
     double delta = residual / ds_dphi_current;
     phi += delta;
 
-    LC_LOG<<__func__<<"(): "<<i<<": phi="<<phi<<", "<<s<<"("<<targetArcFromStart<<"): "<<residual;
+    // LC_LOG<<__func__<<"(): "<<i<<": phi="<<phi<<", "<<s<<"("<<targetArcFromStart<<"): "<<residual;
     if (std::abs(delta) < tol) {
       converged = true;
       break;
