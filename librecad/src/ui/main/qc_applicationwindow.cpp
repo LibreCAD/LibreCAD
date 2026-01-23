@@ -937,6 +937,15 @@ void QC_ApplicationWindow::slotEditActiveBlock(){
     }
 }
 
+void QC_ApplicationWindow::slotFileOpenRecent(const QAction *action){
+    auto variant = action->data();
+    if (variant.isValid()) {
+        showStatusMessage(tr("Opening recent file..."));
+        QString fileName = variant.toString();
+        openFile(fileName, RS2::FormatUnknown);
+    }
+}
+
 QString QC_ApplicationWindow::getFileNameFromFullPath(const QString &path) {
     QFileInfo info(path);
     return info.fileName();
@@ -1682,15 +1691,6 @@ QMenu *QC_ApplicationWindow::createPopupMenu() {
 
 void QC_ApplicationWindow::toggleFullscreen(bool checked) {
     checked ? showFullScreen() : showMaximized();
-}
-
-void QC_ApplicationWindow::slotFileOpenRecent(const QAction *action){
-    auto variant = action->data();
-    if (variant.isValid()) {
-        showStatusMessage(tr("Opening recent file..."));
-        QString fileName = variant.toString();
-        openFile(fileName, RS2::FormatUnknown);
-    }
 }
 
 /**
