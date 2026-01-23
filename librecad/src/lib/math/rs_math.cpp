@@ -1122,26 +1122,26 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
     //y^0
     qy[0]=-d2*g*l + a*d*j*l - a2*l2
             - ( f2*g2 - d*f*g*j + a*f*j2 - 2.*a*f*g*l);
-    if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
-        DEBUG_HEADER
-                std::cout<<qy[4]<<"*y^4 +("<<qy[3]<<")*y^3+("<<qy[2]<<")*y^2+("<<qy[1]<<")*y+("<<qy[0]<<")==0"<<std::endl;
-    }
+    // if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
+    //     DEBUG_HEADER
+    //             std::cout<<qy[4]<<"*y^4 +("<<qy[3]<<")*y^3+("<<qy[2]<<")*y^2+("<<qy[1]<<")*y+("<<qy[0]<<")==0"<<std::endl;
+    // }
     //quarticSolver
     auto roots=quarticSolverFull(qy);
-    if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
-        std::cout<<"roots.size()= "<<roots.size()<<std::endl;
-    }
+    // if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
+    //     std::cout<<"roots.size()= "<<roots.size()<<std::endl;
+    // }
 
-    if (roots.size()==0 ) { // no intersection found
+    if (roots.empty() ) { // no intersection found
         return ret;
     }
     std::vector<double> ce(0,0.);
 
     for(size_t i0=0;i0<roots.size();i0++){
-        if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
-            DEBUG_HEADER
-                    std::cout<<"y="<<roots[i0]<<std::endl;
-        }
+        // if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
+        //     DEBUG_HEADER
+        //             std::cout<<"y="<<roots[i0]<<std::endl;
+        // }
         /*
           Collect[Eliminate[{ a*x^2 + b*x*y+c*y^2+d*x+e*y+f==0,g*x^2+h*x*y+i*y^2+j*x+k*y+l==0},x],y]
           */
@@ -1177,13 +1177,25 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
             continue;
         }
         RS_Vector vp(-ce[2]/ce[1],roots[i0]);
-        if(simultaneousQuadraticVerify(m,vp)) ret.push_back(vp);
+        if(simultaneousQuadraticVerify(m,vp))
+          ret.push_back(vp);
     }
-    if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
-        DEBUG_HEADER
-                std::cout<<"ret="<<ret<<std::endl;
-    }
-    return ret;
+    // if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
+    //     DEBUG_HEADER
+    //             std::cout<<"ret="<<ret<<std::endl;
+    // }
+
+    // filtering
+    RS_VectorSolutions filtered;
+    std::copy_if(ret.begin(), ret.end(), std::back_inserter(filtered), [&filtered](const RS_Vector& vp) {
+      return vp.valid
+             && vp.magnitude() <= RS_MAXDOUBLE
+             && (
+                                                               filtered.empty()
+                                                            || filtered.getClosestDistance(vp) >= RS_TOLERANCE  );
+
+    });
+    return filtered;
 }
 
 RS_VectorSolutions RS_Math::simultaneousQuadraticSolverMixed(const std::vector<std::vector<double> >& m)
