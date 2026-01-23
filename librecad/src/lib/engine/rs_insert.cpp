@@ -265,7 +265,7 @@ RS_Block* RS_Insert::getBlockForInsert() const{
         return block;
     }
 
-    RS_BlockList* blkList;
+    RS_BlockList* blkList = nullptr;
 
     if (!data.blockSource) {
         if (getGraphic()) {

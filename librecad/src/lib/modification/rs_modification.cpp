@@ -624,17 +624,17 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
         addNewEntities(addList);
     } else {
 
-        // paste as block:
-        // create new block:
+        // Issue #2447 : use the existing block, if exists
         QString name = data.blockName;
-        if (name.isEmpty()) {
-            name = graphic->newBlockName();
+        RS_Block* b = graphic->findBlock(name);
+        if (b == nullptr) {
+            // paste as block: create new block:
+            name = graphic->newBlockName(name);
+            b = addNewBlock(name, *graphic);
         }
 
-        RS_Block* b = addNewBlock(name, *graphic);
-
         // add entities to block:
-        for(auto e: *source){
+        for(RS_Entity* e: std::as_const(*source)){
             RS_Entity* e2 = e->clone();
             e2->reparent(b);
 

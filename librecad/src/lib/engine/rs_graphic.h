@@ -162,8 +162,8 @@ public:
     RS_Block* findBlock(const QString& name) {
         return blockList.find(name);
     }
-    QString newBlockName() {
-        return blockList.newName();
+    QString newBlockName(const QString hint = {}) {
+        return blockList.newName(hint);
     }
     void toggleBlock(const QString& name) {
         blockList.toggle(name);
