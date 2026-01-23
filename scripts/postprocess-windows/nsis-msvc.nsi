@@ -127,7 +127,6 @@ Section "Main Section" SecMain
     SetOutPath "$INSTDIR\resources\qm"
     File /nonfatal "${TRANSLATIONS_DIR}\qt_*.qm"
     File /nonfatal "${TRANSLATIONS_DIR}\qtbase_*.qm"
-    File /nonfatal "${TRANSLATIONS_DIR}\qtbase_*.qm"
     File /nonfatal "..\..\generated\*.qm"
     ; LibreCAD translations - non-fatal (warnings only)
     ; SetOutPath "$INSTDIR\ts"
