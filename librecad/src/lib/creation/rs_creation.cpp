@@ -943,8 +943,7 @@ RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
     //g.scale(RS_Vector(data.factor, data.factor));
     //g.rotate(data.angle);
 
-    QString s;
-    s = QFileInfo(data.file).completeBaseName();
+    QString s = QFileInfo(data.file).completeBaseName();
 
     RS_Modification m(*container, graphicView);
     m.paste(
