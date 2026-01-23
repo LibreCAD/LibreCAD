@@ -285,17 +285,20 @@ void LC_MenuFactory::createFileMenu(QMenuBar* menu_bar, QList<QMenu*>& topMenuMe
     m_menuFile = menu(tr("&File"), "file", menu_bar, {
                           "FileNew",
                           "FileNewTemplate",
-                          "FileOpen",
+                          "FileOpen"
+                      });
+
+    m_menuRecentFiles = new QMenu(tr("Recent Files"), m_menuFile);
+
+    m_menuFile->addMenu(m_menuRecentFiles);
+
+    addActions(m_menuFile, {
                           "",
                           "FileSave",
                           "FileSaveAs",
                           "FileSaveAll",
                           ""
                       });
-
-    m_menuRecentFiles = new QMenu(tr("Recent Files"), m_menuFile);
-
-    m_menuFile->addMenu(m_menuRecentFiles);
 
     subMenu(m_menuFile, tr("Import"), "import", ":/icons/import.lci", {
                 "DrawImage",
