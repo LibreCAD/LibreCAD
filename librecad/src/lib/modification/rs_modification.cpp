@@ -456,7 +456,7 @@ void RS_Modification::copy(const RS_Vector& ref, const bool cut) {
 void RS_Modification::copyEntity(RS_Entity* e, const RS_Vector& ref, bool cut) {
     RS_Entity* e2 = e->clone();
     e2->setSelected(false);
-    e2->move(ref);
+    e2->move(-ref);
 
     RS_CLIPBOARD->addEntity(e2);
 
