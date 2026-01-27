@@ -28,6 +28,7 @@
 #include <QMenuBar>
 #include <QToolBar>
 #include <QMouseEvent>
+#include <QToolTip>
 #include <QUrl>
 
 #include "lc_actiongroupmanager.h"
@@ -714,6 +715,10 @@ QMenu* LC_MenuFactory::menu(const QString& title, const QString& name, QMenuBar*
     nameCleared.remove('&');
     result->setObjectName(nameCleared.toLower() + "_menu");
     result->setTearOffEnabled(m_allowTearOffMenus);
+    if (QString(nameCleared.toLower()) == "plugins") {
+        // Show ToolTips for Plugins menu only
+        result ->setToolTipsVisible(true);
+    }
     return result;
 }
 
