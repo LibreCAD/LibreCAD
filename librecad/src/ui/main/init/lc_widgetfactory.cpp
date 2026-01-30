@@ -127,7 +127,7 @@ void LC_WidgetFactory::createCADSidebar(int columns, int icon_size, bool flatBut
 QDockWidget* LC_WidgetFactory::createDockWidget(const QString& horizontalTitle, const char *name, const QString& verticalTitle) const {
     auto result = new LC_DockWidget(m_appWin, horizontalTitle, verticalTitle);
     // auto result = new QDockWidget(horizontalTitle, m_appWin);
-    result->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    result->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Maximum);
     result->setWindowTitle(horizontalTitle);
     result->setObjectName(name);
     result->setProperty("_lc_doc_widget", true);
