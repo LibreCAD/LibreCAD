@@ -481,19 +481,19 @@ $SKPOLY
   9
 $TDCREATE
  40
-2456679.571788912
+2456679.571634109
   9
 $TDUCREATE
  40
-2456679.446788912
+2456679.446634109
   9
 $TDUPDATE
  40
-2456679.571789097
+2456679.571634468
   9
 $TDUUPDATE
  40
-2456679.446789097
+2456679.446634468
   9
 $TDINDWG
  40
@@ -541,7 +541,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-EF
+F3
   9
 $SURFTAB1
  70
@@ -921,7 +921,7 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{95421201-7D42-46AF-85B1-9775ECB894D6}
+{6BFD4E70-0165-4F97-821B-6F7532F1DAE4}
   9
 $VERSIONGUID
   2
@@ -1223,7 +1223,7 @@ AcDbViewportTableRecord
  12
 0.0
  22
-0.1875
+0.3249999999999886
  13
 0.0
  23
@@ -1249,9 +1249,9 @@ AcDbViewportTableRecord
  37
 0.0
  40
-1.453500000000012
+2.192999999999977
  41
-1.122132003983599
+1.140309790623063
  42
 50.0
  43
@@ -1423,7 +1423,7 @@ K5LT_THIN
   0
 LTYPE
   5
-A4
+A5
 330
 5
 100
@@ -4701,9 +4701,565 @@ SECTION
   2
 ENTITIES
   0
+HATCH
+  5
+A4
+330
+1F
+100
+AcDbEntity
+  8
+0
+ 62
+     7
+100
+AcDbHatch
+ 10
+0.0
+ 20
+0.0
+ 30
+0.0
+210
+0.0
+220
+0.0
+230
+1.0
+  2
+SOLID
+ 70
+     1
+ 71
+     0
+ 91
+        6
+ 92
+        1
+ 93
+        8
+ 72
+     1
+ 10
+-0.7995190528383287
+ 20
+-0.3749999999999999
+ 11
+-0.7425190528383318
+ 21
+-0.4926902714755957
+ 72
+     1
+ 10
+-0.7425190528383318
+ 20
+-0.4926902714755957
+ 11
+-0.6148390528383361
+ 21
+-0.5209359366297435
+ 72
+     1
+ 10
+-0.6148390528383361
+ 20
+-0.5209359366297435
+ 11
+-0.5135158528383335
+ 21
+-0.4382702899452916
+ 72
+     1
+ 10
+-0.5135158528383335
+ 20
+-0.4382702899452916
+ 11
+-0.4995190528383288
+ 21
+-0.375
+ 72
+     1
+ 10
+-0.4995190528383288
+ 20
+-0.3749999999999999
+ 11
+-0.5565190528383258
+ 21
+-0.257309728524404
+ 72
+     1
+ 10
+-0.5565190528383258
+ 20
+-0.257309728524404
+ 11
+-0.6841990528383215
+ 21
+-0.2290640633702564
+ 72
+     1
+ 10
+-0.6841990528383215
+ 20
+-0.2290640633702564
+ 11
+-0.7855222528383241
+ 21
+-0.3117297100547082
+ 72
+     1
+ 10
+-0.7855222528383241
+ 20
+-0.3117297100547082
+ 11
+-0.7995190528383288
+ 21
+-0.3749999999999999
+ 97
+        0
+ 92
+        1
+ 93
+        8
+ 72
+     1
+ 10
+-1.22583302491977
+ 20
+-0.6499999999999997
+ 11
+-1.187833024919772
+ 21
+-0.571539819016269
+ 72
+     1
+ 10
+-1.187833024919772
+ 20
+-0.571539819016269
+ 11
+-1.102713024919775
+ 21
+-0.5527093755801706
+ 72
+     1
+ 10
+-1.102713024919775
+ 20
+-0.5527093755801706
+ 11
+-1.035164224919773
+ 21
+-0.6078198067031385
+ 72
+     1
+ 10
+-1.035164224919773
+ 20
+-0.6078198067031385
+ 11
+-1.02583302491977
+ 21
+-0.6499999999999997
+ 72
+     1
+ 10
+-1.02583302491977
+ 20
+-0.6499999999999997
+ 11
+-1.063833024919768
+ 21
+-0.7284601809837303
+ 72
+     1
+ 10
+-1.063833024919768
+ 20
+-0.7284601809837303
+ 11
+-1.148953024919765
+ 21
+-0.7472906244198287
+ 72
+     1
+ 10
+-1.148953024919765
+ 20
+-0.7472906244198287
+ 11
+-1.216501824919767
+ 21
+-0.6921801932968609
+ 72
+     1
+ 10
+-1.216501824919767
+ 20
+-0.6921801932968609
+ 11
+-1.22583302491977
+ 21
+-0.6499999999999997
+ 97
+        0
+ 92
+        1
+ 93
+        8
+ 72
+     1
+ 10
+0.4995190528383288
+ 20
+-0.3749999999999999
+ 11
+0.5565190528383258
+ 21
+-0.257309728524404
+ 72
+     1
+ 10
+0.5565190528383258
+ 20
+-0.257309728524404
+ 11
+0.6841990528383215
+ 21
+-0.2290640633702564
+ 72
+     1
+ 10
+0.6841990528383215
+ 20
+-0.2290640633702564
+ 11
+0.7855222528383241
+ 21
+-0.3117297100547082
+ 72
+     1
+ 10
+0.7855222528383241
+ 20
+-0.3117297100547082
+ 11
+0.7995190528383288
+ 21
+-0.3749999999999999
+ 72
+     1
+ 10
+0.7995190528383288
+ 20
+-0.3749999999999999
+ 11
+0.7425190528383318
+ 21
+-0.4926902714755959
+ 72
+     1
+ 10
+0.7425190528383318
+ 20
+-0.4926902714755959
+ 11
+0.6148390528383361
+ 21
+-0.5209359366297435
+ 72
+     1
+ 10
+0.6148390528383361
+ 20
+-0.5209359366297435
+ 11
+0.5135158528383335
+ 21
+-0.4382702899452917
+ 72
+     1
+ 10
+0.5135158528383335
+ 20
+-0.4382702899452917
+ 11
+0.4995190528383288
+ 21
+-0.3749999999999999
+ 97
+        0
+ 92
+        1
+ 93
+        8
+ 72
+     1
+ 10
+1.22583302491977
+ 20
+-0.6499999999999997
+ 11
+1.187833024919772
+ 21
+-0.7284601809837303
+ 72
+     1
+ 10
+1.187833024919772
+ 20
+-0.7284601809837303
+ 11
+1.102713024919775
+ 21
+-0.7472906244198287
+ 72
+     1
+ 10
+1.102713024919775
+ 20
+-0.7472906244198287
+ 11
+1.035164224919773
+ 21
+-0.6921801932968609
+ 72
+     1
+ 10
+1.035164224919773
+ 20
+-0.6921801932968609
+ 11
+1.02583302491977
+ 21
+-0.6499999999999997
+ 72
+     1
+ 10
+1.02583302491977
+ 20
+-0.6499999999999997
+ 11
+1.063833024919768
+ 21
+-0.5715398190162693
+ 72
+     1
+ 10
+1.063833024919768
+ 20
+-0.5715398190162693
+ 11
+1.148953024919765
+ 21
+-0.5527093755801709
+ 72
+     1
+ 10
+1.148953024919765
+ 20
+-0.5527093755801709
+ 11
+1.216501824919767
+ 21
+-0.6078198067031386
+ 72
+     1
+ 10
+1.216501824919767
+ 20
+-0.6078198067031386
+ 11
+1.22583302491977
+ 21
+-0.6499999999999997
+ 97
+        0
+ 92
+        1
+ 93
+        8
+ 72
+     1
+ 10
+-0.1500000000000002
+ 20
+0.7499999999999999
+ 11
+-0.0930000000000031
+ 21
+0.8676902714755957
+ 72
+     1
+ 10
+-0.0930000000000031
+ 20
+0.8676902714755957
+ 11
+0.0346799999999926
+ 21
+0.8959359366297434
+ 72
+     1
+ 10
+0.0346799999999926
+ 20
+0.8959359366297434
+ 11
+0.1360031999999951
+ 21
+0.8132702899452916
+ 72
+     1
+ 10
+0.1360031999999951
+ 20
+0.8132702899452916
+ 11
+0.1499999999999998
+ 21
+0.7499999999999999
+ 72
+     1
+ 10
+0.1499999999999998
+ 20
+0.7499999999999999
+ 11
+0.0930000000000027
+ 21
+0.632309728524404
+ 72
+     1
+ 10
+0.0930000000000027
+ 20
+0.632309728524404
+ 11
+-0.0346799999999929
+ 21
+0.6040640633702564
+ 72
+     1
+ 10
+-0.0346799999999929
+ 20
+0.6040640633702564
+ 11
+-0.1360031999999955
+ 21
+0.6867297100547082
+ 72
+     1
+ 10
+-0.1360031999999955
+ 20
+0.6867297100547082
+ 11
+-0.1500000000000002
+ 21
+0.7499999999999999
+ 97
+        0
+ 92
+        1
+ 93
+        8
+ 72
+     1
+ 10
+-0.1000000000000001
+ 20
+1.3
+ 11
+-0.0620000000000021
+ 21
+1.37846018098373
+ 72
+     1
+ 10
+-0.0620000000000021
+ 20
+1.37846018098373
+ 11
+0.0231199999999951
+ 21
+1.397290624419829
+ 72
+     1
+ 10
+0.0231199999999951
+ 20
+1.397290624419829
+ 11
+0.0906687999999968
+ 21
+1.342180193296861
+ 72
+     1
+ 10
+0.0906687999999968
+ 20
+1.342180193296861
+ 11
+0.0999999999999999
+ 21
+1.3
+ 72
+     1
+ 10
+0.0999999999999999
+ 20
+1.3
+ 11
+0.0620000000000018
+ 21
+1.221539819016269
+ 72
+     1
+ 10
+0.0620000000000018
+ 20
+1.221539819016269
+ 11
+-0.0231199999999953
+ 21
+1.202709375580171
+ 72
+     1
+ 10
+-0.0231199999999953
+ 20
+1.202709375580171
+ 11
+-0.090668799999997
+ 21
+1.257819806703139
+ 72
+     1
+ 10
+-0.090668799999997
+ 20
+1.257819806703139
+ 11
+-0.1000000000000001
+ 21
+1.3
+ 97
+        0
+ 75
+     0
+ 76
+     1
+ 98
+        0
+  0
 CIRCLE
   5
-A5
+A6
 330
 1F
 100
@@ -4729,7 +5285,85 @@ AcDbCircle
   0
 CIRCLE
   5
-A6
+A7
+330
+1F
+100
+AcDbEntity
+  8
+0
+  6
+K5LT32768
+ 62
+     7
+370
+    18
+100
+AcDbCircle
+ 10
+-0.6495190528383288
+ 20
+-0.3749999999999999
+ 30
+0.0
+ 40
+0.15
+  0
+CIRCLE
+  5
+A8
+330
+1F
+100
+AcDbEntity
+  8
+0
+  6
+K5LT32768
+ 62
+     7
+370
+    18
+100
+AcDbCircle
+ 10
+-1.12583302491977
+ 20
+-0.6499999999999997
+ 30
+0.0
+ 40
+0.1
+  0
+CIRCLE
+  5
+A9
+330
+1F
+100
+AcDbEntity
+  8
+0
+  6
+K5LT32768
+ 62
+     7
+370
+    18
+100
+AcDbCircle
+ 10
+-0.0000000000000001
+ 20
+1.3
+ 30
+0.0
+ 40
+0.1
+  0
+CIRCLE
+  5
+AA
 330
 1F
 100
@@ -4755,7 +5389,7 @@ AcDbCircle
   0
 CIRCLE
   5
-A7
+AB
 330
 1F
 100
@@ -4771,17 +5405,17 @@ K5LT32768
 100
 AcDbCircle
  10
--0.6495190528383292
+1.12583302491977
  20
--0.3749999999999997
+-0.6499999999999997
  30
 0.0
  40
-0.15
+0.1
   0
 CIRCLE
   5
-A8
+AC
 330
 1F
 100
@@ -4797,9 +5431,9 @@ K5LT32768
 100
 AcDbCircle
  10
-0.6495190528383292
+0.6495190528383288
  20
--0.3749999999999997
+-0.3749999999999999
  30
 0.0
  40
@@ -4835,7 +5469,7 @@ ACAD_MATERIAL
   3
 ACAD_MLEADERSTYLE
 350
-EE
+F2
   3
 ACAD_MLINESTYLE
 350
@@ -4851,11 +5485,11 @@ E
   3
 ACAD_SCALELIST
 350
-A9
+AD
   3
 ACAD_TABLESTYLE
 350
-ED
+F1
   3
 ACAD_VISUALSTYLE
 350
@@ -4863,7 +5497,7 @@ ACAD_VISUALSTYLE
   3
 AcDbVariableDictionary
 350
-CB
+CF
   0
 DICTIONARY
   5
@@ -4939,7 +5573,7 @@ Global
   0
 DICTIONARY
   5
-EE
+F2
 102
 {ACAD_REACTORS
 330
@@ -5015,7 +5649,7 @@ F
   0
 DICTIONARY
   5
-A9
+AD
 102
 {ACAD_REACTORS
 330
@@ -5031,139 +5665,139 @@ AcDbDictionary
   3
 A0
 350
-AA
+AE
   3
 A1
 350
-AB
+AF
   3
 A2
 350
-AC
+B0
   3
 A3
 350
-AD
+B1
   3
 A4
 350
-AE
+B2
   3
 A5
 350
-AF
+B3
   3
 A6
 350
-B0
+B4
   3
 A7
 350
-B1
+B5
   3
 A8
 350
-B2
+B6
   3
 A9
 350
-B3
+B7
   3
 B0
 350
-B4
+B8
   3
 B1
 350
-B5
+B9
   3
 B2
 350
-B6
+BA
   3
 B3
 350
-B7
+BB
   3
 B4
 350
-B8
+BC
   3
 B5
 350
-B9
+BD
   3
 B6
 350
-BA
+BE
   3
 B7
 350
-BB
+BF
   3
 B8
 350
-BC
+C0
   3
 B9
 350
-BD
+C1
   3
 C0
 350
-BE
+C2
   3
 C1
 350
-BF
+C3
   3
 C2
 350
-C0
+C4
   3
 C3
 350
-C1
+C5
   3
 C4
 350
-C2
+C6
   3
 C5
 350
-C3
+C7
   3
 C6
 350
-C4
+C8
   3
 C7
 350
-C5
+C9
   3
 C8
 350
-C6
+CA
   3
 C9
 350
-C7
+CB
   3
 D0
 350
-C8
+CC
   3
 D1
 350
-C9
+CD
   3
 D2
 350
-CA
+CE
   0
 DICTIONARY
   5
-ED
+F1
 102
 {ACAD_REACTORS
 330
@@ -5259,7 +5893,7 @@ Thicken
   0
 DICTIONARY
   5
-CB
+CF
 102
 {ACAD_REACTORS
 330
@@ -5275,7 +5909,7 @@ AcDbDictionary
   3
 CANNOSCALE
 350
-CC
+D0
   0
 LAYOUT
   5
@@ -5789,15 +6423,15 @@ E
   0
 SCALE
   5
-AA
+AE
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -5813,15 +6447,15 @@ AcDbScale
   0
 SCALE
   5
-AB
+AF
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -5837,15 +6471,15 @@ AcDbScale
   0
 SCALE
   5
-AC
+B0
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -5861,15 +6495,15 @@ AcDbScale
   0
 SCALE
   5
-AD
+B1
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -5885,15 +6519,15 @@ AcDbScale
   0
 SCALE
   5
-AE
+B2
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -5909,15 +6543,15 @@ AcDbScale
   0
 SCALE
   5
-AF
+B3
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -5933,15 +6567,15 @@ AcDbScale
   0
 SCALE
   5
-B0
+B4
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -5957,15 +6591,15 @@ AcDbScale
   0
 SCALE
   5
-B1
+B5
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -5981,15 +6615,15 @@ AcDbScale
   0
 SCALE
   5
-B2
+B6
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6005,15 +6639,15 @@ AcDbScale
   0
 SCALE
   5
-B3
+B7
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6029,15 +6663,15 @@ AcDbScale
   0
 SCALE
   5
-B4
+B8
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6053,15 +6687,15 @@ AcDbScale
   0
 SCALE
   5
-B5
+B9
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6077,15 +6711,15 @@ AcDbScale
   0
 SCALE
   5
-B6
+BA
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6101,15 +6735,15 @@ AcDbScale
   0
 SCALE
   5
-B7
+BB
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6125,15 +6759,15 @@ AcDbScale
   0
 SCALE
   5
-B8
+BC
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6149,15 +6783,15 @@ AcDbScale
   0
 SCALE
   5
-B9
+BD
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6173,15 +6807,15 @@ AcDbScale
   0
 SCALE
   5
-BA
+BE
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6197,15 +6831,15 @@ AcDbScale
   0
 SCALE
   5
-BB
+BF
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6221,15 +6855,15 @@ AcDbScale
   0
 SCALE
   5
-BC
+C0
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6245,15 +6879,15 @@ AcDbScale
   0
 SCALE
   5
-BD
+C1
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6269,15 +6903,15 @@ AcDbScale
   0
 SCALE
   5
-BE
+C2
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6293,15 +6927,15 @@ AcDbScale
   0
 SCALE
   5
-BF
+C3
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6317,15 +6951,15 @@ AcDbScale
   0
 SCALE
   5
-C0
+C4
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6341,15 +6975,15 @@ AcDbScale
   0
 SCALE
   5
-C1
+C5
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6365,15 +6999,15 @@ AcDbScale
   0
 SCALE
   5
-C2
+C6
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6389,15 +7023,15 @@ AcDbScale
   0
 SCALE
   5
-C3
+C7
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6413,15 +7047,15 @@ AcDbScale
   0
 SCALE
   5
-C4
+C8
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6437,15 +7071,15 @@ AcDbScale
   0
 SCALE
   5
-C5
+C9
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6461,15 +7095,15 @@ AcDbScale
   0
 SCALE
   5
-C6
+CA
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6485,15 +7119,15 @@ AcDbScale
   0
 SCALE
   5
-C7
+CB
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6509,15 +7143,15 @@ AcDbScale
   0
 SCALE
   5
-C8
+CC
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6533,15 +7167,15 @@ AcDbScale
   0
 SCALE
   5
-C9
+CD
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6557,15 +7191,15 @@ AcDbScale
   0
 SCALE
   5
-CA
+CE
 102
 {ACAD_REACTORS
 330
-A9
+AD
 102
 }
 330
-A9
+AD
 100
 AcDbScale
  70
@@ -6591,7 +7225,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-D5
+D9
 102
 }
 330
@@ -6681,7 +7315,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-D9
+DD
 102
 }
 330
@@ -6771,7 +7405,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-D7
+DB
 102
 }
 330
@@ -6861,7 +7495,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-DB
+DF
 102
 }
 330
@@ -6951,7 +7585,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-E3
+E7
 102
 }
 330
@@ -7041,7 +7675,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-EB
+EF
 102
 }
 330
@@ -7133,7 +7767,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-DF
+E3
 102
 }
 330
@@ -7223,7 +7857,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-E1
+E5
 102
 }
 330
@@ -7313,7 +7947,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-E9
+ED
 102
 }
 330
@@ -7403,7 +8037,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-CD
+D1
 102
 }
 330
@@ -7493,7 +8127,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-CF
+D3
 102
 }
 330
@@ -7583,7 +8217,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-D1
+D5
 102
 }
 330
@@ -7673,7 +8307,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-D3
+D7
 102
 }
 330
@@ -7763,7 +8397,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-E7
+EB
 102
 }
 330
@@ -7853,7 +8487,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-DD
+E1
 102
 }
 330
@@ -7945,7 +8579,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-E5
+E9
 102
 }
 330
@@ -8025,15 +8659,15 @@ Thicken
   0
 DICTIONARYVAR
   5
-CC
+D0
 102
 {ACAD_REACTORS
 330
-CB
+CF
 102
 }
 330
-CB
+CF
 100
 DictionaryVariables
 280
@@ -8043,7 +8677,7 @@ DictionaryVariables
   0
 DICTIONARY
   5
-D5
+D9
 330
 2F
 100
@@ -8055,11 +8689,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-D6
+DA
   0
 DICTIONARY
   5
-D9
+DD
 330
 31
 100
@@ -8071,29 +8705,13 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-DA
-  0
-DICTIONARY
-  5
-D7
-330
-30
-100
-AcDbDictionary
-280
-     1
-281
-     1
-  3
-ACAD_XREC_ROUNDTRIP
-360
-D8
+DE
   0
 DICTIONARY
   5
 DB
 330
-32
+30
 100
 AcDbDictionary
 280
@@ -8107,41 +8725,9 @@ DC
   0
 DICTIONARY
   5
-E3
-330
-36
-100
-AcDbDictionary
-280
-     1
-281
-     1
-  3
-ACAD_XREC_ROUNDTRIP
-360
-E4
-  0
-DICTIONARY
-  5
-EB
-330
-3A
-100
-AcDbDictionary
-280
-     1
-281
-     1
-  3
-ACAD_XREC_ROUNDTRIP
-360
-EC
-  0
-DICTIONARY
-  5
 DF
 330
-34
+32
 100
 AcDbDictionary
 280
@@ -8155,7 +8741,55 @@ E0
   0
 DICTIONARY
   5
-E1
+E7
+330
+36
+100
+AcDbDictionary
+280
+     1
+281
+     1
+  3
+ACAD_XREC_ROUNDTRIP
+360
+E8
+  0
+DICTIONARY
+  5
+EF
+330
+3A
+100
+AcDbDictionary
+280
+     1
+281
+     1
+  3
+ACAD_XREC_ROUNDTRIP
+360
+F0
+  0
+DICTIONARY
+  5
+E3
+330
+34
+100
+AcDbDictionary
+280
+     1
+281
+     1
+  3
+ACAD_XREC_ROUNDTRIP
+360
+E4
+  0
+DICTIONARY
+  5
+E5
 330
 35
 100
@@ -8167,11 +8801,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-E2
+E6
   0
 DICTIONARY
   5
-E9
+ED
 330
 39
 100
@@ -8183,45 +8817,13 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-EA
-  0
-DICTIONARY
-  5
-CD
-330
-2B
-100
-AcDbDictionary
-280
-     1
-281
-     1
-  3
-ACAD_XREC_ROUNDTRIP
-360
-CE
-  0
-DICTIONARY
-  5
-CF
-330
-2C
-100
-AcDbDictionary
-280
-     1
-281
-     1
-  3
-ACAD_XREC_ROUNDTRIP
-360
-D0
+EE
   0
 DICTIONARY
   5
 D1
 330
-2D
+2B
 100
 AcDbDictionary
 280
@@ -8237,7 +8839,7 @@ DICTIONARY
   5
 D3
 330
-2E
+2C
 100
 AcDbDictionary
 280
@@ -8251,7 +8853,39 @@ D4
   0
 DICTIONARY
   5
-E7
+D5
+330
+2D
+100
+AcDbDictionary
+280
+     1
+281
+     1
+  3
+ACAD_XREC_ROUNDTRIP
+360
+D6
+  0
+DICTIONARY
+  5
+D7
+330
+2E
+100
+AcDbDictionary
+280
+     1
+281
+     1
+  3
+ACAD_XREC_ROUNDTRIP
+360
+D8
+  0
+DICTIONARY
+  5
+EB
 330
 38
 100
@@ -8263,11 +8897,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-E8
+EC
   0
 DICTIONARY
   5
-DD
+E1
 330
 33
 100
@@ -8279,11 +8913,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-DE
+E2
   0
 DICTIONARY
   5
-E5
+E9
 330
 37
 100
@@ -8295,7 +8929,1635 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
+EA
+  0
+XRECORD
+  5
+DA
+102
+{ACAD_REACTORS
+330
+D9
+102
+}
+330
+D9
+100
+AcDbXrecord
+280
+     1
+102
+RTVSPropertyOp0
+ 70
+     1
+102
+RTVSPropertyOp1
+ 70
+     1
+102
+RTVSPropertyOp2
+ 70
+     1
+102
+RTVSPropertyOp3
+ 70
+     1
+102
+RTVSPropertyOp4
+ 70
+     1
+102
+RTVSPropertyOp5
+ 70
+     1
+102
+RTVSPropertyOp6
+ 70
+     1
+102
+RTVSPropertyOp7
+ 70
+     1
+102
+RTVSPropertyOp8
+ 70
+     1
+102
+RTVSPropertyOp9
+ 70
+     1
+102
+RTVSPropertyOp10
+ 70
+     1
+102
+RTVSPropertyOp11
+ 70
+     1
+102
+RTVSPropertyOp12
+ 70
+     1
+102
+RTVSPropertyOp13
+ 70
+     1
+102
+RTVSPropertyOp14
+ 70
+     1
+102
+RTVSPropertyOp15
+ 70
+     1
+102
+RTVSPropertyOp16
+ 70
+     1
+102
+RTVSPropertyOp17
+ 70
+     1
+102
+RTVSPropertyOp18
+ 70
+     1
+102
+RTVSPropertyOp19
+ 70
+     1
+102
+RTVSPropertyOp20
+ 70
+     1
+102
+RTVSPropertyOp21
+ 70
+     1
+102
+RTVSPropertyOp22
+ 70
+     1
+102
+RTVSPropertyOp23
+ 70
+     1
+102
+RTVSPropertyOp24
+ 70
+     1
+102
+RTVSPropertyOp25
+ 70
+     1
+102
+RTVSPropertyOp26
+ 70
+     1
+102
+RTVSPropertyOp27
+ 70
+     1
+102
+RTVSPropertyOp28
+ 70
+     1
+102
+RTVSPropertyOp29
+ 70
+     1
+102
+RTVSPropertyOp30
+ 70
+     1
+102
+RTVSPropertyOp31
+ 70
+     1
+102
+RTVSPropertyOp32
+ 70
+     1
+  0
+XRECORD
+  5
+DE
+102
+{ACAD_REACTORS
+330
+DD
+102
+}
+330
+DD
+100
+AcDbXrecord
+280
+     1
+102
+RTVSPropertyOp0
+ 70
+     1
+102
+RTVSPropertyOp1
+ 70
+     1
+102
+RTVSPropertyOp2
+ 70
+     1
+102
+RTVSPropertyOp3
+ 70
+     1
+102
+RTVSPropertyOp4
+ 70
+     1
+102
+RTVSPropertyOp5
+ 70
+     1
+102
+RTVSPropertyOp6
+ 70
+     1
+102
+RTVSPropertyOp7
+ 70
+     1
+102
+RTVSPropertyOp8
+ 70
+     1
+102
+RTVSPropertyOp9
+ 70
+     1
+102
+RTVSPropertyOp10
+ 70
+     1
+102
+RTVSPropertyOp11
+ 70
+     1
+102
+RTVSPropertyOp12
+ 70
+     1
+102
+RTVSPropertyOp13
+ 70
+     1
+102
+RTVSPropertyOp14
+ 70
+     1
+102
+RTVSPropertyOp15
+ 70
+     1
+102
+RTVSPropertyOp16
+ 70
+     1
+102
+RTVSPropertyOp17
+ 70
+     1
+102
+RTVSPropertyOp18
+ 70
+     1
+102
+RTVSPropertyOp19
+ 70
+     1
+102
+RTVSPropertyOp20
+ 70
+     1
+102
+RTVSPropertyOp21
+ 70
+     1
+102
+RTVSPropertyOp22
+ 70
+     1
+102
+RTVSPropertyOp23
+ 70
+     1
+102
+RTVSPropertyOp24
+ 70
+     1
+102
+RTVSPropertyOp25
+ 70
+     1
+102
+RTVSPropertyOp26
+ 70
+     1
+102
+RTVSPropertyOp27
+ 70
+     1
+102
+RTVSPropertyOp28
+ 70
+     1
+102
+RTVSPropertyOp29
+ 70
+     1
+102
+RTVSPropertyOp30
+ 70
+     1
+102
+RTVSPropertyOp31
+ 70
+     1
+102
+RTVSPropertyOp32
+ 70
+     1
+  0
+XRECORD
+  5
+DC
+102
+{ACAD_REACTORS
+330
+DB
+102
+}
+330
+DB
+100
+AcDbXrecord
+280
+     1
+102
+RTVSPropertyOp0
+ 70
+     1
+102
+RTVSPropertyOp1
+ 70
+     1
+102
+RTVSPropertyOp2
+ 70
+     1
+102
+RTVSPropertyOp3
+ 70
+     1
+102
+RTVSPropertyOp4
+ 70
+     1
+102
+RTVSPropertyOp5
+ 70
+     1
+102
+RTVSPropertyOp6
+ 70
+     1
+102
+RTVSPropertyOp7
+ 70
+     1
+102
+RTVSPropertyOp8
+ 70
+     1
+102
+RTVSPropertyOp9
+ 70
+     1
+102
+RTVSPropertyOp10
+ 70
+     1
+102
+RTVSPropertyOp11
+ 70
+     1
+102
+RTVSPropertyOp12
+ 70
+     1
+102
+RTVSPropertyOp13
+ 70
+     1
+102
+RTVSPropertyOp14
+ 70
+     1
+102
+RTVSPropertyOp15
+ 70
+     1
+102
+RTVSPropertyOp16
+ 70
+     1
+102
+RTVSPropertyOp17
+ 70
+     1
+102
+RTVSPropertyOp18
+ 70
+     1
+102
+RTVSPropertyOp19
+ 70
+     1
+102
+RTVSPropertyOp20
+ 70
+     1
+102
+RTVSPropertyOp21
+ 70
+     1
+102
+RTVSPropertyOp22
+ 70
+     1
+102
+RTVSPropertyOp23
+ 70
+     1
+102
+RTVSPropertyOp24
+ 70
+     1
+102
+RTVSPropertyOp25
+ 70
+     1
+102
+RTVSPropertyOp26
+ 70
+     1
+102
+RTVSPropertyOp27
+ 70
+     1
+102
+RTVSPropertyOp28
+ 70
+     1
+102
+RTVSPropertyOp29
+ 70
+     1
+102
+RTVSPropertyOp30
+ 70
+     1
+102
+RTVSPropertyOp31
+ 70
+     1
+102
+RTVSPropertyOp32
+ 70
+     1
+  0
+XRECORD
+  5
+E0
+102
+{ACAD_REACTORS
+330
+DF
+102
+}
+330
+DF
+100
+AcDbXrecord
+280
+     1
+102
+RTVSPropertyOp0
+ 70
+     1
+102
+RTVSPropertyOp1
+ 70
+     1
+102
+RTVSPropertyOp2
+ 70
+     1
+102
+RTVSPropertyOp3
+ 70
+     1
+102
+RTVSPropertyOp4
+ 70
+     1
+102
+RTVSPropertyOp5
+ 70
+     1
+102
+RTVSPropertyOp6
+ 70
+     1
+102
+RTVSPropertyOp7
+ 70
+     1
+102
+RTVSPropertyOp8
+ 70
+     1
+102
+RTVSPropertyOp9
+ 70
+     1
+102
+RTVSPropertyOp10
+ 70
+     1
+102
+RTVSPropertyOp11
+ 70
+     1
+102
+RTVSPropertyOp12
+ 70
+     1
+102
+RTVSPropertyOp13
+ 70
+     1
+102
+RTVSPropertyOp14
+ 70
+     1
+102
+RTVSPropertyOp15
+ 70
+     1
+102
+RTVSPropertyOp16
+ 70
+     1
+102
+RTVSPropertyOp17
+ 70
+     1
+102
+RTVSPropertyOp18
+ 70
+     1
+102
+RTVSPropertyOp19
+ 70
+     1
+102
+RTVSPropertyOp20
+ 70
+     1
+102
+RTVSPropertyOp21
+ 70
+     1
+102
+RTVSPropertyOp22
+ 70
+     1
+102
+RTVSPropertyOp23
+ 70
+     1
+102
+RTVSPropertyOp24
+ 70
+     1
+102
+RTVSPropertyOp25
+ 70
+     1
+102
+RTVSPropertyOp26
+ 70
+     1
+102
+RTVSPropertyOp27
+ 70
+     1
+102
+RTVSPropertyOp28
+ 70
+     1
+102
+RTVSPropertyOp29
+ 70
+     1
+102
+RTVSPropertyOp30
+ 70
+     1
+102
+RTVSPropertyOp31
+ 70
+     1
+102
+RTVSPropertyOp32
+ 70
+     1
+  0
+XRECORD
+  5
+E8
+102
+{ACAD_REACTORS
+330
+E7
+102
+}
+330
+E7
+100
+AcDbXrecord
+280
+     1
+102
+RTVSPropertyOp0
+ 70
+     1
+102
+RTVSPropertyOp1
+ 70
+     1
+102
+RTVSPropertyOp2
+ 70
+     1
+102
+RTVSPropertyOp3
+ 70
+     1
+102
+RTVSPropertyOp4
+ 70
+     1
+102
+RTVSPropertyOp5
+ 70
+     1
+102
+RTVSPropertyOp6
+ 70
+     1
+102
+RTVSPropertyOp7
+ 70
+     1
+102
+RTVSPropertyOp8
+ 70
+     1
+102
+RTVSPropertyOp9
+ 70
+     1
+102
+RTVSPropertyOp10
+ 70
+     1
+102
+RTVSPropertyOp11
+ 70
+     1
+102
+RTVSPropertyOp12
+ 70
+     1
+102
+RTVSPropertyOp13
+ 70
+     1
+102
+RTVSPropertyOp14
+ 70
+     1
+102
+RTVSPropertyOp15
+ 70
+     1
+102
+RTVSPropertyOp16
+ 70
+     1
+102
+RTVSPropertyOp17
+ 70
+     1
+102
+RTVSPropertyOp18
+ 70
+     1
+102
+RTVSPropertyOp19
+ 70
+     1
+102
+RTVSPropertyOp20
+ 70
+     1
+102
+RTVSPropertyOp21
+ 70
+     1
+102
+RTVSPropertyOp22
+ 70
+     1
+102
+RTVSPropertyOp23
+ 70
+     1
+102
+RTVSPropertyOp24
+ 70
+     1
+102
+RTVSPropertyOp25
+ 70
+     1
+102
+RTVSPropertyOp26
+ 70
+     1
+102
+RTVSPropertyOp27
+ 70
+     1
+102
+RTVSPropertyOp28
+ 70
+     1
+102
+RTVSPropertyOp29
+ 70
+     1
+102
+RTVSPropertyOp30
+ 70
+     1
+102
+RTVSPropertyOp31
+ 70
+     1
+102
+RTVSPropertyOp32
+ 70
+     1
+  0
+XRECORD
+  5
+F0
+102
+{ACAD_REACTORS
+330
+EF
+102
+}
+330
+EF
+100
+AcDbXrecord
+280
+     1
+102
+RTVSPropertyOp0
+ 70
+     1
+102
+RTVSPropertyOp1
+ 70
+     1
+102
+RTVSPropertyOp2
+ 70
+     1
+102
+RTVSPropertyOp3
+ 70
+     1
+102
+RTVSPropertyOp4
+ 70
+     1
+102
+RTVSPropertyOp5
+ 70
+     1
+102
+RTVSPropertyOp6
+ 70
+     1
+102
+RTVSPropertyOp7
+ 70
+     1
+102
+RTVSPropertyOp8
+ 70
+     1
+102
+RTVSPropertyOp9
+ 70
+     1
+102
+RTVSPropertyOp10
+ 70
+     1
+102
+RTVSPropertyOp11
+ 70
+     1
+102
+RTVSPropertyOp12
+ 70
+     1
+102
+RTVSPropertyOp13
+ 70
+     1
+102
+RTVSPropertyOp14
+ 70
+     1
+102
+RTVSPropertyOp15
+ 70
+     1
+102
+RTVSPropertyOp16
+ 70
+     1
+102
+RTVSPropertyOp17
+ 70
+     1
+102
+RTVSPropertyOp18
+ 70
+     1
+102
+RTVSPropertyOp19
+ 70
+     1
+102
+RTVSPropertyOp20
+ 70
+     1
+102
+RTVSPropertyOp21
+ 70
+     1
+102
+RTVSPropertyOp22
+ 70
+     1
+102
+RTVSPropertyOp23
+ 70
+     1
+102
+RTVSPropertyOp24
+ 70
+     1
+102
+RTVSPropertyOp25
+ 70
+     1
+102
+RTVSPropertyOp26
+ 70
+     1
+102
+RTVSPropertyOp27
+ 70
+     1
+102
+RTVSPropertyOp28
+ 70
+     1
+102
+RTVSPropertyOp29
+ 70
+     1
+102
+RTVSPropertyOp30
+ 70
+     1
+102
+RTVSPropertyOp31
+ 70
+     1
+102
+RTVSPropertyOp32
+ 70
+     1
+  0
+XRECORD
+  5
+E4
+102
+{ACAD_REACTORS
+330
+E3
+102
+}
+330
+E3
+100
+AcDbXrecord
+280
+     1
+102
+RTVSPropertyOp0
+ 70
+     1
+102
+RTVSPropertyOp1
+ 70
+     1
+102
+RTVSPropertyOp2
+ 70
+     1
+102
+RTVSPropertyOp3
+ 70
+     1
+102
+RTVSPropertyOp4
+ 70
+     1
+102
+RTVSPropertyOp5
+ 70
+     1
+102
+RTVSPropertyOp6
+ 70
+     1
+102
+RTVSPropertyOp7
+ 70
+     1
+102
+RTVSPropertyOp8
+ 70
+     1
+102
+RTVSPropertyOp9
+ 70
+     1
+102
+RTVSPropertyOp10
+ 70
+     1
+102
+RTVSPropertyOp11
+ 70
+     1
+102
+RTVSPropertyOp12
+ 70
+     1
+102
+RTVSPropertyOp13
+ 70
+     1
+102
+RTVSPropertyOp14
+ 70
+     1
+102
+RTVSPropertyOp15
+ 70
+     1
+102
+RTVSPropertyOp16
+ 70
+     1
+102
+RTVSPropertyOp17
+ 70
+     1
+102
+RTVSPropertyOp18
+ 70
+     1
+102
+RTVSPropertyOp19
+ 70
+     1
+102
+RTVSPropertyOp20
+ 70
+     1
+102
+RTVSPropertyOp21
+ 70
+     1
+102
+RTVSPropertyOp22
+ 70
+     1
+102
+RTVSPropertyOp23
+ 70
+     1
+102
+RTVSPropertyOp24
+ 70
+     1
+102
+RTVSPropertyOp25
+ 70
+     1
+102
+RTVSPropertyOp26
+ 70
+     1
+102
+RTVSPropertyOp27
+ 70
+     1
+102
+RTVSPropertyOp28
+ 70
+     1
+102
+RTVSPropertyOp29
+ 70
+     1
+102
+RTVSPropertyOp30
+ 70
+     1
+102
+RTVSPropertyOp31
+ 70
+     1
+102
+RTVSPropertyOp32
+ 70
+     1
+  0
+XRECORD
+  5
 E6
+102
+{ACAD_REACTORS
+330
+E5
+102
+}
+330
+E5
+100
+AcDbXrecord
+280
+     1
+102
+RTVSPropertyOp0
+ 70
+     1
+102
+RTVSPropertyOp1
+ 70
+     1
+102
+RTVSPropertyOp2
+ 70
+     1
+102
+RTVSPropertyOp3
+ 70
+     1
+102
+RTVSPropertyOp4
+ 70
+     1
+102
+RTVSPropertyOp5
+ 70
+     1
+102
+RTVSPropertyOp6
+ 70
+     1
+102
+RTVSPropertyOp7
+ 70
+     1
+102
+RTVSPropertyOp8
+ 70
+     1
+102
+RTVSPropertyOp9
+ 70
+     1
+102
+RTVSPropertyOp10
+ 70
+     1
+102
+RTVSPropertyOp11
+ 70
+     1
+102
+RTVSPropertyOp12
+ 70
+     1
+102
+RTVSPropertyOp13
+ 70
+     1
+102
+RTVSPropertyOp14
+ 70
+     1
+102
+RTVSPropertyOp15
+ 70
+     1
+102
+RTVSPropertyOp16
+ 70
+     1
+102
+RTVSPropertyOp17
+ 70
+     1
+102
+RTVSPropertyOp18
+ 70
+     1
+102
+RTVSPropertyOp19
+ 70
+     1
+102
+RTVSPropertyOp20
+ 70
+     1
+102
+RTVSPropertyOp21
+ 70
+     1
+102
+RTVSPropertyOp22
+ 70
+     1
+102
+RTVSPropertyOp23
+ 70
+     1
+102
+RTVSPropertyOp24
+ 70
+     1
+102
+RTVSPropertyOp25
+ 70
+     1
+102
+RTVSPropertyOp26
+ 70
+     1
+102
+RTVSPropertyOp27
+ 70
+     1
+102
+RTVSPropertyOp28
+ 70
+     1
+102
+RTVSPropertyOp29
+ 70
+     1
+102
+RTVSPropertyOp30
+ 70
+     1
+102
+RTVSPropertyOp31
+ 70
+     1
+102
+RTVSPropertyOp32
+ 70
+     1
+  0
+XRECORD
+  5
+EE
+102
+{ACAD_REACTORS
+330
+ED
+102
+}
+330
+ED
+100
+AcDbXrecord
+280
+     1
+102
+RTVSPropertyOp0
+ 70
+     1
+102
+RTVSPropertyOp1
+ 70
+     1
+102
+RTVSPropertyOp2
+ 70
+     1
+102
+RTVSPropertyOp3
+ 70
+     1
+102
+RTVSPropertyOp4
+ 70
+     1
+102
+RTVSPropertyOp5
+ 70
+     1
+102
+RTVSPropertyOp6
+ 70
+     1
+102
+RTVSPropertyOp7
+ 70
+     1
+102
+RTVSPropertyOp8
+ 70
+     1
+102
+RTVSPropertyOp9
+ 70
+     1
+102
+RTVSPropertyOp10
+ 70
+     1
+102
+RTVSPropertyOp11
+ 70
+     1
+102
+RTVSPropertyOp12
+ 70
+     1
+102
+RTVSPropertyOp13
+ 70
+     1
+102
+RTVSPropertyOp14
+ 70
+     1
+102
+RTVSPropertyOp15
+ 70
+     1
+102
+RTVSPropertyOp16
+ 70
+     1
+102
+RTVSPropertyOp17
+ 70
+     1
+102
+RTVSPropertyOp18
+ 70
+     1
+102
+RTVSPropertyOp19
+ 70
+     1
+102
+RTVSPropertyOp20
+ 70
+     1
+102
+RTVSPropertyOp21
+ 70
+     1
+102
+RTVSPropertyOp22
+ 70
+     1
+102
+RTVSPropertyOp23
+ 70
+     1
+102
+RTVSPropertyOp24
+ 70
+     1
+102
+RTVSPropertyOp25
+ 70
+     1
+102
+RTVSPropertyOp26
+ 70
+     1
+102
+RTVSPropertyOp27
+ 70
+     1
+102
+RTVSPropertyOp28
+ 70
+     1
+102
+RTVSPropertyOp29
+ 70
+     1
+102
+RTVSPropertyOp30
+ 70
+     1
+102
+RTVSPropertyOp31
+ 70
+     1
+102
+RTVSPropertyOp32
+ 70
+     1
+  0
+XRECORD
+  5
+D2
+102
+{ACAD_REACTORS
+330
+D1
+102
+}
+330
+D1
+100
+AcDbXrecord
+280
+     1
+102
+RTVSPropertyOp0
+ 70
+     1
+102
+RTVSPropertyOp1
+ 70
+     1
+102
+RTVSPropertyOp2
+ 70
+     1
+102
+RTVSPropertyOp3
+ 70
+     1
+102
+RTVSPropertyOp4
+ 70
+     1
+102
+RTVSPropertyOp5
+ 70
+     1
+102
+RTVSPropertyOp6
+ 70
+     1
+102
+RTVSPropertyOp7
+ 70
+     1
+102
+RTVSPropertyOp8
+ 70
+     1
+102
+RTVSPropertyOp9
+ 70
+     1
+102
+RTVSPropertyOp10
+ 70
+     1
+102
+RTVSPropertyOp11
+ 70
+     1
+102
+RTVSPropertyOp12
+ 70
+     1
+102
+RTVSPropertyOp13
+ 70
+     1
+102
+RTVSPropertyOp14
+ 70
+     1
+102
+RTVSPropertyOp15
+ 70
+     1
+102
+RTVSPropertyOp16
+ 70
+     1
+102
+RTVSPropertyOp17
+ 70
+     1
+102
+RTVSPropertyOp18
+ 70
+     1
+102
+RTVSPropertyOp19
+ 70
+     1
+102
+RTVSPropertyOp20
+ 70
+     1
+102
+RTVSPropertyOp21
+ 70
+     1
+102
+RTVSPropertyOp22
+ 70
+     1
+102
+RTVSPropertyOp23
+ 70
+     1
+102
+RTVSPropertyOp24
+ 70
+     1
+102
+RTVSPropertyOp25
+ 70
+     1
+102
+RTVSPropertyOp26
+ 70
+     1
+102
+RTVSPropertyOp27
+ 70
+     1
+102
+RTVSPropertyOp28
+ 70
+     1
+102
+RTVSPropertyOp29
+ 70
+     1
+102
+RTVSPropertyOp30
+ 70
+     1
+102
+RTVSPropertyOp31
+ 70
+     1
+102
+RTVSPropertyOp32
+ 70
+     1
+  0
+XRECORD
+  5
+D4
+102
+{ACAD_REACTORS
+330
+D3
+102
+}
+330
+D3
+100
+AcDbXrecord
+280
+     1
+102
+RTVSPropertyOp0
+ 70
+     1
+102
+RTVSPropertyOp1
+ 70
+     1
+102
+RTVSPropertyOp2
+ 70
+     1
+102
+RTVSPropertyOp3
+ 70
+     1
+102
+RTVSPropertyOp4
+ 70
+     1
+102
+RTVSPropertyOp5
+ 70
+     1
+102
+RTVSPropertyOp6
+ 70
+     1
+102
+RTVSPropertyOp7
+ 70
+     1
+102
+RTVSPropertyOp8
+ 70
+     1
+102
+RTVSPropertyOp9
+ 70
+     1
+102
+RTVSPropertyOp10
+ 70
+     1
+102
+RTVSPropertyOp11
+ 70
+     1
+102
+RTVSPropertyOp12
+ 70
+     1
+102
+RTVSPropertyOp13
+ 70
+     1
+102
+RTVSPropertyOp14
+ 70
+     1
+102
+RTVSPropertyOp15
+ 70
+     1
+102
+RTVSPropertyOp16
+ 70
+     1
+102
+RTVSPropertyOp17
+ 70
+     1
+102
+RTVSPropertyOp18
+ 70
+     1
+102
+RTVSPropertyOp19
+ 70
+     1
+102
+RTVSPropertyOp20
+ 70
+     1
+102
+RTVSPropertyOp21
+ 70
+     1
+102
+RTVSPropertyOp22
+ 70
+     1
+102
+RTVSPropertyOp23
+ 70
+     1
+102
+RTVSPropertyOp24
+ 70
+     1
+102
+RTVSPropertyOp25
+ 70
+     1
+102
+RTVSPropertyOp26
+ 70
+     1
+102
+RTVSPropertyOp27
+ 70
+     1
+102
+RTVSPropertyOp28
+ 70
+     1
+102
+RTVSPropertyOp29
+ 70
+     1
+102
+RTVSPropertyOp30
+ 70
+     1
+102
+RTVSPropertyOp31
+ 70
+     1
+102
+RTVSPropertyOp32
+ 70
+     1
   0
 XRECORD
   5
@@ -8447,154 +10709,6 @@ RTVSPropertyOp32
   0
 XRECORD
   5
-DA
-102
-{ACAD_REACTORS
-330
-D9
-102
-}
-330
-D9
-100
-AcDbXrecord
-280
-     1
-102
-RTVSPropertyOp0
- 70
-     1
-102
-RTVSPropertyOp1
- 70
-     1
-102
-RTVSPropertyOp2
- 70
-     1
-102
-RTVSPropertyOp3
- 70
-     1
-102
-RTVSPropertyOp4
- 70
-     1
-102
-RTVSPropertyOp5
- 70
-     1
-102
-RTVSPropertyOp6
- 70
-     1
-102
-RTVSPropertyOp7
- 70
-     1
-102
-RTVSPropertyOp8
- 70
-     1
-102
-RTVSPropertyOp9
- 70
-     1
-102
-RTVSPropertyOp10
- 70
-     1
-102
-RTVSPropertyOp11
- 70
-     1
-102
-RTVSPropertyOp12
- 70
-     1
-102
-RTVSPropertyOp13
- 70
-     1
-102
-RTVSPropertyOp14
- 70
-     1
-102
-RTVSPropertyOp15
- 70
-     1
-102
-RTVSPropertyOp16
- 70
-     1
-102
-RTVSPropertyOp17
- 70
-     1
-102
-RTVSPropertyOp18
- 70
-     1
-102
-RTVSPropertyOp19
- 70
-     1
-102
-RTVSPropertyOp20
- 70
-     1
-102
-RTVSPropertyOp21
- 70
-     1
-102
-RTVSPropertyOp22
- 70
-     1
-102
-RTVSPropertyOp23
- 70
-     1
-102
-RTVSPropertyOp24
- 70
-     1
-102
-RTVSPropertyOp25
- 70
-     1
-102
-RTVSPropertyOp26
- 70
-     1
-102
-RTVSPropertyOp27
- 70
-     1
-102
-RTVSPropertyOp28
- 70
-     1
-102
-RTVSPropertyOp29
- 70
-     1
-102
-RTVSPropertyOp30
- 70
-     1
-102
-RTVSPropertyOp31
- 70
-     1
-102
-RTVSPropertyOp32
- 70
-     1
-  0
-XRECORD
-  5
 D8
 102
 {ACAD_REACTORS
@@ -8743,302 +10857,6 @@ RTVSPropertyOp32
   0
 XRECORD
   5
-DC
-102
-{ACAD_REACTORS
-330
-DB
-102
-}
-330
-DB
-100
-AcDbXrecord
-280
-     1
-102
-RTVSPropertyOp0
- 70
-     1
-102
-RTVSPropertyOp1
- 70
-     1
-102
-RTVSPropertyOp2
- 70
-     1
-102
-RTVSPropertyOp3
- 70
-     1
-102
-RTVSPropertyOp4
- 70
-     1
-102
-RTVSPropertyOp5
- 70
-     1
-102
-RTVSPropertyOp6
- 70
-     1
-102
-RTVSPropertyOp7
- 70
-     1
-102
-RTVSPropertyOp8
- 70
-     1
-102
-RTVSPropertyOp9
- 70
-     1
-102
-RTVSPropertyOp10
- 70
-     1
-102
-RTVSPropertyOp11
- 70
-     1
-102
-RTVSPropertyOp12
- 70
-     1
-102
-RTVSPropertyOp13
- 70
-     1
-102
-RTVSPropertyOp14
- 70
-     1
-102
-RTVSPropertyOp15
- 70
-     1
-102
-RTVSPropertyOp16
- 70
-     1
-102
-RTVSPropertyOp17
- 70
-     1
-102
-RTVSPropertyOp18
- 70
-     1
-102
-RTVSPropertyOp19
- 70
-     1
-102
-RTVSPropertyOp20
- 70
-     1
-102
-RTVSPropertyOp21
- 70
-     1
-102
-RTVSPropertyOp22
- 70
-     1
-102
-RTVSPropertyOp23
- 70
-     1
-102
-RTVSPropertyOp24
- 70
-     1
-102
-RTVSPropertyOp25
- 70
-     1
-102
-RTVSPropertyOp26
- 70
-     1
-102
-RTVSPropertyOp27
- 70
-     1
-102
-RTVSPropertyOp28
- 70
-     1
-102
-RTVSPropertyOp29
- 70
-     1
-102
-RTVSPropertyOp30
- 70
-     1
-102
-RTVSPropertyOp31
- 70
-     1
-102
-RTVSPropertyOp32
- 70
-     1
-  0
-XRECORD
-  5
-E4
-102
-{ACAD_REACTORS
-330
-E3
-102
-}
-330
-E3
-100
-AcDbXrecord
-280
-     1
-102
-RTVSPropertyOp0
- 70
-     1
-102
-RTVSPropertyOp1
- 70
-     1
-102
-RTVSPropertyOp2
- 70
-     1
-102
-RTVSPropertyOp3
- 70
-     1
-102
-RTVSPropertyOp4
- 70
-     1
-102
-RTVSPropertyOp5
- 70
-     1
-102
-RTVSPropertyOp6
- 70
-     1
-102
-RTVSPropertyOp7
- 70
-     1
-102
-RTVSPropertyOp8
- 70
-     1
-102
-RTVSPropertyOp9
- 70
-     1
-102
-RTVSPropertyOp10
- 70
-     1
-102
-RTVSPropertyOp11
- 70
-     1
-102
-RTVSPropertyOp12
- 70
-     1
-102
-RTVSPropertyOp13
- 70
-     1
-102
-RTVSPropertyOp14
- 70
-     1
-102
-RTVSPropertyOp15
- 70
-     1
-102
-RTVSPropertyOp16
- 70
-     1
-102
-RTVSPropertyOp17
- 70
-     1
-102
-RTVSPropertyOp18
- 70
-     1
-102
-RTVSPropertyOp19
- 70
-     1
-102
-RTVSPropertyOp20
- 70
-     1
-102
-RTVSPropertyOp21
- 70
-     1
-102
-RTVSPropertyOp22
- 70
-     1
-102
-RTVSPropertyOp23
- 70
-     1
-102
-RTVSPropertyOp24
- 70
-     1
-102
-RTVSPropertyOp25
- 70
-     1
-102
-RTVSPropertyOp26
- 70
-     1
-102
-RTVSPropertyOp27
- 70
-     1
-102
-RTVSPropertyOp28
- 70
-     1
-102
-RTVSPropertyOp29
- 70
-     1
-102
-RTVSPropertyOp30
- 70
-     1
-102
-RTVSPropertyOp31
- 70
-     1
-102
-RTVSPropertyOp32
- 70
-     1
-  0
-XRECORD
-  5
 EC
 102
 {ACAD_REACTORS
@@ -9048,154 +10866,6 @@ EB
 }
 330
 EB
-100
-AcDbXrecord
-280
-     1
-102
-RTVSPropertyOp0
- 70
-     1
-102
-RTVSPropertyOp1
- 70
-     1
-102
-RTVSPropertyOp2
- 70
-     1
-102
-RTVSPropertyOp3
- 70
-     1
-102
-RTVSPropertyOp4
- 70
-     1
-102
-RTVSPropertyOp5
- 70
-     1
-102
-RTVSPropertyOp6
- 70
-     1
-102
-RTVSPropertyOp7
- 70
-     1
-102
-RTVSPropertyOp8
- 70
-     1
-102
-RTVSPropertyOp9
- 70
-     1
-102
-RTVSPropertyOp10
- 70
-     1
-102
-RTVSPropertyOp11
- 70
-     1
-102
-RTVSPropertyOp12
- 70
-     1
-102
-RTVSPropertyOp13
- 70
-     1
-102
-RTVSPropertyOp14
- 70
-     1
-102
-RTVSPropertyOp15
- 70
-     1
-102
-RTVSPropertyOp16
- 70
-     1
-102
-RTVSPropertyOp17
- 70
-     1
-102
-RTVSPropertyOp18
- 70
-     1
-102
-RTVSPropertyOp19
- 70
-     1
-102
-RTVSPropertyOp20
- 70
-     1
-102
-RTVSPropertyOp21
- 70
-     1
-102
-RTVSPropertyOp22
- 70
-     1
-102
-RTVSPropertyOp23
- 70
-     1
-102
-RTVSPropertyOp24
- 70
-     1
-102
-RTVSPropertyOp25
- 70
-     1
-102
-RTVSPropertyOp26
- 70
-     1
-102
-RTVSPropertyOp27
- 70
-     1
-102
-RTVSPropertyOp28
- 70
-     1
-102
-RTVSPropertyOp29
- 70
-     1
-102
-RTVSPropertyOp30
- 70
-     1
-102
-RTVSPropertyOp31
- 70
-     1
-102
-RTVSPropertyOp32
- 70
-     1
-  0
-XRECORD
-  5
-E0
-102
-{ACAD_REACTORS
-330
-DF
-102
-}
-330
-DF
 100
 AcDbXrecord
 280
@@ -9492,1042 +11162,6 @@ E9
 }
 330
 E9
-100
-AcDbXrecord
-280
-     1
-102
-RTVSPropertyOp0
- 70
-     1
-102
-RTVSPropertyOp1
- 70
-     1
-102
-RTVSPropertyOp2
- 70
-     1
-102
-RTVSPropertyOp3
- 70
-     1
-102
-RTVSPropertyOp4
- 70
-     1
-102
-RTVSPropertyOp5
- 70
-     1
-102
-RTVSPropertyOp6
- 70
-     1
-102
-RTVSPropertyOp7
- 70
-     1
-102
-RTVSPropertyOp8
- 70
-     1
-102
-RTVSPropertyOp9
- 70
-     1
-102
-RTVSPropertyOp10
- 70
-     1
-102
-RTVSPropertyOp11
- 70
-     1
-102
-RTVSPropertyOp12
- 70
-     1
-102
-RTVSPropertyOp13
- 70
-     1
-102
-RTVSPropertyOp14
- 70
-     1
-102
-RTVSPropertyOp15
- 70
-     1
-102
-RTVSPropertyOp16
- 70
-     1
-102
-RTVSPropertyOp17
- 70
-     1
-102
-RTVSPropertyOp18
- 70
-     1
-102
-RTVSPropertyOp19
- 70
-     1
-102
-RTVSPropertyOp20
- 70
-     1
-102
-RTVSPropertyOp21
- 70
-     1
-102
-RTVSPropertyOp22
- 70
-     1
-102
-RTVSPropertyOp23
- 70
-     1
-102
-RTVSPropertyOp24
- 70
-     1
-102
-RTVSPropertyOp25
- 70
-     1
-102
-RTVSPropertyOp26
- 70
-     1
-102
-RTVSPropertyOp27
- 70
-     1
-102
-RTVSPropertyOp28
- 70
-     1
-102
-RTVSPropertyOp29
- 70
-     1
-102
-RTVSPropertyOp30
- 70
-     1
-102
-RTVSPropertyOp31
- 70
-     1
-102
-RTVSPropertyOp32
- 70
-     1
-  0
-XRECORD
-  5
-CE
-102
-{ACAD_REACTORS
-330
-CD
-102
-}
-330
-CD
-100
-AcDbXrecord
-280
-     1
-102
-RTVSPropertyOp0
- 70
-     1
-102
-RTVSPropertyOp1
- 70
-     1
-102
-RTVSPropertyOp2
- 70
-     1
-102
-RTVSPropertyOp3
- 70
-     1
-102
-RTVSPropertyOp4
- 70
-     1
-102
-RTVSPropertyOp5
- 70
-     1
-102
-RTVSPropertyOp6
- 70
-     1
-102
-RTVSPropertyOp7
- 70
-     1
-102
-RTVSPropertyOp8
- 70
-     1
-102
-RTVSPropertyOp9
- 70
-     1
-102
-RTVSPropertyOp10
- 70
-     1
-102
-RTVSPropertyOp11
- 70
-     1
-102
-RTVSPropertyOp12
- 70
-     1
-102
-RTVSPropertyOp13
- 70
-     1
-102
-RTVSPropertyOp14
- 70
-     1
-102
-RTVSPropertyOp15
- 70
-     1
-102
-RTVSPropertyOp16
- 70
-     1
-102
-RTVSPropertyOp17
- 70
-     1
-102
-RTVSPropertyOp18
- 70
-     1
-102
-RTVSPropertyOp19
- 70
-     1
-102
-RTVSPropertyOp20
- 70
-     1
-102
-RTVSPropertyOp21
- 70
-     1
-102
-RTVSPropertyOp22
- 70
-     1
-102
-RTVSPropertyOp23
- 70
-     1
-102
-RTVSPropertyOp24
- 70
-     1
-102
-RTVSPropertyOp25
- 70
-     1
-102
-RTVSPropertyOp26
- 70
-     1
-102
-RTVSPropertyOp27
- 70
-     1
-102
-RTVSPropertyOp28
- 70
-     1
-102
-RTVSPropertyOp29
- 70
-     1
-102
-RTVSPropertyOp30
- 70
-     1
-102
-RTVSPropertyOp31
- 70
-     1
-102
-RTVSPropertyOp32
- 70
-     1
-  0
-XRECORD
-  5
-D0
-102
-{ACAD_REACTORS
-330
-CF
-102
-}
-330
-CF
-100
-AcDbXrecord
-280
-     1
-102
-RTVSPropertyOp0
- 70
-     1
-102
-RTVSPropertyOp1
- 70
-     1
-102
-RTVSPropertyOp2
- 70
-     1
-102
-RTVSPropertyOp3
- 70
-     1
-102
-RTVSPropertyOp4
- 70
-     1
-102
-RTVSPropertyOp5
- 70
-     1
-102
-RTVSPropertyOp6
- 70
-     1
-102
-RTVSPropertyOp7
- 70
-     1
-102
-RTVSPropertyOp8
- 70
-     1
-102
-RTVSPropertyOp9
- 70
-     1
-102
-RTVSPropertyOp10
- 70
-     1
-102
-RTVSPropertyOp11
- 70
-     1
-102
-RTVSPropertyOp12
- 70
-     1
-102
-RTVSPropertyOp13
- 70
-     1
-102
-RTVSPropertyOp14
- 70
-     1
-102
-RTVSPropertyOp15
- 70
-     1
-102
-RTVSPropertyOp16
- 70
-     1
-102
-RTVSPropertyOp17
- 70
-     1
-102
-RTVSPropertyOp18
- 70
-     1
-102
-RTVSPropertyOp19
- 70
-     1
-102
-RTVSPropertyOp20
- 70
-     1
-102
-RTVSPropertyOp21
- 70
-     1
-102
-RTVSPropertyOp22
- 70
-     1
-102
-RTVSPropertyOp23
- 70
-     1
-102
-RTVSPropertyOp24
- 70
-     1
-102
-RTVSPropertyOp25
- 70
-     1
-102
-RTVSPropertyOp26
- 70
-     1
-102
-RTVSPropertyOp27
- 70
-     1
-102
-RTVSPropertyOp28
- 70
-     1
-102
-RTVSPropertyOp29
- 70
-     1
-102
-RTVSPropertyOp30
- 70
-     1
-102
-RTVSPropertyOp31
- 70
-     1
-102
-RTVSPropertyOp32
- 70
-     1
-  0
-XRECORD
-  5
-D2
-102
-{ACAD_REACTORS
-330
-D1
-102
-}
-330
-D1
-100
-AcDbXrecord
-280
-     1
-102
-RTVSPropertyOp0
- 70
-     1
-102
-RTVSPropertyOp1
- 70
-     1
-102
-RTVSPropertyOp2
- 70
-     1
-102
-RTVSPropertyOp3
- 70
-     1
-102
-RTVSPropertyOp4
- 70
-     1
-102
-RTVSPropertyOp5
- 70
-     1
-102
-RTVSPropertyOp6
- 70
-     1
-102
-RTVSPropertyOp7
- 70
-     1
-102
-RTVSPropertyOp8
- 70
-     1
-102
-RTVSPropertyOp9
- 70
-     1
-102
-RTVSPropertyOp10
- 70
-     1
-102
-RTVSPropertyOp11
- 70
-     1
-102
-RTVSPropertyOp12
- 70
-     1
-102
-RTVSPropertyOp13
- 70
-     1
-102
-RTVSPropertyOp14
- 70
-     1
-102
-RTVSPropertyOp15
- 70
-     1
-102
-RTVSPropertyOp16
- 70
-     1
-102
-RTVSPropertyOp17
- 70
-     1
-102
-RTVSPropertyOp18
- 70
-     1
-102
-RTVSPropertyOp19
- 70
-     1
-102
-RTVSPropertyOp20
- 70
-     1
-102
-RTVSPropertyOp21
- 70
-     1
-102
-RTVSPropertyOp22
- 70
-     1
-102
-RTVSPropertyOp23
- 70
-     1
-102
-RTVSPropertyOp24
- 70
-     1
-102
-RTVSPropertyOp25
- 70
-     1
-102
-RTVSPropertyOp26
- 70
-     1
-102
-RTVSPropertyOp27
- 70
-     1
-102
-RTVSPropertyOp28
- 70
-     1
-102
-RTVSPropertyOp29
- 70
-     1
-102
-RTVSPropertyOp30
- 70
-     1
-102
-RTVSPropertyOp31
- 70
-     1
-102
-RTVSPropertyOp32
- 70
-     1
-  0
-XRECORD
-  5
-D4
-102
-{ACAD_REACTORS
-330
-D3
-102
-}
-330
-D3
-100
-AcDbXrecord
-280
-     1
-102
-RTVSPropertyOp0
- 70
-     1
-102
-RTVSPropertyOp1
- 70
-     1
-102
-RTVSPropertyOp2
- 70
-     1
-102
-RTVSPropertyOp3
- 70
-     1
-102
-RTVSPropertyOp4
- 70
-     1
-102
-RTVSPropertyOp5
- 70
-     1
-102
-RTVSPropertyOp6
- 70
-     1
-102
-RTVSPropertyOp7
- 70
-     1
-102
-RTVSPropertyOp8
- 70
-     1
-102
-RTVSPropertyOp9
- 70
-     1
-102
-RTVSPropertyOp10
- 70
-     1
-102
-RTVSPropertyOp11
- 70
-     1
-102
-RTVSPropertyOp12
- 70
-     1
-102
-RTVSPropertyOp13
- 70
-     1
-102
-RTVSPropertyOp14
- 70
-     1
-102
-RTVSPropertyOp15
- 70
-     1
-102
-RTVSPropertyOp16
- 70
-     1
-102
-RTVSPropertyOp17
- 70
-     1
-102
-RTVSPropertyOp18
- 70
-     1
-102
-RTVSPropertyOp19
- 70
-     1
-102
-RTVSPropertyOp20
- 70
-     1
-102
-RTVSPropertyOp21
- 70
-     1
-102
-RTVSPropertyOp22
- 70
-     1
-102
-RTVSPropertyOp23
- 70
-     1
-102
-RTVSPropertyOp24
- 70
-     1
-102
-RTVSPropertyOp25
- 70
-     1
-102
-RTVSPropertyOp26
- 70
-     1
-102
-RTVSPropertyOp27
- 70
-     1
-102
-RTVSPropertyOp28
- 70
-     1
-102
-RTVSPropertyOp29
- 70
-     1
-102
-RTVSPropertyOp30
- 70
-     1
-102
-RTVSPropertyOp31
- 70
-     1
-102
-RTVSPropertyOp32
- 70
-     1
-  0
-XRECORD
-  5
-E8
-102
-{ACAD_REACTORS
-330
-E7
-102
-}
-330
-E7
-100
-AcDbXrecord
-280
-     1
-102
-RTVSPropertyOp0
- 70
-     1
-102
-RTVSPropertyOp1
- 70
-     1
-102
-RTVSPropertyOp2
- 70
-     1
-102
-RTVSPropertyOp3
- 70
-     1
-102
-RTVSPropertyOp4
- 70
-     1
-102
-RTVSPropertyOp5
- 70
-     1
-102
-RTVSPropertyOp6
- 70
-     1
-102
-RTVSPropertyOp7
- 70
-     1
-102
-RTVSPropertyOp8
- 70
-     1
-102
-RTVSPropertyOp9
- 70
-     1
-102
-RTVSPropertyOp10
- 70
-     1
-102
-RTVSPropertyOp11
- 70
-     1
-102
-RTVSPropertyOp12
- 70
-     1
-102
-RTVSPropertyOp13
- 70
-     1
-102
-RTVSPropertyOp14
- 70
-     1
-102
-RTVSPropertyOp15
- 70
-     1
-102
-RTVSPropertyOp16
- 70
-     1
-102
-RTVSPropertyOp17
- 70
-     1
-102
-RTVSPropertyOp18
- 70
-     1
-102
-RTVSPropertyOp19
- 70
-     1
-102
-RTVSPropertyOp20
- 70
-     1
-102
-RTVSPropertyOp21
- 70
-     1
-102
-RTVSPropertyOp22
- 70
-     1
-102
-RTVSPropertyOp23
- 70
-     1
-102
-RTVSPropertyOp24
- 70
-     1
-102
-RTVSPropertyOp25
- 70
-     1
-102
-RTVSPropertyOp26
- 70
-     1
-102
-RTVSPropertyOp27
- 70
-     1
-102
-RTVSPropertyOp28
- 70
-     1
-102
-RTVSPropertyOp29
- 70
-     1
-102
-RTVSPropertyOp30
- 70
-     1
-102
-RTVSPropertyOp31
- 70
-     1
-102
-RTVSPropertyOp32
- 70
-     1
-  0
-XRECORD
-  5
-DE
-102
-{ACAD_REACTORS
-330
-DD
-102
-}
-330
-DD
-100
-AcDbXrecord
-280
-     1
-102
-RTVSPropertyOp0
- 70
-     1
-102
-RTVSPropertyOp1
- 70
-     1
-102
-RTVSPropertyOp2
- 70
-     1
-102
-RTVSPropertyOp3
- 70
-     1
-102
-RTVSPropertyOp4
- 70
-     1
-102
-RTVSPropertyOp5
- 70
-     1
-102
-RTVSPropertyOp6
- 70
-     1
-102
-RTVSPropertyOp7
- 70
-     1
-102
-RTVSPropertyOp8
- 70
-     1
-102
-RTVSPropertyOp9
- 70
-     1
-102
-RTVSPropertyOp10
- 70
-     1
-102
-RTVSPropertyOp11
- 70
-     1
-102
-RTVSPropertyOp12
- 70
-     1
-102
-RTVSPropertyOp13
- 70
-     1
-102
-RTVSPropertyOp14
- 70
-     1
-102
-RTVSPropertyOp15
- 70
-     1
-102
-RTVSPropertyOp16
- 70
-     1
-102
-RTVSPropertyOp17
- 70
-     1
-102
-RTVSPropertyOp18
- 70
-     1
-102
-RTVSPropertyOp19
- 70
-     1
-102
-RTVSPropertyOp20
- 70
-     1
-102
-RTVSPropertyOp21
- 70
-     1
-102
-RTVSPropertyOp22
- 70
-     1
-102
-RTVSPropertyOp23
- 70
-     1
-102
-RTVSPropertyOp24
- 70
-     1
-102
-RTVSPropertyOp25
- 70
-     1
-102
-RTVSPropertyOp26
- 70
-     1
-102
-RTVSPropertyOp27
- 70
-     1
-102
-RTVSPropertyOp28
- 70
-     1
-102
-RTVSPropertyOp29
- 70
-     1
-102
-RTVSPropertyOp30
- 70
-     1
-102
-RTVSPropertyOp31
- 70
-     1
-102
-RTVSPropertyOp32
- 70
-     1
-  0
-XRECORD
-  5
-E6
-102
-{ACAD_REACTORS
-330
-E5
-102
-}
-330
-E5
 100
 AcDbXrecord
 280
@@ -10689,131 +11323,115 @@ FF009F7FFF002900A5006752A5001F007F004F3F7F0013004C002F264C0009002600171326007F00
 310
 00A500A552A5007F007F007F3F7F004C004C004C264C002600260026132600FF00BF00FF7FDF00A5007C00A55291007F005F007F3F6F004C0039004C26420026001C0026132100FF007F00FF7FBF00A5005200A5527C007F003F007F3F5F004C0026004C2639002600130026131C00FF003F00FF7F9F00A5002900A5526700
 310
-7F001F007F3F4F004C0013004C262F002600090026131700000000002D2D2D005B5B5B0089898900B7B7B700B3B3B30000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+7F001F007F3F4F004C0013004C262F002600090026131700000000002D2D2D005B5B5B0089898900B7B7B700B3B3B30000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007070700000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000007070707070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007070707070700000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070707070707070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000007070707070707000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000707070707
+310
+07070707000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000707070707070707000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007070707070707070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000007070707070707070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000707070707070707070000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000707070707070707070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000070707070707070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070707070707070700000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070707070007000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000007070707070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000007000707000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007070007000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000000000707070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000070707070000000000000000000000000000000007000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000070707070707070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000707070707070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000707070707070707070700000000000000000000000000000000000000000000000000000000000000000000000000000000000707070707070707070000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070707070707070707070700000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000707070707070707070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000707070707070707070707000000000000000000000000000000000000000000000000000000000000000000000000000007070707070707070707070700000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007070707070707070707070707000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000070707070707070707070707070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000070707070707070707070707070000000000000000000000000000000000000000000000000000000000000000000000000007070707070707070707070707000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007070707070707070707070007000000000000000000000000000000000000000000000000000000000000000000000000000007070707070707070707
+310
+07070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007070707070707
+310
+07070707000000000000000000000000000000000000000000000000000000000000000000000000000000070707070707070707070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000707070707070707000700000000000000000000000000000000000000000000000000000000000000000000000000000000070707070707070707070000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070707070707070707000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000707070707070707070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000007070000070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000707000007070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000707000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000007070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007070000000707070000000000000000000000000000000000000000000000000000000000000000000000
 310
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
-00000000000000000000000000000000000000000000000707070707070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007070707070707000000000000000000000000000000000000000000
+00000000000000000707000000000000000007000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000000000707000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000000000000000700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
-00000000000000000000000000000000000000000000000007000000000000000707000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007
-310
-07000000000000000000000700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007070000000000000000000007000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-07000000000000000000000000000700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000700000000000000000000000000070000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000700000000000000000000000000070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000700000000000000000000000000000007000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000000070000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070000000000000000000000000000000700000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000070000000000000000000000000000000700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000700000000000000000000000000000007000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000000070000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000000000007000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000007000000000000000000000000000000000007000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000700000000000000000000000000
-310
-00000000070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000700000000000000000000000000000000000700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000000000007000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070000000000000000000000
-310
-00000000000007000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000000070000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000000070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000070000000000000000000000000000000700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000700000000000000000000000000000007000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070000000000000000000000000007000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000070000000000000000000000000007000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007
-310
-00000000000000000000000000070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000700000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000700000000000000000000070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000700000000000000000000070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000707000000000000000700000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000707000000000000000700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000707070707070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007070707070707000000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000700000000000000000000000700
 310
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000700000000000000000000000000070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007070707070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070707070000000000070700000000000000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070000000000000000000000000007000000000000000000000000000000000000000000
 310
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
-00000000000000000000000000000000000000000000000000000000070000000000000000000000070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000000070000000000000000000000000000070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070700000000000000000000000000000700000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000007000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000700000000
 310
-00000000070000000000000000000000000000000000070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000000070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000700000000000000000000000000000000000007000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070000000000000000000000000007000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070000000000000000000000000000000000
-310
-00000700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000070000000000000000000000000000000000000000070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000000000000000000070000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000700000000000000000000
 310
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
-00000000000000000000000000070000000000000000000000000000000000000000000700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000000000000700000000000000000000000700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000000000000000000070000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070000000000000000
-310
-00000000000000000000000000000700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000700000000000000000000000000000000000000000000070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070000000000000000000000000000000000000000000007000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070000000000000000000000070000000000000000000000000000000000000000000000000000000000000000
 310
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
-00000000000000000000000000000000000000000000000007000000000000000000000000000000000000000000070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000007070000000000000000070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000700000000000000000000000000000000000000000007000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070700000007070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000007000000000000000000000000000000000000000007000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000000000000000700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000700000000000000000000000000000000
-310
-00000700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000070000000000000000000000000000000000070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070700000000000000000000000000070700000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000070000000000000000000007070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070707070000000007070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000007070707000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000707070000000000
 310
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
@@ -10853,6 +11471,46 @@ FF009F7FFF002900A5006752A5001F007F004F3F7F0013004C002F264C0009002600171326007F00
 310
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000007070707070707000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007070707070707070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+07070707070707070707000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000707070707070707070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007070707070707070707070700000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000070707070707070707070707070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007070707070707070707070707000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000707070707070707070707070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070707070707070707070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070707070707070707
+310
+07000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000707070707070707070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000707000007070000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
+00000000000000000000000000000000000000000000000000000707000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+310
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
@@ -10881,55 +11539,31 @@ FF009F7FFF002900A5006752A5001F007F004F3F7F0013004C002F264C0009002600171326007F00
 310
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
-00000007070707070707000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070000000000000007070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070700000000000000000000070000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000707070700000000000000000000000000000000000000000000
 310
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
-00000000000000000000000000000000000000000000000000000000000000070000000000000000000000000007000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000000707070707000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000700000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000007000000000000000000000000000000070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000700000000000000000000000000000007000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000000000000000000
-310
-00000000000700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000070000000000000000000000000000000000070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000000000007000000000000000000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000707070707070707000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
-00000000000000000000000000000000000000000700000000000000000000000000000007000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00000007070707070707070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070000000000000000000000000000000700000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000707070707070707070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007
-310
-00000000000000000000000000000007000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000700000000000000000000000000070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070000000000000000000000000007000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000070707070707070707000000000000000000
 310
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
-00000000000000000000000000000000000000000000000000000000000000000007000000000000000000000707000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000007070707070707000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007070000000000000007000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000707070707070700000000000000000000000000000000000000000000000000000000000000
 310
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 310
-000000000000000000000000000000070707070707070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+000000000000000000000000000000000007070700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   0
 ENDSEC
   0
