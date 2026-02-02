@@ -38,7 +38,7 @@ PluginCapabilities ExpTo_Csv::getCapabilities() const
 {
     PluginCapabilities pluginCapabilities;
     pluginCapabilities.menuEntryPoints << PluginMenuLocation("plugins_menu",
-                                        name());
+                                        name(), tr("Export to csv test tip..."));
     return pluginCapabilities;
 }
 

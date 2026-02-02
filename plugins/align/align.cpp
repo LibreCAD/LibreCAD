@@ -28,8 +28,8 @@ PluginCapabilities LC_Align::getCapabilities() const
 {
     PluginCapabilities pluginCapabilities;
     pluginCapabilities.menuEntryPoints
-            << PluginMenuLocation("plugins_menu", tr("Align"))
-	    << PluginMenuLocation("plugins_menu", tr("Align settings..."));
+        << PluginMenuLocation("plugins_menu", tr("Align settings..."),
+            tr("Align test tip..."));
     return pluginCapabilities;
 }
 

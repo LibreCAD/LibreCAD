@@ -38,7 +38,8 @@ PluginCapabilities divide::getCapabilities() const
 {
     PluginCapabilities pluginCapabilities;
     pluginCapabilities.menuEntryPoints
-            << PluginMenuLocation( "plugins_menu", tr( "Divide" ) );
+        << PluginMenuLocation( "plugins_menu", tr( "Divide" ),
+            tr("Divide test tip..."));
     return pluginCapabilities;
 }
 
