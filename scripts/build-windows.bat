@@ -49,6 +49,7 @@ set SCMREVISION=unknown
 rem Use strings.exe to find the LC_VERSION string
 where strings >nul 2>nul
 if %errorlevel% equ 0 (
+    dir windows\LibreCAD.exe
     for /f "delims=" %%v in ('strings windows\LibreCAD.exe ^| findstr /b /c:"LC_VERSION"') do (
         set "LINE=%%v"
         rem Remove everything up to and including "LC_VERSION"
@@ -62,12 +63,14 @@ if %errorlevel% equ 0 (
 cd
 if "!SCMREVISION!"=="unknown" (
     echo [WARNING] Could not extract version from executable. Falling back to default.
-    for /f "tokens=1,* delims==" %%a in ('findstr /R /C:"^LC_VERSION[[:space:]]*=[[:space:]]*\"[0-9\.]\+\"[[:space:]]*$" librecad/src/src.pro') do (
+    dir librecad\src\src.pro
+    for /f "tokens=1,* delims==" %%a in ('findstr /R /C:"^LC_VERSION[[:space:]]*=[[:space:]]*\"[0-9\.]\+\"[[:space:]]*$" librecad\src\src.pro') do (
     set "line=%%b"
     for /f "tokens=1,* delims=" %%c in ('echo !line!') do (
        set "version=%%c"
         set "version=!version:"=!"
         set "SCMREVISION=!version!"
+        echo "SCMREVISION=%SCMREVISION%"
     )
 )
 )
@@ -80,6 +83,7 @@ popd
 
 call set-windows-env.bat
 
+        echo "SCMREVISION=%SCMREVISION%"
 if _%LC_NSIS_FILE%==_ (
     set LC_NSIS_FILE=nsis-msvc.nsi
 )
@@ -93,6 +97,7 @@ if "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
 )
 
 rem Pass the extracted SCMREVISION to NSIS
+        echo "SCMREVISION=%SCMREVISION%"
 set NSIS_FLAGS=%NSIS_FLAGS% /DSCMREVISION="!SCMREVISION!"
 
 makensis.exe %NSIS_FLAGS% %LC_NSIS_FILE%
