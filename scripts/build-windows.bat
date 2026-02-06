@@ -59,10 +59,22 @@ if %errorlevel% equ 0 (
     )
 )
 
+cd
 if "!SCMREVISION!"=="unknown" (
     echo [WARNING] Could not extract version from executable. Falling back to default.
-    set SCMREVISION=2.2.1.3
+    for /f "tokens=1,* delims==" %%a in ('findstr /R /C:"^LC_VERSION[[:space:]]*=[[:space:]]*\"[0-9\.]\+\"[[:space:]]*$" librecad/src/src.pro') do (
+    set "line=%%b"
+    for /f "tokens=1,* delims=" %%c in ('echo !line!') do (
+       set "version=%%c"
+        set "version=!version:"=!"
+        set "SCMREVISION=!version!"
+    )
 )
+)
+
+if "!SCMREVISION!"=="unknown" (
+    set SCMREVISION=2.2.1.3
+  )
 
 popd
 
