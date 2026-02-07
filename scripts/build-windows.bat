@@ -50,13 +50,13 @@ rem Use strings.exe to find the LC_VERSION string
 where strings >nul 2>nul
 if %errorlevel% equ 0 (
     dir windows\LibreCAD.exe
-    for /f "delims=" %%v in ('strings windows\LibreCAD.exe ^| findstr /b /c:"LC_VERSION"') do (
+    for /f "delims==" %%v in ('strings windows\LibreCAD.exe ^| findstr /b /c:"LC_VERSION"') do (
         set "LINE=%%v"
         rem Remove everything up to and including "LC_VERSION"
         set "SCMREVISION=!LINE:*LC_VERSION=!"
         rem Remove surrounding quotes and trim spaces
         set "SCMREVISION=!SCMREVISION:"=!"
-        set "SCMREVISION=!SCMREVISION: =!"
+        echo "SCMREVISION=!SCMREVISION: =!"
     )
 )
 

@@ -264,6 +264,7 @@ jobs:
         run: |
           copy CI\custom-win.pri custom.pri
           copy CI\custom-win.nsh scripts\postprocess-windows\custom.nsh
+          winget install --id Microsoft.Sysinternals.Strings --source winget -e
 
       - name: Build and package with script (MSVC-compatible)
         shell: cmd
@@ -326,6 +327,7 @@ jobs:
         run: |
           copy CI\custom-win.pri custom.pri
           copy CI\custom-win-x64.nsh scripts\postprocess-windows\custom.nsh
+          winget install --id Microsoft.Sysinternals.Strings --source winget -e
 
       - name: Build and package with script (MSVC-compatible)
         shell: cmd
