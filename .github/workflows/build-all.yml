@@ -262,7 +262,8 @@ jobs:
       - name: Install winget
         shell: cmd
         run: |
-          powershell -Command "Add-AppxPackage -RegisterByFamilyName -MainPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe"
+          powershell -Command "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser" >nul 2>&1
+          powershell -Command "Install-Script winget-install -Force -ErrorAction Stop"
           winget --version
 
       - name: Configure for MSVC
@@ -331,7 +332,8 @@ jobs:
       - name: Install winget
         shell: cmd
         run: |
-          powershell -Command "Add-AppxPackage -RegisterByFamilyName -MainPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe"
+          powershell -Command "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser" >nul 2>&1
+          powershell -Command "Install-Script winget-install -Force -ErrorAction Stop"
           winget --version
 
       - name: Configure for MSVC
