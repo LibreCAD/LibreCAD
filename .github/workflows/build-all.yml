@@ -260,11 +260,9 @@ jobs:
           rm boost.7z
 
       - name: Install winget
-        shell: cmd
-        run: |
-          powershell -Command "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser" >nul 2>&1
-          powershell -Command "Install-Script winget-install -Force -ErrorAction Stop"
-          winget --version
+        uses: Cyberboss/install-winget@v1
+        with:
+          wget_release_id: latest
 
       - name: Configure for MSVC
         shell: cmd
@@ -330,11 +328,9 @@ jobs:
           rm boost.7z
 
       - name: Install winget
-        shell: cmd
-        run: |
-          powershell -Command "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser" >nul 2>&1
-          powershell -Command "Install-Script winget-install -Force -ErrorAction Stop"
-          winget --version
+        uses: Cyberboss/install-winget@v1
+        with:
+          wget_release_id: latest
 
       - name: Configure for MSVC
         shell: cmd
