@@ -259,6 +259,12 @@ jobs:
           mv boost_1_87_0 ../boost
           rm boost.7z
 
+      - name: Install winget
+        shell: cmd
+        run: |
+          powershell -Command "Add-AppxPackage -RegisterByFamilyName -MainPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe"
+          winget --version
+
       - name: Configure for MSVC
         shell: cmd
         run: |
@@ -321,6 +327,12 @@ jobs:
           7z x -o. -y boost.7z
           mv boost_1_87_0 ../boost
           rm boost.7z
+
+      - name: Install winget
+        shell: cmd
+        run: |
+          powershell -Command "Add-AppxPackage -RegisterByFamilyName -MainPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe"
+          winget --version
 
       - name: Configure for MSVC
         shell: cmd
