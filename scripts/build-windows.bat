@@ -1,4 +1,6 @@
 @echo off
+setlocal enabledelayedexpansion
+
 call set-windows-env.bat
 
 pushd ..
@@ -47,20 +49,36 @@ echo [INFO] Extracting version (SCMREVISION) from LibreCAD.exe...
 set SCMREVISION=unknown
 
 rem Use strings.exe to find the LC_VERSION string
-where strings >nul 2>nul
-if %errorlevel% equ 0 (
-    dir windows\LibreCAD.exe
-    for /f "delims==" %%v in ('strings windows\LibreCAD.exe ^| findstr /b /c:"LC_VERSION"') do (
-        set "LINE=%%v"
-        rem Remove everything up to and including "LC_VERSION"
-        set "SCMREVISION=!LINE:*LC_VERSION=!"
-        rem Remove surrounding quotes and trim spaces
-        set "SCMREVISION=!SCMREVISION:"=!"
-        echo "SCMREVISION=!SCMREVISION: =!"
-    )
+
+set "search_term=LibreCAD="
+set "target_file=windows\LibreCAD.exe"
+
+for /f "tokens=1,* delims==" %%a in ('findstr /c:"%search_term%" %target_file%') do (
+    set "value=%%b"
+    echo found: %%a=%%b
+    goto :found
+)
+for /f "tokens=1,* delims==" %%a in ('findstr /c:"LC_VERSION=" librecad\src\src.pro') do (
+    set "value=%%b"
+    set "temp_string=%value%:~1%"
+    set "value=%temp_string:~0,-1%"
+    echo found: %%a=%%b
+    goto :found
 )
 
+set SCMREVISION="2.2.1.3"
+
+goto :resolved
+
+:found
+set "value=%value:~0,100%"
+echo "Found LC_VERSION: " %value%
+
+set "SCMREVISION=%value%"
+:resolved
+
 cd
+echo "SCMREVISION=%SCMREVISION%"
 if "!SCMREVISION!"=="unknown" (
     echo [WARNING] Could not extract version from executable. Falling back to default.
     dir librecad\src\src.pro

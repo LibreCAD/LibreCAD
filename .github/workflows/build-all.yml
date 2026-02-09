@@ -259,17 +259,11 @@ jobs:
           mv boost_1_87_0 ../boost
           rm boost.7z
 
-      - name: Install winget
-        uses: Cyberboss/install-winget@v1
-        with:
-          wget_release_id: latest
-
       - name: Configure for MSVC
         shell: cmd
         run: |
           copy CI\custom-win.pri custom.pri
           copy CI\custom-win.nsh scripts\postprocess-windows\custom.nsh
-          winget install --id Microsoft.Sysinternals.Strings --source winget -e
 
       - name: Build and package with script (MSVC-compatible)
         shell: cmd
@@ -327,17 +321,11 @@ jobs:
           mv boost_1_87_0 ../boost
           rm boost.7z
 
-      - name: Install winget
-        uses: Cyberboss/install-winget@v1
-        with:
-          wget_release_id: latest
-
       - name: Configure for MSVC
         shell: cmd
         run: |
           copy CI\custom-win.pri custom.pri
           copy CI\custom-win-x64.nsh scripts\postprocess-windows\custom.nsh
-          winget install --id Microsoft.Sysinternals.Strings --source winget -e
 
       - name: Build and package with script (MSVC-compatible)
         shell: cmd
