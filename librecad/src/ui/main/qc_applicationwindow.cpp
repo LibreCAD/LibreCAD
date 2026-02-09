@@ -90,6 +90,7 @@
 #include "rs_actioninterface.h"
 #include "rs_actionlibraryinsert.h"
 #include "rs_actionprintpreview.h"
+#include "rs_commands.h"
 #include "rs_debug.h"
 #include "rs_settings.h"
 #include "rs_units.h"
@@ -1826,6 +1827,37 @@ void QC_ApplicationWindow::changeEvent([[maybe_unused]] QEvent *event) {
         }
     }
 #endif
+}
+
+void QC_ApplicationWindow::refreshMenuAliases()
+{
+    QMap<QString, QAction*>& a_map = m_actionGroupManager->getActionsMap();
+
+    for (auto it = a_map.constBegin(); it != a_map.constEnd(); ++it) {
+        QAction* act = it.value();
+        if (!act) continue;
+
+        QString orig = act->property("origText").toString();
+        if (orig.isEmpty()) {
+            orig = act->text();
+            act->setProperty("origText", orig);
+        }
+
+        // Retrieve the ActionType from the property set by associateQActionWithActionType
+        QVariant atProp = act->property("RS2:actionType");
+        RS2::ActionType at = RS2::ActionNone;
+        if (atProp.isValid()) {
+            at = static_cast<RS2::ActionType>(atProp.toInt());
+        }
+
+        if (at == RS2::ActionNone) continue;
+
+        QStringList als = RS_COMMANDS->aliasesForAction(at);
+        if (als.isEmpty()) continue;
+
+        QString aliasText = QString(" (%1)").arg(als.join(", "));
+        act->setText(orig + aliasText);
+    }
 }
 
 void QC_ApplicationWindow::invokeLicenseWindow() const {

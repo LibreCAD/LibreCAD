@@ -90,6 +90,7 @@ void LC_ApplicationWindowInitializer::initApplication(){
     loadCmdWidgetVariablesFile();
     initAutoSaveTimer();
     updateCommandsAlias();
+    m_appWin->refreshMenuAliases();
     initPlugins();
     m_appWin->showStatusMessage(qApp->applicationName() + " Ready", 2000);
     initReleaseChecker();
