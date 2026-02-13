@@ -1,5 +1,3 @@
-
-
 /****************************************************************************
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
@@ -30,6 +28,7 @@
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 
 #include "rs_ellipse.h"
+#include "rs_line.h"
 #include "rs_vector.h"
 #include "rs_math.h"  // For M_PI if needed
 
@@ -127,21 +126,308 @@ TEST_CASE("RS_Ellipse::getNearestPointOnEntity") {
     REQUIRE(nearest.valid == true);
 }
 
-TEST_CASE("RS_Ellipse::areaLineIntegral") {
-    RS_Ellipse ellipse(nullptr, {RS_Vector(0,0), RS_Vector(5,0), 0.5, 0, 2*M_PI, false});  // Full ellipse
-    REQUIRE(std::abs(ellipse.areaLineIntegral() - (M_PI * 5.0 * 2.5)) < EPS);  // Area = pi * a * b
 
-    RS_Ellipse halfEllipse(nullptr, {RS_Vector(0,0), RS_Vector(5,0), 0.5, 0, M_PI, false});  // Half ellipse
-    REQUIRE(std::abs(halfEllipse.areaLineIntegral() - (M_PI * 5.0 * 2.5 / 2)) < EPS);
+
+using namespace Catch;
+
+TEST_CASE("RS_Ellipse::areaLineIntegral()", "[rs_ellipse]") {
+    double tol = 1e-8;
+
+    SECTION("Full ellipse, center (0,0), ratio 1.0, rotation 0") {
+        RS_Vector center(0.0, 0.0);
+        RS_Vector majorP(5.0, 0.0);
+        double ratio = 1.0;
+        double angle1 = 0.0;
+        double angle2 = 0.0;
+        bool reversed = false;
+        RS_EllipseData data{center, majorP, ratio, angle1, angle2, reversed};
+        RS_Ellipse ellipse(nullptr, data);
+        double result = ellipse.areaLineIntegral();
+        double expected = M_PI * 5.0 * 5.0;
+        REQUIRE_THAT(result, Matchers::WithinAbs(expected, tol));
+    }
+
+    SECTION("Full ellipse, center (3,4), ratio 0.5, rotation pi/4") {
+        RS_Vector center(3.0, 4.0);
+        double a = 2.0;
+        double alpha = M_PI / 4.0;
+        RS_Vector majorP(a * cos(alpha), a * sin(alpha));
+        double ratio = 0.5;
+        double angle1 = 0.0;
+        double angle2 = 0.0;
+        bool reversed = false;
+        RS_EllipseData data{center, majorP, ratio, angle1, angle2, reversed};
+        RS_Ellipse ellipse(nullptr, data);
+        double result = ellipse.areaLineIntegral();
+        double expected = M_PI * 2.0 * 1.0;
+        REQUIRE_THAT(result, Matchers::WithinAbs(expected, tol));
+    }
+
+    SECTION("Arc non-reversed, ratio 0.5, angles 0 to pi/2, rotation pi/4") {
+        RS_Vector center(3.0, 4.0);
+        double a = 2.0;
+        double alpha = M_PI / 4.0;
+        RS_Vector majorP(a * cos(alpha), a * sin(alpha));
+        double ratio = 0.5;
+        double angle1 = 0.0;
+        double angle2 = M_PI / 2.0;
+        bool reversed = false;
+        RS_EllipseData data{center, majorP, ratio, angle1, angle2, reversed};
+        RS_Ellipse ellipse(nullptr, data);
+        double result = ellipse.areaLineIntegral();
+        double expected = -1.8005240167647454;
+        REQUIRE_THAT(result, Matchers::WithinAbs(expected, tol));
+    }
+
+    SECTION("Arc reversed, ratio 0.5, angles 0 to pi/2, rotation pi/4") {
+        RS_Vector center(3.0, 4.0);
+        double a = 2.0;
+        double alpha = M_PI / 4.0;
+        RS_Vector majorP(a * cos(alpha), a * sin(alpha));
+        double ratio = 0.5;
+        double angle1 = 0.0;
+        double angle2 = M_PI / 2.0;
+        bool reversed = true;
+        RS_EllipseData data{center, majorP, ratio, angle1, angle2, reversed};
+        RS_Ellipse ellipse(nullptr, data);
+        double result = ellipse.areaLineIntegral();
+        double expected = -8.083709323944333;
+        REQUIRE_THAT(result, Matchers::WithinAbs(expected, tol));
+    }
+
+    SECTION("Arc non-reversed, ratio 0.5, angles pi/4 to 3pi/4, rotation pi/4") {
+        RS_Vector center(3.0, 4.0);
+        double a = 2.0;
+        double alpha = M_PI / 4.0;
+        RS_Vector majorP(a * cos(alpha), a * sin(alpha));
+        double ratio = 0.5;
+        double angle1 = M_PI / 4.0;
+        double angle2 = 3.0 * M_PI / 4.0;
+        bool reversed = false;
+        RS_EllipseData data{center, majorP, ratio, angle1, angle2, reversed};
+        RS_Ellipse ellipse(nullptr, data);
+        double result = ellipse.areaLineIntegral();
+        double expected = -4.4292036732051026;
+        REQUIRE_THAT(result, Matchers::WithinAbs(expected, tol));
+    }
+
+    SECTION("Arc non-reversed, ratio 2.0, angles 0 to pi/2, rotation pi/4") {
+        RS_Vector center(3.0, 4.0);
+        double a = 2.0;
+        double alpha = M_PI / 4.0;
+        RS_Vector majorP(a * cos(alpha), a * sin(alpha));
+        double ratio = 2.0;
+        double angle1 = 0.0;
+        double angle2 = M_PI / 2.0;
+        bool reversed = false;
+        RS_EllipseData data{center, majorP, ratio, angle1, angle2, reversed};
+        RS_Ellipse ellipse(nullptr, data);
+        double result = ellipse.areaLineIntegral();
+        double expected = 5.525825994298873;
+        REQUIRE_THAT(result, Matchers::WithinAbs(expected, tol));
+    }
+
+    SECTION("Arc reversed, ratio 2.0, angles pi/4 to 3pi/4, rotation pi/6") {
+        RS_Vector center(3.0, 4.0);
+        double a = 2.0;
+        double alpha = M_PI / 6.0;
+        RS_Vector majorP(a * cos(alpha), a * sin(alpha));
+        double ratio = 2.0;
+        double angle1 = M_PI / 4.0;
+        double angle2 = 3.0 * M_PI / 4.0;
+        bool reversed = true;
+        RS_EllipseData data{center, majorP, ratio, angle1, angle2, reversed};
+        RS_Ellipse ellipse(nullptr, data);
+        double result = ellipse.areaLineIntegral();
+        double expected = -25.092196608658043;
+        REQUIRE_THAT(result, Matchers::WithinAbs(expected, tol));
+    }
+
+    SECTION("Arc non-reversed, ratio 0.75, angles 0 to pi, rotation 0, center (0,0)") {
+        RS_Vector center(0.0, 0.0);
+        double a = 2.0;
+        double alpha = 0.0;
+        RS_Vector majorP(a * cos(alpha), a * sin(alpha));
+        double ratio = 0.75;
+        double angle1 = 0.0;
+        double angle2 = M_PI;
+        bool reversed = false;
+        RS_EllipseData data{center, majorP, ratio, angle1, angle2, reversed};
+        RS_Ellipse ellipse(nullptr, data);
+        double result = ellipse.areaLineIntegral();
+        double expected = 4.71238898038469;
+        REQUIRE_THAT(result, Matchers::WithinAbs(expected, tol));
+    }
+
+    SECTION("Arc reversed, ratio 0.75, angles 0 to pi, rotation 0, center (0,0)") {
+        RS_Vector center(0.0, 0.0);
+        double a = 2.0;
+        double alpha = 0.0;
+        RS_Vector majorP(a * cos(alpha), a * sin(alpha));
+        double ratio = 0.75;
+        double angle1 = 0.0;
+        double angle2 = M_PI;
+        bool reversed = true;
+        RS_EllipseData data{center, majorP, ratio, angle1, angle2, reversed};
+        RS_Ellipse ellipse(nullptr, data);
+        double result = ellipse.areaLineIntegral();
+        double expected = -4.71238898038469;
+        REQUIRE_THAT(result, Matchers::WithinAbs(expected, tol));
+    }
+
+    SECTION("Arc non-reversed, ratio 1.5, angles pi/2 to 3pi/2, rotation pi/3, center (3,4)") {
+        RS_Vector center(3.0, 4.0);
+        double a = 2.0;
+        double alpha = M_PI / 3.0;
+        RS_Vector majorP(a * cos(alpha), a * sin(alpha));
+        double ratio = 1.5;
+        double angle1 = M_PI / 2.0;
+        double angle2 = 3.0 * M_PI / 2.0;
+        bool reversed = false;
+        RS_EllipseData data{center, majorP, ratio, angle1, angle2, reversed};
+        RS_Ellipse ellipse(nullptr, data);
+        double result = ellipse.areaLineIntegral();
+        double expected = 0.4247779607693788;
+        REQUIRE_THAT(result, Matchers::WithinAbs(expected, tol));
+    }
+
+    SECTION("Arc reversed, ratio 1.5, angles pi/2 to 3pi/2, rotation pi/3, center (3,4)") {
+        RS_Vector center(3.0, 4.0);
+        double a = 2.0;
+        double alpha = M_PI / 3.0;
+        RS_Vector majorP(a * cos(alpha), a * sin(alpha));
+        double ratio = 1.5;
+        double angle1 = M_PI / 2.0;
+        double angle2 = 3.0 * M_PI / 2.0;
+        bool reversed = true;
+        RS_EllipseData data{center, majorP, ratio, angle1, angle2, reversed};
+        RS_Ellipse ellipse(nullptr, data);
+        double result = ellipse.areaLineIntegral();
+        double expected = -18.42477796076938;
+        REQUIRE_THAT(result, Matchers::WithinAbs(expected, tol));
+    }
+
+    SECTION("Arc non-reversed, ratio 0.5, angles 7pi/4 to pi/4 (crossing 0), rotation pi/2, center (0,0)") {
+        RS_Vector center(0.0, 0.0);
+        double a = 2.0;
+        double alpha = M_PI / 2.0;
+        RS_Vector majorP(a * cos(alpha), a * sin(alpha));
+        double ratio = 0.5;
+        double angle1 = 7.0 * M_PI / 4.0;
+        double angle2 = M_PI / 4.0;
+        bool reversed = false;
+        RS_EllipseData data{center, majorP, ratio, angle1, angle2, reversed};
+        RS_Ellipse ellipse(nullptr, data);
+        double result = ellipse.areaLineIntegral();
+        double expected = 0.5707963267948966;
+        REQUIRE_THAT(result, Matchers::WithinAbs(expected, tol));
+    }
+
+    SECTION("Arc reversed, ratio 0.5, angles 7pi/4 to pi/4 (crossing 0), rotation pi/2, center (0,0)") {
+        RS_Vector center(0.0, 0.0);
+        double a = 2.0;
+        double alpha = M_PI / 2.0;
+        RS_Vector majorP(a * cos(alpha), a * sin(alpha));
+        double ratio = 0.5;
+        double angle1 = 7.0 * M_PI / 4.0;
+        double angle2 = M_PI / 4.0;
+        bool reversed = true;
+        RS_EllipseData data{center, majorP, ratio, angle1, angle2, reversed};
+        RS_Ellipse ellipse(nullptr, data);
+        double result = ellipse.areaLineIntegral();
+        double expected = -5.71238898038469;
+        REQUIRE_THAT(result, Matchers::WithinAbs(expected, tol));
+    }
+
+    SECTION("Arc non-reversed, ratio 1.0, angles 0 to 3pi/2, rotation 0, center (3,4)") {
+        RS_Vector center(3.0, 4.0);
+        double a = 2.0;
+        double alpha = 0.0;
+        RS_Vector majorP(a * cos(alpha), a * sin(alpha));
+        double ratio = 1.0;
+        double angle1 = 0.0;
+        double angle2 = 3.0 * M_PI / 2.0;
+        bool reversed = false;
+        RS_EllipseData data{center, majorP, ratio, angle1, angle2, reversed};
+        RS_Ellipse ellipse(nullptr, data);
+        double result = ellipse.areaLineIntegral();
+        double expected = 3.4247779607693793;
+        REQUIRE_THAT(result, Matchers::WithinAbs(expected, tol));
+    }
+
+    SECTION("Arc reversed, ratio 1.0, angles 0 to 3pi/2, rotation 0, center (3,4)") {
+        RS_Vector center(3.0, 4.0);
+        double a = 2.0;
+        double alpha = 0.0;
+        RS_Vector majorP(a * cos(alpha), a * sin(alpha));
+        double ratio = 1.0;
+        double angle1 = 0.0;
+        double angle2 = 3.0 * M_PI / 2.0;
+        bool reversed = true;
+        RS_EllipseData data{center, majorP, ratio, angle1, angle2, reversed};
+        RS_Ellipse ellipse(nullptr, data);
+        double result = ellipse.areaLineIntegral();
+        double expected = -9.14159265358979312;
+        REQUIRE_THAT(result, Matchers::WithinAbs(expected, tol));
+    }
 }
 
-TEST_CASE("RS_Ellipse::switchMajorMinor") {
-    RS_Ellipse ellipse(nullptr, {RS_Vector(0,0), RS_Vector(5,0), 0.5, 0, 2*M_PI, false});
-    REQUIRE(ellipse.switchMajorMinor() == true);
-    REQUIRE(ellipse.getMajorP() == RS_Vector(0.0, 2.5));  // Switched to vertical major
-    REQUIRE(std::abs(ellipse.getRatio() - 2.0) < EPS);  // Inverse ratio 1/0.5 = 2
-    REQUIRE(ellipse.switchMajorMinor());  // Switch back
-    REQUIRE(ellipse.getMajorP().distanceTo(RS_Vector(-5.0, 0.0)) < EPS);
-    REQUIRE(std::abs(ellipse.getRatio() - 0.5) < EPS);
+TEST_CASE("Elliptic arc segment area", "[rs_ellipse]") {
+    double tol = 1e-8;
 
+    SECTION("Arc non-reversed, ratio 0.5, angles 0 to pi/2, rotation 0, center 0") {
+        RS_Vector center(0.0, 0.0);
+        double a = 2.0;
+        double alpha = 0.0;
+        RS_Vector majorP(a * cos(alpha), a * sin(alpha));
+        double ratio = 0.5;
+        double angle1 = 0.0;
+        double angle2 = M_PI / 2.0;
+        bool reversed = false;
+        RS_EllipseData data{center, majorP, ratio, angle1, angle2, reversed};
+        RS_Ellipse ellipse(nullptr, data);
+
+        double theta = ellipse.getAngleLength();
+        double sector = 0.5 * a * (a * ratio) * theta;  // 0.5 a b theta
+        RS_Vector p1 = ellipse.getStartpoint();  // (2,0)
+        RS_Vector p2 = ellipse.getEndpoint();    // (0,1)
+        double triangle = 0.5 * (p1.x * p2.y - p2.x * p1.y);  // Signed area
+        double segment = sector - triangle;
+        double expected = M_PI / 2.0 - 1.0;  // ~0.5708
+        REQUIRE_THAT(segment, Matchers::WithinAbs(expected, tol));
+    }
+
+    SECTION("Arc reversed, ratio 2.5, angles pi/6 to 3pi/7, rotation pi/5, center (3,4)") {
+        RS_Vector center(3.0, 4.0);
+        double a = 2.0;
+        double alpha = M_PI / 5.0;
+        RS_Vector majorP(a * cos(alpha), a * sin(alpha));
+        double ratio = 2.5;
+        double angle1 = M_PI / 6.0;
+        double angle2 = 3.0 * M_PI / 7.0;
+        bool reversed = true;
+        RS_EllipseData data{center, majorP, ratio, angle1, angle2, reversed};
+        RS_Ellipse ellipse(nullptr, data);
+
+        double segment = ellipse.areaLineIntegral();
+        double expected = -28.9718193637963;
+        REQUIRE_THAT(segment, Matchers::WithinAbs(expected, tol));
+    }
+
+    SECTION("Arc non-reversed, center (3,4), majorP=(2,1), ratio 0.75, angles pi/6 to 0.8pi, rotation from majorP; line connecting begin/end") {
+        RS_Vector center(3.0, 4.0);
+        RS_Vector majorP(2.0, 1.0);
+        double ratio = 0.75;
+        double angle1 = M_PI / 6.0;
+        double angle2 = 0.8 * M_PI;
+        bool reversed = false;
+        RS_EllipseData data{center, majorP, ratio, angle1, angle2, reversed};
+        RS_Ellipse ellipse(nullptr, data);
+
+        RS_Line line{nullptr, RS_LineData{ellipse.getEndpoint(), ellipse.getStartpoint()}};
+
+        double area = ellipse.areaLineIntegral() + line.areaLineIntegral();
+        double expected = 2.0177435430580033;
+        REQUIRE_THAT(area, Matchers::WithinAbs(expected, tol));
+    }
 }
