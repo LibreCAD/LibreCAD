@@ -430,4 +430,23 @@ TEST_CASE("Elliptic arc segment area", "[rs_ellipse]") {
         double expected = 2.0177435430580033;
         REQUIRE_THAT(area, Matchers::WithinAbs(expected, tol));
     }
+
+    SECTION("Arc non-reversed, center (81.36434599, 21.83868864), majorP=(-111.51516953, 0), minor radius=4.911886562, angles in degrees:250.5718813 to ,441.6127417, reversed=false; line connecting begin/end") {
+        RS_Vector center(81.36434599, 21.83868864);
+        double a = 11.51516953;
+        double b = 4.911886562;
+        RS_Vector majorP(-a, 0);
+        double ratio = b/a;
+        double angle1 = RS_Math::deg2rad(250.5718813);
+        double angle2 = RS_Math::deg2rad(441.6127417);
+        bool reversed = false;
+        RS_EllipseData data{center, majorP, ratio, angle1, angle2, reversed};
+        RS_Ellipse ellipse(nullptr, data);
+
+        RS_Line line{nullptr, RS_LineData{ellipse.getEndpoint(), ellipse.getStartpoint()}};
+
+        double area = ellipse.areaLineIntegral() + line.areaLineIntegral();
+        double expected = 99.7117795862;
+        REQUIRE_THAT(area, Matchers::WithinAbs(expected, 1e-7));
+    }
 }
