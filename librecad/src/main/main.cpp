@@ -52,6 +52,8 @@
 
 namespace
 {
+// To a plain text string to the compiled binary
+const std::string g_lcVersion{"LC_VISION=" XSTR(LC_VERSION)};
 void restoreWindowGeometry(QC_ApplicationWindow& appWin, QSettings& settings);
 }
 /**

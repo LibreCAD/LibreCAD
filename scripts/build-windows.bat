@@ -1,4 +1,6 @@
 @echo off
+setlocal enabledelayedexpansion
+
 call set-windows-env.bat
 
 pushd ..
@@ -40,34 +42,49 @@ rem lrelease.exe librecad\ts\*.ts -qm windows\ts\
 dir windows\ts
 rem windeployqt.exe windows\LibreCAD.exe --release --verbose 2 --force
 
-rem ------------------------------------------------------------------
-rem Extract SCMREVISION from the built executable (from LC_VERSION in src.pro)
-rem ------------------------------------------------------------------
-echo [INFO] Extracting version (SCMREVISION) from LibreCAD.exe...
+echo [INFO] Extracting version (SCMREVISION)...
 set SCMREVISION=unknown
 
-rem Use strings.exe to find the LC_VERSION string
-where strings >nul 2>nul
-if %errorlevel% equ 0 (
-    for /f "delims=" %%v in ('strings windows\LibreCAD.exe ^| findstr /b /c:"LC_VERSION"') do (
-        set "LINE=%%v"
-        rem Remove everything up to and including "LC_VERSION"
-        set "SCMREVISION=!LINE:*LC_VERSION=!"
-        rem Remove surrounding quotes and trim spaces
-        set "SCMREVISION=!SCMREVISION:"=!"
-        set "SCMREVISION=!SCMREVISION: =!"
+rem Parse default LC_VERSION from src.pro (find line starting with LC_VERSION= , allowing spaces)
+for /f "delims=" %%l in ('findstr /R /C:"^[ \t]*LC_VERSION[ \t]*=" librecad\src\src.pro') do set "line=%%l"
+
+if defined line (
+    for /f "tokens=1,* delims==" %%a in ("!line!") do set "value=%%b"
+    rem Trim leading/trailing spaces
+    for /f "tokens=*" %%i in ("!value!") do set "value=%%i"
+    rem Remove surrounding quotes if present
+    if "!value:~0,1!"=="\"" if "!value:~-1!"=="\"" (
+        set "SCMREVISION=!value:~1,-1!"
+    ) else (
+        set "SCMREVISION=!value!"
     )
 )
 
+rem Override with Git if available (mimics src.pro logic)
+where git >nul 2>nul
+if %errorlevel%==0 (
+    if exist .git (
+        for /f "delims=" %%i in ('git describe --always 2^>nul') do set SCMREVISION=%%i
+    )
+)
+
+rem If MSYSGIT_DIR is set, use it as alternative (like in src.pro)
+if NOT "_%MSYSGIT_DIR%"=="_" (
+    for /f "delims=" %%i in ('"%MSYSGIT_DIR%\git.exe" describe --always 2^>nul') do set SCMREVISION=%%i
+)
+
 if "!SCMREVISION!"=="unknown" (
-    echo [WARNING] Could not extract version from executable. Falling back to default.
+    echo [WARNING] Could not extract version. Using hardcoded default.
     set SCMREVISION=2.2.1.3
 )
+
+echo "SCMREVISION=%SCMREVISION%"
 
 popd
 
 call set-windows-env.bat
 
+        echo "SCMREVISION=%SCMREVISION%"
 if _%LC_NSIS_FILE%==_ (
     set LC_NSIS_FILE=nsis-msvc.nsi
 )
@@ -81,6 +98,7 @@ if "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
 )
 
 rem Pass the extracted SCMREVISION to NSIS
+        echo "SCMREVISION=%SCMREVISION%"
 set NSIS_FLAGS=%NSIS_FLAGS% /DSCMREVISION="!SCMREVISION!"
 
 makensis.exe %NSIS_FLAGS% %LC_NSIS_FILE%
