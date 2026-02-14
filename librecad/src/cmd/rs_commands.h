@@ -61,6 +61,8 @@ public:
     RS2::ActionType cmdToAction(const QString& cmd, bool verbose = true) const;
     RS2::ActionType keycodeToAction(const QString& code) const;
 
+    QStringList aliasesForAction(RS2::ActionType a) const;
+
     static QString command(const QString& cmd);
 
     static bool checkCommand(const QString& cmd, const QString& str,
