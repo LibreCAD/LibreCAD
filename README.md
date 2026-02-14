@@ -39,8 +39,11 @@ $ librecad dxf2svg foo.dxf
 
 ## Releases and Milestones
 
+### Releases
 - [Releases and Prereleases](https://github.com/LibreCAD/LibreCAD/releases)
-- [Milestones](https://github.com/LibreCAD/LibreCAD/milestones)
+### Latest Builds
+- [2.2.2-alpha](https://github.com/LibreCAD/LibreCAD/releases/tag/2.2.2_alpha-latest)
+- [2.2.1.x latest](https://github.com/LibreCAD/LibreCAD/releases/tag/2.2.1.3_rc-latest)
 
   For macOS arm64 builds, the app is __NOT__ signed. To workaround the "damaged" error ([#2162](https://github.com/LibreCAD/LibreCAD/issues/2162)):
   ```bash
