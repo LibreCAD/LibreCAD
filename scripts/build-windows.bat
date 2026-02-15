@@ -80,6 +80,34 @@ if "!SCMREVISION!"=="unknown" (
 
 echo "SCMREVISION=%SCMREVISION%"
 
+:: Input string (e.g., 2.2.1.3-*, 2.2.2-alpha)
+set "input=%SCMREVISION%"
+if "!input!"=="" set "input=2.2.2-alpha*"
+
+:: 1. Scan for the first character that is NOT 0-9 or .
+set "CLEAN_VERSION="
+for /L %%i in (0,1,50) do (
+    set "char=!input:~%%i,1!"
+    if "!char!"=="" goto :done_scan
+
+    echo !char!| findstr /R "[0-9.]" >nul
+    if errorlevel 1 (
+        goto :done_scan
+    ) else (
+        set "CLEAN_VERSION=!CLEAN_VERSION!!char!"
+    )
+)
+
+:done_scan
+:: 2. Split and pad with zeros to ensure X.X.X.X format
+for /f "tokens=1-4 delims=." %%a in ("!CLEAN_VERSION!") do (
+    set "v1=%%a" & set "v2=%%b" & set "v3=%%c" & set "v4=%%d"
+)
+
+for %%v in (v1 v2 v3 v4) do if "!%%v!"=="" set "%%v=0"
+
+set "VIProductVersion=!v1!.!v2!.!v3!.!v4!"
+
 popd
 
 call set-windows-env.bat
@@ -99,7 +127,7 @@ if "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
 
 rem Pass the extracted SCMREVISION to NSIS
         echo "SCMREVISION=%SCMREVISION%"
-set NSIS_FLAGS=%NSIS_FLAGS% /DSCMREVISION="!SCMREVISION!"
+set NSIS_FLAGS=%NSIS_FLAGS% /DSCMREVISION="!SCMREVISION!" /DVIProductVersion="!VIProductVersion!"
 
 makensis.exe %NSIS_FLAGS% %LC_NSIS_FILE%
 popd
