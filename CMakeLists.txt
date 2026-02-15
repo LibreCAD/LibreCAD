@@ -8,30 +8,19 @@ set(CMAKE_AUTOUIC OFF)
 if(CMAKE_VERSION VERSION_LESS "3.7.0")
     set(CMAKE_INCLUDE_CURRENT_DIR ON)
 endif()
-#set(MIN_GW_PATH_PREFIX "c:\\DevTools\\QT\\6.7.2\\mingw_64")
-set(MIN_GW_PATH_PREFIX "d:\\Qt\\QT5\\5.11.0\\mingw_64")
-#set(MIN_GW_PATH_PREFIX "c:\\DevTools\\QT\\6.7.2\\mingw_64")
-set(BOOST_DIR "c:\\Local\\boost_1_87_0")
-#set(Boost_INCLUDE_DIR "c:\\Local\\boost_1_87_0")
-#set(CMAKE_PREFIX_PATH "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
-#set(Qt5_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt5")
-#set(Qt5Core_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt5Core")
-#set(Qt5Svg_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt5Svg")
-#set(Qt5CoreTools_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt5CoreTools")
-#set(Qt5Gui_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\QtGui")
-#set(QtNetwork_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\QtNetwork")
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-#set(CMAKE_AUTOUIC_OPTIONS --connections string)
 add_compile_definitions(DWGSUPPORT)
 add_compile_definitions(MUPARSER_STATIC)
 add_compile_definitions(LC_VERSION=2.2.1.1_rc)
 add_compile_definitions(LC_PRERELEASE=true)
 find_package(Qt5 COMPONENTS Gui Core Widgets PrintSupport Svg Network REQUIRED)
 find_package(Qt5 REQUIRED COMPONENTS LinguistTools)
-#qt_standard_project_setup()
-find_package(Boost 1.74.0 REQUIRED)
-#include_directories(${MIN_GW_PATH_PREFIX}\\include\\QtSvg)
-#include_directories(${Boost_INCLUDE_DIRS})
+if(POLICY CMP0167)
+  cmake_policy(SET CMP0167 NEW)
+endif()
+set(Boost_NO_BOOST_CMAKE ON)
+find_package(Boost 1.74.0 CONFIG REQUIRED)
+include_directories(${Boost_INCLUDE_DIRS})
 include_directories(librecad/res/actions)
 include_directories(librecad/res/extui)
 include_directories(librecad/res/icons)
@@ -159,7 +148,6 @@ include_directories(librecad/src/ui/action_options/image)
 include_directories(librecad/src/ui/action_options/misc)
 include_directories(librecad/src/ui/action_options/insert)
 include_directories(librecad/src/ui/action_options/other)
-#include_directories(librecad/src/ui/not_used)
 include_directories(librecad/src/ui/actions)
 include_directories(librecad/src/ui/components)
 include_directories(librecad/src/ui/components/comboboxes)
@@ -183,18 +171,19 @@ include_directories(librecad/src/ui/dock_widgets/block_widget)
 include_directories(librecad/src/ui/dock_widgets/library_widget)
 include_directories(librecad/src/ui/dock_widgets/layer_widget)
 include_directories(librecad/src/ui/dock_widgets/views_list)
-#Temporary disabled for build
-#include_directories(plugins/align)
-#include_directories(plugins/asciifile)
-#include_directories(plugins/divide)
-#include_directories(plugins/gear)
-#include_directories(plugins/list)
-#include_directories(plugins/picfile)
-#include_directories(plugins/plotequation)
-#include_directories(plugins/sameprop)
-#include_directories(plugins/sample)
+include_directories(plugins/align)
+include_directories(plugins/asciifile)
+include_directories(plugins/divide)
+include_directories(plugins/gear)
+include_directories(plugins/list)
+include_directories(plugins/picfile)
+include_directories(plugins/plotequation)
+include_directories(plugins/sameprop)
+include_directories(plugins/sample)
+include_directories(plugins/pointstocsv)
+include_directories(plugins/circletools)
 set(SOURCES
-	librecad/src/ui/qg_scrollbar.h
+librecad/src/ui/qg_scrollbar.h
 librecad/src/ui/forms/lc_widgetoptionsdialog.cpp
 librecad/src/cmd/rs_commands.cpp
 librecad/src/lib/actions/rs_actioninterface.cpp
@@ -603,13 +592,13 @@ librecad/src/actions/rs_actionselectwindow.cpp
 librecad/src/actions/rs_actionmodifyscale.cpp
 )
 set(JWW_SRC
-	  libraries/jwwlib/src/dl_attributes.h
+  libraries/jwwlib/src/dl_attributes.h
         libraries/jwwlib/src/dl_codes.h
         libraries/jwwlib/src/dl_creationinterface.h
         libraries/jwwlib/src/dl_entities.h
         libraries/jwwlib/src/dl_exception.h
         libraries/jwwlib/src/dl_extrusion.h
-#        libraries/jwwlib/src/dl_jww-copy.cpp
+# libraries/jwwlib/src/dl_jww-copy.cpp
         libraries/jwwlib/src/dl_jww.cpp
         libraries/jwwlib/src/dl_jww.h
         libraries/jwwlib/src/dl_writer.h
@@ -619,9 +608,8 @@ set(JWW_SRC
         libraries/jwwlib/src/jwwdoc.cpp
         libraries/jwwlib/src/jwwdoc.h
 )
-
 set(DXFRW_SRC
-	 libraries/libdxfrw/src/intern/drw_cptable932.h
+ libraries/libdxfrw/src/intern/drw_cptable932.h
         libraries/libdxfrw/src/intern/drw_cptable936.h
         libraries/libdxfrw/src/intern/drw_cptable949.h
         libraries/libdxfrw/src/intern/drw_cptable950.h
@@ -670,21 +658,7 @@ set(DXFRW_SRC
         libraries/libdxfrw/src/libdxfrw.h
         libraries/libdxfrw/src/main_doc.h
 )
-
 set(MUPARSER_SRC
-libraries/muparser/include/muParser.h
-        libraries/muparser/include/muParserBase.h
-        libraries/muparser/include/muParserBytecode.h
-        libraries/muparser/include/muParserCallback.h
-        libraries/muparser/include/muParserDef.h
-        libraries/muparser/include/muParserDLL.h
-        libraries/muparser/include/muParserError.h
-        libraries/muparser/include/muParserFixes.h
-        libraries/muparser/include/muParserInt.h
-        libraries/muparser/include/muParserTemplateMagic.h
-        libraries/muparser/include/muParserToken.h
-        libraries/muparser/include/muParserTokenReader.h
-	
 libraries/muparser/src/muParser.cpp
 libraries/muparser/src/muParserBase.cpp
 libraries/muparser/src/muParserBytecode.cpp
@@ -694,7 +668,6 @@ libraries/muparser/src/muParserError.cpp
 libraries/muparser/src/muParserInt.cpp
 libraries/muparser/src/muParserTokenReader.cpp
 )
-
 qt5_wrap_ui(UI_HEADERS
 librecad/src/ui/forms/lc_dlgsplinepoints.ui
 librecad/src/ui/forms/qg_beveloptions.ui
@@ -799,19 +772,15 @@ librecad/src/ui/lc_quickinfowidgetoptionsdialog.ui
 if(WIN32)
     target_compile_definitions(librecad PRIVATE _USE_MATH_DEFINES)
     set(SOURCES
-	    ${SOURCES}
-	librecad/src/main/emu_c99.cpp
-	)
+    ${SOURCES}
+librecad/src/main/emu_c99.cpp
+)
 endif(WIN32)
-
     set(SOURCES
-	    ${SOURCES}
-	${JWW_SRC}
-	${DXFRW_SRC}
-	    ${MUPARSER_SRC}
+    ${SOURCES}
+${JWW_SRC}
+${DXFRW_SRC}
     )
-
-# set(CMAKE_AUTOUIC_OPTIONS --connections string)
 set(TS_DIR ../librecad/ts)
 set(TS_FILES
 librecad/ts/librecad_es_bo.ts
@@ -947,34 +916,59 @@ librecad/res/main/main.qrc
 librecad/res/ui/ui.qrc
 licenses/licenses.qrc
 )
-qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+qt5_add_translation(QM_FILES ${TS_FILES})
+add_library(muparser STATIC ${MUPARSER_SRC})
+target_include_directories(muparser PUBLIC libraries/muparser/include)
 add_executable(librecad
-	${UI_HEADERS}
-	${SOURCES}
+${UI_HEADERS}
+${SOURCES}
         ${QRC_FILES}
-	${QM_FILES}
+${QM_FILES}
  )
-target_link_libraries(librecad PRIVATE Qt5::Core Qt5::Widgets Qt5::Gui Qt5::PrintSupport Qt5::Svg Qt5::Network)
+target_link_libraries(librecad PRIVATE muparser Qt5::Core Qt5::Widgets Qt5::Gui Qt5::PrintSupport Qt5::Svg Qt5::Network)
 set_target_properties(librecad PROPERTIES
-	WIN32_EXECUTABLE ON
-	MACOSX_BUNDLE ON
+WIN32_EXECUTABLE ON
+MACOSX_BUNDLE ON
    AUTOUIC_OPTIONS "--connections string")
 set_property(TARGET librecad PROPERTY AUTOUIC_OPTIONS --connections string)
-
 find_package(Freetype REQUIRED)
-
 add_executable(ttf2lff
-	tools/ttf2lff/main.cpp
+tools/ttf2lff/main.cpp
 )
 target_include_directories(ttf2lff PRIVATE ${FREETYPE_INCLUDE_DIRS})
 target_link_libraries(ttf2lff ${FREETYPE_LIBRARIES})
-install(TARGETS librecad RUNTIME DESTINATION bin)
+install(TARGETS librecad 
+    RUNTIME DESTINATION bin
+    BUNDLE DESTINATION .
+)
 install(TARGETS ttf2lff RUNTIME DESTINATION bin)
-#set(autouic_options
-#		--connections string
-#)
-#set_property(TARGET LibreCAD APPEND PROPERTY
-#  INTERFACE_AUTOUIC_OPTIONS ${autouic_options}
-#)
-#target_link_libraries(LibreCAD Qt5::Core Qt5::Widgets Qt5::Gui Qt5::PrintSupport Qt5::Svg)
-#target_link_libraries(LibreCAD Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg)
+
+# Enable plugins
+set(PLUGIN_NAMES align asciifile divide gear list picfile plotequation sameprop sample pointstocsv circletools)
+
+set(align_SOURCES plugins/align/align.cpp)
+set(asciifile_SOURCES plugins/asciifile/asciifile.cpp)
+set(divide_SOURCES plugins/divide/divide.cpp plugins/divide/dividedlg.cpp)
+set(gear_SOURCES plugins/gear/gear.cpp)
+set(list_SOURCES plugins/list/list.cpp)
+set(picfile_SOURCES plugins/picfile/picfile.cpp)
+set(plotequation_SOURCES plugins/plotequation/plot.cpp plugins/plotequation/plotdialog.cpp)
+set(sameprop_SOURCES plugins/sameprop/sameprop.cpp)
+set(sample_SOURCES plugins/sample/sample.cpp)
+set(pointstocsv_SOURCES plugins/pointstocsv/pointstocsv.cpp)
+set(circletools_SOURCES plugins/circletools/circletools.cpp)
+
+add_library(plugin_deps INTERFACE)
+target_link_libraries(plugin_deps INTERFACE Qt5::Core Qt5::Widgets Qt5::Gui)
+target_compile_definitions(plugin_deps INTERFACE DWGSUPPORT MUPARSER_STATIC)
+
+foreach(name ${PLUGIN_NAMES})
+  add_library(${name} SHARED ${${name}_SOURCES})
+  target_link_libraries(${name} PRIVATE plugin_deps)
+  set_target_properties(${name} PROPERTIES AUTOMOC ON AUTOUIC ON)
+  install(TARGETS ${name}
+    LIBRARY DESTINATION bin/resources/plugins
+    RUNTIME DESTINATION bin/resources/plugins
+  )
+endforeach()
+target_link_libraries(plotequation PRIVATE muparser)
