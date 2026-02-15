@@ -1,0 +1,6 @@
+{
+  "Keys": [ "CircleTools" ],
+  "name": "CircleTools",
+  "version": "1.0.0",
+  "description": "Batch circle operations: find by diameter, resize, move matches to layer. Debug logging to CircleTools.log is enabled by default."
+}
