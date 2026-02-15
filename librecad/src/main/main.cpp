@@ -38,15 +38,15 @@
 #include <QSettings>
 #include <QSplashScreen>
 
-#include "console_dxf2pdf.h"
-#include "console_dxf2png.h"
-#include "lc_application.h"
-#include "main.h"
-
 #include <QDir>
 #include <QPushButton>
 #include <QTimer>
 #include <QToolBar>
+
+#include "console_dxf2pdf.h"
+#include "console_dxf2png.h"
+#include "lc_application.h"
+#include "main.h"
 
 #include "lc_iconcolorsoptions.h"
 #include "qc_applicationwindow.h"
@@ -65,6 +65,9 @@
 // fixme - sand - files - complete refactoring
 namespace
 {
+// To a plain text string to the compiled binary
+const std::string g_lcVersion{"LC_VISION=" XSTR(LC_VERSION)};
+
 // update splash for alpha/beta names)
     void updateSplash(const std::unique_ptr<QSplashScreen>& splash);
 }
