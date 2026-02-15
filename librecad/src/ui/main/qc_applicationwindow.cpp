@@ -1831,6 +1831,10 @@ void QC_ApplicationWindow::changeEvent([[maybe_unused]] QEvent *event) {
 
 void QC_ApplicationWindow::refreshMenuAliases()
 {
+    LC_GROUP("Startup");
+    bool showCommandInMenu = LC_GET_BOOL("ShowCommandInMenu", true);
+    LC_GROUP_END();
+
     QMap<QString, QAction*>& a_map = m_actionGroupManager->getActionsMap();
 
     for (auto it = a_map.constBegin(); it != a_map.constEnd(); ++it) {
@@ -1841,6 +1845,11 @@ void QC_ApplicationWindow::refreshMenuAliases()
         if (orig.isEmpty()) {
             orig = act->text();
             act->setProperty("origText", orig);
+        }
+
+        if (!showCommandInMenu) {
+            act->setText(orig);
+            continue;
         }
 
         // Retrieve the ActionType from the property set by associateQActionWithActionType
