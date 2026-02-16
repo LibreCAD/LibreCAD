@@ -462,11 +462,13 @@
 //0 = Off
 //1 = On
 
-/* Hard-pointer ID to visual style while creating 3D solid primitives. The default value is NULL.
+/* Hard-pointer ID to visual style while creating 3D solid primitives.
+   The default value is NULL.
    - 9, $349, xx, <hex string representing object ID> */
 #define DXF_FORMAT_GC_DragVS		349
 
 /* Drawing code page; set to the system code page when a new drawing is created, but not otherwise maintained by AutoCAD
+   The default value is ANSI_1252.
    - 9, $DWGCODEPAGE, 3, <string> */
 #define DXF_FORMAT_GC_DwgCodePage	3
 
