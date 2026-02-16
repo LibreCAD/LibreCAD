@@ -90,6 +90,7 @@ void LC_ApplicationWindowInitializer::initApplication(){
     loadCmdWidgetVariablesFile();
     initAutoSaveTimer();
     updateCommandsAlias();
+    m_appWin->refreshMenuAliases();
     initPlugins();
     m_appWin->showStatusMessage(qApp->applicationName() + " Ready", 2000);
     initReleaseChecker();
@@ -109,6 +110,7 @@ void LC_ApplicationWindowInitializer::initReleaseChecker(){
 void LC_ApplicationWindowInitializer::initActionGroupManager(){
     m_appWin->m_actionGroupManager = std::make_unique<LC_ActionGroupManager>(m_appWin);
     connect(RS_SETTINGS, &RS_Settings::optionsChanged, m_appWin->m_actionGroupManager.get(), &LC_ActionGroupManager::onOptionsChanged);
+    connect(RS_SETTINGS, &RS_Settings::optionsChanged, m_appWin, &QC_ApplicationWindow::refreshMenuAliases);
 }
 
 void LC_ApplicationWindowInitializer::initActionOptionsManager(){
