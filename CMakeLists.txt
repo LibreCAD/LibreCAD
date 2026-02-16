@@ -726,6 +726,8 @@ set(SHARED_SOURCES
     librecad/src/lib/engine/document/container/lc_containertraverser.h
     librecad/src/lib/engine/document/container/lc_looputils.cpp
     librecad/src/lib/engine/document/container/lc_looputils.h
+    librecad/src/lib/engine/document/container/lc_pathbuilder.h
+    librecad/src/lib/engine/document/container/lc_pathbuilder.cpp
     librecad/src/lib/engine/document/container/rs_entitycontainer.cpp
     librecad/src/lib/engine/document/container/rs_entitycontainer.h
     librecad/src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp
