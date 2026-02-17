@@ -89,6 +89,8 @@ public:
    */
   void clear();
 
+  friend class LC_Loops;
+
 private:
   /**
    * @brief Converts WCS point to UI (screen) coordinates.

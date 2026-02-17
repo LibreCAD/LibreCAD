@@ -844,23 +844,27 @@ void RS_Painter::drawEllipseBySplinePointsUI(const RS_Ellipse& ellipse, QPainter
   // Don't duplicate first point for closed
   const bool closed = !ellipse.isEllipticArc();
   int numPoints = closed ? numSegments : numSegments + 1;
-  double delta = lenRad / numSegments;
+  double delta = ellipse.isReversed() ? - lenRad / numSegments : lenRad / numSegments;
 
   LC_SplinePointsData data;
   data.closed = closed;
 
-  double param = ellipse.isReversed() ? ellipse.getAngle1(): ellipse.getAngle2();
-  RS_Vector rotation{- ellipse.getMajorP().angle()};
-  RS_Vector uiCenter = toGui(ellipse.getCenter());
+  double param = ellipse.getAngle1();
+  RS_Vector rotation{ellipse.getMajorP().angle()};
+  RS_Vector center = ellipse.getCenter();
 
-  const RS_Vector scaleXY{uiRadii.x, - uiRadii.y};
+  const RS_Vector scaleXY(ellipse.getMajorRadius(), ellipse.getMinorRadius());
   for (int i = 0; i < numPoints; ++i) {
-    data.splinePoints.push_back(RS_Vector{param}.scale(scaleXY).rotate(rotation).move(uiCenter));
+    const RS_Vector ellipsePoint = RS_Vector{param}.scale(scaleXY).rotate(rotation).move(center);
+    data.splinePoints.push_back(toGui(ellipsePoint));
+    LC_ERR<<"Ellipse Point: param="<<param<<" , "<<ellipsePoint;
     param += delta;
   }
 
   LC_SplinePoints spline(nullptr, data);
   addSplinePointsToPath(spline.getData().controlPoints, ellipse.isEllipticArc(), path);
+  for(auto&& vp: spline.getData().controlPoints)
+    LC_ERR<<"Ellipse control point: "<< toWorld(vp);
 }
 
 void RS_Painter::addSplinePointsToPath(const std::vector<RS_Vector> &uiControlPoints, bool closed, QPainterPath &path) const

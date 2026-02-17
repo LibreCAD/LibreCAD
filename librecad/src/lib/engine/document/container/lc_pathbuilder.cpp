@@ -49,9 +49,10 @@ void PathBuilder::append(RS_Entity* entity) {
   if (!entity || entity->isUndone()) return;
 
   RS_Vector startp = entity->getStartpoint();
+  moveTo(startp);
   const double tol = 1e-6;
   if (!m_hasLastPoint || m_lastPoint.distanceTo(startp) > tol) {
-    moveTo(startp);
+    LC_ERR<<__func__<<": line "<<__LINE__<<": found gap at "<<m_lastPoint<<" to "<<startp;
   }
 
   RS2::EntityType type = entity->rtti();
