@@ -32,6 +32,7 @@
 #include "lc_cachedlengthentity.h"
 
 class LC_Quadratic;
+class QPainterPath;
 
 namespace lc {
     namespace geo {
@@ -231,6 +232,7 @@ public:
     void revertDirection() override;
 
     void draw(RS_Painter* painter) override;
+    QPainterPath createPainterPath(RS_Painter* painter) const;
 
     friend std::ostream& operator << (std::ostream& os, const RS_Ellipse& a);
 

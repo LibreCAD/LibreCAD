@@ -1767,3 +1767,64 @@ bool RS_Painter::isFullyWithinBoundingRect(const LC_Rect &rect){
 const LC_Rect &RS_Painter::getWcsBoundingRect() const {
     return wcsBoundingRect;
 }
+
+
+QPainterPath RS_Painter::createPathForParametricCurve(
+    std::vector<double>& paramPoints,
+    std::function<RS_Vector(double)> getPointAtParam,
+    double approxRadius
+) const
+{
+    QPainterPath path;
+    const LC_Rect& vpRect = getWcsBoundingRect();
+    double scale = toGuiDX(1.);
+    double maxErrorPx = 1.0; // Max approximation error in pixels
+    // Normalized error e_r = maxErrorPx / (approxRadius * scale)
+    double e_r = maxErrorPx / (approxRadius * scale);
+    // Step angle for quadratic approx: theta ≈ pow(24 * e_r, 0.25) (from error ≈ (theta^4)/24 * r)
+    double theta = std::pow(24 * e_r, 0.25);
+
+    for (size_t i = 1; i < paramPoints.size(); ++i) {
+        double d1 = paramPoints[i - 1];
+        double d2 = paramPoints[i];
+        double segmentLength = d2 - d1;
+        if (segmentLength < RS_TOLERANCE_ANGLE) continue;
+
+        double midP = (d1 + d2) / 2.0;
+        RS_Vector midPoint = getPointAtParam(midP);
+        bool visible = vpRect.inArea(midPoint, RS_TOLERANCE);
+
+        int numSamples;
+        if (visible) {
+            if (!std::isnormal(theta) || theta < RS_TOLERANCE_ANGLE) theta = M_PI / 18; // Fallback ~10 deg
+            numSamples = static_cast<int>(std::ceil(segmentLength / theta));
+            if (numSamples < 2) numSamples = 2;
+        } else {
+            numSamples = 2; // 3 points: start, mid, end for invisible
+        }
+
+        std::vector<RS_Vector> samples;
+        double step = segmentLength / numSamples;
+        for (int j = 0; j <= numSamples; ++j) {
+            double param = d1 + j * step;
+            samples.push_back(getPointAtParam(param));
+        }
+
+        // Approximate with LC_SplinePoints (quadratic Bezier chain)
+        LC_SplinePointsData spd(false, false); // Open, not cut
+        spd.splinePoints = samples;
+        spd.useControlPoints = false;
+        LC_SplinePoints approx(nullptr, spd);
+        approx.update(); // Generates quadratic control points
+
+        const auto& cps = approx.getControlPoints();
+        if (cps.empty()) continue;
+
+        std::vector<RS_Vector> uiCps;
+        for (const auto& cp : cps) {
+            uiCps.push_back(toGui(cp));
+        }
+        addSplinePointsToPath(uiCps, false, path);
+    }
+    return path;
+}

@@ -160,7 +160,7 @@ void PathBuilder::appendEllipse(RS_Ellipse* ellipse) {
   if (!ellipse || !m_painter) return;
 
   // TODO: pixel-level precision (issue #2035)
-  m_painter->drawEllipseBySplinePointsUI(*ellipse, m_path);
+  m_path.addPath(ellipse->createPainterPath(m_painter));
 }
 
 void PathBuilder::appendSplinePoints(LC_SplinePoints* spline) {
