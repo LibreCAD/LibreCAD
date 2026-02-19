@@ -23,6 +23,9 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+//! File: rs_arc.cpp
+
+#include <QPainterPath>
 
 #include "rs_arc.h"
 
@@ -973,8 +976,50 @@ void RS_Arc::stretch(const RS_Vector& firstCorner,
     calculateBorders();
 }
 
+QPainterPath RS_Arc::createPainterPath(RS_Painter* painter) const {
+  const LC_Rect& vpRect = painter->getWcsBoundingRect();
+  double baseAngle = isReversed() ? data.angle2 : data.angle1;
+  double fullAngleLength = getAngleLength();
+  std::vector<double> crossPoints;
+
+         // Compute intersections with viewport borders
+  std::array<RS_Vector, 4> vertices = vpRect.vertices();
+  for (unsigned short i = 0; i < vertices.size(); ++i) {
+    RS_Line line{vertices.at(i), vertices.at((i + 1) % vertices.size())};
+    RS_VectorSolutions vpIts = RS_Information::getIntersection(this, &line, true);
+    for (const RS_Vector& vp : vpIts) {
+      double ap1 = getTangentDirection(vp).angle();
+      double ap2 = line.getTangentDirection(vp).angle();
+      if (std::abs(RS_Math::correctAngle(ap2 - ap1)) > RS_TOLERANCE_ANGLE) {
+        double angle = getArcAngle(vp);
+        crossPoints.push_back(RS_Math::getAngleDifference(baseAngle, angle));
+      }
+    }
+  }
+
+         // Add start/end if visible
+  RS_Vector vpStart = getStartpoint();
+  RS_Vector vpEnd = getEndpoint();
+  if (vpRect.inArea(vpStart, RS_TOLERANCE)) crossPoints.insert(crossPoints.begin(), 0.0);
+  if (vpRect.inArea(vpEnd, RS_TOLERANCE)) crossPoints.push_back(fullAngleLength);
+
+         // Sort and unique
+  std::sort(crossPoints.begin(), crossPoints.end());
+  auto last = std::unique(crossPoints.begin(), crossPoints.end(), [](double a, double b) {
+    return std::abs(a - b) < RS_TOLERANCE_ANGLE;
+  });
+  crossPoints.erase(last, crossPoints.end());
+
+         // Define point getter (relative param 0 to fullAngleLength)
+  auto getPointAtParam = [this, baseAngle](double relParam) {
+    return this->getPointAtParameter(baseAngle + relParam);
+  };
+
+  return painter->createPathForParametricCurve(crossPoints, getPointAtParam, getRadius());
+}
+
 void RS_Arc::draw(RS_Painter* painter) {
-    painter->drawEntityArc(this);
+  painter->drawPath(createPainterPath(painter));
 }
 
 /**
