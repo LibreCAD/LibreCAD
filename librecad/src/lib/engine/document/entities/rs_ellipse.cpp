@@ -1846,10 +1846,15 @@ double RS_Ellipse::getMinorRadius() const {
 void RS_Ellipse::draw(RS_Painter* painter) {
   if (painter == nullptr)
     return;
-  painter->drawPath(createPainterPath(painter));
+
+  QPainterPath path;
+  RS_Vector startUi = painter->toGui(getStartpoint());
+  path.moveTo(startUi.x, startUi.y);
+  createPainterPath(painter, path);
+  painter->drawPath(path);
 }
 
-QPainterPath RS_Ellipse::createPainterPath(RS_Painter* painter) const {
+void RS_Ellipse::createPainterPath(RS_Painter* painter, QPainterPath& path) const {
   const LC_Rect& vpRect = painter->getWcsBoundingRect();
   double baseAngle = isReversed() ? getAngle2() : getAngle1();
   double fullAngleLength = data.isArc ? getAngleLength() : 2 * M_PI;
@@ -1870,10 +1875,8 @@ QPainterPath RS_Ellipse::createPainterPath(RS_Painter* painter) const {
   }
 
          // Add start/end if visible
-  RS_Vector vpStart = getStartpoint();
-  RS_Vector vpEnd = getEndpoint();
-  if (vpRect.inArea(vpStart, RS_TOLERANCE)) crossPoints.insert(crossPoints.begin(), 0.0);
-  if (vpRect.inArea(vpEnd, RS_TOLERANCE)) crossPoints.push_back(fullAngleLength);
+  crossPoints.insert(crossPoints.begin(), 0.0);
+  crossPoints.push_back(fullAngleLength);
 
          // Sort and unique
   std::sort(crossPoints.begin(), crossPoints.end());
@@ -1887,7 +1890,7 @@ QPainterPath RS_Ellipse::createPainterPath(RS_Painter* painter) const {
     return this->getEllipsePoint(baseAngle + relParam);
   };
 
-  return painter->createPathForParametricCurve(crossPoints, getPointAtParam, getMajorRadius());
+  painter->createPathForParametricCurve(path, crossPoints, getPointAtParam, getMajorRadius());
 }
 
 /** directly draw the arc, assuming the whole arc is within visible window */

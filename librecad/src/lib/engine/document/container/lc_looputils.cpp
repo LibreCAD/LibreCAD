@@ -748,6 +748,31 @@ void LC_Loops::addEllipticArc(QPainterPath& path, const RS_Vector& center, doubl
   }
 }
 
+namespace {
+void debugPath(const QPainterPath &path) {
+  LC_ERR << "Path Element Count:" << path.elementCount();
+
+  for (int i = 0; i < path.elementCount(); ++i) {
+    const QPainterPath::Element &e = path.elementAt(i);
+
+    switch (e.type) {
+    case QPainterPath::MoveToElement:
+      LC_ERR << i << ": MoveTo  " << e.x << "," << e.y;
+      break;
+    case QPainterPath::LineToElement:
+      LC_ERR << i << ": LineTo  " << e.x << "," << e.y;
+      break;
+    case QPainterPath::CurveToElement:
+      LC_ERR << i << ": CurveTo " << e.x << "," << e.y;
+      // Note: CurveTo is followed by two CurveToDataElements for control points
+      break;
+    case QPainterPath::CurveToDataElement:
+      LC_ERR << i << ":   Data  " << e.x << "," << e.y;
+      break;
+    }
+  }
+}
+}
 /**
  * @brief Converts container entities to QPainterPath, handling lines, arcs, circles, ellipses, splines, and parabolas.
  * Closes the subpath; skips unsupported types.
@@ -766,7 +791,7 @@ QPainterPath LC_Loops::buildPathFromLoop(RS_Painter* painter, const RS_EntityCon
     return path;
   }
 
-  builder.moveTo(cont.first()->getStartpoint());
+  //builder.moveTo(cont.first()->getStartpoint());
   for (RS_Entity* e : cont) {
     if (e->isAtomic()) {
       RS_Vector start = e->getStartpoint();
@@ -778,6 +803,7 @@ QPainterPath LC_Loops::buildPathFromLoop(RS_Painter* painter, const RS_EntityCon
     }
   }
   builder.closeSubpath();
+  debugPath(path);
   return path;
 }
 

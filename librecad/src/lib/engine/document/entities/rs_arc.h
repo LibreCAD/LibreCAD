@@ -253,7 +253,7 @@ public:
 
 
     void draw(RS_Painter* painter) override;
-    QPainterPath createPainterPath(RS_Painter* painter) const;
+    void createPainterPath(RS_Painter* painter, QPainterPath& path) const;
 
     friend std::ostream& operator << (std::ostream& os, const RS_Arc& a);
 

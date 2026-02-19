@@ -976,7 +976,7 @@ void RS_Arc::stretch(const RS_Vector& firstCorner,
     calculateBorders();
 }
 
-QPainterPath RS_Arc::createPainterPath(RS_Painter* painter) const {
+void RS_Arc::createPainterPath(RS_Painter* painter, QPainterPath& path) const {
   const LC_Rect& vpRect = painter->getWcsBoundingRect();
   double baseAngle = isReversed() ? data.angle2 : data.angle1;
   double fullAngleLength = getAngleLength();
@@ -998,10 +998,8 @@ QPainterPath RS_Arc::createPainterPath(RS_Painter* painter) const {
   }
 
          // Add start/end if visible
-  RS_Vector vpStart = getStartpoint();
-  RS_Vector vpEnd = getEndpoint();
-  if (vpRect.inArea(vpStart, RS_TOLERANCE)) crossPoints.insert(crossPoints.begin(), 0.0);
-  if (vpRect.inArea(vpEnd, RS_TOLERANCE)) crossPoints.push_back(fullAngleLength);
+    crossPoints.insert(crossPoints.begin(), 0.0);
+    crossPoints.push_back(fullAngleLength);
 
          // Sort and unique
   std::sort(crossPoints.begin(), crossPoints.end());
@@ -1015,11 +1013,15 @@ QPainterPath RS_Arc::createPainterPath(RS_Painter* painter) const {
     return this->getPointAtParameter(baseAngle + relParam);
   };
 
-  return painter->createPathForParametricCurve(crossPoints, getPointAtParam, getRadius());
+  painter->createPathForParametricCurve(path, crossPoints, getPointAtParam, getRadius());
 }
 
 void RS_Arc::draw(RS_Painter* painter) {
-  painter->drawPath(createPainterPath(painter));
+  QPainterPath path;
+  RS_Vector startUi = painter->toGui(getStartpoint());
+  path.moveTo(startUi.x, startUi.y);
+  createPainterPath(painter, path);
+  painter->drawPath(path);
 }
 
 /**

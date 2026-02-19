@@ -863,8 +863,6 @@ void RS_Painter::drawEllipseBySplinePointsUI(const RS_Ellipse& ellipse, QPainter
 
   LC_SplinePoints spline(nullptr, data);
   addSplinePointsToPath(spline.getData().controlPoints, ellipse.isEllipticArc(), path);
-  for(auto&& vp: spline.getData().controlPoints)
-    LC_ERR<<"Ellipse control point: "<< toWorld(vp);
 }
 
 void RS_Painter::addSplinePointsToPath(const std::vector<RS_Vector> &uiControlPoints, bool closed, QPainterPath &path) const
@@ -894,7 +892,7 @@ void RS_Painter::addSplinePointsToPath(const std::vector<RS_Vector> &uiControlPo
         }
         path.quadTo(QPointF(cpNMinus1.x, cpNMinus1.y), QPointF(vStart.x, vStart.y));
     } else {
-        path.moveTo(QPointF(vStart.x, vStart.y));
+        path.lineTo(QPointF(vStart.x, vStart.y));
         const RS_Vector &cp1 = uiControlPoints[1];
         if (n < 3) {
             path.lineTo(QPointF(cp1.x, cp1.y));
@@ -1769,13 +1767,15 @@ const LC_Rect &RS_Painter::getWcsBoundingRect() const {
 }
 
 
-QPainterPath RS_Painter::createPathForParametricCurve(
+void RS_Painter::createPathForParametricCurve(
+    QPainterPath& path,
     std::vector<double>& paramPoints,
     std::function<RS_Vector(double)> getPointAtParam,
     double approxRadius
 ) const
 {
-    QPainterPath path;
+  LC_ERR<<__func__<<"(): begin";
+
     const LC_Rect& vpRect = getWcsBoundingRect();
     double scale = toGuiDX(1.);
     double maxErrorPx = 1.0; // Max approximation error in pixels
@@ -1826,5 +1826,5 @@ QPainterPath RS_Painter::createPathForParametricCurve(
         }
         addSplinePointsToPath(uiCps, false, path);
     }
-    return path;
+  LC_ERR<<__func__<<"(): end";
 }

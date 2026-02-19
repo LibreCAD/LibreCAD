@@ -106,6 +106,7 @@ private:
 
   RS_Painter* m_painter = nullptr;
   QPainterPath m_path;
+  RS_Vector m_firstPoint{};  ///< First WCS point for continuity.
   RS_Vector m_lastPoint{};  ///< Last WCS point for continuity.
   bool m_hasLastPoint = false;
 };

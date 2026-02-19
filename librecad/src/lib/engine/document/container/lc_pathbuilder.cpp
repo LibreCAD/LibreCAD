@@ -41,7 +41,7 @@ namespace LC_LoopUtils {
 PathBuilder::PathBuilder(RS_Painter* painter)
     : m_painter(painter) {
   assert(m_painter != nullptr);
-  m_path.setFillRule(Qt::OddEvenFill);  // Critical for correct hatch hole rendering
+  m_path.setFillRule(Qt::WindingFill);  // Critical for correct hatch hole rendering
   m_hasLastPoint = false;
 }
 
@@ -49,11 +49,16 @@ void PathBuilder::append(RS_Entity* entity) {
   if (!entity || entity->isUndone()) return;
 
   RS_Vector startp = entity->getStartpoint();
-  moveTo(startp);
+  if (m_hasLastPoint)
+    lineTo(startp);
+  else
+    moveTo(startp);
   const double tol = 1e-6;
   if (!m_hasLastPoint || m_lastPoint.distanceTo(startp) > tol) {
     LC_ERR<<__func__<<": line "<<__LINE__<<": found gap at "<<m_lastPoint<<" to "<<startp;
   }
+  if (!m_hasLastPoint)
+    m_firstPoint = startp;
 
   RS2::EntityType type = entity->rtti();
 
@@ -100,6 +105,8 @@ void PathBuilder::lineTo(const RS_Vector& pos) {
 }
 
 void PathBuilder::closeSubpath() {
+  //m_path.lineTo(toGuiPoint(m_firstPoint));
+  m_path = m_path.toReversed();
   m_path.closeSubpath();
   // Keep m_hasLastPoint for next append (continuity)
 }
@@ -117,30 +124,15 @@ QPointF PathBuilder::toGuiPoint(const RS_Vector& vp) const {
 
 void PathBuilder::appendLine(RS_Line* line) {
   if (!line) return;
+  m_path.moveTo(toGuiPoint(line->getStartpoint()));
   m_path.lineTo(toGuiPoint(line->getEndpoint()));
+  LC_ERR<<"adding line: now at: "<<toGuiPoint(line->getEndpoint()).y();
 }
 
 void PathBuilder::appendArc(RS_Arc* arc) {
   if (!arc || !m_painter) return;
-
-  // TODO: pixel-level precision (issue #2035)
-  double startAngle = arc->getAngle1();
-  double endAngle = arc->getAngle2();
-  if (arc->isReversed())
-    endAngle = startAngle - RS_Math::correctAngle(startAngle - endAngle);
-  else
-    endAngle = startAngle + RS_Math::correctAngle(endAngle - startAngle);
-
-  double startDeg = RS_Math::rad2deg(startAngle);
-  double sweepDeg = RS_Math::rad2deg(endAngle - startAngle);
-
-  QPointF center = toGuiPoint(arc->getCenter());
-  double radiusX = m_painter->toGuiDX(arc->getRadius());
-  double radiusY = m_painter->toGuiDY(arc->getRadius());
-  QPointF halfSize{radiusX, radiusY};
-  QRectF arcRect{center - halfSize, center + halfSize};
-
-  m_path.arcTo(arcRect, startDeg, sweepDeg);
+  arc->createPainterPath(m_painter, m_path);
+  LC_ERR<<"adding arc: now at: "<<m_path.currentPosition().y();
 }
 
 void PathBuilder::appendCircle(RS_Circle* circle) {
@@ -160,7 +152,7 @@ void PathBuilder::appendEllipse(RS_Ellipse* ellipse) {
   if (!ellipse || !m_painter) return;
 
   // TODO: pixel-level precision (issue #2035)
-  m_path.addPath(ellipse->createPainterPath(m_painter));
+  ellipse->createPainterPath(m_painter, m_path);
 }
 
 void PathBuilder::appendSplinePoints(LC_SplinePoints* spline) {
