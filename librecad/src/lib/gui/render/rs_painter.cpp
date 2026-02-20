@@ -1801,6 +1801,10 @@ void RS_Painter::createPathForParametricCurve(
             numSamples = static_cast<int>(std::ceil(segmentLength / theta));
             if (numSamples < 2) numSamples = 2;
         } else {
+          // TODO: replace this with a more efficient and error-proof algorithm
+          // The QPainterPath for an invisible segment should never run into the
+          // viewport. If the number of sampling points is small, the path may
+          // become partially visible, causing artifacts in rendering.
           numSamples = 8;
         }
 
