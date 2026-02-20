@@ -371,7 +371,7 @@ void LC_ActionDrawRectangle1Point::doUpdateMouseButtonHints(int status){
             updateMouseWidgetTRBack(tr("Specify width"));
             break;
         case SetSize:
-            updateMouseWidgetTRBack(tr("Specify size (width, height))"));
+            updateMouseWidgetTRBack(tr("Specify size (width, height)"));
             break;
         case SetPoint1Snap:
             updateMouseWidgetTRBack(tr("Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]"));
