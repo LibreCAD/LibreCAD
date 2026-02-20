@@ -1855,42 +1855,11 @@ void RS_Ellipse::draw(RS_Painter* painter) {
 }
 
 void RS_Ellipse::createPainterPath(RS_Painter* painter, QPainterPath& path) const {
-  const LC_Rect& vpRect = painter->getWcsBoundingRect();
   double baseAngle = isReversed() ? getAngle2() : getAngle1();
   double fullAngleLength = data.isArc ? getAngleLength() : 2 * M_PI;
-  std::vector<double> crossPoints;
-
-         // Compute intersections with viewport borders
-  std::array<RS_Vector, 4> vertices = vpRect.vertices();
-  for (unsigned short i = 0; i < vertices.size(); ++i) {
-    RS_Line line{vertices.at(i), vertices.at((i + 1) % vertices.size())};
-    RS_VectorSolutions vpIts = RS_Information::getIntersection(this, &line, true);
-    for (const RS_Vector& vp : vpIts) {
-      double ap1 = getTangentDirection(vp).angle();
-      double ap2 = line.getTangentDirection(vp).angle();
-      if (std::abs(RS_Math::correctAngle(ap2 - ap1)) > RS_TOLERANCE_ANGLE) {
-        crossPoints.push_back(RS_Math::getAngleDifference(baseAngle, getEllipseAngle(vp)));
-      }
-    }
-  }
-
-         // Add start/end if visible
-  crossPoints.insert(crossPoints.begin(), 0.0);
-  crossPoints.push_back(fullAngleLength);
-
-         // Sort and unique
-  std::sort(crossPoints.begin(), crossPoints.end());
-  auto last = std::unique(crossPoints.begin(), crossPoints.end(), [](double a, double b) {
-    return std::abs(a - b) < RS_TOLERANCE_ANGLE;
-  });
-  crossPoints.erase(last, crossPoints.end());
-
-         // Define point getter
-  auto getPointAtParam = [this, baseAngle](double relParam) {
-    return this->getEllipsePoint(baseAngle + relParam);
-  };
-
-  painter->createPathForParametricCurve(path, crossPoints, getPointAtParam, getMajorRadius());
+  auto getParamFunc = [this](const RS_Vector& vp) { return getEllipseAngle(vp); };
+  auto getPointFunc = [this](double param) { return getEllipsePoint(param); };
+  painter->createPathForEntity(this, path, baseAngle, fullAngleLength, getParamFunc, getPointFunc, getMajorRadius());
 }
 
 /** directly draw the arc, assuming the whole arc is within visible window */

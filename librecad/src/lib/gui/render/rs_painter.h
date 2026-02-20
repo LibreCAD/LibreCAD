@@ -264,6 +264,16 @@ public:
 
     void drawEllipseBySplinePointsUI(const RS_Ellipse& ellipse, QPainterPath &path);
 
+    void createPathForEntity(
+        const RS_Entity* entity,
+        QPainterPath& path,
+        double baseAngle,
+        double fullAngleLength,
+        std::function<double(const RS_Vector&)> getParamFunc,
+        std::function<RS_Vector(double)> getPointFunc,
+        double approxRadius
+        ) const;
+
   void createPathForParametricCurve(
       QPainterPath& path,
       std::vector<double>& paramPoints,

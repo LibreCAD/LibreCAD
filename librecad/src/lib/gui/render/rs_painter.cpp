@@ -1828,3 +1828,44 @@ void RS_Painter::createPathForParametricCurve(
     }
   LC_ERR<<__func__<<"(): end";
 }
+
+void RS_Painter::createPathForEntity(
+    const RS_Entity* entity,
+    QPainterPath& path,
+    double baseAngle,
+    double fullAngleLength,
+    std::function<double(const RS_Vector&)> getParamFunc,
+    std::function<RS_Vector(double)> getPointFunc,
+    double approxRadius
+    ) const
+{
+  const LC_Rect& vpRect = getWcsBoundingRect();
+  std::vector<double> crossPoints;
+  // Compute intersections with viewport borders
+  std::array<RS_Vector, 4> vertices = vpRect.vertices();
+  for (unsigned short i = 0; i < vertices.size(); ++i) {
+    RS_Line line{vertices.at(i), vertices.at((i + 1) % vertices.size())};
+    RS_VectorSolutions vpIts = RS_Information::getIntersection(entity, &line, true);
+    for (const RS_Vector& vp : vpIts) {
+      double ap1 = entity->getTangentDirection(vp).angle();
+      double ap2 = line.getTangentDirection(vp).angle();
+      if (std::abs(RS_Math::correctAngle(ap2 - ap1)) > RS_TOLERANCE_ANGLE) {
+        crossPoints.push_back(RS_Math::getAngleDifference(baseAngle, getParamFunc(vp)));
+      }
+    }
+  }
+  // Add start/end if visible
+  crossPoints.insert(crossPoints.begin(), 0.0);
+  crossPoints.push_back(fullAngleLength);
+  // Sort and unique
+  std::sort(crossPoints.begin(), crossPoints.end());
+  auto last = std::unique(crossPoints.begin(), crossPoints.end(), [](double a, double b) {
+    return std::abs(a - b) < RS_TOLERANCE_ANGLE;
+  });
+  crossPoints.erase(last, crossPoints.end());
+  // Define point getter
+  auto getPointAtParam = [getPointFunc, baseAngle](double relParam) {
+    return getPointFunc(baseAngle + relParam);
+  };
+  createPathForParametricCurve(path, crossPoints, getPointAtParam, approxRadius);
+}

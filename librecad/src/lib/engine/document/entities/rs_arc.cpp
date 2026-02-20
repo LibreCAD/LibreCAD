@@ -114,12 +114,12 @@ std::ostream& operator << (std::ostream& os, const RS_ArcData& ad) {
 RS_Arc::RS_Arc(RS_EntityContainer* parent,
                const RS_ArcData& d)
     : LC_CachedLengthEntity(parent), data(d) {
-    calculateBorders();
+    RS_Arc::calculateBorders();
 }
 
 RS_Arc::RS_Arc(const RS_ArcData& d)
     : LC_CachedLengthEntity(nullptr), data(d) {
-    calculateBorders();
+    RS_Arc::calculateBorders();
 }
 
 RS_Entity* RS_Arc::clone() const {
@@ -977,43 +977,11 @@ void RS_Arc::stretch(const RS_Vector& firstCorner,
 }
 
 void RS_Arc::createPainterPath(RS_Painter* painter, QPainterPath& path) const {
-  const LC_Rect& vpRect = painter->getWcsBoundingRect();
   double baseAngle = isReversed() ? data.angle2 : data.angle1;
   double fullAngleLength = getAngleLength();
-  std::vector<double> crossPoints;
-
-         // Compute intersections with viewport borders
-  std::array<RS_Vector, 4> vertices = vpRect.vertices();
-  for (unsigned short i = 0; i < vertices.size(); ++i) {
-    RS_Line line{vertices.at(i), vertices.at((i + 1) % vertices.size())};
-    RS_VectorSolutions vpIts = RS_Information::getIntersection(this, &line, true);
-    for (const RS_Vector& vp : vpIts) {
-      double ap1 = getTangentDirection(vp).angle();
-      double ap2 = line.getTangentDirection(vp).angle();
-      if (std::abs(RS_Math::correctAngle(ap2 - ap1)) > RS_TOLERANCE_ANGLE) {
-        double angle = getArcAngle(vp);
-        crossPoints.push_back(RS_Math::getAngleDifference(baseAngle, angle));
-      }
-    }
-  }
-
-         // Add start/end if visible
-    crossPoints.insert(crossPoints.begin(), 0.0);
-    crossPoints.push_back(fullAngleLength);
-
-         // Sort and unique
-  std::sort(crossPoints.begin(), crossPoints.end());
-  auto last = std::unique(crossPoints.begin(), crossPoints.end(), [](double a, double b) {
-    return std::abs(a - b) < RS_TOLERANCE_ANGLE;
-  });
-  crossPoints.erase(last, crossPoints.end());
-
-         // Define point getter (relative param 0 to fullAngleLength)
-  auto getPointAtParam = [this, baseAngle](double relParam) {
-    return this->getPointAtParameter(baseAngle + relParam);
-  };
-
-  painter->createPathForParametricCurve(path, crossPoints, getPointAtParam, getRadius());
+  auto getParamFunc = [this](const RS_Vector& vp) { return getArcAngle(vp); };
+  auto getPointFunc = [this](double param) { return getPointAtParameter(param); };
+  painter->createPathForEntity(this, path, baseAngle, fullAngleLength, getParamFunc, getPointFunc, getRadius());
 }
 
 void RS_Arc::draw(RS_Painter* painter) {
