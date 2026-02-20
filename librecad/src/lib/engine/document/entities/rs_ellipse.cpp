@@ -292,7 +292,6 @@ void RS_Ellipse::mergeBoundingBox(LC_Rect& boundingBox, const RS_Vector& directi
             boundingBox = boundingBox.merge(getEllipsePoint(a));
 }
 
-
 /**
   * return the foci of ellipse
   *
@@ -1859,31 +1858,7 @@ void RS_Ellipse::createPainterPath(RS_Painter* painter, QPainterPath& path) cons
   double fullAngleLength = data.isArc ? getAngleLength() : 2 * M_PI;
   auto getParamFunc = [this](const RS_Vector& vp) { return getEllipseAngle(vp); };
   auto getPointFunc = [this](double param) { return getEllipsePoint(param); };
-  painter->createPathForEntity(this, path, baseAngle, fullAngleLength, getParamFunc, getPointFunc, getMajorRadius());
-}
-
-/** directly draw the arc, assuming the whole arc is within visible window */
-void RS_Ellipse::drawVisible(RS_Painter* painter) const
-{
-    if(!isVisibleInWindow(*painter))
-        return;
-    double startAngle = RS_Math::rad2deg(getAngle1());
-    double endAngle = RS_Math::rad2deg(getAngle2());
-    double angularLength = RS_Math::rad2deg(getAngleLength());
-    if (data.reversed) {
-        std::swap(startAngle, endAngle);
-    }
-    painter->drawEllipseArcWCS(data.center, getMajorRadius(), data.ratio, data.angleDegrees,
-                               startAngle,
-                               endAngle,
-                               angularLength,
-                               false);
-}
-
-bool RS_Ellipse::isVisibleInWindow(const RS_Painter& painter) const
-{
-    const LC_Rect& vpRect = painter.getWcsBoundingRect();
-    return LC_Rect{getMin(), getMax()}.overlaps(vpRect);
+  painter->pathForEntity(path, this, baseAngle, fullAngleLength, getParamFunc, getPointFunc, getMajorRadius());
 }
 
 /**

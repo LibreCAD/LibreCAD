@@ -981,7 +981,7 @@ void RS_Arc::createPainterPath(RS_Painter* painter, QPainterPath& path) const {
   double fullAngleLength = getAngleLength();
   auto getParamFunc = [this](const RS_Vector& vp) { return getArcAngle(vp); };
   auto getPointFunc = [this](double param) { return getPointAtParameter(param); };
-  painter->createPathForEntity(this, path, baseAngle, fullAngleLength, getParamFunc, getPointFunc, getRadius());
+  painter->pathForEntity(path, this, baseAngle, fullAngleLength, getParamFunc, getPointFunc, getRadius());
 }
 
 void RS_Arc::draw(RS_Painter* painter) {

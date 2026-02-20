@@ -1767,8 +1767,7 @@ const LC_Rect &RS_Painter::getWcsBoundingRect() const {
     return wcsBoundingRect;
 }
 
-
-void RS_Painter::createPathForParametricCurve(
+void RS_Painter::pathForParametricCurve(
     QPainterPath& path,
     const std::vector<double>& paramPoints,
     const std::function<RS_Vector(double)>& getPointAtParam,
@@ -1834,13 +1833,13 @@ void RS_Painter::createPathForParametricCurve(
   LC_LOG<<__func__<<"(): end";
 }
 
-void RS_Painter::createPathForEntity(
-    const RS_Entity* entity,
+void RS_Painter::pathForEntity(
     QPainterPath& path,
+    const RS_Entity* entity,
     double baseAngle,
     double fullAngleLength,
-    std::function<double(const RS_Vector&)> getParamFunc,
-    std::function<RS_Vector(double)> getPointFunc,
+    const std::function<double(const RS_Vector&)>& getParamFunc,
+    const std::function<RS_Vector(double)>& getPointFunc,
     double approxRadius
     ) const
 {
@@ -1872,5 +1871,5 @@ void RS_Painter::createPathForEntity(
   auto getPointAtParam = [getPointFunc, baseAngle](double relParam) {
     return getPointFunc(baseAngle + relParam);
   };
-  createPathForParametricCurve(path, crossPoints, getPointAtParam, approxRadius);
+  pathForParametricCurve(path, crossPoints, getPointAtParam, approxRadius);
 }

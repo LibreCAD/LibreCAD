@@ -881,7 +881,7 @@ void RS_Circle::createPainterPath(RS_Painter* painter, QPainterPath& path) const
   };
 
          // Delegate to painter's generic parametric curve generator
-  painter->createPathForParametricCurve(
+  painter->pathForParametricCurve(
       path,
       crossPoints,
       pointAt,
