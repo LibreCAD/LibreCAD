@@ -276,8 +276,8 @@ public:
 
   void createPathForParametricCurve(
       QPainterPath& path,
-      std::vector<double>& paramPoints,
-      std::function<RS_Vector(double)> getPointAtParam,
+      const std::vector<double>& paramPoints,
+      const std::function<RS_Vector(double)>& getPointAtParam,
       double approxRadius
         ) const;
 
@@ -354,7 +354,6 @@ protected:
     void drawImgUI(QImage& img, const RS_Vector& uiInsert, const RS_Vector& uVector, const RS_Vector& vVector, const RS_Vector& factor);
 
     void drawRectUI(const RS_Vector& p1, const RS_Vector& p2);
-
 
     void drawTextH(int x1, int y1, int x2, int y2,
                    const QString& text);

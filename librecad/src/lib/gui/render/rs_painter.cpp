@@ -155,6 +155,7 @@ const QColor qcolorWhite = colorWhite.toQColor();
         painter.drawPolygon(square);
     }
 }
+
 /**
  * Constructor.
  */
@@ -1769,8 +1770,8 @@ const LC_Rect &RS_Painter::getWcsBoundingRect() const {
 
 void RS_Painter::createPathForParametricCurve(
     QPainterPath& path,
-    std::vector<double>& paramPoints,
-    std::function<RS_Vector(double)> getPointAtParam,
+    const std::vector<double>& paramPoints,
+    const std::function<RS_Vector(double)>& getPointAtParam,
     double approxRadius
 ) const
 {
@@ -1800,7 +1801,7 @@ void RS_Painter::createPathForParametricCurve(
             numSamples = static_cast<int>(std::ceil(segmentLength / theta));
             if (numSamples < 2) numSamples = 2;
         } else {
-            numSamples = 2; // 3 points: start, mid, end for invisible
+          numSamples = 8;
         }
 
         std::vector<RS_Vector> samples;
