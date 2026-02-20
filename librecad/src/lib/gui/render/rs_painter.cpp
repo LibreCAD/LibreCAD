@@ -1774,7 +1774,7 @@ void RS_Painter::createPathForParametricCurve(
     double approxRadius
 ) const
 {
-  LC_ERR<<__func__<<"(): begin";
+  LC_LOG<<__func__<<"(): begin";
 
     const LC_Rect& vpRect = getWcsBoundingRect();
     double scale = toGuiDX(1.);
@@ -1826,7 +1826,7 @@ void RS_Painter::createPathForParametricCurve(
         }
         addSplinePointsToPath(uiCps, false, path);
     }
-  LC_ERR<<__func__<<"(): end";
+  LC_LOG<<__func__<<"(): end";
 }
 
 void RS_Painter::createPathForEntity(

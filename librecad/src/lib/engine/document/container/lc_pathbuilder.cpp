@@ -126,32 +126,23 @@ void PathBuilder::appendLine(RS_Line* line) {
   if (!line) return;
   m_path.moveTo(toGuiPoint(line->getStartpoint()));
   m_path.lineTo(toGuiPoint(line->getEndpoint()));
-  LC_ERR<<"adding line: now at: "<<toGuiPoint(line->getEndpoint()).y();
+  //LC_LOG<<"adding line: now at: "<<toGuiPoint(line->getEndpoint()).y();
 }
 
 void PathBuilder::appendArc(RS_Arc* arc) {
   if (!arc || !m_painter) return;
   arc->createPainterPath(m_painter, m_path);
-  LC_ERR<<"adding arc: now at: "<<m_path.currentPosition().y();
+  //LC_LOG<<"adding arc: now at: "<<m_path.currentPosition().y();
 }
 
 void PathBuilder::appendCircle(RS_Circle* circle) {
   if (!circle || !m_painter) return;
-
-  // TODO: pixel-level precision (issue #2035)
-  QPointF center = toGuiPoint(circle->getCenter());
-  double radiusX = m_painter->toGuiDX(circle->getRadius());
-  double radiusY = m_painter->toGuiDY(circle->getRadius());
-  QPointF halfSize{radiusX, radiusY};
-  QRectF circleRect{center - halfSize, center + halfSize};
-
-  m_path.addEllipse(circleRect);
+  circle->createPainterPath(m_painter, m_path);
 }
 
 void PathBuilder::appendEllipse(RS_Ellipse* ellipse) {
   if (!ellipse || !m_painter) return;
 
-  // TODO: pixel-level precision (issue #2035)
   ellipse->createPainterPath(m_painter, m_path);
 }
 

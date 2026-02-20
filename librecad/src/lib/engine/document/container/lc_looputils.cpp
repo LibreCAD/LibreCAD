@@ -124,6 +124,30 @@ bool isClosed(const RS_Entity& en) {
     return false;
   }
 }
+
+void debugPath(const QPainterPath &path) {
+  LC_ERR << "Path Element Count:" << path.elementCount();
+
+  for (int i = 0; i < path.elementCount(); ++i) {
+    const QPainterPath::Element &e = path.elementAt(i);
+
+    switch (e.type) {
+    case QPainterPath::MoveToElement:
+      LC_ERR << i << ": MoveTo  " << e.x << "," << e.y;
+      break;
+    case QPainterPath::LineToElement:
+      LC_ERR << i << ": LineTo  " << e.x << "," << e.y;
+      break;
+    case QPainterPath::CurveToElement:
+      LC_ERR << i << ": CurveTo " << e.x << "," << e.y;
+      // Note: CurveTo is followed by two CurveToDataElements for control points
+      break;
+    case QPainterPath::CurveToDataElement:
+      LC_ERR << i << ":   Data  " << e.x << "," << e.y;
+      break;
+    }
+  }
+}
 }  // anonymous namespace for helpers
 
 // NEW: Tolerance-aware key for RS_Vector endpoints (handles floating-point exactly as in ENDPOINT_TOLERANCE)
@@ -748,31 +772,6 @@ void LC_Loops::addEllipticArc(QPainterPath& path, const RS_Vector& center, doubl
   }
 }
 
-namespace {
-void debugPath(const QPainterPath &path) {
-  LC_ERR << "Path Element Count:" << path.elementCount();
-
-  for (int i = 0; i < path.elementCount(); ++i) {
-    const QPainterPath::Element &e = path.elementAt(i);
-
-    switch (e.type) {
-    case QPainterPath::MoveToElement:
-      LC_ERR << i << ": MoveTo  " << e.x << "," << e.y;
-      break;
-    case QPainterPath::LineToElement:
-      LC_ERR << i << ": LineTo  " << e.x << "," << e.y;
-      break;
-    case QPainterPath::CurveToElement:
-      LC_ERR << i << ": CurveTo " << e.x << "," << e.y;
-      // Note: CurveTo is followed by two CurveToDataElements for control points
-      break;
-    case QPainterPath::CurveToDataElement:
-      LC_ERR << i << ":   Data  " << e.x << "," << e.y;
-      break;
-    }
-  }
-}
-}
 /**
  * @brief Converts container entities to QPainterPath, handling lines, arcs, circles, ellipses, splines, and parabolas.
  * Closes the subpath; skips unsupported types.
@@ -791,19 +790,22 @@ QPainterPath LC_Loops::buildPathFromLoop(RS_Painter* painter, const RS_EntityCon
     return path;
   }
 
-  //builder.moveTo(cont.first()->getStartpoint());
+         //builder.moveTo(cont.first()->getStartpoint());
   for (RS_Entity* e : cont) {
     if (e->isAtomic()) {
       RS_Vector start = e->getStartpoint();
       // avoid small gaps due to rounding errors
-      if ((path.currentPosition() - builder.toGuiPoint({start.x, start.y})).manhattanLength() >= 3.) {
-        LC_ERR<<__func__<<"(): added line at "<<start.x<<", "<<start.y;
+      if (!path.isEmpty() && (path.currentPosition() - builder.toGuiPoint({start.x, start.y})).manhattanLength() >= 3.) {
+        LC_ERR<<__func__<<"(): added line at ("<<start.x<<", "<<start.y<<"), gap from ("
+               <<path.currentPosition().x()<<", " <<path.currentPosition().x()<<")";
       }
       builder.append(e);
     }
   }
   builder.closeSubpath();
-  debugPath(path);
+  if (RS_DEBUG->getLevel() > RS_Debug::D_WARNING) {
+      debugPath(path);
+  }
   return path;
 }
 
