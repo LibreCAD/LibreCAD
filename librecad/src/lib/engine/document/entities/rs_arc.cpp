@@ -23,6 +23,9 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+//! File: rs_arc.cpp
+
+#include <QPainterPath>
 
 #include "rs_arc.h"
 
@@ -111,12 +114,12 @@ std::ostream& operator << (std::ostream& os, const RS_ArcData& ad) {
 RS_Arc::RS_Arc(RS_EntityContainer* parent,
                const RS_ArcData& d)
     : LC_CachedLengthEntity(parent), data(d) {
-    calculateBorders();
+    RS_Arc::calculateBorders();
 }
 
 RS_Arc::RS_Arc(const RS_ArcData& d)
     : LC_CachedLengthEntity(nullptr), data(d) {
-    calculateBorders();
+    RS_Arc::calculateBorders();
 }
 
 RS_Entity* RS_Arc::clone() const {
@@ -973,8 +976,20 @@ void RS_Arc::stretch(const RS_Vector& firstCorner,
     calculateBorders();
 }
 
+void RS_Arc::createPainterPath(RS_Painter* painter, QPainterPath& path) const {
+  double baseAngle = isReversed() ? data.angle2 : data.angle1;
+  double fullAngleLength = getAngleLength();
+  auto getParamFunc = [this](const RS_Vector& vp) { return getArcAngle(vp); };
+  auto getPointFunc = [this](double param) { return getPointAtParameter(param); };
+  painter->pathForEntity(path, this, baseAngle, fullAngleLength, getParamFunc, getPointFunc, getRadius());
+}
+
 void RS_Arc::draw(RS_Painter* painter) {
-    painter->drawEntityArc(this);
+  QPainterPath path;
+  RS_Vector startUi = painter->toGui(getStartpoint());
+  path.moveTo(startUi.x, startUi.y);
+  createPainterPath(painter, path);
+  painter->drawPath(path);
 }
 
 /**

@@ -23,6 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+//! File: rs_arc.cpp
 
 #ifndef RS_ARC_H
 #define RS_ARC_H
@@ -30,6 +31,7 @@
 #include "lc_cachedlengthentity.h"
 
 class LC_Quadratic;
+class QPainterPath;
 
 
 /**
@@ -133,7 +135,7 @@ public:
     void setAngle2(double a2);
 
     /** get angle relative arc center*/
-    double getArcAngle(const RS_Vector& vp) {
+    double getArcAngle(const RS_Vector& vp) const {
         return (vp - data.center).angle();
     }
 
@@ -251,6 +253,7 @@ public:
 
 
     void draw(RS_Painter* painter) override;
+    void createPainterPath(RS_Painter* painter, QPainterPath& path) const;
 
     friend std::ostream& operator << (std::ostream& os, const RS_Arc& a);
 

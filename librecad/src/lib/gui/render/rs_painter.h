@@ -264,6 +264,123 @@ public:
 
     void drawEllipseBySplinePointsUI(const RS_Ellipse& ellipse, QPainterPath &path);
 
+    /**
+     * @brief Generates a clipped QPainterPath for a parametric entity (arc, circle, ellipse, etc.)
+     *        by finding viewport border intersections and approximating visible segments.
+     *      * This is a convenience wrapper that:
+     *  - computes intersection parameters with the current viewport rectangle borders,
+     *  - adds start/end parameters,
+     *  - sorts and deduplicates them,
+     *  - then delegates segment approximation to createPathForParametricCurve().
+     *      * It is intended to be called from entity classes' `createPainterPath()` methods
+     * to keep viewport clipping + tangent filtering logic centralized and reusable.
+     *      * @param path              [out] The QPainterPath to append the generated segments to.
+     *                          May already contain content (e.g. moveTo from previous subpath).
+     *      * @param entity            The entity being rendered. Used only for:
+     *                          - intersection tests with viewport lines
+     *                          - tangent direction queries via entity->getTangentDirection()
+     *                          Must implement RS_Entity interface (not null).
+     *      * @param baseParam         Starting parameter value (e.g. angle1 for arc/ellipse, 0 for circle).
+     *                          All relative parameters are computed with respect to this base.
+     *      * @param fullParamLength   Total parameter range covered by the entity
+     *                          (e.g. 2*M_PI for full circle/ellipse, getAngleLength() for arcs).
+     *      * @param getParamFromPoint Function that converts a world point → parameter value on the curve.
+     *                          Example for arc/circle:    [](const RS_Vector& p){ return (p - center).angle(); }
+     *                          Example for ellipse:       [](const RS_Vector& p){ return getEllipseAngle(p); }
+     *      * @param getPointFromParam Function that converts a parameter value → world point on the curve.
+     *                          Example for arc/circle:    [](double t){ return center + RS_Vector::polar(radius, t); }
+     *                          Example for ellipse:       [](double t){ return getEllipsePoint(t); }
+     *      * @param approxRadius      Reference radius used to control approximation quality / step size.
+     *                          • circle → radius
+     *                          • ellipse → major radius (conservative choice)
+     *                          Larger values produce fewer segments (coarser approximation).
+     *      * @note
+     *   - The generated path is **not** automatically closed.
+     *     If building a closed contour for solid fill, call path.closeSubpath() after all segments.
+     *   - Assumes the entity is visible and has valid geometry (caller should check beforehand).
+     *   - Does **not** include fast-path full-shape generation (addEllipse / addEllipseArcWCS).
+     *     Entities should handle full/visible fast paths themselves before calling this method.
+     *   - Intersection points are filtered by tangent direction difference to avoid adding
+     *     tangent/grazing points that do not actually split the visible portion.
+     *      * Typical usage in an entity's createPainterPath():
+     * @code
+     * void RS_Arc::createPainterPath(RS_Painter* painter, QPainterPath& path) const
+     * {
+     *     if (!painter) return;
+     *      *     // fast reject / fast full-circle path here if applicable...
+     *      *     double base   = isReversed() ? data.angle2 : data.angle1;
+     *     double length = getAngleLength();
+     *      *     painter->createPathForEntity(
+     *         path,
+     *         this,
+     *         base,
+     *         length,
+     *         [this](const RS_Vector& p){ return getArcAngle(p); },
+     *         [this](double t){ return getPointAtParameter(t); },
+     *         getRadius()
+     *     );
+     * }
+     * @endcode
+     *      * @see createPathForParametricCurve() — the lower-level method that actually builds segments
+     */
+    void pathForEntity(
+        QPainterPath& path,
+        const RS_Entity* entity,
+        double baseParam,
+        double fullParamLength,
+        const std::function<double(const RS_Vector&)>& getParamFromPoint,
+        const std::function<RS_Vector(double)>& getPointFromParam,
+        double approxRadius
+        ) const;
+
+    /**
+     * @brief Generates a QPainterPath by approximating a parametric curve with quadratic segments.
+     *      * This is the core method used by RS_Arc, RS_Circle, RS_Ellipse (and potentially splines)
+     * to draw visible portions of curves while respecting the current viewport clipping rectangle.
+     *      * It splits the parameter range into visible segments (based on intersections with viewport borders)
+     * and approximates each segment using quadratic Bezier curves (via LC_SplinePoints) with sagitta-based
+     * adaptive sampling — this gives good visual quality at reasonable performance.
+     *      * The function is deliberately designed to be reusable both for:
+     *  - normal entity drawing (stroke only)
+     *  - building closed contours for solid filling / hatching (fillPath)
+     *      * @param path              [out] The QPainterPath to append segments to.
+     *                          Usually starts empty, but can be appended to existing paths.
+     *      * @param paramPoints       Sorted list of parameter values (in curve parameter space)
+     *                          that define split points — typically includes:
+     *                          • 0.0 (start)
+     *                          • fullLength (end)
+     *                          • all valid intersection parameters with viewport borders
+     *                          The list must be sorted ascending and contain no duplicates
+     *                          closer than RS_TOLERANCE_ANGLE.
+     *      * @param getPointAtParam   Functor/lambda that maps a parameter value → world coordinate (RS_Vector)
+     *                          Example for circle:    [this](double t){ return center + polar(radius, t); }
+     *                          Example for ellipse:   [this](double t){ return getEllipsePoint(t); }
+     *      * @param approxRadius      Reference radius used to estimate approximation error / step size.
+     *                          • For circles → radius
+     *                          • For ellipses → major radius (conservative choice)
+     *                          Larger values → coarser approximation (fewer segments)
+     *                          Smaller values → finer approximation (more segments, better quality)
+     *      * Typical usage pattern in entity classes:
+     * @code
+     * std::vector<double> splits = {0.0, fullLength};
+     * // add viewport intersection parameters ...
+     * std::sort(splits); std::unique(...);
+     *      * auto pointGetter = [this](double t){ return getPointAt(t); };
+     * painter->pathForParametricCurve(path, splits, pointGetter, getMajorRadius());
+     * @endcode
+     *      * @note
+     *   - The function assumes paramPoints are already sorted and cleaned.
+     *   - It does NOT close the path — caller must call closeSubpath() if needed (usually for solid fill).
+     *   - Approximation quality scales with screen pixels — very small curves get minimal points.
+     *   - For full-circle / full-ellipse fast paths, use addEllipse() directly instead of this method.
+     *      * @see addClippedParametricSegments() — higher-level wrapper that also computes split points
+     */
+    void pathForParametricCurve(
+        QPainterPath& path,
+        const std::vector<double>& paramPoints,
+        const std::function<RS_Vector(double)>& getPointAtParam,
+        double approxRadius
+        ) const;
 
 protected:
     /**
@@ -338,7 +455,6 @@ protected:
     void drawImgUI(QImage& img, const RS_Vector& uiInsert, const RS_Vector& uVector, const RS_Vector& vVector, const RS_Vector& factor);
 
     void drawRectUI(const RS_Vector& p1, const RS_Vector& p2);
-
 
     void drawTextH(int x1, int y1, int x2, int y2,
                    const QString& text);

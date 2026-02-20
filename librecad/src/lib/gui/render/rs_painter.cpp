@@ -155,6 +155,7 @@ const QColor qcolorWhite = colorWhite.toQColor();
         painter.drawPolygon(square);
     }
 }
+
 /**
  * Constructor.
  */
@@ -844,18 +845,20 @@ void RS_Painter::drawEllipseBySplinePointsUI(const RS_Ellipse& ellipse, QPainter
   // Don't duplicate first point for closed
   const bool closed = !ellipse.isEllipticArc();
   int numPoints = closed ? numSegments : numSegments + 1;
-  double delta = lenRad / numSegments;
+  double delta = ellipse.isReversed() ? - lenRad / numSegments : lenRad / numSegments;
 
   LC_SplinePointsData data;
   data.closed = closed;
 
-  double param = ellipse.isReversed() ? ellipse.getAngle1(): ellipse.getAngle2();
-  RS_Vector rotation{- ellipse.getMajorP().angle()};
-  RS_Vector uiCenter = toGui(ellipse.getCenter());
+  double param = ellipse.getAngle1();
+  RS_Vector rotation{ellipse.getMajorP().angle()};
+  RS_Vector center = ellipse.getCenter();
 
-  const RS_Vector scaleXY{uiRadii.x, - uiRadii.y};
+  const RS_Vector scaleXY(ellipse.getMajorRadius(), ellipse.getMinorRadius());
   for (int i = 0; i < numPoints; ++i) {
-    data.splinePoints.push_back(RS_Vector{param}.scale(scaleXY).rotate(rotation).move(uiCenter));
+    const RS_Vector ellipsePoint = RS_Vector{param}.scale(scaleXY).rotate(rotation).move(center);
+    data.splinePoints.push_back(toGui(ellipsePoint));
+    LC_ERR<<"Ellipse Point: param="<<param<<" , "<<ellipsePoint;
     param += delta;
   }
 
@@ -890,7 +893,7 @@ void RS_Painter::addSplinePointsToPath(const std::vector<RS_Vector> &uiControlPo
         }
         path.quadTo(QPointF(cpNMinus1.x, cpNMinus1.y), QPointF(vStart.x, vStart.y));
     } else {
-        path.moveTo(QPointF(vStart.x, vStart.y));
+        path.lineTo(QPointF(vStart.x, vStart.y));
         const RS_Vector &cp1 = uiControlPoints[1];
         if (n < 3) {
             path.lineTo(QPointF(cp1.x, cp1.y));
@@ -1762,4 +1765,111 @@ bool RS_Painter::isFullyWithinBoundingRect(const LC_Rect &rect){
 
 const LC_Rect &RS_Painter::getWcsBoundingRect() const {
     return wcsBoundingRect;
+}
+
+void RS_Painter::pathForParametricCurve(
+    QPainterPath& path,
+    const std::vector<double>& paramPoints,
+    const std::function<RS_Vector(double)>& getPointAtParam,
+    double approxRadius
+) const
+{
+  LC_LOG<<__func__<<"(): begin";
+
+    const LC_Rect& vpRect = getWcsBoundingRect();
+    double scale = toGuiDX(1.);
+    double maxErrorPx = 1.0; // Max approximation error in pixels
+    // Normalized error e_r = maxErrorPx / (approxRadius * scale)
+    double e_r = maxErrorPx / (approxRadius * scale);
+    // Step angle for quadratic approx: theta ≈ pow(24 * e_r, 0.25) (from error ≈ (theta^4)/24 * r)
+    double theta = std::pow(24 * e_r, 0.25);
+
+    for (size_t i = 1; i < paramPoints.size(); ++i) {
+        double d1 = paramPoints[i - 1];
+        double d2 = paramPoints[i];
+        double segmentLength = d2 - d1;
+        if (segmentLength < RS_TOLERANCE_ANGLE) continue;
+
+        double midP = (d1 + d2) / 2.0;
+        RS_Vector midPoint = getPointAtParam(midP);
+        bool visible = vpRect.inArea(midPoint, RS_TOLERANCE);
+
+        int numSamples;
+        if (visible) {
+            if (!std::isnormal(theta) || theta < RS_TOLERANCE_ANGLE) theta = M_PI / 18; // Fallback ~10 deg
+            numSamples = static_cast<int>(std::ceil(segmentLength / theta));
+            if (numSamples < 2) numSamples = 2;
+        } else {
+          // TODO: replace this with a more efficient and error-proof algorithm
+          // The QPainterPath for an invisible segment should never run into the
+          // viewport. If the number of sampling points is small, the path may
+          // become partially visible, causing artifacts in rendering.
+          numSamples = 8;
+        }
+
+        std::vector<RS_Vector> samples;
+        double step = segmentLength / numSamples;
+        for (int j = 0; j <= numSamples; ++j) {
+            double param = d1 + j * step;
+            samples.push_back(getPointAtParam(param));
+        }
+
+        // Approximate with LC_SplinePoints (quadratic Bezier chain)
+        LC_SplinePointsData spd(false, false); // Open, not cut
+        spd.splinePoints = samples;
+        spd.useControlPoints = false;
+        LC_SplinePoints approx(nullptr, spd);
+        approx.update(); // Generates quadratic control points
+
+        const auto& cps = approx.getControlPoints();
+        if (cps.empty()) continue;
+
+        std::vector<RS_Vector> uiCps;
+        for (const auto& cp : cps) {
+            uiCps.push_back(toGui(cp));
+        }
+        addSplinePointsToPath(uiCps, false, path);
+    }
+  LC_LOG<<__func__<<"(): end";
+}
+
+void RS_Painter::pathForEntity(
+    QPainterPath& path,
+    const RS_Entity* entity,
+    double baseAngle,
+    double fullAngleLength,
+    const std::function<double(const RS_Vector&)>& getParamFunc,
+    const std::function<RS_Vector(double)>& getPointFunc,
+    double approxRadius
+    ) const
+{
+  const LC_Rect& vpRect = getWcsBoundingRect();
+  std::vector<double> crossPoints;
+  // Compute intersections with viewport borders
+  std::array<RS_Vector, 4> vertices = vpRect.vertices();
+  for (unsigned short i = 0; i < vertices.size(); ++i) {
+    RS_Line line{vertices.at(i), vertices.at((i + 1) % vertices.size())};
+    RS_VectorSolutions vpIts = RS_Information::getIntersection(entity, &line, true);
+    for (const RS_Vector& vp : vpIts) {
+      double ap1 = entity->getTangentDirection(vp).angle();
+      double ap2 = line.getTangentDirection(vp).angle();
+      if (std::abs(RS_Math::correctAngle(ap2 - ap1)) > RS_TOLERANCE_ANGLE) {
+        crossPoints.push_back(RS_Math::getAngleDifference(baseAngle, getParamFunc(vp)));
+      }
+    }
+  }
+  // Add start/end if visible
+  crossPoints.insert(crossPoints.begin(), 0.0);
+  crossPoints.push_back(fullAngleLength);
+  // Sort and unique
+  std::sort(crossPoints.begin(), crossPoints.end());
+  auto last = std::unique(crossPoints.begin(), crossPoints.end(), [](double a, double b) {
+    return std::abs(a - b) < RS_TOLERANCE_ANGLE;
+  });
+  crossPoints.erase(last, crossPoints.end());
+  // Define point getter
+  auto getPointAtParam = [getPointFunc, baseAngle](double relParam) {
+    return getPointFunc(baseAngle + relParam);
+  };
+  pathForParametricCurve(path, crossPoints, getPointAtParam, approxRadius);
 }

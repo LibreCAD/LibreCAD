@@ -29,6 +29,8 @@
 
 #include <vector>
 
+#include <QPainterPath>
+
 #include "lc_quadratic.h"
 
 #include "rs_circle.h"
@@ -797,9 +799,116 @@ RS_Entity& RS_Circle::shear(double k){
     }
     return *this;
 }
+/**
+ * Creates a QPainterPath for this circle using the clipped/visible-segment approach.
+ * This matches the style used by RS_Arc and RS_Ellipse, enabling consistent behavior
+ * when building closed contours for solid fill / hatching.
+ */
+void RS_Circle::createPainterPath(RS_Painter* painter, QPainterPath& path) const
+{
+  if (!painter) {
+    return;
+  }
 
-void RS_Circle::draw(RS_Painter* painter) {
-    painter->drawEntityCircle(this);
+  const LC_Rect& vpRect = painter->getWcsBoundingRect();
+
+         // Quick bounding box check
+  RS_Vector minV = getMin();
+  RS_Vector maxV = getMax();
+
+         // Completely outside → nothing to draw
+  if (!vpRect.overlaps(LC_Rect(minV, maxV))) {
+    return;
+  }
+
+         // Fast path: fully inside viewport → use Qt optimized ellipse
+  bool fullyInside =
+      minV.x >= vpRect.minP().x && maxV.x <= vpRect.maxP().x &&
+      minV.y >= vpRect.minP().y && maxV.y <= vpRect.maxP().y;
+
+  if (fullyInside) {
+    RS_Vector uiCenter = painter->toGui(getCenter());
+    double uiRadius    = painter->toGuiDX(getRadius());
+
+    path.addEllipse(
+        uiCenter.x - uiRadius,
+        uiCenter.y - uiRadius,
+        2.0 * uiRadius,
+        2.0 * uiRadius
+        );
+    return;
+  }
+
+         // ───────────────────────────────────────────────
+         // General case: partially visible → segment clipping
+         // ───────────────────────────────────────────────
+  constexpr double baseAngle = 0.0;
+  constexpr double fullAngleLength = 2.0 * M_PI;
+
+  std::vector<double> crossPoints;
+
+  std::array<RS_Vector, 4> vertices = vpRect.vertices();
+  for (size_t i = 0; i < vertices.size(); ++i) {
+    RS_Line edge{vertices[i], vertices[(i + 1) % vertices.size()]};
+
+    RS_VectorSolutions sols = RS_Information::getIntersection(this, &edge, true);
+
+    for (const RS_Vector& pt : sols) {
+      double dirCircle = getTangentDirection(pt).angle();
+      double dirEdge   = edge.getTangentDirection(pt).angle();
+
+      if (std::abs(RS_Math::correctAngle(dirEdge - dirCircle)) > RS_TOLERANCE_ANGLE) {
+        double angle = (pt - getCenter()).angle();
+        double relParam = RS_Math::correctAngle(angle - baseAngle);
+        crossPoints.push_back(relParam);
+      }
+    }
+  }
+
+         // Always include full circle range
+  crossPoints.insert(crossPoints.begin(), 0.0);
+  crossPoints.push_back(fullAngleLength);
+
+         // Sort + remove near-duplicates
+  std::sort(crossPoints.begin(), crossPoints.end());
+  auto last = std::unique(crossPoints.begin(), crossPoints.end(),
+                          [](double a, double b) { return std::abs(a - b) < RS_TOLERANCE_ANGLE; });
+  crossPoints.erase(last, crossPoints.end());
+
+         // Point getter: parameter (angle) → world point
+  auto pointAt = [this](double angle) -> RS_Vector {
+    return getCenter() + RS_Vector::polar(getRadius(), angle);
+  };
+
+         // Delegate to painter's generic parametric curve generator
+  painter->pathForParametricCurve(
+      path,
+      crossPoints,
+      pointAt,
+      getRadius()   // used for sagitta / approximation control
+      );
+}
+
+/**
+ * Updated draw() method — now consistently uses createPainterPath()
+ * (same pattern as RS_Arc and RS_Ellipse)
+ */
+void RS_Circle::draw(RS_Painter* painter)
+{
+  if (painter == nullptr) {
+    return;
+  }
+
+  QPainterPath path;
+
+         // Arbitrary starting point at angle=0, mainly to satisfy moveTo requirement
+  RS_Vector centerUi = painter->toGui(getCenter() + RS_Vector{getRadius(), 0.});
+  path.moveTo(centerUi.x, centerUi.y);
+
+         // Build the actual path (fast or clipped depending on visibility)
+  createPainterPath(painter, path);
+
+  painter->drawPath(path);
 }
 
 void RS_Circle::moveRef(const RS_Vector& ref, const RS_Vector& offset) {

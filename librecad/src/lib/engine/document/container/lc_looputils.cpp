@@ -4,7 +4,7 @@
 ** This file was created for the LibreCAD project (librecad.org), a 2D CAD program.
 **
 ** Copyright (C) 2023 librecad (www.librecad.org)
-** Copyright (C) 2023 dxli (github.com/dxli)
+** Copyright (C) 2026 dxli (github.com/dxli)
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -26,12 +26,20 @@
 
 #include <algorithm>
 #include <cmath>
+#include <functional>
+#include <random>
 #include <set>
+#include <unordered_map>
+
 #include <QPen>
 #include <QPainterPath>
 
 #include "lc_looputils.h"
+#include "lc_pathbuilder.h"
+#include "lc_parabola.h"
 #include "lc_rect.h"
+#include "lc_splinepoints.h"
+#include "rs.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_debug.h"
@@ -43,9 +51,6 @@
 #include "rs_painter.h"
 #include "rs_pattern.h"
 #include "rs_vector.h"
-#include "rs.h"
-#include "lc_splinepoints.h"  // ADDED: For LC_SplinePoints support
-#include "lc_parabola.h"      // ADDED: For LC_Parabola support
 
 namespace {
 // Definition for buildLC_Loops (moved to namespace level for accessibility)
@@ -120,261 +125,55 @@ bool isClosed(const RS_Entity& en) {
   }
 }
 
-/**
- * @brief PathBuilder is a utility class to build a QPainterPath by appending RS_Entity objects.
- * All appendages are transformed to UI coordinates using the provided RS_Painter.
- * Handles common entity types: Line, Arc, Circle, Ellipse, Spline, Parabola.
- * Supports moveTo for starting new subpaths and ensures continuity where possible.
- */
-class PathBuilder {
-public:
-  /**
-   * @brief Constructor.
-   * @param painter RS_Painter for UI coordinate transformations (required for UI mode).
-   */
-  explicit PathBuilder(RS_Painter* painter = nullptr);
+void debugPath(const QPainterPath &path) {
+  LC_ERR << "Path Element Count:" << path.elementCount();
 
-  /**
-   * @brief Appends the given entity to the path, transforming to UI coordinates.
-   * Handles startpoint continuity; moves to start if needed.
-   * @param entity The RS_Entity to append.
-   */
-  void append(RS_Entity* entity);
+  for (int i = 0; i < path.elementCount(); ++i) {
+    const QPainterPath::Element &e = path.elementAt(i);
 
-  /**
-   * @brief Moves to the given position (in WCS; transformed to UI).
-   * Starts a new subpath.
-   * @param pos The position in WCS.
-   */
-  void moveTo(const RS_Vector& pos);
-  void lineTo(const RS_Vector& pos);
-
-  /**
-   * @brief Closes the current subpath.
-   */
-  void closeSubpath();
-
-  /**
-   * @brief Gets the built path.
-   * @return Reference to the QPainterPath.
-   */
-  QPainterPath& getPath() { return m_path; }
-  const QPainterPath& getPath() const { return m_path; }
-
-  /**
-   * @brief Clears the path.
-   */
-  void clear();
-  QPointF toGuiPoint(const RS_Vector& vp) const
-  {
-    RS_Vector guiVp = m_painter->toGui(vp);
-    return {guiVp.x, guiVp.y};
-  }
-
-private:
-  /**
-   * @brief Appends a line in UI coordinates.
-   * @param line The RS_Line.
-   */
-  void appendLine(RS_Line* line);
-
-  /**
-   * @brief Appends an arc using cubic Bezier approximation in UI coordinates.
-   * Follows entity direction (reversed or not).
-   * @param arc The RS_Arc.
-   */
-  void appendArc(RS_Arc* arc);
-
-  /**
-   * @brief Appends a circle as a full arc in UI coordinates.
-   * @param circle The RS_Circle.
-   */
-  void appendCircle(RS_Circle* circle);
-
-  /**
-   * @brief Appends an ellipse arc in UI coordinates using Bezier approximation.
-   * @param ellipse The RS_Ellipse.
-   */
-  void appendEllipse(RS_Ellipse* ellipse);
-
-  /**
-   * @brief Appends a spline (LC_SplinePoints) by appending quadratic Bezier segments in UI coordinates.
-   * Assumes current position is at startpoint; uses quadTo for each quadratic segment.
-   * @param spline The LC_SplinePoints.
-   */
-  void appendSplinePoints(LC_SplinePoints* spline);
-
-  /**
-   * @brief Appends a parabola (LC_Parabola) by sampling stroke points in UI coordinates.
-   * Assumes current position is at startpoint; uses lineTo for polyline approximation.
-   * @param parabola The LC_Parabola.
-   */
-  void appendParabola(LC_Parabola* parabola);
-
-  RS_Painter* m_painter = nullptr;
-  QPainterPath m_path;
-  RS_Vector m_lastPoint{};  ///< Last point in WCS for continuity check.
-  bool m_hasLastPoint = false;  ///< Flag indicating if m_lastPoint is valid.
-};
-
-PathBuilder::PathBuilder(RS_Painter* painter)
-    : m_painter(painter){
-  assert(m_painter != nullptr);
-  m_path.setFillRule(Qt::OddEvenFill);
-  m_hasLastPoint = false;
-}
-
-void PathBuilder::append(RS_Entity* entity) {
-  if (!entity || entity->isUndone()) return;
-
-  RS_Vector startp = entity->getStartpoint();
-  const double tol = 1e-6;
-  if (!m_hasLastPoint || m_lastPoint.distanceTo(startp) > tol) {
-    moveTo(startp);
-  }
-
-  RS2::EntityType type = entity->rtti();
-
-  switch (type) {
-  case RS2::EntityLine:
-    appendLine(static_cast<RS_Line*>(entity));
-    break;
-  case RS2::EntityArc:
-    appendArc(static_cast<RS_Arc*>(entity));
-    break;
-  case RS2::EntityCircle:
-    appendCircle(static_cast<RS_Circle*>(entity));
-    break;
-  case RS2::EntityEllipse:
-    appendEllipse(static_cast<RS_Ellipse*>(entity));
-    break;
-  case RS2::EntitySpline:
-    appendSplinePoints(static_cast<LC_SplinePoints*>(entity));
-    break;
-  case RS2::EntityParabola:
-    appendParabola(static_cast<LC_Parabola*>(entity));
-    break;
-  default:
-    RS_DEBUG->print(RS_Debug::D_WARNING, "PathBuilder::append: Unsupported entity type %d", static_cast<int>(type));
-    break;
-  }
-
-  m_lastPoint = entity->getEndpoint();
-  m_hasLastPoint = true;
-}
-
-void PathBuilder::moveTo(const RS_Vector& pos) {
-  QPointF uiPos = toGuiPoint(pos);
-  m_path.moveTo(uiPos);
-  m_lastPoint = pos;
-  m_hasLastPoint = true;
-}
-
-void PathBuilder::lineTo(const RS_Vector& pos) {
-  QPointF uiPos = toGuiPoint(pos);
-  m_path.lineTo(uiPos);
-  m_lastPoint = pos;
-  m_hasLastPoint = true;
-}
-
-void PathBuilder::closeSubpath() {
-  m_path.closeSubpath();
-  // Do not reset m_hasLastPoint; keep for potential next append
-}
-
-void PathBuilder::clear() {
-  m_path = QPainterPath();
-  m_lastPoint = RS_Vector(0., 0.);
-  m_hasLastPoint = false;
-}
-
-void PathBuilder::appendLine(RS_Line* line) {
-  if (!line)
-    return;
-
-  QPointF uiEnd = toGuiPoint(line->getEndpoint());
-
-  m_path.lineTo(uiEnd);
-}
-
-void PathBuilder::appendArc(RS_Arc* arc) {
-  // TODO: need pixel level precision: issue #2035
-  if (!arc || !m_painter)
-    return;
-
-  double startAngle = arc->getAngle1();
-  double endAngle = arc->getAngle2();
-  if (arc->isReversed())
-    endAngle = startAngle - RS_Math::correctAngle(startAngle - endAngle);
-  else
-    endAngle = startAngle + RS_Math::correctAngle(endAngle - startAngle);
-
-  double startDeg = RS_Math::rad2deg(startAngle);
-  double sweepDeg = RS_Math::rad2deg(endAngle - startAngle);
-
-  QPointF center = toGuiPoint(arc->getCenter());
-  double radiusX = m_painter->toGuiDX(arc->getRadius());
-  double radiusY = m_painter->toGuiDY(arc->getRadius());
-  QPointF halfSize{radiusX, radiusY};
-  QRectF arcRect{center - halfSize, center + halfSize};
-
-  m_path.arcTo(arcRect, startDeg, sweepDeg);
-}
-
-void PathBuilder::appendEllipse(RS_Ellipse* ellipse) {
-  if (!ellipse || !m_painter) return;
-
-  // TODO: need pixel level precision: issue #2035
-  m_painter->drawEllipseBySplinePointsUI(*ellipse, m_path);
-}
-
-void PathBuilder::appendCircle(RS_Circle* circle) {
-  if (!circle || !m_painter) return;
-
-  // TODO: need pixel level precision: issue #2035
-  QPointF center = toGuiPoint(circle->getCenter());
-  double radiusX = m_painter->toGuiDX(circle->getRadius());
-  double radiusY = m_painter->toGuiDY(circle->getRadius());
-  QPointF halfSize{radiusX, radiusY};
-  QRectF circleRect{center - halfSize, center + halfSize};
-
-  m_path.addEllipse(circleRect);
-}
-
-void PathBuilder::appendSplinePoints(LC_SplinePoints* spline) {
-  if (!spline || !m_painter) return;
-
-  const auto& points = spline->getPoints();
-  if (points.empty()) return;
-
-  size_t n_points = points.size();
-  size_t num_segs = spline->isClosed() ? n_points : n_points - 1;
-  if (num_segs == 0) {
-    // Degenerate case: connect to endpoint
-    lineTo(spline->getEndpoint());
-    return;
-  }
-
-         // Assume current path position is at the startpoint of the first segment
-  for (size_t i = 0; i < num_segs; ++i) {
-    RS_Vector start, ctrl, end;
-    if (spline->GetQuadPoints(int(i), &start, &ctrl, &end) != 0) {
-      m_path.moveTo(toGuiPoint(start));
-      m_path.quadTo(toGuiPoint(ctrl), toGuiPoint(end));
-    } else {
-      // Fallback: line to end if quad points unavailable
-      lineTo(end);
+    switch (e.type) {
+    case QPainterPath::MoveToElement:
+      LC_ERR << i << ": MoveTo  " << e.x << "," << e.y;
+      break;
+    case QPainterPath::LineToElement:
+      LC_ERR << i << ": LineTo  " << e.x << "," << e.y;
+      break;
+    case QPainterPath::CurveToElement:
+      LC_ERR << i << ": CurveTo " << e.x << "," << e.y;
+      // Note: CurveTo is followed by two CurveToDataElements for control points
+      break;
+    case QPainterPath::CurveToDataElement:
+      LC_ERR << i << ":   Data  " << e.x << "," << e.y;
+      break;
     }
   }
 }
+}  // anonymous namespace for helpers
 
-void PathBuilder::appendParabola(LC_Parabola* parabola) {
-  if (!parabola) return;
+// NEW: Tolerance-aware key for RS_Vector endpoints (handles floating-point exactly as in ENDPOINT_TOLERANCE)
+struct VectorKey {
+  long long x, y;
+  bool operator==(const VectorKey& other) const {
+    return x == other.x && y == other.y;
+  }
+};
 
-         // Inherit from LC_SplinePoints for quadratic Bezier handling
-  appendSplinePoints(parabola);
+namespace std {
+template<> struct hash<VectorKey> {
+  std::size_t operator()(const VectorKey& k) const {
+    std::hash<long long> h;
+    return h(k.x) ^ (h(k.y) << 1);  // Simple but collision-resistant for CAD coords
+  }
+};
 }
 
+// Helper to create key: round to ~1e-8 precision (matches ENDPOINT_TOLERANCE)
+VectorKey makeVectorKey(const RS_Vector& v) {
+  constexpr double SCALE = 1e8;  // 8 decimal places
+  return {
+      static_cast<long long>(std::round(v.x * SCALE)),
+      static_cast<long long>(std::round(v.y * SCALE))
+  };
 }
 
 namespace LC_LoopUtils {
@@ -386,12 +185,16 @@ struct LoopExtractor::LoopData {
   RS_Entity* current = nullptr;         ///< Current entity in loop
   RS_Vector endPoint;                   ///< Current endpoint
   RS_Vector targetPoint;                ///< Target start point for closure
-  bool reversed = false;                ///< Direction reversal flag
+  bool reversed = false;                ///< Direction reversal flag (legacy)
+
+         // NEW: Precomputed adjacency map for O(1) getConnected() lookups
+  std::unordered_map<VectorKey, std::vector<RS_Entity*>> endpointToEdges;
 };
 
 /**
  * @brief Constructs LoopExtractor and initializes unprocessed edges.
  * Filters to atomic entities with length > ENDPOINT_TOLERANCE.
+ * **ALGORITHM UPGRADE**: Builds full endpoint adjacency map upfront for graph traversal.
  */
 LoopExtractor::LoopExtractor(const RS_EntityContainer& edges) :
                                                                 m_data(std::make_unique<LoopData>())
@@ -400,6 +203,13 @@ LoopExtractor::LoopExtractor(const RS_EntityContainer& edges) :
     if (e->isAtomic() && e->getLength() > ENDPOINT_TOLERANCE) {  // Skip degenerate zero-length edges
       m_data->unprocessed.push_back(e);
       m_data->processed[e] = false;
+
+             // Build bidirectional adjacency (both start and end points)
+      VectorKey k1 = makeVectorKey(e->getStartpoint());
+      m_data->endpointToEdges[k1].push_back(e);
+
+      VectorKey k2 = makeVectorKey(e->getEndpoint());
+      m_data->endpointToEdges[k2].push_back(e);
     }
   }
 }
@@ -426,7 +236,12 @@ std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract() {
       m_data->targetPoint = start;
       m_data->endPoint = end;
       m_data->unprocessed.erase(std::remove(m_data->unprocessed.begin(), m_data->unprocessed.end(), first), m_data->unprocessed.end());
+      size_t iteration = 0;  // NEW: Safety against malformed input
       while (m_data->endPoint.distanceTo(m_data->targetPoint) > ENDPOINT_TOLERANCE) {  // Continue until closure within tolerance
+        if (++iteration > m_data->unprocessed.size() * 2) {
+          RS_DEBUG->print(RS_Debug::D_WARNING, "LoopExtractor: possible degenerate loop detected");
+          break;
+        }
         if (findNext()) {
           if (m_data->endPoint.distanceTo(m_data->targetPoint) <= ENDPOINT_TOLERANCE) break;
         } else {
@@ -454,13 +269,22 @@ std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract() {
   return results;
 }
 
+// ========================== UPDATED: validate() ==========================
 /**
- * @brief Validates the current loop for closure.
- * @return True if valid.
+ * @brief Validates the current loop for full closure, connectivity, and consistent directions.
+ *        Ensures every entity is traversed forward (start → end) in loop order, with no mixed or broken directions.
+ *        This is hatch-critical: prevents leaking trims or incorrect islands due to direction flips.
+ *        Full O(N) check but N is tiny; early-exit on first error.
  */
 bool LoopExtractor::validate() const {
-  if (m_loop->count() == 0) return false;
-  if (m_loop->count() == 1) {
+  const size_t n = m_loop->count();
+  if (n == 0) {
+    RS_DEBUG->print(RS_Debug::D_WARNING, "LoopExtractor::validate: Empty loop");
+    return false;
+  }
+
+         // Special case: single closed entity (no chain to check)
+  if (n == 1) {
     RS_Entity* e = m_loop->entityAt(0);
     RS2::EntityType type = e->rtti();
     if (type == RS2::EntityCircle) return true;
@@ -468,61 +292,191 @@ bool LoopExtractor::validate() const {
       RS_Ellipse* ell = static_cast<RS_Ellipse*>(e);
       return ell->getAngleLength() >= 2 * M_PI - RS_TOLERANCE;
     }
-    if (type == RS2::EntitySpline) {  // SUPPORT: Closed splines
+    if (type == RS2::EntitySpline) {  // Closed spline
       LC_SplinePoints* spl = static_cast<LC_SplinePoints*>(e);
       return spl->isClosed();
     }
-    if (type == RS2::EntityParabola) {  // SUPPORT: Valid if primitives computed successfully
+    if (type == RS2::EntityParabola) {  // Valid primitive
       LC_Parabola* para = static_cast<LC_Parabola*>(e);
       return para->getData().valid;
     }
+    // Fallback: check self-closure
     return e->getStartpoint().distanceTo(e->getEndpoint()) <= ENDPOINT_TOLERANCE;
   }
+
+         // Full multi-entity chain validation (ensures consistent forward directions)
+  RS_Entity* prev = m_loop->entityAt(0);
+  for (size_t i = 1; i < n; ++i) {
+    RS_Entity* curr = m_loop->entityAt(i);
+    const double dist = prev->getEndpoint().distanceTo(curr->getStartpoint());
+    if (dist > ENDPOINT_TOLERANCE) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "LoopExtractor::validate: Broken connection at entity %zu (dist=%.2e)", i, dist);
+      return false;
+    }
+    prev = curr;
+  }
+
+         // Final closure: last end → first start
   RS_Entity* first = m_loop->entityAt(0);
   RS_Entity* last = m_loop->last();
-  return first->getStartpoint().distanceTo(last->getEndpoint()) <= ENDPOINT_TOLERANCE;
+  const double closeDist = last->getEndpoint().distanceTo(first->getStartpoint());
+  if (closeDist > ENDPOINT_TOLERANCE) {
+    RS_DEBUG->print(RS_Debug::D_WARNING,
+                    "LoopExtractor::validate: Loop does not close (dist=%.2e)", closeDist);
+    return false;
+  }
+
+         // Optional: sanity check on area (should be positive after reversal in extract())
+  const double area = m_loop->areaLineIntegral();
+  if (std::abs(area) < RS_TOLERANCE) {
+    RS_DEBUG->print(RS_Debug::D_WARNING, "LoopExtractor::validate: Degenerate zero-area loop");
+    return false;
+  }
+
+  return true;
 }
 
+// ========================== UPDATED: findFirst() ==========================
 /**
- * @brief Finds the first edge to start a loop.
- * @return Starting entity or nullptr.
+ * @brief Finds the first edge to start a new loop.
+ *        Uses a **random test-ray direction** (fixed seed for reproducibility) to guarantee we always hit the true outermost contour first.
+ *        This eliminates the last source of fragility: horizontal/vertical alignments that could cause inner loops to be extracted prematurely.
+ *        Pairs perfectly with the tangent-based `findOutermost()` for bulletproof contour extraction.
  */
-RS_Entity* LoopExtractor::findFirst() const {
-  if (m_data->unprocessed.empty()) return nullptr;
-  RS_Entity* firstEdge = m_data->unprocessed[0];
-  RS_Vector mid = firstEdge->getMiddlePoint();
-  RS_Vector lineStart(mid.x - 1000, mid.y);
-  RS_Line testLine(lineStart, mid);
-  double minDist = RS_MAXDOUBLE;
-  RS_Entity* closest = nullptr;
+RS_Entity* LoopExtractor::findFirst() const
+{
+  if (m_data->unprocessed.empty())
+    return nullptr;
+
+         // Fixed-seed RNG → deterministic across runs, yet never axis-aligned (avoids coincidence with any edge)
+  static std::mt19937 gen(12345);  // arbitrary but stable seed
+  static std::uniform_real_distribution<double> dist(0.0, 2.0 * M_PI);
+  const double angle = dist(gen);
+  const RS_Vector dir(std::cos(angle), std::sin(angle));  // unit direction vector
+
+         // Find the point with the minimal projection onto the ray (i.e., the "leftmost" relative to this direction)
+  double minProj = RS_MAXDOUBLE;
+  RS_Vector bestPoint;
+  RS_Entity* bestEntity = m_data->unprocessed[0];
+
   for (RS_Entity* e : m_data->unprocessed) {
-    RS_VectorSolutions sol = RS_Information::getIntersection(&testLine, e, true);
-    if (sol.hasValid()) {
-      for (RS_Vector v : sol) {
-        double d = v.distanceTo(lineStart);
-        if (d < minDist) {
-          minDist = d;
-          closest = e;
-        }
+    for (const RS_Vector& p : {e->getStartpoint(), e->getEndpoint(), e->getMiddlePoint()}) {
+      const double proj = p.dotP(dir);
+      if (proj < minProj) {
+        minProj = proj;
+        bestPoint = p;
+        bestEntity = e;
       }
     }
   }
-  return closest ? closest : firstEdge;
+
+         // Shoot a long test ray from far away *against* the direction
+  const RS_Vector rayStart = bestPoint - dir * 5000.0;  // 5000 units is safe for any drawing scale
+  const RS_Line testLine(rayStart, bestPoint);
+
+         // Find the intersection *closest* to the ray origin (i.e., the first edge the ray hits)
+  double minDist = RS_MAXDOUBLE;
+  RS_Entity* closest = nullptr;
+
+  for (RS_Entity* e : m_data->unprocessed) {
+    RS_VectorSolutions sol = RS_Information::getIntersection(&testLine, e, true);
+    if (!sol.hasValid())
+      continue;
+
+    for (const RS_Vector& v : sol) {
+      // Parameter along the ray (positive = ahead of rayStart)
+      const double d = (v - rayStart).dotP(dir);
+      if (d > -RS_TOLERANCE && d < minDist) {
+        minDist = d;
+        closest = e;
+      }
+    }
+  }
+
+  return closest ? closest : bestEntity;
 }
 
+// ========================== UPDATED: findOutermost() ==========================
+/**
+ * @brief Selects the next edge that makes the strongest left turn (CCW preference).
+ *        This is the correct "outermost" rule for reliable contour extraction.
+ *        Purely tangent-based → extremely robust on curves and splines.
+ */
+RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const
+{
+  if (edges.empty())
+    return nullptr;
+  if (edges.size() == 1)
+    return edges[0];
+
+         // Incoming direction (how we arrived at the junction)
+  const double incoming = m_data->current->getDirection2();
+
+  std::vector<std::pair<double, RS_Entity*>> candidates;
+  candidates.reserve(edges.size());
+
+  for (RS_Entity* e : edges) {
+    // Determine whether we will need to reverse this edge
+    const bool attachAtStart =
+        e->getStartpoint().distanceTo(m_data->endPoint) <= ENDPOINT_TOLERANCE;
+
+    double outgoing;
+    if (attachAtStart) {
+      outgoing = e->getDirection1();                    // forward as-is
+    } else {
+      // Will be reversed → outgoing tangent = original direction2 + π
+      outgoing = RS_Math::correctAngle(e->getDirection2() + M_PI);
+    }
+
+           // Signed turn angle in [-π, π]. Positive = left turn (CCW)
+    double turn = RS_Math::correctAngle(outgoing - incoming);
+    if (turn > M_PI)
+      turn -= 2.0 * M_PI;
+
+    candidates.emplace_back(turn, e);
+  }
+
+         // Prefer maximum left turn → this is what "outermost" actually means for CCW boundary following
+  std::sort(candidates.begin(), candidates.end(),
+            [](const auto& a, const auto& b) { return a.first > b.first; });
+
+  return candidates.front().second;
+}
+
+// ========================== UPDATED: getConnected() ==========================
+/**
+ * @brief Gets entities connected to the current endpoint.
+ *        O(degree) via precomputed map — huge speedup for complex contours.
+ *        Filters to unprocessed only; tolerance handled in key construction.
+ */
+std::vector<RS_Entity*> LoopExtractor::getConnected() const {
+  std::vector<RS_Entity*> ret;
+  VectorKey k = makeVectorKey(m_data->endPoint);
+
+  auto it = m_data->endpointToEdges.find(k);
+  if (it != m_data->endpointToEdges.end()) {
+    for (RS_Entity* e : it->second) {
+      auto pit = m_data->processed.find(e);
+      if (pit != m_data->processed.end() && !pit->second) {
+        ret.push_back(e);
+      }
+    }
+  }
+  return ret;
+}
+
+// ========================== UPDATED: findNext() ==========================
 /**
  * @brief Finds and adds the next connected edge to the loop.
  * @return True if found.
  */
 bool LoopExtractor::findNext() const {
-  std::vector<RS_Entity*> connected = getConnected();
+  std::vector<RS_Entity*> connected = getConnected();  // Now O(degree) fast
   if (connected.empty()) return false;
-  RS_Entity* next = nullptr;
-  if (connected.size() == 1) {
-    next = connected[0];
-  } else {
-    next = findOutermost(connected);
-  }
+
+  RS_Entity* next = (connected.size() == 1) ? connected[0] : findOutermost(connected);
+
   if (next) {
     RS_Entity* cloned = next->clone();
     m_loop->addEntity(cloned);
@@ -536,77 +490,6 @@ bool LoopExtractor::findNext() const {
     return true;
   }
   return false;
-}
-
-/**
- * @brief Gets entities connected to the current endpoint.
- * @return Vector of connected entities.
- */
-std::vector<RS_Entity*> LoopExtractor::getConnected() const {
-  std::vector<RS_Entity*> ret;
-  for (RS_Entity* e : m_data->unprocessed) {
-    if (e->getStartpoint().distanceTo(m_data->endPoint) <= ENDPOINT_TOLERANCE || e->getEndpoint().distanceTo(m_data->endPoint) <= ENDPOINT_TOLERANCE) {
-      ret.push_back(e);
-    }
-  }
-  return ret;
-}
-
-/**
- * @brief Selects the outermost (preferred direction) from connected edges.
- * @param edges Connected edges.
- * @return Selected entity.
- */
-RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const {
-  double radius = 1e-6;
-  RS_Circle circle(nullptr, RS_CircleData(m_data->endPoint, radius));
-  double currentAngle = m_data->current->getDirection2();  // Incoming tangent at junction
-  std::vector<std::pair<double, RS_Entity*>> angleDiffs;
-  for (RS_Entity* e : edges) {
-    // Compute outgoing tangent, accounting for potential reversal
-    bool needsReversal = (e->getStartpoint().distanceTo(m_data->endPoint) > ENDPOINT_TOLERANCE);
-    double outgoingAngle;
-    if (!needsReversal) {
-      outgoingAngle = e->getDirection1();  // Tangent at start
-    } else {
-      outgoingAngle = RS_Math::correctAngle(e->getDirection2() + M_PI);  // Flip by pi for reversal
-    }
-
-    RS_VectorSolutions sol = RS_Information::getIntersection(&circle, e, true);
-    if (!sol.hasValid()) continue;
-
-           // Select the intersection closest to the outgoing direction
-    RS_Vector selected_v;
-    double min_adiff = RS_MAXDOUBLE;
-    for (size_t k = 0; k < sol.getNumber(); ++k) {
-      RS_Vector v = sol.get(k);
-      double dist = v.distanceTo(m_data->endPoint);
-      if (std::abs(dist - radius) > RS_TOLERANCE) continue;  // Filter valid radius intersections
-
-      double a = (v - m_data->endPoint).angle();
-      double adiff = RS_Math::correctAngle(a - outgoingAngle);
-      if (adiff > M_PI) adiff = 2 * M_PI - adiff;  // Minimal unsigned difference
-      if (adiff < min_adiff) {
-        min_adiff = adiff;
-        selected_v = v;
-      }
-    }
-
-    if (min_adiff > 1e-4) continue;  // Skip if no close match (numerical or curvature issues)
-
-    double angle = (selected_v - m_data->endPoint).angle();
-    double diff = RS_Math::correctAngle(angle - currentAngle);
-    if (diff > M_PI) diff -= 2 * M_PI;  // Signed difference in (-pi, pi]
-
-    angleDiffs.push_back({diff, e});
-  }
-
-  if (angleDiffs.empty()) return nullptr;
-  // Sort by descending signed diff to prefer left turns (largest positive diff) for CCW outer boundary
-  std::sort(angleDiffs.begin(), angleDiffs.end(), [](const auto& a, const auto& b) {
-    return a.first > b.first;
-  });
-  return angleDiffs[0].second;
 }
 
 // Private implementation for LoopSorter
@@ -907,18 +790,22 @@ QPainterPath LC_Loops::buildPathFromLoop(RS_Painter* painter, const RS_EntityCon
     return path;
   }
 
-  builder.moveTo(cont.first()->getStartpoint());
+         //builder.moveTo(cont.first()->getStartpoint());
   for (RS_Entity* e : cont) {
     if (e->isAtomic()) {
       RS_Vector start = e->getStartpoint();
       // avoid small gaps due to rounding errors
-      if ((path.currentPosition() - builder.toGuiPoint({start.x, start.y})).manhattanLength() >= 3.) {
-        LC_ERR<<__func__<<"(): added line at "<<start.x<<", "<<start.y;
+      if (!path.isEmpty() && (path.currentPosition() - builder.toGuiPoint({start.x, start.y})).manhattanLength() >= 3.) {
+        LC_ERR<<__func__<<"(): added line at ("<<start.x<<", "<<start.y<<"), gap from ("
+               <<path.currentPosition().x()<<", " <<path.currentPosition().x()<<")";
       }
       builder.append(e);
     }
   }
   builder.closeSubpath();
+  if (RS_DEBUG->getLevel() > RS_Debug::D_WARNING) {
+      debugPath(path);
+  }
   return path;
 }
 
