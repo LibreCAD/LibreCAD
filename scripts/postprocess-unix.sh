@@ -1,43 +1,46 @@
 #!/bin/sh
 
 THISDIR="`pwd`"
-LCDIR="${THISDIR}/librecad"
-PIDIR="${THISDIR}/plugins"
+LC_DIR="${THISDIR}/librecad"
+PL_DIR="${THISDIR}/plugins"
 RESOURCEDIR="${THISDIR}/unix/resources"
 APPDATADIR="${THISDIR}/unix/appdata"
-TSDIRLC="${LCDIR}/ts"
-TSDIRPI="${PIDIR}/ts"
-SPTDIR="${LCDIR}/support"
 DESKTOPDIR="${THISDIR}/desktop"
-LRELEASE="lrelease"
+# For Qt6
+LUPDATE="/usr/lib/qt6/bin/lupdate"
+LRELEASE="/usr/lib/qt6/bin/lrelease"
+# For Qt5
+#LUPDATE="lupdate"
+#LRELEASE="lrelease"
 
-cd "${THISDIR}"
+# Create dirs for unix directory
+mkdir -p -- "${RESOURCEDIR}"/fonts "${RESOURCEDIR}"/patterns "${RESOURCEDIR}"/qm
 
-# Postprocess for unix
-mkdir -p "${RESOURCEDIR}"/fonts
-mkdir -p "${RESOURCEDIR}"/patterns
-cp "${SPTDIR}"/patterns/*.dxf "${RESOURCEDIR}"/patterns
-cp "${SPTDIR}"/fonts/*.lff* "${RESOURCEDIR}"/fonts
-find "${SPTDIR}"/library -type d | sed 's:^.*support/::' | xargs -IFILES  mkdir -p "${RESOURCEDIR}"/FILES
-find "${SPTDIR}"/library -type f -iname "*.dxf" | sed 's/^.*support//' | xargs -IFILES  cp "${SPTDIR}"/FILES "${RESOURCEDIR}"/FILES
+# Copy files to unix directory
+echo -n "Copy fonts to ${RESOURCEDIR}/fonts: "
+cp "${LC_DIR}"/support/fonts/*.lff "${RESOURCEDIR}"/fonts
+echo "Ok."
 
-# Generate translations
-${LRELEASE} "${LCDIR}"/src/src.pro
-${LRELEASE} "${PIDIR}"/plugins.pro
-mkdir -p "${RESOURCEDIR}"/qm
+echo -n "Copy library to ${RESOURCEDIR}/library: "
+cp -r "${LC_DIR}"/support/library "${RESOURCEDIR}"
+echo "Ok."
 
-# Go into translations directory
-cd "${TSDIRLC}"
-for tf in *.qm
-do
-        cp "${tf}" "${RESOURCEDIR}/qm/${tf}"
-done
+echo -n "Copy patterns to ${RESOURCEDIR}/patterns: "
+cp "${LC_DIR}"/support/patterns/*.dxf "${RESOURCEDIR}"/patterns
+echo "Ok."
 
-cd "${TSDIRPI}"
-for tf in *.qm
-do
-        cp "${tf}" "${RESOURCEDIR}/qm/${tf}"
-done
+# Update translations
+echo -n "Update translations from .cpp to .ts: "
+${LUPDATE} -silent librecad/ -extensions cpp,ui -ts librecad/ts/*.ts
+${LUPDATE} -silent plugins/ -extensions cpp,ui -ts plugins/ts/*.ts
+echo "Ok."
+
+echo -n "Generate translations from .ts to ${RESOURCEDIR}/qm/*.qm: "
+${LRELEASE} -silent librecad/ts/*.ts
+mv librecad/ts/*.qm ${RESOURCEDIR}/qm
+${LRELEASE} -silent plugins/ts/*.ts
+mv plugins/ts/*.qm ${RESOURCEDIR}/qm
+echo "Ok."
 
 # copy desktop and appdata files to unix/appdata/
 mkdir -p "${APPDATADIR}"
