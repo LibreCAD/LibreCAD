@@ -520,7 +520,7 @@ void LC_ActionDrawLinePoints::updateMouseButtonHints(){
             updateMouseWidgetTRBack(tr("Specify edge points mode\n[none|start|end|both|distance]"));
             break;
         case SetFixDistance:
-            updateMouseWidgetTRBack(tr("Specify fixed distance between points\nor[x|y|p|number|edges]"));
+            updateMouseWidgetTRBack(tr("Specify fixed distance between points\nor [x|y|p|number|edges]"));
             break;
         case SetDistance: {
             bool toX = m_direction == DIRECTION_X;
@@ -539,7 +539,7 @@ void LC_ActionDrawLinePoints::updateMouseButtonHints(){
                 msg += "|" + command("x");
                 msg += "|" + command("y");
                 QString angleStr = RS_Math::doubleToString(m_angleDegrees, 1);
-                updateMouseWidget(tr("Specify  distance (angle %1 deg)\nor [%2]").arg(angleStr, msg),tr("Back"), MOD_SHIFT_MIRROR_ANGLE);
+                updateMouseWidget(tr("Specify distance (angle %1 deg)\nor [%2]").arg(angleStr, msg),tr("Back"), MOD_SHIFT_MIRROR_ANGLE);
             }
             break;
         }
