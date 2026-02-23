@@ -57,7 +57,7 @@ RS_ActionLibraryInsert::RS_ActionLibraryInsert(RS_EntityContainer& container,
 RS_ActionLibraryInsert::~RS_ActionLibraryInsert() = default;
 
 QAction* RS_ActionLibraryInsert::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-   QAction* action = new QAction(tr("Insert Library Object"), NULL);
+   QAction* action = new QAction(tr("Insert Library Object"), nullptr);
     return action;
 }
 
@@ -74,6 +74,7 @@ void RS_ActionLibraryInsert::init(int status) {
 void RS_ActionLibraryInsert::setFile(const QString& file) {
 	pPoints->data.file = file;
 
+    pPoints->prev.clear();
 	if (!pPoints->prev.open(file, RS2::FormatUnknown)) {
         RS_DIALOGFACTORY->commandMessage(tr("Cannot open file '%1'").arg(file));
     }
