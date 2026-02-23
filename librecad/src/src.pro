@@ -13,7 +13,8 @@ DEFINES -= JWW_WRITE_SUPPORT
 LC_VERSION="2.2.2.6-alpha"
 LC_PRERELEASE = "true";
 
-VERSION=$${LC_VERSION}
+# For About window only
+DEFINES += ABOUT_VERSION=\"$${LC_VERSION}\"
 
 # Store intermedia stuff somewhere else
 GENERATED_DIR = ../../generated/librecad
@@ -31,7 +32,7 @@ CONFIG += qt \
 QT += widgets printsupport network
 CONFIG += c++17
 
-# using qt5 connections for UI forms
+# using qt6 connections for UI forms
 QMAKE_UIC_FLAGS += --connections string
 
 *-g++ {
@@ -51,7 +52,9 @@ DESTDIR = $${INSTALLDIR}
 
 # Make translations at the end of the process
 unix {
+    message(LibreCAD version \"$${LC_VERSION}\")
     LC_VERSION=$$system([ "$(which git)x" != "x" -a -d ../../.git ] && echo "$(git describe --always)" || echo "$${LC_VERSION}")
+    message(Make translations for LibreCAD version \"$${LC_VERSION}\")
 
     macx {
         TARGET = LibreCAD
@@ -68,6 +71,7 @@ unix {
         TARGET = librecad
         DEFINES += QC_APPDIR="\"librecad\""
         RC_FILE = ../res/images/librecad.icns
+        message(Prepare to run scripts/postprocess-unix.sh)
         contains(DISABLE_POSTSCRIPT, false) {
             QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-unix.sh
         }
