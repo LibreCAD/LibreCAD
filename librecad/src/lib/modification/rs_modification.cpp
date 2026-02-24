@@ -591,15 +591,6 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
             RS_Entity* e2 = e->clone();
             e2->reparent(container);
 
-            // if (e2->rtti() == RS2::EntityInsert) {
-            //     RS_Insert* insert = static_cast<RS_Insert*>(e2);
-            //     const RS_Insert* orig = static_cast<const RS_Insert*>(e);
-            //     RS_Vector originalInsertPoint = orig->getInsertionPoint();
-            //     // Explicitly preserve and compose angle
-            //     // Shift, rotate, scale around new point
-            //     insert->setAngle(orig->getAngle() + data.angle);
-            // }
-
             e2->move(data.insertionPoint);
 
             // Apply rotation (adds paste angle, rotates position around new point)
