@@ -125,7 +125,7 @@ protected:
 	//RS_Block* block;
 	//RS_InsertData data;
 	struct Points;
-	std::unique_ptr<Points> pPoints;
+	std::unique_ptr<Points> m_pPoints;
 	
 	/** Last status before entering option. */
     Status lastStatus = SetTargetPoint;

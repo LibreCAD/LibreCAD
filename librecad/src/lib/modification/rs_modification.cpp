@@ -591,17 +591,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
             RS_Entity* e2 = e->clone();
             e2->reparent(container);
 
-            if (e2->rtti() == RS2::EntityInsert) {
-                RS_Insert* insert = static_cast<RS_Insert*>(e2);
-                RS_Vector originalInsertPoint = insert->getInsertionPoint();
-                const RS_Insert* orig = static_cast<const RS_Insert*>(e);
-                // Explicitly preserve and compose angle
-                insert->setAngle(orig->getAngle() + data.angle);
-                // Shift, rotate, scale around new point
-                e2->move(data.insertionPoint - originalInsertPoint);
-            } else {
-                e2->move(data.insertionPoint);
-            }
+            e2->move(data.insertionPoint);
 
             // Apply rotation (adds paste angle, rotates position around new point)
             e2->rotate(data.insertionPoint, data.angle);
@@ -631,32 +621,32 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
             // paste as block: create new block:
             name = graphic->newBlockName(name);
             b = addNewBlock(name, *graphic);
-        }
 
-        // add entities to block:
-        for(RS_Entity* e: std::as_const(*source)){
-            RS_Entity* e2 = e->clone();
-            e2->reparent(b);
+            // add entities to block:
+            for(RS_Entity* e: std::as_const(*source)){
+                RS_Entity* e2 = e->clone();
+                e2->reparent(b);
 
-            // For asInsert, if source entity is an insert, preserve its angle and scale
-            if (e2->rtti() == RS2::EntityInsert) {
-                RS_Insert* origInsert = static_cast<RS_Insert*>(e);
-                RS_Insert* newInsert = static_cast<RS_Insert*>(e2);
-                // Preserve and compose
-                newInsert->setAngle(origInsert->getAngle() + data.angle);
-                newInsert->setScale(origInsert->getScale() * scale);
-                newInsert->setInsertionPoint(data.insertionPoint - b->getBasePoint());
-                // Update to apply preserved transformations
-                newInsert->update();
-            } else {
-                if (std::abs(scale.x)>RS_TOLERANCE && std::abs(scale.y)>RS_TOLERANCE) {
-                    e2->scale(RS_Vector(0.0, 0.0), scale);
+                // For asInsert, if source entity is an insert, preserve its angle and scale
+                if (e2->rtti() == RS2::EntityInsert) {
+                    RS_Insert* origInsert = static_cast<RS_Insert*>(e);
+                    RS_Insert* newInsert = static_cast<RS_Insert*>(e2);
+                    // Preserve and compose
+                    newInsert->setAngle(origInsert->getAngle() - data.angle);
+                    newInsert->setScale(origInsert->getScale());
+                    //newInsert->setInsertionPoint(b->getBasePoint() + origInsert->getInsertionPoint());
+                    // Update to apply preserved transformations
+                    newInsert->update();
+                } else {
+                    //e2->rotate(RS_Vector(0.0, 0.0), data.angle);
+                    //e2->move(b->getBasePoint() - data.insertionPoint);
+                    if (std::abs(scale.x)>RS_TOLERANCE && std::abs(scale.y)>RS_TOLERANCE) {
+                        e2->scale(b->getBasePoint(), scale);
+                    }
                 }
-                e2->rotate(RS_Vector(0.0, 0.0), data.angle);
-                e2->move(data.insertionPoint - b->getBasePoint());
-            }
 
-            b->addEntity(e2);
+                b->addEntity(e2);
+            }
         }
 
         // create insert:
@@ -665,7 +655,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
         RS_Insert* i = new RS_Insert(graphic, d);
         i->setLayer(graphic->getActiveLayer());
 
-        i->setAngle(i->getAngle() + data.angle);  // Extra composition if needed
+        //i->setAngle(i->getAngle() + data.angle);  // Extra composition if needed
         i->update();
         container->addEntity(i);
 

@@ -200,26 +200,19 @@ void RS_Insert::update() {
 
 //                                RS_DEBUG->print("RS_Insert::update: transforming entity");
 
-                // Move:
-//                                RS_DEBUG->print("RS_Insert::update: move 1");
-                    if (std::abs(data.scaleFactor.x)>MIN_Scale_Factor &&
-                            std::abs(data.scaleFactor.y)>MIN_Scale_Factor) {
-                        ne->move(data.insertionPoint +
-                                 RS_Vector(data.spacing.x/data.scaleFactor.x*c,
-                                           data.spacing.y/data.scaleFactor.y*r));
-                    }
-                    else {
-                        ne->move(data.insertionPoint);
-                    }
-                // Move because of block base point:
-//                                RS_DEBUG->print("RS_Insert::update: move 2");
-                    ne->move(blk->getBasePoint()*(-1));
                 // Scale:
 //                                RS_DEBUG->print("RS_Insert::update: scale");
-                    ne->scale(data.insertionPoint, data.scaleFactor);
+                    if (std::abs(data.scaleFactor.x)>MIN_Scale_Factor &&
+                        std::abs(data.scaleFactor.y)>MIN_Scale_Factor) {
+                            ne->scale(blk->getBasePoint(), data.scaleFactor);
+                    }
                 // Rotate:
 //                                RS_DEBUG->print("RS_Insert::update: rotate");
-                    ne->rotate(data.insertionPoint, data.angle);
+                    ne->rotate(blk->getBasePoint(), data.angle);
+                    RS_Vector arrayOffset(data.spacing.x * c,
+                                          data.spacing.y * r);
+
+                    ne->move(data.insertionPoint - blk->getBasePoint() + arrayOffset);
 
                    // RS_DEBUG->print(RS_Debug::D_ERROR, "ne: angle: %lg\n", data.angle);
                 // Select:
