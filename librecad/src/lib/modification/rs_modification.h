@@ -32,18 +32,19 @@
 #include "rs_pen.h"
 #include "rs_vector.h"
 
+class LC_GraphicViewport;
 class RS_Arc;
 class RS_AtomicEntity;
+class RS_Document;
 class RS_Entity;
 class RS_EntityContainer;
-class RS_MText;
-class RS_Text;
-class RS_Line;
-class RS_Polyline;
-class RS_Document;
 class RS_Graphic;
 class RS_GraphicView;
-class LC_GraphicViewport;
+class RS_Insert;
+class RS_Line;
+class RS_MText;
+class RS_Polyline;
+class RS_Text;
 
 struct LC_ModifyOperationFlags{
     bool useCurrentAttributes = false;
@@ -296,7 +297,11 @@ public:
                           RS_EntityContainer* container, bool keepSelected);
     bool changeAttributes(RS_AttributesData& data, RS_EntityContainer* container, const bool keepSelected);
     void copy(const RS_Vector& ref, const bool cut);
-    void paste(const RS_PasteData& data, RS_Graphic* source = nullptr);
+    /**
+     * @brielf - Only returns the newly inserted block for block insertion;
+     *           Returns nullptr otherwise
+     */
+    RS_Insert* paste(const RS_PasteData& data, RS_Graphic* source = nullptr);
     bool move(RS_MoveData& data, bool previewOnly = false, RS_EntityContainer* previewContainer = nullptr);
     bool move(RS_MoveData& data, const std::vector<RS_Entity*>& entitiesList, bool forPreviewOnly, bool keepSelected);
     bool rotate(RS_RotateData& data, bool forPreviewOnly = false, bool keepSelected = false);
@@ -387,10 +392,10 @@ private:
     bool explodeTextIntoLetters(RS_MText* text, std::vector<RS_Entity*>& addList);
     bool explodeTextIntoLetters(RS_Text* text, std::vector<RS_Entity*>& addList);
 protected:
-    RS_EntityContainer* container = nullptr;
-    RS_Graphic* graphic = nullptr;
-    RS_Document* document = nullptr;
-    LC_GraphicViewport* viewport = nullptr;
+    RS_EntityContainer* m_container = nullptr;
+    RS_Graphic* m_graphic = nullptr;
+    RS_Document* m_document = nullptr;
+    LC_GraphicViewport* m_viewport = nullptr;
     bool handleUndo = false;
 
     void trimEnding(const RS_Vector& trimCoord, RS_AtomicEntity* trimmed1, const RS_Vector& is) const;
