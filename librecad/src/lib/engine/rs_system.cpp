@@ -616,6 +616,8 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) const
     dirList.append( QDir::cleanPath( appDir + "/../share/doc/" + appDirName + "/" + subDirectory));
 
     // try various locations for different Linux distributions
+    if (subDirectory.contains("library", Qt::CaseInsensitive))
+        LC_ERR<<__func__<<"(): "<<QDir::cleanPath( appDir + "/../share/" + appDirName + "/" + subDirectory);
     dirList.append( QDir::cleanPath( appDir + "/../share/" + appDirName + "/" + subDirectory));
     dirList.append( QDir::cleanPath( appDir + "/../lib64/" + appDirName + "/" + subDirectory));
     dirList.append( QDir::cleanPath( appDir + "/../lib/" + appDirName + "/" + subDirectory));

@@ -34,7 +34,7 @@
 #include "rs_units.h"
 
 struct RS_ActionLibraryInsert::ActionData {
-    RS_Graphic* prev;
+    std::unique_ptr<RS_Graphic> prev;
     RS_LibraryInsertData data;
 };
 
@@ -59,10 +59,15 @@ void RS_ActionLibraryInsert::init(int status) {
 void RS_ActionLibraryInsert::setFile(const QString& file) {
     m_actionData->data.file = file;
     LC_DocumentsStorage storage;
-    delete m_actionData->prev;
-    m_actionData->prev = new RS_Graphic();
-    if (!storage.loadDocument(m_actionData->prev, file, RS2::FormatUnknown)) {
+    m_actionData->prev = std::make_unique<RS_Graphic>();
+    if (!storage.loadDocument(m_actionData->prev.get(), file, RS2::FormatUnknown)) {
         commandMessage(tr("Cannot open file '%1'").arg(file));
+    } else {
+        double factor = RS_Units::convert(1.0, m_actionData->prev->getUnit(), m_graphic->getUnit());
+        if (std::abs(factor - 1.0) > RS_TOLERANCE) {
+            m_actionData->prev->scale(RS_Vector(), RS_Vector(factor, factor));
+            m_actionData->prev->calculateBorders();
+        }
     }
 }
 
@@ -70,14 +75,16 @@ void RS_ActionLibraryInsert::reset() {
     m_actionData->data.insertionPoint = {};
     m_actionData->data.factor = 1.0;
     m_actionData->data.angle = 0.0;
-    delete m_actionData->prev;
+    m_actionData->prev.reset();
 }
 
 void RS_ActionLibraryInsert::trigger() {
+    if (! m_actionData->prev)
+        return;
     deletePreview();
     RS_Creation creation(m_container, m_viewport);
     auto insertData    = m_actionData->data;
-    insertData.graphic = m_actionData->prev;
+    insertData.graphic = m_actionData->prev.get();
     insertData.angle = toWorldAngleFromUCSBasis(m_actionData->data.angle);
     creation.createLibraryInsert(insertData);
     redrawDrawing();

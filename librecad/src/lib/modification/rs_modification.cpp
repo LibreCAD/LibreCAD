@@ -698,42 +698,111 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
     LC_UndoSection undo(document, viewport, handleUndo);
 
     if (data.asInsert) {
-        // === BLOCK: Bake → angle=0 ===
-        QString bname = data.blockName.isEmpty() ? getUniqueBlockName(graphic) : data.blockName;
-        RS_Block* block = addNewBlock(bname, *graphic);
 
-        auto entities = lc::LC_ContainerTraverser{*src, RS2::ResolveAll}.entities();
-        for (RS_Entity* e : entities) {
-            if (e == nullptr || e->isUndone()) continue;
-            RS_Entity* clone = e->clone();
-            // Bake: center→0 → scale/rot → block@0
-            clone->move(-center);
-            clone->scale(RS_Vector{}, scaleV);
-            clone->rotate(RS_Vector{}, data.angle);
-            block->addByBlockEntity(clone);  // **ByBlock** 👌
-        }
+            if (!src || src->count() == 0) {
+                RS_DEBUG->print(RS_Debug::D_WARNING, "paste(asInsert): empty or null source graphic");
+                return;
+            }
 
-        // Insert (baked, **angle=0**)
-        RS_InsertData idata(bname, data.insertionPoint, {1., 1.}, 0.0, 1, 1, {});
-        RS_Insert* insert = new RS_Insert(container, idata);
-        insert->reparent(container);
-        container->addEntity(insert);
+            // Block name – prefer provided, fallback to auto-generated
+            QString blockName = data.blockName.trimmed();
+            if (blockName.isEmpty()) {
+                blockName = getUniqueBlockName(graphic, QStringLiteral("LibraryInsert"));
+            }
 
-        // Props (inherit)
-        RS_Entity* first = src->firstEntity(RS2::ResolveNone);
-        if (first) {
-            insert->setLayer(first->getLayer());
-            insert->setPen(first->getPen(true));
-        }
-        insert->setSelected(true);
-        insert->update();
+            RS_Block* newBlock = addNewBlock(blockName, *graphic);
+            if (!newBlock) {
+                RS_DEBUG->print(RS_Debug::D_ERROR, "paste(asInsert): cannot create block '%s'",
+                                qPrintable(blockName));
+                return;
+            }
 
-        undo.addUndoable(block);
-        undo.addUndoable(insert);
+            //newBlock->
 
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "paste: block '%s'", bname.toLatin1().data());
+            // Compute centering offset (shift everything to block origin)
+            src->calculateBorders();
+            RS_Vector minP = src->getMin();
+            RS_Vector maxP = src->getMax();
+            RS_Vector centerOffset = (minP + maxP) * 0.5;
 
-    } else {
+            // Resolve effective scale (user factor preferred)
+            RS_Vector scaleXY(data.factor, data.factor);
+            if (scaleXY.magnitude() <= RS_TOLERANCE) {
+                scaleXY = getPasteScale(data, src, *graphic);
+            }
+
+            LC_UndoSection undoSection(document, viewport, handleUndo);
+
+            int clonedCount = 0;
+            auto traverser = lc::LC_ContainerTraverser{*src, RS2::ResolveAll};
+
+            for (RS_Entity* srcEnt : traverser.entities()) {
+                if (!srcEnt || srcEnt->isUndone() || !srcEnt->isVisible()) {
+                    continue;
+                }
+
+                std::unique_ptr<RS_Entity> clone(srcEnt->clone());
+                if (!clone) continue;
+
+                if (clone->rtti() == RS2::EntityInsert) {
+                    // Preserve nested insert completely
+                    auto* orig = static_cast<RS_Insert*>(srcEnt);
+                    auto* nested = static_cast<RS_Insert*>(clone.get());
+
+                    nested->setAngle(orig->getAngle());
+                    nested->setScale(orig->getScale());           // full X/Y support
+                    nested->setLayer(orig->getLayer());
+                    nested->setPen(orig->getPen(true));
+                    nested->setVisible(orig->isVisible());
+                    nested->update();
+                } else {
+                    // Normal entities → only recenter
+                    clone->move(-centerOffset);
+                }
+
+                newBlock->addByBlockEntity(clone.release());
+                ++clonedCount;
+            }
+
+            newBlock->calculateBorders();
+
+            // Top-level insert carries FULL user transform
+            RS_InsertData insertData(
+                blockName,
+                data.insertionPoint,
+                scaleXY,
+                data.angle,
+                1, 1, RS_Vector()       // no array
+                );
+
+            std::unique_ptr<RS_Insert> insertPtr(new RS_Insert(container, insertData));
+            RS_Insert* insert = insertPtr.get();
+
+            // Inherit attributes from source
+            if (RS_Entity* sample = src->firstEntity(RS2::ResolveNone)) {
+                insert->setLayer(sample->getLayer());
+                insert->setPen(sample->getPen(true));
+            }
+
+            insert->reparent(container);
+            insert->setSelected(true);
+            insert->update();
+
+            container->addEntity(insertPtr.release());
+
+            undoSection.addUndoable(newBlock);
+            undoSection.addUndoable(insert);
+
+            RS_DEBUG->print(RS_Debug::D_DEBUGGING,
+                            "paste(asInsert): block '%s' | %d entities | "
+                            "pos=(%.3f,%.3f) | angle=%.1f° | scale=%.3f×%.3f",
+                            qPrintable(blockName), clonedCount,
+                            data.insertionPoint.x, data.insertionPoint.y,
+                            RS_Math::rad2deg(data.angle),
+                            scaleXY.x, scaleXY.y);
+
+            return;
+         } else {
         // === EXPLODED ===
         std::vector<RS_Entity*> newEnts;
         auto entities = lc::LC_ContainerTraverser{*src, RS2::ResolveAll}.entities();
