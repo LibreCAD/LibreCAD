@@ -94,6 +94,7 @@ void RS_System::init(const QString& appName,
                      const QString& appDirName,
                      const QString& arg0)
 {
+    LC_ERR<<__func__<<"(): line "<<__LINE__<<": appDirName="<<appDirName;
     init(appName, appVersion, appDirName, arg0.toLatin1().data());
 }
 

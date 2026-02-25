@@ -57,7 +57,7 @@ unix {
         TARGET = LibreCAD
         VERSION=$$system(echo "$${LC_VERSION}" | sed -e 's/\-.*//g')
         QMAKE_INFO_PLIST = Info.plist.app
-        DEFINES += QC_APPDIR="\"LibreCAD\""
+        DEFINES += QC_APPDIR=\\\"LibreCAD\\\"
         ICON = ../res/images/librecad.icns
         contains(DISABLE_POSTSCRIPT, false) {
             QMAKE_POST_LINK = /bin/sh $$_PRO_FILE_PWD_/../../scripts/postprocess-osx.sh $$OUT_PWD/$${DESTDIR}/$${TARGET}.app/ $$[QT_INSTALL_BINS];
@@ -66,7 +66,7 @@ unix {
     }
     else {
         TARGET = librecad
-        DEFINES += QC_APPDIR="\"librecad\""
+        DEFINES += QC_APPDIR=\\\"librecad\\\"
         RC_FILE = ../res/images/librecad.icns
         contains(DISABLE_POSTSCRIPT, false) {
             QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-unix.sh
@@ -76,9 +76,9 @@ unix {
 }
 win32 {
     TARGET = LibreCAD
+    DEFINES += QC_APPDIR=\\\"librecad\\\"
 
     CONFIG += console
-    DEFINES += QC_APPDIR="\"LibreCAD\""
 
     # add MSYSGIT_DIR = PathToGitBinFolder (without quotes) in custom.pro file, for commit hash in about dialog
     !isEmpty( MSYSGIT_DIR ) {
