@@ -1065,29 +1065,30 @@ RS_Block* RS_Creation::createBlock(const RS_BlockData* data,
      */
 RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data)
 {
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING,
-                    "createLibraryInsert: file='%s' angle=%.1f° factor=%.3f",
-                    data.file.toLatin1().data(), RS_Math::rad2deg(data.angle), data.factor);
+  RS_DEBUG->print(RS_Debug::D_DEBUGGING,
+                  "createLibraryInsert: file='%s' angle=%.1f° factor=%.3f",
+                  data.file.toLatin1().data(), RS_Math::rad2deg(data.angle), data.factor);
 
-    if (!data.graphic || data.graphic->count() == 0) {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "createLibraryInsert: invalid/empty graphic");
-        return nullptr;
-    }
+  if (data.graphic == nullptr || data.graphic->count() == 0) {
+    RS_DEBUG->print(RS_Debug::D_WARNING, "createLibraryInsert: invalid/empty graphic");
+    return nullptr;
+  }
 
-    // Safe unit conversion via clone (don't mutate library cache)
-    RS_Graphic* source = data.graphic;
+  QString blockName = QFileInfo(data.file).completeBaseName();
+  if (blockName.isEmpty())
+    blockName = "LibPart_" + QString::number(QDateTime::currentMSecsSinceEpoch());
 
-    QString blockName = QFileInfo(data.file).completeBaseName();
-    if (blockName.isEmpty()) blockName = "LibPart_" + QString::number(QDateTime::currentMSecsSinceEpoch());
+  RS_PasteData pasteData(data.insertionPoint, data.factor, data.angle, true, blockName);
 
-    RS_PasteData pasteData(data.insertionPoint, data.factor, data.angle, true, blockName);
+  RS_Modification mod(*m_container, m_viewport);
+  RS_Insert* ret = mod.paste(pasteData, data.graphic);  // uses fixed paste() above
 
-    RS_Modification mod(*m_container, m_viewport);
-    mod.paste(pasteData, source);  // uses fixed paste() above
+  if (ret != nullptr)
+    RS_DEBUG->print("%s(): pasted RS_Insert %llu done", __func__, ret->getId());
+  else
+    RS_DEBUG->print("%s(): failed to create an RS_Insert", __func__);
 
-    // Note: with paste() returning RS_Insert* in future, return it here directly
-    // For now: caller can find the newest RS_Insert if needed
-    return nullptr;  // placeholder — improve later to return insert
+  return ret;
 }
 
 bool RS_Creation::setupAndAddEntity(RS_Entity* en) const{

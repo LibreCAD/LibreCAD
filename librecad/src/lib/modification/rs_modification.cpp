@@ -655,18 +655,18 @@ void RS_Modification::copyBlocks(RS_Entity* e) {
  * @param source The source from where to paste. nullptr means the source
  *      is the clipboard.
  */
-void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
+RS_Insert* RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
   RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste:");
 
   if (m_container == nullptr || m_container->isLocked() || !m_container->isVisible()) {
     RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::paste: invalid container");
-    return;
+    return nullptr;
   }
 
   RS_Graphic* src = (source != nullptr) ? source : RS_CLIPBOARD->getGraphic();
   if (src == nullptr) {
     RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::paste: no source");
-    return;
+    return nullptr;
   }
 
   src->calculateBorders();
@@ -676,11 +676,12 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
 
   LC_UndoSection undo(m_document, m_viewport, handleUndo);
 
+  RS_Insert* ret = nullptr;
   if (data.asInsert) {
 
     if (!src || src->count() == 0) {
       RS_DEBUG->print(RS_Debug::D_WARNING, "paste(asInsert): empty or null source graphic");
-      return;
+      return nullptr;
     }
 
            // Block name – prefer provided, fallback to auto-generated
@@ -716,14 +717,14 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
 
            // create insert:
     RS_InsertData d(name, data.insertionPoint, RS_Vector(1.0,1.0), data.angle, 1,1, RS_Vector(0.0,0.0), nullptr, RS2::Update);  // Use data.angle and force update
-    RS_Insert* i = new RS_Insert(m_graphic, d);
-    i->setLayer(m_graphic->getActiveLayer());
+    RS_Insert* ret = new RS_Insert(m_graphic, d);
+    ret->setLayer(m_graphic->getActiveLayer());
 
-    i->update();
-    m_container->addEntity(i);
-    i->reparent(m_container);
+    ret->update();
+    m_container->addEntity(ret);
+    ret->reparent(m_container);
 
-    undo.addUndoable(i);
+    undo.addUndoable(ret);
   } else {
     // copy as entities
 
@@ -757,6 +758,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
   m_graphic->updateInserts();
   m_viewport->notifyChanged();
   RS_DEBUG->print(RS_Debug::D_DEBUGGING, "paste: OK ✅");
+  return ret;
 }
 
 /**
