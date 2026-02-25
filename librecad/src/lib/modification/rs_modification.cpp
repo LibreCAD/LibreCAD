@@ -522,7 +522,7 @@ void RS_Modification::copyEntity(RS_Entity* e, const RS_Vector& ref, const bool 
 
     // Ensure the insert is updated before copying to populate the container with transformed entities
     if (e->rtti() == RS2::EntityInsert) {
-        dynamic_cast<RS_Insert*>(e)->update();
+        static_cast<RS_Insert*>(e)->update();
     }
 
     // add entity to clipboard:
@@ -547,15 +547,12 @@ void RS_Modification::copyEntity(RS_Entity* e, const RS_Vector& ref, const bool 
     if (cut) {
         LC_UndoSection undo(m_document, m_viewport);
         RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: cut ID/flag: %s", getIdFlagString(e).c_str());
+        // delete entity in graphic view:
         e->changeUndoState();
         undo.addUndoable(e);
-
-        e->setSelected(false);
-    } else {
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: delete in view ID/flag: %s", getIdFlagString(e).c_str());
-        // delete entity in graphic view:
-        e->setSelected(false);
     }
+
+    e->setSelected(false);
 
     m_viewport->notifyChanged();
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: OK");
@@ -717,21 +714,18 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
       }
     }
 
-           // Compute centering offset (shift everything to block origin)
-
            // create insert:
     RS_InsertData d(name, data.insertionPoint, RS_Vector(1.0,1.0), data.angle, 1,1, RS_Vector(0.0,0.0), nullptr, RS2::Update);  // Use data.angle and force update
-
     RS_Insert* i = new RS_Insert(m_graphic, d);
     i->setLayer(m_graphic->getActiveLayer());
 
-           //i->setAngle(i->getAngle() + data.angle);  // Extra composition if needed
     i->update();
     m_container->addEntity(i);
     i->reparent(m_container);
 
     undo.addUndoable(i);
   } else {
+    // copy as entities
 
     for(const RS_Entity* e: *source){
       RS_Entity* e2 = e->clone();
