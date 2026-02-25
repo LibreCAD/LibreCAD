@@ -94,7 +94,6 @@ void RS_System::init(const QString& appName,
                      const QString& appDirName,
                      const QString& arg0)
 {
-    LC_ERR<<__func__<<"(): line "<<__LINE__<<": appDirName="<<appDirName;
     init(appName, appVersion, appDirName, arg0.toLatin1().data());
 }
 
@@ -617,8 +616,6 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) const
     dirList.append( QDir::cleanPath( appDir + "/../share/doc/" + appDirName + "/" + subDirectory));
 
     // try various locations for different Linux distributions
-    if (subDirectory.contains("library", Qt::CaseInsensitive))
-        LC_ERR<<__func__<<"(): "<<QDir::cleanPath( appDir + "/../share/" + appDirName + "/" + subDirectory);
     dirList.append( QDir::cleanPath( appDir + "/../share/" + appDirName + "/" + subDirectory));
     dirList.append( QDir::cleanPath( appDir + "/../lib64/" + appDirName + "/" + subDirectory));
     dirList.append( QDir::cleanPath( appDir + "/../lib/" + appDirName + "/" + subDirectory));
@@ -676,14 +673,13 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) const
     QStringList ret;
 
     RS_DEBUG->print("RS_System::getDirectoryList: Paths:");
-    for (QStringList::Iterator it = dirList.begin(); it != dirList.end(); ++it ) {
-        if (QFileInfo( *it).isDir()) {
-            ret += (*it);
-            RS_DEBUG->print(*it);
+    for (const QString& dir: std::as_const(dirList)) {
+        if (QFileInfo{dir}.isDir()) {
+            ret += dir;
         }
     }
 
-    for (auto& dir: ret) {
+    for (const QString& dir: std::as_const(ret)) {
         RS_DEBUG->print("%s\n", QString("%1(): line %2: dir=%3").arg(__func__).arg(__LINE__).arg(dir).toUtf8().constData());
     }
 
