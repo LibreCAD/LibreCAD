@@ -115,7 +115,7 @@ public:
     void addBlockNotification() {blockList.addNotification();}
     void removeBlock(RS_Block* block) {blockList.remove(block);}
     RS_Block* findBlock(const QString& name) {return blockList.find(name);}
-    QString newBlockName() {return blockList.newName();}
+    QString newBlockName(const QString& suggestion) {return blockList.newName(suggestion);}
     void toggleBlock(const QString& name) {blockList.toggle(name);}
     void toggleBlock(RS_Block* block) {blockList.toggle(block);}
     void freezeAllBlocks(bool freeze) {blockList.freezeAll(freeze);}

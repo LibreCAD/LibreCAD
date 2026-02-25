@@ -387,10 +387,10 @@ private:
     bool explodeTextIntoLetters(RS_MText* text, std::vector<RS_Entity*>& addList);
     bool explodeTextIntoLetters(RS_Text* text, std::vector<RS_Entity*>& addList);
 protected:
-    RS_EntityContainer* container = nullptr;
-    RS_Graphic* graphic = nullptr;
-    RS_Document* document = nullptr;
-    LC_GraphicViewport* viewport = nullptr;
+    RS_EntityContainer* m_container = nullptr;
+    RS_Graphic* m_graphic = nullptr;
+    RS_Document* m_document = nullptr;
+    LC_GraphicViewport* m_viewport = nullptr;
     bool handleUndo = false;
 
     void trimEnding(const RS_Vector& trimCoord, RS_AtomicEntity* trimmed1, const RS_Vector& is) const;
