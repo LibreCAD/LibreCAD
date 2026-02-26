@@ -229,6 +229,7 @@ public slots:
     void restoreNamedView5();
     void restoreNamedViewCurrent();
     void restoreNamedView(const QString& viewName);
+    void refreshMenuAliases();
     void invokeLicenseWindow() const;
     void onNewVersionAvailable();
     void checkForNewVersion();
