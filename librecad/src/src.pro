@@ -42,7 +42,7 @@ msvc {
 }
 
 DESTDIR = $${INSTALLDIR}
-DEFINES += QC_APPDIR=\\\"librecad\\\"
+DEFINES += QC_APPDIR=librecad
 
 # Make translations at the end of the process
 unix {

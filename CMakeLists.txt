@@ -920,6 +920,9 @@ licenses/licenses.qrc
 qt5_add_translation(QM_FILES ${TS_FILES})
 add_library(muparser STATIC ${MUPARSER_SRC})
 target_include_directories(muparser PUBLIC libraries/muparser/include)
+set_target_properties(muparser  PROPERTIES
+    POSITION_INDEPENDENT_CODE TRUE
+)
 add_executable(librecad
 ${UI_HEADERS}
 ${SOURCES}

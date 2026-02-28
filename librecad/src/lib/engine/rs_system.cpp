@@ -47,18 +47,19 @@ RS_System* RS_System::instance() {
 /**
  * Initializes the system.
  *
- * @param appName Application name (e.g. "librecad II")
- * @param appVersion Application version (e.g. "1.2.3")
- * @param appDirName Application directory name used for
+ * @param m_appName Application name (e.g. "librecad II")
+ * @param m_appVersion Application version (e.g. "1.2.3")
+ * @param m_appDirName Application directory name used for
  *     subdirectories in /usr, /etc ~/.
  */
 void RS_System::init(const QString& appName,
                      const QString& appVersion,
                      const QString& appDirName,
-                     const char *arg0) {
-    this->appName = appName;
-    this->appVersion = appVersion;
-    this->appDirName = appDirName;
+                     const char *arg0)
+{
+    m_appName = appName;
+    m_appVersion = appVersion;
+    m_appDirName = appDirName;
     if (QFile::decodeName( arg0).contains( "/.mount")) {
         // in AppImage QCoreApplication::applicationDirPath() directs to /lib64 of mounted AppImage
         // thus use argv[0] to extract the correct path to librecad executable
@@ -544,7 +545,7 @@ QStringList RS_System::getFileList(const QString& subDirectory,
     checkInit();
 
     RS_DEBUG->print( "RS_System::getFileList: subdirectory %s ", subDirectory.toLatin1().data());
-    RS_DEBUG->print( "RS_System::getFileList: appDirName %s ", appDirName.toLatin1().data());
+    RS_DEBUG->print( "RS_System::getFileList: appDirName %s ", m_appDirName.toLatin1().data());
     RS_DEBUG->print( "RS_System::getFileList: getCurrentDir %s ", getCurrentDir().toLatin1().data());
 
     QStringList fileList;
@@ -587,7 +588,7 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 #endif // Q_OS_WIN32 or Q_OS_WIN64
 
     // Unix home directory, it's old style but some people might have stuff there.
-    dirList.append( getHomeDir() + "/." + appDirName + "/" + subDirectory);
+    dirList.append( getHomeDir() + "/." + m_appDirName + "/" + subDirectory);
 
     //local (application) directory has priority over other dirs:
     if (!subDirectory.compare( "plugins")) {
@@ -605,16 +606,16 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
     // from package manager the executable is in /usr/bin
     // in AppImage the executable is APPDIR/usr/bin
     // so this should work for package manager and AppImage distribution
-    dirList.append( QDir::cleanPath( appDir + "/../share/doc/" + appDirName + "/" + subDirectory));
+    dirList.append( QDir::cleanPath( appDir + "/../share/doc/" + m_appDirName + "/" + subDirectory));
 
     // try various locations for different Linux distributions
-    dirList.append( QDir::cleanPath( appDir + "/../share/" + appDirName + "/" + subDirectory));
-    dirList.append( QDir::cleanPath( appDir + "/../lib64/" + appDirName + "/" + subDirectory));
-    dirList.append( QDir::cleanPath( appDir + "/../lib/" + appDirName + "/" + subDirectory));
+    dirList.append( QDir::cleanPath( appDir + "/../share/" + m_appDirName + "/" + subDirectory));
+    dirList.append( QDir::cleanPath( appDir + "/../lib64/" + m_appDirName + "/" + subDirectory));
+    dirList.append( QDir::cleanPath( appDir + "/../lib/" + m_appDirName + "/" + subDirectory));
 
     if (QStringLiteral( "plugins") == subDirectory) {
-        dirList.append( QDir::cleanPath( appDir + "/../lib64/" + appDirName));
-        dirList.append( QDir::cleanPath( appDir + "/../lib/" + appDirName));
+        dirList.append( QDir::cleanPath( appDir + "/../lib64/" + m_appDirName));
+        dirList.append( QDir::cleanPath( appDir + "/../lib/" + m_appDirName));
     }
 #endif
     for (auto& dir: dirList) {

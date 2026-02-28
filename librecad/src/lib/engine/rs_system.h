@@ -151,14 +151,14 @@ public:
      * @return The application name.
      */
     QString getAppName() {
-        return appName;
+        return m_appName;
     }
 
     /**
      * @return The application version.
      */
     QString getAppVersion() {
-        return appVersion;
+        return m_appVersion;
     }
 
     QStringList getFileList(const QString& subDirectory,
@@ -190,9 +190,9 @@ private:
 
 protected:
 
-    QString appName;
-    QString appVersion;
-    QString appDirName;
+    QString m_appName;
+    QString m_appVersion;
+    QString m_appDirName;
     QString appDir;
 
     QStringList languageList;   //< List of available translations
