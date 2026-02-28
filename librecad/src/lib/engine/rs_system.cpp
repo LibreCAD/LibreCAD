@@ -637,6 +637,7 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 #endif
     QString executableDirectory = QCoreApplication::applicationDirPath();
     dirList.append( executableDirectory + "/resources/" + subDirectory);
+    dirList.append( QDir::cleanPath( executableDirectory + "/../share/" + m_appDirName + "/" + subDirectory));
 
     // Individual directories:
     RS_SETTINGS->beginGroup( "/Paths");
