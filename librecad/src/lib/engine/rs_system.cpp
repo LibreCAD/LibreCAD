@@ -47,9 +47,9 @@ RS_System* RS_System::instance() {
 /**
  * Initializes the system.
  *
- * @param m_appName Application name (e.g. "librecad II")
- * @param m_appVersion Application version (e.g. "1.2.3")
- * @param m_appDirName Application directory name used for
+ * @param appName Application name (e.g. "librecad II")
+ * @param appVersion Application version (e.g. "1.2.3")
+ * @param appDirName Application directory name used for
  *     subdirectories in /usr, /etc ~/.
  */
 void RS_System::init(const QString& appName,
@@ -580,11 +580,11 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
     QString subDirectory = QDir::fromNativeSeparators( _subDirectory);
 
 #ifdef Q_OS_MAC
-    dirList.append(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
+    dirList.append(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/" + m_appDirName + "/" + subDirectory);
 #endif // Q_OS_MAC
 
 #if (defined(Q_OS_WIN32) || defined(Q_OS_WIN64))
-    dirList.append(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
+    dirList.append(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/" + m_appDirName + "/" + subDirectory);
 #endif // Q_OS_WIN32 or Q_OS_WIN64
 
     // Unix home directory, it's old style but some people might have stuff there.
