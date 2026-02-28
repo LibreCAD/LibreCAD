@@ -626,7 +626,7 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 #ifdef Q_OS_MAC
     // Apple uses the resource directory
     if (!appDir.isEmpty() && appDir!="/") {
-        dirList.append( QDir::cleanPath( appDir + "/../Resources/" + subDirectory));
+        dirList.append( QDir::cleanPath(appDir + "/../Resources/" + subDirectory));
     }
 #endif
 
@@ -637,7 +637,10 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 #endif
     QString executableDirectory = QCoreApplication::applicationDirPath();
     dirList.append( executableDirectory + "/resources/" + subDirectory);
-    dirList.append( QDir::cleanPath( executableDirectory + "/../share/" + m_appDirName + "/" + subDirectory));
+    dirList.append( QDir::cleanPath(executableDirectory + "/../resources/" + m_appDirName + "/" + subDirectory));
+    dirList.append( QDir::cleanPath(executableDirectory + "/../share/" + m_appDirName + "/" + subDirectory));
+    dirList.append( QDir::cleanPath(executableDirectory + "/../lib/" + m_appDirName + "/" + subDirectory));
+    dirList.append( QDir::cleanPath(executableDirectory + "/../lib64/" + m_appDirName + "/" + subDirectory));
 
     // Individual directories:
     RS_SETTINGS->beginGroup( "/Paths");
