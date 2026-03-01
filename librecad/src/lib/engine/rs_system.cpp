@@ -601,6 +601,8 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 
     RS_DEBUG->print("%s\n", QString("%1(): line %2: dir=%3").arg(__func__).arg(__LINE__).arg(appDir).toStdString().c_str());
 
+    const QString executableDirectory = QCoreApplication::applicationDirPath();
+
 #if (defined(Q_OS_WIN32) || defined(Q_OS_WIN64) || defined(Q_OS_UNIX))
     // for AppImage use relative paths from executable
     // from package manager the executable is in /usr/bin
@@ -617,6 +619,7 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
         dirList.append( QDir::cleanPath( appDir + "/../lib64/" + m_appDirName));
         dirList.append( QDir::cleanPath( appDir + "/../lib/" + m_appDirName));
         dirList.append( QDir::cleanPath(executableDirectory + "/../lib/" + m_appDirName);
+        dirList.append( QDir::cleanPath(executableDirectory + "/../lib64/" + m_appDirName);
     }
 #endif
 
@@ -632,7 +635,6 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
     // not for Apple because it uses resources this is more for unix systems
     dirList.append( appDir + "/resources/" + subDirectory);
 #endif
-    QString executableDirectory = QCoreApplication::applicationDirPath();
     dirList.append( executableDirectory + "/resources/" + subDirectory);
     dirList.append( QDir::cleanPath(executableDirectory + "/../resources/" + m_appDirName + "/" + subDirectory));
     dirList.append( QDir::cleanPath(executableDirectory + "/../share/" + m_appDirName + "/" + subDirectory));
