@@ -601,42 +601,49 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 
     RS_DEBUG->print("%s\n", QString("%1(): line %2: dir=%3").arg(__func__).arg(__LINE__).arg(appDir).toStdString().c_str());
 
+    const QString executableDirectory = QCoreApplication::applicationDirPath();
+
 #if (defined(Q_OS_WIN32) || defined(Q_OS_WIN64) || defined(Q_OS_UNIX))
     // for AppImage use relative paths from executable
     // from package manager the executable is in /usr/bin
     // in AppImage the executable is APPDIR/usr/bin
     // so this should work for package manager and AppImage distribution
-    dirList.append( QDir::cleanPath( appDir + "/../share/doc/" + m_appDirName + "/" + subDirectory));
+    dirList.append(QDir::cleanPath( appDir + "/../share/doc/" + m_appDirName + "/" + subDirectory));
 
     // try various locations for different Linux distributions
-    dirList.append( QDir::cleanPath( appDir + "/../share/" + m_appDirName + "/" + subDirectory));
-    dirList.append( QDir::cleanPath( appDir + "/../lib64/" + m_appDirName + "/" + subDirectory));
-    dirList.append( QDir::cleanPath( appDir + "/../lib/" + m_appDirName + "/" + subDirectory));
+    dirList.append(QDir::cleanPath( appDir + "/../share/" + m_appDirName + "/" + subDirectory));
+    dirList.append(QDir::cleanPath( appDir + "/../lib64/" + m_appDirName + "/" + subDirectory));
+    dirList.append(QDir::cleanPath( appDir + "/../lib/" + m_appDirName + "/" + subDirectory));
 
-    if (QStringLiteral( "plugins") == subDirectory) {
-        dirList.append( QDir::cleanPath( appDir + "/../lib64/" + m_appDirName));
-        dirList.append( QDir::cleanPath( appDir + "/../lib/" + m_appDirName));
+    if (QStringLiteral("plugins") == subDirectory) {
+        dirList.append(QDir::cleanPath( appDir + "/../lib64/" + m_appDirName));
+        dirList.append(QDir::cleanPath( appDir + "/../lib/" + m_appDirName));
+        dirList.append(QDir::cleanPath(executableDirectory + "/../lib/" + m_appDirName));
+        dirList.append(QDir::cleanPath(executableDirectory + "/../lib64/" + m_appDirName));
     }
 #endif
-    for (auto& dir: dirList) {
-
-        RS_DEBUG->print("%s\n", QString("%1(): line %2: dir=%3\n").arg(__func__).arg(__LINE__).arg(dir).toStdString().c_str());
-    }
 
 #ifdef Q_OS_MAC
     // Apple uses the resource directory
     if (!appDir.isEmpty() && appDir!="/") {
-        dirList.append( QDir::cleanPath( appDir + "/../Resources/" + subDirectory));
+        dirList.append( QDir::cleanPath(appDir + "/../Resources/" + subDirectory));
     }
 #endif
 
 #ifndef Q_OS_MAC
     // Add support directory if librecad is run-in-place,
     // not for Apple because it uses resources this is more for unix systems
-    dirList.append( appDir + "/resources/" + subDirectory);
+    dirList.append(appDir + "/resources/" + subDirectory);
 #endif
-    QString executableDirectory = QCoreApplication::applicationDirPath();
-    dirList.append( executableDirectory + "/resources/" + subDirectory);
+    dirList.append(executableDirectory + "/resources/" + subDirectory);
+    dirList.append(QDir::cleanPath(executableDirectory + "/../resources/" + m_appDirName + "/" + subDirectory));
+    dirList.append(QDir::cleanPath(executableDirectory + "/../share/" + m_appDirName + "/" + subDirectory));
+    dirList.append(QDir::cleanPath(executableDirectory + "/../lib/" + m_appDirName + "/" + subDirectory));
+    dirList.append(QDir::cleanPath(executableDirectory + "/../lib64/" + m_appDirName + "/" + subDirectory));
+
+    for (const QString& dir: dirList) {
+        RS_DEBUG->print("%s\n", QString("%1(): line %2: dir=%3\n").arg(__func__).arg(__LINE__).arg(dir).toStdString().c_str());
+    }
 
     // Individual directories:
     RS_SETTINGS->beginGroup( "/Paths");
@@ -682,8 +689,6 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
     }
 
     for (auto& dir: ret) {
-
-
         RS_DEBUG->print("%s\n", QString("%1(): line %2: dir=%3").arg(__func__).arg(__LINE__).arg(dir).toStdString().c_str());
     }
 

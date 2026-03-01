@@ -18,35 +18,33 @@
 /*  along with this program.  If not, see <http://www.gnu.org/licenses/>.    */
 /*****************************************************************************/
 
-#include "circletools.h"
-
-#include <QMessageBox>
-#include <QInputDialog>
-#include <QDialog>
-#include <QVBoxLayout>
-#include <QLabel>
-#include <QLineEdit>
-#include <QSizePolicy>
-#include <QPushButton>
-#include <QAbstractButton>
-#include <QSet>
-#include <QStringList>
-#include <QPointF>
-#include <QtAlgorithms>
-#include <QtGlobal>
-#include <QApplication>
-#include <QEvent>
-#include <QKeyEvent>
-#include <QFile>
-#include <QTextStream>
-#include <QDateTime>
-#include <QStandardPaths>
-#include <QDir>
 #include <algorithm>
 #include <cmath>
 
+#include <QAbstractButton>
+#include <QApplication>
+#include <QDateTime>
+#include <QDialog>
+#include <QDir>
+#include <QEvent>
+#include <QFile>
+#include <QInputDialog>
+#include <QKeyEvent>
+#include <QLabel>
+#include <QLineEdit>
+#include <QMessageBox>
+#include <QPointF>
+#include <QPushButton>
+#include <QSet>
+#include <QSizePolicy>
+#include <QStandardPaths>
+#include <QStringList>
+#include <QTextStream>
+#include <QVBoxLayout>
+#include <QtAlgorithms>
+#include <QtGlobal>
 
-
+#include "circletools.h"
 
 QString CircleToolsPlugin::name() const {
     return QStringLiteral("CircleTools");
@@ -59,7 +57,7 @@ PluginCapabilities CircleToolsPlugin::getCapabilities() const {
     const QString action = QStringLiteral("CircleTools - Circles (diameter / layer)");
     cap.menuEntryPoints << PluginMenuLocation(QStringLiteral("Plugins"), action);
     cap.menuEntryPoints << PluginMenuLocation(QStringLiteral("plugins_menu"), action);
-    cap.menuEntryPoints << PluginMenuLocation(QStringLiteral("menuPlugins"), action);
+    //cap.menuEntryPoints << PluginMenuLocation(QStringLiteral("menu_Plugins"), action);
 
     return cap;
 }
