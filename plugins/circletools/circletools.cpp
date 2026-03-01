@@ -57,7 +57,7 @@ PluginCapabilities CircleToolsPlugin::getCapabilities() const {
     const QString action = QStringLiteral("CircleTools - Circles (diameter / layer)");
     cap.menuEntryPoints << PluginMenuLocation(QStringLiteral("Plugins"), action);
     cap.menuEntryPoints << PluginMenuLocation(QStringLiteral("plugins_menu"), action);
-    cap.menuEntryPoints << PluginMenuLocation(QStringLiteral("menu_Plugins"), action);
+    //cap.menuEntryPoints << PluginMenuLocation(QStringLiteral("menu_Plugins"), action);
 
     return cap;
 }

@@ -616,12 +616,9 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
     if (QStringLiteral( "plugins") == subDirectory) {
         dirList.append( QDir::cleanPath( appDir + "/../lib64/" + m_appDirName));
         dirList.append( QDir::cleanPath( appDir + "/../lib/" + m_appDirName));
+        dirList.append( QDir::cleanPath(executableDirectory + "/../lib/" + m_appDirName);
     }
 #endif
-    for (auto& dir: dirList) {
-
-        RS_DEBUG->print("%s\n", QString("%1(): line %2: dir=%3\n").arg(__func__).arg(__LINE__).arg(dir).toStdString().c_str());
-    }
 
 #ifdef Q_OS_MAC
     // Apple uses the resource directory
@@ -641,6 +638,10 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
     dirList.append( QDir::cleanPath(executableDirectory + "/../share/" + m_appDirName + "/" + subDirectory));
     dirList.append( QDir::cleanPath(executableDirectory + "/../lib/" + m_appDirName + "/" + subDirectory));
     dirList.append( QDir::cleanPath(executableDirectory + "/../lib64/" + m_appDirName + "/" + subDirectory));
+
+    for (auto& dir: dirList) {
+        RS_DEBUG->print("%s\n", QString("%1(): line %2: dir=%3\n").arg(__func__).arg(__LINE__).arg(dir).toStdString().c_str());
+    }
 
     // Individual directories:
     RS_SETTINGS->beginGroup( "/Paths");
@@ -686,8 +687,6 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
     }
 
     for (auto& dir: ret) {
-
-
         RS_DEBUG->print("%s\n", QString("%1(): line %2: dir=%3").arg(__func__).arg(__LINE__).arg(dir).toStdString().c_str());
     }
 
