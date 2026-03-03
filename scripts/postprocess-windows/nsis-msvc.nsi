@@ -231,7 +231,7 @@ Section "Associate .dxf files" SecAssoc
   ; Set new association
   WriteRegStr HKCR ".dxf" "" "LibreCAD.DXF"
   WriteRegStr HKCR "LibreCAD.DXF" "" "DXF File"
-  WriteRegStr HKCR "LibreCAD.DXF\DefaultIcon" "" "$INSTDIR\LibreCAD.exe,0"
+  WriteRegStr HKCR "LibreCAD.DXF\DefaultIcon" "" "$INSTDIR\LibreCAD.ico,0"
   WriteRegStr HKCR "LibreCAD.DXF\shell\open\command" "" '"$INSTDIR\LibreCAD.exe" "%1"'
 
   ; Check for errors
