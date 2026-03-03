@@ -155,7 +155,7 @@ echo "Updating version files..."
 
 # Update CMakeLists.txt (example: set(LIBRECAD_VERSION "${NEW_VERSION}"))
 if [[ -f CMakeLists.txt ]]; then
-    run_cmd "sed -i.bak \"s/set(LIBRECAD_VERSION \".*\"/set(LIBRECAD_VERSION \"${NEW_VERSION}\"/\" CMakeLists.txt"
+    run_cmd "sed -i.bak \"s/set(LC_VERSION \".*\"/set(LC_VERSION \"${NEW_VERSION}\"/\" CMakeLists.txt"
     run_cmd "rm -f CMakeLists.txt.bak"
     echo "Updated CMakeLists.txt"
 else
@@ -164,8 +164,8 @@ fi
 
 # Update common.pri (example: DEFINES += LC_VERSION="\\\"2.2.x\\\"")
 if [[ -f common.pri ]]; then
-    run_cmd "sed -i.bak \"s/LC_VERSION=\\\".*\\\"/LC_VERSION=\\\"${NEW_VERSION}\\\"/\" common.pri"
-    run_cmd "rm -f common.pri.bak"
+    run_cmd "sed -i.bak \"s/LC_VERSION=\\\".*\\\"/LC_VERSION=\\\"${NEW_VERSION}\\\"/\" librecad/src/src.pro"
+    run_cmd "rm -f librecad/src/src.pro.bak"
     echo "Updated common.pri"
 else
     echo "Warning: common.pri not found - skipping."
