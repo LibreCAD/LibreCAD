@@ -1,1 +1,15 @@
-  { "Keys": [ ] }
+{
+    "IID": "org.librecad.PluginInterface/1.0",
+    "MetaData": {
+        "Name": "Read PIC File",
+        "Description": "Imports diagrams from PIC graphics language files into the current drawing",
+        "Version": "1.0",
+        "License": "GPL-2.0-or-later",
+        "Category": "Import",
+        "Keys": [
+            "picfile",
+            "readpic",
+            "pic"
+        ]
+    }
+}

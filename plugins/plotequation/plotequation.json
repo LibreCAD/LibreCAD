@@ -1,1 +1,19 @@
-  { "Keys": [ ] }
+{
+    "IID": "org.librecad.PluginInterface/1.0",
+    "MetaData": {
+        "Name": "Plot Equation",
+        "Author": "LibreCAD Team & contributors",
+        "Description": "Plots mathematical equations or parametric functions as polylines, splines or point clouds in the current drawing. Supports Cartesian (y=f(x)) and parametric (x(t), y(t)) forms using muParser expressions.",
+        "Version": "1.0",
+        "Copyright": "(C) LibreCAD developers",
+        "License": "GPL-2.0-or-later",
+        "Category": "Drawing Tools",
+        "Keys": [
+            "plot",
+            "equation",
+            "function",
+            "plotequation",
+            "plotequation"
+        ]
+    }
+}
