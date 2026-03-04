@@ -866,52 +866,71 @@ void RS_Painter::drawEllipseBySplinePointsUI(const RS_Ellipse& ellipse, QPainter
   addSplinePointsToPath(spline.getData().controlPoints, ellipse.isEllipticArc(), path);
 }
 
-void RS_Painter::addSplinePointsToPath(const std::vector<RS_Vector> &uiControlPoints, bool closed, QPainterPath &path) const
+void RS_Painter::addSplinePointsToPath(const std::vector<RS_Vector> &uiControlPoints, bool closed, QPainterPath &qPath) const
 {
     size_t n = uiControlPoints.size();
-    if (n < 2)
+    if(n < 2)
         return;
 
     RS_Vector vStart = uiControlPoints.front();
-    RS_Vector vEnd(false);
+    RS_Vector vControl(false), vEnd(false);
 
-    if (closed) {
-        if (n < 3)
-            return;
-        const RS_Vector &cp0 = uiControlPoints[0];
-        const RS_Vector &cpNMinus1 = uiControlPoints[n - 1];
-        vStart = (cpNMinus1 + cp0) / 2.0;
-        path.moveTo(QPointF(vStart.x, vStart.y));
+#ifdef DEBUG_RENDER_SPLINEPOINTS
+    drawPointEntityUI(vStart.x, vStart.y, 2, 15);
+#endif
 
-        vEnd = (cp0 + uiControlPoints[1]) / 2.0;
-        path.quadTo(QPointF(cp0.x, cp0.y), QPointF(vEnd.x, vEnd.y));
-
-        for (size_t i = 1; i < n - 1; i++) {
-            const RS_Vector &cpi = uiControlPoints[i];
-            vEnd = (cpi + uiControlPoints[i + 1]) / 2.0;
-            path.quadTo(QPointF(cpi.x, cpi.y), QPointF(vEnd.x, vEnd.y));
+    if(closed){
+        if(n < 3){
+            qPath.lineTo(QPointF(uiControlPoints[1].x, uiControlPoints[1].y));
         }
-        path.quadTo(QPointF(cpNMinus1.x, cpNMinus1.y), QPointF(vStart.x, vStart.y));
-    } else {
-        path.lineTo(QPointF(vStart.x, vStart.y));
+        else {
+            const RS_Vector &cp0 = uiControlPoints[0];
+            const RS_Vector &cpNMinus1 = uiControlPoints[n - 1];
+            vStart = (cpNMinus1 + cp0) / 2.0;
+            qPath.moveTo(QPointF(vStart.x, vStart.y));
+
+            vEnd = (cp0 + uiControlPoints[1]) / 2.0;
+            qPath.quadTo(QPointF(cp0.x, cp0.y), QPointF(vEnd.x, vEnd.y));
+
+            for (size_t i = 1; i < n - 1; i++) {
+                const RS_Vector &cpi = uiControlPoints[i];
+                vEnd = (cpi + uiControlPoints[i + 1]) / 2.0;
+                qPath.quadTo(QPointF(cpi.x, cpi.y), QPointF(vEnd.x, vEnd.y));
+            }
+            qPath.quadTo(QPointF(cpNMinus1.x, cpNMinus1.y), QPointF(vStart.x, vStart.y));
+        }
+    }
+    else {
         const RS_Vector &cp1 = uiControlPoints[1];
-        if (n < 3) {
-            path.lineTo(QPointF(cp1.x, cp1.y));
-        } else {
+        if(n < 3) {
+            qPath.lineTo(QPointF(cp1.x, cp1.y));
+        }
+        else {
             const RS_Vector &cp2 = uiControlPoints[2];
             if (n < 4) {
-                path.quadTo(QPointF(cp1.x, cp1.y), QPointF(cp2.x, cp2.y));
-            } else {
+                qPath.quadTo(QPointF(cp1.x, cp1.y), QPointF(cp2.x, cp2.y));
+            }
+            else {
                 vEnd = (cp1 + cp2) / 2.0;
-                path.quadTo(QPointF(cp1.x, cp1.y), QPointF(vEnd.x, vEnd.y));
+                qPath.quadTo(QPointF(cp1.x, cp1.y), QPointF(vEnd.x, vEnd.y));
 
                 for (size_t i = 2; i < n - 2; i++) {
                     const RS_Vector &cpi = uiControlPoints[i];
                     vEnd = (cpi + uiControlPoints[i + 1]) / 2.0;
-                    path.quadTo(QPointF(cpi.x, cpi.y), QPointF(vEnd.x, vEnd.y));
+                    qPath.quadTo(QPointF(cpi.x, cpi.y), QPointF(vEnd.x, vEnd.y));
+#ifdef DEBUG_RENDER_SPLINEPOINTS
+                    drawPointEntityUI(cpi.x, cpi.y, 2, 15);
+                    drawPointEntityUI(vEnd.x, vEnd.y, 4, 15);
+#endif
                 }
 
-                path.quadTo(QPointF(uiControlPoints[n - 2].x, uiControlPoints[n - 2].y), QPointF(uiControlPoints[n - 1].x, uiControlPoints[n - 1].y));
+                qPath.quadTo(QPointF(uiControlPoints[n - 2].x, uiControlPoints[n - 2].y), QPointF(uiControlPoints[n - 1].x, uiControlPoints[n - 1].y));
+#ifdef DEBUG_RENDER_SPLINEPOINTS
+                drawPointEntityUI(cp1.x, cp1.y, 2, 15);
+                drawPointEntityUI(cp2.x, cp2.y, 2, 15);
+                drawPointEntityUI(uiControlPoints[n - 2].x, uiControlPoints[n - 2].y, 2, 15);
+                drawPointEntityUI(uiControlPoints[n - 1].x, uiControlPoints[n - 1   ].y, 2, 15);
+#endif
             }
         }
     }
@@ -1028,73 +1047,12 @@ void RS_Painter::drawSplinePointsWCS(const 	std::vector<RS_Vector> &wcsControlPo
 #define DEBUG_RENDER_SPLINEPOINTS_NO
 
 void RS_Painter::drawSplinePointsUI(const std::vector<RS_Vector> &uiControlPoints, bool closed){
-    size_t n = uiControlPoints.size();
-    if(n < 2)
+    if (uiControlPoints.empty())
         return;
-
-    RS_Vector vStart = uiControlPoints.front();
-    RS_Vector vControl(false), vEnd(false);
-
-    QPainterPath qPath(QPointF(vStart.x, vStart.y));
-#ifdef DEBUG_RENDER_SPLINEPOINTS
-    drawPointEntityUI(vStart.x, vStart.y, 2, 15);
-#endif
-
-    if(closed){
-        if(n < 3){
-            qPath.lineTo(QPointF(uiControlPoints[1].x, uiControlPoints[1].y));
-        }
-        else {
-            const RS_Vector &cp0 = uiControlPoints[0];
-            const RS_Vector &cpNMinus1 = uiControlPoints[n - 1];
-            vStart = (cpNMinus1 + cp0) / 2.0;
-            qPath.moveTo(QPointF(vStart.x, vStart.y));
-
-            vEnd = (cp0 + uiControlPoints[1]) / 2.0;
-            qPath.quadTo(QPointF(cp0.x, cp0.y), QPointF(vEnd.x, vEnd.y));
-
-            for (size_t i = 1; i < n - 1; i++) {
-                const RS_Vector &cpi = uiControlPoints[i];
-                vEnd = (cpi + uiControlPoints[i + 1]) / 2.0;
-                qPath.quadTo(QPointF(cpi.x, cpi.y), QPointF(vEnd.x, vEnd.y));
-            }
-            qPath.quadTo(QPointF(cpNMinus1.x, cpNMinus1.y), QPointF(vStart.x, vStart.y));
-        }
-    }
-    else {
-        const RS_Vector &cp1 = uiControlPoints[1];
-        if(n < 3) {
-            qPath.lineTo(QPointF(cp1.x, cp1.y));
-        }
-        else {
-            const RS_Vector &cp2 = uiControlPoints[2];
-            if (n < 4) {
-                qPath.quadTo(QPointF(cp1.x, cp1.y), QPointF(cp2.x, cp2.y));
-            }
-            else {
-                vEnd = (cp1 + cp2) / 2.0;
-                qPath.quadTo(QPointF(cp1.x, cp1.y), QPointF(vEnd.x, vEnd.y));
-
-                for (size_t i = 2; i < n - 2; i++) {
-                    const RS_Vector &cpi = uiControlPoints[i];
-                    vEnd = (cpi + uiControlPoints[i + 1]) / 2.0;
-                    qPath.quadTo(QPointF(cpi.x, cpi.y), QPointF(vEnd.x, vEnd.y));
-#ifdef DEBUG_RENDER_SPLINEPOINTS
-                    drawPointEntityUI(cpi.x, cpi.y, 2, 15);
-                    drawPointEntityUI(vEnd.x, vEnd.y, 4, 15);
-#endif
-                }
-
-                qPath.quadTo(QPointF(uiControlPoints[n - 2].x, uiControlPoints[n - 2].y), QPointF(uiControlPoints[n - 1].x, uiControlPoints[n - 1].y));
-#ifdef DEBUG_RENDER_SPLINEPOINTS
-                drawPointEntityUI(cp1.x, cp1.y, 2, 15);
-                drawPointEntityUI(cp2.x, cp2.y, 2, 15);
-                drawPointEntityUI(uiControlPoints[n - 2].x, uiControlPoints[n - 2].y, 2, 15);
-                drawPointEntityUI(uiControlPoints[n - 1].x, uiControlPoints[n - 1   ].y, 2, 15);
-#endif
-            }
-        }
-    }
+    QPointF startPos{uiControlPoints.front().x, uiControlPoints.front().y};
+    QPainterPath qPath(startPos);
+    qPath.moveTo(startPos);
+    addSplinePointsToPath(uiControlPoints, closed, qPath);
     QPainter::drawPath(qPath);
 }
 
@@ -1778,12 +1736,14 @@ void RS_Painter::pathForParametricCurve(
 
     const LC_Rect& vpRect = getWcsBoundingRect();
     double scale = toGuiDX(1.);
-    double maxErrorPx = 1.0; // Max approximation error in pixels
+    double maxErrorPx = 0.5; // Max approximation error in pixels
     // Normalized error e_r = maxErrorPx / (approxRadius * scale)
     double e_r = maxErrorPx / (approxRadius * scale);
     // Step angle for quadratic approx: theta ≈ pow(24 * e_r, 0.25) (from error ≈ (theta^4)/24 * r)
     double theta = std::pow(24 * e_r, 0.25);
 
+    RS_Vector startPos = toGui(getPointAtParam(paramPoints.front()));
+    path.moveTo({startPos.x, startPos.y});
     for (size_t i = 1; i < paramPoints.size(); ++i) {
         double d1 = paramPoints[i - 1];
         double d2 = paramPoints[i];
@@ -1794,17 +1754,16 @@ void RS_Painter::pathForParametricCurve(
         RS_Vector midPoint = getPointAtParam(midP);
         bool visible = vpRect.inArea(midPoint, RS_TOLERANCE);
 
-        int numSamples;
-        if (visible) {
-            if (!std::isnormal(theta) || theta < RS_TOLERANCE_ANGLE) theta = M_PI / 18; // Fallback ~10 deg
-            numSamples = static_cast<int>(std::ceil(segmentLength / theta));
-            if (numSamples < 2) numSamples = 2;
-        } else {
+        if (!std::isnormal(theta) || theta < RS_TOLERANCE_ANGLE)
+            theta = M_PI / 12; // Fallback ~15 deg
+        int numSamples = static_cast<int>(std::ceil(segmentLength / theta));
+        numSamples = std::max(numSamples, 2);
+        if (!visible) {
           // TODO: replace this with a more efficient and error-proof algorithm
           // The QPainterPath for an invisible segment should never run into the
           // viewport. If the number of sampling points is small, the path may
           // become partially visible, causing artifacts in rendering.
-          numSamples = 8;
+          numSamples = std::min(numSamples, 9);
         }
 
         std::vector<RS_Vector> samples;

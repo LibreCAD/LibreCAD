@@ -1846,9 +1846,10 @@ void RS_Ellipse::draw(RS_Painter* painter) {
   if (painter == nullptr)
     return;
 
-  QPainterPath path;
-  RS_Vector startUi = painter->toGui(getStartpoint());
-  path.moveTo(startUi.x, startUi.y);
+  RS_Vector startUi = painter->toGui(isArc() ? getStartpoint() : getCenter() + getMajorP());
+  QPointF startPos{startUi.x, startUi.y};
+  QPainterPath path(startPos);
+  path.moveTo(startPos);
   createPainterPath(painter, path);
   painter->drawPath(path);
 }
