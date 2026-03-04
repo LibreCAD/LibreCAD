@@ -236,13 +236,13 @@ bool LC_DlgMenuAssigner::validateShortcut() {
         noteMsg = tr("NOTE: Menu assignment will be ignored. It is reserved for 'Pan'.");
     }
     else  if (leftButton && shift && click && !alt && !ctrl) {
-        noteMsg = tr("NNOTE: Menu assignment will be ignored. It is reserved for 'Select Contour'.");
+        noteMsg = tr("NOTE: Menu assignment will be ignored. It is reserved for 'Select Contour'.");
     }
     else if (rightButton && noKeys && click) {
         noteMsg = tr("NOTE: This combination is reserved for default context menu and may prevent invocation of it!");
     }
     else if (middleButton && noKeys && click) {
-        ui->lblNotes->setText(tr("NOTE: This combination is reserved for Pan! Menu assignment will be ignored"));
+        ui->lblNotes->setText(tr("NOTE: This combination is reserved for Pan! Menu assignment will be ignored."));
     }
     else {
         QString existingMenuName = findMenuForActivator();
