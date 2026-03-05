@@ -595,7 +595,12 @@ const LC_CommandItem g_commandList[] = {
             {{"pj", QObject::tr("pj", "pl join")}},
             RS2::ActionPolylineSegment
         },
-
+        // Dual curve
+        {
+            {{"dual", QObject::tr("dual", "create dual geometries")}},
+            {{"du", QObject::tr("du", "create dual geometries")}},
+            RS2::ActionDrawDual
+        },
         /* SELECT COMMANDS */
         // Select all entities
         {

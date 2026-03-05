@@ -1,1 +1,16 @@
-{ "Keys": [ ] }
+{
+    "IID": "org.librecad.PluginInterface/1.0",
+    "MetaData": {
+        "Name": "Points to CSV",
+        "Description": "Exports selected points (or entity coordinates) to a CSV file for further analysis or external use",
+        "Version": "1.0",
+        "License": "GPL-2.0-or-later",
+        "Category": "Export",
+        "Keys": [
+            "pointstocsv",
+            "csvexport",
+            "exportpoints",
+            "pointscsv"
+        ]
+    }
+}

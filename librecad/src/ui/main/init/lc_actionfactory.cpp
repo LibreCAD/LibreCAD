@@ -274,7 +274,8 @@ void LC_ActionFactory::createDrawCurveActions(QMap<QString, QAction*>& map, QAct
         {"DrawArc2PLength",        RS2::ActionDrawArc2PLength,       tr("&2 Points, Length"),         ":/icons/arc_2p_length.lci"},
         {"DrawArc2PHeight",        RS2::ActionDrawArc2PHeight,       tr("&2 Points, Height"),         ":/icons/arc_2p_height.lci"},
         {"DrawArcParallel",        RS2::ActionDrawArcParallel,       tr("&Concentric"),               ":/icons/arc_concentric.lci"},     // fixme - why this action is not in list?
-        {"DrawArcTangential",      RS2::ActionDrawArcTangential,     tr("Arc &Tangential"),           ":/icons/arc_continuation.lci"}
+        {"DrawArcTangential",      RS2::ActionDrawArcTangential,     tr("Arc &Tangential"),           ":/icons/arc_continuation.lci"},
+        {"DrawDualCurve",       RS2::ActionDrawDual,     tr("&Dual Curve"),           ":/icons/i"}
     });
 }
 

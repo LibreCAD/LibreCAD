@@ -391,6 +391,8 @@ set(SHARED_SOURCES
     librecad/src/actions/drawing/draw/curve/rs_actiondrawarc3p.h
     librecad/src/actions/drawing/draw/curve/rs_actiondrawarctangential.cpp
     librecad/src/actions/drawing/draw/curve/rs_actiondrawarctangential.h
+    librecad/src/actions/drawing/draw/curve/lc_actiondrawdual.cpp
+    librecad/src/actions/drawing/draw/curve/lc_actiondrawdual.h
     librecad/src/actions/drawing/draw/curve/rs_actiondrawlinefree.cpp
     librecad/src/actions/drawing/draw/curve/rs_actiondrawlinefree.h
     librecad/src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp
@@ -1016,6 +1018,8 @@ set(SHARED_SOURCES
     librecad/src/lib/math/lc_linemath.h
     librecad/src/lib/math/lc_quadratic.cpp
     librecad/src/lib/math/lc_quadratic.h
+    librecad/src/lib/math/lc_quadraticutils.cpp
+    librecad/src/lib/math/lc_quadraticutils.h
     librecad/src/lib/math/rs_math.cpp
     librecad/src/lib/math/rs_math.h
     librecad/src/lib/modification/lc_align.cpp
