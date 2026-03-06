@@ -349,7 +349,7 @@ void LC_WidgetFactory::initializeRightDockWidgets()
 #if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
         if (dock != nullptr && dock->dockLocation() == Qt::RightDockWidgetArea) {
 #else
-        if (dock != nullptr && dockWidgetArea(dock) == Qt::RightDockWidgetArea) {
+        if (dock != nullptr && QMainWindow::dockWidgetArea(dock) == Qt::RightDockWidgetArea) {
 #endif
             dock->resize(390, dock->height());
         }
