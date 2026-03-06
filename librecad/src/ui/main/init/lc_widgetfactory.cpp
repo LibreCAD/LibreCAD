@@ -20,11 +20,12 @@
  * ********************************************************************************
  */
 
-#include "lc_widgetfactory.h"
 
+#include <QMainWindow>
 #include <QStatusBar>
 #include <QToolBar>
 
+#include "lc_widgetfactory.h"
 #include "lc_actiongroupmanager.h"
 #include "lc_anglesbasiswidget.h"
 #include "lc_caddockwidget.h"
@@ -305,6 +306,7 @@ void LC_WidgetFactory::updateDockWidgetsTitleBarType(const QC_ApplicationWindow*
 void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
 
     bool verticalTitle = LC_GET_ONE_BOOL("Widgets", "DockTitleBarVertical", false);
+
     QDockWidget *dock_pen_palette = createPenPalletteWidget();
     QDockWidget *dock_layer = createLayerWidget(action_handler);
     QDockWidget *dock_ucss = createUCSListWidget();
@@ -321,16 +323,39 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
     m_appWin->addDockWidget(Qt::RightDockWidgetArea, dock_library);
     m_appWin->tabifyDockWidget(dock_library, dock_block);
     m_appWin->tabifyDockWidget(dock_block, dock_layer);
-    m_appWin->tabifyDockWidget(dock_block, dock_quick_info);
     m_appWin->tabifyDockWidget(dock_layer, dock_pen_palette);
     m_appWin->tabifyDockWidget(dock_pen_palette, dock_layer_tree);
+    m_appWin->tabifyDockWidget(dock_layer_tree, dock_quick_info);
 
     m_appWin->addDockWidget(Qt::RightDockWidgetArea, dock_views);
     m_appWin->tabifyDockWidget(dock_views, dock_ucss);
     m_appWin->addDockWidget(Qt::RightDockWidgetArea, dock_command);
 
     updateDockWidgetsTitleBarType(m_appWin, verticalTitle);
+
+    // Only resize when the app is opened for the first time
+    initializeRightDockWidgets();
 }
+
+void LC_WidgetFactory::initializeRightDockWidgets()
+{
+    LC_GROUP_GUARD("Geometry");
+    if (!LC_GET_STR("WindowGeometry").isEmpty()) {
+        // No-op, if previous Window geometry is found
+        return;
+    }
+
+    for (QDockWidget* dock : m_appWin->findChildren<QDockWidget*>()) {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+        if (dock != nullptr && dock->dockLocation() == Qt::RightDockWidgetArea) {
+#else
+        if (dock != nullptr && m_appWin->dockWidgetArea(dock) == Qt::RightDockWidgetArea) {
+#endif
+            dock->resize(390, dock->height());
+        }
+    }
+}
+
 
 // fixme - sand - remove this method
 void LC_WidgetFactory::makeActionsInvisible(const std::vector<QString> &actionNames) const {

@@ -25,6 +25,7 @@
 #include "qg_dimoptions.h"
 #include "rs_constructionline.h"
 #include "rs_dimaligned.h"
+#include "rs_dimlinear.h"
 #include "rs_polyline.h"
 #include "rs_preview.h"
 
@@ -45,8 +46,8 @@ namespace {
 
 void LC_ActionDrawDimBaseline::reset(){
     RS_ActionDimension::reset();
-    double oldAngle = m_edata->angle; // keep selected angle
-    *m_edata = {{}, {}, oldAngle, 0.0};
+    const double oldAngle = m_edata->angle; // keep selected angle
+    *m_edata = RS_DimLinearData({}, {}, oldAngle, 0.);
 }
 
 void LC_ActionDrawDimBaseline::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
