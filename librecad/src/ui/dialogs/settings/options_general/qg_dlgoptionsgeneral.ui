@@ -4943,6 +4943,16 @@
             </property>
            </widget>
           </item>
+          <item row="10" column="0">
+           <widget class="QCheckBox" name="cbShowCommandInMenu">
+            <property name="toolTip">
+             <string>If enabled, command aliases will be shown next to menu items</string>
+            </property>
+            <property name="text">
+             <string>Show command next to menu items</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>

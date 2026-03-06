@@ -35,6 +35,7 @@
 #include "lc_actiongroupmanager.h"
 #include "lc_infocursorsettingsmanager.h"
 #include "qc_applicationwindow.h"
+#include "rs_commands.h"
 #include "rs_settings.h"
 #include "lc_shortcutinfo.h"
 
@@ -164,6 +165,30 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, bool useT
     createWidgetActionsUncheckable(a_map, agm->getGroupByName("widgets"));
     createEditActionsUncheckable(a_map, agm->getGroupByName("edit"));
     createDrawDimensionsUncheckable(a_map, agm->getGroupByName("dimension"));
+
+    // Ensure every action has data() set with command aliases for menu decoration
+    for (auto it = a_map.begin(); it != a_map.end(); ++it) {
+        QAction* a = it.value();
+        if (!a) continue;
+        QVariant d = a->data();
+        if (d.isValid() && !d.toString().trimmed().isEmpty()) continue;
+
+        QVariant atProp = a->property("RS2:actionType");
+        if (atProp.isValid()) {
+            RS2::ActionType at = static_cast<RS2::ActionType>(atProp.toInt());
+            if (at != RS2::ActionNone) {
+                QStringList aliases = RS_COMMANDS->aliasesForAction(at);
+                if (!aliases.isEmpty()) {
+                    a->setData(aliases.join(", "));
+                    continue;
+                }
+            }
+        }
+
+        // Fallback: use objectName lowercased as the data token
+        QString on = a->objectName();
+        if (!on.isEmpty()) a->setData(on.toLower());
+    }
 
     setupCreatedActions(a_map);
     setDefaultShortcuts(a_map, agm);
