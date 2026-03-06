@@ -1557,7 +1557,6 @@ target_compile_definitions(librecad_lib PRIVATE
 )
 target_include_directories(librecad_lib PRIVATE
     ${SHARED_INCLUDES}
-    ${MUPARSER_SOURCES}
 )
 
 target_link_libraries(librecad_lib PRIVATE

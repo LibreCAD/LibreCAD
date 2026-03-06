@@ -202,7 +202,7 @@ std::tuple<double, double, RS_Vector> computeEllipseSemiAxesAndMajorP(
  * @param q The LC_Quadratic object (assumed to be linear)
  * @return RS_Line* with a long visible segment, or nullptr
  */
-RS_Entity* LC_QuadraticUtils::createLineFromLinearCoefficients(const LC_Quadratic& q)
+RS_Entity* createLineFromLinearCoefficients(const LC_Quadratic& q)
 {
   double D = q.getD();
   double E = q.getE();
@@ -429,7 +429,7 @@ RS_Entity* createParabola(const LC_Quadratic& q,
  * @return RS_EntityContainer* containing two LC_Hyperbola (caller takes ownership)
  *         or nullptr if invalid
  */
-RS_Entity* LC_QuadraticUtils::createHyperbola(
+RS_Entity* createHyperbola(
     const LC_Quadratic& q,
     const RS_Vector& center,
     double valueAtCenter,
