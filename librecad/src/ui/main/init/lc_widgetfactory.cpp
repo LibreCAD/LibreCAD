@@ -339,7 +339,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
 
 void LC_WidgetFactory::initializeRightDockWidgets()
 {
-    LC_GROUP("Geometry");
+    LC_GROUP_GUARD("Geometry");
     if (!LC_GET_STR("WindowGeometry").isEmpty()) {
         // No-op, if previous Window geometry is found
         return;
@@ -347,12 +347,11 @@ void LC_WidgetFactory::initializeRightDockWidgets()
 
     for (QDockWidget* dock : m_appWin->findChildren<QDockWidget*>()) {
 #if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
-        if (dock && dock->dockLocation() == Qt::RightDockWidgetArea) {
-#elif
-        if (dock && dockWidgetArea(dock) == Qt::RightDockWidgetArea) {
+        if (dock != nullptr && dock->dockLocation() == Qt::RightDockWidgetArea) {
+#else
+        if (dock != nullptr && dockWidgetArea(dock) == Qt::RightDockWidgetArea) {
 #endif
             dock->resize(390, dock->height());
-            LC_ERR<<__LINE__<<": "<<__func__;
         }
     }
 }
