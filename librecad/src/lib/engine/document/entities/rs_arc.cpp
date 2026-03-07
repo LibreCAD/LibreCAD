@@ -90,8 +90,6 @@ void RS_Arc::setAngle2(double a2) {
 void RS_Arc::setReversed(bool r) {
     if (data.reversed != r) {
         data.reversed = r;
-        std::swap(data.angle1, data.angle2);
-        std::swap(m_startPoint, m_endPoint);
     }
 }
 
@@ -439,7 +437,7 @@ RS_Vector RS_Arc::getNearestPointOnEntity(const RS_Vector& coord,
     }
 
     double angle = (coord-data.center).angle();
-    if ( ! onEntity || RS_Math::isAngleBetween(angle,data.angle1, data.angle2, isReversed())) {
+    if ( ! onEntity || RS_Math::isAngleBetween(angle, data.angle1, data.angle2, isReversed())) {
         vec.setPolar(data.radius, angle);
         vec+=data.center;
     } else {
@@ -916,6 +914,7 @@ void RS_Arc::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     setAngle1(RS_Math::correctAngle(a - getAngle1()));
     setAngle2(RS_Math::correctAngle(a - getAngle2()));
     correctAngles(); // make sure angleLength is no more than 2*M_PI
+    updatePaintingInfo();
     calculateBorders();
 }
 
@@ -977,11 +976,11 @@ void RS_Arc::stretch(const RS_Vector& firstCorner,
 }
 
 void RS_Arc::createPainterPath(RS_Painter* painter, QPainterPath& path) const {
-  double baseAngle = data.angle1;
-  double fullAngleLength = isReversed() ? - getAngleLength() : getAngleLength();
-  auto getParamFunc = [this](const RS_Vector& vp) { return getArcAngle(vp); };
-  auto getPointFunc = [this](double param) { return getPointAtParameter(param); };
-  painter->pathForEntity(path, this, baseAngle, fullAngleLength, getParamFunc, getPointFunc, getRadius());
+    double baseAngle = getAngle1();
+    double fullAngleLength = isReversed() ? - getAngleLength() : getAngleLength();
+    auto getParamFunc = [this](const RS_Vector& vp) { return getArcAngle(vp); };
+    auto getPointFunc = [this](double param) { return getPointAtParameter(param); };
+    painter->pathForEntity(path, this, baseAngle, fullAngleLength, getParamFunc, getPointFunc, getRadius());
 }
 
 void RS_Arc::draw(RS_Painter* painter) {

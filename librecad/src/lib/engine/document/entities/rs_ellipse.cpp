@@ -1856,12 +1856,12 @@ void RS_Ellipse::draw(RS_Painter* painter) {
 
 void RS_Ellipse::createPainterPath(RS_Painter* painter, QPainterPath& path) const {
     double baseAngle = getAngle1();
-  double fullAngleLength = data.isArc ? getAngleLength() : 2 * M_PI;
-    if (isReversed())
-      fullAngleLength = - fullAngleLength;
-  auto getParamFunc = [this](const RS_Vector& vp) { return getEllipseAngle(vp); };
-  auto getPointFunc = [this](double param) { return getEllipsePoint(param); };
-  painter->pathForEntity(path, this, baseAngle, fullAngleLength, getParamFunc, getPointFunc, getMajorRadius());
+    double fullAngleLength = isArc() ? getAngleLength() : 2 * M_PI;
+    if (isArc() && isReversed())
+        fullAngleLength = - fullAngleLength;
+    auto getParamFunc = [this](const RS_Vector& vp) { return getEllipseAngle(vp); };
+    auto getPointFunc = [this](double param) { return getEllipsePoint(param); };
+    painter->pathForEntity(path, this, baseAngle, fullAngleLength, getParamFunc, getPointFunc, getMajorRadius());
 }
 
 /**
