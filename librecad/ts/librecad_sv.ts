@@ -1180,7 +1180,7 @@ avståndet mellan punkterna=%2 är större än diametern=%3</translation>
     </message>
     <message>
         <source>File</source>
-        <translation>Fil</translation>
+        <translation>Arkiv</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -6958,7 +6958,7 @@ Vill du ersätta den?</translation>
     </message>
     <message>
         <source>File</source>
-        <translation>Fil</translation>
+        <translation>Arkiv</translation>
     </message>
     <message>
         <source>Dimension</source>
