@@ -46,6 +46,7 @@ strip unix/resources/plugins/*.so
 cp unix/librecad appdir/usr/bin/
 cp unix/resources/plugins/*.so appdir/usr/lib/librecad/
 cp -r unix/resources/qm/* appdir/usr/share/librecad/qm/
+cp unix/*.qm appdir/usr/share/librecad/qm/
 
 cp desktop/librecad.desktop appdir/usr/share/applications/
 cp desktop/org.librecad.librecad.appdata.xml appdir/usr/share/metainfo/
