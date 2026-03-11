@@ -53,7 +53,8 @@ EOF
 # <<< END >>>
 
 cp unix/resources/plugins/*.so appdir/usr/lib/librecad/
-cp -r unix/resources/qm appdir/usr/share/librecad/
+mkdir appdir/usr/share/librecad/qm
+cp unix/resources/qm/* appdir/usr/share/librecad/qm/
 
 cp desktop/librecad.desktop appdir/usr/share/applications/
 cp desktop/org.librecad.librecad.appdata.xml appdir/usr/share/metainfo/
