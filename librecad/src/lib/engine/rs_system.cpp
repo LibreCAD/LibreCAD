@@ -446,9 +446,10 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
 
         // load LibreCAD translations
         if (nullptr == tLibreCAD) {
-            if (t->load( langFileLower, *it) == true
+            if (t->load( langFileLower, *it)
                     || (  ! langUpper.isEmpty()
-                          && t->load( langFileUpper, *it) == true)) {
+                          && t->load( langFileUpper, *it))) {
+                LC_ERR<<"loaded language: "<<*it;
                 tLibreCAD = t;
                 qApp->installTranslator( tLibreCAD);
                 t = new QTranslator(0);
