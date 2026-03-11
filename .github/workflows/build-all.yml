@@ -32,7 +32,7 @@ jobs:
         run: |
           export CC=g++
           export ANALYZE="scan-build -o out --use-cc=g++ --use-analyzer=/usr/bin/clang++ "
-          ${ANALYZE}qmake -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
+          ${ANALYZE}qmake -r librecad.pro "CONFIG+=debug_and_release lrelease" PREFIX=/usr
           ${ANALYZE}make release -j$(nproc)
 
       - name: Create report repository
@@ -92,7 +92,7 @@ jobs:
 
       - name: Build
         run: |
-          /usr/lib/qt5/bin/qmake -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
+          /usr/lib/qt5/bin/qmake -r librecad.pro "CONFIG+=debug_and_release lrelease" PREFIX=/usr
           make release -j$(nproc)
 
       - name: Create AppImage
