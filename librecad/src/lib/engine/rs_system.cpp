@@ -392,100 +392,90 @@ void RS_System::initAllLanguagesList() {
  *
  *fixme, need to support command language
  */
-void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/) {
-    static QTranslator* tQt = nullptr;
-    static QTranslator* tLibreCAD = nullptr;
-    static QTranslator* tPlugIns = nullptr;
+#include "rs_debug.h"
 
-    //make translation filenames case insensitive, #276
-    QString langLower("");
-    QString langUpper("");
-    int i0 = lang.indexOf('_');
-    if (i0 >= 2 && lang.size() - i0 >= 2) {
-        //contains region code
-        langLower = lang.left( i0) + '_' + lang.mid( i0 + 1).toLower();
-        langUpper = lang.left( i0) + '_' + lang.mid( i0 + 1).toUpper();
-    }
-    else {
-        langLower = lang;
-        langUpper.clear();
-    }
-    // search in various directories for translations
-    QStringList lst = getDirectoryList( "qm");
+/**
+ * Loads .qm translation files matching the requested language (case-insensitive).
+ */
+void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
+{
+    if (lang.trimmed().isEmpty())
+        return;
 
-    RS_SETTINGS->beginGroup( "/Paths");
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-    lst += (RS_SETTINGS->readEntry( "/Translations", "")).split( ";", Qt::SkipEmptyParts);
-#else
-    lst += (RS_SETTINGS->readEntry( "/Translations", "")).split( ";", QString::SkipEmptyParts);
-#endif
+    static QTranslator* tr[3] = {};  // 0 = LibreCAD, 1 = plugins, 2 = qt
+
+    for(QTranslator*& translator: tr) {
+        if (translator) {
+            qApp->removeTranslator(translator);
+            delete translator;
+            translator = nullptr;
+        }
+    }
+
+    QString langReq = lang.trimmed().toLower();
+    QString langAlt;
+    if (int i = langReq.indexOf('_'); i >= 2) {
+        langAlt = langReq.left(i) + "_" + langReq.mid(i+1).toUpper();
+    }
+
+    QStringList paths = getDirectoryList("qm");
+    RS_SETTINGS->beginGroup("/Paths");
+    paths += RS_SETTINGS->readEntry("/Translations", "").split(';', Qt::SkipEmptyParts);
     RS_SETTINGS->endGroup();
+    paths.removeDuplicates();
 
-    if( tLibreCAD != nullptr) {
-        qApp->removeTranslator( tLibreCAD);
-        delete tLibreCAD;
-    }
-    if( tPlugIns != nullptr) {
-        qApp->removeTranslator( tPlugIns);
-        delete tPlugIns;
-    }
-    if( tQt != nullptr) {
-        qApp->removeTranslator( tQt);
-        delete tQt;
-    }
-    QString langFileLower = "librecad_" + langLower + ".qm",
-            langFileUpper = "librecad_" + langUpper + ".qm",
-            langPlugInsLower = "plugins_" + langLower + ".qm",
-            langPlugInsUpper = "plugins_" + langUpper + ".qm",
-            langQtLower = "qt_" + langLower + ".qm",
-            langQtUpper = "qt_" + langUpper + ".qm";
-    QTranslator* t = new QTranslator(0);
-    for (QStringList::Iterator it = lst.begin();
-         it != lst.end();
-         ++it) {
+    bool loadedAny = false;
 
-        // load LibreCAD translations
-        if (nullptr == tLibreCAD) {
-            if (t->load( langFileLower, *it)
-                    || (  ! langUpper.isEmpty()
-                          && t->load( langFileUpper, *it))) {
-                LC_ERR<<"loaded language: "<<*it;
-                tLibreCAD = t;
-                qApp->installTranslator( tLibreCAD);
-                t = new QTranslator(0);
+    for (const QString& path : std::as_const(paths)) {
+        if (path.isEmpty())
+            continue;
+        QDir dir(path);
+        if (!dir.exists())
+            continue;
+
+        for (const QString& file : dir.entryList({"*.qm"}, QDir::Files)) {
+            QString name = file.toLower();
+
+            int cat = -1;
+            QString langPart;
+            if      (name.startsWith("librecad_")) {
+                cat = 0; langPart = name.mid(9);
+            } else if (name.startsWith("plugins_")) {
+                cat = 1; langPart = name.mid(8);
+            } else if (name.startsWith("qt_")) {
+                cat = 2; langPart = name.mid(3);
+            } else continue;
+
+            if (langPart.endsWith(".qm"))
+                langPart.chop(3);
+
+            if (tr[cat])
+                continue;                           // already loaded this category
+            if (langPart != langReq && langPart != langAlt)
+                continue;
+
+            QTranslator* t = new QTranslator(qApp);
+            QString full = dir.absoluteFilePath(file);
+
+            if (t->load(full)) {
+                LC_ERR << "Loaded: " << file << " from " << path << " (for " << lang << ")";
+                qApp->installTranslator(t);
+                tr[cat] = t;
+                loadedAny = true;
+            } else {
+                LC_ERR << "Failed to load: " << file << " from " << path;
+                delete t;
             }
-        }
 
-        // load PlugIns translations
-        if (nullptr == tPlugIns) {
-            if (t->load( langPlugInsLower, *it) == true
-                    || (  ! langUpper.isEmpty()
-                          && t->load( langPlugInsUpper, *it) == true)) {
-                tPlugIns = t;
-                qApp->installTranslator( tPlugIns);
-                t = new QTranslator(0);
-            }
-        }
-
-        // load Qt standard dialog translations
-        if (nullptr == tQt) {
-            if (t->load( langQtLower, *it) == true
-                    || (  ! langUpper.isEmpty()
-                          && t->load( langQtUpper, *it) == true)) {
-                tQt = t;
-                qApp->installTranslator( tQt);
-                t = new QTranslator(0);
-            }
-        }
-        if (nullptr != tLibreCAD && nullptr != tPlugIns && nullptr != tQt) {
-            break;
+            if (tr[0] && tr[1] && tr[2])
+                return;
         }
     }
-    if (nullptr != t) {
-        delete t;
+
+    if (!loadedAny) {
+        LC_ERR << "No matching .qm files for language: " << lang;
     }
 }
-
 
 /**
  * Checks if the system has been initialized and prints a warning
