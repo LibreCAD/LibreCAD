@@ -12,7 +12,7 @@
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -23,11 +23,11 @@
     </message>
     <message>
         <source>GroupBox</source>
-        <translation type="unfinished" />
+        <translation>GroupBox</translation>
     </message>
     <message>
         <source>Set</source>
-        <translation type="unfinished" />
+        <translation>Ustaw</translation>
     </message>
 </context>
 <context>
@@ -48,42 +48,42 @@
     <name>DlgParabola</name>
     <message>
         <source>Parabola</source>
-        <translation type="unfinished" />
+        <translation>Parabola</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Warstwa:</translation>
+        <translation>Warstwa:</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished">Geometria</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <source>Points on Spline</source>
-        <translation type="unfinished" />
+        <translation>Punkty na Spline</translation>
     </message>
     <message>
         <source>Control Points</source>
-        <translation type="unfinished">Punkt kontrolny</translation>
+        <translation>Punkty kontroli</translation>
     </message>
 </context>
 <context>
     <name>DlgSplinePoints</name>
     <message>
         <source>SplinePoints</source>
-        <translation type="unfinished" />
+        <translation>SplinePoints</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Warstwa:</translation>
+        <translation>Warstwa:</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished">Geometria</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <source>Closed</source>
-        <translation type="unfinished">Zamknięta</translation>
+        <translation>Zamknięte</translation>
     </message>
     <message>
         <source>Spline Points</source>
@@ -95,22 +95,22 @@
     </message>
     <message>
         <source>Points on Spline</source>
-        <translation type="unfinished" />
+        <translation>Punkty na Spline</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDimArc</name>
     <message>
         <source>Select arc entity</source>
-        <translation type="unfinished" />
+        <translation>Wybierz jednostkę łuku</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Anuluj</translation>
+        <translation>Anuluj</translation>
     </message>
     <message>
         <source>Specify dimension arc location</source>
-        <translation type="unfinished" />
+        <translation>Określić położenie łuku wymiarowego</translation>
     </message>
 </context>
 <context>
@@ -118,31 +118,32 @@
     <message>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation type="unfinished" />
+        <translation>promień =% 1 jest zbyt mały dla wybranych punktów
+odległość między punktami =% 2 jest większa niż średnica =% 3</translation>
     </message>
     <message>
         <source>Select from two possible circle centers</source>
-        <translation type="unfinished" />
+        <translation>Wybierz z dwóch możliwych centrów okręgu</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="unfinished">Wskaż pierwszy punkt</translation>
+        <translation>Określić pierwszy punkt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Anuluj</translation>
+        <translation>Anuluj</translation>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished">Wskaż drugi punkt</translation>
+        <translation>Określić drugi punkt</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Wstecz</translation>
+        <translation>Tył</translation>
     </message>
     <message>
         <source>Select circle center</source>
-        <translation type="unfinished" />
+        <translation>Wybierz środek okręgu</translation>
     </message>
 </context>
 <context>
@@ -150,124 +151,126 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Specify distance (%1)
 or [%2]</source>
-        <translation type="unfinished" />
+        <translation>Określ odległość (% 1)
+lub [% 2]</translation>
     </message>
     <message>
         <source>X</source>
-        <translation type="unfinished">X</translation>
+        <translation>X</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Wstecz</translation>
+        <translation>Tył</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation type="unfinished">Y</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
-        <translation type="unfinished" />
+        <translation>Określ odległość (kąt% 1 deg)
+lub [% 2]</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawLinePolygonCenTan</name>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished">Wskaż środek</translation>
+        <translation>Określ środek</translation>
     </message>
     <message>
         <source>Specify a tangent</source>
-        <translation type="unfinished" />
+        <translation>Określić tangens</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation type="unfinished">Wprowadź liczbę:</translation>
+        <translation>Wprowadź numer:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished">Nieprawidłowa liczba. Spróbuj 1..9999</translation>
+        <translation>Niepoprawny numer. Spróbuj 1.. 9999</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Nieprawidłowe wyrażenie</translation>
+        <translation>Niepoprawne wyrażenie</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawLineSnake</name>
     <message>
         <source>Specify direction (x or y) or [%1]</source>
-        <translation type="unfinished" />
+        <translation>Określić kierunek (x lub y) lub [% 1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Wstecz</translation>
+        <translation>Tył</translation>
     </message>
     <message>
         <source>Specify distance (%1) or [%2]</source>
-        <translation type="unfinished" />
+        <translation>Określić odległość (% 1) lub [% 2]</translation>
     </message>
     <message>
         <source>X</source>
-        <translation type="unfinished">X</translation>
+        <translation>X</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation type="unfinished">Y</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <source>Specify distance (%1 deg) or [%2]</source>
-        <translation type="unfinished" />
+        <translation>Określić odległość (% 1 deg) lub [% 2]</translation>
     </message>
     <message>
         <source>Specify angle or [%2]</source>
-        <translation type="unfinished" />
+        <translation>Określić kąt lub [% 2]</translation>
     </message>
     <message>
         <source>Specify point or [%1]</source>
-        <translation type="unfinished" />
+        <translation>Określić punkt lub [% 1]</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawParabola4Points</name>
     <message>
         <source>Specify the first point on parabola</source>
-        <translation type="unfinished" />
+        <translation>Określić pierwszy punkt dotyczący paraboli</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Anuluj</translation>
+        <translation>Anuluj</translation>
     </message>
     <message>
         <source>Specify the second point on parabola</source>
-        <translation type="unfinished" />
+        <translation>Określić drugi punkt dotyczący paraboli</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Wstecz</translation>
+        <translation>Tył</translation>
     </message>
     <message>
         <source>Specify the third point on parabola</source>
-        <translation type="unfinished" />
+        <translation>Określić trzeci punkt na paraboli</translation>
     </message>
     <message>
         <source>Specify the fourth point on parabola</source>
-        <translation type="unfinished" />
+        <translation>Podaj czwarty punkt dotyczący paraboli</translation>
     </message>
     <message>
         <source>Specify the Axis on parabola</source>
-        <translation type="unfinished" />
+        <translation>Określ oś na paraboli</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawParabolaFD</name>
     <message>
         <source>Specify the focus of parabola</source>
-        <translation type="unfinished" />
+        <translation>Określić ostrość paraboli</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Anuluj</translation>
+        <translation>Anuluj</translation>
     </message>
     <message>
         <source>Specify the directrix of parabola</source>
@@ -681,203 +684,203 @@ or [%2]</source>
     </message>
     <message>
         <source>&amp;Explode Text into Letters</source>
-        <translation type="unfinished">&amp;Rozbij tekst na litery</translation>
+        <translation>&amp; Eksploduj tekst do liter</translation>
     </message>
     <message>
         <source>Point inside contour</source>
-        <translation type="unfinished">Punkt wewnątrz konturu</translation>
+        <translation>Punkt wewnątrz konturu</translation>
     </message>
     <message>
         <source>&amp;Distance Point to Point</source>
-        <translation type="unfinished">&amp;Odległość punkt - punkt</translation>
+        <translation>&amp; Punkt odległości do punktu</translation>
     </message>
     <message>
         <source>&amp;Distance Entity to Point</source>
-        <translation type="unfinished">&amp;Odległość obiektu do punktu</translation>
+        <translation>&amp; Podmiot na odległość do punktu</translation>
     </message>
     <message>
         <source>An&amp;gle between two lines</source>
-        <translation type="unfinished" />
+        <translation>An &amp; gle między dwoma wierszami</translation>
     </message>
     <message>
         <source>&amp;Total length of selected entities</source>
-        <translation type="unfinished">&amp;Całkowita długość zaznaczonych obiektów</translation>
+        <translation>&amp; Całkowita długość wybranych podmiotów</translation>
     </message>
     <message>
         <source>Polygonal &amp;Area</source>
-        <translation type="unfinished" />
+        <translation>Poligonal &amp; Area</translation>
     </message>
     <message>
         <source>&amp;Selection pointer</source>
-        <translation type="unfinished">Wskaźnik &amp;wyboru</translation>
+        <translation>Wskaźnik wyboru</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation type="unfinished">&amp;Cofnij</translation>
+        <translation>&amp; Cofnij</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation type="unfinished">P&amp;onów</translation>
+        <translation>&amp; Przywróć</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished">Wy&amp;tnij</translation>
+        <translation>Cu &amp; t</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished">&amp;Kopiuj</translation>
+        <translation>&amp; Kopiuj</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished">&amp;Wklej</translation>
+        <translation>&amp; Wklej</translation>
     </message>
     <message>
         <source>move to bottom</source>
-        <translation type="unfinished" />
+        <translation>przejść do dołu</translation>
     </message>
     <message>
         <source>lower after entity</source>
-        <translation type="unfinished" />
+        <translation>niższa po stronie jednostki</translation>
     </message>
     <message>
         <source>raise over entity</source>
-        <translation type="unfinished" />
+        <translation>pozyskanie nad jednostką</translation>
     </message>
     <message>
         <source>move to top</source>
-        <translation type="unfinished" />
+        <translation>przejść do góry</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">&amp;Dodaj warstwę</translation>
+        <translation>&amp; Dodaj warstwę</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">&amp;Usuń warstwę</translation>
+        <translation>&amp; Usuń warstwę</translation>
     </message>
     <message>
         <source>&amp;Edit Layer</source>
-        <translation type="unfinished">&amp;Edytuj warstwę</translation>
+        <translation>&amp; Edytuj warstwę</translation>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation type="unfinished" />
+        <translation>Włączenie / wyłączenie Loc warstwy &amp; k</translation>
     </message>
     <message>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation type="unfinished" />
+        <translation>&amp; Włączenie / wyłączenie widoczności warstwy</translation>
     </message>
     <message>
         <source>Toggle Layer &amp;Print</source>
-        <translation type="unfinished" />
+        <translation>Włączenie / wyłączenie drukowania warstwy</translation>
     </message>
     <message>
         <source>Toggle &amp;Construction Layer</source>
-        <translation type="unfinished" />
+        <translation>Włączenie / wyłączenie warstwy konstrukcyjnej</translation>
     </message>
     <message>
         <source>&amp;Add Block</source>
-        <translation type="unfinished">&amp;Dodaj blok</translation>
+        <translation>&amp; Dodaj blok</translation>
     </message>
     <message>
         <source>&amp;Remove Block</source>
-        <translation type="unfinished">&amp;Usuń blok</translation>
+        <translation>&amp; Usuń blok</translation>
     </message>
     <message>
         <source>&amp;Rename Block</source>
-        <translation type="unfinished">&amp;Zmień nazwę bloku</translation>
+        <translation>&amp; Zmień nazwę bloku</translation>
     </message>
     <message>
         <source>&amp;Edit Block</source>
-        <translation type="unfinished">&amp;Edytuj blok</translation>
+        <translation>&amp; Edytuj blok</translation>
     </message>
     <message>
         <source>&amp;Save Block</source>
-        <translation type="unfinished" />
+        <translation>&amp; Zapisz blok</translation>
     </message>
     <message>
         <source>&amp;Insert Block</source>
-        <translation type="unfinished">&amp;Wstaw blok</translation>
+        <translation>&amp; Wstaw blok</translation>
     </message>
     <message>
         <source>Toggle Block &amp;Visibility</source>
-        <translation type="unfinished" />
+        <translation>Włączenie / wyłączenie blokowania i widoczności</translation>
     </message>
     <message>
         <source>&amp;Create Block</source>
-        <translation type="unfinished">&amp;Stwórz blok</translation>
+        <translation>&amp; Utwórz blok</translation>
     </message>
     <message>
         <source>Ex&amp;plode</source>
-        <translation type="unfinished" />
+        <translation>Ex &amp; plode</translation>
     </message>
     <message>
         <source>&amp;Application Preferences</source>
-        <translation type="unfinished">Preferencje &amp;aplikacji</translation>
+        <translation>&amp; Ustawienia aplikacji</translation>
     </message>
     <message>
         <source>Current &amp;Drawing Preferences</source>
-        <translation type="unfinished">&amp;Preferencje bieżącego rysunku</translation>
+        <translation>Bieżące &amp; preferencje rysowania</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
-        <translation type="unfinished">&amp;Usuń zaznaczone</translation>
+        <translation>&amp; Usuń zaznaczone</translation>
     </message>
     <message>
         <source>Select &amp;All</source>
-        <translation type="unfinished">Zaznacz &amp;wszystko</translation>
+        <translation>Wybierz &amp; wszystko</translation>
     </message>
     <message>
         <source>Deselect &amp;all</source>
-        <translation type="unfinished">Odznacz &amp;wszystko</translation>
+        <translation>Usuń &amp; wszystkie</translation>
     </message>
     <message>
         <source>Ctrl+K</source>
-        <translation type="unfinished">Ctrl+K</translation>
+        <translation>Ctrl + K</translation>
     </message>
     <message>
         <source>Invert Selection</source>
-        <translation type="unfinished">Odwróć zaznaczenie</translation>
+        <translation>Odwróć zaznaczenie</translation>
     </message>
     <message>
         <source>Zoom &amp;In</source>
-        <translation type="unfinished">&amp;Powiększ</translation>
+        <translation>Powiększ &amp; W</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
-        <translation type="unfinished">Po&amp;mniejsz</translation>
+        <translation>&amp; Powiększ</translation>
     </message>
     <message>
         <source>&amp;Auto Zoom</source>
-        <translation type="unfinished">&amp;Autozoom</translation>
+        <translation>&amp; Automatyczne powiększenie</translation>
     </message>
     <message>
         <source>Previous &amp;View</source>
-        <translation type="unfinished">Poprzedni &amp;widok</translation>
+        <translation>Poprzedni &amp; Widok</translation>
     </message>
     <message>
         <source>&amp;Redraw</source>
-        <translation type="unfinished" />
+        <translation>&amp; Redraw</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation type="unfinished">&amp;Nowy</translation>
+        <translation>&amp; Nowy</translation>
     </message>
     <message>
         <source>New From &amp;Template</source>
-        <translation type="unfinished" />
+        <translation>Nowy szablon</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation type="unfinished">&amp;Otwórz...</translation>
+        <translation>&amp; Otwórz...</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished">&amp;Zapisz</translation>
+        <translation>&amp; Zapisz</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="unfinished">Zapisz &amp;jako...</translation>
+        <translation>Zapisz &amp; jako...</translation>
     </message>
     <message>
         <source>&amp;Export as image</source>

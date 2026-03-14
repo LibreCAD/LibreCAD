@@ -252,212 +252,212 @@ eller [% 2]</translation>
     <name>LC_ActionDrawParabolaFD</name>
     <message>
         <source>Specify the focus of parabola</source>
-        <translation type="unfinished" />
+        <translation>Angiv fokus for parabola</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished" />
+        <translation>Annullér</translation>
     </message>
     <message>
         <source>Specify the directrix of parabola</source>
-        <translation type="unfinished" />
+        <translation>Angiv parabolas directrix</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Tilbage</translation>
+        <translation>Tilbage</translation>
     </message>
     <message>
         <source>Specify the start point on parabola</source>
-        <translation type="unfinished" />
+        <translation>Angiv startpunktet på parabola</translation>
     </message>
     <message>
         <source>Specify the end point on parabola</source>
-        <translation type="unfinished" />
+        <translation>Angiv slutpunktet for parablen</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawSliceDivide</name>
     <message>
         <source> is not divided as it is locked.</source>
-        <translation type="unfinished" />
+        <translation>er ikke delt, da det er låst.</translation>
     </message>
     <message>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation type="unfinished" />
+        <translation>er ikke opdelt, da det er en del af polylin. Udvid polylin først.</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished">Linie</translation>
+        <translation>Linje</translation>
     </message>
     <message>
         <source>Arc</source>
-        <translation type="unfinished">Bue</translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation type="unfinished">Cirkel</translation>
+        <translation>Cirkel</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawSplinePoints</name>
     <message>
         <source>Specify first control point</source>
-        <translation type="unfinished" />
+        <translation>Angiv første kontrolpunkt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished" />
+        <translation>Annullér</translation>
     </message>
     <message>
         <source>Specify next control point or [%1]</source>
-        <translation type="unfinished" />
+        <translation>Angiv næste kontrolpunkt eller [% 1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Tilbage</translation>
+        <translation>Tilbage</translation>
     </message>
     <message>
         <source>Specify next control point</source>
-        <translation type="unfinished" />
+        <translation>Angiv næste kontrolpunkt</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">Kan ikke fortryde: der er ikke defineret nok enheder endnu.</translation>
+        <translation>Kan ikke fortryde: Ikke nok enheder defineret endnu.</translation>
     </message>
     <message>
         <source>Cannot undo: Nothing could be redone.</source>
-        <translation type="unfinished" />
+        <translation>Kan ikke fortryde: Intet kunne gøres om.</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionFactory</name>
     <message>
         <source>&amp;Window Zoom</source>
-        <translation type="unfinished">Zoom &amp;vindue</translation>
+        <translation>&amp; Vindue Zoom</translation>
     </message>
     <message>
         <source>Zoom &amp;Panning</source>
-        <translation type="unfinished" />
+        <translation>Zoom og panning</translation>
     </message>
     <message>
         <source>Select Entity</source>
-        <translation type="unfinished">Vælg enhed</translation>
+        <translation>Vælg enhed</translation>
     </message>
     <message>
         <source>Select Window</source>
-        <translation type="unfinished">Vælg vindue</translation>
+        <translation>Vælg vindue</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation type="unfinished">Fravælg vindue</translation>
+        <translation>Afmarkér vindue</translation>
     </message>
     <message>
         <source>(De-)Select &amp;Contour</source>
-        <translation type="unfinished">(Fra-)Vælg &amp;figur</translation>
+        <translation>(De-) Vælg &amp; contour</translation>
     </message>
     <message>
         <source>Select Intersected Entities</source>
-        <translation type="unfinished">Vælg krydsede enheder</translation>
+        <translation>Vælg intersected enheder</translation>
     </message>
     <message>
         <source>Deselect Intersected Entities</source>
-        <translation type="unfinished">Fravælg krydsede enheder</translation>
+        <translation>Afmarkér intersected enheder</translation>
     </message>
     <message>
         <source>(De-)Select Layer</source>
-        <translation type="unfinished">(Fra-)Vælg lag</translation>
+        <translation>(De-) Vælg lag</translation>
     </message>
     <message>
         <source>&amp;Points</source>
-        <translation type="unfinished">&amp;Punkter</translation>
+        <translation>&amp; Point</translation>
     </message>
     <message>
         <source>&amp;2 Points</source>
-        <translation type="unfinished">&amp;2 Punkter</translation>
+        <translation>&amp; 2 punkter</translation>
     </message>
     <message>
         <source>&amp;Angle</source>
-        <translation type="unfinished">&amp;Vinkel</translation>
+        <translation>&amp; Vinkel</translation>
     </message>
     <message>
         <source>&amp;Horizontal</source>
-        <translation type="unfinished">&amp;Horisontal</translation>
+        <translation>&amp; Vandret</translation>
     </message>
     <message>
         <source>Vertical</source>
-        <translation type="unfinished">Vertikal</translation>
+        <translation>Lodret</translation>
     </message>
     <message>
         <source>&amp;Freehand Line</source>
-        <translation type="unfinished">&amp;Frihåndstegnet linie</translation>
+        <translation>&amp; Freehand linje</translation>
     </message>
     <message>
         <source>&amp;Parallel</source>
-        <translation type="unfinished" />
+        <translation>&amp; Parallelt</translation>
     </message>
     <message>
         <source>Parallel through point</source>
-        <translation type="unfinished">Parallel igennem et punkt</translation>
+        <translation>Parallelt gennem punkt</translation>
     </message>
     <message>
         <source>Rectangle</source>
-        <translation type="unfinished">Rektangel</translation>
+        <translation>Rektangel</translation>
     </message>
     <message>
         <source>Bisector</source>
-        <translation type="unfinished">Vinkeldeling</translation>
+        <translation>Bisector</translation>
     </message>
     <message>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">Tangent (P,C)</translation>
+        <translation>Tangent (P, C)</translation>
     </message>
     <message>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">Tangent (C,C)</translation>
+        <translation>Tangent (C, C)</translation>
     </message>
     <message>
         <source>Tangent &amp;Orthogonal</source>
-        <translation type="unfinished" />
+        <translation>Tangent og ortogonal</translation>
     </message>
     <message>
         <source>Orthogonal</source>
-        <translation type="unfinished" />
+        <translation>Orthogonal</translation>
     </message>
     <message>
         <source>Relative angle</source>
-        <translation type="unfinished">Relativ vinkel</translation>
+        <translation>Relativ vinkel</translation>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation type="unfinished">Pol&amp;ygon (Cen,Hjør)</translation>
+        <translation>Pol &amp; ygon (Cen, Cor)</translation>
     </message>
     <message>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation type="unfinished">Polygo&amp;n (Hjør,Hjør)</translation>
+        <translation>Polygo &amp; n (Cor, Cor)</translation>
     </message>
     <message>
         <source>Center, &amp;Point</source>
-        <translation type="unfinished">Centrum, &amp;punkt</translation>
+        <translation>Center, &amp; punkt</translation>
     </message>
     <message>
         <source>Center, &amp;Radius</source>
-        <translation type="unfinished">Centrum, &amp;radius</translation>
+        <translation>Center, &amp; Radius</translation>
     </message>
     <message>
         <source>2 Points</source>
-        <translation type="unfinished">2 Punkter</translation>
+        <translation>2 punkter</translation>
     </message>
     <message>
         <source>2 Points, Radius</source>
-        <translation type="unfinished" />
+        <translation>2 point, Radius</translation>
     </message>
     <message>
         <source>3 Points</source>
-        <translation type="unfinished" />
+        <translation>3 punkter</translation>
     </message>
     <message>
         <source>&amp;Concentric</source>
-        <translation type="unfinished">Kon&amp;centrisk</translation>
+        <translation>&amp; Koncentrisk</translation>
     </message>
     <message>
         <source>Circle &amp;Inscribed</source>

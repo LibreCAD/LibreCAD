@@ -1361,213 +1361,214 @@ vagy [% 2]</translation>
     </message>
     <message>
         <source>Offset Y:</source>
-        <translation type="unfinished" />
+        <translation>Offset Y:</translation>
     </message>
     <message>
         <source>Pen:</source>
-        <translation type="unfinished" />
+        <translation>Toll:</translation>
     </message>
 </context>
 <context>
     <name>LC_LayerDialogEx</name>
     <message>
         <source>Layer Settings</source>
-        <translation type="unfinished">Fólia beállításai</translation>
+        <translation>A réteg beállításai</translation>
     </message>
     <message>
         <source>Parent Layers Path:</source>
-        <translation type="unfinished" />
+        <translation>Szülőrétegek útja:</translation>
     </message>
     <message>
         <source>Layer Type</source>
-        <translation type="unfinished" />
+        <translation>Rétegtípus</translation>
     </message>
     <message>
         <source>Informational</source>
-        <translation type="unfinished" />
+        <translation>Tájékoztatás</translation>
     </message>
     <message>
         <source>Normal</source>
-        <translation type="unfinished" />
+        <translation>Normál</translation>
     </message>
     <message>
         <source>Dimensions</source>
-        <translation type="unfinished">Méretek</translation>
+        <translation>Méretek</translation>
     </message>
     <message>
         <source>Alternative Position</source>
-        <translation type="unfinished" />
+        <translation>Alternatív pozíció</translation>
     </message>
     <message>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation type="unfinished" />
+        <translation>A Construction Layer rendelkezik entitások végtelen egyenes vonalak tervezett használni geometriai építés.
+Az építőipari réteg tartalma nem jelenik meg a nyomtatásban.</translation>
     </message>
     <message>
         <source>Construction Layer</source>
-        <translation type="unfinished">Építési réteg</translation>
+        <translation>Építési réteg</translation>
     </message>
     <message>
         <source>Layer Name:</source>
-        <translation type="unfinished">Fólia neve:</translation>
+        <translation>A réteg neve:</translation>
     </message>
     <message>
         <source>Rename Virtual Layer</source>
-        <translation type="unfinished" />
+        <translation>Virtuális réteg átnevezése</translation>
     </message>
     <message>
         <source>Add Secondary Layer</source>
-        <translation type="unfinished" />
+        <translation>Másodlagos réteg hozzáadása</translation>
     </message>
     <message>
         <source>Add Layer</source>
-        <translation type="unfinished" />
+        <translation>A réteg hozzáadása</translation>
     </message>
     <message>
         <source>Edit Layer</source>
-        <translation type="unfinished" />
+        <translation>A réteg szerkesztése</translation>
     </message>
     <message>
         <source>Default Pen</source>
-        <translation type="unfinished">Alapértelmezett toll</translation>
+        <translation>Alapértelmezett injekciós toll</translation>
     </message>
     <message>
         <source>Rename Layer</source>
-        <translation type="unfinished" />
+        <translation>A réteg átnevezése</translation>
     </message>
 </context>
 <context>
     <name>LC_LayerTreeOptionsDialog</name>
     <message>
         <source>Layers Tree Options</source>
-        <translation type="unfinished" />
+        <translation>Layers fa beállítások</translation>
     </message>
     <message>
         <source>Naming Convention</source>
-        <translation type="unfinished" />
+        <translation>Megnevezési egyezmény</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
-        <translation type="unfinished" />
+        <translation>A rétegszintű névelválasztó</translation>
     </message>
     <message>
         <source>Secondary Layer Suffixes</source>
-        <translation type="unfinished" />
+        <translation>Másodlagos rétegek</translation>
     </message>
     <message>
         <source>Dimensional</source>
-        <translation type="unfinished" />
+        <translation>Méretek</translation>
     </message>
     <message>
         <source>Informational</source>
-        <translation type="unfinished" />
+        <translation>Tájékoztatás</translation>
     </message>
     <message>
         <source>Alternative Position </source>
-        <translation type="unfinished" />
+        <translation>Alternatív pozíció</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
-        <translation type="unfinished" />
+        <translation>Duplikáló név</translation>
     </message>
     <message>
         <source>Prefix</source>
-        <translation type="unfinished" />
+        <translation>Előtag</translation>
     </message>
     <message>
         <source>Suffix</source>
-        <translation type="unfinished" />
+        <translation>Suffix</translation>
     </message>
     <message>
         <source>Display and Operations</source>
-        <translation type="unfinished" />
+        <translation>Megjelenítés és üzemeltetés</translation>
     </message>
     <message>
         <source>Show full name as ToolTip</source>
-        <translation type="unfinished" />
+        <translation>A teljes név megjelenítése ToolTip néven</translation>
     </message>
     <message>
         <source>Show layer type icons</source>
-        <translation type="unfinished" />
+        <translation>A rétegtípus ikonok megjelenítése</translation>
     </message>
     <message>
         <source>Show indented layer names. Ident size:</source>
-        <translation type="unfinished" />
+        <translation>A belső rétegnevek megjelenítése. Az azonosító mérete:</translation>
     </message>
     <message>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation type="unfinished" />
+        <translation>A szerkezetátalakítás engedélyezése a Drag &amp; Drop segítségével</translation>
     </message>
     <message>
         <source>Rename secondary layers on primary rename</source>
-        <translation type="unfinished" />
+        <translation>Másodlagos rétegek átnevezése az elsődleges átnevezésen</translation>
     </message>
     <message>
         <source>Colors</source>
-        <translation type="unfinished" />
+        <translation>Színek</translation>
     </message>
     <message>
         <source>Matched item in highlight filter mode</source>
-        <translation type="unfinished" />
+        <translation>Egyezett elem kiemelt szűrőüzemmódban</translation>
     </message>
     <message>
         <source>#1E90FF</source>
-        <translation type="unfinished">#1E90FF</translation>
+        <translation># 1E90FF</translation>
     </message>
     <message>
         <source>Virtual layer background color</source>
-        <translation type="unfinished" />
+        <translation>Virtuális réteg háttér színe</translation>
     </message>
     <message>
         <source>Threeview items separator grid</source>
-        <translation type="unfinished" />
+        <translation>Háromoldalú elemek elválasztó rács</translation>
     </message>
     <message>
         <source>Selected items background color</source>
-        <translation type="unfinished" />
+        <translation>Kiválasztott elemek háttérszíne</translation>
     </message>
     <message>
         <source>Active layer background color</source>
-        <translation type="unfinished" />
+        <translation>Aktív réteg háttér színe</translation>
     </message>
     <message>
         <source>Default Pens</source>
-        <translation type="unfinished" />
+        <translation>Alapértelmezett tollak</translation>
     </message>
     <message>
         <source>Normal Layer</source>
-        <translation type="unfinished" />
+        <translation>Normál réteg</translation>
     </message>
     <message>
         <source>Dimensional Layer</source>
-        <translation type="unfinished" />
+        <translation>Méretréteg</translation>
     </message>
     <message>
         <source>Informational Layer</source>
-        <translation type="unfinished" />
+        <translation>Információs réteg</translation>
     </message>
     <message>
         <source>Alternative Position Layer</source>
-        <translation type="unfinished" />
+        <translation>Alternatív helyzetjelző réteg</translation>
     </message>
     <message>
         <source>Select Color</source>
-        <translation type="unfinished" />
+        <translation>Szín kiválasztása</translation>
     </message>
 </context>
 <context>
     <name>LC_LayerTreeWidget</name>
     <message>
         <source>Filter</source>
-        <translation type="unfinished">Szűrő</translation>
+        <translation>Szűrő</translation>
     </message>
     <message>
         <source>Looking for matching layer names</source>
-        <translation type="unfinished">Egyező fólianevek keresése</translation>
+        <translation>A megfelelő rétegnevek keresése</translation>
     </message>
     <message>
         <source>Highlight Mode</source>
-        <translation type="unfinished" />
+        <translation>Kiemelt üzemmód</translation>
     </message>
     <message>
         <source>Settings</source>

@@ -323,34 +323,34 @@ atau [% 2]</translation>
     <message>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="290" />
         <source>Specify the focus of parabola</source>
-        <translation type="unfinished" />
+        <translation>Nyatakan fokus dari parabola</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="291" />
         <source>Cancel</source>
-        <translation type="unfinished">Batal</translation>
+        <translation>Batal</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="295" />
         <source>Specify the directrix of parabola</source>
-        <translation type="unfinished" />
+        <translation>Nyatakan direktrix dari parabola</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="296" />
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="301" />
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="306" />
         <source>Back</source>
-        <translation type="unfinished">Mundur</translation>
+        <translation>Mundur</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="300" />
         <source>Specify the start point on parabola</source>
-        <translation type="unfinished" />
+        <translation>Nyatakan titik awal pada parabola</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="305" />
         <source>Specify the end point on parabola</source>
-        <translation type="unfinished" />
+        <translation>Nyatakan titik akhir pada parabola</translation>
     </message>
 </context>
 <context>
@@ -358,27 +358,27 @@ atau [% 2]</translation>
     <message>
         <location filename="../src/actions/lc_abstractactionwithpreview.cpp" line="846" />
         <source> is not divided as it is locked.</source>
-        <translation type="unfinished" />
+        <translation>tidak dibagi karena terkunci.</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_abstractactionwithpreview.cpp" line="854" />
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation type="unfinished" />
+        <translation>tidak dibagi karena merupakan bagian dari poliline. Expand polyline pertama.</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="180" />
         <source>Line</source>
-        <translation type="unfinished">Garis</translation>
+        <translation>Baris</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190" />
         <source>Arc</source>
-        <translation type="unfinished" />
+        <translation>Arc</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200" />
         <source>Circle</source>
-        <translation type="unfinished">Lingkaran</translation>
+        <translation>Lingkaran</translation>
     </message>
 </context>
 <context>
@@ -386,39 +386,39 @@ atau [% 2]</translation>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="251" />
         <source>Specify first control point</source>
-        <translation type="unfinished" />
+        <translation>Nyatakan titik kontrol pertama</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="252" />
         <source>Cancel</source>
-        <translation type="unfinished">Batal</translation>
+        <translation>Batal</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="275" />
         <source>Specify next control point or [%1]</source>
-        <translation type="unfinished" />
+        <translation>Spesifikasikan titik kontrol berikutnya atau [% 1]</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="276" />
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="282" />
         <source>Back</source>
-        <translation type="unfinished">Mundur</translation>
+        <translation>Mundur</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="281" />
         <source>Specify next control point</source>
-        <translation type="unfinished" />
+        <translation>Nyatakan titik kontrol berikutnya</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="334" />
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="359" />
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished" />
+        <translation>Tak bisa membatalkan: Entitas yang belum cukup didefinisikan.</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="380" />
         <source>Cannot undo: Nothing could be redone.</source>
-        <translation type="unfinished" />
+        <translation>Tak bisa dibatalkan: Tak ada yang bisa diperbaiki.</translation>
     </message>
 </context>
 <context>
@@ -426,83 +426,83 @@ atau [% 2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1528" />
         <source>&amp;Window Zoom</source>
-        <translation type="unfinished" />
+        <translation>&amp; Pembesaran Jendela</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="54" />
         <source>Zoom &amp;Panning</source>
-        <translation type="unfinished" />
+        <translation>View-zoom-action</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="63" />
         <source>Select Entity</source>
-        <translation type="unfinished" />
+        <translation>Pilih Entitas</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="70" />
         <source>Select Window</source>
-        <translation type="unfinished" />
+        <translation>Pilih Jendela</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="77" />
         <source>Deselect Window</source>
-        <translation type="unfinished" />
+        <translation>Tidak Pilih Jendela</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="84" />
         <source>(De-)Select &amp;Contour</source>
-        <translation type="unfinished" />
+        <translation>(De-) Pilih &amp; Contour</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="91" />
         <source>Select Intersected Entities</source>
-        <translation type="unfinished" />
+        <translation>Pilih Entifitas Terinteraksi</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="98" />
         <source>Deselect Intersected Entities</source>
-        <translation type="unfinished" />
+        <translation>Pilih Entifitas Terinteraksi</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="105" />
         <source>(De-)Select Layer</source>
-        <translation type="unfinished" />
+        <translation>(De-) Pilih Lapis</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="114" />
         <source>&amp;Points</source>
-        <translation type="unfinished">&amp;Titik</translation>
+        <translation>&amp; Poin</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="124" />
         <source>&amp;2 Points</source>
-        <translation type="unfinished">&amp;2 Titik</translation>
+        <translation>&amp; 2 Poin</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="131" />
         <source>&amp;Angle</source>
-        <translation type="unfinished">&amp;Sudut</translation>
+        <translation>&amp; Sudut</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="138" />
         <location filename="../src/ui/lc_actionfactory.cpp" line="648" />
         <source>&amp;Horizontal</source>
-        <translation type="unfinished">&amp;Horizontal</translation>
+        <translation>&amp; Horisontal</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="145" />
         <source>Vertical</source>
-        <translation type="unfinished">Vertikal</translation>
+        <translation>Vertikal</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="158" />
         <source>&amp;Freehand Line</source>
-        <translation type="unfinished">&amp;Garis Bebas</translation>
+        <translation>&amp; Baris Lengkap</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="165" />
         <source>&amp;Parallel</source>
-        <translation type="unfinished">&amp;Paralel</translation>
+        <translation>&amp; Paralel</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="172" />
@@ -517,82 +517,82 @@ atau [% 2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="186" />
         <source>Bisector</source>
-        <translation type="unfinished" />
+        <translation>Bisector</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="193" />
         <source>Tangent (P,C)</source>
-        <translation type="unfinished" />
+        <translation>Tangen (P, C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="200" />
         <source>Tangent (C,C)</source>
-        <translation type="unfinished" />
+        <translation>Tangen (C, C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="207" />
         <source>Tangent &amp;Orthogonal</source>
-        <translation type="unfinished" />
+        <translation>Tangen &amp; Orthogonal</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="214" />
         <source>Orthogonal</source>
-        <translation type="unfinished" />
+        <translation>Orthogonal</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="221" />
         <source>Relative angle</source>
-        <translation type="unfinished">Sudut relatif</translation>
+        <translation>Sudut relatif</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="228" />
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation type="unfinished" />
+        <translation>Pol &amp; ygon (Cen, Cor)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="235" />
         <source>Pol&amp;ygon (Cen,Tan)</source>
-        <translation type="unfinished" />
+        <translation>Pol &amp; ygon (Cen, Tan)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="242" />
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation type="unfinished" />
+        <translation>Poligo &amp; n (Cor, Cor)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="251" />
         <source>Center, &amp;Point</source>
-        <translation type="unfinished">Pusat, &amp;Titik</translation>
+        <translation>Pusat, &amp; Titik</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="257" />
         <source>Cross</source>
-        <translation type="unfinished" />
+        <translation>Silang</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="263" />
         <source>Snake</source>
-        <translation type="unfinished" />
+        <translation>Ular</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="269" />
         <source>Snake (X)</source>
-        <translation type="unfinished" />
+        <translation>Ular (X)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="275" />
         <source>Snake (Y)</source>
-        <translation type="unfinished" />
+        <translation>Ular (Y)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="281" />
         <source>Rectangle (1 Point)</source>
-        <translation type="unfinished" />
+        <translation>Rectangle (1 Point)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="287" />
         <source>Rectangle (2 Points)</source>
-        <translation type="unfinished" />
+        <translation>Rectangle (2 Points)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="293" />
