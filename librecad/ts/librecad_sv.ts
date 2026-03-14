@@ -1,103 +1,102 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
+<?xml version='1.0' encoding='utf-8'?>
 <TS version="2.1" language="sv">
 <context>
     <name>ColorWizard</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Frame</translation>
     </message>
     <message>
         <source>Add to favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Lägg till favoriter</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>......</translation>
     </message>
 </context>
 <context>
     <name>ComboBoxOption</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Frame</translation>
     </message>
     <message>
         <source>GroupBox</source>
-        <translation type="unfinished"></translation>
+        <translation>GruppBox</translation>
     </message>
     <message>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Set</translation>
     </message>
 </context>
 <context>
     <name>DlgParabola</name>
     <message>
         <source>Parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Parabola</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Lager:</translation>
+        <translation>Layer:</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished">Geometri</translation>
+        <translation>Geometri</translation>
     </message>
     <message>
         <source>Points on Spline</source>
-        <translation type="unfinished"></translation>
+        <translation>Poäng på Spline</translation>
     </message>
     <message>
         <source>Control Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrollpunkter</translation>
     </message>
 </context>
 <context>
     <name>DlgSplinePoints</name>
     <message>
         <source>SplinePoints</source>
-        <translation type="unfinished"></translation>
+        <translation>SplinePoints</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Lager:</translation>
+        <translation>Layer:</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished">Geometri</translation>
+        <translation>Geometri</translation>
     </message>
     <message>
         <source>Closed</source>
-        <translation type="unfinished">Stängd</translation>
+        <translation>Stängt</translation>
     </message>
     <message>
         <source>Spline Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Spline poäng</translation>
     </message>
     <message>
         <source>Control Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrollpunkter</translation>
     </message>
     <message>
         <source>Points on Spline</source>
-        <translation type="unfinished"></translation>
+        <translation>Poäng på Spline</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDimArc</name>
     <message>
         <source>Select arc entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj bågenhet</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Specify dimension arc location</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera dimension arc plats</translation>
     </message>
 </context>
 <context>
@@ -105,31 +104,32 @@
     <message>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation type="unfinished"></translation>
+        <translation>radie=%1 är för liten för valda poäng
+avståndet mellan poäng=%2 är större än diameter= %3</translation>
     </message>
     <message>
         <source>Select from two possible circle centers</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj från två möjliga cirkelcenter</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första punkten</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange andra punkten</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Select circle center</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj cirkelcenter</translation>
     </message>
 </context>
 <context>
@@ -137,1793 +137,1796 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Specify distance (%1)
 or [%2]</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange avstånd (%1)
+eller [%2]</translation>
     </message>
     <message>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>YTTERLIGARE</translation>
     </message>
     <message>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange avstånd (vinkel %1 deg)
+eller [%2]</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawLinePolygonCenTan</name>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera centrum</translation>
     </message>
     <message>
         <source>Specify a tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange en tangent</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange nummer:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished"></translation>
+        <translation>Inte ett giltigt nummer. Försök 1.9999</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Inte ett giltigt uttryck</translation>
+        <translation>Inte ett giltigt uttryck</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawLineSnake</name>
     <message>
         <source>Specify direction (x or y) or [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange riktning (x eller y) eller [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify distance (%1) or [%2]</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange avstånd (%1) eller [%2]</translation>
     </message>
     <message>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>YTTERLIGARE</translation>
     </message>
     <message>
         <source>Specify distance (%1 deg) or [%2]</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange avstånd (%1 deg) eller [%2]</translation>
     </message>
     <message>
         <source>Specify angle or [%2]</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange vinkel eller [%2]</translation>
     </message>
     <message>
         <source>Specify point or [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange punkt eller [%1]</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawParabola4Points</name>
     <message>
         <source>Specify the first point on parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första punkten på parabola</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Specify the second point on parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange den andra punkten på parabola</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify the third point on parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange den tredje punkten på parabola</translation>
     </message>
     <message>
         <source>Specify the fourth point on parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange den fjärde punkten på parabola</translation>
     </message>
     <message>
         <source>Specify the Axis on parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange axeln på parabola</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawParabolaFD</name>
     <message>
         <source>Specify the focus of parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange fokus för parabola</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Specify the directrix of parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange direktrisen av parabola</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify the start point on parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange startpunkten på parabola</translation>
     </message>
     <message>
         <source>Specify the end point on parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange slutpunkten på parabola</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawSliceDivide</name>
     <message>
         <source> is not divided as it is locked.</source>
-        <translation type="unfinished"></translation>
+        <translation>är inte delat eftersom det är låst.</translation>
     </message>
     <message>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation type="unfinished"></translation>
+        <translation>är inte delat eftersom det är en del av polyline. Expandera polyline först.</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation type="unfinished">Cirkel</translation>
+        <translation>Cirkel</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawSplinePoints</name>
     <message>
         <source>Specify first control point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första kontrollpunkten</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Specify next control point or [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange nästa kontrollpunkt eller [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify next control point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange nästa kontrollpunkt</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte ångra: Inte tillräckligt många enheter definierade än.</translation>
     </message>
     <message>
         <source>Cannot undo: Nothing could be redone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte ångra: Ingenting kan göras redone.</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionFactory</name>
     <message>
         <source>&amp;Window Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>och Windows Zoom</translation>
     </message>
     <message>
         <source>Zoom &amp;Panning</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom &amp; Panning</translation>
     </message>
     <message>
         <source>Select Entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj Entity</translation>
     </message>
     <message>
         <source>Select Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj fönster</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Deselect Window</translation>
     </message>
     <message>
         <source>(De-)Select &amp;Contour</source>
-        <translation type="unfinished"></translation>
+        <translation>(De-) Välj &amp; Contour</translation>
     </message>
     <message>
         <source>Select Intersected Entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj Intersected Entities</translation>
     </message>
     <message>
         <source>Deselect Intersected Entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Deselect Intersected Entities</translation>
     </message>
     <message>
         <source>(De-)Select Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>(De-) Välj lager</translation>
     </message>
     <message>
         <source>&amp;Points</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Points</translation>
     </message>
     <message>
         <source>&amp;2 Points</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;2 poäng</translation>
     </message>
     <message>
         <source>&amp;Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>och enngle</translation>
     </message>
     <message>
         <source>&amp;Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>och Horizontal</translation>
     </message>
     <message>
         <source>Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikal</translation>
     </message>
     <message>
         <source>&amp;Freehand Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Freehand Line</translation>
     </message>
     <message>
         <source>&amp;Parallel</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Parallel</translation>
     </message>
     <message>
         <source>Parallel through point</source>
-        <translation type="unfinished"></translation>
+        <translation>Parallell genom punkt</translation>
     </message>
     <message>
         <source>Rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>Rectangle</translation>
     </message>
     <message>
         <source>Bisector</source>
-        <translation type="unfinished"></translation>
+        <translation>Bisector</translation>
     </message>
     <message>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangent (P,C)</translation>
     </message>
     <message>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangent (C,C)</translation>
     </message>
     <message>
         <source>Tangent &amp;Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangent &amp; Orthogonal</translation>
     </message>
     <message>
         <source>Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Ortogonal</translation>
     </message>
     <message>
         <source>Relative angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Relativ vinkel</translation>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pol&amp;ygon (Cen,Cor)</translation>
     </message>
     <message>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation type="unfinished"></translation>
+        <translation>Polygo&amp;n (Cor,Cor)</translation>
     </message>
     <message>
         <source>Center, &amp;Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Center, &amp;Point</translation>
     </message>
     <message>
         <source>Center, &amp;Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Center, &amp;Radius</translation>
     </message>
     <message>
         <source>2 Points</source>
-        <translation type="unfinished"></translation>
+        <translation>2 poäng</translation>
     </message>
     <message>
         <source>2 Points, Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>2 poäng, Radius</translation>
     </message>
     <message>
         <source>3 Points</source>
-        <translation type="unfinished"></translation>
+        <translation>3 poäng</translation>
     </message>
     <message>
         <source>&amp;Concentric</source>
-        <translation type="unfinished"></translation>
+        <translation>Koncentrerad</translation>
     </message>
     <message>
         <source>Circle &amp;Inscribed</source>
-        <translation type="unfinished"></translation>
+        <translation>Circle &amp; Inscribed</translation>
     </message>
     <message>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tangential 2 cirklar, Radius</translation>
     </message>
     <message>
         <source>Tangential 2 Circles, 1 Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangential 2 cirklar, 1 poäng</translation>
     </message>
     <message>
         <source>Tangential &amp;3 Circles</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangential &amp; 3 cirklar</translation>
     </message>
     <message>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangential, 2 P&amp;oints</translation>
     </message>
     <message>
         <source>&amp;Center, Point, Angles</source>
-        <translation type="unfinished"></translation>
+        <translation>Restauranger i närheten av Point, Angles</translation>
     </message>
     <message>
         <source>&amp;3 Points</source>
-        <translation type="unfinished"></translation>
+        <translation>3 poäng</translation>
     </message>
     <message>
         <source>Arc &amp;Tangential</source>
-        <translation type="unfinished"></translation>
+        <translation>Arc &amp; Tangential</translation>
     </message>
     <message>
         <source>&amp;Ellipse (Axis)</source>
-        <translation type="unfinished"></translation>
+        <translation>och Ellipse (Axis)</translation>
     </message>
     <message>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellipse &amp;Arc (Axis)</translation>
     </message>
     <message>
         <source>Ellipse &amp;Foci Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellipse &amp; Foci Point</translation>
     </message>
     <message>
         <source>Ellipse &amp;4 Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellipse &amp;4 Point</translation>
     </message>
     <message>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellipse Center och &amp;3 Points</translation>
     </message>
     <message>
         <source>Ellipse &amp;Inscribed</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellipse &amp; Inscribed</translation>
     </message>
     <message>
         <source>&amp;Spline</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Spline</translation>
     </message>
     <message>
         <source>&amp;Spline through points</source>
-        <translation type="unfinished"></translation>
+        <translation>Spline genom poäng</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Polyline</translation>
     </message>
     <message>
         <source>&amp;Add node</source>
-        <translation type="unfinished"></translation>
+        <translation>Lägg till Node</translation>
     </message>
     <message>
         <source>A&amp;ppend node</source>
-        <translation type="unfinished"></translation>
+        <translation>A&amp;Pend Node</translation>
     </message>
     <message>
         <source>&amp;Delete node</source>
-        <translation type="unfinished"></translation>
+        <translation>och Delete Node</translation>
     </message>
     <message>
         <source>Delete &amp;between two nodes</source>
-        <translation type="unfinished"></translation>
+        <translation>Delete &amp;between två noder</translation>
     </message>
     <message>
         <source>&amp;Trim segments</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Trim segment</translation>
     </message>
     <message>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation type="unfinished"></translation>
+        <translation>Skapa &amp; Equidistant Polylines</translation>
     </message>
     <message>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation type="unfinished"></translation>
+        <translation>Skapa polyline från befintliga och segment</translation>
     </message>
     <message>
         <source>&amp;MText</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;MText</translation>
     </message>
     <message>
         <source>&amp;Text</source>
-        <translation type="unfinished">&amp;Text</translation>
+        <translation>ochText</translation>
     </message>
     <message>
         <source>&amp;Hatch</source>
-        <translation type="unfinished"></translation>
+        <translation>och Hatch</translation>
     </message>
     <message>
         <source>Insert &amp;Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Infoga &amp; Bild</translation>
     </message>
     <message>
         <source>&amp;Aligned</source>
-        <translation type="unfinished"></translation>
+        <translation>och anpassade</translation>
     </message>
     <message>
         <source>&amp;Linear</source>
-        <translation type="unfinished"></translation>
+        <translation>och linear</translation>
     </message>
     <message>
         <source>&amp;Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>ochVertical</translation>
     </message>
     <message>
         <source>&amp;Radial</source>
-        <translation type="unfinished"></translation>
+        <translation>och Radial</translation>
     </message>
     <message>
         <source>&amp;Diametric</source>
-        <translation type="unfinished"></translation>
+        <translation>och Diametric</translation>
     </message>
     <message>
         <source>&amp;Angular</source>
-        <translation type="unfinished"></translation>
+        <translation>och vinklar</translation>
     </message>
     <message>
         <source>&amp;Leader</source>
-        <translation type="unfinished"></translation>
+        <translation>och ledare</translation>
     </message>
     <message>
         <source>&amp;Attributes</source>
-        <translation type="unfinished">&amp;Attribut</translation>
+        <translation>och bidrag</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation type="unfinished">&amp;Ta bort</translation>
+        <translation>och Delete</translation>
     </message>
     <message>
         <source>Delete Freehand</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort Freehand</translation>
     </message>
     <message>
         <source>&amp;Move / Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>och flytta / kopia</translation>
     </message>
     <message>
         <source>Re&amp;vert direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Re&amp;vert riktning</translation>
     </message>
     <message>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <source>&amp;Rotate</source>
-        <translation type="unfinished">&amp;Rotera</translation>
+        <translation>ochRotate</translation>
     </message>
     <message>
         <source>&amp;Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>och skala</translation>
     </message>
     <message>
         <source>&amp;Mirror</source>
-        <translation type="unfinished"></translation>
+        <translation>och Mirror</translation>
     </message>
     <message>
         <source>Rotate T&amp;wo</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotate T&amp;wo</translation>
     </message>
     <message>
         <source>&amp;Properties</source>
-        <translation type="unfinished">&amp;Egenskaper</translation>
+        <translation>&amp;Properties</translation>
     </message>
     <message>
         <source>&amp;Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>ochTrim</translation>
     </message>
     <message>
         <source>&amp;Lengthen</source>
-        <translation type="unfinished"></translation>
+        <translation>och Lengthen</translation>
     </message>
     <message>
         <source>&amp;Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Divide</translation>
     </message>
     <message>
         <source>&amp;Stretch</source>
-        <translation type="unfinished"></translation>
+        <translation>ochStretch</translation>
     </message>
     <message>
         <source>&amp;Bevel</source>
-        <translation type="unfinished"></translation>
+        <translation>och Bevel</translation>
     </message>
     <message>
         <source>&amp;Fillet</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fillet</translation>
     </message>
     <message>
         <source>&amp;Explode Text into Letters</source>
-        <translation type="unfinished"></translation>
+        <translation>Utplacera text i brev</translation>
     </message>
     <message>
         <source>Point inside contour</source>
-        <translation type="unfinished"></translation>
+        <translation>Point inuti kontur</translation>
     </message>
     <message>
         <source>&amp;Distance Point to Point</source>
-        <translation type="unfinished"></translation>
+        <translation>och distanspoäng till Point</translation>
     </message>
     <message>
         <source>&amp;Distance Entity to Point</source>
-        <translation type="unfinished"></translation>
+        <translation>och distans enhet till Point</translation>
     </message>
     <message>
         <source>An&amp;gle between two lines</source>
-        <translation type="unfinished"></translation>
+        <translation>An&amp;gle mellan två linjer</translation>
     </message>
     <message>
         <source>&amp;Total length of selected entities</source>
-        <translation type="unfinished"></translation>
+        <translation>ochTotal längd på utvalda enheter</translation>
     </message>
     <message>
         <source>Polygonal &amp;Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Polygonal &amp; Rea</translation>
     </message>
     <message>
         <source>&amp;Selection pointer</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Selection Pointer</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation type="unfinished">&amp;Ångra</translation>
+        <translation>ochundo</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation type="unfinished">&amp;Gör om</translation>
+        <translation>ochRedo</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished">Klipp &amp;ut</translation>
+        <translation>Cu&amp;t</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished">&amp;Kopiera</translation>
+        <translation>och kopia</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished">Klistra &amp;in</translation>
+        <translation>och Paste</translation>
     </message>
     <message>
         <source>move to bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>flytta till botten</translation>
     </message>
     <message>
         <source>lower after entity</source>
-        <translation type="unfinished"></translation>
+        <translation>lägre efter enhet</translation>
     </message>
     <message>
         <source>raise over entity</source>
-        <translation type="unfinished"></translation>
+        <translation>höja sig över företaget</translation>
     </message>
     <message>
         <source>move to top</source>
-        <translation type="unfinished"></translation>
+        <translation>flytta till toppen</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">&amp;Lägg till lager</translation>
+        <translation>och add layer</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">&amp;Ta bort lager</translation>
+        <translation>Remove Layer</translation>
     </message>
     <message>
         <source>&amp;Edit Layer</source>
-        <translation type="unfinished">R&amp;edigera lager</translation>
+        <translation>Redigera Layer</translation>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation type="unfinished"></translation>
+        <translation>Toggle Layer Loc&amp;k</translation>
     </message>
     <message>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>ochToggle Layer Visibility</translation>
     </message>
     <message>
         <source>Toggle Layer &amp;Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Toggle Layer &amp; Prince</translation>
     </message>
     <message>
         <source>Toggle &amp;Construction Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Toggle &amp; Construction Layer</translation>
     </message>
     <message>
         <source>&amp;Add Block</source>
-        <translation type="unfinished">&amp;Lägg till block</translation>
+        <translation>och lägga till block</translation>
     </message>
     <message>
         <source>&amp;Remove Block</source>
-        <translation type="unfinished">&amp;Ta bort block</translation>
+        <translation>och ta bort block</translation>
     </message>
     <message>
         <source>&amp;Rename Block</source>
-        <translation type="unfinished">&amp;Byt namn på block</translation>
+        <translation>Rename Block</translation>
     </message>
     <message>
         <source>&amp;Edit Block</source>
-        <translation type="unfinished">R&amp;edigera block</translation>
+        <translation>och redigera block</translation>
     </message>
     <message>
         <source>&amp;Save Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Save Block</translation>
     </message>
     <message>
         <source>&amp;Insert Block</source>
-        <translation type="unfinished">&amp;Infoga block</translation>
+        <translation>Infoga block</translation>
     </message>
     <message>
         <source>Toggle Block &amp;Visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Toggle Block &amp;Visibility</translation>
     </message>
     <message>
         <source>&amp;Create Block</source>
-        <translation type="unfinished">&amp;Skapa block</translation>
+        <translation>Skapa block</translation>
     </message>
     <message>
         <source>Ex&amp;plode</source>
-        <translation type="unfinished"></translation>
+        <translation>Ex&amp;plode</translation>
     </message>
     <message>
         <source>&amp;Application Preferences</source>
-        <translation type="unfinished">&amp;Programinställningar</translation>
+        <translation>&amp;Application Preferences</translation>
     </message>
     <message>
         <source>Current &amp;Drawing Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuvarande &amp; Drawing Preferences</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Delete vald</translation>
     </message>
     <message>
         <source>Select &amp;All</source>
-        <translation type="unfinished">Markera &amp;allt</translation>
+        <translation>Välj &amp;All</translation>
     </message>
     <message>
         <source>Deselect &amp;all</source>
-        <translation type="unfinished">Avmarkera &amp;allt</translation>
+        <translation>Deselect &amp;all</translation>
     </message>
     <message>
         <source>Ctrl+K</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+K</translation>
     </message>
     <message>
         <source>Invert Selection</source>
-        <translation type="unfinished">Invertera markering</translation>
+        <translation>Invert Selection</translation>
     </message>
     <message>
         <source>Zoom &amp;In</source>
-        <translation type="unfinished">Zooma &amp;in</translation>
+        <translation>Zoom &amp; Inom</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
-        <translation type="unfinished">Zooma &amp;ut</translation>
+        <translation>Zoom &amp; Out</translation>
     </message>
     <message>
         <source>&amp;Auto Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>och Auto Zoom</translation>
     </message>
     <message>
         <source>Previous &amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>Föregående &amp;View</translation>
     </message>
     <message>
         <source>&amp;Redraw</source>
-        <translation type="unfinished"></translation>
+        <translation>Redraw</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation type="unfinished">&amp;Ny</translation>
+        <translation>och New</translation>
     </message>
     <message>
         <source>New From &amp;Template</source>
-        <translation type="unfinished"></translation>
+        <translation>Nytt från &amp;Template</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation type="unfinished">&amp;Öppna...</translation>
+        <translation>Öppna...</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished">&amp;Spara</translation>
+        <translation>och spara</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="unfinished">Spara so&amp;m...</translation>
+        <translation>Spara och...</translation>
     </message>
     <message>
         <source>&amp;Export as image</source>
-        <translation type="unfinished"></translation>
+        <translation>och export som bild</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished">S&amp;täng</translation>
+        <translation>och nära</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="unfinished">Skriv &amp;ut...</translation>
+        <translation>och Prince...</translation>
     </message>
     <message>
         <source>Export as PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportera som PDF</translation>
     </message>
     <message>
         <source>Print Pre&amp;view</source>
-        <translation type="unfinished"></translation>
+        <translation>Print Pre &amp;view</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished">A&amp;vsluta</translation>
+        <translation>ochQuit</translation>
     </message>
     <message>
         <source>&amp;Block</source>
-        <translation type="unfinished">&amp;Block</translation>
+        <translation>&amp;Block</translation>
     </message>
     <message>
         <source>&amp;Fullscreen</source>
-        <translation type="unfinished"></translation>
+        <translation>och Fullscreen</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>och Grid</translation>
     </message>
     <message>
         <source>Ctrl+G</source>
         <comment>Toggle Grid</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+G</translation>
     </message>
     <message>
         <source>&amp;Draft</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Draft</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
-        <translation type="unfinished">&amp;Statusrad</translation>
+        <translation>och Statusbar</translation>
     </message>
     <message>
         <source>Ctrl+I</source>
         <comment>Hide Statusbar</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+I</translation>
     </message>
     <message>
         <source>Focus on &amp;Command Line</source>
-        <translation type="unfinished">Fokusera på &amp;kommandorad</translation>
+        <translation>Fokus på &amp;Command Line</translation>
     </message>
     <message>
         <source>Widget Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Widgetalternativ</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished">Vänster</translation>
+        <translation>Vänstern</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished">Höger</translation>
+        <translation>Rätt rätt</translation>
     </message>
     <message>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Topp</translation>
     </message>
     <message>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Bottom</translation>
     </message>
     <message>
         <source>Floating</source>
-        <translation type="unfinished"></translation>
+        <translation>Flytande</translation>
     </message>
     <message>
         <source>Reload Style Sheet</source>
-        <translation type="unfinished"></translation>
+        <translation>Reload Style Sheet</translation>
     </message>
     <message>
         <source>Device Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Enhetsalternativ</translation>
     </message>
     <message>
         <source>Mo&amp;ve and Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Mo&amp;ve och Rotate</translation>
     </message>
     <message>
         <source>Tr&amp;im Two</source>
-        <translation type="unfinished"></translation>
+        <translation>Tr&amp;im två</translation>
     </message>
     <message>
         <source>O&amp;ffset</source>
-        <translation type="unfinished"></translation>
+        <translation>O&amp;FSET</translation>
     </message>
     <message>
         <source>Menu Creator</source>
-        <translation type="unfinished"></translation>
+        <translation>Menu Creator</translation>
     </message>
     <message>
         <source>Toolbar Creator</source>
-        <translation type="unfinished"></translation>
+        <translation>Toolbar Creator</translation>
     </message>
     <message>
         <source>Ctrl+D</source>
         <comment>Toggle Draft Mode</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Tan)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pol&amp;ygon (Cen,Tan)</translation>
     </message>
     <message>
         <source>&amp;Arc</source>
-        <translation type="unfinished"></translation>
+        <translation>och Arc</translation>
     </message>
     <message>
         <source>&amp;Show all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>och visa alla lager</translation>
     </message>
     <message>
         <source>&amp;Hide all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Hjälp alla lager</translation>
     </message>
     <message>
         <source>&amp;Unlock all</source>
-        <translation type="unfinished"></translation>
+        <translation>låsa upp allt</translation>
     </message>
     <message>
         <source>&amp;Lock all</source>
-        <translation type="unfinished"></translation>
+        <translation>och lås all</translation>
     </message>
     <message>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportera valda lager(er)</translation>
     </message>
     <message>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Export &amp; Visible Layer(s)</translation>
     </message>
     <message>
         <source>&amp;Show all blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>och visa alla block</translation>
     </message>
     <message>
         <source>&amp;Hide all blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Hjälp alla block</translation>
     </message>
     <message>
         <source>Export as CA&amp;M/plain SVG...</source>
-        <translation type="unfinished"></translation>
+        <translation>Export som CA&amp;M/plain SVG...</translation>
     </message>
     <message>
         <source>Close All</source>
-        <translation type="unfinished"></translation>
+        <translation>Nära allt</translation>
     </message>
     <message>
         <source>Re-dock Widgets</source>
-        <translation type="unfinished"></translation>
+        <translation>Re-dock Widgets</translation>
     </message>
     <message>
         <source>Save A&amp;ll...</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara A&amp;ll...</translation>
     </message>
     <message>
         <source>Cross</source>
-        <translation type="unfinished"></translation>
+        <translation>Korsa kors</translation>
     </message>
     <message>
         <source>Snake</source>
-        <translation type="unfinished"></translation>
+        <translation>Snake</translation>
     </message>
     <message>
         <source>Snake (X)</source>
-        <translation type="unfinished"></translation>
+        <translation>Snake (X)</translation>
     </message>
     <message>
         <source>Snake (Y)</source>
-        <translation type="unfinished"></translation>
+        <translation>Snake (Y)</translation>
     </message>
     <message>
         <source>Rectangle (1 Point)</source>
-        <translation type="unfinished"></translation>
+        <translation>Rektangel (1 poäng)</translation>
     </message>
     <message>
         <source>Rectangle (2 Points)</source>
-        <translation type="unfinished"></translation>
+        <translation>Rektangel (2 poäng)</translation>
     </message>
     <message>
         <source>Rectangle (3 Points)</source>
-        <translation type="unfinished"></translation>
+        <translation>Rektangel (3 poäng)</translation>
     </message>
     <message>
         <source>Star</source>
-        <translation type="unfinished"></translation>
+        <translation>Stjärna</translation>
     </message>
     <message>
         <source>Break/Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Break/Divide</translation>
     </message>
     <message>
         <source>Line Gap</source>
-        <translation type="unfinished"></translation>
+        <translation>Line Gap</translation>
     </message>
     <message>
         <source>Angle From Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Angle från Line</translation>
     </message>
     <message>
         <source>Orthogonal From Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Ortogonal från Line</translation>
     </message>
     <message>
         <source>From Point To Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Från Point To Line</translation>
     </message>
     <message>
         <source>Slice/Divide Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Slice/Divide Line</translation>
     </message>
     <message>
         <source>Slice/Divide Circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Slice/Divide Circle</translation>
     </message>
     <message>
         <source>Line of Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Linje av poäng</translation>
     </message>
     <message>
         <source>By Arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Av Arc</translation>
     </message>
     <message>
         <source>Para&amp;bola 4 points</source>
-        <translation type="unfinished"></translation>
+        <translation>Para&amp;bola 4 poäng</translation>
     </message>
     <message>
         <source>Parabola &amp;Focus Directrix</source>
-        <translation type="unfinished"></translation>
+        <translation>Parabola &amp; Focus Directrix</translation>
     </message>
     <message>
         <source>&amp;Pick Pen From Entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Pick Pen från Entity</translation>
     </message>
     <message>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pick Pen från Entity (Resolved)</translation>
     </message>
     <message>
         <source>Apply Pen to Entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Applicera Pen till Entity</translation>
     </message>
     <message>
         <source>Copy Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Copy Pen</translation>
     </message>
     <message>
         <source>Line Join</source>
-        <translation type="unfinished"></translation>
+        <translation>Line går med</translation>
     </message>
     <message>
         <source>Duplicate</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplicera</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation type="unfinished"></translation>
+        <source>Update Current Pen by Active Layer' Pen</source>
+        <translation>Uppdatering Nuvarande Pen av Aktiv Layer Pen</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
     <message>
         <source>Export as</source>
-        <translation type="unfinished"></translation>
+        <translation>Export som</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionLayersExport</name>
     <message>
-        <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation type="unfinished"></translation>
+        <source>Saving layer "%1" as "%2" </source>
+        <translation>Spara lager "%1" som "%2"</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionPenApply</name>
     <message>
         <source>Specify entity to pick the pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange entitet för att välja penna</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Specify entity to apply pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange enhet för att tillämpa penna</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionPenPick</name>
     <message>
         <source>Specify entity to pick the pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange entitet för att välja penna</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionSnapMiddleManual</name>
     <message>
         <source>Specify percentage / start-point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange procent / startpunkt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Specify start point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange startpunkt</translation>
     </message>
     <message>
         <source>Specify end point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange slutpunkt</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
 </context>
 <context>
     <name>LC_CircleByArcOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulär</translation>
     </message>
     <message>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivt</translation>
     </message>
     <message>
         <source>Original</source>
-        <translation type="unfinished"></translation>
+        <translation>Ursprunglig original</translation>
     </message>
     <message>
         <source>Original Resolved</source>
-        <translation type="unfinished"></translation>
+        <translation>Originalupplöst</translation>
     </message>
     <message>
         <source>Radius Shift:</source>
-        <translation type="unfinished"></translation>
+        <translation>Radius Shift:</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Lager:</translation>
+        <translation>Layer:</translation>
     </message>
     <message>
         <source>Replace arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Ersätt arc</translation>
     </message>
     <message>
         <source>Pen:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pen:</translation>
     </message>
 </context>
 <context>
     <name>LC_CrossOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulär</translation>
     </message>
     <message>
         <source>Extension</source>
-        <translation type="unfinished"></translation>
+        <translation>Förlängning</translation>
     </message>
     <message>
         <source>Total Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Total längd</translation>
     </message>
     <message>
         <source>Percent</source>
-        <translation type="unfinished"></translation>
+        <translation>Procent</translation>
     </message>
     <message>
         <source>X:</source>
-        <translation type="unfinished"></translation>
+        <translation>X:</translation>
     </message>
     <message>
         <source>Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Vinkel:</translation>
+        <translation>Angle:</translation>
     </message>
 </context>
 <context>
     <name>LC_DeviceOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulär</translation>
     </message>
     <message>
         <source>Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Enhet</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara</translation>
     </message>
 </context>
 <context>
     <name>LC_DlgParabola</name>
     <message>
         <source>Parabola control points cannot be collinear</source>
-        <translation type="unfinished"></translation>
+        <translation>Parabola kontrollpunkter kan inte vara collinear</translation>
     </message>
 </context>
 <context>
     <name>LC_DuplicateOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulär</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Lager:</translation>
+        <translation>Layer:</translation>
     </message>
     <message>
         <source>In Place</source>
-        <translation type="unfinished"></translation>
+        <translation>På plats</translation>
     </message>
     <message>
         <source>Offset X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Offset X:</translation>
     </message>
     <message>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivt</translation>
     </message>
     <message>
         <source>Original</source>
-        <translation type="unfinished"></translation>
+        <translation>Ursprunglig original</translation>
     </message>
     <message>
         <source>Original Resolved</source>
-        <translation type="unfinished"></translation>
+        <translation>Originalupplöst</translation>
     </message>
     <message>
         <source>Offset Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Offset Y:</translation>
     </message>
     <message>
         <source>Pen:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pen:</translation>
     </message>
 </context>
 <context>
     <name>LC_LayerDialogEx</name>
     <message>
         <source>Layer Settings</source>
-        <translation type="unfinished">Lagerinställningar</translation>
+        <translation>Layer Inställningar</translation>
     </message>
     <message>
         <source>Parent Layers Path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Förälder Layers Path:</translation>
     </message>
     <message>
         <source>Layer Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagertyp</translation>
     </message>
     <message>
         <source>Informational</source>
-        <translation type="unfinished"></translation>
+        <translation>Informations</translation>
     </message>
     <message>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation>Normal</translation>
     </message>
     <message>
         <source>Dimensions</source>
-        <translation type="unfinished">Dimensioner</translation>
+        <translation>Dimensioner</translation>
     </message>
     <message>
         <source>Alternative Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternativ position</translation>
     </message>
     <message>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation type="unfinished"></translation>
+        <translation>En Construction Layer har enheter av oändliga raka linjer avsedda att användas för geometrisk konstruktion.
+Innehållet i en Construction Layer ska inte visas i utskrift.</translation>
     </message>
     <message>
         <source>Construction Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Bygglager</translation>
     </message>
     <message>
         <source>Layer Name:</source>
-        <translation type="unfinished">Lagernamn:</translation>
+        <translation>Lagernamn:</translation>
     </message>
     <message>
         <source>Rename Virtual Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Rename Virtual Layer</translation>
     </message>
     <message>
         <source>Add Secondary Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Lägg till sekundärlayer</translation>
     </message>
     <message>
         <source>Add Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Lägg till Layer</translation>
     </message>
     <message>
         <source>Edit Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Edit Layer</translation>
     </message>
     <message>
         <source>Default Pen</source>
-        <translation type="unfinished">Standardpenna</translation>
+        <translation>Default Pen</translation>
     </message>
     <message>
         <source>Rename Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Rename Layer</translation>
     </message>
 </context>
 <context>
     <name>LC_LayerTreeOptionsDialog</name>
     <message>
         <source>Layers Tree Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Layers trädalternativ</translation>
     </message>
     <message>
         <source>Naming Convention</source>
-        <translation type="unfinished"></translation>
+        <translation>Namnkonvention</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
-        <translation type="unfinished"></translation>
+        <translation>Layer Level Name Separator</translation>
     </message>
     <message>
         <source>Secondary Layer Suffixes</source>
-        <translation type="unfinished"></translation>
+        <translation>Sekundära Layer Suffixes</translation>
     </message>
     <message>
         <source>Dimensional</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimensionell</translation>
     </message>
     <message>
         <source>Informational</source>
-        <translation type="unfinished"></translation>
+        <translation>Informations</translation>
     </message>
     <message>
         <source>Alternative Position </source>
-        <translation type="unfinished"></translation>
+        <translation>Alternativ position</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplicerande namn</translation>
     </message>
     <message>
         <source>Prefix</source>
-        <translation type="unfinished"></translation>
+        <translation>Prefix</translation>
     </message>
     <message>
         <source>Suffix</source>
-        <translation type="unfinished"></translation>
+        <translation>Suffix</translation>
     </message>
     <message>
         <source>Display and Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa och Operations</translation>
     </message>
     <message>
         <source>Show full name as ToolTip</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa fullständigt namn som ToolTip</translation>
     </message>
     <message>
         <source>Show layer type icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa lager typ ikoner</translation>
     </message>
     <message>
         <source>Show indented layer names. Ident size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa indragna lagernamn. Identstorlek:</translation>
     </message>
     <message>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillåt omstrukturering via Drag&amp;Drop</translation>
     </message>
     <message>
         <source>Rename secondary layers on primary rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Rename sekundära lager på primärt namn</translation>
     </message>
     <message>
         <source>Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Färger</translation>
     </message>
     <message>
         <source>Matched item in highlight filter mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Matchade objekt i höjdpunkt filterläge</translation>
     </message>
     <message>
         <source>#1E90FF</source>
-        <translation type="unfinished"></translation>
+        <translation>#1E90FF</translation>
     </message>
     <message>
         <source>Virtual layer background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Virtuell lager bakgrund färg</translation>
     </message>
     <message>
         <source>Threeview items separator grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Treview objekt separator rutnät</translation>
     </message>
     <message>
         <source>Selected items background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Valda objekt bakgrundsfärg</translation>
     </message>
     <message>
         <source>Active layer background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiv lager bakgrund färg</translation>
     </message>
     <message>
         <source>Default Pens</source>
-        <translation type="unfinished"></translation>
+        <translation>Default Pens</translation>
     </message>
     <message>
         <source>Normal Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Normal Layer</translation>
     </message>
     <message>
         <source>Dimensional Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimensionell Layer</translation>
     </message>
     <message>
         <source>Informational Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Informationslayer</translation>
     </message>
     <message>
         <source>Alternative Position Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternativ Position Layer</translation>
     </message>
     <message>
         <source>Select Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj färg</translation>
     </message>
 </context>
 <context>
     <name>LC_LayerTreeWidget</name>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter</translation>
     </message>
     <message>
         <source>Looking for matching layer names</source>
-        <translation type="unfinished"></translation>
+        <translation>Letar efter matchande lagernamn</translation>
     </message>
     <message>
         <source>Highlight Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Highlight Mode</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <source>Show all layers</source>
-        <translation type="unfinished">Visa alla lager</translation>
+        <translation>Visa alla lager</translation>
     </message>
     <message>
         <source>Hide all layers</source>
-        <translation type="unfinished">Dölj alla lager</translation>
+        <translation>Dölj alla lager</translation>
     </message>
     <message>
         <source>Show Secondary Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa sekundära lager</translation>
     </message>
     <message>
         <source>Show Active Layer Only</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa Active Layer bara</translation>
     </message>
     <message>
         <source>Expand All</source>
-        <translation type="unfinished"></translation>
+        <translation>Expandera alla</translation>
     </message>
     <message>
         <source>Collapse All</source>
-        <translation type="unfinished"></translation>
+        <translation>Kollapsa alla</translation>
     </message>
     <message>
         <source>Collapse Secondary</source>
-        <translation type="unfinished"></translation>
+        <translation>Kollaps sekundär</translation>
     </message>
     <message>
         <source>Unlock all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Lås upp alla lager</translation>
     </message>
     <message>
         <source>Lock all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Lås alla lager</translation>
     </message>
     <message>
         <source>Add a layer</source>
-        <translation type="unfinished">Lägg till ett lager</translation>
+        <translation>Lägg till ett lager</translation>
     </message>
     <message>
         <source>Add dimensions Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Lägg till dimensioner Layer</translation>
     </message>
     <message>
         <source>Remove layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort lager</translation>
     </message>
     <message>
         <source>Modify layer attributes / rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifiera lager attribut / namn</translation>
     </message>
     <message>
         <source>Flat List Mode)</source>
-        <translation type="unfinished"></translation>
+        <translation>Flat List Mode)</translation>
     </message>
     <message>
         <source>Layer Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Layer Menu</translation>
     </message>
     <message>
         <source>&amp;Add Child Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>och över Child Layer</translation>
     </message>
     <message>
         <source>&amp;Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Rename</translation>
     </message>
     <message>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation type="unfinished"></translation>
+        <translation>Remove Layers (Sub-Tree)</translation>
     </message>
     <message>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopieringsstruktur (Sub-Tree)</translation>
     </message>
     <message>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Duplicate innehåll (Sub-Tree)</translation>
     </message>
     <message>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation type="unfinished"></translation>
+        <translation>och välja enheter (Sub-Tree)</translation>
     </message>
     <message>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera Layer &amp;Attributes</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">&amp;Ta bort lager</translation>
+        <translation>Remove Layer</translation>
     </message>
     <message>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Lägg till Dimensions Sub-Layer</translation>
     </message>
     <message>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Lägg till Info Sub-Layer</translation>
     </message>
     <message>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>och över Alternative View Sub-Layer</translation>
     </message>
     <message>
         <source>&amp;Remove Sub-layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Remove Sub-layers</translation>
     </message>
     <message>
         <source>Convert to Dimensional Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertera till Dimensional Layer</translation>
     </message>
     <message>
         <source>Convert to Info Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertera till Info Layer</translation>
     </message>
     <message>
         <source>Convert to Alternative Position Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertera till Alternativ Position Layer</translation>
     </message>
     <message>
         <source>Convert to Normal Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertera till Normal Layer</translation>
     </message>
     <message>
-        <source>&amp;Select Layer&apos;s Entities</source>
-        <translation type="unfinished"></translation>
+        <source>&amp;Select Layer's Entities</source>
+        <translation>och välja Layers enheter</translation>
     </message>
     <message>
         <source>&amp;Create Layer Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>och Create Layer Copy</translation>
     </message>
     <message>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplicera lager med innehåll</translation>
     </message>
     <message>
         <source>Move Selection to Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Flytta urval till Layer</translation>
     </message>
     <message>
         <source>Duplicate Selection to Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplicate Selection till Layer</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">&amp;Lägg till lager</translation>
+        <translation>och add layer</translation>
     </message>
     <message>
         <source>&amp;Freeze Others Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Frysa andra lager</translation>
     </message>
     <message>
         <source>&amp;Defreeze All Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Defreeze alla lager</translation>
     </message>
     <message>
         <source>&amp;Freeze All Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Freeze alla lager</translation>
     </message>
     <message>
         <source>&amp;Unlock All Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>låsa upp alla lager</translation>
     </message>
     <message>
         <source>&amp;Lock All Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>och lås alla lager</translation>
     </message>
     <message>
         <source>Enable &amp;Printing All Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera och skriva alla lager</translation>
     </message>
     <message>
         <source>&amp;Disable Printing All Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Disable utskrift alla lager</translation>
     </message>
     <message>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>och ta bort tomma lager</translation>
     </message>
 </context>
 <context>
     <name>LC_LineAngleRelOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulär</translation>
     </message>
     <message>
         <source>Offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Offset:</translation>
     </message>
     <message>
         <source>Free</source>
-        <translation type="unfinished"></translation>
+        <translation>Gratis gratis</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Börja</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation type="unfinished"></translation>
+        <translation>Mellan</translation>
     </message>
     <message>
         <source>End</source>
-        <translation type="unfinished"></translation>
+        <translation>Slut</translation>
     </message>
     <message>
         <source>Line Snap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Line Snap:</translation>
     </message>
     <message>
         <source>Rel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Dela</translation>
     </message>
     <message>
         <source>Tick Snap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tick Snap:</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished">Längd:</translation>
+        <translation>Längd:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Vinkel:</translation>
+        <translation>Angle:</translation>
     </message>
     <message>
         <source>Snap Distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap distans:</translation>
     </message>
 </context>
 <context>
     <name>LC_LineFromPointToLineOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulär</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Vinkel:</translation>
+        <translation>Angle:</translation>
     </message>
     <message>
         <source>Size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Storlek:</translation>
     </message>
     <message>
         <source>Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Ortogonal</translation>
     </message>
     <message>
         <source>To Intersection</source>
-        <translation type="unfinished"></translation>
+        <translation>Till korsning</translation>
     </message>
     <message>
         <source>Fixed Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Fast längd</translation>
     </message>
     <message>
         <source>End offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Slutför kompensation:</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Börja</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation type="unfinished"></translation>
+        <translation>Mellan</translation>
     </message>
     <message>
         <source>End</source>
-        <translation type="unfinished"></translation>
+        <translation>Slut</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished">Längd:</translation>
+        <translation>Längd:</translation>
     </message>
     <message>
         <source>Snap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap:</translation>
     </message>
 </context>
 <context>
     <name>LC_LineJoinOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulär</translation>
     </message>
     <message>
         <source>Extend/Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Förlängning/Trim</translation>
     </message>
     <message>
         <source>Add segment</source>
-        <translation type="unfinished"></translation>
+        <translation>Add segment</translation>
     </message>
     <message>
         <source>No change</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen förändring</translation>
     </message>
     <message>
         <source>Create Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Skapa polyline</translation>
     </message>
     <message>
         <source>Attributes:</source>
-        <translation type="unfinished"></translation>
+        <translation>Attribut:</translation>
     </message>
     <message>
         <source>Active Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiv penna</translation>
     </message>
     <message>
         <source>Line 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Linje 1</translation>
     </message>
     <message>
         <source>Line 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Linje 2</translation>
     </message>
     <message>
         <source>Both lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Båda linjerna</translation>
     </message>
     <message>
         <source>Remove originals</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort original</translation>
     </message>
     <message>
         <source>Line 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>Linje 2:</translation>
     </message>
     <message>
         <source>Line 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Linje 1:</translation>
     </message>
 </context>
 <context>
     <name>LC_LinePointsOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulär</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Vinkel:</translation>
+        <translation>Angle:</translation>
     </message>
     <message>
         <source>Fit Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Fit Line</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Ingen</translation>
+        <translation>Ingen</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation type="unfinished"></translation>
+        <translation>Båda båda</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Börja</translation>
     </message>
     <message>
         <source>End</source>
-        <translation type="unfinished"></translation>
+        <translation>Slut</translation>
     </message>
     <message>
         <source>Edge Points:</source>
-        <translation type="unfinished"></translation>
+        <translation>Edge Points:</translation>
     </message>
     <message>
         <source>Number of points:</source>
-        <translation type="unfinished"></translation>
+        <translation>Antal poäng:</translation>
     </message>
     <message>
         <source>Fixed Distance</source>
-        <translation type="unfinished"></translation>
+        <translation>Fast avstånd</translation>
     </message>
 </context>
 <context>
@@ -1945,869 +1948,871 @@ or [%2]</source>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulär</translation>
     </message>
     <message>
         <source>Remove Segments</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort segment</translation>
     </message>
     <message>
         <source>Remove Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Remove Selected</translation>
     </message>
 </context>
 <context>
     <name>LC_ModifyGapOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulär</translation>
     </message>
     <message>
         <source>Gap Snap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gap Snap:</translation>
     </message>
     <message>
         <source>Snap Distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap distans:</translation>
     </message>
     <message>
         <source>Free</source>
-        <translation type="unfinished"></translation>
+        <translation>Gratis gratis</translation>
     </message>
     <message>
         <source>Gap Size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gap Size:</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Börja</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation type="unfinished"></translation>
+        <translation>Mellan</translation>
     </message>
     <message>
         <source>End</source>
-        <translation type="unfinished"></translation>
+        <translation>Slut</translation>
     </message>
     <message>
         <source>Line Snap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Line Snap:</translation>
     </message>
 </context>
 <context>
     <name>LC_PenPaletteOptionsDialog</name>
     <message>
         <source>Pen Palette Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Pen Palette Inställningar</translation>
     </message>
     <message>
         <source>Columns to display</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolumner för att visa</translation>
     </message>
     <message>
         <source>Line Type Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjetypnamn</translation>
     </message>
     <message>
         <source>Color Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Färgnamn</translation>
     </message>
     <message>
         <source>Line Type Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjetyp Ikon</translation>
     </message>
     <message>
         <source>Color Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Färg Icon</translation>
     </message>
     <message>
         <source>Line Width Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Line Width Icon</translation>
     </message>
     <message>
         <source>Line Width Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjebreddsnamn</translation>
     </message>
     <message>
         <source>Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Färger</translation>
     </message>
     <message>
         <source>Active Pen Background:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiv penna bakgrund:</translation>
     </message>
     <message>
         <source>Entire table row is bold for active pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Hela tabellraden är djärv för aktiv penna</translation>
     </message>
     <message>
         <source>Grid Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Grid Color:</translation>
     </message>
     <message>
         <source>Matched Item Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Matchad objektfärg:</translation>
     </message>
     <message>
         <source>Case-insensitive pens filtering</source>
-        <translation type="unfinished"></translation>
+        <translation>Case-insensitive pennfiltrering</translation>
     </message>
     <message>
         <source>Controls whether tooltip will be shown for table item or not</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontroller om tooltip visas för tabellobjekt eller inte</translation>
     </message>
     <message>
         <source>Show tooltip for table items</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa tooltip för tabellobjekt</translation>
     </message>
     <message>
         <source>Pens file:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pens-fil:</translation>
     </message>
     <message>
         <source>Show colorn name as</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa färgnamn som</translation>
     </message>
     <message>
         <source>HEX</source>
-        <translation type="unfinished"></translation>
+        <translation>HEX</translation>
     </message>
     <message>
         <source>RGB</source>
-        <translation type="unfinished"></translation>
+        <translation>RGB</translation>
     </message>
     <message>
         <source>Natural name where possible</source>
-        <translation type="unfinished"></translation>
+        <translation>Naturligt namn där det är möjligt</translation>
     </message>
     <message>
         <source>Show info message if no entities may be selected by pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa infomeddelande om inga enheter kan väljas genom penna</translation>
     </message>
     <message>
         <source>On double click on table item</source>
-        <translation type="unfinished"></translation>
+        <translation>På dubbelklicka på tabellobjekt</translation>
     </message>
     <message>
         <source>Do nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>Gör ingenting</translation>
     </message>
     <message>
         <source>Select entities by attributes pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj enheter genom attribut penna</translation>
     </message>
     <message>
         <source>Select entities by drawing pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj enheter genom att rita penna</translation>
     </message>
 </context>
 <context>
     <name>LC_PenPaletteWidget</name>
     <message>
         <source>Pen Palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Pen Palette</translation>
     </message>
     <message>
         <source>Pen Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pen namn:</translation>
     </message>
     <message>
         <source>Color:</source>
-        <translation type="unfinished">Färg:</translation>
+        <translation>Färg:</translation>
     </message>
     <message>
         <source>Filter...</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter...</translation>
     </message>
     <message>
         <source>Highlight Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Highlight Mode</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ:</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished">Bredd:</translation>
+        <translation>Bredd:</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Fyll Pen Editor från Entity Drawing Pen</translation>
     </message>
     <message>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Fyll Pen Editor från Entity Attributes</translation>
     </message>
     <message>
         <source>Select Entities By Drawing Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj enheter genom att dra penna</translation>
     </message>
     <message>
         <source>Select Entities By Pen Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj enheter genom Pen Attributes</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara</translation>
     </message>
     <message>
         <source>Apply Pen To Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Applicera Pen för att välja</translation>
     </message>
     <message>
         <source>Fill Editor Pen by Current Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Fill Editor Pen från Current Pen</translation>
     </message>
     <message>
         <source>Apply Editor Pen As Current Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Applicera redaktör Pen som nuvarande penna</translation>
     </message>
     <message>
         <source>to current</source>
-        <translation type="unfinished"></translation>
+        <translation>till nuvarande</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation type="unfinished"></translation>
+        <source>Update Current Pen by Active Layer' Pen</source>
+        <translation>Uppdatering Nuvarande Pen av Aktiv Layer Pen</translation>
     </message>
     <message>
-        <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation type="unfinished"></translation>
+        <source>Fill Pen Editor from Active Layer's Pen</source>
+        <translation>Fyll Pen Editor från Active Layer's Pen</translation>
     </message>
     <message>
         <source>Pick from Active Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj från Active Layer</translation>
     </message>
     <message>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Applicera redaktör Pen till Active Layer Pen</translation>
     </message>
     <message>
         <source>Apply To Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Ansök till Layer</translation>
     </message>
     <message>
         <source>Remove Selected Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort vald penna</translation>
     </message>
     <message>
         <source>Delete Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Delete Pen</translation>
     </message>
     <message>
         <source>Pens Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Pens Menu</translation>
     </message>
     <message>
         <source>&amp;Apply Pen To Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Apply Pen för att välja</translation>
     </message>
     <message>
         <source>&amp;Set As Current Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ställ in som nuvarande penna</translation>
     </message>
     <message>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Apply Pen till Active Layer</translation>
     </message>
     <message>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Välja enheter med attribut Pen</translation>
     </message>
     <message>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Välja enheter med dragningspenna</translation>
     </message>
     <message>
         <source>&amp;Edit Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera Pen</translation>
     </message>
     <message>
         <source>&amp;Remove Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Remove Pen</translation>
     </message>
     <message>
         <source>&amp;Remove Pens</source>
-        <translation type="unfinished"></translation>
+        <translation>Remove Pens</translation>
     </message>
     <message>
         <source>Pen palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Pen palett</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="unfinished"></translation>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+        <translation>Placering av pennfil ändras, vänligen starta om programmet så att ny pennfil kommer att användas.
+
+Observera att om du sparar penna via redaktör utan omstart sparas aktuella pennor från paletten i den nya filen och därför kommer befintligt innehåll av den att överskridas.</translation>
     </message>
 </context>
 <context>
     <name>LC_Rectangle1PointOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulär</translation>
     </message>
     <message>
         <source>Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Polyline</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished">Höjd:</translation>
+        <translation>Höjd:</translation>
     </message>
     <message>
         <source>Edges:</source>
-        <translation type="unfinished"></translation>
+        <translation>Edges:</translation>
     </message>
     <message>
         <source>Corners:</source>
-        <translation type="unfinished"></translation>
+        <translation>Corners:</translation>
     </message>
     <message>
         <source>Size inner</source>
-        <translation type="unfinished"></translation>
+        <translation>Storlek inre</translation>
     </message>
     <message>
         <source>Length X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Längd X:</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished">Radie:</translation>
+        <translation>Radius:</translation>
     </message>
     <message>
         <source>Snap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap:</translation>
     </message>
     <message>
         <source>Length Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Längd Y:</translation>
     </message>
     <message>
         <source>Top-left</source>
-        <translation type="unfinished"></translation>
+        <translation>Top-left</translation>
     </message>
     <message>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Topp</translation>
     </message>
     <message>
         <source>Top-right</source>
-        <translation type="unfinished"></translation>
+        <translation>Top-höger</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished">Vänster</translation>
+        <translation>Vänstern</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation type="unfinished"></translation>
+        <translation>Mellan</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished">Höger</translation>
+        <translation>Rätt rätt</translation>
     </message>
     <message>
         <source>Bottom-left</source>
-        <translation type="unfinished"></translation>
+        <translation>Bottom-left</translation>
     </message>
     <message>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Bottom</translation>
     </message>
     <message>
         <source>Bottom-right</source>
-        <translation type="unfinished"></translation>
+        <translation>Bottom-höger</translation>
     </message>
     <message>
         <source>Straight</source>
-        <translation type="unfinished"></translation>
+        <translation>Straight</translation>
     </message>
     <message>
         <source>Round</source>
-        <translation type="unfinished"></translation>
+        <translation>Runda</translation>
     </message>
     <message>
         <source>Bevel</source>
-        <translation type="unfinished"></translation>
+        <translation>Bevel</translation>
     </message>
     <message>
         <source>Snap shift</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap skift</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation type="unfinished"></translation>
+        <translation>Båda båda</translation>
     </message>
     <message>
         <source>Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikal</translation>
     </message>
     <message>
         <source>Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Horisontell</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished">Bredd:</translation>
+        <translation>Bredd:</translation>
     </message>
     <message>
         <source>Base Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Base Angle:</translation>
     </message>
 </context>
 <context>
     <name>LC_Rectangle2PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulär</translation>
     </message>
     <message>
         <source>Snap shift</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap skift</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished">Radie:</translation>
+        <translation>Radius:</translation>
     </message>
     <message>
         <source>Edges:</source>
-        <translation type="unfinished"></translation>
+        <translation>Edges:</translation>
     </message>
     <message>
         <source>Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Polyline</translation>
     </message>
     <message>
         <source>End Snap:</source>
-        <translation type="unfinished"></translation>
+        <translation>End Snap:</translation>
     </message>
     <message>
         <source>Corners:</source>
-        <translation type="unfinished"></translation>
+        <translation>Corners:</translation>
     </message>
     <message>
         <source>Length X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Längd X:</translation>
     </message>
     <message>
         <source>Start Snap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Start Snap:</translation>
     </message>
     <message>
         <source>Corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Corner</translation>
     </message>
     <message>
         <source>Mid-Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Mid-Vertical</translation>
     </message>
     <message>
         <source>Mid-Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Mid-horisontal</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation type="unfinished"></translation>
+        <translation>Mellan</translation>
     </message>
     <message>
         <source>Base Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Base Angle:</translation>
     </message>
     <message>
         <source>Straight</source>
-        <translation type="unfinished"></translation>
+        <translation>Straight</translation>
     </message>
     <message>
         <source>Round</source>
-        <translation type="unfinished"></translation>
+        <translation>Runda</translation>
     </message>
     <message>
         <source>Bevel</source>
-        <translation type="unfinished"></translation>
+        <translation>Bevel</translation>
     </message>
     <message>
         <source>Length Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Längd Y:</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation type="unfinished"></translation>
+        <translation>Båda båda</translation>
     </message>
     <message>
         <source>Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikal</translation>
     </message>
     <message>
         <source>Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Horisontell</translation>
     </message>
 </context>
 <context>
     <name>LC_Rectangle3PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulär</translation>
     </message>
     <message>
         <source>Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Polyline</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation type="unfinished"></translation>
+        <translation>Båda båda</translation>
     </message>
     <message>
         <source>Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikal</translation>
     </message>
     <message>
         <source>Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Horisontell</translation>
     </message>
     <message>
         <source>Edges:</source>
-        <translation type="unfinished"></translation>
+        <translation>Edges:</translation>
     </message>
     <message>
         <source>Quadrangle</source>
-        <translation type="unfinished"></translation>
+        <translation>Quadrangle</translation>
     </message>
     <message>
         <source>Fixed Base Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fast Base Angle:</translation>
     </message>
     <message>
         <source>Length X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Längd X:</translation>
     </message>
     <message>
         <source>Straight</source>
-        <translation type="unfinished"></translation>
+        <translation>Straight</translation>
     </message>
     <message>
         <source>Round</source>
-        <translation type="unfinished"></translation>
+        <translation>Runda</translation>
     </message>
     <message>
         <source>Bevel</source>
-        <translation type="unfinished"></translation>
+        <translation>Bevel</translation>
     </message>
     <message>
         <source>Corners:</source>
-        <translation type="unfinished"></translation>
+        <translation>Corners:</translation>
     </message>
     <message>
         <source>Snap shift</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap skift</translation>
     </message>
     <message>
         <source>Length Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Längd Y:</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished">Radie:</translation>
+        <translation>Radius:</translation>
     </message>
     <message>
         <source>Fixed Inner Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fast inre vinkel:</translation>
     </message>
 </context>
 <context>
     <name>LC_SimpleTests</name>
     <message>
         <source>De&amp;bugging</source>
-        <translation type="unfinished">Felsökn&amp;ing</translation>
+        <translation>De&amp;bugging</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Infoga bild</translation>
     </message>
 </context>
 <context>
     <name>LC_SliceDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulär</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Ingen</translation>
+        <translation>Ingen</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation type="unfinished"></translation>
+        <translation>Båda båda</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Börja</translation>
     </message>
     <message>
         <source>End</source>
-        <translation type="unfinished"></translation>
+        <translation>Slut</translation>
     </message>
     <message>
         <source>Edge Tick:</source>
-        <translation type="unfinished"></translation>
+        <translation>Edge Tick:</translation>
     </message>
     <message>
         <source>Rel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Offset:</translation>
     </message>
     <message>
         <source>Count:</source>
-        <translation type="unfinished"></translation>
+        <translation>Räkna:</translation>
     </message>
     <message>
         <source>Start Circle Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Start Circle Angle:</translation>
     </message>
     <message>
         <source>Tick Length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tick Length:</translation>
     </message>
     <message>
         <source>Tick snap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tick snap:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Vinkel:</translation>
+        <translation>Angle:</translation>
     </message>
     <message>
         <source>Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Dela</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation type="unfinished"></translation>
+        <translation>Mellan</translation>
     </message>
     <message>
         <source>Fixed </source>
-        <translation type="unfinished"></translation>
+        <translation>Fast</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation type="unfinished">Avstånd:</translation>
+        <translation>Avstånd:</translation>
     </message>
 </context>
 <context>
     <name>LC_StarOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulär</translation>
     </message>
     <message>
         <source>Radius Inner</source>
-        <translation type="unfinished"></translation>
+        <translation>Radius inre</translation>
     </message>
     <message>
         <source>Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Polyline</translation>
     </message>
     <message>
         <source>Radius Outer</source>
-        <translation type="unfinished"></translation>
+        <translation>Radius Outer</translation>
     </message>
     <message>
         <source>Symmetric</source>
-        <translation type="unfinished"></translation>
+        <translation>Symmetrisk</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nummer:</translation>
     </message>
 </context>
 <context>
     <name>LC_WidgetFactory</name>
     <message>
         <source>Library Browser</source>
-        <translation type="unfinished">Biblioteksvisare</translation>
+        <translation>Library Browser</translation>
     </message>
     <message>
         <source>Command line</source>
-        <translation type="unfinished">Kommandorad</translation>
+        <translation>Command line</translation>
     </message>
     <message>
         <source>Dock</source>
-        <translation type="unfinished"></translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished"></translation>
+        <translation>Float</translation>
     </message>
     <message>
         <source>Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Lines</translation>
     </message>
     <message>
         <source>Circles</source>
-        <translation type="unfinished"></translation>
+        <translation>Cirklar</translation>
     </message>
     <message>
         <source>Freehand</source>
-        <translation type="unfinished"></translation>
+        <translation>Freehand</translation>
     </message>
     <message>
         <source>Ellipses</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellipses</translation>
     </message>
     <message>
         <source>PolyLines</source>
-        <translation type="unfinished"></translation>
+        <translation>Polyliner</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj</translation>
     </message>
     <message>
         <source>Dimensions</source>
-        <translation type="unfinished">Dimensioner</translation>
+        <translation>Dimensioner</translation>
     </message>
     <message>
         <source>Modify</source>
-        <translation type="unfinished">Ändra</translation>
+        <translation>Ändra</translation>
     </message>
     <message>
         <source>Measure</source>
-        <translation type="unfinished"></translation>
+        <translation>Mätning</translation>
     </message>
 </context>
 <context>
     <name>LC_WidgetOptionsDialog</name>
     <message>
         <source>Widget Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Widgetalternativ</translation>
     </message>
     <message>
         <source>Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Toolbar</translation>
     </message>
     <message>
         <source>Icon Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikonstorlek</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>General general</translation>
     </message>
     <message>
         <source>Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stil</translation>
     </message>
     <message>
         <source>Style Sheet</source>
-        <translation type="unfinished"></translation>
+        <translation>Stil Sheet</translation>
     </message>
     <message>
         <source>Statusbar</source>
-        <translation type="unfinished">Statusrad</translation>
+        <translation>Statusbar</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Höjd</translation>
     </message>
     <message>
         <source>Font Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Font Size</translation>
     </message>
     <message>
         <source>Input the path of a Qt style sheet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inmata vägen för en Qt stil ark.</translation>
     </message>
     <message>
         <source>side length in pixels</source>
-        <translation type="unfinished"></translation>
+        <translation>sidlängd i pixlar</translation>
     </message>
     <message>
         <source>Use themed icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Använd tema ikoner</translation>
     </message>
     <message>
         <source>Left toolbar columns:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vänster toolbar kolumner:</translation>
     </message>
 </context>
 <context>
     <name>LG_DimzerosBox</name>
     <message>
         <source>select:</source>
-        <translation type="unfinished"></translation>
+        <translation>välj:</translation>
     </message>
     <message>
         <source>remove left</source>
-        <translation type="unfinished"></translation>
+        <translation>avlägsna vänster</translation>
     </message>
     <message>
         <source>remove right</source>
-        <translation type="unfinished"></translation>
+        <translation>ta bort rätt</translation>
     </message>
     <message>
-        <source>remove 0&apos;</source>
-        <translation type="unfinished"></translation>
+        <source>remove 0'</source>
+        <translation>ta bort 0</translation>
     </message>
     <message>
-        <source>remove 0&quot;</source>
-        <translation type="unfinished"></translation>
+        <source>remove 0"</source>
+        <translation>ta bort 0"</translation>
     </message>
 </context>
 <context>
     <name>PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Line Relative Angle Options</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Spacing:</translation>
     </message>
     <message>
         <source>Distance from original polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Avstånd från original polyline</translation>
     </message>
     <message>
         <source>Copies:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopior:</translation>
     </message>
 </context>
 <context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj objekt:</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
 </context>
 <context>
     <name>QC_ActionGetPoint</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
 </context>
 <context>
     <name>QC_ActionGetSelect</name>
     <message>
         <source>Select objects:</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj objekt:</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
 </context>
 <context>
@@ -2858,15 +2863,15 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>&amp;Cascade</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Cascade</translation>
     </message>
     <message>
         <source>&amp;Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tile</translation>
     </message>
     <message>
         <source>Tile &amp;Horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Tile &amp; Horisontellt</translation>
     </message>
     <message>
         <source>Creating new file...</source>
@@ -2898,23 +2903,23 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>File</source>
-        <translation type="unfinished">Arkiv</translation>
+        <translation>Fil</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Redigera</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished">Visa</translation>
+        <translation>Utsikt</translation>
     </message>
     <message>
         <source>Pen</source>
-        <translation type="unfinished">Penna</translation>
+        <translation>Penna Pen Pen Pen Penna</translation>
     </message>
     <message>
         <source>Tool Options</source>
-        <translation type="unfinished">Verktygsalternativ</translation>
+        <translation>Verktygsalternativ</translation>
     </message>
     <message>
         <source>Layer List</source>
@@ -2969,8 +2974,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Kommandorad</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Block &quot;%1&quot;</translation>
+        <source>Block '%1'</source>
+        <translation>Block "%1"</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -2982,402 +2987,408 @@ Kontrollera rättigheterna.</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Polyline</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Importera import</translation>
     </message>
     <message>
         <source>&amp;Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>ochToolbars</translation>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Autosparande ritning...</translation>
     </message>
     <message>
         <source>Auto-saved drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Autobesparad ritning</translation>
     </message>
     <message>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
 Auto-save disabled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte auto-spara filen
+%1
+Vänligen kontrollera behörigheterna.
+Auto-save inaktiverad.</translation>
     </message>
     <message>
         <source>Version: %1</source>
-        <translation type="unfinished">Version: %1</translation>
+        <translation>Version: %1</translation>
     </message>
     <message>
         <source>Compiled on: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Sammanställd på: %1</translation>
     </message>
     <message>
         <source>Warning: File already opened : </source>
-        <translation type="unfinished"></translation>
+        <translation>Varning: Fil öppnade redan:</translation>
     </message>
     <message>
         <source>Cannot save the file </source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte spara filen</translation>
     </message>
     <message>
         <source> , please check the filename and permissions.</source>
-        <translation type="unfinished"></translation>
+        <translation>kontrollera filnamn och behörigheter.</translation>
     </message>
     <message>
         <source>Tile &amp;Vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Tile &amp; vertikalt</translation>
     </message>
     <message>
         <source>Ta&amp;b mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta&amp;b mode</translation>
     </message>
     <message>
         <source>New document from template: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nytt dokument från mall:</translation>
     </message>
     <message>
         <source>Select Template aborted</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj mall aborterad</translation>
     </message>
     <message>
         <source>Auto-saving failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Autobesparing misslyckades</translation>
     </message>
     <message>
         <source>Snap Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap Selection</translation>
     </message>
     <message>
         <source>Export as</source>
-        <translation type="unfinished"></translation>
+        <translation>Export som</translation>
     </message>
     <message>
         <source>Compiler: Clang %1.%2.%3</source>
-        <translation type="unfinished"></translation>
+        <translation>Kompilator: Clang %1, %2, %3</translation>
     </message>
     <message>
         <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation type="unfinished"></translation>
+        <translation>Kompilator: GNU GCC %1, %2, %3</translation>
     </message>
     <message>
         <source>Qt Version: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Qt Version: %1</translation>
     </message>
     <message>
         <source>Draft Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Draft Mode</translation>
     </message>
     <message>
         <source>Export as PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportera som PDF</translation>
     </message>
     <message>
         <source>Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Export</translation>
     </message>
     <message>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte öppna filen
+%1
+Vänligen kontrollera dess existens och tillstånd.</translation>
     </message>
     <message>
-        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation type="unfinished"></translation>
+        <source>File '%1' does not exist. Opening aborted</source>
+        <translation>Fil "%1" finns inte. Öppnande aborterad</translation>
     </message>
     <message>
         <source>Categories</source>
-        <translation type="unfinished"></translation>
+        <translation>Kategorier</translation>
     </message>
     <message>
         <source>&amp;Order</source>
-        <translation type="unfinished"></translation>
+        <translation>och order</translation>
     </message>
     <message>
         <source>Order</source>
-        <translation type="unfinished"></translation>
+        <translation>Order</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation type="unfinished">Cirkel</translation>
+        <translation>Cirkel</translation>
     </message>
     <message>
         <source>&amp;Curve</source>
-        <translation type="unfinished"></translation>
+        <translation>och Curve</translation>
     </message>
     <message>
         <source>Curve</source>
-        <translation type="unfinished"></translation>
+        <translation>Curve</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation type="unfinished">Ellips</translation>
+        <translation>Ellipse</translation>
     </message>
     <message>
         <source>Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Polyline</translation>
     </message>
     <message>
         <source>Dimension</source>
-        <translation type="unfinished">Dimension</translation>
+        <translation>Dimension</translation>
     </message>
     <message>
         <source>Modify</source>
-        <translation type="unfinished">Ändra</translation>
+        <translation>Ändra</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Dock Areas</source>
-        <translation type="unfinished"></translation>
+        <translation>Dock Areas</translation>
     </message>
     <message>
         <source>Grid Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Grid Status</translation>
     </message>
     <message>
         <source>Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>Toolbars</translation>
     </message>
     <message>
         <source>Dockwidgets</source>
-        <translation type="unfinished"></translation>
+        <translation>Dockwidgets</translation>
     </message>
     <message>
         <source>Device Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Enhetsalternativ</translation>
     </message>
     <message>
         <source>Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Enhet</translation>
     </message>
     <message>
         <source>&amp;Options</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Options</translation>
     </message>
     <message>
         <source>Pl&amp;ugins</source>
-        <translation type="unfinished"></translation>
+        <translation>Pl&amp;ugins</translation>
     </message>
     <message>
         <source>Dime&amp;nsion</source>
-        <translation type="unfinished"></translation>
+        <translation>Dime&amp;nsion</translation>
     </message>
     <message>
         <source>Dock Wid&amp;gets</source>
-        <translation type="unfinished"></translation>
+        <translation>Dock Wid&amp;gets</translation>
     </message>
     <message>
         <source>Recent Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Nya filer</translation>
     </message>
     <message>
         <source>Compiler: Microsoft Visual C++</source>
-        <translation type="unfinished"></translation>
+        <translation>Kompilator: Microsoft Visual C++</translation>
     </message>
     <message>
         <source>Boost Version: %1.%2.%3</source>
-        <translation type="unfinished"></translation>
+        <translation>Öka versionen: %1, %2, %3</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Kopiera</translation>
+        <translation>Kopiera</translation>
     </message>
     <message>
         <source>Contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>Bidragsgivare</translation>
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Licens</translation>
     </message>
     <message>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Systemsystem</translation>
     </message>
     <message>
         <source>Toolbar Creator</source>
-        <translation type="unfinished"></translation>
+        <translation>Toolbar Creator</translation>
     </message>
     <message>
         <source>Menu Creator</source>
-        <translation type="unfinished"></translation>
+        <translation>Menu Creator</translation>
     </message>
     <message>
         <source>Menu Assigner</source>
-        <translation type="unfinished"></translation>
+        <translation>Menu Assigner</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>och verktyg</translation>
     </message>
     <message>
         <source>&amp;Drawings</source>
-        <translation type="unfinished"></translation>
+        <translation>och disk</translation>
     </message>
     <message>
         <source>Saving drawing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara ritning: %1</translation>
     </message>
     <message>
         <source>Save cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara inställd</translation>
     </message>
     <message>
         <source>Closing Drawing</source>
-        <translation type="unfinished">Stänger ritning</translation>
+        <translation>Sluta rita</translation>
     </message>
     <message>
         <source>Save changes to the following item?
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara ändringar i följande objekt?
+%1</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished">&amp;Spara</translation>
+        <translation>och spara</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="unfinished">Spara so&amp;m...</translation>
+        <translation>Spara och...</translation>
     </message>
     <message>
         <source>&amp;Save %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara %1</translation>
     </message>
     <message>
         <source>Save %1 &amp;as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara %1 och...</translation>
     </message>
     <message>
         <source>&amp;Window mode</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Window läge</translation>
     </message>
     <message>
         <source>&amp;Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Layout</translation>
     </message>
     <message>
         <source>Rounded</source>
-        <translation type="unfinished"></translation>
+        <translation>Rundade</translation>
     </message>
     <message>
         <source>Triangular</source>
-        <translation type="unfinished"></translation>
+        <translation>Triangulär</translation>
     </message>
     <message>
         <source>North</source>
-        <translation type="unfinished"></translation>
+        <translation>Nord</translation>
     </message>
     <message>
         <source>South</source>
-        <translation type="unfinished"></translation>
+        <translation>Södra söder</translation>
     </message>
     <message>
         <source>East</source>
-        <translation type="unfinished"></translation>
+        <translation>Öst</translation>
     </message>
     <message>
         <source>West</source>
-        <translation type="unfinished"></translation>
+        <translation>Västvärlden</translation>
     </message>
     <message>
         <source>&amp;Arrange</source>
-        <translation type="unfinished"></translation>
+        <translation>och Arrange</translation>
     </message>
     <message>
         <source>&amp;Maximized</source>
-        <translation type="unfinished"></translation>
+        <translation>och Maximerad</translation>
     </message>
     <message>
         <source>Save All cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara alla inställda</translation>
     </message>
     <message>
         <source>Close All cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Nära alla inställda</translation>
     </message>
     <message>
         <source>The Code</source>
-        <translation type="unfinished"></translation>
+        <translation>Koden</translation>
     </message>
     <message>
         <source>Cmd</source>
-        <translation type="unfinished"></translation>
+        <translation>Cmd</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished"></translation>
+        <translation>Float</translation>
     </message>
     <message>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
-        <translation type="unfinished"></translation>
+        <translation>och wiki</translation>
     </message>
     <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="unfinished"></translation>
+        <source>User's &amp;Manual</source>
+        <translation>Användarens &amp; Manual</translation>
     </message>
     <message>
         <source>&amp;Commands</source>
-        <translation type="unfinished"></translation>
+        <translation>och kommandon</translation>
     </message>
     <message>
         <source>&amp;Style Sheets</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Style Sheets</translation>
     </message>
     <message>
         <source>Wid&amp;gets</source>
-        <translation type="unfinished"></translation>
+        <translation>Wid&amp;gets</translation>
     </message>
     <message>
         <source>&amp;Forum</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Forum</translation>
     </message>
     <message>
         <source>Zulip &amp;Chat</source>
-        <translation type="unfinished"></translation>
+        <translation>Zulip och chat</translation>
     </message>
     <message>
         <source>&amp;Release Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Release Information</translation>
     </message>
     <message>
         <source>On&amp;line</source>
-        <translation type="unfinished"></translation>
+        <translation>On &amp;line</translation>
     </message>
     <message>
         <source>&amp;Donate</source>
-        <translation type="unfinished"></translation>
+        <translation>och Donate</translation>
     </message>
     <message>
         <source>Please adjust scaling and positioning in print preview first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vänligen justera skalning och positionering i tryckförhandsgranskning först.</translation>
     </message>
     <message>
         <source>Pen Palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Pen Palette</translation>
     </message>
     <message>
         <source>Layer Tree</source>
-        <translation type="unfinished"></translation>
+        <translation>Layer Tree</translation>
     </message>
 </context>
 <context>
@@ -3385,38 +3396,42 @@ Please check its existence and permissions.</source>
     <message>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
-        <translation type="unfinished"></translation>
+        <translation>fly</translation>
     </message>
     <message>
         <source>Spacebar: restored snapping mode to normal</source>
-        <translation type="unfinished"></translation>
+        <translation>Spacebar: återställd snappningsläge till normalt</translation>
     </message>
     <message>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Spacebar: tillfälligt ställa in snapping läge till gratis snapping</translation>
     </message>
 </context>
 <context>
     <name>QG_ActiveLayerName</name>
     <message>
         <source>Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Urval</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Current Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuvarande Layer</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC ”-/W3C//DTD HTML 4.0//EN” ”http://www.w3.org/TR/REC-html40/strict.dtd”&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1"/&gt;&lt;style type="text/css"&gt;
+p, li { vitrymd: pre-wrap; }
+&lt;/stil&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-vikt:400; font-stil:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; "&gt; Namn på Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -3431,55 +3446,56 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Renaming Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Renaming Block</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation type="unfinished"></translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>Kunde inte namnge block. Ett block som heter "%1" finns redan.</translation>
     </message>
 </context>
 <context>
     <name>QG_BlockWidget</name>
     <message>
         <source>Rename the active block</source>
-        <translation type="unfinished"></translation>
+        <translation>Namnge det aktiva blocket</translation>
     </message>
     <message>
         <source>Edit the active block
 in a separate window</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera aktivt block
+i ett separat fönster</translation>
     </message>
     <message>
         <source>Insert the active block</source>
-        <translation type="unfinished"></translation>
+        <translation>Sätt in det aktiva blocket</translation>
     </message>
     <message>
         <source>Block Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Block Menu</translation>
     </message>
     <message>
         <source>&amp;Defreeze all Blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Defrize alla block</translation>
     </message>
     <message>
         <source>&amp;Freeze all Blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Freeze alla block</translation>
     </message>
     <message>
         <source>&amp;Add Block</source>
-        <translation type="unfinished">&amp;Lägg till block</translation>
+        <translation>och lägga till block</translation>
     </message>
     <message>
         <source>&amp;Remove Block</source>
-        <translation type="unfinished">&amp;Ta bort block</translation>
+        <translation>och ta bort block</translation>
     </message>
     <message>
         <source>&amp;Edit Block</source>
-        <translation type="unfinished">R&amp;edigera block</translation>
+        <translation>och redigera block</translation>
     </message>
     <message>
         <source>&amp;Toggle Visibility</source>
-        <translation type="unfinished">&amp;Växla synlighet</translation>
+        <translation>och växla synlighet</translation>
     </message>
     <message>
         <source>Show all blocks</source>
@@ -3503,27 +3519,27 @@ in a separate window</source>
     </message>
     <message>
         <source>Create Block</source>
-        <translation type="unfinished">Skapa block</translation>
+        <translation>Skapa block</translation>
     </message>
     <message>
         <source>Add an empty block</source>
-        <translation type="unfinished"></translation>
+        <translation>Lägg till ett tomt block</translation>
     </message>
     <message>
         <source>save the active block to a file</source>
-        <translation type="unfinished"></translation>
+        <translation>spara det aktiva blocket till en fil</translation>
     </message>
     <message>
         <source>Remove block</source>
-        <translation type="unfinished"></translation>
+        <translation>Remove block</translation>
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter</translation>
     </message>
     <message>
         <source>Looking for matching block names</source>
-        <translation type="unfinished"></translation>
+        <translation>Letar efter matchande blocknamn</translation>
     </message>
 </context>
 <context>
@@ -3578,65 +3594,65 @@ in a separate window</source>
     </message>
     <message>
         <source>Dark Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Mörkröd</translation>
     </message>
     <message>
         <source>Dark Yellow</source>
-        <translation type="unfinished"></translation>
+        <translation>Mörk gul</translation>
     </message>
     <message>
         <source>Dark Green</source>
-        <translation type="unfinished"></translation>
+        <translation>Mörk grön</translation>
     </message>
     <message>
         <source>Dark Cyan</source>
-        <translation type="unfinished"></translation>
+        <translation>Dark Cyan</translation>
     </message>
     <message>
         <source>Dark Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Mörkblå</translation>
     </message>
     <message>
         <source>Dark Magenta</source>
-        <translation type="unfinished"></translation>
+        <translation>Mörk Magenta</translation>
     </message>
     <message>
         <source>Dark Gray</source>
-        <translation type="unfinished"></translation>
+        <translation>Dark Gray</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Anpassad</translation>
     </message>
     <message>
         <source>/ColorBox</source>
-        <translation type="unfinished"></translation>
+        <translation>/ColorBox</translation>
     </message>
     <message>
         <source>Custom Picked</source>
-        <translation type="unfinished"></translation>
+        <translation>Anpassad Picked</translation>
     </message>
 </context>
 <context>
     <name>QG_CommandEdit</name>
     <message>
         <source>clear</source>
-        <translation type="unfinished"></translation>
+        <translation>tydliga</translation>
     </message>
 </context>
 <context>
     <name>QG_CommandHistory</name>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished">&amp;Kopiera</translation>
+        <translation>och kopia</translation>
     </message>
     <message>
         <source>Select &amp;All</source>
-        <translation type="unfinished">Markera &amp;allt</translation>
+        <translation>Välj &amp;All</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Clear</translation>
     </message>
 </context>
 <context>
@@ -3651,36 +3667,36 @@ in a separate window</source>
     </message>
     <message>
         <source>Unknown command: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Okänt kommando: %1</translation>
     </message>
     <message>
         <source>Command history and output</source>
-        <translation type="unfinished"></translation>
+        <translation>Kommando historia och output</translation>
     </message>
     <message>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
-        <translation type="unfinished"></translation>
+        <translation>fly</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>......</translation>
     </message>
     <message>
         <source>Dock</source>
-        <translation type="unfinished"></translation>
+        <translation>Dock</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished"></translation>
+        <translation>Float</translation>
     </message>
     <message>
         <source>Command line</source>
-        <translation type="unfinished">Kommandorad</translation>
+        <translation>Command line</translation>
     </message>
     <message>
         <source>Cmd</source>
-        <translation type="unfinished"></translation>
+        <translation>Cmd</translation>
     </message>
 </context>
 <context>
@@ -3695,18 +3711,18 @@ in a separate window</source>
     <message>
         <source>R</source>
         <comment>Radial dimension prefix</comment>
-        <translation type="unfinished"></translation>
+        <translation>R</translation>
     </message>
 </context>
 <context>
     <name>QG_DimensionLabelEditor</name>
     <message>
         <source>Dimension Label Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimension Label Editor</translation>
     </message>
     <message>
         <source>Dimension Label:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimension Label:</translation>
     </message>
     <message>
         <source>Label:</source>
@@ -3734,32 +3750,32 @@ in a separate window</source>
     </message>
     <message>
         <source>⌀ (Diameter)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Diameter)</translation>
     </message>
     <message>
         <source>π (Pi)</source>
-        <translation type="unfinished"></translation>
+        <translation>π (Pi)</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Format of the dimension text, &amp;lt;&amp;gt; can be used as a placeholder for the dimension measurement value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Format för dimensionstexten, &lt; &gt; kan användas som platshållare för dimensionsmätningsvärdet&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>R</source>
         <comment>Radial dimension prefix</comment>
-        <translation type="unfinished"></translation>
+        <translation>R</translation>
     </message>
     <message>
         <source>R</source>
         <comment>Radial dimesnion prefix</comment>
-        <translation type="unfinished"></translation>
+        <translation>R</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgArc</name>
     <message>
         <source>Arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Arc</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -3775,23 +3791,23 @@ in a separate window</source>
     </message>
     <message>
         <source>Center (y):</source>
-        <translation type="unfinished">Center (y):</translation>
+        <translation>Center (y):</translation>
     </message>
     <message>
         <source>Center (x):</source>
-        <translation type="unfinished">Center (x):</translation>
+        <translation>Center (x):</translation>
     </message>
     <message>
         <source>Start Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Starta Angle:</translation>
     </message>
     <message>
         <source>End Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>End Angle:</translation>
     </message>
     <message>
         <source>Reversed</source>
-        <translation type="unfinished"></translation>
+        <translation>Omvänd</translation>
     </message>
 </context>
 <context>
@@ -3807,11 +3823,12 @@ in a separate window</source>
     <message>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillämpa attribut även till alla delenheter av utvalda INSERT.
+Detta ändrar återkommande alla enheter i själva blocket.</translation>
     </message>
     <message>
         <source>Apply attributes Block-deep</source>
-        <translation type="unfinished"></translation>
+        <translation>Applicera attribut Block-deep</translation>
     </message>
 </context>
 <context>
@@ -3845,7 +3862,7 @@ This recursively modifies all entities of the Block itself.</source>
     <name>QG_DlgDimLinear</name>
     <message>
         <source>Linear Dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjär dimension</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -3887,42 +3904,42 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Center (y):</source>
-        <translation type="unfinished">Center (y):</translation>
+        <translation>Center (y):</translation>
     </message>
     <message>
         <source>Center (x):</source>
-        <translation type="unfinished">Center (x):</translation>
+        <translation>Center (x):</translation>
     </message>
     <message>
         <source>End Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>End Angle:</translation>
     </message>
     <message>
         <source>Start Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Starta Angle:</translation>
     </message>
     <message>
         <source>Rotation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotation:</translation>
     </message>
     <message>
         <source>Minor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mindre:</translation>
     </message>
     <message>
         <source>Major:</source>
-        <translation type="unfinished"></translation>
+        <translation>Major:</translation>
     </message>
     <message>
         <source>Reversed</source>
-        <translation type="unfinished"></translation>
+        <translation>Omvänd</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgHatch</name>
     <message>
         <source>Choose Hatch Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj Hatch Attributes</translation>
     </message>
     <message>
         <source>Pattern</source>
@@ -3938,74 +3955,74 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Solid Fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Solid Fill</translation>
     </message>
     <message>
         <source>Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Förhandsgranskning</translation>
     </message>
     <message>
         <source>Enable Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Möjlig förhandsgranskning</translation>
     </message>
     <message>
         <source>Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Område</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgImage</name>
     <message>
         <source>Image</source>
-        <translation type="unfinished">Bild</translation>
+        <translation>Bild</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Lager:</translation>
+        <translation>Layer:</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished">Geometri</translation>
+        <translation>Geometri</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished">Bredd:</translation>
+        <translation>Bredd:</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished">Höjd:</translation>
+        <translation>Höjd:</translation>
     </message>
     <message>
         <source>insert (x):</source>
-        <translation type="unfinished"></translation>
+        <translation>infoga (x):</translation>
     </message>
     <message>
         <source>Scale:</source>
-        <translation type="unfinished">Skala:</translation>
+        <translation>Skala:</translation>
     </message>
     <message>
         <source>Size (px):</source>
-        <translation type="unfinished"></translation>
+        <translation>Storlek (px):</translation>
     </message>
     <message>
         <source>path:</source>
-        <translation type="unfinished"></translation>
+        <translation>vägen:</translation>
     </message>
     <message>
         <source>insert (y):</source>
-        <translation type="unfinished"></translation>
+        <translation>infoga (y):</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Vinkel:</translation>
+        <translation>Angle:</translation>
     </message>
     <message>
         <source>DPI</source>
-        <translation type="unfinished"></translation>
+        <translation>DPI</translation>
     </message>
     <message>
         <source>Select an image file</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj en bildfil</translation>
     </message>
 </context>
 <context>
@@ -4027,12 +4044,16 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>Kommandospråk:</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;Välkommen till LibreCAD&lt;/b&gt;
+&lt;/font&gt;
+&lt;br&gt;
+Vänligen välj den enhet du vill använda för nya ritningar och ditt föredragna språk.&lt;br&gt;
+(Du kan ändra dessa inställningar senare.)</translation>
     </message>
 </context>
 <context>
@@ -4051,11 +4072,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Insertion point (x):</source>
-        <translation type="unfinished"></translation>
+        <translation>Insättningspunkt (x):</translation>
     </message>
     <message>
         <source>Insertion point (y):</source>
-        <translation type="unfinished"></translation>
+        <translation>Insättningspunkt (y):</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -4071,26 +4092,26 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Row Spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Row Spacing:</translation>
     </message>
     <message>
         <source>Column Spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Column Spacing:</translation>
     </message>
     <message>
         <source>Scale X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skala X:</translation>
     </message>
     <message>
         <source>Scale Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skala Y:</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgLine</name>
     <message>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4102,723 +4123,723 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>End point (x):</source>
-        <translation type="unfinished"></translation>
+        <translation>Slutpunkt (x):</translation>
     </message>
     <message>
         <source>End point (y):</source>
-        <translation type="unfinished"></translation>
+        <translation>Slutpunkt (y):</translation>
     </message>
     <message>
         <source>Start point (y):</source>
-        <translation type="unfinished"></translation>
+        <translation>Startpunkt (y):</translation>
     </message>
     <message>
         <source>Start point (x):</source>
-        <translation type="unfinished"></translation>
+        <translation>Startpunkt (x):</translation>
     </message>
     <message>
         <source>ID: </source>
-        <translation type="unfinished"></translation>
+        <translation>ID:</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgMText</name>
     <message>
         <source>MText</source>
-        <translation type="unfinished"></translation>
+        <translation>MText</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Lager:</translation>
+        <translation>Layer:</translation>
     </message>
     <message>
         <source>&amp;Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>och höjd:</translation>
     </message>
     <message>
         <source>&amp;Default line spacing</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Default line spacing</translation>
     </message>
     <message>
         <source>Alt+D</source>
-        <translation type="unfinished">Alt+D</translation>
+        <translation>Alt+D</translation>
     </message>
     <message>
         <source>Alignment</source>
-        <translation type="unfinished">Justering</translation>
+        <translation>Inriktning</translation>
     </message>
     <message>
         <source>Top Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Top Right</translation>
     </message>
     <message>
         <source>Top Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Top Left</translation>
     </message>
     <message>
         <source>Middle Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Mellan vänster</translation>
     </message>
     <message>
         <source>Middle Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Middle Center</translation>
     </message>
     <message>
         <source>Middle Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Mellanhöger</translation>
     </message>
     <message>
         <source>Bottom Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Bottom Left</translation>
     </message>
     <message>
         <source>Bottom Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Bottom Right</translation>
     </message>
     <message>
         <source>Bottom Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Bottom Center</translation>
     </message>
     <message>
         <source>Top Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Top Center</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished">Vinkel</translation>
+        <translation>Angle</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation type="unfinished">Text:</translation>
+        <translation>Text:</translation>
     </message>
     <message>
         <source>Clear Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Tydlig text</translation>
     </message>
     <message>
         <source>Load Text From File</source>
-        <translation type="unfinished"></translation>
+        <translation>Ladda text från fil</translation>
     </message>
     <message>
         <source>Save Text To File</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara text till fil</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished">Klipp ut</translation>
+        <translation>Skär</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Kopiera</translation>
+        <translation>Kopiera</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished">Klistra in</translation>
+        <translation>Paste</translation>
     </message>
     <message>
         <source>Insert Symbol</source>
-        <translation type="unfinished">Infoga symbol</translation>
+        <translation>Infoga symbol</translation>
     </message>
     <message>
         <source>Degree (°)</source>
-        <translation type="unfinished">Grad (°)</translation>
+        <translation>Grad (°)</translation>
     </message>
     <message>
         <source>Plus / Minus (±)</source>
-        <translation type="unfinished">Plus / Minus (±)</translation>
+        <translation>Plus / Minus (±)</translation>
     </message>
     <message>
         <source>At (@)</source>
-        <translation type="unfinished"></translation>
+        <translation>På (@)</translation>
     </message>
     <message>
         <source>Hash (#)</source>
-        <translation type="unfinished"></translation>
+        <translation>Hash (#)</translation>
     </message>
     <message>
         <source>Dollar ($)</source>
-        <translation type="unfinished">Dollar ($)</translation>
+        <translation>Dollar ($)</translation>
     </message>
     <message>
         <source>Copyright (©)</source>
-        <translation type="unfinished">Copyright (©)</translation>
+        <translation>Copyright (©)</translation>
     </message>
     <message>
         <source>Registered (®)</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrerad (®)</translation>
     </message>
     <message>
         <source>Paragraph (§)</source>
-        <translation type="unfinished"></translation>
+        <translation>Punkt (§)</translation>
     </message>
     <message>
         <source>Pi (π)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pi (π)</translation>
     </message>
     <message>
         <source>Pound (£)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pound (£)</translation>
     </message>
     <message>
         <source>Yen (¥)</source>
-        <translation type="unfinished">Yen (¥)</translation>
+        <translation>Yen (Yen)</translation>
     </message>
     <message>
         <source>Times (×)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tid (×)</translation>
     </message>
     <message>
         <source>Division (÷)</source>
-        <translation type="unfinished"></translation>
+        <translation>Division (÷)</translation>
     </message>
     <message>
         <source>Insert Unicode</source>
-        <translation type="unfinished"></translation>
+        <translation>Infoga Unicode</translation>
     </message>
     <message>
         <source>Page:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sidan:</translation>
     </message>
     <message>
         <source>Char:</source>
-        <translation type="unfinished"></translation>
+        <translation>Char:</translation>
     </message>
     <message>
         <source>[0000-007F] Basic Latin</source>
-        <translation type="unfinished"></translation>
+        <translation>[00-007F] Grundläggande latin</translation>
     </message>
     <message>
         <source>[0080-00FF] Latin-1 Supplementary</source>
-        <translation type="unfinished"></translation>
+        <translation>[0080-00FF] Latin-1 tillägg</translation>
     </message>
     <message>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation type="unfinished"></translation>
+        <translation>[0100-017F] Latin Extended- Ett</translation>
     </message>
     <message>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation type="unfinished"></translation>
+        <translation>[0180-024F] Latin Extended-B</translation>
     </message>
     <message>
         <source>[0250-02AF] IPA Extensions</source>
-        <translation type="unfinished"></translation>
+        <translation>[0250-02AF] IPA-förlängningar</translation>
     </message>
     <message>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
-        <translation type="unfinished"></translation>
+        <translation>[02B0-02FF] Spacing Modifier Brev</translation>
     </message>
     <message>
         <source>[0300-036F] Combining Diacritical Marks</source>
-        <translation type="unfinished"></translation>
+        <translation>[0300-036F] Kombinera Diakritiska Marknader</translation>
     </message>
     <message>
         <source>[0370-03FF] Greek and Coptic</source>
-        <translation type="unfinished"></translation>
+        <translation>[0370-03FF] grekiska och koptiska</translation>
     </message>
     <message>
         <source>[0400-04FF] Cyrillic</source>
-        <translation type="unfinished"></translation>
+        <translation>[0400-04FF] Cyrillic</translation>
     </message>
     <message>
         <source>[0500-052F] Cyrillic Supplementary</source>
-        <translation type="unfinished"></translation>
+        <translation>[0500-052F] Kyrilliska tillägg</translation>
     </message>
     <message>
         <source>[0530-058F] Armenian</source>
-        <translation type="unfinished"></translation>
+        <translation>[0530-058F] armeniska</translation>
     </message>
     <message>
         <source>[0590-05FF] Hebrew</source>
-        <translation type="unfinished"></translation>
+        <translation>[0590-05F] hebreiska</translation>
     </message>
     <message>
         <source>[0600-06FF] Arabic</source>
-        <translation type="unfinished"></translation>
+        <translation>[0600-06FF] Arabiska</translation>
     </message>
     <message>
         <source>[0700-074F] Syriac</source>
-        <translation type="unfinished"></translation>
+        <translation>[0700-074F] Syriska</translation>
     </message>
     <message>
         <source>[0780-07BF] Thaana</source>
-        <translation type="unfinished"></translation>
+        <translation>[0780-07BF] Thana</translation>
     </message>
     <message>
         <source>[0900-097F] Devanagari</source>
-        <translation type="unfinished"></translation>
+        <translation>[0900-097F] Devanagari</translation>
     </message>
     <message>
         <source>[0980-09FF] Bengali</source>
-        <translation type="unfinished"></translation>
+        <translation>[0980-09FF] Bengali</translation>
     </message>
     <message>
         <source>[0A00-0A7F] Gurmukhi</source>
-        <translation type="unfinished"></translation>
+        <translation>[0A00-0A7F] Gurmukhi</translation>
     </message>
     <message>
         <source>[0A80-0AFF] Gujarati</source>
-        <translation type="unfinished"></translation>
+        <translation>[0A80-0AFF] Gujarati</translation>
     </message>
     <message>
         <source>[0B00-0B7F] Oriya</source>
-        <translation type="unfinished"></translation>
+        <translation>[0B00-0B7F] Oriya</translation>
     </message>
     <message>
         <source>[0B80-0BFF] Tamil</source>
-        <translation type="unfinished"></translation>
+        <translation>[0B80-0BFF] Tamil</translation>
     </message>
     <message>
         <source>[0C00-0C7F] Telugu</source>
-        <translation type="unfinished"></translation>
+        <translation>[0C00-0C7F] Telugu</translation>
     </message>
     <message>
         <source>[0C80-0CFF] Kannada</source>
-        <translation type="unfinished"></translation>
+        <translation>[0C80-0CFF] Kannada</translation>
     </message>
     <message>
         <source>[0D00-0D7F] Malayalam</source>
-        <translation type="unfinished"></translation>
+        <translation>[0D00-0D7F] Malayalam</translation>
     </message>
     <message>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation type="unfinished"></translation>
+        <translation>[0D80-0DFF] Sinhala</translation>
     </message>
     <message>
         <source>[0E00-0E7F] Thai</source>
-        <translation type="unfinished"></translation>
+        <translation>[0E00-0E7F] Thailändska</translation>
     </message>
     <message>
         <source>[0E80-0EFF] Lao</source>
-        <translation type="unfinished"></translation>
+        <translation>[0E80-0EFF] Lao</translation>
     </message>
     <message>
         <source>[0F00-0FFF] Tibetan</source>
-        <translation type="unfinished"></translation>
+        <translation>[0F00-0FF] Tibetanska</translation>
     </message>
     <message>
         <source>[1000-109F] Myanmar</source>
-        <translation type="unfinished"></translation>
+        <translation>[1000-109F] Myanmar</translation>
     </message>
     <message>
         <source>[10A0-10FF] Georgian</source>
-        <translation type="unfinished"></translation>
+        <translation>[10A0-10FF] Georgien</translation>
     </message>
     <message>
         <source>[1100-11FF] Hangul Jamo</source>
-        <translation type="unfinished"></translation>
+        <translation>[1100-11F] Hangul Jamo</translation>
     </message>
     <message>
         <source>[1200-137F] Ethiopic</source>
-        <translation type="unfinished"></translation>
+        <translation>[1200-137F] Etiopisk</translation>
     </message>
     <message>
         <source>[13A0-13FF] Cherokee</source>
-        <translation type="unfinished"></translation>
+        <translation>[13A0-13FF] Cherokee</translation>
     </message>
     <message>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation type="unfinished"></translation>
+        <translation>[1400-167F] Förenade kanadensiska Aboriginal Syllabic</translation>
     </message>
     <message>
         <source>[1680-169F] Ogham</source>
-        <translation type="unfinished"></translation>
+        <translation>[1680-169F] Ogham</translation>
     </message>
     <message>
         <source>[16A0-16FF] Runic</source>
-        <translation type="unfinished"></translation>
+        <translation>[16A0-16FF] Runic</translation>
     </message>
     <message>
         <source>[1700-171F] Tagalog</source>
-        <translation type="unfinished"></translation>
+        <translation>[1700-171F] Tagalog</translation>
     </message>
     <message>
         <source>[1720-173F] Hanunoo</source>
-        <translation type="unfinished"></translation>
+        <translation>[1720-173F] Hanunoo</translation>
     </message>
     <message>
         <source>[1740-175F] Buhid</source>
-        <translation type="unfinished"></translation>
+        <translation>[1740-175F] Buhid</translation>
     </message>
     <message>
         <source>[1760-177F] Tagbanwa</source>
-        <translation type="unfinished"></translation>
+        <translation>[1760-177F] Tagbanwa</translation>
     </message>
     <message>
         <source>[1780-17FF] Khmer</source>
-        <translation type="unfinished"></translation>
+        <translation>[1780-17F] Khmer</translation>
     </message>
     <message>
         <source>[1800-18AF] Mongolian</source>
-        <translation type="unfinished"></translation>
+        <translation>[1800-18AF] mongoliska</translation>
     </message>
     <message>
         <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation type="unfinished"></translation>
+        <translation>[1E00-1EFF] Latin utökade tillägg</translation>
     </message>
     <message>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation type="unfinished"></translation>
+        <translation>[1F00-1FF] grekisk utvidgad</translation>
     </message>
     <message>
         <source>[2000-206F] General Punctuation</source>
-        <translation type="unfinished"></translation>
+        <translation>[2000-206F] Allmän skiljetecken</translation>
     </message>
     <message>
         <source>[2070-209F] Superscripts and Subscripts</source>
-        <translation type="unfinished"></translation>
+        <translation>[2070-209F] Prenumerationer och prenumerationer</translation>
     </message>
     <message>
         <source>[20A0-20CF] Currency Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>[20A0-20CF] Valuta symboler</translation>
     </message>
     <message>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>[20D0-20FF] Kombinera märken för symboler</translation>
     </message>
     <message>
         <source>[2100-214F] Letterlike Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>[2100-214F] Brevlika symboler</translation>
     </message>
     <message>
         <source>[2150-218F] Number Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>[2150-218F] Antalformulär</translation>
     </message>
     <message>
         <source>[2190-21FF] Arrows</source>
-        <translation type="unfinished"></translation>
+        <translation>[2190-21FF] Pilar</translation>
     </message>
     <message>
         <source>[2200-22FF] Mathematical Operators</source>
-        <translation type="unfinished"></translation>
+        <translation>[2200-22FF] matematiska operatörer</translation>
     </message>
     <message>
         <source>[2300-23FF] Miscellaneous Technical</source>
-        <translation type="unfinished"></translation>
+        <translation>[2300-23FF] Tekniska</translation>
     </message>
     <message>
         <source>[2400-243F] Control Pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>[2400-243F] Kontrollera bilder</translation>
     </message>
     <message>
         <source>[2440-245F] Optical Character Recognition</source>
-        <translation type="unfinished"></translation>
+        <translation>[2440-245F] Optisk karaktärsigenkänning</translation>
     </message>
     <message>
         <source>[2460-24FF] Enclosed Alphanumerics</source>
-        <translation type="unfinished"></translation>
+        <translation>[2460-24FF] innesluten alfanumerik</translation>
     </message>
     <message>
         <source>[2500-257F] Box Drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>[2500-257F] boxning</translation>
     </message>
     <message>
         <source>[2580-259F] Block Elements</source>
-        <translation type="unfinished"></translation>
+        <translation>[2580-259F] Blockera element</translation>
     </message>
     <message>
         <source>[25A0-25FF] Geometric Shapes</source>
-        <translation type="unfinished"></translation>
+        <translation>[25A0-25FF] Geometriska former</translation>
     </message>
     <message>
         <source>[2600-26FF] Miscellaneous Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>[2600-26FF] diverse symboler</translation>
     </message>
     <message>
         <source>[2700-27BF] Dingbats</source>
-        <translation type="unfinished"></translation>
+        <translation>[2700-27BF] Dingbats</translation>
     </message>
     <message>
         <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
-        <translation type="unfinished"></translation>
+        <translation>[27C0-27EF] diverse matematiska symboler Ett</translation>
     </message>
     <message>
         <source>[27F0-27FF] Supplemental Arrows-A</source>
-        <translation type="unfinished"></translation>
+        <translation>[27F0-27FF] kompletterande pilar Ett</translation>
     </message>
     <message>
         <source>[2800-28FF] Braille Patterns</source>
-        <translation type="unfinished"></translation>
+        <translation>[2800-28F] Braille Mönster</translation>
     </message>
     <message>
         <source>[2900-297F] Supplemental Arrows-B</source>
-        <translation type="unfinished"></translation>
+        <translation>[2900-297F] Tilläggspilar-B</translation>
     </message>
     <message>
         <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
-        <translation type="unfinished"></translation>
+        <translation>[2980-29FF] diverse matematiska symboler-B</translation>
     </message>
     <message>
         <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
-        <translation type="unfinished"></translation>
+        <translation>[2A00-2AFF] kompletterande matematiska operatörer</translation>
     </message>
     <message>
         <source>[2E80-2EFF] CJK Radicals Supplement</source>
-        <translation type="unfinished"></translation>
+        <translation>[2E80-2EFF] CJK Radicals Supplement</translation>
     </message>
     <message>
         <source>[2F00-2FDF] Kangxi Radicals</source>
-        <translation type="unfinished"></translation>
+        <translation>[2F00-2FDF] Kangxi radikaler</translation>
     </message>
     <message>
         <source>[2FF0-2FFF] Ideographic Description Characters</source>
-        <translation type="unfinished"></translation>
+        <translation>[2FF0-2FF] Ideografiska beskrivningar</translation>
     </message>
     <message>
         <source>[3000-303F] CJK Symbols and Punctuation</source>
-        <translation type="unfinished"></translation>
+        <translation>[3000-303F] CJK symboler och skiljetecken</translation>
     </message>
     <message>
         <source>[3040-309F] Hiragana</source>
-        <translation type="unfinished"></translation>
+        <translation>[3040-309F] Hiragana</translation>
     </message>
     <message>
         <source>[30A0-30FF] Katakana</source>
-        <translation type="unfinished"></translation>
+        <translation>[30A0-30FF] Katakana</translation>
     </message>
     <message>
         <source>[3100-312F] Bopomofo</source>
-        <translation type="unfinished"></translation>
+        <translation>[3100-312F] Bopomofo</translation>
     </message>
     <message>
         <source>[3130-318F] Hangul Compatibility Jamo</source>
-        <translation type="unfinished"></translation>
+        <translation>[3130-318F] Hangul Kompatibilitet Jamo</translation>
     </message>
     <message>
         <source>[3190-319F] Kanbun</source>
-        <translation type="unfinished"></translation>
+        <translation>[3190-319F] Kanbun</translation>
     </message>
     <message>
         <source>[31A0-31BF] Bopomofo Extended</source>
-        <translation type="unfinished"></translation>
+        <translation>[31A0-31BF] Bopomofo utökad</translation>
     </message>
     <message>
         <source>[3200-32FF] Enclosed CJK Letters and Months</source>
-        <translation type="unfinished"></translation>
+        <translation>[3200-32FF] Stängt CJK Brev och Månader</translation>
     </message>
     <message>
         <source>[3300-33FF] CJK Compatibility</source>
-        <translation type="unfinished"></translation>
+        <translation>[3300-33FF] CJK Kompatibilitet</translation>
     </message>
     <message>
         <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
-        <translation type="unfinished"></translation>
+        <translation>CJK Unified Ideographs Extension A</translation>
     </message>
     <message>
         <source>[4E00-9FAF] CJK Unified Ideographs</source>
-        <translation type="unfinished"></translation>
+        <translation>CJK Unified Ideographs</translation>
     </message>
     <message>
         <source>[A000-A48F] Yi Syllables</source>
-        <translation type="unfinished"></translation>
+        <translation>[A000-A48F] Yi Syllables</translation>
     </message>
     <message>
         <source>[A490-A4CF] Yi Radicals</source>
-        <translation type="unfinished"></translation>
+        <translation>[A490-A4CF] Yi Radikaler</translation>
     </message>
     <message>
         <source>[AC00-D7AF] Hangul Syllables</source>
-        <translation type="unfinished"></translation>
+        <translation>[AC00-D7AF] Hangul Syllables</translation>
     </message>
     <message>
         <source>[D800-DBFF] High Surrogates</source>
-        <translation type="unfinished"></translation>
+        <translation>[D800-DBF] Höga surrogat</translation>
     </message>
     <message>
         <source>[DC00-DFFF] Low Surrogate Area</source>
-        <translation type="unfinished"></translation>
+        <translation>[DC00-DFF] Lågt surrogatområde</translation>
     </message>
     <message>
         <source>[E000-F8FF] Private Use Area</source>
-        <translation type="unfinished"></translation>
+        <translation>[E000-F8F] Privat användningsområde</translation>
     </message>
     <message>
         <source>[F900-FAFF] CJK Compatibility Ideographs</source>
-        <translation type="unfinished"></translation>
+        <translation>[F900-FAFF] CJK Compatibility Ideographs</translation>
     </message>
     <message>
         <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>[FB00-FB4F] Alfabetiska presentationsformulär</translation>
     </message>
     <message>
         <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
-        <translation type="unfinished"></translation>
+        <translation>[FB50-FDF] Arabiska presentationsformer Ett</translation>
     </message>
     <message>
         <source>[FE00-FE0F] Variation Selectors</source>
-        <translation type="unfinished"></translation>
+        <translation>[FE00-FE0F] Variationsväljare</translation>
     </message>
     <message>
         <source>[FE20-FE2F] Combining Half Marks</source>
-        <translation type="unfinished"></translation>
+        <translation>[FE20-FE2F] Kombinera Half Marks</translation>
     </message>
     <message>
         <source>[FE30-FE4F] CJK Compatibility Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>[FE30-FE4F] CJK Kompatibilitetsformulär</translation>
     </message>
     <message>
         <source>[FE50-FE6F] Small Form Variants</source>
-        <translation type="unfinished"></translation>
+        <translation>[FE50-FE6F] Små Form Varianter</translation>
     </message>
     <message>
         <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
-        <translation type="unfinished"></translation>
+        <translation>[FE70-FEFF] Arabiska presentationsformulär-B</translation>
     </message>
     <message>
         <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>[FF00-FFEF] Halfwidth och Fullwidth Forms</translation>
     </message>
     <message>
         <source>[FFF0-FFFF] Specials</source>
-        <translation type="unfinished"></translation>
+        <translation>[FFF0-FFF] Specialer</translation>
     </message>
     <message>
         <source>[10300-1032F] Old Italic</source>
-        <translation type="unfinished"></translation>
+        <translation>[10300-1032F] Gamla Italic</translation>
     </message>
     <message>
         <source>[10330-1034F] Gothic</source>
-        <translation type="unfinished"></translation>
+        <translation>[10330-1034F] Gotiska</translation>
     </message>
     <message>
         <source>[10400-1044F] Deseret</source>
-        <translation type="unfinished"></translation>
+        <translation>[10400-1044F] Deseret</translation>
     </message>
     <message>
         <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>[1D000-1D0FF] Bysantinska musikaliska symboler</translation>
     </message>
     <message>
         <source>[1D100-1D1FF] Musical Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>[1D100-1D1FF] Musikaliska symboler</translation>
     </message>
     <message>
         <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>[1D400-1D7F] Matematiska alfanumeriska symboler</translation>
     </message>
     <message>
         <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
-        <translation type="unfinished"></translation>
+        <translation>CJK Unified Ideographs Extension B</translation>
     </message>
     <message>
         <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
-        <translation type="unfinished"></translation>
+        <translation>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</translation>
     </message>
     <message>
         <source>[E0000-E007F] Tags</source>
-        <translation type="unfinished"></translation>
+        <translation>[E00-E007F] Taggar</translation>
     </message>
     <message>
         <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
-        <translation type="unfinished"></translation>
+        <translation>[F0000-FFFD] Tilläggsområde för privat användning Ett</translation>
     </message>
     <message>
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
-        <translation type="unfinished"></translation>
+        <translation>[100000-10FFD] Kompletterande Private Use Area-B</translation>
     </message>
     <message>
         <source>Diameter (⌀)</source>
-        <translation type="unfinished"></translation>
+        <translation>Diameter (=)</translation>
     </message>
     <message>
         <source>&amp;Line spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Line spacing:</translation>
     </message>
     <message>
         <source>Font Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Font Inställningar</translation>
     </message>
     <message>
         <source>Font:</source>
-        <translation type="unfinished"></translation>
+        <translation>Font:</translation>
     </message>
     <message>
         <source>Text Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Textriktning</translation>
     </message>
     <message>
         <source>Left to right</source>
-        <translation type="unfinished"></translation>
+        <translation>Vänster till höger</translation>
     </message>
     <message>
         <source>Right to left</source>
-        <translation type="unfinished"></translation>
+        <translation>Höger till vänster</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgMirror</name>
     <message>
         <source>Mirroring Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Spegelalternativ</translation>
     </message>
     <message>
         <source>Number of copies</source>
-        <translation type="unfinished">Antal kopior</translation>
+        <translation>Antal kopior</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation type="unfinished"></translation>
+        <translation>och Delete Original</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation type="unfinished"></translation>
+        <translation>ochKeep Original</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Använd nuvarande &amp;attributes</translation>
     </message>
     <message>
         <source>Use current &amp;layer</source>
-        <translation type="unfinished">Använd aktuellt &amp;lager</translation>
+        <translation>Använd nuvarande &amp;layer</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>......</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgMove</name>
     <message>
         <source>Number of copies</source>
-        <translation type="unfinished">Antal kopior</translation>
+        <translation>Antal kopior</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation type="unfinished"></translation>
+        <translation>och Delete Original</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation type="unfinished"></translation>
+        <translation>ochKeep Original</translation>
     </message>
     <message>
         <source>&amp;Multiple Copies</source>
-        <translation type="unfinished"></translation>
+        <translation>Flera kopior</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Använd nuvarande &amp;attributes</translation>
     </message>
     <message>
         <source>Use current &amp;layer</source>
-        <translation type="unfinished">Använd aktuellt &amp;lager</translation>
+        <translation>Använd nuvarande &amp;layer</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>......</translation>
     </message>
     <message>
         <source>Move/Copy Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Flytta / kopiera alternativ</translation>
     </message>
     <message>
         <source>Number of copies. Maximum 100</source>
-        <translation type="unfinished"></translation>
+        <translation>Antal kopior. Maximalt 100</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgMoveRotate</name>
     <message>
         <source>Move/Rotate Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Flytta/Rotera alternativ</translation>
     </message>
     <message>
         <source>Number of copies</source>
@@ -4826,66 +4847,66 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>&amp;Angle (a):</source>
-        <translation type="unfinished"></translation>
+        <translation>och vinkel (a):</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Använd nuvarande &amp;attributes</translation>
     </message>
     <message>
         <source>Use current &amp;layer</source>
-        <translation type="unfinished">Använd aktuellt &amp;lager</translation>
+        <translation>Använd nuvarande &amp;layer</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation type="unfinished"></translation>
+        <translation>och Delete Original</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation type="unfinished"></translation>
+        <translation>ochKeep Original</translation>
     </message>
     <message>
         <source>&amp;Multiple Copies</source>
-        <translation type="unfinished"></translation>
+        <translation>Flera kopior</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>......</translation>
     </message>
     <message>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+S</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgOptionsDrawing</name>
     <message>
         <source>Main Unit</source>
-        <translation type="unfinished"></translation>
+        <translation>Huvudenhet</translation>
     </message>
     <message>
         <source>Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Längd</translation>
     </message>
     <message>
         <source>Decimal</source>
-        <translation type="unfinished"></translation>
+        <translation>Decimal</translation>
     </message>
     <message>
         <source>Scientific</source>
-        <translation type="unfinished"></translation>
+        <translation>Vetenskaplig</translation>
     </message>
     <message>
         <source>Engineering</source>
-        <translation type="unfinished"></translation>
+        <translation>Engineering</translation>
     </message>
     <message>
         <source>Architectural</source>
-        <translation type="unfinished"></translation>
+        <translation>Arkitektur</translation>
     </message>
     <message>
         <source>Fractional</source>
-        <translation type="unfinished"></translation>
+        <translation>Fractional</translation>
     </message>
     <message>
         <source>Angle</source>
@@ -4893,27 +4914,27 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Decimal Degrees</source>
-        <translation type="unfinished"></translation>
+        <translation>Decimal Degrees</translation>
     </message>
     <message>
         <source>Radians</source>
-        <translation type="unfinished"></translation>
+        <translation>Radianer</translation>
     </message>
     <message>
         <source>Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Förhandsgranskning</translation>
     </message>
     <message>
         <source>linear</source>
-        <translation type="unfinished"></translation>
+        <translation>linjär</translation>
     </message>
     <message>
         <source>angular</source>
-        <translation type="unfinished"></translation>
+        <translation>angular</translation>
     </message>
     <message>
         <source>Text Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>Texthöjd:</translation>
     </message>
     <message>
         <source>units</source>
@@ -4921,39 +4942,39 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Deg/min/sec</source>
-        <translation type="unfinished"></translation>
+        <translation>Deg/min/sec</translation>
     </message>
     <message>
         <source>Gradians</source>
-        <translation type="unfinished"></translation>
+        <translation>Gradianer</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
-        <translation type="unfinished"></translation>
+        <source>Surveyor's units</source>
+        <translation>Surveyors enheter</translation>
     </message>
     <message>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternativ</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation type="unfinished"></translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>För längdformaten "Engineering" och "Architectural", måste enheten ställas in på Inch.</translation>
     </message>
     <message>
         <source>Arrow size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Råstorlek:</translation>
     </message>
     <message>
         <source>Dimension line gap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimension line gap:</translation>
     </message>
     <message>
         <source>Drawing Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Rita preferenser</translation>
     </message>
     <message>
         <source>&amp;Paper</source>
-        <translation type="unfinished"></translation>
+        <translation>och Paper</translation>
     </message>
     <message>
         <source>&amp;Landscape</source>
@@ -4965,323 +4986,323 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>&amp;Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Units</translation>
     </message>
     <message>
         <source>&amp;Main drawing unit:</source>
-        <translation type="unfinished"></translation>
+        <translation>och huvudritningsenhet:</translation>
     </message>
     <message>
         <source>&amp;Format:</source>
-        <translation type="unfinished"></translation>
+        <translation>och Format:</translation>
     </message>
     <message>
         <source>P&amp;recision:</source>
-        <translation type="unfinished"></translation>
+        <translation>P&amp;recision:</translation>
     </message>
     <message>
         <source>F&amp;ormat:</source>
-        <translation type="unfinished"></translation>
+        <translation>F&amp;ormat:</translation>
     </message>
     <message>
         <source>Pre&amp;cision:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pre&amp;cision:</translation>
     </message>
     <message>
         <source>&amp;Dimensions</source>
-        <translation type="unfinished"></translation>
+        <translation>och dimensioner</translation>
     </message>
     <message>
         <source>Grid Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Grid Inställningar</translation>
     </message>
     <message>
         <source>Show Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Show Grid</translation>
     </message>
     <message>
         <source>X Spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>X Spacing:</translation>
     </message>
     <message>
         <source>Y Spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Y Spacing:</translation>
     </message>
     <message>
         <source>auto</source>
-        <translation type="unfinished">auto</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>och Grid</translation>
     </message>
     <message>
         <source>Number of line segments per spline patch:</source>
-        <translation type="unfinished"></translation>
+        <translation>Antal linjesegment per spline patch:</translation>
     </message>
     <message>
         <source>Crosshair</source>
-        <translation type="unfinished"></translation>
+        <translation>Crosshair</translation>
     </message>
     <message>
         <source>Left crosshair with isometric grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Vänstern crosshair med isometric grid</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished">Vänster</translation>
+        <translation>Vänstern</translation>
     </message>
     <message>
         <source>Top crosshair with isometric grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Top crosshair med isometrisk rutnät</translation>
     </message>
     <message>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Topp</translation>
     </message>
     <message>
         <source>Right crosshair with isometric grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Höger crosshair med isometrisk rutnät</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished">Höger</translation>
+        <translation>Rätt rätt</translation>
     </message>
     <message>
         <source>Use orthogonal grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Använd ortogonalt rutnät</translation>
     </message>
     <message>
         <source>Orthogonal Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Ortogonalt grepp</translation>
     </message>
     <message>
         <source>Use isometric grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Använd Isometric Griid</translation>
     </message>
     <message>
         <source>Isometric Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Isometric Grid</translation>
     </message>
     <message>
         <source>Tick size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tick size:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Dimension Tick storlek. Ställ in den till 0 kommer att inaktivera dimensionen fästing. Dimension pil kommer inte att dras när dimension fästing är aktiverad.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Horisontell</translation>
     </message>
     <message>
         <source>General Scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>General Scale:</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Skala för att multiplicera alla dimensionsvärden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale för att multiplicera alla dimensionsgenometrier.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Text style:</source>
-        <translation type="unfinished"></translation>
+        <translation>Textstil:</translation>
     </message>
     <message>
-        <source>&apos;.&apos; (Period)</source>
-        <translation type="unfinished"></translation>
+        <source>'.' (Period)</source>
+        <translation>"(Period)</translation>
     </message>
     <message>
-        <source>&apos;,&apos; (Comma)</source>
-        <translation type="unfinished"></translation>
+        <source>',' (Comma)</source>
+        <translation>"(Comma)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
-        <translation type="unfinished"></translation>
+        <translation>Decimal separator:</translation>
     </message>
     <message>
         <source>Linear units:</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjära enheter:</translation>
     </message>
     <message>
         <source>Color:</source>
-        <translation type="unfinished">Färg:</translation>
+        <translation>Färg:</translation>
     </message>
     <message>
         <source>Length Factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Längdsfaktor:</translation>
     </message>
     <message>
         <source>Angular units:</source>
-        <translation type="unfinished"></translation>
+        <translation>Angular enheter:</translation>
     </message>
     <message>
         <source>Linear zeros:</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjära nollor:</translation>
     </message>
     <message>
         <source>Format units</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatenheter</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance gap around text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Avståndsklyftan kring text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Text size &amp; position</source>
-        <translation type="unfinished"></translation>
+        <translation>Textstorlek och position</translation>
     </message>
     <message>
         <source>Length to enlarge over dimension line</source>
-        <translation type="unfinished"></translation>
+        <translation>Längd för att förstora över dimensionslinjen</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Dimension pil storlek. &lt;a name="result box"/&gt; utan effekt när tickstorlek &lt;a name="result box"/&gt; är annat än 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished">Bredd:</translation>
+        <translation>Bredd:</translation>
     </message>
     <message>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimension linjer, pilar &amp; fästingar</translation>
     </message>
     <message>
         <source>Angular zeros:</source>
-        <translation type="unfinished"></translation>
+        <translation>Angular nollor:</translation>
     </message>
     <message>
         <source>Angular precision:</source>
-        <translation type="unfinished"></translation>
+        <translation>Angular precision:</translation>
     </message>
     <message>
         <source>Enlarge:</source>
-        <translation type="unfinished"></translation>
+        <translation>Utvidga:</translation>
     </message>
     <message>
         <source>Offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Offset:</translation>
     </message>
     <message>
         <source>Linear precision:</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjär precision:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Textjustering &lt;a name="result box"/&gt;relativ till dimensionslinjen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Aligned</source>
-        <translation type="unfinished"></translation>
+        <translation>Aligned</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Offset från ursprungspunkt.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Text alignment:</source>
-        <translation type="unfinished"></translation>
+        <translation>Textjustering:</translation>
     </message>
     <message>
         <source>Extension lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Förlängningslinjer</translation>
     </message>
     <message>
         <source>Fixed length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fast längd:</translation>
     </message>
     <message>
         <source>Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Format</translation>
     </message>
     <message>
         <source>&amp;Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>och höjd:</translation>
     </message>
     <message>
         <source>&amp;Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>och bredd:</translation>
     </message>
     <message>
         <source>Orientation</source>
-        <translation type="unfinished"></translation>
+        <translation>Orientering</translation>
     </message>
     <message>
         <source>Margins</source>
-        <translation type="unfinished"></translation>
+        <translation>Marginaler</translation>
     </message>
     <message>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Bottom</translation>
     </message>
     <message>
         <source>Number of pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Antal sidor</translation>
     </message>
     <message>
         <source>Horizontally:</source>
-        <translation type="unfinished"></translation>
+        <translation>Horisontellt:</translation>
     </message>
     <message>
         <source>Vertically:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikalt:</translation>
     </message>
     <message>
         <source>fixed extension line length</source>
-        <translation type="unfinished"></translation>
+        <translation>fixerad förlängningslinjelängd</translation>
     </message>
     <message>
         <source>&amp;Splines</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Splines</translation>
     </message>
     <message>
         <source>&amp;Points</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Points</translation>
     </message>
     <message>
         <source>Point Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Point Style</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>......</translation>
     </message>
     <message>
         <source>Point Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Point Size</translation>
     </message>
     <message>
         <source>Dwg Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Dwg enheter</translation>
     </message>
     <message>
         <source>Size relative to screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Storlek i förhållande till skärmen</translation>
     </message>
     <message>
         <source>Size in drawing units</source>
-        <translation type="unfinished"></translation>
+        <translation>Storlek i ritningsenheter</translation>
     </message>
     <message>
         <source>(0 =&gt; 5% relative to screen size)</source>
-        <translation type="unfinished"></translation>
+        <translation>(0 =&gt; 5% i förhållande till skärmstorlek)</translation>
     </message>
     <message>
         <source>Architectural (metric)</source>
-        <translation type="unfinished"></translation>
+        <translation>Arkitektur (metrisk)</translation>
     </message>
     <message>
-        <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation type="unfinished"></translation>
+        <source>For the length format 'Architectural (metric)', the unit must be set to Meter.</source>
+        <translation>För längdformatet "Arkitektur (metrisk)" måste enheten ställas in på Meter.</translation>
     </message>
     <message>
         <source>Screen %</source>
-        <translation type="unfinished"></translation>
+        <translation>Screen %</translation>
     </message>
 </context>
 <context>
@@ -5296,7 +5317,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Hatch Patterns:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hatch Patterns:</translation>
     </message>
     <message>
         <source>Fonts:</source>
@@ -5304,7 +5325,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Part Libraries:</source>
-        <translation type="unfinished"></translation>
+        <translation>Delbibliotek:</translation>
     </message>
     <message>
         <source>Language</source>
@@ -5320,7 +5341,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Defaults for new drawings</source>
-        <translation type="unfinished"></translation>
+        <translation>Standarder för nya ritningar</translation>
     </message>
     <message>
         <source>&amp;Appearance</source>
@@ -5328,23 +5349,23 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>&amp;GUI Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>och Gui språk:</translation>
     </message>
     <message>
         <source>&amp;Command Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kommandospråk:</translation>
     </message>
     <message>
         <source>&amp;Paths</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Paths</translation>
     </message>
     <message>
         <source>&amp;Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>och standarder</translation>
     </message>
     <message>
         <source>&amp;Unit:</source>
-        <translation type="unfinished"></translation>
+        <translation>ochUnit:</translation>
     </message>
     <message>
         <source>Backgr&amp;ound:</source>
@@ -5352,23 +5373,23 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>G&amp;rid Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>G&amp;rid Color:</translation>
     </message>
     <message>
         <source>&amp;Meta Grid Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Meta Grid Color:</translation>
     </message>
     <message>
         <source>A&amp;utomatically scale grid</source>
-        <translation type="unfinished"></translation>
+        <translation>A&amp;utomatiskt skala rutnät</translation>
     </message>
     <message>
         <source>S&amp;elected Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>S &amp; vald färg:</translation>
     </message>
     <message>
         <source>&amp;Highlighted Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>och Highlighted Color:</translation>
     </message>
     <message>
         <source>Please restart the application to apply all changes.</source>
@@ -5384,338 +5405,346 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Program Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Programstandarder</translation>
     </message>
     <message>
         <source>Drawing unit.</source>
-        <translation type="unfinished"></translation>
+        <translation>Rita enheten.</translation>
     </message>
     <message>
         <source>Time between automatic saving of the document in minutes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tid mellan automatisk sparande av dokumentet på några minuter.</translation>
     </message>
     <message>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation>När du ställer in kommer LibreCAD automatiskt att generera en säkerhetskopia av din nuvarande ritning.</translation>
     </message>
     <message>
         <source>Auto backup</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto backup</translation>
     </message>
     <message>
         <source>Template:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mallen:</translation>
     </message>
     <message>
         <source>St&amp;art Handle Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>St&amp;art Handle Color:</translation>
     </message>
     <message>
         <source>&amp;Handle Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>och Sandle Color:</translation>
     </message>
     <message>
         <source>&amp;End Handle Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>och slut Handle Color:</translation>
     </message>
     <message>
         <source>Graphic Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafiska färger</translation>
     </message>
     <message>
         <source>Snap indicator:</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap indikator:</translation>
     </message>
     <message>
         <source>Anti-aliasing</source>
-        <translation type="unfinished"></translation>
+        <translation>Anti-aliasing</translation>
     </message>
     <message>
         <source>Modify layer of selected entities, at  layer activation</source>
-        <translation type="unfinished"></translation>
+        <translation>Ändra lager av utvalda enheter, vid lager aktivering</translation>
     </message>
     <message>
         <source>Clear Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Tydliga inställningar</translation>
     </message>
     <message>
         <source>restores program geometry/layout to original state</source>
-        <translation type="unfinished"></translation>
+        <translation>återställer programgeometri/layout till det ursprungliga tillståndet</translation>
     </message>
     <message>
         <source>Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Layout</translation>
     </message>
     <message>
         <source>restores the program to its original state</source>
-        <translation type="unfinished"></translation>
+        <translation>återställer programmet till sitt ursprungliga tillstånd</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Allt allt</translation>
     </message>
     <message>
         <source>Scrollbars</source>
-        <translation type="unfinished"></translation>
+        <translation>Scrollbars</translation>
     </message>
     <message>
         <source>Snap indicator lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap indikatorlinjer</translation>
     </message>
     <message>
         <source>Snap indicator shape</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap indikator form</translation>
     </message>
     <message>
         <source>Hide cursor when snapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Dölj cursor när snapping</translation>
     </message>
     <message>
         <source>Start in tab mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Börja i flikläge</translation>
     </message>
     <message>
         <source>Startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Startup</translation>
     </message>
     <message>
         <source>Display loading screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Display loading screen</translation>
     </message>
     <message>
         <source>Start with main window maximized</source>
-        <translation type="unfinished"></translation>
+        <translation>Börja med huvudfönster maximerat</translation>
     </message>
     <message>
         <source>Enable CAD dockwidgets</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera CAD dockwidgets</translation>
     </message>
     <message>
         <source>Enable CAD toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera CAD verktygsfält</translation>
     </message>
     <message>
         <source>#1E90FF</source>
-        <translation type="unfinished"></translation>
+        <translation>#1E90FF</translation>
     </message>
     <message>
         <source>Clear settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Tydliga inställningar</translation>
     </message>
     <message>
         <source>This will also include custom menus and toolbars. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Detta kommer också att omfatta anpassade menyer och verktygsfält. Fortsätt?</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; När det är möjligt skulle aktivering av ett lager ändra alla utvalda enheter till det nya lagret. För att ändra lager av flera enheter: först välja behövs enheter; aktivera ett lager i lager widgeten. Detta gör alla utvalda enheter modifierade för att tillhöra det nya lagret.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Variable File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Variabel fil:</translation>
     </message>
     <message>
         <source>Minimal Grid Spacing (p&amp;x):</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimal Grid Spacing (p&amp;x):</translation>
     </message>
     <message>
         <source>N&amp;umber of preview entities:</source>
-        <translation type="unfinished"></translation>
+        <translation>N&amp;umber av förhandsgranskningsenheter:</translation>
     </message>
     <message>
-        <source>Don&apos;t use native OS file open dialog</source>
-        <translation type="unfinished"></translation>
+        <source>Don't use native OS file open dialog</source>
+        <translation>Använd inte inbyggd OS-fil öppen dialogruta</translation>
     </message>
     <message>
         <source>Auto-panning</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto-panning</translation>
     </message>
     <message>
         <source>Hide the relative-&amp;zero marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Dölj den relativa och noll markören</translation>
     </message>
     <message>
         <source>Alt+Z</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Z</translation>
     </message>
     <message>
         <source>Visualize the entity under the cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>Visualisera företaget under markören</translation>
     </message>
     <message>
         <source>Mouse-over effects</source>
-        <translation type="unfinished"></translation>
+        <translation>Mouse-over effekter</translation>
     </message>
     <message>
         <source>&amp;Relative-Zero Marker Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Relativ-Zero Marker Color:</translation>
     </message>
     <message>
         <source>Auto save time (minutes):</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto spara tid (minutes):</translation>
     </message>
     <message>
         <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inverts scrolling riktning när du använder mushjul med Skift nyckel.</translation>
     </message>
     <message>
         <source>Invert horizontal scrolling direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Invert horisontell rullning riktning</translation>
     </message>
     <message>
         <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inverts bläddra riktning när du använder mushjul med Ctrl nyckel.</translation>
     </message>
     <message>
         <source>Invert vertical scrolling direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Invert vertikal rullning riktning</translation>
     </message>
     <message>
         <source>Inverts zoom direction when using mouse wheel.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inverts zoom riktning när man använder mushjul.</translation>
     </message>
     <message>
         <source>Invert zoom direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Invert zoom riktning</translation>
     </message>
     <message>
         <source>Keyboard Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Keyboard Inställningar</translation>
     </message>
     <message>
         <source>Evaluate commands when SPACE BAR is pressed</source>
-        <translation type="unfinished"></translation>
+        <translation>Utvärdera kommandon när SPACE BAR pressas</translation>
     </message>
     <message>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation type="unfinished"></translation>
+        <translation>Växla gratis snap läge när SPACE BAR pressas</translation>
     </message>
     <message>
         <source>CAD Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>CAD Preferences</translation>
     </message>
     <message>
         <source>Automatically zoom drawing when opening</source>
-        <translation type="unfinished"></translation>
+        <translation>Zooma automatiskt när du öppnar</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI', 'Noto Sans', 'Helvetica', 'Arial','sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji'; font-size:14px; färg: #1f2328; bakgrunds:ff #ff Del bibliotek mapp. Symbolbiblioteket dxf-filer måste finnas i underkatalogerna i denna mapp. Undermappnamnen kommer att visas i biblioteket Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system', 'BlinkMacSystemFont','Segoe UI','Noto Sans', 'Help&gt;,'Arial','sans-s#erif', 'Apple Color Emoji', 'Segoe UI Emoji'; fovet-size:14px; färg:1f #</translation>
     </message>
     <message>
         <source>Open last opened files</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna senast öppnade filer</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Växla tillfälligt fri snappning när rymdfältet trycks och kommandofönstret aktiveras&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgOptionsMakerCam</name>
     <message>
         <source>Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Layers</translation>
     </message>
     <message>
         <source>Export invisible layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportera osynliga lager</translation>
     </message>
     <message>
         <source>Export visible construction layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Export synliga byggskikt</translation>
     </message>
     <message>
         <source>Blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Block</translation>
     </message>
     <message>
         <source>Convert blocks to safe inline SVG content</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertera block till säker inline SVG-innehåll</translation>
     </message>
     <message>
         <source>Ellipses / Ellipse arcs</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellipses / Ellipse arcs</translation>
     </message>
     <message>
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungefär ellipser och ellipsbågar med kubiska béziers</translation>
     </message>
     <message>
         <source>Export as CAM/plain SVG</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportera som CAM/plain SVG</translation>
     </message>
     <message>
         <source>Default width of elements, mm</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardbredd av element, mm</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilder</translation>
     </message>
     <message>
         <source>Raster Image export</source>
-        <translation type="unfinished"></translation>
+        <translation>Raster Image export</translation>
     </message>
     <message>
         <source>Dash/Dot Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Dash/Dot Lines</translation>
     </message>
     <message>
         <source>Length of the pattern, mm</source>
-        <translation type="unfinished"></translation>
+        <translation>Mönstrets längd, mm</translation>
     </message>
     <message>
         <source>Bake dash/dot lines to SVG path</source>
-        <translation type="unfinished"></translation>
+        <translation>Bake dash/dot-linjer till SVG-banan</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation type="unfinished"></translation>
+that has been set invisibe ("display: none" or "visibility: hidden").</source>
+        <translation>MakerCAM från november 2014 döljer inte SVG-innehåll
+Det har satts invisibe ("display: none" eller "synlighet: dold").</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
 because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>MakerCAM från och med november 2014 kan inte korrekt hantera block.
+eftersom det inte tar hänsyn till referenspunkten i &lt;använd&gt;.</translation>
     </message>
     <message>
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation type="unfinished"></translation>
+        <translation>MakerCAM från mars 2015 kan inte visa ellipser och ellipsbågar korrekt.
+När de skapas med &lt;ellips&gt; taggen med en rotation i
+&lt;transform&gt; attribut eller som &lt;path&gt; med elliptiska bågsegment.</translation>
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
-        <translation type="unfinished"></translation>
+but avoided in some CAM's.</source>
+        <translation>Exporterade bilder kan vara användbara i SVG-redigerare (Inkscape, etc).
+Men undviks i vissa CAM.</translation>
     </message>
     <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+        <source>Many CAM's(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation type="unfinished"></translation>
+        <translation>Många CAM (MakerCAM, EleskCAM, LaserWeb) ignorerar streckad / doted linje stil,
+som kan vara användbart i lasercut av plywood eller för pappersbruk.</translation>
     </message>
     <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+        <source>Default width of elements can affect some CAM's/SVG Editors, 
 but ignored by other</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardbredd av element kan påverka vissa CAM / SVG Editors,
+men ignoreras av andra</translation>
     </message>
     <message>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation type="unfinished"></translation>
+        <translation>Längd av linjemönster relaterat till zoom,
+så standard steg värde krävs för bakning</translation>
     </message>
     <message>
         <source>Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Poäng</translation>
     </message>
     <message>
         <source>Export Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportpoäng</translation>
     </message>
     <message>
         <source>Whether to export points</source>
-        <translation type="unfinished"></translation>
+        <translation>Huruvida exportera poäng</translation>
     </message>
 </context>
 <context>
@@ -5752,50 +5781,50 @@ so default step value required for baking</source>
     <name>QG_DlgPolyline</name>
     <message>
         <source>Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Polyline</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Lager:</translation>
+        <translation>Layer:</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished">Geometri</translation>
+        <translation>Geometri</translation>
     </message>
     <message>
         <source>Closed</source>
-        <translation type="unfinished">Stängd</translation>
+        <translation>Stängt</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgRotate</name>
     <message>
         <source>Rotation Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotationsalternativ</translation>
     </message>
     <message>
         <source>Number of copies</source>
-        <translation type="unfinished">Antal kopior</translation>
+        <translation>Antal kopior</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation type="unfinished"></translation>
+        <translation>och Delete Original</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation type="unfinished"></translation>
+        <translation>ochKeep Original</translation>
     </message>
     <message>
         <source>&amp;Multiple Copies:</source>
-        <translation type="unfinished"></translation>
+        <translation>Flera kopior:</translation>
     </message>
     <message>
         <source>&amp;Angle (a):</source>
-        <translation type="unfinished"></translation>
+        <translation>och vinkel (a):</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Använd nuvarande &amp;attributes</translation>
     </message>
     <message>
         <source>Use current &amp;layer</source>
@@ -5803,57 +5832,57 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>......</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgRotate2</name>
     <message>
         <source>Rotate Two Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotera två alternativ</translation>
     </message>
     <message>
         <source>Number of copies</source>
-        <translation type="unfinished">Antal kopior</translation>
+        <translation>Antal kopior</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation type="unfinished"></translation>
+        <translation>och Delete Original</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation type="unfinished"></translation>
+        <translation>ochKeep Original</translation>
     </message>
     <message>
         <source>&amp;Multiple Copies</source>
-        <translation type="unfinished"></translation>
+        <translation>Flera kopior</translation>
     </message>
     <message>
         <source>Angle (&amp;a):</source>
-        <translation type="unfinished"></translation>
+        <translation>Angle (&amp;a):</translation>
     </message>
     <message>
         <source>Angle (&amp;b):</source>
-        <translation type="unfinished"></translation>
+        <translation>Angle (&amp;b):</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Använd nuvarande &amp;attributes</translation>
     </message>
     <message>
         <source>Use current &amp;layer</source>
-        <translation type="unfinished">Använd aktuellt &amp;lager</translation>
+        <translation>Använd nuvarande &amp;layer</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>......</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgScale</name>
     <message>
         <source>Scaling Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Skala alternativ</translation>
     </message>
     <message>
         <source>Number of copies</source>
@@ -5861,54 +5890,54 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Använd nuvarande &amp;attributes</translation>
     </message>
     <message>
         <source>Use current &amp;layer</source>
-        <translation type="unfinished">Använd aktuellt &amp;lager</translation>
+        <translation>Använd nuvarande &amp;layer</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation type="unfinished"></translation>
+        <translation>och Delete Original</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation type="unfinished"></translation>
+        <translation>ochKeep Original</translation>
     </message>
     <message>
         <source>&amp;Multiple Copies</source>
-        <translation type="unfinished"></translation>
+        <translation>Flera kopior</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>......</translation>
     </message>
     <message>
         <source>Scale by the same factor at both x- and y- directions</source>
-        <translation type="unfinished"></translation>
+        <translation>Skala av samma faktor vid både x- och y-riktningar</translation>
     </message>
     <message>
         <source>Isotropic Scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>Isotropisk skalning</translation>
     </message>
     <message>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>YTTERLIGARE</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Hitta skalförhållandena runt mitten med en referenspunkt och en målpunkt.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgSpline</name>
     <message>
         <source>Spline</source>
-        <translation type="unfinished"></translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -5939,15 +5968,15 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Clear Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Tydlig text</translation>
     </message>
     <message>
         <source>Load Text From File</source>
-        <translation type="unfinished"></translation>
+        <translation>Ladda text från fil</translation>
     </message>
     <message>
         <source>Save Text To File</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara text till fil</translation>
     </message>
     <message>
         <source>Cut</source>
@@ -5967,39 +5996,39 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Top Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Top Right</translation>
     </message>
     <message>
         <source>Top Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Top Left</translation>
     </message>
     <message>
         <source>Middle Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Mellan vänster</translation>
     </message>
     <message>
         <source>Middle Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Middle Center</translation>
     </message>
     <message>
         <source>Middle Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Mellanhöger</translation>
     </message>
     <message>
         <source>Bottom Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Bottom Left</translation>
     </message>
     <message>
         <source>Bottom Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Bottom Right</translation>
     </message>
     <message>
         <source>Bottom Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Bottom Center</translation>
     </message>
     <message>
         <source>Top Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Top Center</translation>
     </message>
     <message>
         <source>Insert Symbol</source>
@@ -6015,11 +6044,11 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>At (@)</source>
-        <translation type="unfinished"></translation>
+        <translation>På (@)</translation>
     </message>
     <message>
         <source>Hash (#)</source>
-        <translation type="unfinished"></translation>
+        <translation>Hash (#)</translation>
     </message>
     <message>
         <source>Dollar ($)</source>
@@ -6031,19 +6060,19 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Registered (®)</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrerad (®)</translation>
     </message>
     <message>
         <source>Paragraph (§)</source>
-        <translation type="unfinished"></translation>
+        <translation>Punkt (§)</translation>
     </message>
     <message>
         <source>Pi (π)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pi (π)</translation>
     </message>
     <message>
         <source>Pound (£)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pound (£)</translation>
     </message>
     <message>
         <source>Yen (¥)</source>
@@ -6051,515 +6080,515 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Times (×)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tid (×)</translation>
     </message>
     <message>
         <source>Division (÷)</source>
-        <translation type="unfinished"></translation>
+        <translation>Division (÷)</translation>
     </message>
     <message>
         <source>Insert Unicode</source>
-        <translation type="unfinished"></translation>
+        <translation>Infoga Unicode</translation>
     </message>
     <message>
         <source>Page:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sidan:</translation>
     </message>
     <message>
         <source>Char:</source>
-        <translation type="unfinished"></translation>
+        <translation>Char:</translation>
     </message>
     <message>
         <source>[0000-007F] Basic Latin</source>
-        <translation type="unfinished"></translation>
+        <translation>[00-007F] Grundläggande latin</translation>
     </message>
     <message>
         <source>[0080-00FF] Latin-1 Supplementary</source>
-        <translation type="unfinished"></translation>
+        <translation>[0080-00FF] Latin-1 tillägg</translation>
     </message>
     <message>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation type="unfinished"></translation>
+        <translation>[0100-017F] Latin Extended- Ett</translation>
     </message>
     <message>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation type="unfinished"></translation>
+        <translation>[0180-024F] Latin Extended-B</translation>
     </message>
     <message>
         <source>[0250-02AF] IPA Extensions</source>
-        <translation type="unfinished"></translation>
+        <translation>[0250-02AF] IPA-förlängningar</translation>
     </message>
     <message>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
-        <translation type="unfinished"></translation>
+        <translation>[02B0-02FF] Spacing Modifier Brev</translation>
     </message>
     <message>
         <source>[0300-036F] Combining Diacritical Marks</source>
-        <translation type="unfinished"></translation>
+        <translation>[0300-036F] Kombinera Diakritiska Marknader</translation>
     </message>
     <message>
         <source>[0370-03FF] Greek and Coptic</source>
-        <translation type="unfinished"></translation>
+        <translation>[0370-03FF] grekiska och koptiska</translation>
     </message>
     <message>
         <source>[0400-04FF] Cyrillic</source>
-        <translation type="unfinished"></translation>
+        <translation>[0400-04FF] Cyrillic</translation>
     </message>
     <message>
         <source>[0500-052F] Cyrillic Supplementary</source>
-        <translation type="unfinished"></translation>
+        <translation>[0500-052F] Kyrilliska tillägg</translation>
     </message>
     <message>
         <source>[0530-058F] Armenian</source>
-        <translation type="unfinished"></translation>
+        <translation>[0530-058F] armeniska</translation>
     </message>
     <message>
         <source>[0590-05FF] Hebrew</source>
-        <translation type="unfinished"></translation>
+        <translation>[0590-05F] hebreiska</translation>
     </message>
     <message>
         <source>[0600-06FF] Arabic</source>
-        <translation type="unfinished"></translation>
+        <translation>[0600-06FF] Arabiska</translation>
     </message>
     <message>
         <source>[0700-074F] Syriac</source>
-        <translation type="unfinished"></translation>
+        <translation>[0700-074F] Syriska</translation>
     </message>
     <message>
         <source>[0780-07BF] Thaana</source>
-        <translation type="unfinished"></translation>
+        <translation>[0780-07BF] Thana</translation>
     </message>
     <message>
         <source>[0900-097F] Devanagari</source>
-        <translation type="unfinished"></translation>
+        <translation>[0900-097F] Devanagari</translation>
     </message>
     <message>
         <source>[0980-09FF] Bengali</source>
-        <translation type="unfinished"></translation>
+        <translation>[0980-09FF] Bengali</translation>
     </message>
     <message>
         <source>[0A00-0A7F] Gurmukhi</source>
-        <translation type="unfinished"></translation>
+        <translation>[0A00-0A7F] Gurmukhi</translation>
     </message>
     <message>
         <source>[0A80-0AFF] Gujarati</source>
-        <translation type="unfinished"></translation>
+        <translation>[0A80-0AFF] Gujarati</translation>
     </message>
     <message>
         <source>[0B00-0B7F] Oriya</source>
-        <translation type="unfinished"></translation>
+        <translation>[0B00-0B7F] Oriya</translation>
     </message>
     <message>
         <source>[0B80-0BFF] Tamil</source>
-        <translation type="unfinished"></translation>
+        <translation>[0B80-0BFF] Tamil</translation>
     </message>
     <message>
         <source>[0C00-0C7F] Telugu</source>
-        <translation type="unfinished"></translation>
+        <translation>[0C00-0C7F] Telugu</translation>
     </message>
     <message>
         <source>[0C80-0CFF] Kannada</source>
-        <translation type="unfinished"></translation>
+        <translation>[0C80-0CFF] Kannada</translation>
     </message>
     <message>
         <source>[0D00-0D7F] Malayalam</source>
-        <translation type="unfinished"></translation>
+        <translation>[0D00-0D7F] Malayalam</translation>
     </message>
     <message>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation type="unfinished"></translation>
+        <translation>[0D80-0DFF] Sinhala</translation>
     </message>
     <message>
         <source>[0E00-0E7F] Thai</source>
-        <translation type="unfinished"></translation>
+        <translation>[0E00-0E7F] Thailändska</translation>
     </message>
     <message>
         <source>[0E80-0EFF] Lao</source>
-        <translation type="unfinished"></translation>
+        <translation>[0E80-0EFF] Lao</translation>
     </message>
     <message>
         <source>[0F00-0FFF] Tibetan</source>
-        <translation type="unfinished"></translation>
+        <translation>[0F00-0FF] Tibetanska</translation>
     </message>
     <message>
         <source>[1000-109F] Myanmar</source>
-        <translation type="unfinished"></translation>
+        <translation>[1000-109F] Myanmar</translation>
     </message>
     <message>
         <source>[10A0-10FF] Georgian</source>
-        <translation type="unfinished"></translation>
+        <translation>[10A0-10FF] Georgien</translation>
     </message>
     <message>
         <source>[1100-11FF] Hangul Jamo</source>
-        <translation type="unfinished"></translation>
+        <translation>[1100-11F] Hangul Jamo</translation>
     </message>
     <message>
         <source>[1200-137F] Ethiopic</source>
-        <translation type="unfinished"></translation>
+        <translation>[1200-137F] Etiopisk</translation>
     </message>
     <message>
         <source>[13A0-13FF] Cherokee</source>
-        <translation type="unfinished"></translation>
+        <translation>[13A0-13FF] Cherokee</translation>
     </message>
     <message>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation type="unfinished"></translation>
+        <translation>[1400-167F] Förenade kanadensiska Aboriginal Syllabic</translation>
     </message>
     <message>
         <source>[1680-169F] Ogham</source>
-        <translation type="unfinished"></translation>
+        <translation>[1680-169F] Ogham</translation>
     </message>
     <message>
         <source>[16A0-16FF] Runic</source>
-        <translation type="unfinished"></translation>
+        <translation>[16A0-16FF] Runic</translation>
     </message>
     <message>
         <source>[1700-171F] Tagalog</source>
-        <translation type="unfinished"></translation>
+        <translation>[1700-171F] Tagalog</translation>
     </message>
     <message>
         <source>[1720-173F] Hanunoo</source>
-        <translation type="unfinished"></translation>
+        <translation>[1720-173F] Hanunoo</translation>
     </message>
     <message>
         <source>[1740-175F] Buhid</source>
-        <translation type="unfinished"></translation>
+        <translation>[1740-175F] Buhid</translation>
     </message>
     <message>
         <source>[1760-177F] Tagbanwa</source>
-        <translation type="unfinished"></translation>
+        <translation>[1760-177F] Tagbanwa</translation>
     </message>
     <message>
         <source>[1780-17FF] Khmer</source>
-        <translation type="unfinished"></translation>
+        <translation>[1780-17F] Khmer</translation>
     </message>
     <message>
         <source>[1800-18AF] Mongolian</source>
-        <translation type="unfinished"></translation>
+        <translation>[1800-18AF] mongoliska</translation>
     </message>
     <message>
         <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation type="unfinished"></translation>
+        <translation>[1E00-1EFF] Latin utökade tillägg</translation>
     </message>
     <message>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation type="unfinished"></translation>
+        <translation>[1F00-1FF] grekisk utvidgad</translation>
     </message>
     <message>
         <source>[2000-206F] General Punctuation</source>
-        <translation type="unfinished"></translation>
+        <translation>[2000-206F] Allmän skiljetecken</translation>
     </message>
     <message>
         <source>[2070-209F] Superscripts and Subscripts</source>
-        <translation type="unfinished"></translation>
+        <translation>[2070-209F] Prenumerationer och prenumerationer</translation>
     </message>
     <message>
         <source>[20A0-20CF] Currency Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>[20A0-20CF] Valuta symboler</translation>
     </message>
     <message>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>[20D0-20FF] Kombinera märken för symboler</translation>
     </message>
     <message>
         <source>[2100-214F] Letterlike Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>[2100-214F] Brevlika symboler</translation>
     </message>
     <message>
         <source>[2150-218F] Number Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>[2150-218F] Antalformulär</translation>
     </message>
     <message>
         <source>[2190-21FF] Arrows</source>
-        <translation type="unfinished"></translation>
+        <translation>[2190-21FF] Pilar</translation>
     </message>
     <message>
         <source>[2200-22FF] Mathematical Operators</source>
-        <translation type="unfinished"></translation>
+        <translation>[2200-22FF] matematiska operatörer</translation>
     </message>
     <message>
         <source>[2300-23FF] Miscellaneous Technical</source>
-        <translation type="unfinished"></translation>
+        <translation>[2300-23FF] Tekniska</translation>
     </message>
     <message>
         <source>[2400-243F] Control Pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>[2400-243F] Kontrollera bilder</translation>
     </message>
     <message>
         <source>[2440-245F] Optical Character Recognition</source>
-        <translation type="unfinished"></translation>
+        <translation>[2440-245F] Optisk karaktärsigenkänning</translation>
     </message>
     <message>
         <source>[2460-24FF] Enclosed Alphanumerics</source>
-        <translation type="unfinished"></translation>
+        <translation>[2460-24FF] innesluten alfanumerik</translation>
     </message>
     <message>
         <source>[2500-257F] Box Drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>[2500-257F] boxning</translation>
     </message>
     <message>
         <source>[2580-259F] Block Elements</source>
-        <translation type="unfinished"></translation>
+        <translation>[2580-259F] Blockera element</translation>
     </message>
     <message>
         <source>[25A0-25FF] Geometric Shapes</source>
-        <translation type="unfinished"></translation>
+        <translation>[25A0-25FF] Geometriska former</translation>
     </message>
     <message>
         <source>[2600-26FF] Miscellaneous Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>[2600-26FF] diverse symboler</translation>
     </message>
     <message>
         <source>[2700-27BF] Dingbats</source>
-        <translation type="unfinished"></translation>
+        <translation>[2700-27BF] Dingbats</translation>
     </message>
     <message>
         <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
-        <translation type="unfinished"></translation>
+        <translation>[27C0-27EF] diverse matematiska symboler Ett</translation>
     </message>
     <message>
         <source>[27F0-27FF] Supplemental Arrows-A</source>
-        <translation type="unfinished"></translation>
+        <translation>[27F0-27FF] kompletterande pilar Ett</translation>
     </message>
     <message>
         <source>[2800-28FF] Braille Patterns</source>
-        <translation type="unfinished"></translation>
+        <translation>[2800-28F] Braille Mönster</translation>
     </message>
     <message>
         <source>[2900-297F] Supplemental Arrows-B</source>
-        <translation type="unfinished"></translation>
+        <translation>[2900-297F] Tilläggspilar-B</translation>
     </message>
     <message>
         <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
-        <translation type="unfinished"></translation>
+        <translation>[2980-29FF] diverse matematiska symboler-B</translation>
     </message>
     <message>
         <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
-        <translation type="unfinished"></translation>
+        <translation>[2A00-2AFF] kompletterande matematiska operatörer</translation>
     </message>
     <message>
         <source>[2E80-2EFF] CJK Radicals Supplement</source>
-        <translation type="unfinished"></translation>
+        <translation>[2E80-2EFF] CJK Radicals Supplement</translation>
     </message>
     <message>
         <source>[2F00-2FDF] Kangxi Radicals</source>
-        <translation type="unfinished"></translation>
+        <translation>[2F00-2FDF] Kangxi radikaler</translation>
     </message>
     <message>
         <source>[2FF0-2FFF] Ideographic Description Characters</source>
-        <translation type="unfinished"></translation>
+        <translation>[2FF0-2FF] Ideografiska beskrivningar</translation>
     </message>
     <message>
         <source>[3000-303F] CJK Symbols and Punctuation</source>
-        <translation type="unfinished"></translation>
+        <translation>[3000-303F] CJK symboler och skiljetecken</translation>
     </message>
     <message>
         <source>[3040-309F] Hiragana</source>
-        <translation type="unfinished"></translation>
+        <translation>[3040-309F] Hiragana</translation>
     </message>
     <message>
         <source>[30A0-30FF] Katakana</source>
-        <translation type="unfinished"></translation>
+        <translation>[30A0-30FF] Katakana</translation>
     </message>
     <message>
         <source>[3100-312F] Bopomofo</source>
-        <translation type="unfinished"></translation>
+        <translation>[3100-312F] Bopomofo</translation>
     </message>
     <message>
         <source>[3130-318F] Hangul Compatibility Jamo</source>
-        <translation type="unfinished"></translation>
+        <translation>[3130-318F] Hangul Kompatibilitet Jamo</translation>
     </message>
     <message>
         <source>[3190-319F] Kanbun</source>
-        <translation type="unfinished"></translation>
+        <translation>[3190-319F] Kanbun</translation>
     </message>
     <message>
         <source>[31A0-31BF] Bopomofo Extended</source>
-        <translation type="unfinished"></translation>
+        <translation>[31A0-31BF] Bopomofo utökad</translation>
     </message>
     <message>
         <source>[3200-32FF] Enclosed CJK Letters and Months</source>
-        <translation type="unfinished"></translation>
+        <translation>[3200-32FF] Stängt CJK Brev och Månader</translation>
     </message>
     <message>
         <source>[3300-33FF] CJK Compatibility</source>
-        <translation type="unfinished"></translation>
+        <translation>[3300-33FF] CJK Kompatibilitet</translation>
     </message>
     <message>
         <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
-        <translation type="unfinished"></translation>
+        <translation>CJK Unified Ideographs Extension A</translation>
     </message>
     <message>
         <source>[4E00-9FAF] CJK Unified Ideographs</source>
-        <translation type="unfinished"></translation>
+        <translation>CJK Unified Ideographs</translation>
     </message>
     <message>
         <source>[A000-A48F] Yi Syllables</source>
-        <translation type="unfinished"></translation>
+        <translation>[A000-A48F] Yi Syllables</translation>
     </message>
     <message>
         <source>[A490-A4CF] Yi Radicals</source>
-        <translation type="unfinished"></translation>
+        <translation>[A490-A4CF] Yi Radikaler</translation>
     </message>
     <message>
         <source>[AC00-D7AF] Hangul Syllables</source>
-        <translation type="unfinished"></translation>
+        <translation>[AC00-D7AF] Hangul Syllables</translation>
     </message>
     <message>
         <source>[D800-DBFF] High Surrogates</source>
-        <translation type="unfinished"></translation>
+        <translation>[D800-DBF] Höga surrogat</translation>
     </message>
     <message>
         <source>[DC00-DFFF] Low Surrogate Area</source>
-        <translation type="unfinished"></translation>
+        <translation>[DC00-DFF] Lågt surrogatområde</translation>
     </message>
     <message>
         <source>[E000-F8FF] Private Use Area</source>
-        <translation type="unfinished"></translation>
+        <translation>[E000-F8F] Privat användningsområde</translation>
     </message>
     <message>
         <source>[F900-FAFF] CJK Compatibility Ideographs</source>
-        <translation type="unfinished"></translation>
+        <translation>[F900-FAFF] CJK Compatibility Ideographs</translation>
     </message>
     <message>
         <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>[FB00-FB4F] Alfabetiska presentationsformulär</translation>
     </message>
     <message>
         <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
-        <translation type="unfinished"></translation>
+        <translation>[FB50-FDF] Arabiska presentationsformer Ett</translation>
     </message>
     <message>
         <source>[FE00-FE0F] Variation Selectors</source>
-        <translation type="unfinished"></translation>
+        <translation>[FE00-FE0F] Variationsväljare</translation>
     </message>
     <message>
         <source>[FE20-FE2F] Combining Half Marks</source>
-        <translation type="unfinished"></translation>
+        <translation>[FE20-FE2F] Kombinera Half Marks</translation>
     </message>
     <message>
         <source>[FE30-FE4F] CJK Compatibility Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>[FE30-FE4F] CJK Kompatibilitetsformulär</translation>
     </message>
     <message>
         <source>[FE50-FE6F] Small Form Variants</source>
-        <translation type="unfinished"></translation>
+        <translation>[FE50-FE6F] Små Form Varianter</translation>
     </message>
     <message>
         <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
-        <translation type="unfinished"></translation>
+        <translation>[FE70-FEFF] Arabiska presentationsformulär-B</translation>
     </message>
     <message>
         <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>[FF00-FFEF] Halfwidth och Fullwidth Forms</translation>
     </message>
     <message>
         <source>[FFF0-FFFF] Specials</source>
-        <translation type="unfinished"></translation>
+        <translation>[FFF0-FFF] Specialer</translation>
     </message>
     <message>
         <source>[10300-1032F] Old Italic</source>
-        <translation type="unfinished"></translation>
+        <translation>[10300-1032F] Gamla Italic</translation>
     </message>
     <message>
         <source>[10330-1034F] Gothic</source>
-        <translation type="unfinished"></translation>
+        <translation>[10330-1034F] Gotiska</translation>
     </message>
     <message>
         <source>[10400-1044F] Deseret</source>
-        <translation type="unfinished"></translation>
+        <translation>[10400-1044F] Deseret</translation>
     </message>
     <message>
         <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>[1D000-1D0FF] Bysantinska musikaliska symboler</translation>
     </message>
     <message>
         <source>[1D100-1D1FF] Musical Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>[1D100-1D1FF] Musikaliska symboler</translation>
     </message>
     <message>
         <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>[1D400-1D7F] Matematiska alfanumeriska symboler</translation>
     </message>
     <message>
         <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
-        <translation type="unfinished"></translation>
+        <translation>CJK Unified Ideographs Extension B</translation>
     </message>
     <message>
         <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
-        <translation type="unfinished"></translation>
+        <translation>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</translation>
     </message>
     <message>
         <source>[E0000-E007F] Tags</source>
-        <translation type="unfinished"></translation>
+        <translation>[E00-E007F] Taggar</translation>
     </message>
     <message>
         <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
-        <translation type="unfinished"></translation>
+        <translation>[F0000-FFFD] Tilläggsområde för privat användning Ett</translation>
     </message>
     <message>
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
-        <translation type="unfinished"></translation>
+        <translation>[100000-10FFD] Kompletterande Private Use Area-B</translation>
     </message>
     <message>
         <source>&amp;Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>och höjd:</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Lager:</translation>
+        <translation>Layer:</translation>
     </message>
     <message>
         <source>Font settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Font Inställningar</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Vinkel:</translation>
+        <translation>Angle:</translation>
     </message>
     <message>
         <source>Oblique:</source>
-        <translation type="unfinished"></translation>
+        <translation>Oblique:</translation>
     </message>
     <message>
         <source>Width factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Breddsfaktor:</translation>
     </message>
     <message>
         <source>Font:</source>
-        <translation type="unfinished"></translation>
+        <translation>Font:</translation>
     </message>
     <message>
         <source>Baseline Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Baseline vänster</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>......</translation>
     </message>
     <message>
         <source>Baseline Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Baseline Rätt</translation>
     </message>
     <message>
         <source>Baseline Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Baseline Center</translation>
     </message>
     <message>
         <source>Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Fit</translation>
     </message>
     <message>
         <source>Diameter (⌀)</source>
-        <translation type="unfinished"></translation>
+        <translation>Diameter (=)</translation>
     </message>
     <message>
         <source>A&amp;ligned</source>
-        <translation type="unfinished"></translation>
+        <translation>A&amp;ligned</translation>
     </message>
     <message>
         <source>&amp;Middle</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Middle</translation>
     </message>
 </context>
 <context>
@@ -6570,7 +6599,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>again Still No Text supplied.</source>
-        <translation type="unfinished"></translation>
+        <translation>still No Text levereras.</translation>
     </message>
     <message>
         <source>Close</source>
@@ -6578,102 +6607,102 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Discard All</source>
-        <translation type="unfinished"></translation>
+        <translation>Kassera alla</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>Discard</translation>
     </message>
 </context>
 <context>
     <name>QG_FileDialog</name>
     <message>
         <source>Drawing Exchange DXF 2000 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Utbyte DXF 2000 %1</translation>
     </message>
     <message>
         <source>Drawing Exchange DXF R12 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Rita Exchange DXF R12 %1</translation>
     </message>
     <message>
         <source>LFF Font %1</source>
-        <translation type="unfinished"></translation>
+        <translation>LFF Font %1</translation>
     </message>
     <message>
         <source>QCad Font %1</source>
-        <translation type="unfinished"></translation>
+        <translation>QCad Font %1</translation>
     </message>
     <message>
         <source>Jww Drawing %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Jw Drawing %1</translation>
     </message>
     <message>
         <source>Drawing Exchange %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Rita utbyte %1</translation>
     </message>
     <message>
         <source>QCad 1.x file %1</source>
-        <translation type="unfinished"></translation>
+        <translation>QCad 1.x fil %1</translation>
     </message>
     <message>
         <source>Drawing Exchange DXF 2007 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Utbyte DXF 2007 %1</translation>
     </message>
     <message>
         <source>Drawing Exchange DXF 2004 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Utbyte DXF 2004 %1</translation>
     </message>
     <message>
         <source>Drawing Exchange DXF R14 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Rita Exchange DXF R14 %1</translation>
     </message>
     <message>
         <source>Block</source>
         <comment>block file</comment>
-        <translation type="unfinished"></translation>
+        <translation>Block</translation>
     </message>
     <message>
         <source>Drawing</source>
         <comment>drawing file</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rita</translation>
     </message>
     <message>
         <source>Open %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppen %1</translation>
     </message>
     <message>
         <source>Save %1 As</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara %1 som</translation>
     </message>
     <message>
         <source>dwg Drawing %1</source>
-        <translation type="unfinished"></translation>
+        <translation>dwg Rita %1</translation>
     </message>
     <message>
         <source>Untitled</source>
-        <translation type="unfinished"></translation>
+        <translation>Untitled</translation>
     </message>
 </context>
 <context>
     <name>QG_GraphicView</name>
     <message>
         <source>Edit Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera egendomar</translation>
     </message>
     <message>
         <source>Edit Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Edit Block</translation>
     </message>
 </context>
 <context>
     <name>QG_ImageOptionsDialog</name>
     <message>
         <source>Image Export Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildexportalternativ</translation>
     </message>
     <message>
         <source>Bitmap Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitmap storlek</translation>
     </message>
     <message>
         <source>Width:</source>
@@ -6701,35 +6730,35 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Colouring</source>
-        <translation type="unfinished"></translation>
+        <translation>Färgläggning</translation>
     </message>
     <message>
         <source>Black / White</source>
-        <translation type="unfinished">Svart/vit</translation>
+        <translation>Svart / Vit</translation>
     </message>
     <message>
         <source>Coloured</source>
-        <translation type="unfinished"></translation>
+        <translation>Färgad</translation>
     </message>
     <message>
         <source>Borders</source>
-        <translation type="unfinished"></translation>
+        <translation>Gränser</translation>
     </message>
     <message>
         <source>Top / Bottom - Border:</source>
-        <translation type="unfinished"></translation>
+        <translation>Top / Bottom - gräns:</translation>
     </message>
     <message>
         <source>Left / Right - Border:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vänster / Höger - gräns:</translation>
     </message>
     <message>
         <source>set same size</source>
-        <translation type="unfinished"></translation>
+        <translation>sätt samma storlek</translation>
     </message>
     <message>
         <source>B&amp;lack</source>
-        <translation type="unfinished"></translation>
+        <translation>B&amp;lack</translation>
     </message>
 </context>
 <context>
@@ -6756,11 +6785,12 @@ so default step value required for baking</source>
     <message>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation type="unfinished"></translation>
+        <translation>En Construction Layer har enheter av oändliga raka linjer avsedda att användas för geometrisk konstruktion.
+Innehållet i en Construction Layer ska inte visas i utskrift.</translation>
     </message>
     <message>
         <source>Construction Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Bygglager</translation>
     </message>
 </context>
 <context>
@@ -6779,19 +6809,19 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Modify layer attributes / rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifiera lager attribut / namn</translation>
     </message>
     <message>
         <source>Layer Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Layer Menu</translation>
     </message>
     <message>
         <source>&amp;Defreeze all Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>och befria alla lager</translation>
     </message>
     <message>
         <source>&amp;Freeze all Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Freeze all Layers</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
@@ -6803,59 +6833,59 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Looking for matching layer names</source>
-        <translation type="unfinished"></translation>
+        <translation>Letar efter matchande lagernamn</translation>
     </message>
     <message>
         <source>Edit Layer &amp;Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Edit Layer &amp; Attributes</translation>
     </message>
     <message>
         <source>Toggle Layer &amp;Visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Toggle Layer &amp;Visibility</translation>
     </message>
     <message>
         <source>Toggle Layer &amp;Printing</source>
-        <translation type="unfinished"></translation>
+        <translation>Toggle Layer &amp; Princeting</translation>
     </message>
     <message>
         <source>Toggle &amp;Construction Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Toggle &amp; Construction Layer</translation>
     </message>
     <message>
         <source>Unlock all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Lås upp alla lager</translation>
     </message>
     <message>
         <source>Lock all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Lås alla lager</translation>
     </message>
     <message>
         <source>Remove layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort lager</translation>
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter</translation>
     </message>
     <message>
         <source>&amp;Unlock all Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>låsa upp alla lager</translation>
     </message>
     <message>
         <source>&amp;Lock all Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>och lås alla lager</translation>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation type="unfinished"></translation>
+        <translation>Toggle Layer Loc&amp;k</translation>
     </message>
     <message>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportera valda lager(er)</translation>
     </message>
     <message>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Export &amp; Visible Layer(s)</translation>
     </message>
 </context>
 <context>
@@ -6870,11 +6900,11 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Refresh</translation>
     </message>
     <message>
         <source>Rebuild</source>
-        <translation type="unfinished"></translation>
+        <translation>Rebuild</translation>
     </message>
 </context>
 <context>
@@ -6893,107 +6923,107 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Continuous</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontinuerlig</translation>
     </message>
     <message>
         <source>Dot</source>
-        <translation type="unfinished"></translation>
+        <translation>Dot</translation>
     </message>
     <message>
         <source>Dot (small)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dot (små)</translation>
     </message>
     <message>
         <source>Dot (large)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dot (stor)</translation>
     </message>
     <message>
         <source>Dash</source>
-        <translation type="unfinished"></translation>
+        <translation>Dash</translation>
     </message>
     <message>
         <source>Dash (small)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dash (liten)</translation>
     </message>
     <message>
         <source>Dash (large)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dash (stor)</translation>
     </message>
     <message>
         <source>Dash Dot</source>
-        <translation type="unfinished"></translation>
+        <translation>Dash Dot</translation>
     </message>
     <message>
         <source>Dash Dot (small)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dash Dot (liten)</translation>
     </message>
     <message>
         <source>Dash Dot (large)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dash Dot (stor)</translation>
     </message>
     <message>
         <source>Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Dela</translation>
     </message>
     <message>
         <source>Divide (small)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dela (liten)</translation>
     </message>
     <message>
         <source>Divide (large)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dela (stor)</translation>
     </message>
     <message>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Center</translation>
     </message>
     <message>
         <source>Center (small)</source>
-        <translation type="unfinished"></translation>
+        <translation>Center (liten)</translation>
     </message>
     <message>
         <source>Center (large)</source>
-        <translation type="unfinished"></translation>
+        <translation>Center (stor)</translation>
     </message>
     <message>
         <source>Border</source>
-        <translation type="unfinished"></translation>
+        <translation>Border</translation>
     </message>
     <message>
         <source>Border (small)</source>
-        <translation type="unfinished"></translation>
+        <translation>Gräns (liten)</translation>
     </message>
     <message>
         <source>Border (large)</source>
-        <translation type="unfinished"></translation>
+        <translation>Gräns (stor)</translation>
     </message>
     <message>
         <source>- Unchanged -</source>
-        <translation type="unfinished"></translation>
+        <translation>- oförändrad -</translation>
     </message>
     <message>
         <source>Dot (tiny)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dot (lite)</translation>
     </message>
     <message>
         <source>Dash (tiny)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dash (lite)</translation>
     </message>
     <message>
         <source>Dash Dot (tiny)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dash Dot (liten)</translation>
     </message>
     <message>
         <source>Divide (tiny)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dela (lite)</translation>
     </message>
     <message>
         <source>Center (tiny)</source>
-        <translation type="unfinished"></translation>
+        <translation>Center (tiny)</translation>
     </message>
     <message>
         <source>Border (tiny)</source>
-        <translation type="unfinished"></translation>
+        <translation>Border (liten)</translation>
     </message>
 </context>
 <context>
@@ -7011,203 +7041,215 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>Vänster</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC ”-/W3C//DTD HTML 4.0//EN” ”http://www.w3.org/TR/REC-html40/strict.dtd”&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1"/&gt;&lt;style type="text/css"&gt;
+p, li { vitrymd: pre-wrap; }
+&lt;/stil&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-vikt:400; font-stil:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; "&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt; "&gt; Tips om vänster/höger musknapp åtgärder&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
-        <translation type="unfinished"></translation>
+        <translation>Line färg</translation>
     </message>
     <message>
         <source>Line width</source>
-        <translation type="unfinished"></translation>
+        <translation>Line bredd</translation>
     </message>
     <message>
         <source>Line type</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjetyp</translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineOptions</name>
     <message>
         <source>wrong action type</source>
-        <translation type="unfinished"></translation>
+        <translation>fel handlingstyp</translation>
     </message>
 </context>
 <context>
     <name>QG_RecentFiles</name>
     <message>
         <source>&amp;%1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>och %1 %2</translation>
     </message>
 </context>
 <context>
     <name>QG_SelectionWidget</name>
     <message>
         <source>Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Urval</translation>
     </message>
     <message>
         <source>Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Valt</translation>
     </message>
     <message>
         <source>Total Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Total längd</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC ”-/W3C//DTD HTML 4.0//EN” ”http://www.w3.org/TR/REC-html40/strict.dtd”&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1"/&gt;&lt;style type="text/css"&gt;
+p, li { vitrymd: pre-wrap; }
+&lt;/stil&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-vikt:400; font-stil:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Nummer av utvalda enheter&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC ”-/W3C//DTD HTML 4.0//EN” ”http://www.w3.org/TR/REC-html40/strict.dtd”&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1"/&gt;&lt;style type="text/css"&gt;
+p, li { vitrymd: pre-wrap; }
+&lt;/stil&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-vikt:400; font-stil:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; "&gt;Total längd på utvalda enheter&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_SnapToolBar</name>
     <message>
         <source>Snap</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap to Endpoints</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap till slutpunkter</translation>
     </message>
     <message>
         <source>Snap to equidistant points of entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap till jämlika punkter av entitet</translation>
     </message>
     <message>
         <source>Snap to center points</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap till centerpunkter</translation>
     </message>
     <message>
         <source>Snap to intersections automatically</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap till korsningar automatiskt</translation>
     </message>
     <message>
         <source>Snap to closest point on entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap till närmaste punkt på företaget</translation>
     </message>
     <message>
         <source>Snap to point with given distance to endpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap to point med given distans till endpoint</translation>
     </message>
     <message>
         <source>Snap to intersections manually</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap till korsningar manuellt</translation>
     </message>
     <message>
         <source>Snap to grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap to grid</translation>
     </message>
     <message>
         <source>Restrict Horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Begränsa horisontellt</translation>
     </message>
     <message>
         <source>Restrict Vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Begränsa vertikalt</translation>
     </message>
     <message>
         <source>Move relative Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Flytta relativ Zero</translation>
     </message>
     <message>
         <source>Lock relative Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Lås relativ Zero</translation>
     </message>
     <message>
         <source>Free Snap</source>
-        <translation type="unfinished"></translation>
+        <translation>Gratis Snap</translation>
     </message>
     <message>
         <source>Snap on grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap on grid</translation>
     </message>
     <message>
         <source>Snap on Endpoints</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap on Endpoints</translation>
     </message>
     <message>
         <source>Snap on Entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap on Entity</translation>
     </message>
     <message>
         <source>Snap Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap Center</translation>
     </message>
     <message>
         <source>Snap Middle</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap Middle</translation>
     </message>
     <message>
         <source>Snap Distance</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap distans</translation>
     </message>
     <message>
         <source>Snap Intersection</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap Intersection</translation>
     </message>
     <message>
         <source>Restrict Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Begränsa horisontellt</translation>
     </message>
     <message>
         <source>Restrict Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Begränsa vertikala</translation>
     </message>
     <message>
         <source>Restrict Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Begränsa ortogonal</translation>
     </message>
     <message>
         <source>Restrict Nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>Begränsa ingenting</translation>
     </message>
     <message>
         <source>Set relative zero position</source>
-        <translation type="unfinished"></translation>
+        <translation>Ställ in relativ noll position</translation>
     </message>
     <message>
         <source>Lock relative zero position</source>
-        <translation type="unfinished"></translation>
+        <translation>Lås relativ noll position</translation>
     </message>
     <message>
         <source>Exclusive Snap Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Exklusiv Snap-läge</translation>
     </message>
     <message>
         <source>Relative zero position is %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Relativ nollposition är %1</translation>
     </message>
     <message>
         <source>locked</source>
-        <translation type="unfinished"></translation>
+        <translation>låst</translation>
     </message>
     <message>
         <source>unlocked</source>
-        <translation type="unfinished"></translation>
+        <translation>lås upp</translation>
     </message>
     <message>
         <source>Snap Middle Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap Middle Manual</translation>
     </message>
 </context>
 <context>
@@ -7218,7 +7260,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Line type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjetyp:</translation>
     </message>
     <message>
         <source>Width:</source>
@@ -7355,231 +7397,246 @@ p, li { white-space: pre-wrap; }
         <translation>Ta bort lager</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation type="unfinished"></translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>Lager "%1" kan aldrig tas bort.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Layer Dialog</translation>
     </message>
     <message>
         <source>Remove Block</source>
         <translation>Ta bort block</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation type="unfinished"></translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>Blockera "%1" och alla dess enheter kommer att tas bort.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>Lageregenskaper</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Lager med namnet &quot;%1&quot; finns redan. Ange ett annat namn.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>Lager med namnet "%1" finns redan. Ange ett annat namn.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+        <source>Layer "%1" and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lager "%1" och alla enheter på den kommer att tas bort.
+Denna åtgärd kan inte ångras.</translation>
     </message>
     <message>
-        <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation type="unfinished"></translation>
+        <source>Layer "0" can never be removed.</source>
+        <translation>Layer "0" kan aldrig tas bort.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>Ta bort %n lager(s)<numerusform />
+            <numerusform />
         </translation>
     </message>
     <message>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Listade lager och alla enheter på dem kommer att tas bort.</translation>
     </message>
     <message>
         <source>Warning: this action can NOT be undone!</source>
-        <translation type="unfinished"></translation>
+        <translation>Varning: Den här åtgärden kan inte vara ogjort!</translation>
     </message>
     <message>
-        <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation type="unfinished"></translation>
+        <source>Warning: layer "0" can never be removed.</source>
+        <translation>Varning: lager "0" kan aldrig tas bort.</translation>
     </message>
     <message>
         <source>Layers for removal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lager för borttagning:</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n block(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>Ta bort %n block(s)<numerusform />
+            <numerusform />
         </translation>
     </message>
     <message>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Listade block och alla deras enheter kommer att tas bort.</translation>
     </message>
     <message>
         <source>Blocks for removal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Block för borttagning:</translation>
     </message>
     <message>
         <source>Layer empty name is not allowed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Layer tomt namn är inte tillåtet.</translation>
     </message>
     <message>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Försök att skapa lager med duplicerande namn. Duplicerat lagernamn är
+[%1].
+Ange ett annat namn.</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation type="unfinished"></translation>
+        <translation>Layer list separator sträng är tom. Det är inte möjligt att bygga lager träd.
+Ange ett annat värde.</translation>
     </message>
     <message>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogiltigt värde ger för %1 färg.
+Ange ett annat värde.</translation>
     </message>
     <message>
         <source>Remove empty layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort tomma lager</translation>
     </message>
     <message>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation type="unfinished"></translation>
+        <translation>Layer(s) utan enheter som finns, men de är filtrerade och inte synliga.
+
+Tydlig filtrering mask och upprepa.</translation>
     </message>
     <message>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inga lager utan enheter hittades, ingenting att ta bort.</translation>
     </message>
     <message>
         <source>Add Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Lägg till Layer</translation>
     </message>
     <message>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sådana barnskikt finns redan för
+[%1].
+Ange ett annat namn.</translation>
     </message>
     <message>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Sådana barnskikt finns redan för
+[%1].</translation>
     </message>
     <message>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Dimensionellt lager kan endast läggas till för normalt aktivt lager.</translation>
     </message>
     <message>
         <source>Move Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Flytta urval</translation>
     </message>
     <message>
         <source>Duplicate Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplicate Selection</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
+        <source>Replace "By Layer" value to source layers values?
 
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
 
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="unfinished"></translation>
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation>Ersätt "By Layer"-värdet till källlagervärden?
+
+Om Ja - enheter med "By Layer" pennor kommer att titta på nya lager precis som på tidigare lager och "By Layer" värde kommer att ersättas med lösta pennor.
+
+Om No - "By Layer"-värden kvarstår och så kommer pennan i målskiktet att definiera penna för sådana enheter.</translation>
     </message>
     <message>
         <source>Layer DialogEx</source>
-        <translation type="unfinished"></translation>
+        <translation>Layer DialogEx</translation>
     </message>
     <message>
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogiltigt värde för %1 färg.
+Ange ett annat värde.</translation>
     </message>
     <message>
         <source>Invalid path to pens file.
 %1 
 Please specify a different value.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogiltig väg till pens fil.
+%1
+Ange ett annat värde.</translation>
     </message>
     <message>
         <source>Remove pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort penna</translation>
     </message>
     <message>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pen kommer att tas bort från palett, dra enheter kommer inte att påverkas.</translation>
     </message>
     <message>
-        <source>Are you sure you&apos;d like to proceed?</source>
-        <translation type="unfinished"></translation>
+        <source>Are you sure you'd like to proceed?</source>
+        <translation>Är du säker på att du vill fortsätta?</translation>
     </message>
     <message>
         <source>Pen for removal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pen för borttagning:</translation>
     </message>
     <message>
         <source>Remove pens</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort pennor</translation>
     </message>
     <message>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pennorna kommer att tas bort från paletten, dra enheter kommer inte att påverkas.</translation>
     </message>
     <message>
         <source>Pens for removal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pennor för borttagning:</translation>
     </message>
     <message>
         <source>Select Entities </source>
-        <translation type="unfinished"></translation>
+        <translation>Välj enheter</translation>
     </message>
     <message>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation type="unfinished"></translation>
+        <translation>Det finns inga enheter som matchar penna på synliga lager.</translation>
     </message>
     <message>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Sådana enheter finns på frysta lager.</translation>
     </message>
     <message>
         <source>Such entities exist on locked layers.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Sådana enheter finns på låsta lager.</translation>
     </message>
     <message>
         <source>Please use different pen attributes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Använd olika penna attribut.</translation>
     </message>
     <message>
         <source>Set pen by entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Ställ penna genom entitet</translation>
     </message>
     <message>
         <source>Please select only one entity to pick pen setting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vänligen välj bara en enhet för att välja penna inställning.</translation>
     </message>
     <message>
         <source>Saving Pens Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara Pens Data</translation>
     </message>
     <message>
         <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte spara pens data till specificerad pens fil. Vill du ange rätt väg till filen?</translation>
     </message>
 </context>
 <context>
@@ -7591,7 +7648,7 @@ Please specify a different value.</source>
     <message>
         <source>%1 already exists.
 Do you want to replace it?</source>
-        <translation type="unfinished">%1 finns redan.
+        <translation>%1 finns redan.
 Vill du ersätta den?</translation>
     </message>
     <message>
@@ -7604,39 +7661,39 @@ Vill du ersätta den?</translation>
     </message>
     <message>
         <source>Windows Bitmap</source>
-        <translation type="unfinished"></translation>
+        <translation>Windows Bitmap</translation>
     </message>
     <message>
         <source>Joint Photographic Experts Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Joint Photographic Experts Group</translation>
     </message>
     <message>
         <source>Multiple-image Network Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Multiple-image Network Graphics</translation>
     </message>
     <message>
         <source>Portable Bit Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Portable Bit Map</translation>
     </message>
     <message>
         <source>Portable Grey Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Portable Grey Map</translation>
     </message>
     <message>
         <source>Portable Network Graphic</source>
-        <translation type="unfinished"></translation>
+        <translation>Portable Network Graphic</translation>
     </message>
     <message>
         <source>Portable Pixel Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Portable Pixel Map</translation>
     </message>
     <message>
         <source>X Bitmap Format</source>
-        <translation type="unfinished"></translation>
+        <translation>X Bitmap Format</translation>
     </message>
     <message>
         <source>X Pixel Map</source>
-        <translation type="unfinished"></translation>
+        <translation>X Pixel karta</translation>
     </message>
     <message>
         <source>All Image Files (%1)</source>
@@ -7644,19 +7701,19 @@ Vill du ersätta den?</translation>
     </message>
     <message>
         <source>Graphics Interchange Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafik Interchange Format</translation>
     </message>
     <message>
         <source>Drawing Exchange %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Rita utbyte %1</translation>
     </message>
     <message>
         <source>QCad 1.x file %1</source>
-        <translation type="unfinished"></translation>
+        <translation>QCad 1.x fil %1</translation>
     </message>
     <message>
         <source>Font %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Font %1</translation>
     </message>
     <message>
         <source>All Files (*.*)</source>
@@ -7752,2957 +7809,2957 @@ Vill du ersätta den?</translation>
     </message>
     <message>
         <source>enter an integer number</source>
-        <translation type="unfinished"></translation>
+        <translation>ange ett heltalsnummer</translation>
     </message>
     <message>
         <source>LibreCAD query</source>
-        <translation type="unfinished"></translation>
+        <translation>LibreCAD fråga</translation>
     </message>
     <message>
         <source>enter a number</source>
-        <translation type="unfinished"></translation>
+        <translation>ange ett nummer</translation>
     </message>
     <message>
         <source>enter text</source>
-        <translation type="unfinished"></translation>
+        <translation>skriv in text</translation>
     </message>
     <message>
         <source>Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Loading...</translation>
     </message>
     <message>
         <source>LFF Font %1</source>
-        <translation type="unfinished"></translation>
+        <translation>LFF Font %1</translation>
     </message>
     <message>
         <source>Jww %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Jww %1</translation>
     </message>
     <message>
         <source>Scalable Vector Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Scalable Vector Graphics</translation>
     </message>
     <message>
         <source>SGI Black &amp; White</source>
-        <translation type="unfinished"></translation>
+        <translation>SGI Black &amp; White</translation>
     </message>
     <message>
         <source>Encapsulated PostScript</source>
-        <translation type="unfinished"></translation>
+        <translation>Inkapslad PostScript</translation>
     </message>
     <message>
         <source>Encapsulated PostScript Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Inkapslad PostScript Format</translation>
     </message>
     <message>
         <source>Encapsulated PostScript Interchange</source>
-        <translation type="unfinished"></translation>
+        <translation>Inkapslad PostScript Interchange</translation>
     </message>
     <message>
         <source>Windows Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Windows Icon</translation>
     </message>
     <message>
         <source>JPEG 2000</source>
-        <translation type="unfinished"></translation>
+        <translation>JPEG 2000</translation>
     </message>
     <message>
         <source>ZSoft Paintbrush</source>
-        <translation type="unfinished"></translation>
+        <translation>ZSoft Paintbrush</translation>
     </message>
     <message>
         <source>PC Paint</source>
-        <translation type="unfinished"></translation>
+        <translation>PC Paint</translation>
     </message>
     <message>
         <source>SGI-Bilddatei</source>
-        <translation type="unfinished"></translation>
+        <translation>SGI-Bilddatei</translation>
     </message>
     <message>
         <source>Targa Image File</source>
-        <translation type="unfinished"></translation>
+        <translation>Targa bildfil</translation>
     </message>
     <message>
         <source>Tagged Image File Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Taggade bildfilformat</translation>
     </message>
     <message>
         <source>Old Drawing Exchange %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Old Drawing Exchange %1</translation>
     </message>
     <message>
         <source>Opened dwg file version %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna dwg-filversionen %1.</translation>
     </message>
     <message>
         <source>unknown error opening dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>okänd fel öppna dwg-fil</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
-        <translation type="unfinished"></translation>
+        <source>can't open this dwg file</source>
+        <translation>kan inte öppna denna dwg-fil</translation>
     </message>
     <message>
         <source>unsupported dwg version</source>
-        <translation type="unfinished"></translation>
+        <translation>unsupported dwg version</translation>
     </message>
     <message>
         <source>error reading file header in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>felläsning fil header i dwg fil</translation>
     </message>
     <message>
         <source>error reading header vars in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>felläsning header varierar i dwg-fil</translation>
     </message>
     <message>
         <source>error reading classes in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>felläsning klasser i dwg fil</translation>
     </message>
     <message>
         <source>error reading offsets in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>felläsning offsets i dwg-fil</translation>
     </message>
     <message>
         <source>error reading tables in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>felläsningstabeller i dwg-fil</translation>
     </message>
     <message>
         <source>error reading entities in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>felläsningsenheter i dwg-fil</translation>
     </message>
     <message>
         <source>dwg Drawing %1</source>
-        <translation type="unfinished"></translation>
+        <translation>dwg Rita %1</translation>
     </message>
     <message>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Fil på disk modifierad. Spara till en annan fil för att undvika dataförlust! Filändrad: %1</translation>
     </message>
     <message>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation type="unfinished"></translation>
+        <translation>Hatch misslyckades på grund av ett gap=%1 mellan (% 2,%3) och (%4,%5)</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">Varning</translation>
+        <translation>Varning</translation>
     </message>
     <message>
         <source>error reading blocks in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>felläsning block i dwg-fil</translation>
     </message>
     <message>
         <source>error reading objects in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>felläsning objekt i dwg fil</translation>
     </message>
     <message>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation type="unfinished"></translation>
+        <translation>duplicerat kommando: %1 tas redan med %2</translation>
     </message>
     <message>
         <source>point</source>
         <comment>draw point</comment>
-        <translation type="unfinished"></translation>
+        <translation>punkt</translation>
     </message>
     <message>
         <source>po</source>
         <comment>draw point</comment>
-        <translation type="unfinished"></translation>
+        <translation>poäng</translation>
     </message>
     <message>
         <source>line</source>
         <comment>draw line</comment>
-        <translation type="unfinished"></translation>
+        <translation>linje</translation>
     </message>
     <message>
         <source>li</source>
         <comment>draw line</comment>
-        <translation type="unfinished"></translation>
+        <translation>lisa</translation>
     </message>
     <message>
         <source>l</source>
         <comment>draw line</comment>
-        <translation type="unfinished"></translation>
+        <translation>låg</translation>
     </message>
     <message>
         <source>polyline</source>
         <comment>draw polyline</comment>
-        <translation type="unfinished"></translation>
+        <translation>polylin</translation>
     </message>
     <message>
         <source>pl</source>
         <comment>draw polyline</comment>
-        <translation type="unfinished"></translation>
+        <translation>pl</translation>
     </message>
     <message>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation type="unfinished"></translation>
+        <translation>gratis gratis</translation>
     </message>
     <message>
         <source>fhl</source>
         <comment>draw freehand line</comment>
-        <translation type="unfinished"></translation>
+        <translation>fhl</translation>
     </message>
     <message>
         <source>spline</source>
         <comment>draw spline</comment>
-        <translation type="unfinished"></translation>
+        <translation>spline</translation>
     </message>
     <message>
         <source>spl</source>
         <comment>draw spline</comment>
-        <translation type="unfinished"></translation>
+        <translation>spl</translation>
     </message>
     <message>
         <source>spline2</source>
         <comment>spline through points</comment>
-        <translation type="unfinished"></translation>
+        <translation>spline2</translation>
     </message>
     <message>
         <source>stp</source>
         <comment>spline through points</comment>
-        <translation type="unfinished"></translation>
+        <translation>stp</translation>
     </message>
     <message>
         <source>ptp</source>
         <comment>parallel through point</comment>
-        <translation type="unfinished"></translation>
+        <translation>ptp</translation>
     </message>
     <message>
         <source>bisect</source>
         <comment>angle bisector</comment>
-        <translation type="unfinished"></translation>
+        <translation>bisekt</translation>
     </message>
     <message>
         <source>bi</source>
         <comment>angle bisector</comment>
-        <translation type="unfinished"></translation>
+        <translation>bi</translation>
     </message>
     <message>
         <source>tanpc</source>
         <comment>tangent point and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>tanpc</translation>
     </message>
     <message>
         <source>ortho</source>
         <comment>perpendicular line</comment>
-        <translation type="unfinished"></translation>
+        <translation>ortho</translation>
     </message>
     <message>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation type="unfinished"></translation>
+        <translation>rect</translation>
     </message>
     <message>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
-        <translation type="unfinished"></translation>
+        <translation>polygon2v</translation>
     </message>
     <message>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation type="unfinished"></translation>
+        <translation>poly2</translation>
     </message>
     <message>
         <source>circle</source>
         <comment>draw circle</comment>
-        <translation type="unfinished">cirkel</translation>
+        <translation>cirkel</translation>
     </message>
     <message>
         <source>ci</source>
         <comment>draw circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>ci</translation>
     </message>
     <message>
         <source>c2</source>
         <comment>circle 2 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>c2</translation>
     </message>
     <message>
         <source>c3</source>
         <comment>circle 3 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>c3</translation>
     </message>
     <message>
         <source>tan3</source>
         <comment>circle tangent to 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>tan3</translation>
     </message>
     <message>
         <source>ct3</source>
         <comment>circle tangent to 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>ct3</translation>
     </message>
     <message>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation>ellipseinscribed</translation>
     </message>
     <message>
         <source>ei</source>
         <comment>inscribed ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation>ei</translation>
     </message>
     <message>
         <source>ie</source>
         <comment>inscribed ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation>ie</translation>
     </message>
     <message>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation type="unfinished"></translation>
+        <translation>holländska</translation>
     </message>
     <message>
         <source>ha</source>
         <comment>draw hatch</comment>
-        <translation type="unfinished"></translation>
+        <translation>haha</translation>
     </message>
     <message>
         <source>mtext</source>
         <comment>draw mtext</comment>
-        <translation type="unfinished"></translation>
+        <translation>mtext</translation>
     </message>
     <message>
         <source>mtxt</source>
         <comment>draw mtext</comment>
-        <translation type="unfinished"></translation>
+        <translation>mtxt</translation>
     </message>
     <message>
         <source>text</source>
         <comment>draw text</comment>
-        <translation type="unfinished">text</translation>
+        <translation>texttext</translation>
     </message>
     <message>
         <source>txt</source>
         <comment>draw text</comment>
-        <translation type="unfinished"></translation>
+        <translation>txt</translation>
     </message>
     <message>
         <source>regen</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished"></translation>
+        <translation>regen</translation>
     </message>
     <message>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished"></translation>
+        <translation>redraw</translation>
     </message>
     <message>
         <source>rg</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished"></translation>
+        <translation>rg</translation>
     </message>
     <message>
         <source>zr</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished"></translation>
+        <translation>zr</translation>
     </message>
     <message>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
-        <translation type="unfinished"></translation>
+        <translation>zoomwindow</translation>
     </message>
     <message>
         <source>zw</source>
         <comment>zoom - window</comment>
-        <translation type="unfinished"></translation>
+        <translation>zw</translation>
     </message>
     <message>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
-        <translation type="unfinished"></translation>
+        <translation>zoomauto</translation>
     </message>
     <message>
         <source>za</source>
         <comment>zoom - auto</comment>
-        <translation type="unfinished"></translation>
+        <translation>za</translation>
     </message>
     <message>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation type="unfinished"></translation>
+        <translation>zoompan</translation>
     </message>
     <message>
         <source>zp</source>
         <comment>zoom - pan</comment>
-        <translation type="unfinished"></translation>
+        <translation>zp</translation>
     </message>
     <message>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
-        <translation type="unfinished"></translation>
+        <translation>zoomprevious</translation>
     </message>
     <message>
         <source>zv</source>
         <comment>zoom - previous</comment>
-        <translation type="unfinished"></translation>
+        <translation>zv</translation>
     </message>
     <message>
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation type="unfinished"></translation>
+        <translation>döda</translation>
     </message>
     <message>
         <source>k</source>
         <comment>kill all actions</comment>
-        <translation type="unfinished"></translation>
+        <translation>kung k</translation>
     </message>
     <message>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation type="unfinished">ångra</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
         <comment>undo cycle</comment>
-        <translation type="unfinished"></translation>
+        <translation>u</translation>
     </message>
     <message>
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation type="unfinished">gör om</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
         <comment>redo cycle</comment>
-        <translation type="unfinished"></translation>
+        <translation>r</translation>
     </message>
     <message>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimaligned</translation>
     </message>
     <message>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimhorizontal</translation>
     </message>
     <message>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation type="unfinished"></translation>
+        <translation>dh</translation>
     </message>
     <message>
         <source>dimvertical</source>
         <comment>dimension - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimvertical</translation>
     </message>
     <message>
         <source>dv</source>
         <comment>dimension - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation>dv</translation>
     </message>
     <message>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimlinear</translation>
     </message>
     <message>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation type="unfinished"></translation>
+        <translation>dl</translation>
     </message>
     <message>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimangular</translation>
     </message>
     <message>
         <source>dan</source>
         <comment>dimension - angular</comment>
-        <translation type="unfinished"></translation>
+        <translation>dan</translation>
     </message>
     <message>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimradial</translation>
     </message>
     <message>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimdiametrisk</translation>
     </message>
     <message>
         <source>dimdiameter</source>
         <comment>dimension - diametric</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimdiameter</translation>
     </message>
     <message>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation type="unfinished"></translation>
+        <translation>dd</translation>
     </message>
     <message>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimleader</translation>
     </message>
     <message>
         <source>ld</source>
         <comment>dimension - leader</comment>
-        <translation type="unfinished"></translation>
+        <translation>ld</translation>
     </message>
     <message>
         <source>dimregen</source>
         <comment>dimension - regenerate</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimregen</translation>
     </message>
     <message>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation type="unfinished"></translation>
+        <translation>begränsande</translation>
     </message>
     <message>
         <source>rn</source>
         <comment>restrict - nothing</comment>
-        <translation type="unfinished"></translation>
+        <translation>rn</translation>
     </message>
     <message>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation type="unfinished"></translation>
+        <translation>begränsarorthogonal</translation>
     </message>
     <message>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
-        <translation type="unfinished"></translation>
+        <translation>rr</translation>
     </message>
     <message>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation type="unfinished"></translation>
+        <translation>begränsningshorisontellt</translation>
     </message>
     <message>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
-        <translation type="unfinished"></translation>
+        <translation>rh</translation>
     </message>
     <message>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation>begränsande</translation>
     </message>
     <message>
         <source>rv</source>
         <comment>restrict - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation>rv</translation>
     </message>
     <message>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
-        <translation type="unfinished"></translation>
+        <translation>mv</translation>
     </message>
     <message>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation type="unfinished"></translation>
+        <translation>bev</translation>
     </message>
     <message>
         <source>ch</source>
         <comment>modify - bevel</comment>
-        <translation type="unfinished"></translation>
+        <translation>ch</translation>
     </message>
     <message>
         <source>fi</source>
         <comment>modify - fillet</comment>
-        <translation type="unfinished"></translation>
+        <translation>fi fi</translation>
     </message>
     <message>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"></translation>
+        <translation>klipp</translation>
     </message>
     <message>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"></translation>
+        <translation>div</translation>
     </message>
     <message>
         <source>mi</source>
         <comment>modify -  mirror</comment>
-        <translation type="unfinished"></translation>
+        <translation>mi</translation>
     </message>
     <message>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
-        <translation type="unfinished"></translation>
+        <translation>rev</translation>
     </message>
     <message>
         <source>ro</source>
         <comment>modify - rotate</comment>
-        <translation type="unfinished"></translation>
+        <translation>rosa</translation>
     </message>
     <message>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation type="unfinished"></translation>
+        <translation>sz</translation>
     </message>
     <message>
         <source>tm</source>
         <comment>modify - trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation>tm</translation>
     </message>
     <message>
         <source>tm2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation>tm2</translation>
     </message>
     <message>
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation type="unfinished"></translation>
+        <translation>le</translation>
     </message>
     <message>
         <source>ss</source>
         <comment>modify - stretch</comment>
-        <translation type="unfinished"></translation>
+        <translation>ss</translation>
     </message>
     <message>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation type="unfinished"></translation>
+        <translation>er</translation>
     </message>
     <message>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
-        <translation type="unfinished"></translation>
+        <translation>dela</translation>
     </message>
     <message>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>xp</translation>
     </message>
     <message>
         <source>snapfree</source>
         <comment>snap - free</comment>
-        <translation type="unfinished"></translation>
+        <translation>snapfree</translation>
     </message>
     <message>
         <source>os</source>
         <comment>snap - free</comment>
-        <translation type="unfinished"></translation>
+        <translation>oss</translation>
     </message>
     <message>
         <source>snapcenter</source>
         <comment>snap - center</comment>
-        <translation type="unfinished"></translation>
+        <translation>snapcenter</translation>
     </message>
     <message>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation type="unfinished"></translation>
+        <translation>skådespel</translation>
     </message>
     <message>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation type="unfinished"></translation>
+        <translation>snapdist</translation>
     </message>
     <message>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
-        <translation type="unfinished"></translation>
+        <translation>sd</translation>
     </message>
     <message>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation type="unfinished"></translation>
+        <translation>snapend</translation>
     </message>
     <message>
         <source>se</source>
         <comment>snap - end points</comment>
-        <translation type="unfinished"></translation>
+        <translation>se</translation>
     </message>
     <message>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation type="unfinished"></translation>
+        <translation>snapgrid</translation>
     </message>
     <message>
         <source>sg</source>
         <comment>snap - grid</comment>
-        <translation type="unfinished"></translation>
+        <translation>sg</translation>
     </message>
     <message>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation type="unfinished"></translation>
+        <translation>snapintersection</translation>
     </message>
     <message>
         <source>si</source>
         <comment>snap - intersection</comment>
-        <translation type="unfinished"></translation>
+        <translation>si</translation>
     </message>
     <message>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation type="unfinished"></translation>
+        <translation>snapmiddle</translation>
     </message>
     <message>
         <source>sm</source>
         <comment>snap - middle points</comment>
-        <translation type="unfinished"></translation>
+        <translation>sm</translation>
     </message>
     <message>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation type="unfinished"></translation>
+        <translation>snaponentitet</translation>
     </message>
     <message>
         <source>sn</source>
         <comment>snap - on entity</comment>
-        <translation type="unfinished"></translation>
+        <translation>snurra</translation>
     </message>
     <message>
         <source>np</source>
         <comment>snap - on entity</comment>
-        <translation type="unfinished"></translation>
+        <translation>np</translation>
     </message>
     <message>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation type="unfinished"></translation>
+        <translation>setrelativezero</translation>
     </message>
     <message>
         <source>rz</source>
         <comment>set relative zero position</comment>
-        <translation type="unfinished"></translation>
+        <translation>rz</translation>
     </message>
     <message>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>selectall</translation>
     </message>
     <message>
         <source>sa</source>
         <comment>Select all entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>saliga</translation>
     </message>
     <message>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>deselectall</translation>
     </message>
     <message>
         <source>tn</source>
         <comment>deselect all entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>tn</translation>
     </message>
     <message>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation type="unfinished"></translation>
+        <translation>attr</translation>
     </message>
     <message>
         <source>ma</source>
         <comment>modify attribute</comment>
-        <translation type="unfinished"></translation>
+        <translation>mamma</translation>
     </message>
     <message>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>före</translation>
     </message>
     <message>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>dist</translation>
     </message>
     <message>
         <source>dpp</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>dpp</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation type="unfinished"></translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>angle</source>
-        <translation type="unfinished">vinkel</translation>
+        <translation>vinkel</translation>
     </message>
     <message>
         <source>dpi</source>
-        <translation type="unfinished"></translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <source>close</source>
-        <translation type="unfinished">stäng</translation>
+        <translation>nära</translation>
     </message>
     <message>
         <source>chord length</source>
-        <translation type="unfinished"></translation>
+        <translation>ackordlängd</translation>
     </message>
     <message>
         <source>columns</source>
-        <translation type="unfinished">kolumner</translation>
+        <translation>kolumner</translation>
     </message>
     <message>
         <source>columnspacing</source>
-        <translation type="unfinished"></translation>
+        <translation>kolumnspacing</translation>
     </message>
     <message>
         <source>factor</source>
-        <translation type="unfinished"></translation>
+        <translation>faktorfaktor</translation>
     </message>
     <message>
         <source>length</source>
-        <translation type="unfinished">längd</translation>
+        <translation>längd</translation>
     </message>
     <message>
         <source>number</source>
-        <translation type="unfinished"></translation>
+        <translation>nummernummer</translation>
     </message>
     <message>
         <source>radius</source>
-        <translation type="unfinished">radie</translation>
+        <translation>radie</translation>
     </message>
     <message>
         <source>rows</source>
-        <translation type="unfinished">rader</translation>
+        <translation>rader</translation>
     </message>
     <message>
         <source>rowspacing</source>
-        <translation type="unfinished"></translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <source>through</source>
-        <translation type="unfinished">genom</translation>
+        <translation>genom</translation>
     </message>
     <message>
         <source>trim</source>
-        <translation type="unfinished"></translation>
+        <translation>trim</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>angle</comment>
-        <translation type="unfinished"></translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>an</source>
         <comment>angle</comment>
-        <translation type="unfinished"></translation>
+        <translation>en</translation>
     </message>
     <message>
         <source>center</source>
-        <translation type="unfinished"></translation>
+        <translation>centrum</translation>
     </message>
     <message>
         <source>cen</source>
         <comment>center</comment>
-        <translation type="unfinished"></translation>
+        <translation>cen</translation>
     </message>
     <message>
         <source>ce</source>
         <comment>center</comment>
-        <translation type="unfinished"></translation>
+        <translation>ce</translation>
     </message>
     <message>
         <source>cl</source>
         <comment>chord length</comment>
-        <translation type="unfinished"></translation>
+        <translation>klipp</translation>
     </message>
     <message>
         <source>c</source>
         <comment>close</comment>
-        <translation type="unfinished"></translation>
+        <translation>c</translation>
     </message>
     <message>
         <source>cols</source>
         <comment>columns</comment>
-        <translation type="unfinished"></translation>
+        <translation>kol</translation>
     </message>
     <message>
         <source>co</source>
         <comment>columns</comment>
-        <translation type="unfinished"></translation>
+        <translation>co</translation>
     </message>
     <message>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation type="unfinished"></translation>
+        <translation>kolumnspacing</translation>
     </message>
     <message>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation type="unfinished"></translation>
+        <translation>colspacing</translation>
     </message>
     <message>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
-        <translation type="unfinished"></translation>
+        <translation>cs</translation>
     </message>
     <message>
         <source>fact</source>
         <comment>factor</comment>
-        <translation type="unfinished"></translation>
+        <translation>faktiskt</translation>
     </message>
     <message>
         <source>f</source>
         <comment>factor</comment>
-        <translation type="unfinished"></translation>
+        <translation>f</translation>
     </message>
     <message>
         <source>help</source>
-        <translation type="unfinished">hjälp</translation>
+        <translation>hjälp</translation>
     </message>
     <message>
         <source>?</source>
         <comment>help</comment>
-        <translation type="unfinished"></translation>
+        <translation>??</translation>
     </message>
     <message>
         <source>length</source>
         <comment>length</comment>
-        <translation type="unfinished">längd</translation>
+        <translation>längd</translation>
     </message>
     <message>
         <source>len</source>
         <comment>length</comment>
-        <translation type="unfinished"></translation>
+        <translation>len</translation>
     </message>
     <message>
         <source>l</source>
         <comment>length</comment>
-        <translation type="unfinished"></translation>
+        <translation>låg</translation>
     </message>
     <message>
         <source>length1</source>
         <comment>length1</comment>
-        <translation type="unfinished"></translation>
+        <translation>längd1</translation>
     </message>
     <message>
         <source>len1</source>
         <comment>length1</comment>
-        <translation type="unfinished"></translation>
+        <translation>len1</translation>
     </message>
     <message>
         <source>l1</source>
         <comment>length1</comment>
-        <translation type="unfinished"></translation>
+        <translation>l1</translation>
     </message>
     <message>
         <source>length2</source>
         <comment>length2</comment>
-        <translation type="unfinished"></translation>
+        <translation>längd2</translation>
     </message>
     <message>
         <source>len2</source>
         <comment>length2</comment>
-        <translation type="unfinished"></translation>
+        <translation>len2</translation>
     </message>
     <message>
         <source>l2</source>
         <comment>length2</comment>
-        <translation type="unfinished"></translation>
+        <translation>l2</translation>
     </message>
     <message>
         <source>number</source>
         <comment>number</comment>
-        <translation type="unfinished"></translation>
+        <translation>nummernummer</translation>
     </message>
     <message>
         <source>num</source>
         <comment>number</comment>
-        <translation type="unfinished"></translation>
+        <translation>num</translation>
     </message>
     <message>
         <source>n</source>
         <comment>number</comment>
-        <translation type="unfinished"></translation>
+        <translation>n</translation>
     </message>
     <message>
         <source>ra</source>
         <comment>radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>ra</translation>
     </message>
     <message>
         <source>reversed</source>
         <comment>reversed</comment>
-        <translation type="unfinished"></translation>
+        <translation>omvänd</translation>
     </message>
     <message>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation type="unfinished"></translation>
+        <translation>rev</translation>
     </message>
     <message>
         <source>row</source>
         <comment>row</comment>
-        <translation type="unfinished"></translation>
+        <translation>rad</translation>
     </message>
     <message>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation type="unfinished"></translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
-        <translation type="unfinished"></translation>
+        <translation>rs</translation>
     </message>
     <message>
         <source>text</source>
-        <translation type="unfinished">text</translation>
+        <translation>texttext</translation>
     </message>
     <message>
         <source>t</source>
         <comment>text</comment>
-        <translation type="unfinished"></translation>
+        <translation>tröja</translation>
     </message>
     <message>
         <source>t</source>
         <comment>through</comment>
-        <translation type="unfinished"></translation>
+        <translation>tröja</translation>
     </message>
     <message>
         <source>undo</source>
-        <translation type="unfinished">ångra</translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
         <comment>undo</comment>
-        <translation type="unfinished"></translation>
+        <translation>u</translation>
     </message>
     <message>
         <source>redo</source>
-        <translation type="unfinished">gör om</translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
         <comment>redo</comment>
-        <translation type="unfinished"></translation>
+        <translation>r</translation>
     </message>
     <message>
         <source>back</source>
-        <translation type="unfinished"></translation>
+        <translation>tillbaka</translation>
     </message>
     <message>
         <source>b</source>
         <comment>back</comment>
-        <translation type="unfinished"></translation>
+        <translation>b</translation>
     </message>
     <message>
         <source>paperoffset</source>
-        <translation type="unfinished"></translation>
+        <translation>papperoffset</translation>
     </message>
     <message>
         <source>graphoffset</source>
-        <translation type="unfinished"></translation>
+        <translation>grafoffset</translation>
     </message>
     <message>
         <source>Command: %1 (%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kommando: %1 ( %2)</translation>
     </message>
     <message>
         <source>RS_Commands:: command not found: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>RS Commands: kommandot som inte finns: %1</translation>
     </message>
     <message>
         <source>Command not found: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kommando som inte hittades: %1</translation>
     </message>
     <message>
         <source>Accepted keycode: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Godtagen nyckelkod: %1</translation>
     </message>
     <message>
         <source>Available commands:</source>
-        <translation type="unfinished">Tillgängliga kommandon:</translation>
+        <translation>Tillgängliga kommandon:</translation>
     </message>
     <message>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation type="unfinished">Ingen</translation>
+        <translation>Ingen</translation>
     </message>
     <message>
         <source>error reading file metadata in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>felläsning av fil metadata i dwg-fil</translation>
     </message>
     <message>
         <source>Calculator error for input: </source>
-        <translation type="unfinished"></translation>
+        <translation>Kalkylatorfel för input:</translation>
     </message>
     <message>
         <source>bw</source>
-        <translation type="unfinished"></translation>
+        <translation>bw</translation>
     </message>
     <message>
         <source>blackwhite</source>
-        <translation type="unfinished"></translation>
+        <translation>svartvit</translation>
     </message>
     <message>
         <source>color</source>
-        <translation type="unfinished"></translation>
+        <translation>färgfärg</translation>
     </message>
     <message>
         <source>di</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"></translation>
+        <translation>dit</translation>
     </message>
     <message>
         <source>t2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation>t2</translation>
     </message>
     <message>
         <source>mp</source>
         <comment>modify properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>mp</translation>
     </message>
     <message>
         <source>Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Block</translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation type="unfinished">Cirkel</translation>
+        <translation>Cirkel</translation>
     </message>
     <message>
         <source>Curve</source>
-        <translation type="unfinished"></translation>
+        <translation>Curve</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Redigera</translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation type="unfinished">Ellips</translation>
+        <translation>Ellipse</translation>
     </message>
     <message>
         <source>File</source>
-        <translation type="unfinished">Arkiv</translation>
+        <translation>Fil</translation>
     </message>
     <message>
         <source>Dimension</source>
-        <translation type="unfinished">Dimension</translation>
+        <translation>Dimension</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Layer</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Modify</source>
-        <translation type="unfinished">Ändra</translation>
+        <translation>Ändra</translation>
     </message>
     <message>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternativ</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation type="unfinished"></translation>
+        <translation>Andra</translation>
     </message>
     <message>
         <source>Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Polyline</translation>
     </message>
     <message>
         <source>Restriction</source>
-        <translation type="unfinished"></translation>
+        <translation>Begränsning</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj</translation>
     </message>
     <message>
         <source>Snap</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap</translation>
     </message>
     <message>
         <source>Snap Extras</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap Extras</translation>
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished">Visa</translation>
+        <translation>Utsikt</translation>
     </message>
     <message>
         <source>Widgets</source>
-        <translation type="unfinished"></translation>
+        <translation>Widgets</translation>
     </message>
     <message>
         <source>Creators</source>
-        <translation type="unfinished"></translation>
+        <translation>Skapare</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Allt allt</translation>
     </message>
     <message>
         <source>Invalid objects removed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogiltiga föremål borttagna:</translation>
     </message>
     <message>
         <source>Pen Wizard</source>
-        <translation type="unfinished"></translation>
+        <translation>Pen Wizard</translation>
     </message>
     <message>
         <source>Select objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj objekt</translation>
     </message>
     <message>
         <source>Apply to selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Applicera på vald</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort</translation>
     </message>
     <message>
         <source>You must input a distance first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Du måste ange ett avstånd först.</translation>
     </message>
     <message>
         <source>cal</source>
-        <translation type="unfinished"></translation>
+        <translation>kalla</translation>
     </message>
     <message>
         <source>Calculator mode: On</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalkylatorläge: On</translation>
     </message>
     <message>
         <source>Calculator mode: Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalkylatorläge: Off</translation>
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Licens</translation>
     </message>
     <message>
         <source>No %1 layers found</source>
-        <translation type="unfinished"></translation>
+        <translation>Inga %1 lager hittades</translation>
     </message>
     <message>
         <source>line2p</source>
         <comment>draw line</comment>
-        <translation type="unfinished"></translation>
+        <translation>line2p</translation>
     </message>
     <message>
         <source>lineang</source>
         <comment>angled line</comment>
-        <translation type="unfinished"></translation>
+        <translation>lineang</translation>
     </message>
     <message>
         <source>la</source>
         <comment>angled line</comment>
-        <translation type="unfinished"></translation>
+        <translation>la</translation>
     </message>
     <message>
         <source>linehor</source>
         <comment>horizontal line</comment>
-        <translation type="unfinished"></translation>
+        <translation>linehor</translation>
     </message>
     <message>
         <source>lh</source>
         <comment>horizontal line</comment>
-        <translation type="unfinished"></translation>
+        <translation>lh</translation>
     </message>
     <message>
         <source>linever</source>
         <comment>vertical line</comment>
-        <translation type="unfinished"></translation>
+        <translation>linever</translation>
     </message>
     <message>
         <source>lv</source>
         <comment>vertical line</comment>
-        <translation type="unfinished"></translation>
+        <translation>lv</translation>
     </message>
     <message>
         <source>linerec</source>
         <comment>draw rectangle</comment>
-        <translation type="unfinished"></translation>
+        <translation>linerec</translation>
     </message>
     <message>
         <source>re</source>
         <comment>draw rectangle</comment>
-        <translation type="unfinished"></translation>
+        <translation>retur</translation>
     </message>
     <message>
         <source>linepar</source>
         <comment>create parallel</comment>
-        <translation type="unfinished"></translation>
+        <translation>linepar</translation>
     </message>
     <message>
         <source>lineoff</source>
         <comment>create parallel</comment>
-        <translation type="unfinished"></translation>
+        <translation>lineoff</translation>
     </message>
     <message>
         <source>pa</source>
         <comment>create parallel</comment>
-        <translation type="unfinished"></translation>
+        <translation>pappa</translation>
     </message>
     <message>
         <source>ll</source>
         <comment>create parallel</comment>
-        <translation type="unfinished"></translation>
+        <translation>ll</translation>
     </message>
     <message>
         <source>lineparthro</source>
         <comment>parallel through point</comment>
-        <translation type="unfinished"></translation>
+        <translation>lineparthro</translation>
     </message>
     <message>
         <source>lp</source>
         <comment>parallel through point</comment>
-        <translation type="unfinished"></translation>
+        <translation>lp</translation>
     </message>
     <message>
         <source>linebisect</source>
         <comment>angle bisector</comment>
-        <translation type="unfinished"></translation>
+        <translation>linebisect</translation>
     </message>
     <message>
         <source>linetancp</source>
         <comment>tangent point and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>linetancp</translation>
     </message>
     <message>
         <source>lt</source>
         <comment>tangent point and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>lt</translation>
     </message>
     <message>
         <source>linetan2c</source>
         <comment>tangent two circles</comment>
-        <translation type="unfinished"></translation>
+        <translation>linetan2c</translation>
     </message>
     <message>
         <source>lc</source>
         <comment>tangent two circles</comment>
-        <translation type="unfinished"></translation>
+        <translation>lc</translation>
     </message>
     <message>
         <source>linetancper</source>
         <comment>tangent line and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>linetancper</translation>
     </message>
     <message>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>eller</translation>
     </message>
     <message>
         <source>lineperp</source>
         <comment>perpendicular line</comment>
-        <translation type="unfinished"></translation>
+        <translation>lineperp</translation>
     </message>
     <message>
         <source>lo</source>
         <comment>perpendicular line</comment>
-        <translation type="unfinished"></translation>
+        <translation>lo</translation>
     </message>
     <message>
         <source>linerelang</source>
         <comment>relative line</comment>
-        <translation type="unfinished"></translation>
+        <translation>linerelang</translation>
     </message>
     <message>
         <source>lr</source>
         <comment>relative line</comment>
-        <translation type="unfinished"></translation>
+        <translation>lr</translation>
     </message>
     <message>
         <source>polygoncencor</source>
         <comment>polygon centre point</comment>
-        <translation type="unfinished"></translation>
+        <translation>polygoncencor</translation>
     </message>
     <message>
         <source>pp</source>
         <comment>polygon centre point</comment>
-        <translation type="unfinished"></translation>
+        <translation>pp</translation>
     </message>
     <message>
         <source>polycp</source>
         <comment>polygon centre point</comment>
-        <translation type="unfinished"></translation>
+        <translation>polycp</translation>
     </message>
     <message>
         <source>pcp</source>
         <comment>polygon centre point</comment>
-        <translation type="unfinished"></translation>
+        <translation>pcp</translation>
     </message>
     <message>
         <source>polygoncentan</source>
         <comment>polygon centre vertex</comment>
-        <translation type="unfinished"></translation>
+        <translation>polygoncentan</translation>
     </message>
     <message>
         <source>pv</source>
         <comment>polygon centre vertex</comment>
-        <translation type="unfinished"></translation>
+        <translation>pv</translation>
     </message>
     <message>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
-        <translation type="unfinished"></translation>
+        <translation>polykt</translation>
     </message>
     <message>
         <source>p2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation type="unfinished"></translation>
+        <translation>p2</translation>
     </message>
     <message>
         <source>c</source>
         <comment>draw circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>c</translation>
     </message>
     <message>
         <source>circle2p</source>
         <comment>circle 2 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>cirkel2p</translation>
     </message>
     <message>
         <source>c2p</source>
         <comment>circle 2 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>c2p</translation>
     </message>
     <message>
         <source>circle2pr</source>
         <comment>circle 2 points radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>cirkel2pr</translation>
     </message>
     <message>
         <source>cc</source>
         <comment>circle 2 points radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>cc</translation>
     </message>
     <message>
         <source>circle3p</source>
         <comment>circle 3 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>cirkel3p</translation>
     </message>
     <message>
         <source>c3p</source>
         <comment>circle 3 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>c3p</translation>
     </message>
     <message>
         <source>circlecr</source>
         <comment>circle point radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>cirkelcr</translation>
     </message>
     <message>
         <source>cr</source>
         <comment>circle point radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>cr</translation>
     </message>
     <message>
         <source>ccr</source>
         <comment>circle point radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>ccr</translation>
     </message>
     <message>
         <source>circletan2cp</source>
         <comment>circle 2 tangent point</comment>
-        <translation type="unfinished"></translation>
+        <translation>cirkeltan2cp</translation>
     </message>
     <message>
         <source>tr</source>
         <comment>circle 2 tangent point</comment>
-        <translation type="unfinished"></translation>
+        <translation>tr</translation>
     </message>
     <message>
         <source>circletan2p</source>
         <comment>circle tangent 2 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>cirkeltan2p</translation>
     </message>
     <message>
         <source>td</source>
         <comment>circle tangent 2 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>td</translation>
     </message>
     <message>
         <source>circletan2cr</source>
         <comment>circle 2 tangent radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>cirkeltan2cr</translation>
     </message>
     <message>
         <source>tc</source>
         <comment>circle 2 tangent radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>tc</translation>
     </message>
     <message>
         <source>circletan3</source>
         <comment>circle tangent to 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>cirkeltan3</translation>
     </message>
     <message>
         <source>t3</source>
         <comment>circle tangent to 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>t3</translation>
     </message>
     <message>
         <source>arc</source>
         <comment>arc point radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>arc</translation>
     </message>
     <message>
         <source>ar</source>
         <comment>arc point radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>ar</translation>
     </message>
     <message>
         <source>a</source>
         <comment>arc point radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>en</translation>
     </message>
     <message>
         <source>arc3p</source>
         <comment>draw 3pt arc</comment>
-        <translation type="unfinished"></translation>
+        <translation>arc3p</translation>
     </message>
     <message>
         <source>a3</source>
         <comment>draw 3pt arc</comment>
-        <translation type="unfinished"></translation>
+        <translation>a3</translation>
     </message>
     <message>
         <source>arctan</source>
         <comment>arc tangent</comment>
-        <translation type="unfinished"></translation>
+        <translation>arctan</translation>
     </message>
     <message>
         <source>at</source>
         <comment>arc tangent</comment>
-        <translation type="unfinished"></translation>
+        <translation>vid</translation>
     </message>
     <message>
         <source>sf</source>
         <comment>draw spline</comment>
-        <translation type="unfinished"></translation>
+        <translation>sf</translation>
     </message>
     <message>
         <source>sp</source>
         <comment>spline through points</comment>
-        <translation type="unfinished"></translation>
+        <translation>spänning</translation>
     </message>
     <message>
         <source>arcellc2ax</source>
         <comment>arc ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation>arcellc2ax</translation>
     </message>
     <message>
         <source>ae</source>
         <comment>arc ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation>ae</translation>
     </message>
     <message>
         <source>fh</source>
         <comment>draw freehand line</comment>
-        <translation type="unfinished"></translation>
+        <translation>fh</translation>
     </message>
     <message>
         <source>ellipsec2p</source>
         <comment>ellipse axis</comment>
-        <translation type="unfinished"></translation>
+        <translation>ellipsec2p</translation>
     </message>
     <message>
         <source>ea</source>
         <comment>ellipse axis</comment>
-        <translation type="unfinished"></translation>
+        <translation>ea</translation>
     </message>
     <message>
         <source>ellipse3p</source>
         <comment>ellipse foci</comment>
-        <translation type="unfinished"></translation>
+        <translation>ellipse3p</translation>
     </message>
     <message>
         <source>ef</source>
         <comment>ellipse foci</comment>
-        <translation type="unfinished"></translation>
+        <translation>ef</translation>
     </message>
     <message>
         <source>ellipse4p</source>
         <comment>ellipse 4 point</comment>
-        <translation type="unfinished"></translation>
+        <translation>ellipse4p</translation>
     </message>
     <message>
         <source>e4</source>
         <comment>ellipse 4 point</comment>
-        <translation type="unfinished"></translation>
+        <translation>e4</translation>
     </message>
     <message>
         <source>ellipsec3p</source>
         <comment>ellipse center 3 point</comment>
-        <translation type="unfinished"></translation>
+        <translation>ellipsec3p</translation>
     </message>
     <message>
         <source>e3</source>
         <comment>ellipse center 3 point</comment>
-        <translation type="unfinished"></translation>
+        <translation>e3</translation>
     </message>
     <message>
         <source>plineadd</source>
         <comment>pl add node</comment>
-        <translation type="unfinished"></translation>
+        <translation>plineadd</translation>
     </message>
     <message>
         <source>pi</source>
         <comment>pl add node</comment>
-        <translation type="unfinished"></translation>
+        <translation>pi</translation>
     </message>
     <message>
         <source>plineapp</source>
         <comment>pl append node</comment>
-        <translation type="unfinished"></translation>
+        <translation>plineapp</translation>
     </message>
     <message>
         <source>pn</source>
         <comment>pl append node</comment>
-        <translation type="unfinished"></translation>
+        <translation>pn</translation>
     </message>
     <message>
         <source>plinedel</source>
         <comment>pl delete node</comment>
-        <translation type="unfinished"></translation>
+        <translation>plinedel</translation>
     </message>
     <message>
         <source>pd</source>
         <comment>pl delete node</comment>
-        <translation type="unfinished"></translation>
+        <translation>pd</translation>
     </message>
     <message>
         <source>plinedeltwn</source>
         <comment>pl del between nodes</comment>
-        <translation type="unfinished"></translation>
+        <translation>plinedeltwn</translation>
     </message>
     <message>
         <source>pr</source>
         <comment>pl del between nodes</comment>
-        <translation type="unfinished"></translation>
+        <translation>pr</translation>
     </message>
     <message>
         <source>plinetrm</source>
         <comment>pl trim segments</comment>
-        <translation type="unfinished"></translation>
+        <translation>plinetrm</translation>
     </message>
     <message>
         <source>pt</source>
         <comment>pl trim segments</comment>
-        <translation type="unfinished"></translation>
+        <translation>pt</translation>
     </message>
     <message>
         <source>plinepar</source>
         <comment>pl equidistant</comment>
-        <translation type="unfinished"></translation>
+        <translation>plinepar</translation>
     </message>
     <message>
         <source>pe</source>
         <comment>pl equidistant</comment>
-        <translation type="unfinished"></translation>
+        <translation>peppar</translation>
     </message>
     <message>
         <source>plinejoin</source>
         <comment>pl join</comment>
-        <translation type="unfinished"></translation>
+        <translation>plinejoin</translation>
     </message>
     <message>
         <source>pj</source>
         <comment>pl join</comment>
-        <translation type="unfinished"></translation>
+        <translation>pj</translation>
     </message>
     <message>
         <source>sx</source>
         <comment>deselect all entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>sx</translation>
     </message>
     <message>
         <source>invertselect</source>
         <comment>invert select</comment>
-        <translation type="unfinished"></translation>
+        <translation>invertselect</translation>
     </message>
     <message>
         <source>is</source>
         <comment>invert select</comment>
-        <translation type="unfinished"></translation>
+        <translation>är att</translation>
     </message>
     <message>
         <source>ds</source>
         <comment>dimension - aligned</comment>
-        <translation type="unfinished"></translation>
+        <translation>ds</translation>
     </message>
     <message>
         <source>dimradius</source>
         <comment>dimension - radial</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimradius</translation>
     </message>
     <message>
         <source>dr</source>
         <comment>dimension - radial</comment>
-        <translation type="unfinished"></translation>
+        <translation>drottning</translation>
     </message>
     <message>
         <source>da</source>
         <comment>dimension - angular</comment>
-        <translation type="unfinished"></translation>
+        <translation>da</translation>
     </message>
     <message>
         <source>dg</source>
         <comment>dimension - regenerate</comment>
-        <translation type="unfinished"></translation>
+        <translation>dg</translation>
     </message>
     <message>
         <source>modmove</source>
         <comment>modify - move (copy)</comment>
-        <translation type="unfinished"></translation>
+        <translation>modmove</translation>
     </message>
     <message>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
-        <translation type="unfinished"></translation>
+        <translation>modrotate</translation>
     </message>
     <message>
         <source>modscale</source>
         <comment>modify - scale</comment>
-        <translation type="unfinished"></translation>
+        <translation>modscale</translation>
     </message>
     <message>
         <source>modmirror</source>
         <comment>modify -  mirror</comment>
-        <translation type="unfinished"></translation>
+        <translation>modmirror</translation>
     </message>
     <message>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
-        <translation type="unfinished"></translation>
+        <translation>modmovrot</translation>
     </message>
     <message>
         <source>mr</source>
         <comment>modify - move rotate</comment>
-        <translation type="unfinished"></translation>
+        <translation>mr</translation>
     </message>
     <message>
         <source>mod2rot</source>
         <comment>modify - rotate2</comment>
-        <translation type="unfinished"></translation>
+        <translation>mod2rot</translation>
     </message>
     <message>
         <source>r2</source>
         <comment>modify - rotate2</comment>
-        <translation type="unfinished"></translation>
+        <translation>r2</translation>
     </message>
     <message>
         <source>modrevert</source>
         <comment>modify -  revert direction</comment>
-        <translation type="unfinished"></translation>
+        <translation>modrevert</translation>
     </message>
     <message>
         <source>md</source>
         <comment>modify -  revert direction</comment>
-        <translation type="unfinished"></translation>
+        <translation>md</translation>
     </message>
     <message>
         <source>modtrim</source>
         <comment>modify - trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation>modtrim</translation>
     </message>
     <message>
         <source>modtrim2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation>modtrim2</translation>
     </message>
     <message>
         <source>modlengthen</source>
         <comment>modify - lengthen</comment>
-        <translation type="unfinished"></translation>
+        <translation>modlengthen</translation>
     </message>
     <message>
         <source>modoffset</source>
         <comment>modify - offset</comment>
-        <translation type="unfinished"></translation>
+        <translation>modoffset</translation>
     </message>
     <message>
         <source>mo</source>
         <comment>modify - offset</comment>
-        <translation type="unfinished"></translation>
+        <translation>mogen</translation>
     </message>
     <message>
         <source>moff</source>
         <comment>modify - offset</comment>
-        <translation type="unfinished"></translation>
+        <translation>moff</translation>
     </message>
     <message>
         <source>modbevel</source>
         <comment>modify - bevel</comment>
-        <translation type="unfinished"></translation>
+        <translation>modbevel</translation>
     </message>
     <message>
         <source>modfillet</source>
         <comment>modify - fillet</comment>
-        <translation type="unfinished"></translation>
+        <translation>modfillet</translation>
     </message>
     <message>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"></translation>
+        <translation>moddivide</translation>
     </message>
     <message>
         <source>modstretch</source>
         <comment>modify - stretch</comment>
-        <translation type="unfinished"></translation>
+        <translation>modstretch</translation>
     </message>
     <message>
         <source>modproperties</source>
         <comment>modify properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>modproperties</translation>
     </message>
     <message>
         <source>modattr</source>
         <comment>modify attribute</comment>
-        <translation type="unfinished"></translation>
+        <translation>modattr</translation>
     </message>
     <message>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
-        <translation type="unfinished"></translation>
+        <translation>modexpltext</translation>
     </message>
     <message>
         <source>xt</source>
         <comment>explode text strings</comment>
-        <translation type="unfinished"></translation>
+        <translation>xt</translation>
     </message>
     <message>
         <source>modexplode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>modexplode</translation>
     </message>
     <message>
         <source>moddelete</source>
         <comment>modify - delete (erase)</comment>
-        <translation type="unfinished"></translation>
+        <translation>moddelete</translation>
     </message>
     <message>
         <source>infodistance</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>infodistans</translation>
     </message>
     <message>
         <source>id</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>id</translation>
     </message>
     <message>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>infodistep</translation>
     </message>
     <message>
         <source>ii</source>
         <comment>distance entity to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>ii</translation>
     </message>
     <message>
         <source>dep</source>
         <comment>distance entity to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>dep</translation>
     </message>
     <message>
         <source>infoangle</source>
         <comment>measure angle</comment>
-        <translation type="unfinished"></translation>
+        <translation>infoangle</translation>
     </message>
     <message>
         <source>ia</source>
         <comment>measure angle</comment>
-        <translation type="unfinished"></translation>
+        <translation>ia</translation>
     </message>
     <message>
         <source>infoarea</source>
         <comment>measure area</comment>
-        <translation type="unfinished"></translation>
+        <translation>infoarea</translation>
     </message>
     <message>
         <source>aa</source>
         <comment>measure area</comment>
-        <translation type="unfinished"></translation>
+        <translation>aa</translation>
     </message>
     <message>
         <source>mt</source>
         <comment>draw mtext</comment>
-        <translation type="unfinished"></translation>
+        <translation>mt</translation>
     </message>
     <message>
         <source>tx</source>
         <comment>draw text</comment>
-        <translation type="unfinished"></translation>
+        <translation>tx</translation>
     </message>
     <message>
         <source>so</source>
         <comment>snap - free</comment>
-        <translation type="unfinished"></translation>
+        <translation>så</translation>
     </message>
     <message>
         <source>ki</source>
         <comment>kill all actions</comment>
-        <translation type="unfinished"></translation>
+        <translation>ki</translation>
     </message>
     <message>
         <source>un</source>
         <comment>undo cycle</comment>
-        <translation type="unfinished"></translation>
+        <translation>undvik</translation>
     </message>
     <message>
         <source>rd</source>
         <comment>redo cycle</comment>
-        <translation type="unfinished"></translation>
+        <translation>rd</translation>
     </message>
     <message>
         <source>drawpref</source>
         <comment>drawing preferences</comment>
-        <translation type="unfinished"></translation>
+        <translation>drapref</translation>
     </message>
     <message>
         <source>dp</source>
         <comment>drawing preferences</comment>
-        <translation type="unfinished"></translation>
+        <translation>dp</translation>
     </message>
     <message>
         <source>equation</source>
-        <translation type="unfinished"></translation>
+        <translation>ekvation</translation>
     </message>
     <message>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
-        <translation type="unfinished"></translation>
+        <translation>längd1</translation>
     </message>
     <message>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
-        <translation type="unfinished"></translation>
+        <translation>längd2</translation>
     </message>
     <message>
         <source>eqn</source>
         <comment>equation</comment>
-        <translation type="unfinished"></translation>
+        <translation>eqn</translation>
     </message>
     <message>
         <source>eq</source>
         <comment>equation</comment>
-        <translation type="unfinished"></translation>
+        <translation>eq</translation>
     </message>
     <message>
         <source>Custom</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Anpassad</translation>
     </message>
     <message>
         <source>A0</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>A0</translation>
     </message>
     <message>
         <source>A1</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>A1</translation>
     </message>
     <message>
         <source>A2</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>A2</translation>
     </message>
     <message>
         <source>A3</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>A3</translation>
     </message>
     <message>
         <source>A4</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>A4</translation>
     </message>
     <message>
         <source>Letter / ANSI A</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brev / ANSI A</translation>
     </message>
     <message>
         <source>Legal</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Legal</translation>
     </message>
     <message>
         <source>Tabloid / ANSI B</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tabloid / ANSI B</translation>
     </message>
     <message>
         <source>ANSI C</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>ANSI C</translation>
     </message>
     <message>
         <source>ANSI D</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>ANSI D</translation>
     </message>
     <message>
         <source>ANSI E</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>ANSI E</translation>
     </message>
     <message>
         <source>Arch A</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Arch A</translation>
     </message>
     <message>
         <source>Arch B</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Arch B</translation>
     </message>
     <message>
         <source>Arch C</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Arch C</translation>
     </message>
     <message>
         <source>Arch D</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Arch D</translation>
     </message>
     <message>
         <source>Arch E</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Arch E</translation>
     </message>
     <message>
         <source>custom</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>anpassade</translation>
     </message>
     <message>
         <source>a0</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>a0</translation>
     </message>
     <message>
         <source>a1</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>a1</translation>
     </message>
     <message>
         <source>a2</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>a2</translation>
     </message>
     <message>
         <source>a3</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>a3</translation>
     </message>
     <message>
         <source>a4</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>a4</translation>
     </message>
     <message>
         <source>letter</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>brevbrev</translation>
     </message>
     <message>
         <source>legal</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>rättslig rätt</translation>
     </message>
     <message>
         <source>tabloid</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>tabloid</translation>
     </message>
     <message>
         <source>ansi c</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>ansi c</translation>
     </message>
     <message>
         <source>ansi d</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>ansi d</translation>
     </message>
     <message>
         <source>ansi e</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>ansi e</translation>
     </message>
     <message>
         <source>arch a</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>arch a</translation>
     </message>
     <message>
         <source>arch b</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>båge b</translation>
     </message>
     <message>
         <source>arch c</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>arch c</translation>
     </message>
     <message>
         <source>arch d</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>arch d</translation>
     </message>
     <message>
         <source>arch e</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>arch e</translation>
     </message>
     <message>
         <source>DWG support is not complete!</source>
-        <translation type="unfinished"></translation>
+        <translation>DWG stöd är inte komplett!</translation>
     </message>
     <message>
         <source>If this file fails to open try an older DWG format</source>
-        <translation type="unfinished"></translation>
+        <translation>Om den här filen inte öppnar prova ett äldre DWG-format</translation>
     </message>
     <message>
         <source>or try to find a converter to make it a DXF file.</source>
-        <translation type="unfinished"></translation>
+        <translation>eller försöka hitta en konverterare för att göra det till en DXF-fil.</translation>
     </message>
     <message>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Information om information</translation>
     </message>
     <message>
         <source>Error</source>
         <comment>fileImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <source>Import error:</source>
         <comment>fileImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Importera fel:</translation>
     </message>
     <message>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hur som helst finns det vissa enheter identifierade.</translation>
     </message>
     <message>
         <source>If you open the file now, the drawing may be not complete or unusable.</source>
         <comment>dwgImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Om du öppnar filen nu kan ritningen inte vara komplett eller oanvändbar.</translation>
     </message>
     <message>
         <source>Ignore error and open the file?</source>
         <comment>dwgImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ignorera fel och öppna filen?</translation>
     </message>
     <message>
         <source>no DXF/DWG error</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>ingen DXF/DWG-fel</translation>
     </message>
     <message>
         <source>error opening DXF/DWG file</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>fel öppnar DXF/DWG-fil</translation>
     </message>
     <message>
         <source>unsupported DXF/DWG file version</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>ostödd DXF/DWG-filversion</translation>
     </message>
     <message>
         <source>error reading DXF/DWG meta data</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>felläsning DXF/DWG metadata</translation>
     </message>
     <message>
         <source>error reading DXF/DWG file header</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>felläsning DXF/DWG fil header</translation>
     </message>
     <message>
         <source>error reading DXF/DWG header dara</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>felläsning DXF / DWG header dara</translation>
     </message>
     <message>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>felläsning av DXF/DWG-objektkarta</translation>
     </message>
     <message>
         <source>error reading DXF/DWG classes</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>felläsning DXF/DWG klasser</translation>
     </message>
     <message>
         <source>error reading DXF/DWG tables</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>felläsning av DXF/DWG-tabeller</translation>
     </message>
     <message>
         <source>error reading DXF/DWG blocks</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>felläsning DXF/DWG block</translation>
     </message>
     <message>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>felläsning av DXF/DWG-enheter</translation>
     </message>
     <message>
         <source>error reading DXF/DWG objects</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>felläsning DXF/DWG-objekt</translation>
     </message>
     <message>
         <source>error reading DXF/DWG sections</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>felläsning DXF/DWG sektioner</translation>
     </message>
     <message>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>felläsning DXF/DWG-kod</translation>
     </message>
     <message>
         <source>undefined error</source>
         <comment>RS_FilterInterface</comment>
-        <translation type="unfinished"></translation>
+        <translation>odefinierat fel</translation>
     </message>
     <message>
         <source>usage: </source>
-        <translation type="unfinished"></translation>
+        <translation>användning:</translation>
     </message>
     <message>
         <source> [options] &lt;dxf_files&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>[alternativ] &lt;dxf files&gt;</translation>
     </message>
     <message>
         <source> *.dxf</source>
-        <translation type="unfinished"></translation>
+        <translation>dxf</translation>
     </message>
     <message>
         <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation type="unfinished"></translation>
+        <translation>skriv ut alla dxf-filer till pdf-filer med samma namn.</translation>
     </message>
     <message>
         <source> -o some.pdf *.dxf</source>
-        <translation type="unfinished"></translation>
+        <translation>-o some.pdf *.dxf</translation>
     </message>
     <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation type="unfinished"></translation>
+        <source>-- print all dxf files to 'some.pdf' file.</source>
+        <translation>skriv ut alla dxf-filer till "some.pdf"-fil.</translation>
     </message>
     <message>
         <source>Auto fit and center drawing to page.</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto passform och mittritning till sidan.</translation>
     </message>
     <message>
         <source>Auto center drawing on page.</source>
-        <translation type="unfinished"></translation>
+        <translation>Autocenter ritning på sidan.</translation>
     </message>
     <message>
         <source>Print grayscale.</source>
-        <translation type="unfinished"></translation>
+        <translation>Print gråskala.</translation>
     </message>
     <message>
         <source>Print monochrome (black/white).</source>
-        <translation type="unfinished"></translation>
+        <translation>Print monokrom (svart/vitt).</translation>
     </message>
     <message>
         <source>Paper size (Width x Height) in mm.</source>
         <comment>WxH</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pappersstorlek (bredd x höjd) i mm.</translation>
     </message>
     <message>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
-        <translation type="unfinished"></translation>
+        <translation>Output resolution (DPI).</translation>
     </message>
     <message>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
-        <translation type="unfinished"></translation>
+        <translation>Output skala. 0,01 (för 1:100 skala).</translation>
     </message>
     <message>
         <source>Paper margins in mm (integer or float).</source>
-        <translation type="unfinished"></translation>
+        <translation>Pappersmarginaler i mm (integer eller flyt).</translation>
     </message>
     <message>
         <source>Print on multiple pages (Horiz. x Vert.).</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv ut på flera sidor (Horiz. x Vert).</translation>
     </message>
     <message>
         <source>Output PDF file.</source>
         <comment>file</comment>
-        <translation type="unfinished"></translation>
+        <translation>Output PDF-fil.</translation>
     </message>
     <message>
         <source>Target output directory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Target output katalog.</translation>
     </message>
     <message>
         <source>&lt;dxf_files&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;dxf files&gt;</translation>
     </message>
     <message>
         <source>Input DXF file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Input DXF fil(s)</translation>
     </message>
     <message>
         <source>Keycode mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Keycode läge</translation>
     </message>
     <message>
         <source>Load command file</source>
-        <translation type="unfinished"></translation>
+        <translation>Load command file</translation>
     </message>
     <message>
         <source>Paste multiple commands</source>
-        <translation type="unfinished"></translation>
+        <translation>Klistra flera kommandon</translation>
     </message>
     <message>
         <source>Combine all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Kombinera alla lager</translation>
     </message>
     <message>
-        <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation type="unfinished"></translation>
+        <source>File "%1" already exists. Do you want to replace it?</source>
+        <translation>Fil "%1" finns redan. Vill du ersätta den?</translation>
     </message>
     <message>
         <source>/CustomColor%1</source>
-        <translation type="unfinished"></translation>
+        <translation>/CustomColor%1</translation>
     </message>
     <message>
         <source>Custom Picked</source>
-        <translation type="unfinished"></translation>
+        <translation>Anpassad Picked</translation>
     </message>
     <message>
         <source>noname</source>
         <comment>default layer name</comment>
-        <translation type="unfinished"></translation>
+        <translation>noname</translation>
     </message>
     <message>
         <source>R</source>
         <comment>Radial dimension prefix</comment>
-        <translation type="unfinished"></translation>
+        <translation>R</translation>
     </message>
     <message>
         <source>sline</source>
         <comment>draw snake line</comment>
-        <translation type="unfinished"></translation>
+        <translation>sline</translation>
     </message>
     <message>
         <source>sli</source>
         <comment>draw snake line</comment>
-        <translation type="unfinished"></translation>
+        <translation>sli</translation>
     </message>
     <message>
         <source>sl</source>
         <comment>draw snake line</comment>
-        <translation type="unfinished"></translation>
+        <translation>släpp</translation>
     </message>
     <message>
         <source>slinex</source>
         <comment>draw snake line (X)</comment>
-        <translation type="unfinished"></translation>
+        <translation>slinex</translation>
     </message>
     <message>
         <source>slix</source>
         <comment>draw snake line (X)</comment>
-        <translation type="unfinished"></translation>
+        <translation>six</translation>
     </message>
     <message>
         <source>rlx</source>
         <comment>draw snake line (X)</comment>
-        <translation type="unfinished"></translation>
+        <translation>rlx</translation>
     </message>
     <message>
         <source>sliney</source>
         <comment>draw snake line (Y)</comment>
-        <translation type="unfinished"></translation>
+        <translation>sliney</translation>
     </message>
     <message>
         <source>sliy</source>
         <comment>draw snake line (Y)</comment>
-        <translation type="unfinished"></translation>
+        <translation>sliy</translation>
     </message>
     <message>
         <source>rly</source>
         <comment>draw snake line (Y)</comment>
-        <translation type="unfinished"></translation>
+        <translation>rly</translation>
     </message>
     <message>
         <source>rect1</source>
         <comment>draw rectangle (1 Point)</comment>
-        <translation type="unfinished"></translation>
+        <translation>rect1</translation>
     </message>
     <message>
         <source>re1</source>
         <comment>draw rectangle (1 Point)</comment>
-        <translation type="unfinished"></translation>
+        <translation>re1</translation>
     </message>
     <message>
         <source>rect2</source>
         <comment>draw rectangle (2 Points)</comment>
-        <translation type="unfinished"></translation>
+        <translation>rect2</translation>
     </message>
     <message>
         <source>re2</source>
         <comment>draw rectangle (2 Points)</comment>
-        <translation type="unfinished"></translation>
+        <translation>re2</translation>
     </message>
     <message>
         <source>rect3</source>
         <comment>draw rectangle (3 Points)</comment>
-        <translation type="unfinished"></translation>
+        <translation>rect3</translation>
     </message>
     <message>
         <source>re3</source>
         <comment>draw rectangle (3 Points)</comment>
-        <translation type="unfinished"></translation>
+        <translation>re3</translation>
     </message>
     <message>
         <source>slicel</source>
         <comment>slice/divide line</comment>
-        <translation type="unfinished"></translation>
+        <translation>sicel</translation>
     </message>
     <message>
         <source>sll</source>
         <comment>slice/divide line</comment>
-        <translation type="unfinished"></translation>
+        <translation>sll</translation>
     </message>
     <message>
         <source>slicec</source>
         <comment>slice/divide circle/arc</comment>
-        <translation type="unfinished"></translation>
+        <translation>särskilt</translation>
     </message>
     <message>
         <source>slc</source>
         <comment>slice/divide circle/arc</comment>
-        <translation type="unfinished"></translation>
+        <translation>sc</translation>
     </message>
     <message>
         <source>star</source>
         <comment>draw star</comment>
-        <translation type="unfinished"></translation>
+        <translation>stjärnstjärna</translation>
     </message>
     <message>
         <source>st</source>
         <comment>draw star</comment>
-        <translation type="unfinished"></translation>
+        <translation>stå</translation>
     </message>
     <message>
         <source>cross</source>
         <comment>draw cross for circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>korsar kors</translation>
     </message>
     <message>
         <source>cx</source>
         <comment>draw cross for circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>cx</translation>
     </message>
     <message>
         <source>linepoints</source>
         <comment>draw line of points</comment>
-        <translation type="unfinished"></translation>
+        <translation>linepoints</translation>
     </message>
     <message>
         <source>lpoints</source>
         <comment>draw line of points</comment>
-        <translation type="unfinished"></translation>
+        <translation>lpoints</translation>
     </message>
     <message>
         <source>criclebyarc</source>
         <comment>draw circle by arc</comment>
-        <translation type="unfinished"></translation>
+        <translation>criclebyarc</translation>
     </message>
     <message>
         <source>cba</source>
         <comment>draw circle by arc</comment>
-        <translation type="unfinished"></translation>
+        <translation>cba</translation>
     </message>
     <message>
         <source>duplicate</source>
         <comment>duplicate entity</comment>
-        <translation type="unfinished"></translation>
+        <translation>duplicate</translation>
     </message>
     <message>
         <source>dup</source>
         <comment>duplicate entity</comment>
-        <translation type="unfinished"></translation>
+        <translation>dup</translation>
     </message>
     <message>
         <source>linejoin</source>
         <comment>lines join</comment>
-        <translation type="unfinished"></translation>
+        <translation>linejoin</translation>
     </message>
     <message>
         <source>lj</source>
         <comment>lines join</comment>
-        <translation type="unfinished"></translation>
+        <translation>ljö</translation>
     </message>
     <message>
         <source>breakdivide</source>
         <comment>break or divide entity</comment>
-        <translation type="unfinished"></translation>
+        <translation>breakdivide</translation>
     </message>
     <message>
         <source>bd</source>
         <comment>break or divide entity</comment>
-        <translation type="unfinished"></translation>
+        <translation>bd</translation>
     </message>
     <message>
         <source>gapline</source>
         <comment>line gap</comment>
-        <translation type="unfinished"></translation>
+        <translation>gapline</translation>
     </message>
     <message>
         <source>gl</source>
         <comment>line gap</comment>
-        <translation type="unfinished"></translation>
+        <translation>glädje</translation>
     </message>
     <message>
         <source>parabola4p</source>
         <comment>Parabola 4 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>parabola4p</translation>
     </message>
     <message>
         <source>pl4</source>
         <comment>Parabola 4 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>pl4</translation>
     </message>
     <message>
         <source>parabolafd</source>
         <comment>Parabola focus directrix</comment>
-        <translation type="unfinished"></translation>
+        <translation>parabolafd</translation>
     </message>
     <message>
         <source>plfd</source>
         <comment>Parabola focus directrix</comment>
-        <translation type="unfinished"></translation>
+        <translation>plfd</translation>
     </message>
     <message>
         <source>angleline</source>
         <comment>draw angle from line</comment>
-        <translation type="unfinished"></translation>
+        <translation>angleline</translation>
     </message>
     <message>
         <source>rortoline</source>
         <comment>draw orthogonal</comment>
-        <translation type="unfinished"></translation>
+        <translation>rortoline</translation>
     </message>
     <message>
         <source>rort</source>
         <comment>draw orthogonal</comment>
-        <translation type="unfinished"></translation>
+        <translation>rort</translation>
     </message>
     <message>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
-        <translation type="unfinished"></translation>
+        <translation>point2line</translation>
     </message>
     <message>
         <source>p2l</source>
         <comment>draw line from point to line</comment>
-        <translation type="unfinished"></translation>
+        <translation>p2l</translation>
     </message>
     <message>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
-        <translation type="unfinished"></translation>
+        <translation>snapmiddlemanual</translation>
     </message>
     <message>
         <source>snapmanual</source>
         <comment>snap middle manual</comment>
-        <translation type="unfinished"></translation>
+        <translation>snapmanual</translation>
     </message>
     <message>
         <source>smm</source>
         <comment>snap middle manual</comment>
-        <translation type="unfinished"></translation>
+        <translation>smmm</translation>
     </message>
     <message>
         <source>x</source>
-        <translation type="unfinished"></translation>
+        <translation>x</translation>
     </message>
     <message>
         <source>y</source>
-        <translation type="unfinished"></translation>
+        <translation>y</translation>
     </message>
     <message>
         <source>p</source>
-        <translation type="unfinished"></translation>
+        <translation>p</translation>
     </message>
     <message>
         <source>anglerel</source>
-        <translation type="unfinished"></translation>
+        <translation>anglerel</translation>
     </message>
     <message>
         <source>start</source>
-        <translation type="unfinished"></translation>
+        <translation>börja</translation>
     </message>
     <message>
         <source>offset</source>
-        <translation type="unfinished"></translation>
+        <translation>offset</translation>
     </message>
     <message>
         <source>linesnap</source>
-        <translation type="unfinished"></translation>
+        <translation>linesnap</translation>
     </message>
     <message>
         <source>ticksnap</source>
-        <translation type="unfinished"></translation>
+        <translation>ticksnap</translation>
     </message>
     <message>
         <source>width</source>
-        <translation type="unfinished"></translation>
+        <translation>bredd</translation>
     </message>
     <message>
         <source>height</source>
-        <translation type="unfinished"></translation>
+        <translation>höjd</translation>
     </message>
     <message>
         <source>pos</source>
-        <translation type="unfinished"></translation>
+        <translation>pos</translation>
     </message>
     <message>
         <source>size</source>
-        <translation type="unfinished"></translation>
+        <translation>storlek</translation>
     </message>
     <message>
         <source>bevels</source>
-        <translation type="unfinished"></translation>
+        <translation>fjäll</translation>
     </message>
     <message>
         <source>nopoly</source>
-        <translation type="unfinished"></translation>
+        <translation>nopoly</translation>
     </message>
     <message>
         <source>usepoly</source>
-        <translation type="unfinished"></translation>
+        <translation>användpoly</translation>
     </message>
     <message>
         <source>corners</source>
-        <translation type="unfinished"></translation>
+        <translation>hörn</translation>
     </message>
     <message>
         <source>str</source>
-        <translation type="unfinished"></translation>
+        <translation>straff</translation>
     </message>
     <message>
         <source>round</source>
-        <translation type="unfinished"></translation>
+        <translation>runda</translation>
     </message>
     <message>
         <source>snap1</source>
-        <translation type="unfinished"></translation>
+        <translation>snapp1</translation>
     </message>
     <message>
         <source>topl</source>
-        <translation type="unfinished"></translation>
+        <translation>topl</translation>
     </message>
     <message>
         <source>top</source>
-        <translation type="unfinished"></translation>
+        <translation>toppen</translation>
     </message>
     <message>
         <source>topr</source>
-        <translation type="unfinished"></translation>
+        <translation>topr</translation>
     </message>
     <message>
         <source>left</source>
-        <translation type="unfinished"></translation>
+        <translation>vänster</translation>
     </message>
     <message>
         <source>middle</source>
-        <translation type="unfinished"></translation>
+        <translation>mitten</translation>
     </message>
     <message>
         <source>right</source>
-        <translation type="unfinished"></translation>
+        <translation>rätt</translation>
     </message>
     <message>
         <source>bottoml</source>
-        <translation type="unfinished"></translation>
+        <translation>bottenl</translation>
     </message>
     <message>
         <source>bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>botten</translation>
     </message>
     <message>
         <source>bottomr</source>
-        <translation type="unfinished"></translation>
+        <translation>botten</translation>
     </message>
     <message>
         <source>snapcorner</source>
-        <translation type="unfinished"></translation>
+        <translation>snapcorner</translation>
     </message>
     <message>
         <source>snapshift</source>
-        <translation type="unfinished"></translation>
+        <translation>snapshift</translation>
     </message>
     <message>
         <source>sizein</source>
-        <translation type="unfinished"></translation>
+        <translation>storlek</translation>
     </message>
     <message>
         <source>sizeout</source>
-        <translation type="unfinished"></translation>
+        <translation>storlek</translation>
     </message>
     <message>
         <source>hor</source>
-        <translation type="unfinished"></translation>
+        <translation>hor</translation>
     </message>
     <message>
         <source>vert</source>
-        <translation type="unfinished"></translation>
+        <translation>vert</translation>
     </message>
     <message>
         <source>snap2</source>
-        <translation type="unfinished"></translation>
+        <translation>snap2</translation>
     </message>
     <message>
         <source>corner</source>
-        <translation type="unfinished"></translation>
+        <translation>hörn</translation>
     </message>
     <message>
         <source>mid-vert</source>
-        <translation type="unfinished"></translation>
+        <translation>mitt-vert</translation>
     </message>
     <message>
         <source>mid-hor</source>
-        <translation type="unfinished"></translation>
+        <translation>mid-hor</translation>
     </message>
     <message>
         <source>quad</source>
-        <translation type="unfinished"></translation>
+        <translation>quad</translation>
     </message>
     <message>
         <source>noquad</source>
-        <translation type="unfinished"></translation>
+        <translation>noquad</translation>
     </message>
     <message>
         <source>angle_inner</source>
-        <translation type="unfinished"></translation>
+        <translation>angle inner</translation>
     </message>
     <message>
         <source>edges</source>
-        <translation type="unfinished"></translation>
+        <translation>edges</translation>
     </message>
     <message>
         <source>edge-none</source>
-        <translation type="unfinished"></translation>
+        <translation>edge-none</translation>
     </message>
     <message>
         <source>edge-both</source>
-        <translation type="unfinished"></translation>
+        <translation>edge-both</translation>
     </message>
     <message>
         <source>edge-start</source>
-        <translation type="unfinished"></translation>
+        <translation>edge-start</translation>
     </message>
     <message>
         <source>edge-end</source>
-        <translation type="unfinished"></translation>
+        <translation>edge-end</translation>
     </message>
     <message>
         <source>end</source>
-        <translation type="unfinished"></translation>
+        <translation>slutet</translation>
     </message>
     <message>
         <source>both</source>
-        <translation type="unfinished"></translation>
+        <translation>båda</translation>
     </message>
     <message>
         <source>none</source>
-        <translation type="unfinished"></translation>
+        <translation>ingen</translation>
     </message>
     <message>
         <source>fit</source>
-        <translation type="unfinished"></translation>
+        <translation>passform</translation>
     </message>
     <message>
         <source>nofit</source>
-        <translation type="unfinished"></translation>
+        <translation>nofit</translation>
     </message>
     <message>
         <source>dist_fixed</source>
-        <translation type="unfinished"></translation>
+        <translation>dist fixed</translation>
     </message>
     <message>
         <source>dist_flex</source>
-        <translation type="unfinished"></translation>
+        <translation>dist flex</translation>
     </message>
     <message>
         <source>distance</source>
-        <translation type="unfinished"></translation>
+        <translation>avstånd</translation>
     </message>
     <message>
         <source>sym</source>
-        <translation type="unfinished"></translation>
+        <translation>sym</translation>
     </message>
     <message>
         <source>nosym</source>
-        <translation type="unfinished"></translation>
+        <translation>nosym</translation>
     </message>
     <message>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Hatch: Inget mönster hittades. Vänligen ange mönsterbana i applikationspreferenser</translation>
     </message>
     <message>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Häxa: lastningsmönster misslyckades: %1</translation>
     </message>
     <message>
         <source>PenTB</source>
-        <translation type="unfinished"></translation>
+        <translation>PenTB</translation>
     </message>
     <message>
         <source>By Layer</source>
-        <translation type="unfinished">Efter lager</translation>
+        <translation>Av Layer</translation>
     </message>
     <message>
         <source>By Block</source>
-        <translation type="unfinished">Efter block</translation>
+        <translation>Av Block</translation>
     </message>
     <message>
         <source>- Unchanged -</source>
-        <translation type="unfinished"></translation>
+        <translation>- oförändrad -</translation>
     </message>
     <message>
         <source>User Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Användarfärg</translation>
     </message>
     <message>
         <source>cal </source>
         <comment>command to trigger cli calculator</comment>
-        <translation type="unfinished"></translation>
+        <translation>kalla</translation>
     </message>
     <message>
         <source>calculate </source>
         <comment>command to trigger cli calculator</comment>
-        <translation type="unfinished"></translation>
+        <translation>beräkna</translation>
     </message>
     <message>
         <source>-Unchanged-</source>
-        <translation type="unfinished"></translation>
+        <translation>Förändrad -</translation>
     </message>
     <message>
         <source>ByLayer</source>
-        <translation type="unfinished"></translation>
+        <translation>ByLayer</translation>
     </message>
     <message>
         <source>ByBlock</source>
-        <translation type="unfinished"></translation>
+        <translation>ByBlock</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished">Standard</translation>
+        <translation>Standard</translation>
     </message>
     <message>
         <source>0.00mm</source>
-        <translation type="unfinished">0.00mm</translation>
+        <translation>0,00 mm</translation>
     </message>
     <message>
         <source>0.05mm</source>
-        <translation type="unfinished">0.05mm</translation>
+        <translation>0,05 mm</translation>
     </message>
     <message>
         <source>0.09mm</source>
-        <translation type="unfinished">0.09mm</translation>
+        <translation>0,09 mm</translation>
     </message>
     <message>
         <source>0.13mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>0,13 mmISO</translation>
     </message>
     <message>
         <source>0.15mm</source>
-        <translation type="unfinished">0.15mm</translation>
+        <translation>0,15 mm</translation>
     </message>
     <message>
         <source>0.18mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>0,18 mmISO</translation>
     </message>
     <message>
         <source>0.20mm</source>
-        <translation type="unfinished">0.20mm</translation>
+        <translation>0,20 mm</translation>
     </message>
     <message>
         <source>0.25mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>0,25 mmISO</translation>
     </message>
     <message>
         <source>0.30mm</source>
-        <translation type="unfinished">0.30mm</translation>
+        <translation>0,30 mm</translation>
     </message>
     <message>
         <source>0.35mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>0,35 mmISO</translation>
     </message>
     <message>
         <source>0.40mm</source>
-        <translation type="unfinished">0.40mm</translation>
+        <translation>0,40 mm</translation>
     </message>
     <message>
         <source>0.50mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>0,50 mmISO</translation>
     </message>
     <message>
         <source>0.53mm</source>
-        <translation type="unfinished">0.53mm</translation>
+        <translation>0,53 mm</translation>
     </message>
     <message>
         <source>0.60mm</source>
-        <translation type="unfinished">0.60mm</translation>
+        <translation>0,60 mm</translation>
     </message>
     <message>
         <source>0.70mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>0,70 mmISO</translation>
     </message>
     <message>
         <source>0.80mm</source>
-        <translation type="unfinished">0.80mm</translation>
+        <translation>0,80 mm</translation>
     </message>
     <message>
         <source>0.90mm</source>
-        <translation type="unfinished">0.90mm</translation>
+        <translation>0,90 mm</translation>
     </message>
     <message>
         <source>1.00mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>1.00mmISO</translation>
     </message>
     <message>
         <source>1.06mm</source>
-        <translation type="unfinished">1.06mm</translation>
+        <translation>1,06 mm</translation>
     </message>
     <message>
         <source>1.20mm</source>
-        <translation type="unfinished">1.20mm</translation>
+        <translation>1,20 mm</translation>
     </message>
     <message>
         <source>1.40mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>1.40mmISO</translation>
     </message>
     <message>
         <source>1.58mm</source>
-        <translation type="unfinished">1.58mm</translation>
+        <translation>1,58 mm</translation>
     </message>
     <message>
         <source>2.00mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>2.00mmISO</translation>
     </message>
     <message>
         <source>2.11mm</source>
-        <translation type="unfinished">2.11mm</translation>
+        <translation>2.11 mm</translation>
     </message>
 </context>
 <context>
@@ -10735,67 +10792,67 @@ Vill du ersätta den?</translation>
         <translation>Ange vinkel:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Enter factor:</translation>
     </message>
     <message>
         <source>Enter columns:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange kolumner:</translation>
     </message>
     <message>
         <source>Enter rows:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange rader:</translation>
     </message>
     <message>
         <source>Enter column spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange kolumnavstånd:</translation>
     </message>
     <message>
         <source>Enter row spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange radavstånd:</translation>
     </message>
     <message>
         <source>Block cannot contain an insert of itself.</source>
-        <translation type="unfinished"></translation>
+        <translation>Block kan inte innehålla en insats av sig själv.</translation>
     </message>
     <message>
         <source> has nested insert of current block in:
 </source>
-        <translation type="unfinished"></translation>
+        <translation>har insats av nuvarande block i:</translation>
     </message>
     <message>
         <source>
 This block cannot be inserted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Detta block kan inte infogas.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksSave</name>
     <message>
         <source>No block activated to save</source>
-        <translation type="unfinished"></translation>
+        <translation>Inget block aktiverat för att spara</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDefault</name>
     <message>
         <source>Choose second edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj andra kanten</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimAligned</name>
     <message>
         <source>Specify first extension line origin</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera första förlängningslinjen ursprung</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10803,26 +10860,26 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second extension line origin</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera andra förlängningslinjens ursprung</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera dimension linje plats</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange dimensionstext:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimAngular</name>
     <message>
         <source>Select first line</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj första raden</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10830,30 +10887,30 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select second line</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj andra raden</translation>
     </message>
     <message>
         <source>Specify dimension arc line location</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera dimension arc line placering</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange dimensionstext:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimDiametric</name>
     <message>
         <source>Not a circle or arc entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Inte en cirkel eller båge enhet</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Inte ett giltigt uttryck</translation>
+        <translation>Inte ett giltigt uttryck</translation>
     </message>
     <message>
         <source>Select arc or circle entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj båge eller cirkelenhet</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10861,18 +10918,18 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify dimension line location</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera dimension linje plats</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange dimensionstext:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimLeader</name>
     <message>
         <source>Specify target point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange målpunkt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10880,22 +10937,22 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange nästa punkt</translation>
     </message>
     <message>
         <source>Finish</source>
-        <translation type="unfinished"></translation>
+        <translation>Finish</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimLinear</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Inte ett giltigt uttryck</translation>
+        <translation>Inte ett giltigt uttryck</translation>
     </message>
     <message>
         <source>Specify first extension line origin</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera första förlängningslinjen ursprung</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10903,38 +10960,38 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second extension line origin</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera andra förlängningslinjens ursprung</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera dimension linje plats</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange dimensionstext:</translation>
     </message>
     <message>
         <source>Enter dimension line angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange dimensionslinjevinkel:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimRadial</name>
     <message>
         <source>Not a circle or arc entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Inte en cirkel eller båge enhet</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Inte ett giltigt uttryck</translation>
+        <translation>Inte ett giltigt uttryck</translation>
     </message>
     <message>
         <source>Select arc or circle entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj båge eller cirkelenhet</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10942,26 +10999,26 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify dimension line position or enter angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange dimension linje position eller ange vinkel:</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange dimensionstext:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawArc</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Inte ett giltigt uttryck</translation>
+        <translation>Inte ett giltigt uttryck</translation>
     </message>
     <message>
         <source>Not a valid chord length</source>
-        <translation type="unfinished"></translation>
+        <translation>Inte en giltig ackordlängd</translation>
     </message>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera centrum</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10969,34 +11026,34 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera radien</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify start angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange startvinkel:</translation>
     </message>
     <message>
         <source>Specify included angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange inkluderad vinkel:</translation>
     </message>
     <message>
         <source>Specify chord length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera ackordlängd:</translation>
     </message>
     <message>
         <source>Specify end angle or [angle/chord length]</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange ändvinkel eller [vinkel / ackordlängd]</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawArc3P</name>
     <message>
         <source>Invalid arc data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Invalid arc data.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11004,26 +11061,26 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange andra punkten</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify endpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera endpoint</translation>
     </message>
     <message>
         <source>Specify startpoint or [center]</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange startpunkt eller [center]</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawArcTangential</name>
     <message>
         <source>Specify base entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange basenhet</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11031,26 +11088,26 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify end angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange slutvinkel</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify end point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange slutpunkt</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircle</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Inte ett giltigt uttryck</translation>
+        <translation>Inte ett giltigt uttryck</translation>
     </message>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera centrum</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11058,22 +11115,22 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify point on circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange punkt på cirkel</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircle2P</name>
     <message>
         <source>Invalid Circle data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Invalid Circle data.</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första punkten</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11081,22 +11138,22 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange andra punkten</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircle3P</name>
     <message>
         <source>Invalid circle data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Invalid cirkeldata.</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första punkten</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11104,26 +11161,26 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange andra punkten</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify third point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange tredje punkt</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleCR</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Inte ett giltigt uttryck</translation>
+        <translation>Inte ett giltigt uttryck</translation>
     </message>
     <message>
         <source>Specify circle center</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange cirkelcenter</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11131,212 +11188,212 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify circle radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange cirkelradie</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (expression)</source>
-        <translation type="unfinished"></translation>
+        <translation>radie=%1 är ogiltig (uttryck)</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (negative)</source>
-        <translation type="unfinished"></translation>
+        <translation>radie=%1 är ogiltig (negativ)</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (zero)</source>
-        <translation type="unfinished"></translation>
+        <translation>radie=%1 är ogiltig (noll)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleInscribe</name>
     <message>
         <source>Specify the first line</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första raden</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Specify the second line</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange den andra raden</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify the third line</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange tredje raden</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan1_2P</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Specify the first point on the tangent circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange den första punkten på tangentcirkeln</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify the second point on the tangent circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange den andra punkten på tangentcirkeln</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj mitten av tangentcirkeln</translation>
     </message>
     <message>
         <source>Specify a line/arc/circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange en linje / båge / cirkel</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan2</name>
     <message>
         <source>Specify the first line/arc/circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange den första raden/arc/cirkeln</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Specify the second line/arc/circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange den andra raden/arc/cirkeln</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj mitten av tangentcirkeln</translation>
     </message>
     <message>
-        <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation type="unfinished"></translation>
+        <source>Invalid expression '%1' for radius</source>
+        <translation>Ogiltigt uttryck "%1" för radie</translation>
     </message>
     <message>
-        <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <source>Invalid negative radius '%1'</source>
+        <translation>Ogiltig negativ radie "%1"</translation>
     </message>
     <message>
-        <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <source>Invalid zero radius '%1'</source>
+        <translation>Invalid noll radie "%1"</translation>
     </message>
     <message>
-        <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <source>No tangent circle possible for radius '%1'</source>
+        <translation>Ingen tangentcirkel möjlig för radie "% 1"</translation>
     </message>
     <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <source>No common tangential circle for radius '%1'</source>
+        <translation>Ingen vanlig tangentiell cirkel för radie "% 1"</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan2_1P</name>
     <message>
         <source>Specify a line/arc/circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange en linje / båge / cirkel</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Specify the another arc/circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange en annan båge/cirkel</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify a point on the tangent circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange en punkt på tangentcirkeln</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj mitten av tangentcirkeln</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan3</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj mitten av tangentcirkeln</translation>
     </message>
     <message>
         <source>Specify the first line/arc/circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange den första raden/arc/cirkeln</translation>
     </message>
     <message>
         <source>Specify the second line/arc/circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange den andra raden/arc/cirkeln</translation>
     </message>
     <message>
         <source>Specify the third line/arc/circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange tredje raden/arc/cirkel</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
         <source>Specify the first point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första punkten på ellips</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Specify the second point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange den andra punkten på ellips</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange den tredje punkten på ellips</translation>
     </message>
     <message>
         <source>Specify the fourth point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange den fjärde punkten på ellips</translation>
     </message>
     <message>
         <source>Can not determine uniquely an ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte bestämma unikt en ellips</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseAxis</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Inte ett giltigt uttryck</translation>
+        <translation>Inte ett giltigt uttryck</translation>
     </message>
     <message>
         <source>Specify ellipse center</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange ellips centrum</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11344,162 +11401,162 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify endpoint of major axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera endpoint av större axel</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange endpoint eller längd på mindre axel:</translation>
     </message>
     <message>
         <source>Specify start angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera startvinkel</translation>
     </message>
     <message>
         <source>Specify end angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange slutvinkel</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseCenter3Points</name>
     <message>
         <source>Specify the center of ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange centrum för ellips</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Specify the first point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första punkten på ellips</translation>
     </message>
     <message>
         <source>Specify the second point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange den andra punkten på ellips</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange den tredje punkten på ellips</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseFociPoint</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Inte ett giltigt uttryck</translation>
+        <translation>Inte ett giltigt uttryck</translation>
     </message>
     <message>
         <source>Specify first focus of ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första fokuset på ellips</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Specify second focus of ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange andra fokus för ellips</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify a point on ellipse or total distance to foci</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange en punkt på ellips eller totalt avstånd till foci</translation>
     </message>
     <message>
         <source>specify a point on ellipse, or total distance to foci</source>
-        <translation type="unfinished"></translation>
+        <translation>ange en punkt på ellips eller totalt avstånd till foci</translation>
     </message>
     <message>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation type="unfinished"></translation>
+        <translation>Totalt avstånd %1 är mindre än avståndet mellan foci</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseInscribe</name>
     <message>
         <source>Specify the first line</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första raden</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Specify the second line</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange den andra raden</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify the third line</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange tredje raden</translation>
     </message>
     <message>
         <source>Specify the fourth line</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange den fjärde raden</translation>
     </message>
     <message>
         <source>Can not determine uniquely an ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte bestämma unikt en ellips</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawHatch</name>
     <message>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogiltigt kläckområde. Kontrollera att de utvalda enheterna utgör en eller flera slutna konturer.</translation>
     </message>
     <message>
         <source>Hatch created successfully.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hatch skapade framgångsrikt.</translation>
     </message>
     <message>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation type="unfinished"></translation>
+        <translation>Hatch Fel: Ogiltig kontur hittades!</translation>
     </message>
     <message>
         <source>Hatch Error: Pattern not found!</source>
-        <translation type="unfinished"></translation>
+        <translation>Hatch Fel: Mönster hittades inte!</translation>
     </message>
     <message>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation type="unfinished"></translation>
+        <translation>Hatch Fel: Contour eller mönster för litet!</translation>
     </message>
     <message>
         <source>Hatch Error: Contour too big!</source>
-        <translation type="unfinished"></translation>
+        <translation>Hatch Fel: Contour för stor!</translation>
     </message>
     <message>
         <source>Hatch Error: Undefined Error!</source>
-        <translation type="unfinished"></translation>
+        <translation>Häxfel: Odefinierat fel!</translation>
     </message>
     <message>
         <source>Total hatch area = %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Totalt kläckområde = %1</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawImage</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Inte ett giltigt uttryck</translation>
+        <translation>Inte ett giltigt uttryck</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished">Ange referenspunkt</translation>
+        <translation>Ange referenspunkt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11507,26 +11564,26 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation type="unfinished">Ange vinkel:</translation>
+        <translation>Ange vinkel:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Enter factor:</translation>
     </message>
     <message>
         <source>Enter dpi:</source>
-        <translation type="unfinished"></translation>
+        <translation>Enter dpi:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLine</name>
     <message>
         <source>Specify first point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första punkten</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11534,38 +11591,38 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange nästa punkt eller [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange nästa punkt</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte stänga sekvensen av linjer: Inte tillräckligt med enheter definierade än, eller redan stängda.</translation>
     </message>
     <message>
         <source>Cannot undo: Begin of history reached</source>
-        <translation type="unfinished"></translation>
+        <translation>Cannot undo: Början av historien nådde</translation>
     </message>
     <message>
         <source>Cannot redo: End of history reached</source>
-        <translation type="unfinished"></translation>
+        <translation>Cannot redo: Slutet på historien nådde</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineAngle</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Inte ett giltigt uttryck</translation>
+        <translation>Inte ett giltigt uttryck</translation>
     </message>
     <message>
         <source>Specify position</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange position</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11573,26 +11630,26 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation type="unfinished">Ange vinkel:</translation>
+        <translation>Ange vinkel:</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Enter length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Enter Längd:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineBisector</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Inte ett giltigt uttryck</translation>
+        <translation>Inte ett giltigt uttryck</translation>
     </message>
     <message>
         <source>Select first line</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj första raden</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11600,31 +11657,31 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select second line</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj andra raden</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Enter bisector length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange bisektorns längd:</translation>
     </message>
     <message>
         <source>Enter number of bisectors:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange antal bisektorer:</translation>
     </message>
     <message>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="unfinished"></translation>
+        <translation>Antal branschlinjer som inte finns i intervallet:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineFree</name>
     <message>
         <source>Click and drag to draw a line</source>
-        <translation type="unfinished"></translation>
+        <translation>Klicka och dra för att dra en linje</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11635,7 +11692,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionDrawLineHorVert</name>
     <message>
         <source>Specify first point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första punkten</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11643,37 +11700,37 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange andra punkten</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineOrthTan</name>
     <message>
         <source>Select a line</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj en linje</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Select circle, arc or ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj cirkel, båge eller ellips</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineParallel</name>
     <message>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange avstånd &lt;%1&gt; eller välj entitet eller [%2]</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11681,22 +11738,22 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange nummer:</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Inte ett giltigt uttryck</translation>
+        <translation>Inte ett giltigt uttryck</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..99</source>
-        <translation type="unfinished"></translation>
+        <translation>Inte ett giltigt nummer. Försök 1.99</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineParallelThrough</name>
     <message>
         <source>Select entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj entitet</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11704,91 +11761,91 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify through point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange genom punkt</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nummer:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..99</source>
-        <translation type="unfinished"></translation>
+        <translation>Inte ett giltigt nummer. Försök 1.99</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Inte ett giltigt uttryck</translation>
+        <translation>Inte ett giltigt uttryck</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLinePolygonCenCor</name>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera centrum</translation>
     </message>
     <message>
         <source>Specify a corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange ett hörn</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange nummer:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished"></translation>
+        <translation>Inte ett giltigt nummer. Försök 1.9999</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Inte ett giltigt uttryck</translation>
+        <translation>Inte ett giltigt uttryck</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLinePolygonCorCor</name>
     <message>
         <source>Specify first corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första hörnet</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange andra hörnet</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nummer:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished"></translation>
+        <translation>Inte ett giltigt nummer. Försök 1.9999</translation>
     </message>
     <message>
         <source>Not a valid expression.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inte ett giltigt uttryck.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineRectangle</name>
     <message>
         <source>Specify first corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första hörnet</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11796,22 +11853,22 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange andra hörnet</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineRelAngle</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Inte ett giltigt uttryck</translation>
+        <translation>Inte ett giltigt uttryck</translation>
     </message>
     <message>
         <source>Select base entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj basenhet</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11819,18 +11876,18 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify position</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange position</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
         <source>Specify point</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera punkt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11838,11 +11895,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select circle, arc or ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj cirkel, båge eller ellips</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
 </context>
 <context>
@@ -11853,45 +11910,45 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Select first circle/ellipse/parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj första cirkel / cellips / parabola</translation>
     </message>
     <message>
         <source>Select second circle/ellipse/parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj andra cirkel/ellips/parabola</translation>
     </message>
     <message>
         <source>Select the tangent line closest to cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj tangentlinjen närmast markören</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawMText</name>
     <message>
         <source>Specify insertion point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange insättningspunkt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Enter text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange text:</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <source>Specify location</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange plats</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11902,74 +11959,74 @@ This block cannot be inserted.</source>
     <name>RS_ActionDrawPolyline</name>
     <message>
         <source>Specify first point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första punkten</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange nästa punkt eller [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange nästa punkt</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte stänga sekvensen av linjer: Inte tillräckligt många enheter definierade än.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte ångra: Inte tillräckligt många enheter definierade än.</translation>
     </message>
     <message>
         <source>Enter the end point x</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange slutpunkten x</translation>
     </message>
     <message>
         <source>Enter number of polylines</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange antal polylinjer</translation>
     </message>
     <message>
         <source>equation</source>
-        <translation type="unfinished"></translation>
+        <translation>ekvation</translation>
     </message>
     <message>
         <source>Enter an equation, f(x)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange en ekvation, f(x)</translation>
     </message>
     <message>
         <source>x</source>
-        <translation type="unfinished"></translation>
+        <translation>x</translation>
     </message>
     <message>
         <source>Enter the start point x</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange startpunkten x</translation>
     </message>
     <message>
         <source>The entered x is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Den inmatade x är ogiltig.</translation>
     </message>
     <message>
         <source>The step size entered is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Stegstorleken som anges är ogiltig.</translation>
     </message>
     <message>
         <source>The value x entered is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Värdet x inmatat är ogiltigt.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawSpline</name>
     <message>
         <source>Specify first control point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första kontrollpunkten</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11977,26 +12034,26 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify next control point or [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange nästa kontrollpunkt eller [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify next control point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange nästa kontrollpunkt</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte ångra: Inte tillräckligt många enheter definierade än.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawText</name>
     <message>
         <source>Specify insertion point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange insättningspunkt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12004,22 +12061,22 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange text:</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange andra punkten</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionEditCopy</name>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished">Ange referenspunkt</translation>
+        <translation>Ange referenspunkt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12030,7 +12087,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionEditPaste</name>
     <message>
         <source>Set reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange referenspunkt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12041,22 +12098,22 @@ This block cannot be inserted.</source>
     <name>RS_ActionEditUndo</name>
     <message>
         <source>Nothing to undo!</source>
-        <translation type="unfinished"></translation>
+        <translation>Inget att ångra!</translation>
     </message>
     <message>
         <source>Nothing to redo!</source>
-        <translation type="unfinished"></translation>
+        <translation>Inget att göra om!</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Lines are parallel</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjer är parallella</translation>
     </message>
     <message>
         <source>Specify first line</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första raden</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12064,30 +12121,30 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second line</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange andra raden</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Angle: %1</source>
-        <translation type="unfinished">Vinkel: %1</translation>
+        <translation>Angel: %1</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Circumference: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Omkrets: %1</translation>
     </message>
     <message>
         <source>Point: %1/%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Poäng: %1/%2</translation>
     </message>
     <message>
         <source>Specify first point of polygon</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första punkten av polygon</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12095,22 +12152,22 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify next point of polygon</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange nästa punkt av polygon</translation>
     </message>
     <message>
         <source>Closing Point: %1/%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Stängpunkt: %1/%2</translation>
     </message>
     <message>
         <source>Area: %1 %2^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Område: %1 %2^2</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoDist</name>
     <message>
         <source>Specify first point of distance</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första punkten av avstånd</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12118,26 +12175,26 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second point of distance</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange andra punkten av avstånd</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
-        <translation type="unfinished"></translation>
+        <translation>Avstånd: %1 Kartesiska: (%2, %3), Polar: (%4&lt;%5)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoDist2</name>
     <message>
         <source>Distance: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Avstånd: %1</translation>
     </message>
     <message>
         <source>Specify entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange entitet</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12145,26 +12202,26 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify point</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera punkt</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoInside</name>
     <message>
         <source>Point is inside selected contour.</source>
-        <translation type="unfinished"></translation>
+        <translation>Point är inuti vald kontur.</translation>
     </message>
     <message>
         <source>Point is outside selected contour.</source>
-        <translation type="unfinished"></translation>
+        <translation>Point är utanför vald kontur.</translation>
     </message>
     <message>
         <source>Specify point</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera punkt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12175,26 +12232,26 @@ This block cannot be inserted.</source>
     <name>RS_ActionInfoTotalLength</name>
     <message>
         <source>Total Length of selected entities: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Total längd på utvalda enheter: %1</translation>
     </message>
     <message>
         <source>At least one of the selected entities cannot be measured.</source>
-        <translation type="unfinished"></translation>
+        <translation>Minst en av de utvalda enheterna kan inte mätas.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLibraryInsert</name>
     <message>
         <source>Insert Library Object</source>
-        <translation type="unfinished"></translation>
+        <translation>Infoga bibliotek objekt</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Inte ett giltigt uttryck</translation>
+        <translation>Inte ett giltigt uttryck</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished">Ange referenspunkt</translation>
+        <translation>Ange referenspunkt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12202,37 +12259,37 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation type="unfinished">Ange vinkel:</translation>
+        <translation>Ange vinkel:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Enter factor:</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <source>Cannot open file '%1'</source>
+        <translation>Kan inte öppna filen "%1"</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLockRelativeZero</name>
     <message>
         <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>(Un-)&amp;Lock Relative Zero</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyBevel</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Inte ett giltigt uttryck</translation>
+        <translation>Inte ett giltigt uttryck</translation>
     </message>
     <message>
         <source>Select first entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj första enhet</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12240,38 +12297,38 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select second entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj andra enhet</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Enter length 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange längd 1:</translation>
     </message>
     <message>
         <source>Enter length 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange längd 2:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyCut</name>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen enhet hittade.</translation>
     </message>
     <message>
         <source>Cutting point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Skärpunkten är ogiltig.</translation>
     </message>
     <message>
         <source>Cutting point is not on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Skärpunkten är inte på företaget.</translation>
     </message>
     <message>
         <source>Specify entity to cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange enhet för att skära</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12279,22 +12336,22 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify cutting point</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera skärpunkt</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Entitet måste vara en linje, båge, cirkel, ellips eller interpolationsspline.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyDeleteFree</name>
     <message>
         <source>Specify first break point on a polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första break point på en polylin</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12302,50 +12359,50 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second break point on the same polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange andra pauspunkten på samma polylin</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Enheter inte i samma polylin.</translation>
     </message>
     <message>
         <source>Parent of second entity is not a polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Förälder till andra entitet är inte en polylin</translation>
     </message>
     <message>
         <source>Parent of first entity is not a polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Förälder till första enhet är inte en polylin</translation>
     </message>
     <message>
         <source>Parent of second entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation>Förälder till andra enhet är nullptr</translation>
     </message>
     <message>
         <source>One of the chosen entities is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation>En av de utvalda enheterna är nullptr</translation>
     </message>
     <message>
         <source>Parent of first entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation>Förälder till första företaget är nullptr</translation>
     </message>
     <message>
         <source>First entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation>Första företaget är nullptr</translation>
     </message>
     <message>
         <source>Second entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation>Andra företaget är nullptr</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyDeleteQuick</name>
     <message>
         <source>Pick entity to delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Pick Entity att ta bort</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12356,18 +12413,18 @@ This block cannot be inserted.</source>
     <name>RS_ActionModifyEntity</name>
     <message>
         <source>Click on entity to modify</source>
-        <translation type="unfinished"></translation>
+        <translation>Klicka på entitet för att ändra</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyMirror</name>
     <message>
         <source>Specify first point of mirror line</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första punkten i spegellinje</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12375,18 +12432,18 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second point of mirror line</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange andra punkten i spegellinjen</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyMove</name>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished">Ange referenspunkt</translation>
+        <translation>Ange referenspunkt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12394,26 +12451,26 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange målpunkt</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Invalid number of copies, use %1 </source>
-        <translation type="unfinished"></translation>
+        <translation>Ogiltigt antal kopior, använd %1</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyMoveRotate</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Inte ett giltigt uttryck</translation>
+        <translation>Inte ett giltigt uttryck</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished">Ange referenspunkt</translation>
+        <translation>Ange referenspunkt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12421,52 +12478,52 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange målpunkt</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Enter rotation angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange rotationsvinkel:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyOffset</name>
     <message>
         <source>Specify direction of offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera riktningen av offset</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyRotate</name>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished">Ange referenspunkt</translation>
+        <translation>Ange referenspunkt</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify rotation center</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange rotationscenter</translation>
     </message>
     <message>
         <source>Specify target point to rotate to</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange målpunkt för att rotera för att</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyRotate2</name>
     <message>
         <source>Specify absolute reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange absolut referenspunkt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12474,30 +12531,30 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify relative reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange relativ referenspunkt</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyRound</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Inte ett giltigt uttryck</translation>
+        <translation>Inte ett giltigt uttryck</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify second entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange andra företaget</translation>
     </message>
     <message>
         <source>Enter radius:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange radie:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12505,14 +12562,14 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första enhet eller ange radie &lt;%1&gt;</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyScale</name>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished">Ange referenspunkt</translation>
+        <translation>Ange referenspunkt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12520,18 +12577,18 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify scale center</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera skalcenter</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange målpunkt</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyStretch</name>
     <message>
         <source>Specify first corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första hörnet</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12539,26 +12596,26 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange andra hörnet</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished">Ange referenspunkt</translation>
+        <translation>Ange referenspunkt</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange målpunkt</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyTrim</name>
     <message>
         <source>Select first trim entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj första trimenheten</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12566,434 +12623,434 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select limiting entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj begränsande enhet</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Select second trim entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj andra trimenhet</translation>
     </message>
     <message>
         <source>Select entity to trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj enhet för trim</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyTrimAmount</name>
     <message>
         <source>No entity found. </source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen enhet hittades.</translation>
     </message>
     <message>
         <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation type="unfinished"></translation>
+        <translation>Den valda Entity är i ett block. Redigera blocket.</translation>
     </message>
     <message>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Det valda företaget är inte en atomentitet eller kan inte trimmas.</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Inte ett giltigt uttryck</translation>
+        <translation>Inte ett giltigt uttryck</translation>
     </message>
     <message>
         <source>Select entity to trim or enter distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj enhet för att trimma eller ange avstånd:</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionOrder</name>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen enhet hittade.</translation>
     </message>
     <message>
         <source>Choose entity for order</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj enhet för order</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineAdd</name>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen enhet hittade.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Entitet måste vara en polylin.</translation>
     </message>
     <message>
         <source>Adding point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Att lägga till punkt är ogiltigt.</translation>
     </message>
     <message>
         <source>Adding point is not on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Att lägga punkt är inte på företaget.</translation>
     </message>
     <message>
         <source>Specify polyline to add nodes</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera polyline för att lägga till noder</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
-        <translation type="unfinished"></translation>
+        <source>Specify adding node's point</source>
+        <translation>Ange att lägga till nodpunkt</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineAppend</name>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen enhet hittade.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Entitet måste vara en polylin.</translation>
     </message>
     <message>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klicka någonstans nära början eller slutet av befintlig polylin.</translation>
     </message>
     <message>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange polylinen någonstans nära början eller slutpunkten</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange nästa punkt eller [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange nästa punkt</translation>
     </message>
     <message>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte appendera noder i en sluten polylin.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte ångra: Inte tillräckligt många enheter definierade än.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineDel</name>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen enhet hittade.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Entitet måste vara en polylin.</translation>
     </message>
     <message>
         <source>Specify polyline to delete node</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera polyline för att ta bort nod</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation type="unfinished"></translation>
+        <source>Specify deleting node's point</source>
+        <translation>Specificera borttagning av nodpunkt</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Deleting point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort punkten är ogiltig.</translation>
     </message>
     <message>
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort punkten är inte på företaget.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineDelBetween</name>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen enhet hittade.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Entitet måste vara en polylin.</translation>
     </message>
     <message>
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort punkten är inte på företaget.</translation>
     </message>
     <message>
         <source>Specify polyline to delete between two nodes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange polylin för att ta bort mellan två noder</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Specify first node</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första noden</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify second node</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera andra noden</translation>
     </message>
     <message>
         <source>Deleting point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort punkten är ogiltig.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineEquidistant</name>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen enhet hittade.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Entitet måste vara en polylin.</translation>
     </message>
     <message>
         <source>Choose the original polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj den ursprungliga polylinen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineSegment</name>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen enhet hittade.</translation>
     </message>
     <message>
         <source>Choose one of the segments on the original polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj ett av segmenten på den ursprungliga polylinen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Entity can not be a closed polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Företaget kan inte vara en sluten polylin.</translation>
     </message>
     <message>
         <source>Polyline created</source>
-        <translation type="unfinished"></translation>
+        <translation>Polyline skapad</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineTrim</name>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen enhet hittade.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Entitet måste vara en polylin.</translation>
     </message>
     <message>
         <source>Specifying point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificeringspunkten är ogiltig.</translation>
     </message>
     <message>
         <source>No Segment found on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inget segment finns på entitet.</translation>
     </message>
     <message>
         <source>Specify polyline to trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificera polyline till trim</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Specify first segment</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första segmentet</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Specify second segment</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange andra segmentet</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPrintPreview</name>
     <message>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
-        <translation type="unfinished"></translation>
+        <translation>RS ActionPrintPreview::fit(): Invalid pappersstorlek</translation>
     </message>
     <message>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Printoutkompensation i papperskoordinater med (% 1, %2)</translation>
     </message>
     <message>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Printoutkompensation i grafkoordinater med (% 1, %2)</translation>
     </message>
     <message>
         <source>Printout offset in graph coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Printout offset i grafkoordinater</translation>
     </message>
     <message>
         <source>Printout offset in paper coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Printout offset i papperskoordinater</translation>
     </message>
     <message>
         <source>: select printout offset coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>välja printout offset koordinater</translation>
     </message>
     <message>
         <source>type in offset from command line to offset printout</source>
-        <translation type="unfinished"></translation>
+        <translation>typ i kompensation från kommandoraden för att kompensera utskrift</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation type="unfinished"></translation>
+        <source>Printout offset ignores relative zero. Ignoring '@'</source>
+        <translation>Printout offset ignorerar relativ noll. Ignorera "@"</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>
-        <translation type="unfinished"></translation>
+        <translation>Printout i svart/vit</translation>
     </message>
     <message>
         <source>Printout in color</source>
-        <translation type="unfinished"></translation>
+        <translation>Printout i färg</translation>
     </message>
     <message>
         <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
-        <translation type="unfinished"></translation>
+        <translation>RS ActionPrintPreview::calcPagesNum(): Sidgränsen har överskridits.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelect</name>
     <message>
         <source>Select to modify attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj för att ändra attribut</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Select to delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj för att ta bort</translation>
     </message>
     <message>
         <source>Select to delete immediately</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj att radera omedelbart</translation>
     </message>
     <message>
         <source>Select to move</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj att flytta</translation>
     </message>
     <message>
         <source>Select to rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj att rotera</translation>
     </message>
     <message>
         <source>Select to scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj att skala</translation>
     </message>
     <message>
         <source>Select to mirror</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj för spegeln</translation>
     </message>
     <message>
         <source>Select to move and rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj att flytta och rotera</translation>
     </message>
     <message>
         <source>Select for two axis rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj för två axel rotation</translation>
     </message>
     <message>
         <source>Select to explode text</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj att utnyttja text</translation>
     </message>
     <message>
         <source>Select to create block</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj för att skapa block</translation>
     </message>
     <message>
         <source>Select to copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj för att kopiera</translation>
     </message>
     <message>
         <source>Select to cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj att skära</translation>
     </message>
     <message>
         <source>No entity selected!</source>
-        <translation type="unfinished"></translation>
+        <translation>Inget företag valt!</translation>
     </message>
     <message>
         <source>Select to create offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj för att skapa offset</translation>
     </message>
     <message>
         <source>Select entities to order</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj enheter för att beställa</translation>
     </message>
     <message>
         <source>Select to explode block</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj att explodera block</translation>
     </message>
     <message>
         <source>Select to revert direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj för att återgå riktning</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectContour</name>
     <message>
         <source>Entity must be an Atomic Entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Företaget måste vara en atomentitet.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectIntersected</name>
     <message>
         <source>Choose first point of intersection line</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj första punkten av skärningslinjen</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -13001,11 +13058,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Choose second point of intersection line</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj andra punkten av skärningslinjen</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
 </context>
 <context>
@@ -13016,22 +13073,22 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Choose second edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj andra kanten</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Click and drag for the selection window</source>
-        <translation type="unfinished"></translation>
+        <translation>Klicka och dra för urvalsfönstret</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSetRelativeZero</name>
     <message>
         <source>Set relative Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Sätt relativ Zero</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -13039,59 +13096,59 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Set &amp;Relative Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Set &amp; Relative Zero</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSnapIntersectionManual</name>
     <message>
         <source>I&amp;ntersection Manually</source>
-        <translation type="unfinished"></translation>
+        <translation>I&amp;ntersection manuellt</translation>
     </message>
     <message>
         <source>Select first entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj första enhet</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <source>Select second entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj andra enhet</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionToolRegenerateDimensions</name>
     <message>
         <source>Regenerated %1 dimension entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Regenererade %1 dimensionsenheter</translation>
     </message>
     <message>
         <source>No dimension entities found</source>
-        <translation type="unfinished"></translation>
+        <translation>Inga dimensionsenheter hittades</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomPan</name>
     <message>
         <source>Click and drag to pan zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>Klicka och dra till pan zoom</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbokning</translation>
     </message>
     <message>
         <source>Zoom panning</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom Panning</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomWindow</name>
     <message>
         <source>Specify first edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange första kanten</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -13099,776 +13156,776 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange andra kanten</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
 </context>
 <context>
     <name>RS_GraphicView</name>
     <message>
         <source>Draft</source>
-        <translation type="unfinished"></translation>
+        <translation>Draft</translation>
     </message>
 </context>
 <context>
     <name>TextFileViewer</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Frame</translation>
     </message>
 </context>
 <context>
     <name>Ui_ArcOptions</name>
     <message>
         <source>Arc Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Arc Options</translation>
     </message>
     <message>
         <source>Counterclockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Counterclockwise</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Clockwise</translation>
     </message>
 </context>
 <context>
     <name>Ui_ArcTangentialOptions</name>
     <message>
         <source>Tangential Arc Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangential Arc Options</translation>
     </message>
     <message>
         <source>Radius of the tangential arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Radius av den tangentiella bågen</translation>
     </message>
     <message>
         <source>Total subtending angle of the tangential arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Total subtending vinkel av den tangentiella bågen</translation>
     </message>
     <message>
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Radius</translation>
     </message>
     <message>
         <source>Angle</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished">Vinkel</translation>
+        <translation>Angle</translation>
     </message>
 </context>
 <context>
     <name>Ui_BevelOptions</name>
     <message>
         <source>Bevel Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Bevel Options</translation>
     </message>
     <message>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrollera att trimma båda enheterna till pannan</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Length 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Längd 1:</translation>
     </message>
     <message>
         <source>Length 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>Längd 2:</translation>
     </message>
 </context>
 <context>
     <name>Ui_CircleOptions</name>
     <message>
         <source>Circle Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Cirkelalternativ</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished">Radie:</translation>
+        <translation>Radius:</translation>
     </message>
 </context>
 <context>
     <name>Ui_CircleTan2Options</name>
     <message>
         <source>Circle Tangential2 Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Circle Tangential2 alternativ</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Radius av den tangentiella cirkeln att dra &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished">Radie:</translation>
+        <translation>Radius:</translation>
     </message>
     <message>
         <source>Radius of tangential circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Radius av tangential cirkel</translation>
     </message>
 </context>
 <context>
     <name>Ui_DimLinearOptions</name>
     <message>
         <source>Linear Dimension Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjära dimensionsalternativ</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Vinkel:</translation>
+        <translation>Angle:</translation>
     </message>
 </context>
 <context>
     <name>Ui_DimOptions</name>
     <message>
         <source>Dimension Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimensionsalternativ</translation>
     </message>
     <message>
         <source>Label:</source>
-        <translation type="unfinished">Etikett:</translation>
+        <translation>Etikett:</translation>
     </message>
     <message>
         <source>⌀</source>
-        <translation type="unfinished"></translation>
+        <translation>|</translation>
     </message>
     <message>
         <source>°</source>
-        <translation type="unfinished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <source>±</source>
-        <translation type="unfinished">±</translation>
+        <translation>±</translation>
     </message>
     <message>
         <source>π</source>
-        <translation type="unfinished"></translation>
+        <translation>π</translation>
     </message>
     <message>
         <source>×</source>
-        <translation type="unfinished">×</translation>
+        <translation>×</translation>
     </message>
     <message>
         <source>÷</source>
-        <translation type="unfinished">÷</translation>
+        <translation>÷</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>......</translation>
     </message>
 </context>
 <context>
     <name>Ui_ImageOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Infoga alternativ</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Vinkel:</translation>
+        <translation>Angle:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotation Angle</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Faktor:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Scale Factor</translation>
     </message>
     <message>
         <source>DPI</source>
-        <translation type="unfinished"></translation>
+        <translation>DPI</translation>
     </message>
     <message>
         <source>DPI of Image</source>
-        <translation type="unfinished"></translation>
+        <translation>DPI av bild</translation>
     </message>
 </context>
 <context>
     <name>Ui_InsertOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Infoga alternativ</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Vinkel:</translation>
+        <translation>Angle:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotation Angle</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Faktor:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Scale Factor</translation>
     </message>
     <message>
         <source>Array:</source>
-        <translation type="unfinished"></translation>
+        <translation>Array:</translation>
     </message>
     <message>
         <source>Number of Columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Antal kolumner</translation>
     </message>
     <message>
         <source>Number of Rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Antal Rows</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Spacing:</translation>
     </message>
     <message>
         <source>Column Spacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Column Spacing</translation>
     </message>
     <message>
         <source>Row Spacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Row Spacing</translation>
     </message>
 </context>
 <context>
     <name>Ui_LibraryInsertOptions</name>
     <message>
         <source>Library Insert Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Bibliotek sätter in alternativ</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Vinkel:</translation>
+        <translation>Angle:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotation Angle</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Faktor:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Scale Factor</translation>
     </message>
 </context>
 <context>
     <name>Ui_LineAngleOptions</name>
     <message>
         <source>Line Angle Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Line Angle Options</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Vinkel:</translation>
+        <translation>Angle:</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjevinkel</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished">Längd:</translation>
+        <translation>Längd:</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation type="unfinished"></translation>
+        <translation>Längd av linje</translation>
     </message>
     <message>
         <source>Snap Point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap Point:</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Börja</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation type="unfinished"></translation>
+        <translation>Mellan</translation>
     </message>
     <message>
         <source>End</source>
-        <translation type="unfinished"></translation>
+        <translation>Slut</translation>
     </message>
 </context>
 <context>
     <name>Ui_LineBisectorOptions</name>
     <message>
         <source>Line Bisector Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Line Bisector Options</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished">Längd:</translation>
+        <translation>Längd:</translation>
     </message>
     <message>
         <source>Length of bisector</source>
-        <translation type="unfinished"></translation>
+        <translation>Längd av bisektor</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nummer:</translation>
     </message>
     <message>
         <source>Number of bisectors to create</source>
-        <translation type="unfinished"></translation>
+        <translation>Antal bisektorer för att skapa</translation>
     </message>
 </context>
 <context>
     <name>Ui_LineOptions</name>
     <message>
         <source>Line Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Line alternativ</translation>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished"></translation>
+        <translation>Form en sluten kontur från linjer som dras</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Stäng</translation>
+        <translation>Nära</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Undo the last line drawing</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Ångra</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Redo den sista raden ritning</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">Gör om</translation>
+        <translation>Redo</translation>
     </message>
 </context>
 <context>
     <name>Ui_LineOptionsRel</name>
     <message>
         <source>Line Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Line alternativ</translation>
     </message>
     <message>
         <source>Direction:</source>
-        <translation type="unfinished"></translation>
+        <translation>Riktning:</translation>
     </message>
     <message>
         <source>Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Polyline</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>YTTERLIGARE</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished">Vinkel</translation>
+        <translation>Angle</translation>
     </message>
     <message>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <source>Rel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Undo the last line drawing</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Ångra</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished"></translation>
+        <translation>Form en sluten kontur från linjer som dras</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Stäng</translation>
+        <translation>Nära</translation>
     </message>
     <message>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Redo den sista raden ritning</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">Gör om</translation>
+        <translation>Redo</translation>
     </message>
     <message>
         <source>Point</source>
-        <translation type="unfinished">Punkt</translation>
+        <translation>Point</translation>
     </message>
 </context>
 <context>
     <name>Ui_LineParallelOptions</name>
     <message>
         <source>Line Parallel Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Line Parallel Options</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation type="unfinished">Avstånd:</translation>
+        <translation>Avstånd:</translation>
     </message>
     <message>
         <source>Distance to original entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Avstånd till ursprunglig enhet</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nummer:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation type="unfinished"></translation>
+        <translation>Antal paralleller för att skapa</translation>
     </message>
 </context>
 <context>
     <name>Ui_LineParallelThroughOptions</name>
     <message>
         <source>Line Parallel Through Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Linje parallell genom alternativ</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nummer:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation type="unfinished"></translation>
+        <translation>Antal paralleller för att skapa</translation>
     </message>
 </context>
 <context>
     <name>Ui_LinePolygon2Options</name>
     <message>
         <source>Polygon Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Polygon Options</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nummer:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation type="unfinished"></translation>
+        <translation>Antal kanter</translation>
     </message>
 </context>
 <context>
     <name>Ui_LinePolygonOptions</name>
     <message>
         <source>Polygon Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Polygon Options</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nummer:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation type="unfinished"></translation>
+        <translation>Antal kanter</translation>
     </message>
 </context>
 <context>
     <name>Ui_LineRelAngleOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Line Relative Angle Options</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Vinkel:</translation>
+        <translation>Angle:</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjevinkel</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished">Längd:</translation>
+        <translation>Längd:</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation type="unfinished"></translation>
+        <translation>Längd av linje</translation>
     </message>
 </context>
 <context>
     <name>Ui_MTextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation type="unfinished">Textalternativ</translation>
+        <translation>Textalternativ</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation type="unfinished">Text:</translation>
+        <translation>Text:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Vinkel:</translation>
+        <translation>Angle:</translation>
     </message>
 </context>
 <context>
     <name>Ui_ModifyOffsetOptions</name>
     <message>
         <source>Modify Offset Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Modify Offset Options</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation type="unfinished">Avstånd:</translation>
+        <translation>Avstånd:</translation>
     </message>
     <message>
         <source>Offset from original entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Offset från originalenheten</translation>
     </message>
 </context>
 <context>
     <name>Ui_MoveRotateOptions</name>
     <message>
         <source>Move Rotate Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Flytta Rotate Options</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Vinkel:</translation>
+        <translation>Angle:</translation>
     </message>
 </context>
 <context>
     <name>Ui_PolylineOptions</name>
     <message>
         <source>Polyline Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Polyline alternativ</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Stäng</translation>
+        <translation>Nära</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Ångra</translation>
+        <translation>Undo</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Line</translation>
     </message>
     <message>
         <source>Tangential</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangential</translation>
     </message>
     <message>
         <source>Tan Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Tan Radius</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished">Vinkel</translation>
+        <translation>Angle</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished">Radie:</translation>
+        <translation>Radius:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Vinkel:</translation>
+        <translation>Angle:</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Counter Clockwise</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Clockwise</translation>
     </message>
 </context>
 <context>
     <name>Ui_PrintPreviewOptions</name>
     <message>
         <source>Print Preview Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Print Preview Options</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale är låst till aktuellt värde&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>fixed</source>
-        <translation type="unfinished"></translation>
+        <translation>fast</translation>
     </message>
     <message>
         <source>Toggle Black / White mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Växla svart / vitt läge</translation>
     </message>
     <message>
         <source>Center to page</source>
-        <translation type="unfinished"></translation>
+        <translation>Center till page</translation>
     </message>
     <message>
         <source>Fit to page</source>
-        <translation type="unfinished"></translation>
+        <translation>Fit to page</translation>
     </message>
     <message>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished"></translation>
+        <translation>Applicera Print Scale till linjebredd</translation>
     </message>
     <message>
         <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Beräkna antalet sidor som behövs för att innehålla ritningen</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size: drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>Ui_RoundOptions</name>
     <message>
         <source>Round Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Runda alternativ</translation>
     </message>
     <message>
         <source>Check to trim both edges to the rounding</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrollera att trimma båda kanterna till rundningen</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished">Radie:</translation>
+        <translation>Radius:</translation>
     </message>
 </context>
 <context>
     <name>Ui_SnapDistOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap distansalternativ</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation type="unfinished">Avstånd:</translation>
+        <translation>Avstånd:</translation>
     </message>
 </context>
 <context>
     <name>Ui_SnapMiddleOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap distansalternativ</translation>
     </message>
     <message>
         <source>Middle Points:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mellanpoäng:</translation>
     </message>
     <message>
         <source>Number of equidistant division points</source>
-        <translation type="unfinished"></translation>
+        <translation>Antal jämviktiga divisionspunkter</translation>
     </message>
 </context>
 <context>
     <name>Ui_SplineOptions</name>
     <message>
         <source>Spline Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Spline alternativ</translation>
     </message>
     <message>
         <source>Degree:</source>
-        <translation type="unfinished">Grad:</translation>
+        <translation>Degree:</translation>
     </message>
     <message>
         <source>Closed</source>
-        <translation type="unfinished">Stängd</translation>
+        <translation>Stängt</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Ångra</translation>
+        <translation>Undo</translation>
     </message>
 </context>
 <context>
     <name>Ui_TextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation type="unfinished">Textalternativ</translation>
+        <translation>Textalternativ</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation type="unfinished">Text:</translation>
+        <translation>Text:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Vinkel:</translation>
+        <translation>Angle:</translation>
     </message>
 </context>
 <context>
     <name>Ui_TrimAmountOptions</name>
     <message>
         <source>Trim Amount Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Trim Belopp Alternativ</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="unfinished"></translation>
+        <translation>Avstånd. Negativa värden för trimning, positiva värden för förlängning.</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished">Längd:</translation>
+        <translation>Längd:</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="unfinished"></translation>
+        <translation>Avstånd. Negativa värden för trimning, positiva värden för förlängning. Negativt tecken ignoreras när trimming till slut total längd.</translation>
     </message>
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingångslängden används som total längd efter trimning, istället för längdökning</translation>
     </message>
 </context>
 <context>
     <name>WidgetCreator</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Frame</translation>
     </message>
     <message>
         <source>&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&gt;</translation>
     </message>
     <message>
         <source>&lt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Namnnamn</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Skapa</translation>
     </message>
     <message>
         <source>Destroy</source>
-        <translation type="unfinished"></translation>
+        <translation>Förstör</translation>
     </message>
     <message>
         <source>Assign</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilldelning</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Uppdatering</translation>
     </message>
 </context>
 <context>

@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
+<?xml version='1.0' encoding='utf-8'?>
 <TS version="2.1" language="eu">
 <context>
     <name>ColorWizard</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished">Markoa</translation>
+        <translation>Markoa</translation>
     </message>
     <message>
         <source>Add to favorites</source>
@@ -13,7 +12,7 @@
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -57,23 +56,23 @@
     <name>DlgParabola</name>
     <message>
         <source>Parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Parabola</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Geruza:</translation>
+        <translation>Geruza:</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished">Geometria</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <source>Points on Spline</source>
-        <translation type="unfinished">Splinen Puntuak</translation>
+        <translation>Puntuak Splinen</translation>
     </message>
     <message>
         <source>Control Points</source>
-        <translation type="unfinished">Kontrol Puntuak</translation>
+        <translation>Kontrol-puntuak</translation>
     </message>
 </context>
 <context>
@@ -115,7 +114,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify dimension arc location</source>
@@ -159,24 +158,26 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Specify distance (%1)
 or [%2]</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu distantzia (%1)
+edo [%2]</translation>
     </message>
     <message>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu distantzia (% 1 deg angelua)
+edo [%2]</translation>
     </message>
 </context>
 <context>
@@ -206,116 +207,116 @@ or [%2]</source>
     <name>LC_ActionDrawLineSnake</name>
     <message>
         <source>Specify direction (x or y) or [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu norabidea (x edo y) edo [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify distance (%1) or [%2]</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu distantzia (%1) edo [%2]</translation>
     </message>
     <message>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <source>Specify distance (%1 deg) or [%2]</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu distantzia (%1 deg) edo [%2]</translation>
     </message>
     <message>
         <source>Specify angle or [%2]</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu angelua edo [%2]</translation>
     </message>
     <message>
         <source>Specify point or [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu puntua edo [%1]</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawParabola4Points</name>
     <message>
         <source>Specify the first point on parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu parabolaren lehen puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify the second point on parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu parabolaren bigarren puntua</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify the third point on parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu parabolaren hirugarren puntua</translation>
     </message>
     <message>
         <source>Specify the fourth point on parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu parabolako laugarren puntua</translation>
     </message>
     <message>
         <source>Specify the Axis on parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu ardatza parabolan</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawParabolaFD</name>
     <message>
         <source>Specify the focus of parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu parabolaren fokua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify the directrix of parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu parabolaren zuzentzailea</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify the start point on parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu parabolaren hasierako puntua</translation>
     </message>
     <message>
         <source>Specify the end point on parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu parabolaren amaierako puntua</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawSliceDivide</name>
     <message>
         <source> is not divided as it is locked.</source>
-        <translation type="unfinished"></translation>
+        <translation>ez dago banatuta blokeatuta dagoen moduan.</translation>
     </message>
     <message>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation type="unfinished"></translation>
+        <translation>ez dago banatua, polilerroaren parte baita. Zabaldu polilerroa lehenik.</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished">Marra</translation>
+        <translation>Lerroa</translation>
     </message>
     <message>
         <source>Arc</source>
-        <translation type="unfinished">Arkua</translation>
+        <translation>Arkua</translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation type="unfinished">Zirkulua</translation>
+        <translation>Zirkulua</translation>
     </message>
 </context>
 <context>
@@ -1001,11 +1002,11 @@ or [%2]</source>
     <message>
         <source>Ctrl+D</source>
         <comment>Toggle Draft Mode</comment>
-        <translation type="unfinished">Ctrl+D</translation>
+        <translation>Ktrl+D</translation>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Tan)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pol&amp;ygon (Cen,Tan)</translation>
     </message>
     <message>
         <source>&amp;Arc</source>
@@ -1061,107 +1062,107 @@ or [%2]</source>
     </message>
     <message>
         <source>Cross</source>
-        <translation type="unfinished"></translation>
+        <translation>Gurutzea</translation>
     </message>
     <message>
         <source>Snake</source>
-        <translation type="unfinished"></translation>
+        <translation>Sugea</translation>
     </message>
     <message>
         <source>Snake (X)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sugea (X)</translation>
     </message>
     <message>
         <source>Snake (Y)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sugea (Y)</translation>
     </message>
     <message>
         <source>Rectangle (1 Point)</source>
-        <translation type="unfinished"></translation>
+        <translation>Laukizuzena (1 puntu)</translation>
     </message>
     <message>
         <source>Rectangle (2 Points)</source>
-        <translation type="unfinished"></translation>
+        <translation>Laukizuzena (2 puntu)</translation>
     </message>
     <message>
         <source>Rectangle (3 Points)</source>
-        <translation type="unfinished"></translation>
+        <translation>Laukizuzena (3 puntu)</translation>
     </message>
     <message>
         <source>Star</source>
-        <translation type="unfinished"></translation>
+        <translation>Izarra</translation>
     </message>
     <message>
         <source>Break/Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Break/Divide</translation>
     </message>
     <message>
         <source>Line Gap</source>
-        <translation type="unfinished"></translation>
+        <translation>Gap linea</translation>
     </message>
     <message>
         <source>Angle From Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Angelua lerrotik</translation>
     </message>
     <message>
         <source>Orthogonal From Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Lerrotik ortogonala</translation>
     </message>
     <message>
         <source>From Point To Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntutik lerrora</translation>
     </message>
     <message>
         <source>Slice/Divide Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Slice/Divide Line</translation>
     </message>
     <message>
         <source>Slice/Divide Circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Zatitu zirkulua</translation>
     </message>
     <message>
         <source>Line of Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntuen lerroa</translation>
     </message>
     <message>
         <source>By Arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Arkuaren arabera</translation>
     </message>
     <message>
         <source>Para&amp;bola 4 points</source>
-        <translation type="unfinished"></translation>
+        <translation>Para&amp;bola 4 puntu</translation>
     </message>
     <message>
         <source>Parabola &amp;Focus Directrix</source>
-        <translation type="unfinished"></translation>
+        <translation>Parabola &amp;Focus Directrix</translation>
     </message>
     <message>
         <source>&amp;Pick Pen From Entity</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pick Pen entitatetik</translation>
     </message>
     <message>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pick Pen From Entity (bereiztuta)</translation>
     </message>
     <message>
         <source>Apply Pen to Entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplikatu Pen entitateari</translation>
     </message>
     <message>
         <source>Copy Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Copy Pen</translation>
     </message>
     <message>
         <source>Line Join</source>
-        <translation type="unfinished"></translation>
+        <translation>Elkartu</translation>
     </message>
     <message>
         <source>Duplicate</source>
-        <translation type="unfinished"></translation>
+        <translation>Bikoiztu</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation type="unfinished"></translation>
+        <source>Update Current Pen by Active Layer' Pen</source>
+        <translation>Eguneratu uneko arkatza geruza aktiboaren arkatzaren arabera</translation>
     </message>
 </context>
 <context>
@@ -1174,127 +1175,127 @@ or [%2]</source>
 <context>
     <name>LC_ActionLayersExport</name>
     <message>
-        <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>&quot;% 1&quot; geruza &quot;% 2&quot; gisa gordetzen </translation>
+        <source>Saving layer "%1" as "%2" </source>
+        <translation>"% 1" geruza "% 2" gisa gordetzen </translation>
     </message>
 </context>
 <context>
     <name>LC_ActionPenApply</name>
     <message>
         <source>Specify entity to pick the pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu arkatza hartzeko entitatea</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify entity to apply pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu entitatea luma aplikatzeko</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionPenPick</name>
     <message>
         <source>Specify entity to pick the pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu arkatza hartzeko entitatea</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionSnapMiddleManual</name>
     <message>
         <source>Specify percentage / start-point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu ehunekoa / hasierako puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify start point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu hasierako puntua</translation>
     </message>
     <message>
         <source>Specify end point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu amaierako puntua</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
 </context>
 <context>
     <name>LC_CircleByArcOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Forma</translation>
+        <translation>Forma</translation>
     </message>
     <message>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktibo</translation>
     </message>
     <message>
         <source>Original</source>
-        <translation type="unfinished"></translation>
+        <translation>Jatorrizkoa</translation>
     </message>
     <message>
         <source>Original Resolved</source>
-        <translation type="unfinished"></translation>
+        <translation>Jatorrizko ebazpena</translation>
     </message>
     <message>
         <source>Radius Shift:</source>
-        <translation type="unfinished"></translation>
+        <translation>Erradio-desplazamendua:</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Geruza:</translation>
+        <translation>Geruza:</translation>
     </message>
     <message>
         <source>Replace arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordeztu arkua</translation>
     </message>
     <message>
         <source>Pen:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pen:</translation>
     </message>
 </context>
 <context>
     <name>LC_CrossOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Forma</translation>
+        <translation>Forma</translation>
     </message>
     <message>
         <source>Extension</source>
-        <translation type="unfinished"></translation>
+        <translation>Luzapena</translation>
     </message>
     <message>
         <source>Total Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Luzera guztira</translation>
     </message>
     <message>
         <source>Percent</source>
-        <translation type="unfinished"></translation>
+        <translation>Ehunekoa</translation>
     </message>
     <message>
         <source>X:</source>
-        <translation type="unfinished"></translation>
+        <translation>X:</translation>
     </message>
     <message>
         <source>Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Mota</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Angelua:</translation>
+        <translation>Angelua:</translation>
     </message>
 </context>
 <context>
@@ -1316,636 +1317,637 @@ or [%2]</source>
     <name>LC_DlgParabola</name>
     <message>
         <source>Parabola control points cannot be collinear</source>
-        <translation type="unfinished"></translation>
+        <translation>Parabola kontrol-puntuak ezin dira paraleloak izan</translation>
     </message>
 </context>
 <context>
     <name>LC_DuplicateOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Forma</translation>
+        <translation>Forma</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Geruza:</translation>
+        <translation>Geruza:</translation>
     </message>
     <message>
         <source>In Place</source>
-        <translation type="unfinished"></translation>
+        <translation>Leku batean</translation>
     </message>
     <message>
         <source>Offset X:</source>
-        <translation type="unfinished"></translation>
+        <translation>X desplazamendua:</translation>
     </message>
     <message>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktibo</translation>
     </message>
     <message>
         <source>Original</source>
-        <translation type="unfinished"></translation>
+        <translation>Jatorrizkoa</translation>
     </message>
     <message>
         <source>Original Resolved</source>
-        <translation type="unfinished"></translation>
+        <translation>Jatorrizko ebazpena</translation>
     </message>
     <message>
         <source>Offset Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Y desplazamendua:</translation>
     </message>
     <message>
         <source>Pen:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pen:</translation>
     </message>
 </context>
 <context>
     <name>LC_LayerDialogEx</name>
     <message>
         <source>Layer Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Geruzaren ezarpenak</translation>
     </message>
     <message>
         <source>Parent Layers Path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Parent Layers Path:</translation>
     </message>
     <message>
         <source>Layer Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Geruza mota</translation>
     </message>
     <message>
         <source>Informational</source>
-        <translation type="unfinished"></translation>
+        <translation>Informazioa</translation>
     </message>
     <message>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation>Normala</translation>
     </message>
     <message>
         <source>Dimensions</source>
-        <translation type="unfinished">Akotazioak</translation>
+        <translation>Dimentsioak</translation>
     </message>
     <message>
         <source>Alternative Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordezko posizioa</translation>
     </message>
     <message>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eraikuntza-geruzak lerro zuzen amaigabeko entitateak ditu, eraikuntza geometrikorako erabiltzekoak.
+Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
     </message>
     <message>
         <source>Construction Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Eraikuntza-geruza</translation>
     </message>
     <message>
         <source>Layer Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Geruzaren izena:</translation>
     </message>
     <message>
         <source>Rename Virtual Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Aldatu geruza birtualaren izena</translation>
     </message>
     <message>
         <source>Add Secondary Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Gehitu geruza sekundarioa</translation>
     </message>
     <message>
         <source>Add Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Gehitu geruza</translation>
     </message>
     <message>
         <source>Edit Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Editatu geruza</translation>
     </message>
     <message>
         <source>Default Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Pen lehenetsia</translation>
     </message>
     <message>
         <source>Rename Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Aldatu geruzaren izena</translation>
     </message>
 </context>
 <context>
     <name>LC_LayerTreeOptionsDialog</name>
     <message>
         <source>Layers Tree Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Geruza-zuhaitzaren aukerak</translation>
     </message>
     <message>
         <source>Naming Convention</source>
-        <translation type="unfinished"></translation>
+        <translation>Izen-ematea</translation>
     </message>
     <message>
         <source>Layer Level Name Separator</source>
-        <translation type="unfinished"></translation>
+        <translation>Geruza-mailaren izena Bereizlea</translation>
     </message>
     <message>
         <source>Secondary Layer Suffixes</source>
-        <translation type="unfinished"></translation>
+        <translation>Bigarren mailako geruza-buffixak</translation>
     </message>
     <message>
         <source>Dimensional</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimentsioa</translation>
     </message>
     <message>
         <source>Informational</source>
-        <translation type="unfinished"></translation>
+        <translation>Informazioa</translation>
     </message>
     <message>
         <source>Alternative Position </source>
-        <translation type="unfinished"></translation>
+        <translation>Ordezko posizioa</translation>
     </message>
     <message>
         <source>Duplicating Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Izena bikoizten</translation>
     </message>
     <message>
         <source>Prefix</source>
-        <translation type="unfinished"></translation>
+        <translation>Aurrizkia</translation>
     </message>
     <message>
         <source>Suffix</source>
-        <translation type="unfinished"></translation>
+        <translation>Suffix</translation>
     </message>
     <message>
         <source>Display and Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Pantaila eta eragiketak</translation>
     </message>
     <message>
         <source>Show full name as ToolTip</source>
-        <translation type="unfinished"></translation>
+        <translation>Erakutsi izen osoa ToolTip gisa</translation>
     </message>
     <message>
         <source>Show layer type icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Erakutsi geruza-motako ikonoak</translation>
     </message>
     <message>
         <source>Show indented layer names. Ident size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Erakutsi ezkutuko geruza-izenak. Ident tamaina:</translation>
     </message>
     <message>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation type="unfinished"></translation>
+        <translation>Baimendu berregituratzea Drag&amp;Drop erabiliz</translation>
     </message>
     <message>
         <source>Rename secondary layers on primary rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Aldatu bigarren mailako geruzak lehen izen-aldatzean</translation>
     </message>
     <message>
         <source>Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Koloreak</translation>
     </message>
     <message>
         <source>Matched item in highlight filter mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Bat datorren elementua nabarmendutako iragazki moduan</translation>
     </message>
     <message>
         <source>#1E90FF</source>
-        <translation type="unfinished"></translation>
+        <translation>#1E90FF</translation>
     </message>
     <message>
         <source>Virtual layer background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Geruza birtualaren atzeko planoaren kolorea</translation>
     </message>
     <message>
         <source>Threeview items separator grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiru ikuspegiko elementuak sareta bereizlea</translation>
     </message>
     <message>
         <source>Selected items background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatutako elementuen atzeko planoaren kolorea</translation>
     </message>
     <message>
         <source>Active layer background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Geruza aktiboaren atzeko planoaren kolorea</translation>
     </message>
     <message>
         <source>Default Pens</source>
-        <translation type="unfinished"></translation>
+        <translation>Pen lehenetsia</translation>
     </message>
     <message>
         <source>Normal Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Geruza normala</translation>
     </message>
     <message>
         <source>Dimensional Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Geruza dimentsionala</translation>
     </message>
     <message>
         <source>Informational Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Informazio-geruza</translation>
     </message>
     <message>
         <source>Alternative Position Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordezko posizioa geruza</translation>
     </message>
     <message>
         <source>Select Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu kolorea</translation>
     </message>
 </context>
 <context>
     <name>LC_LayerTreeWidget</name>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Iragazkia</translation>
     </message>
     <message>
         <source>Looking for matching layer names</source>
-        <translation type="unfinished"></translation>
+        <translation>Bat datozen geruza-izenen bila</translation>
     </message>
     <message>
         <source>Highlight Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Nabarmentze modua</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezarpenak</translation>
     </message>
     <message>
         <source>Show all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Erakutsi geruza guztiak</translation>
     </message>
     <message>
         <source>Hide all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezkutatu geruza guztiak</translation>
     </message>
     <message>
         <source>Show Secondary Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Erakutsi geruza sekundarioak</translation>
     </message>
     <message>
         <source>Show Active Layer Only</source>
-        <translation type="unfinished"></translation>
+        <translation>Erakutsi geruza aktiboa soilik</translation>
     </message>
     <message>
         <source>Expand All</source>
-        <translation type="unfinished"></translation>
+        <translation>Zabaldu dena</translation>
     </message>
     <message>
         <source>Collapse All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tolestu denak</translation>
     </message>
     <message>
         <source>Collapse Secondary</source>
-        <translation type="unfinished"></translation>
+        <translation>Tolestu sekundarioa</translation>
     </message>
     <message>
         <source>Unlock all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Desblokeatu geruza guztiak</translation>
     </message>
     <message>
         <source>Lock all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Blokeatu geruza guztiak</translation>
     </message>
     <message>
         <source>Add a layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Gehitu geruza bat</translation>
     </message>
     <message>
         <source>Add dimensions Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Gehitu neurriak</translation>
     </message>
     <message>
         <source>Remove layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Kendu geruza</translation>
     </message>
     <message>
         <source>Modify layer attributes / rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Aldatu geruzen atributuak / aldatu izena</translation>
     </message>
     <message>
         <source>Flat List Mode)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zerrenda lauaren modua)</translation>
     </message>
     <message>
         <source>Layer Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Geruza-menua</translation>
     </message>
     <message>
         <source>&amp;Add Child Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Gehitu geruza umea</translation>
     </message>
     <message>
         <source>&amp;Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Aldatu izena</translation>
     </message>
     <message>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kendu geruzak (Sub-Tree)</translation>
     </message>
     <message>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kopiatu egitura (Sub-Tree)</translation>
     </message>
     <message>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Bikoiztu edukia (Sub-Tree)</translation>
     </message>
     <message>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Hautatu entitateak (Sub-Tree)</translation>
     </message>
     <message>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Editatu geruza eta atributuak</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">&amp;Geruza kendu</translation>
+        <translation>&amp;Kendu geruza</translation>
     </message>
     <message>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Add Dimensions Sub-Layer</translation>
     </message>
     <message>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Gehitu informazioa Azpigeruza</translation>
     </message>
     <message>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Gehitu ikuspegi alternatiboa</translation>
     </message>
     <message>
         <source>&amp;Remove Sub-layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kendu azpi-geruzak</translation>
     </message>
     <message>
         <source>Convert to Dimensional Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Bihurtu geruza dimentsionalera</translation>
     </message>
     <message>
         <source>Convert to Info Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Bihurtu informazio-geruzara</translation>
     </message>
     <message>
         <source>Convert to Alternative Position Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Bihurtu beste posizioko geruzara</translation>
     </message>
     <message>
         <source>Convert to Normal Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Bihurtu geruza normalera</translation>
     </message>
     <message>
-        <source>&amp;Select Layer&apos;s Entities</source>
-        <translation type="unfinished"></translation>
+        <source>&amp;Select Layer's Entities</source>
+        <translation>&amp;Hautatu geruzaren entitateak</translation>
     </message>
     <message>
         <source>&amp;Create Layer Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sortu geruzaren kopia</translation>
     </message>
     <message>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation type="unfinished"></translation>
+        <translation>Bikoiztu geruza edukiarekin</translation>
     </message>
     <message>
         <source>Move Selection to Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Eraman hautapena geruzara</translation>
     </message>
     <message>
         <source>Duplicate Selection to Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Bikoiztu hautapena geruzara</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">&amp;Geruza gehitu</translation>
+        <translation>&amp;Gehitu geruza</translation>
     </message>
     <message>
         <source>&amp;Freeze Others Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Izoztu beste geruzak</translation>
     </message>
     <message>
         <source>&amp;Defreeze All Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Desizoztu geruza guztiak</translation>
     </message>
     <message>
         <source>&amp;Freeze All Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Izoztu geruza guztiak</translation>
     </message>
     <message>
         <source>&amp;Unlock All Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Desblokeatu geruza guztiak</translation>
     </message>
     <message>
         <source>&amp;Lock All Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Blokeatu geruza guztiak</translation>
     </message>
     <message>
         <source>Enable &amp;Printing All Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Gaitu geruza guztiak inprimatzea</translation>
     </message>
     <message>
         <source>&amp;Disable Printing All Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Geruza guztiak inprimatzea</translation>
     </message>
     <message>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Bilatu eta kendu geruza hutsak</translation>
     </message>
 </context>
 <context>
     <name>LC_LineAngleRelOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Forma</translation>
+        <translation>Forma</translation>
     </message>
     <message>
         <source>Offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Desplazamendua:</translation>
     </message>
     <message>
         <source>Free</source>
-        <translation type="unfinished"></translation>
+        <translation>Libre</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Hasi</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation type="unfinished"></translation>
+        <translation>Erdialdean</translation>
     </message>
     <message>
         <source>End</source>
-        <translation type="unfinished"></translation>
+        <translation>Amaiera</translation>
     </message>
     <message>
         <source>Line Snap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitze-lerroa:</translation>
     </message>
     <message>
         <source>Rel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Zatitu</translation>
     </message>
     <message>
         <source>Tick Snap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tick Snap:</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished">Luzera:</translation>
+        <translation>Luzera:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Angelua:</translation>
+        <translation>Angelua:</translation>
     </message>
     <message>
         <source>Snap Distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitze distantzia:</translation>
     </message>
 </context>
 <context>
     <name>LC_LineFromPointToLineOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Forma</translation>
+        <translation>Forma</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Angelua:</translation>
+        <translation>Angelua:</translation>
     </message>
     <message>
         <source>Size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaina:</translation>
     </message>
     <message>
         <source>Orthogonal</source>
-        <translation type="unfinished">Ortogonala</translation>
+        <translation>Ortogonala</translation>
     </message>
     <message>
         <source>To Intersection</source>
-        <translation type="unfinished"></translation>
+        <translation>Intersekziora</translation>
     </message>
     <message>
         <source>Fixed Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Luzera finkoa</translation>
     </message>
     <message>
         <source>End offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Desplazamendua:</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Hasi</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation type="unfinished"></translation>
+        <translation>Erdialdean</translation>
     </message>
     <message>
         <source>End</source>
-        <translation type="unfinished"></translation>
+        <translation>Amaiera</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished">Luzera:</translation>
+        <translation>Luzera:</translation>
     </message>
     <message>
         <source>Snap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitu:</translation>
     </message>
 </context>
 <context>
     <name>LC_LineJoinOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Forma</translation>
+        <translation>Forma</translation>
     </message>
     <message>
         <source>Extend/Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Zabaldu/Trim</translation>
     </message>
     <message>
         <source>Add segment</source>
-        <translation type="unfinished"></translation>
+        <translation>Gehitu segmentua</translation>
     </message>
     <message>
         <source>No change</source>
-        <translation type="unfinished"></translation>
+        <translation>Aldaketarik ez</translation>
     </message>
     <message>
         <source>Create Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortu polilerroa</translation>
     </message>
     <message>
         <source>Attributes:</source>
-        <translation type="unfinished"></translation>
+        <translation>Atributuak:</translation>
     </message>
     <message>
         <source>Active Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Active Pen</translation>
     </message>
     <message>
         <source>Line 1</source>
-        <translation type="unfinished"></translation>
+        <translation>1. lerroa</translation>
     </message>
     <message>
         <source>Line 2</source>
-        <translation type="unfinished"></translation>
+        <translation>2. linea</translation>
     </message>
     <message>
         <source>Both lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Bi lerroak</translation>
     </message>
     <message>
         <source>Remove originals</source>
-        <translation type="unfinished"></translation>
+        <translation>Kendu jatorrizkoak</translation>
     </message>
     <message>
         <source>Line 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>2. lerroa:</translation>
     </message>
     <message>
         <source>Line 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>1. lerroa:</translation>
     </message>
 </context>
 <context>
     <name>LC_LinePointsOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Forma</translation>
+        <translation>Forma</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Angelua:</translation>
+        <translation>Angelua:</translation>
     </message>
     <message>
         <source>Fit Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Doitu lerroa</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Bat ere ez</translation>
+        <translation>Bat ere ez</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation type="unfinished"></translation>
+        <translation>Biak</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Hasi</translation>
     </message>
     <message>
         <source>End</source>
-        <translation type="unfinished"></translation>
+        <translation>Amaiera</translation>
     </message>
     <message>
         <source>Edge Points:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ertzaren puntuak:</translation>
     </message>
     <message>
         <source>Number of points:</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntu kopurua:</translation>
     </message>
     <message>
         <source>Fixed Distance</source>
-        <translation type="unfinished"></translation>
+        <translation>Distantzia finkoa</translation>
     </message>
 </context>
 <context>
@@ -1959,579 +1961,581 @@ or [%2]</source>
     <name>LC_ModifyBreakDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Forma</translation>
+        <translation>Forma</translation>
     </message>
     <message>
         <source>Remove Segments</source>
-        <translation type="unfinished"></translation>
+        <translation>Kendu segmentuak</translation>
     </message>
     <message>
         <source>Remove Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Kendu hautatutakoa</translation>
     </message>
 </context>
 <context>
     <name>LC_ModifyGapOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Forma</translation>
+        <translation>Forma</translation>
     </message>
     <message>
         <source>Gap Snap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gap Snap:</translation>
     </message>
     <message>
         <source>Snap Distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitze distantzia:</translation>
     </message>
     <message>
         <source>Free</source>
-        <translation type="unfinished"></translation>
+        <translation>Libre</translation>
     </message>
     <message>
         <source>Gap Size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gap tamaina:</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Hasi</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation type="unfinished"></translation>
+        <translation>Erdialdean</translation>
     </message>
     <message>
         <source>End</source>
-        <translation type="unfinished"></translation>
+        <translation>Amaiera</translation>
     </message>
     <message>
         <source>Line Snap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitze-lerroa:</translation>
     </message>
 </context>
 <context>
     <name>LC_PenPaletteOptionsDialog</name>
     <message>
         <source>Pen Palette Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Pen paleta ezarpenak</translation>
     </message>
     <message>
         <source>Columns to display</source>
-        <translation type="unfinished"></translation>
+        <translation>Bistaratu beharreko zutabeak</translation>
     </message>
     <message>
         <source>Line Type Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Lerro mota izena</translation>
     </message>
     <message>
         <source>Color Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolore-izena</translation>
     </message>
     <message>
         <source>Line Type Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Lerro-motaren ikonoa</translation>
     </message>
     <message>
         <source>Color Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolore-ikonoa</translation>
     </message>
     <message>
         <source>Line Width Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Lerro-zabaleraren ikonoa</translation>
     </message>
     <message>
         <source>Line Width Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Marra-zabaleraren izena</translation>
     </message>
     <message>
         <source>Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Koloreak</translation>
     </message>
     <message>
         <source>Active Pen Background:</source>
-        <translation type="unfinished"></translation>
+        <translation>Atzeko plano aktiboa:</translation>
     </message>
     <message>
         <source>Entire table row is bold for active pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Mahaiaren errenkada osoa ausarta da luma aktiboarentzat</translation>
     </message>
     <message>
         <source>Grid Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Saretaren kolorea:</translation>
     </message>
     <message>
         <source>Matched Item Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bat datozen elementuen kolorea:</translation>
     </message>
     <message>
         <source>Case-insensitive pens filtering</source>
-        <translation type="unfinished"></translation>
+        <translation>Kasurik gabeko lumak iragaztea</translation>
     </message>
     <message>
         <source>Controls whether tooltip will be shown for table item or not</source>
-        <translation type="unfinished"></translation>
+        <translation>Taulako elementuaren argibideak erakutsiko diren ala ez kontrolatzen du</translation>
     </message>
     <message>
         <source>Show tooltip for table items</source>
-        <translation type="unfinished"></translation>
+        <translation>Erakutsi taulako elementuei buruzko argibideak</translation>
     </message>
     <message>
         <source>Pens file:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pens fitxategia:</translation>
     </message>
     <message>
         <source>Show colorn name as</source>
-        <translation type="unfinished"></translation>
+        <translation>Erakutsi kolorearen izena honela</translation>
     </message>
     <message>
         <source>HEX</source>
-        <translation type="unfinished"></translation>
+        <translation>HEX</translation>
     </message>
     <message>
         <source>RGB</source>
-        <translation type="unfinished"></translation>
+        <translation>GBU</translation>
     </message>
     <message>
         <source>Natural name where possible</source>
-        <translation type="unfinished"></translation>
+        <translation>Izen naturala posible denean</translation>
     </message>
     <message>
         <source>Show info message if no entities may be selected by pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Erakutsi informazio-mezua boligrafoak entitaterik hautatu ezin badu</translation>
     </message>
     <message>
         <source>On double click on table item</source>
-        <translation type="unfinished"></translation>
+        <translation>Egin klik bikoitza taulako elementuan</translation>
     </message>
     <message>
         <source>Do nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez egin ezer</translation>
     </message>
     <message>
         <source>Select entities by attributes pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu entitateak atributuen arabera</translation>
     </message>
     <message>
         <source>Select entities by drawing pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu entitateak luma marraztuz</translation>
     </message>
 </context>
 <context>
     <name>LC_PenPaletteWidget</name>
     <message>
         <source>Pen Palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Pen paleta</translation>
     </message>
     <message>
         <source>Pen Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Izena:</translation>
     </message>
     <message>
         <source>Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolorea:</translation>
     </message>
     <message>
         <source>Filter...</source>
-        <translation type="unfinished"></translation>
+        <translation>Iragazkia...</translation>
     </message>
     <message>
         <source>Highlight Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Nabarmentze modua</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mota:</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished">Zabalera:</translation>
+        <translation>Zabalera:</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezarpenak</translation>
     </message>
     <message>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Bete arkatzaren editorea entitatearen marrazkiaren arabera</translation>
     </message>
     <message>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Bete arkatzaren editorea entitatearen atributuen arabera</translation>
     </message>
     <message>
         <source>Select Entities By Drawing Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu entitateak arkatza marraztuz</translation>
     </message>
     <message>
         <source>Select Entities By Pen Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu entitateak Pen atributuen arabera</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Gorde</translation>
+        <translation>Gorde</translation>
     </message>
     <message>
         <source>Apply Pen To Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplikatu arkatza hautapenari</translation>
     </message>
     <message>
         <source>Fill Editor Pen by Current Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Bete editorearen arkatza uneko arkatzaren arabera</translation>
     </message>
     <message>
         <source>Apply Editor Pen As Current Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplikatu editorea Pen uneko arkatz gisa</translation>
     </message>
     <message>
         <source>to current</source>
-        <translation type="unfinished"></translation>
+        <translation>gaur</translation>
     </message>
     <message>
-        <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation type="unfinished"></translation>
+        <source>Update Current Pen by Active Layer' Pen</source>
+        <translation>Eguneratu uneko arkatza geruza aktiboaren arkatzaren arabera</translation>
     </message>
     <message>
-        <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation type="unfinished"></translation>
+        <source>Fill Pen Editor from Active Layer's Pen</source>
+        <translation>Bete geruza aktiboaren arkatzaren editorea</translation>
     </message>
     <message>
         <source>Pick from Active Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Hartu geruza aktiboa</translation>
     </message>
     <message>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplikatu arkatza geruza aktiboan</translation>
     </message>
     <message>
         <source>Apply To Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplikatu geruzari</translation>
     </message>
     <message>
         <source>Remove Selected Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Kendu hautatutako luma</translation>
     </message>
     <message>
         <source>Delete Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezabatu</translation>
     </message>
     <message>
         <source>Pens Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Pens menua</translation>
     </message>
     <message>
         <source>&amp;Apply Pen To Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Aplikatu arkatza hautapenera</translation>
     </message>
     <message>
         <source>&amp;Set As Current Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezarri uneko arkatz gisa</translation>
     </message>
     <message>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Aplikatu arkatza geruza aktiboan</translation>
     </message>
     <message>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Hautatu entitateak atributuekin Pen</translation>
     </message>
     <message>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Hautatu entitateak marrazki-lumarekin</translation>
     </message>
     <message>
         <source>&amp;Edit Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Editatu Pen</translation>
     </message>
     <message>
         <source>&amp;Remove Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kendu</translation>
     </message>
     <message>
         <source>&amp;Remove Pens</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kendu arkatzak</translation>
     </message>
     <message>
         <source>Pen palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Pen paleta</translation>
     </message>
     <message>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="unfinished"></translation>
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+        <translation>Pens fitxategiaren kokalekua aldatu da, berrabiarazi aplikazioa, beraz pens fitxategi berria erabiliko da.
+
+Kontuan izan arkatza editoretik berrabiarazterik gabe gordetzen baduzu, paletako uneko lumak fitxategi berrian gordeko direla, eta, beraz, haren edukia gainidatziko dela.</translation>
     </message>
 </context>
 <context>
     <name>LC_Rectangle1PointOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Forma</translation>
+        <translation>Forma</translation>
     </message>
     <message>
         <source>Polyline</source>
-        <translation type="unfinished">Polilinea</translation>
+        <translation>Polilerroa</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished">Altuera:</translation>
+        <translation>Altuera:</translation>
     </message>
     <message>
         <source>Edges:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ertzak:</translation>
     </message>
     <message>
         <source>Corners:</source>
-        <translation type="unfinished"></translation>
+        <translation>Izkina:</translation>
     </message>
     <message>
         <source>Size inner</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaina barnekoa</translation>
     </message>
     <message>
         <source>Length X:</source>
-        <translation type="unfinished"></translation>
+        <translation>X luzera:</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished">Erradioa:</translation>
+        <translation>Erradioa:</translation>
     </message>
     <message>
         <source>Snap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitu:</translation>
     </message>
     <message>
         <source>Length Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Y luzera:</translation>
     </message>
     <message>
         <source>Top-left</source>
-        <translation type="unfinished"></translation>
+        <translation>Goiko ezkerrekoa</translation>
     </message>
     <message>
         <source>Top</source>
-        <translation type="unfinished">Gora</translation>
+        <translation>Goian</translation>
     </message>
     <message>
         <source>Top-right</source>
-        <translation type="unfinished"></translation>
+        <translation>Goian eskuinean</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished">Ezkerra</translation>
+        <translation>Ezkerra</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation type="unfinished"></translation>
+        <translation>Erdialdean</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished">Eskuma</translation>
+        <translation>Eskuinean</translation>
     </message>
     <message>
         <source>Bottom-left</source>
-        <translation type="unfinished"></translation>
+        <translation>Behean ezkerrean</translation>
     </message>
     <message>
         <source>Bottom</source>
-        <translation type="unfinished">Behera</translation>
+        <translation>Behean</translation>
     </message>
     <message>
         <source>Bottom-right</source>
-        <translation type="unfinished"></translation>
+        <translation>Behean eskuinean</translation>
     </message>
     <message>
         <source>Straight</source>
-        <translation type="unfinished"></translation>
+        <translation>Zuzena</translation>
     </message>
     <message>
         <source>Round</source>
-        <translation type="unfinished"></translation>
+        <translation>Biribildu</translation>
     </message>
     <message>
         <source>Bevel</source>
-        <translation type="unfinished"></translation>
+        <translation>Bevel</translation>
     </message>
     <message>
         <source>Snap shift</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitu desplazamendua</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation type="unfinished"></translation>
+        <translation>Biak</translation>
     </message>
     <message>
         <source>Vertical</source>
-        <translation type="unfinished">Goitik Behera</translation>
+        <translation>Bertikala</translation>
     </message>
     <message>
         <source>Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Horizontala</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished">Zabalera:</translation>
+        <translation>Zabalera:</translation>
     </message>
     <message>
         <source>Base Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Oinarrizko angelua:</translation>
     </message>
 </context>
 <context>
     <name>LC_Rectangle2PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Forma</translation>
+        <translation>Forma</translation>
     </message>
     <message>
         <source>Snap shift</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitu desplazamendua</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished">Erradioa:</translation>
+        <translation>Erradioa:</translation>
     </message>
     <message>
         <source>Edges:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ertzak:</translation>
     </message>
     <message>
         <source>Polyline</source>
-        <translation type="unfinished">Polilinea</translation>
+        <translation>Polilerroa</translation>
     </message>
     <message>
         <source>End Snap:</source>
-        <translation type="unfinished"></translation>
+        <translation>End Snap:</translation>
     </message>
     <message>
         <source>Corners:</source>
-        <translation type="unfinished"></translation>
+        <translation>Izkina:</translation>
     </message>
     <message>
         <source>Length X:</source>
-        <translation type="unfinished"></translation>
+        <translation>X luzera:</translation>
     </message>
     <message>
         <source>Start Snap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hasi pantaila:</translation>
     </message>
     <message>
         <source>Corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Corner</translation>
     </message>
     <message>
         <source>Mid-Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Erdi-bertikala</translation>
     </message>
     <message>
         <source>Mid-Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Erdi-horizontala</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation type="unfinished"></translation>
+        <translation>Erdialdean</translation>
     </message>
     <message>
         <source>Base Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Oinarrizko angelua:</translation>
     </message>
     <message>
         <source>Straight</source>
-        <translation type="unfinished"></translation>
+        <translation>Zuzena</translation>
     </message>
     <message>
         <source>Round</source>
-        <translation type="unfinished"></translation>
+        <translation>Biribildu</translation>
     </message>
     <message>
         <source>Bevel</source>
-        <translation type="unfinished"></translation>
+        <translation>Bevel</translation>
     </message>
     <message>
         <source>Length Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Y luzera:</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation type="unfinished"></translation>
+        <translation>Biak</translation>
     </message>
     <message>
         <source>Vertical</source>
-        <translation type="unfinished">Goitik Behera</translation>
+        <translation>Bertikala</translation>
     </message>
     <message>
         <source>Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Horizontala</translation>
     </message>
 </context>
 <context>
     <name>LC_Rectangle3PointsOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Forma</translation>
+        <translation>Forma</translation>
     </message>
     <message>
         <source>Polyline</source>
-        <translation type="unfinished">Polilinea</translation>
+        <translation>Polilerroa</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation type="unfinished"></translation>
+        <translation>Biak</translation>
     </message>
     <message>
         <source>Vertical</source>
-        <translation type="unfinished">Goitik Behera</translation>
+        <translation>Bertikala</translation>
     </message>
     <message>
         <source>Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Horizontala</translation>
     </message>
     <message>
         <source>Edges:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ertzak:</translation>
     </message>
     <message>
         <source>Quadrangle</source>
-        <translation type="unfinished"></translation>
+        <translation>Quadrangle</translation>
     </message>
     <message>
         <source>Fixed Base Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Oinarri-angelu finkoa:</translation>
     </message>
     <message>
         <source>Length X:</source>
-        <translation type="unfinished"></translation>
+        <translation>X luzera:</translation>
     </message>
     <message>
         <source>Straight</source>
-        <translation type="unfinished"></translation>
+        <translation>Zuzena</translation>
     </message>
     <message>
         <source>Round</source>
-        <translation type="unfinished"></translation>
+        <translation>Biribildu</translation>
     </message>
     <message>
         <source>Bevel</source>
-        <translation type="unfinished"></translation>
+        <translation>Bevel</translation>
     </message>
     <message>
         <source>Corners:</source>
-        <translation type="unfinished"></translation>
+        <translation>Izkina:</translation>
     </message>
     <message>
         <source>Snap shift</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitu desplazamendua</translation>
     </message>
     <message>
         <source>Length Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Y luzera:</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished">Erradioa:</translation>
+        <translation>Erradioa:</translation>
     </message>
     <message>
         <source>Fixed Inner Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Barneko angelu finkoa:</translation>
     </message>
 </context>
 <context>
@@ -2549,109 +2553,109 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <name>LC_SliceDivideOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Forma</translation>
+        <translation>Forma</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Bat ere ez</translation>
+        <translation>Bat ere ez</translation>
     </message>
     <message>
         <source>Both</source>
-        <translation type="unfinished"></translation>
+        <translation>Biak</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Hasi</translation>
     </message>
     <message>
         <source>End</source>
-        <translation type="unfinished"></translation>
+        <translation>Amaiera</translation>
     </message>
     <message>
         <source>Edge Tick:</source>
-        <translation type="unfinished"></translation>
+        <translation>Edge Tick:</translation>
     </message>
     <message>
         <source>Rel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Desplazamendua:</translation>
     </message>
     <message>
         <source>Count:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zenbat:</translation>
     </message>
     <message>
         <source>Start Circle Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hasi zirkuluaren angelua:</translation>
     </message>
     <message>
         <source>Tick Length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Probaren luzera:</translation>
     </message>
     <message>
         <source>Tick snap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tick snap:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Angelua:</translation>
+        <translation>Angelua:</translation>
     </message>
     <message>
         <source>Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Zatitu</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation type="unfinished"></translation>
+        <translation>Erdialdean</translation>
     </message>
     <message>
         <source>Fixed </source>
-        <translation type="unfinished"></translation>
+        <translation>Finkoa</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Distantzia:</translation>
     </message>
 </context>
 <context>
     <name>LC_StarOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Forma</translation>
+        <translation>Forma</translation>
     </message>
     <message>
         <source>Radius Inner</source>
-        <translation type="unfinished"></translation>
+        <translation>Radius Inner</translation>
     </message>
     <message>
         <source>Polyline</source>
-        <translation type="unfinished">Polilinea</translation>
+        <translation>Polilerroa</translation>
     </message>
     <message>
         <source>Radius Outer</source>
-        <translation type="unfinished"></translation>
+        <translation>Radius Outer</translation>
     </message>
     <message>
         <source>Symmetric</source>
-        <translation type="unfinished"></translation>
+        <translation>Simetrikoa</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zenbakia:</translation>
     </message>
 </context>
 <context>
     <name>LC_WidgetFactory</name>
     <message>
         <source>Library Browser</source>
-        <translation type="unfinished">Liburutegia</translation>
+        <translation>Liburutegi-arakatzailea</translation>
     </message>
     <message>
         <source>Command line</source>
-        <translation type="unfinished">Komando Lerroa</translation>
+        <translation>Komando-lerroa</translation>
     </message>
     <message>
         <source>Dock</source>
@@ -2683,7 +2687,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished">Aukeratu</translation>
+        <translation>Hautatu</translation>
     </message>
     <message>
         <source>Dimensions</source>
@@ -2691,7 +2695,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Modify</source>
-        <translation type="unfinished">Aldatu</translation>
+        <translation>Aldatu</translation>
     </message>
     <message>
         <source>Measure</source>
@@ -2750,7 +2754,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     </message>
     <message>
         <source>Left toolbar columns:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezkerreko tresna-barraren zutabeak:</translation>
     </message>
 </context>
 <context>
@@ -2768,11 +2772,11 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>kendu eskuma</translation>
     </message>
     <message>
-        <source>remove 0&apos;</source>
+        <source>remove 0'</source>
         <translation>kendu 0</translation>
     </message>
     <message>
-        <source>remove 0&quot;</source>
+        <source>remove 0"</source>
         <translation>kendu 0ª</translation>
     </message>
 </context>
@@ -2959,8 +2963,8 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Komando Lerroa</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Blokea &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>Blokea '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -3097,8 +3101,8 @@ Please check its existence and permissions.</source>
 Ikus ea dagoen eta baimenak.</translation>
     </message>
     <message>
-        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>Ez dago &apos;%1&apos; fitxategirik.</translation>
+        <source>File '%1' does not exist. Opening aborted</source>
+        <translation>Ez dago '%1' fitxategirik.</translation>
     </message>
     <message>
         <source>Categories</source>
@@ -3214,7 +3218,7 @@ Ikus ea dagoen eta baimenak.</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Kopiatu</translation>
+        <translation>Kopiatu</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -3258,7 +3262,7 @@ Ikus ea dagoen eta baimenak.</translation>
     </message>
     <message>
         <source>Closing Drawing</source>
-        <translation type="unfinished">Irudia izten</translation>
+        <translation>Marraztea</translation>
     </message>
     <message>
         <source>Save changes to the following item?
@@ -3268,11 +3272,11 @@ Ikus ea dagoen eta baimenak.</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished">&amp;Gorde</translation>
+        <translation>&amp;Gorde</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="unfinished">Gorde &amp;bezala</translation>
+        <translation>Gorde &amp;as...</translation>
     </message>
     <message>
         <source>&amp;Save %1</source>
@@ -3316,88 +3320,88 @@ Ikus ea dagoen eta baimenak.</translation>
     </message>
     <message>
         <source>&amp;Arrange</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Arrange</translation>
     </message>
     <message>
         <source>&amp;Maximized</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Gehienez</translation>
     </message>
     <message>
         <source>Save All cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Gorde dena bertan behera utzita</translation>
     </message>
     <message>
         <source>Close All cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Itxi denak bertan behera utzita</translation>
     </message>
     <message>
         <source>The Code</source>
-        <translation type="unfinished"></translation>
+        <translation>Kodea</translation>
     </message>
     <message>
         <source>Cmd</source>
-        <translation type="unfinished"></translation>
+        <translation>Cmd</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished">Flotatu</translation>
+        <translation>Mugikorra</translation>
     </message>
     <message>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation type="unfinished">Panela</translation>
+        <translation>Atrakagarria</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Wiki</translation>
     </message>
     <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="unfinished"></translation>
+        <source>User's &amp;Manual</source>
+        <translation>Erabiltzailearen &amp;eskuzkoa</translation>
     </message>
     <message>
         <source>&amp;Commands</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Komandoak</translation>
     </message>
     <message>
         <source>&amp;Style Sheets</source>
-        <translation type="unfinished"></translation>
+        <translation>Orri &amp; soilak</translation>
     </message>
     <message>
         <source>Wid&amp;gets</source>
-        <translation type="unfinished"></translation>
+        <translation>Wid &amp;gets</translation>
     </message>
     <message>
         <source>&amp;Forum</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Forum</translation>
     </message>
     <message>
         <source>Zulip &amp;Chat</source>
-        <translation type="unfinished"></translation>
+        <translation>Zulip &amp;Chat</translation>
     </message>
     <message>
         <source>&amp;Release Information</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Askatu informazioa</translation>
     </message>
     <message>
         <source>On&amp;line</source>
-        <translation type="unfinished"></translation>
+        <translation>On&amp;line</translation>
     </message>
     <message>
         <source>&amp;Donate</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Donate</translation>
     </message>
     <message>
         <source>Please adjust scaling and positioning in print preview first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Doitu eskala eta kokapena inprimatzeko aurrebistan.</translation>
     </message>
     <message>
         <source>Pen Palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Pen paleta</translation>
     </message>
     <message>
         <source>Layer Tree</source>
-        <translation type="unfinished"></translation>
+        <translation>Geruza-zuhaitza</translation>
     </message>
 </context>
 <context>
@@ -3409,11 +3413,11 @@ Ikus ea dagoen eta baimenak.</translation>
     </message>
     <message>
         <source>Spacebar: restored snapping mode to normal</source>
-        <translation type="unfinished"></translation>
+        <translation>Espazio-barra: kaptura-modua berrezarria normalki</translation>
     </message>
     <message>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Zuriune-barra: aldi baterako atxikitze modua libre ateratzeko</translation>
     </message>
 </context>
 <context>
@@ -3431,16 +3435,16 @@ Ikus ea dagoen eta baimenak.</translation>
         <translation>Uneko Geruza</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -3458,8 +3462,8 @@ p, li { white-space: pre-wrap; }
         <translation>Blokeari izen berria jartzen</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Ezin blokea berrinzendatu. &quot;%1&quot; deritzon blokea badago jada.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>Ezin blokea berrinzendatu. "%1" deritzon blokea badago jada.</translation>
     </message>
 </context>
 <context>
@@ -3540,15 +3544,15 @@ beste lehio batean</translation>
     </message>
     <message>
         <source>Remove block</source>
-        <translation type="unfinished"></translation>
+        <translation>Kendu blokea</translation>
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Iragazkia</translation>
     </message>
     <message>
         <source>Looking for matching block names</source>
-        <translation type="unfinished"></translation>
+        <translation>Bat datozen blokeen izenak bilatzen</translation>
     </message>
 </context>
 <context>
@@ -3635,11 +3639,11 @@ beste lehio batean</translation>
     </message>
     <message>
         <source>/ColorBox</source>
-        <translation type="unfinished"></translation>
+        <translation>/ColorBox</translation>
     </message>
     <message>
         <source>Custom Picked</source>
-        <translation type="unfinished"></translation>
+        <translation>Aukeratutako pertsonalizatua</translation>
     </message>
 </context>
 <context>
@@ -3689,23 +3693,23 @@ beste lehio batean</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Dock</source>
-        <translation type="unfinished">Panela</translation>
+        <translation>Atrakagarria</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished">Flotatu</translation>
+        <translation>Mugikorra</translation>
     </message>
     <message>
         <source>Command line</source>
-        <translation type="unfinished">Komando Lerroa</translation>
+        <translation>Komando-lerroa</translation>
     </message>
     <message>
         <source>Cmd</source>
-        <translation type="unfinished"></translation>
+        <translation>Cmd</translation>
     </message>
 </context>
 <context>
@@ -3720,7 +3724,7 @@ beste lehio batean</translation>
     <message>
         <source>R</source>
         <comment>Radial dimension prefix</comment>
-        <translation type="unfinished"></translation>
+        <translation>R</translation>
     </message>
 </context>
 <context>
@@ -3767,17 +3771,17 @@ beste lehio batean</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Format of the dimension text, &amp;lt;&amp;gt; can be used as a placeholder for the dimension measurement value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Dimentsioaren testuaren formatua, &lt;&gt; dimentsioaren neurketa-baliorako leku-marka gisa erabil daiteke &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>R</source>
         <comment>Radial dimension prefix</comment>
-        <translation type="unfinished"></translation>
+        <translation>R</translation>
     </message>
     <message>
         <source>R</source>
         <comment>Radial dimesnion prefix</comment>
-        <translation type="unfinished"></translation>
+        <translation>R</translation>
     </message>
 </context>
 <context>
@@ -3832,11 +3836,12 @@ beste lehio batean</translation>
     <message>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplikatu atributuak hautatutako INSERTen azpi-erakunde guztiei ere.
+Honek errekurtsiboki aldatzen ditu blokearen entitate guztiak.</translation>
     </message>
     <message>
         <source>Apply attributes Block-deep</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplikatu atributuak Bloke-deep</translation>
     </message>
 </context>
 <context>
@@ -3975,7 +3980,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Area</translation>
     </message>
 </context>
 <context>
@@ -4030,7 +4035,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Select an image file</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu irudi-fitxategia</translation>
     </message>
 </context>
 <context>
@@ -4052,12 +4057,12 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>Komandoen Hizkuntza:</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt;
@@ -4147,7 +4152,7 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
     </message>
     <message>
         <source>ID: </source>
-        <translation type="unfinished"></translation>
+        <translation>ID:</translation>
     </message>
 </context>
 <context>
@@ -4754,23 +4759,23 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
     </message>
     <message>
         <source>Font Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Letra-tipoen ezarpenak</translation>
     </message>
     <message>
         <source>Font:</source>
-        <translation type="unfinished"></translation>
+        <translation>Letra-tipoa:</translation>
     </message>
     <message>
         <source>Text Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Testuaren norabidea</translation>
     </message>
     <message>
         <source>Left to right</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezkerretik eskuinera</translation>
     </message>
     <message>
         <source>Right to left</source>
-        <translation type="unfinished"></translation>
+        <translation>Eskuinetik ezkerrera</translation>
     </message>
 </context>
 <context>
@@ -4918,7 +4923,7 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished">Angelua</translation>
+        <translation>Angelua</translation>
     </message>
     <message>
         <source>Decimal Degrees</source>
@@ -4930,7 +4935,7 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
     </message>
     <message>
         <source>Preview</source>
-        <translation type="unfinished">Aurrikusi</translation>
+        <translation>Aurrebista</translation>
     </message>
     <message>
         <source>linear</source>
@@ -4957,7 +4962,7 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
         <translation>Gradianeak</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>Unitate topografikoak</translation>
     </message>
     <message>
@@ -4965,8 +4970,8 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
         <translation>Aukerak</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>&quot;Ingeneritza&quot; eta &quot;Arkitekturazko&quot; neurrientzat, unitatea Hazbetea izan behar da.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>"Ingeneritza" eta "Arkitekturazko" neurrientzat, unitatea Hazbetea izan behar da.</translation>
     </message>
     <message>
         <source>Arrow size:</source>
@@ -5042,709 +5047,717 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
     </message>
     <message>
         <source>&amp;Grid</source>
-        <translation type="unfinished">&amp;Sarea</translation>
+        <translation>&amp;Grid</translation>
     </message>
     <message>
         <source>Number of line segments per spline patch:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lerro-segmentu kopurua spline adabaki bakoitzeko:</translation>
     </message>
     <message>
         <source>Crosshair</source>
-        <translation type="unfinished"></translation>
+        <translation>Crosshair</translation>
     </message>
     <message>
         <source>Left crosshair with isometric grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezkerreko gurutzagunea sare isometrikoarekin</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished">Ezkerra</translation>
+        <translation>Ezkerra</translation>
     </message>
     <message>
         <source>Top crosshair with isometric grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Goiko gurutzagunea sare isometrikoarekin</translation>
     </message>
     <message>
         <source>Top</source>
-        <translation type="unfinished">Gora</translation>
+        <translation>Goian</translation>
     </message>
     <message>
         <source>Right crosshair with isometric grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Eskuineko gurutzagunea sare isometrikoarekin</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished">Eskuma</translation>
+        <translation>Eskuinean</translation>
     </message>
     <message>
         <source>Use orthogonal grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Erabili sareta ortogonala</translation>
     </message>
     <message>
         <source>Orthogonal Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Sareta ortogonala</translation>
     </message>
     <message>
         <source>Use isometric grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Erabili sareta isometrikoa</translation>
     </message>
     <message>
         <source>Isometric Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Sareta isometrikoa</translation>
     </message>
     <message>
         <source>Tick size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tick tamaina:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Neurriaren tamaina. Ezarri 0 balioarekin dimentsioaren marka desgaituko du. Dimentsio-gezia ez da marratuko dimentsio-marka gaituta dagoenean.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Horizontala</translation>
     </message>
     <message>
         <source>General Scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>Eskala orokorra:</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Dimentsio-balio guztiak biderkatzeko eskala.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Eskala dimentsioen geometria guztiak biderkatzeko.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Text style:</source>
-        <translation type="unfinished"></translation>
+        <translation>Testuaren estiloa:</translation>
     </message>
     <message>
-        <source>&apos;.&apos; (Period)</source>
-        <translation type="unfinished"></translation>
+        <source>'.' (Period)</source>
+        <translation>"." (Period)</translation>
     </message>
     <message>
-        <source>&apos;,&apos; (Comma)</source>
-        <translation type="unfinished"></translation>
+        <source>',' (Comma)</source>
+        <translation>',' (Comma)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bereizlea:</translation>
     </message>
     <message>
         <source>Linear units:</source>
-        <translation type="unfinished"></translation>
+        <translation>Unitate linealak:</translation>
     </message>
     <message>
         <source>Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolorea:</translation>
     </message>
     <message>
         <source>Length Factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Luzera-faktorea:</translation>
     </message>
     <message>
         <source>Angular units:</source>
-        <translation type="unfinished"></translation>
+        <translation>Unitate angeluarrak:</translation>
     </message>
     <message>
         <source>Linear zeros:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zero linealak:</translation>
     </message>
     <message>
         <source>Format units</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatuak</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance gap around text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Distantzia-tartea &lt;/p&gt;&lt;/body&gt;&lt;/html&gt; testuaren inguruan</translation>
     </message>
     <message>
         <source>Text size &amp; position</source>
-        <translation type="unfinished"></translation>
+        <translation>Testuaren tamaina eta posizioa</translation>
     </message>
     <message>
         <source>Length to enlarge over dimension line</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimentsio-lerroaren luzera handitzeko</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Dimentsio-geziaren tamaina. &lt;a name="result box"/&gt; efekturik gabe &lt;izen bat="result box"/&gt; 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt; ez denean</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished">Zabalera:</translation>
+        <translation>Zabalera:</translation>
     </message>
     <message>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimentsio-lerroak, geziak eta markak</translation>
     </message>
     <message>
         <source>Angular zeros:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zero angeluarrak:</translation>
     </message>
     <message>
         <source>Angular precision:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztasun angularra:</translation>
     </message>
     <message>
         <source>Enlarge:</source>
-        <translation type="unfinished"></translation>
+        <translation>Handiagotu:</translation>
     </message>
     <message>
         <source>Offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Desplazamendua:</translation>
     </message>
     <message>
         <source>Linear precision:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztasun lineala:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Testuaren lerrokatzea &lt;a name="result box"/&gt;moldatze-lerroarekiko erlatiboa.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Aligned</source>
-        <translation type="unfinished"></translation>
+        <translation>Lerrokatuta</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Jatorrizko puntutik kanpo.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Text alignment:</source>
-        <translation type="unfinished"></translation>
+        <translation>Testuaren lerrokatzea:</translation>
     </message>
     <message>
         <source>Extension lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Hedapen-lerroak</translation>
     </message>
     <message>
         <source>Fixed length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Luzera finkoa:</translation>
     </message>
     <message>
         <source>Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatua</translation>
     </message>
     <message>
         <source>&amp;Height:</source>
-        <translation type="unfinished">&amp;Altuera:</translation>
+        <translation>&amp; Altuera:</translation>
     </message>
     <message>
         <source>&amp;Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Zabalera:</translation>
     </message>
     <message>
         <source>Orientation</source>
-        <translation type="unfinished"></translation>
+        <translation>Orientazioa</translation>
     </message>
     <message>
         <source>Margins</source>
-        <translation type="unfinished"></translation>
+        <translation>Marjinak</translation>
     </message>
     <message>
         <source>Bottom</source>
-        <translation type="unfinished">Behera</translation>
+        <translation>Behean</translation>
     </message>
     <message>
         <source>Number of pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Orrialde kopurua</translation>
     </message>
     <message>
         <source>Horizontally:</source>
-        <translation type="unfinished"></translation>
+        <translation>Horizontalki:</translation>
     </message>
     <message>
         <source>Vertically:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bertikalki:</translation>
     </message>
     <message>
         <source>fixed extension line length</source>
-        <translation type="unfinished"></translation>
+        <translation>luzera finkoko luzera</translation>
     </message>
     <message>
         <source>&amp;Splines</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Splines</translation>
     </message>
     <message>
         <source>&amp;Points</source>
-        <translation type="unfinished">&amp;Puntuak</translation>
+        <translation>&amp;Puntuak</translation>
     </message>
     <message>
         <source>Point Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntu-estiloa</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Point Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntu-tamaina</translation>
     </message>
     <message>
         <source>Dwg Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Unitateak</translation>
     </message>
     <message>
         <source>Size relative to screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Pantailaren tamaina</translation>
     </message>
     <message>
         <source>Size in drawing units</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaina marrazki unitateetan</translation>
     </message>
     <message>
         <source>(0 =&gt; 5% relative to screen size)</source>
-        <translation type="unfinished"></translation>
+        <translation>(0 =&gt; %5 pantailaren tamainarekiko erlatiboa)</translation>
     </message>
     <message>
         <source>Architectural (metric)</source>
-        <translation type="unfinished"></translation>
+        <translation>Arkitektura (metrikoa)</translation>
     </message>
     <message>
-        <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation type="unfinished"></translation>
+        <source>For the length format 'Architectural (metric)', the unit must be set to Meter.</source>
+        <translation>"Arkitektura (metrikoa)" luzera-formatuan, unitatea Meter-era ezarri behar da.</translation>
     </message>
     <message>
         <source>Screen %</source>
-        <translation type="unfinished"></translation>
+        <translation>%</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgOptionsGeneral</name>
     <message>
         <source>Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Hobespenak</translation>
     </message>
     <message>
         <source>Translations:</source>
-        <translation type="unfinished"></translation>
+        <translation>Itzulpenak:</translation>
     </message>
     <message>
         <source>Hatch Patterns:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hatch ereduak:</translation>
     </message>
     <message>
         <source>Fonts:</source>
-        <translation type="unfinished"></translation>
+        <translation>Letra-tipoak:</translation>
     </message>
     <message>
         <source>Part Libraries:</source>
-        <translation type="unfinished"></translation>
+        <translation>Liburutegi partekatuak:</translation>
     </message>
     <message>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Hizkuntza</translation>
     </message>
     <message>
         <source>Graphic View</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikuspegi grafikoa</translation>
     </message>
     <message>
         <source>Application Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplikazioaren hobespenak</translation>
     </message>
     <message>
         <source>Defaults for new drawings</source>
-        <translation type="unfinished"></translation>
+        <translation>Marrazki berrietarako lehenespenak</translation>
     </message>
     <message>
         <source>&amp;Appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Itxurapena</translation>
     </message>
     <message>
         <source>&amp;GUI Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;GUI hizkuntza:</translation>
     </message>
     <message>
         <source>&amp;Command Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Komando-hizkuntza:</translation>
     </message>
     <message>
         <source>&amp;Paths</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Paths</translation>
     </message>
     <message>
         <source>&amp;Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Lehenetsiak</translation>
     </message>
     <message>
         <source>&amp;Unit:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Unitatea:</translation>
     </message>
     <message>
         <source>Backgr&amp;ound:</source>
-        <translation type="unfinished"></translation>
+        <translation>Backgr&amp;ound:</translation>
     </message>
     <message>
         <source>G&amp;rid Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>G&amp;rid kolorea:</translation>
     </message>
     <message>
         <source>&amp;Meta Grid Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Meta Grid-aren kolorea:</translation>
     </message>
     <message>
         <source>A&amp;utomatically scale grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Eskala-sarea</translation>
     </message>
     <message>
         <source>S&amp;elected Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>S&amp;hautatutako kolorea:</translation>
     </message>
     <message>
         <source>&amp;Highlighted Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolore argia:</translation>
     </message>
     <message>
         <source>Please restart the application to apply all changes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mesedez, berrabiarazi aplikazioa aldaketa guztiak aplikatzeko.</translation>
     </message>
     <message>
         <source>Alt+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+S</translation>
     </message>
     <message>
         <source>Alt+U</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+U</translation>
     </message>
     <message>
         <source>Program Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Programa lehenetsia</translation>
     </message>
     <message>
         <source>Drawing unit.</source>
-        <translation type="unfinished"></translation>
+        <translation>Marrazki unitatea.</translation>
     </message>
     <message>
         <source>Time between automatic saving of the document in minutes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokumentua automatikoki gordetzeko denbora minutu gutxi barru.</translation>
     </message>
     <message>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezarritakoan, LibreCAD-ek automatikoki sortuko du uneko marrazkiaren babeskopia.</translation>
     </message>
     <message>
         <source>Auto backup</source>
-        <translation type="unfinished"></translation>
+        <translation>Babeskopia automatikoa</translation>
     </message>
     <message>
         <source>Template:</source>
-        <translation type="unfinished"></translation>
+        <translation>Txantiloia:</translation>
     </message>
     <message>
         <source>St&amp;art Handle Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>St&amp;art Handle Color:</translation>
     </message>
     <message>
         <source>&amp;Handle Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Eskuaren kolorea:</translation>
     </message>
     <message>
         <source>&amp;End Handle Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Amaitu heldulekuaren kolorea:</translation>
     </message>
     <message>
         <source>Graphic Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolore grafikoak</translation>
     </message>
     <message>
         <source>Snap indicator:</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitze-adierazlea:</translation>
     </message>
     <message>
         <source>Anti-aliasing</source>
-        <translation type="unfinished"></translation>
+        <translation>Antialiasing</translation>
     </message>
     <message>
         <source>Modify layer of selected entities, at  layer activation</source>
-        <translation type="unfinished"></translation>
+        <translation>Aldatu hautatutako erakundeen geruza geruza, geruzaren aktibazioan</translation>
     </message>
     <message>
         <source>Clear Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Garbitu ezarpenak</translation>
     </message>
     <message>
         <source>restores program geometry/layout to original state</source>
-        <translation type="unfinished"></translation>
+        <translation>programa-geometria/iraupena jatorrizko egoerara itzultzen du</translation>
     </message>
     <message>
         <source>Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Diseinua</translation>
     </message>
     <message>
         <source>restores the program to its original state</source>
-        <translation type="unfinished"></translation>
+        <translation>programa jatorrizko egoerara itzultzen du</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Denak</translation>
     </message>
     <message>
         <source>Scrollbars</source>
-        <translation type="unfinished"></translation>
+        <translation>Korritze-barrak</translation>
     </message>
     <message>
         <source>Snap indicator lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitze-adierazlearen lerroak</translation>
     </message>
     <message>
         <source>Snap indicator shape</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitze-adierazlearen forma</translation>
     </message>
     <message>
         <source>Hide cursor when snapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezkutatu kurtsorea atxikitzeko orduan</translation>
     </message>
     <message>
         <source>Start in tab mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Hasi fitxa moduan</translation>
     </message>
     <message>
         <source>Startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Abioa</translation>
     </message>
     <message>
         <source>Display loading screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Pantaila kargatzen</translation>
     </message>
     <message>
         <source>Start with main window maximized</source>
-        <translation type="unfinished"></translation>
+        <translation>Hasi leiho nagusia maximizatuta</translation>
     </message>
     <message>
         <source>Enable CAD dockwidgets</source>
-        <translation type="unfinished"></translation>
+        <translation>Gaitu CAD atrakagarriak</translation>
     </message>
     <message>
         <source>Enable CAD toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>Gaitu CAD tresna-barrak</translation>
     </message>
     <message>
         <source>#1E90FF</source>
-        <translation type="unfinished"></translation>
+        <translation>#1E90FF</translation>
     </message>
     <message>
         <source>Clear settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Garbitu ezarpenak</translation>
     </message>
     <message>
         <source>This will also include custom menus and toolbars. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Menu eta tresna-barra pertsonalizatuak ere izango ditu. Jarraitu?</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Gaitutakoan, geruza bat aktibatzeak hautatutako entitate guztiak geruza berri horretara aldatuko lituzke. Entitate anitzen geruza aldatzeko: hautatu beharrezko entitateak, aktibatu geruza bat geruza-trepetan. Hautatutako erakunde guztiak geruza berrian sartzen dira.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Variable File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fitxategi aldagarria:</translation>
     </message>
     <message>
         <source>Minimal Grid Spacing (p&amp;x):</source>
-        <translation type="unfinished"></translation>
+        <translation>Saretaren gutxieneko tartea (p&amp;x):</translation>
     </message>
     <message>
         <source>N&amp;umber of preview entities:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aurrebista-erakundeen N&amp;umber:</translation>
     </message>
     <message>
-        <source>Don&apos;t use native OS file open dialog</source>
-        <translation type="unfinished"></translation>
+        <source>Don't use native OS file open dialog</source>
+        <translation>Ez erabili jatorrizko SE fitxategia irekitzeko elkarrizketa-koadroa</translation>
     </message>
     <message>
         <source>Auto-panning</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto-jarraipena</translation>
     </message>
     <message>
         <source>Hide the relative-&amp;zero marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezkutatu markatzaile erlatibo eta zeroa</translation>
     </message>
     <message>
         <source>Alt+Z</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Z</translation>
     </message>
     <message>
         <source>Visualize the entity under the cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikusi entitatea kurtsorearen azpian</translation>
     </message>
     <message>
         <source>Mouse-over effects</source>
-        <translation type="unfinished"></translation>
+        <translation>Sagu-gaineko efektuak</translation>
     </message>
     <message>
         <source>&amp;Relative-Zero Marker Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Zero markatzailearen kolorea:</translation>
     </message>
     <message>
         <source>Auto save time (minutes):</source>
-        <translation type="unfinished"></translation>
+        <translation>Aurreztu denbora automatikoki (minututan):</translation>
     </message>
     <message>
         <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
-        <translation type="unfinished"></translation>
+        <translation>Atzera egiten du saguaren gurpila Maius teklarekin erabiltzean.</translation>
     </message>
     <message>
         <source>Invert horizontal scrolling direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Alderantzikatu korritze horizontalaren norabidea</translation>
     </message>
     <message>
         <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
-        <translation type="unfinished"></translation>
+        <translation>Norabidea alderantzikatzen du saguaren gurpila Ktrl teklarekin erabiltzean.</translation>
     </message>
     <message>
         <source>Invert vertical scrolling direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Alderantzikatu korritze bertikalaren norabidea</translation>
     </message>
     <message>
         <source>Inverts zoom direction when using mouse wheel.</source>
-        <translation type="unfinished"></translation>
+        <translation>Saguaren gurpila erabiltzean zoomaren norabidea alderantzikatzen du.</translation>
     </message>
     <message>
         <source>Invert zoom direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Alderantzikatu zoomaren norabidea</translation>
     </message>
     <message>
         <source>Keyboard Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Teklatuaren ezarpenak</translation>
     </message>
     <message>
         <source>Evaluate commands when SPACE BAR is pressed</source>
-        <translation type="unfinished"></translation>
+        <translation>Ebaluatu komandoak SPACEBAR sakatzen denean</translation>
     </message>
     <message>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation type="unfinished"></translation>
+        <translation>Txandakatu pantaila libreko modua SPACE BAR sakatutakoan</translation>
     </message>
     <message>
         <source>CAD Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>CAD hobespenak</translation>
     </message>
     <message>
         <source>Automatically zoom drawing when opening</source>
-        <translation type="unfinished"></translation>
+        <translation>Zooma automatikoki handitzea irekitzen denean</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;"&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" letra-familia:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji', letra-tamaina: 14pxxx; kolorea#128; atzeko planoa: 'ff'; Liburutegiko karpeta. Dxf liburutegi sinboloa karpeta honen azpidirektorioetan egon behar du. Azpikarpetak liburutegi-arakatzailean agertuko dira.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;p&gt;&lt;span style=" letra-familia:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe Uji' letra-tamaina: 14x14; letra-tamaina:1x1; atzeko planoko irudia: '3x3';'tmolda &gt;&gt; Trepetak:'</translation>
     </message>
     <message>
         <source>Open last opened files</source>
-        <translation type="unfinished"></translation>
+        <translation>Ireki irekitako azken fitxategiak</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Denbora-tartea sakatzen denean eta komando-leihoa aktibatzen denean '&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgOptionsMakerCam</name>
     <message>
         <source>Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Geruzak</translation>
     </message>
     <message>
         <source>Export invisible layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Esportatu geruza ikusezinak</translation>
     </message>
     <message>
         <source>Export visible construction layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Esportatu eraikuntza-geruza ikusgaiak</translation>
     </message>
     <message>
         <source>Blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Blokeak</translation>
     </message>
     <message>
         <source>Convert blocks to safe inline SVG content</source>
-        <translation type="unfinished"></translation>
+        <translation>Bihurtu blokeak segurtasunez SVG edukira</translation>
     </message>
     <message>
         <source>Ellipses / Ellipse arcs</source>
-        <translation type="unfinished"></translation>
+        <translation>Elipsiak / arku eliptikoak</translation>
     </message>
     <message>
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
-        <translation type="unfinished"></translation>
+        <translation>Elipse gutxi eta elipse arkuak bézier kubikoekin</translation>
     </message>
     <message>
         <source>Export as CAM/plain SVG</source>
-        <translation type="unfinished"></translation>
+        <translation>Esportatu CAM/plain SVG gisa</translation>
     </message>
     <message>
         <source>Default width of elements, mm</source>
-        <translation type="unfinished"></translation>
+        <translation>Elementuen zabalera lehenetsia, mm</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation type="unfinished"></translation>
+        <translation>Irudiak</translation>
     </message>
     <message>
         <source>Raster Image export</source>
-        <translation type="unfinished"></translation>
+        <translation>Raster Image export</translation>
     </message>
     <message>
         <source>Dash/Dot Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Marrak</translation>
     </message>
     <message>
         <source>Length of the pattern, mm</source>
-        <translation type="unfinished"></translation>
+        <translation>Ereduaren luzera, mm</translation>
     </message>
     <message>
         <source>Bake dash/dot lines to SVG path</source>
-        <translation type="unfinished"></translation>
+        <translation>Egin marra marra marrak SVG bideraino</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation type="unfinished"></translation>
+that has been set invisibe ("display: none" or "visibility: hidden").</source>
+        <translation>MakerCAM 2014ko azaroan ez du SVG edukia ezkutatzen
+Invisibe ("adierazpena: bat ere ez" edo "ikusgarritasuna: ezkutatuta").</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
 because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>MakerCAMek 2014ko azaroan ezin ditu blokeak zuzen kudeatu.
+&lt;use&gt;ko erreferentzia-puntua ez duelako kontuan hartzen.</translation>
     </message>
     <message>
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation type="unfinished"></translation>
+        <translation>MakerCAMek 2015eko martxoan ezin ditu elipseak eta elipse arkuak zuzen erakutsi.
+&lt;ellipse&gt; etiketarekin sortzen direnean biraketa batekin
+&lt;transform&gt; atributua edo &lt;path&gt;, arku eliptikoen segmentuak erabiliz.</translation>
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
-        <translation type="unfinished"></translation>
+but avoided in some CAM's.</source>
+        <translation>Esportatutako irudiak erabilgarriak izan daitezke SVG editoreetan (Inkscape, etab.),
+baina CAMen batzuetan saihestu egin zen.</translation>
     </message>
     <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+        <source>Many CAM's(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation type="unfinished"></translation>
+        <translation>CAM-ko askok (MakerCAM, EleskCAM, LaserWeb) ez diote jaramonik egiten lerro-estiloari.
+Hori erabilgarria izan daiteke egur-lanetan edo papergintzan.</translation>
     </message>
     <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+        <source>Default width of elements can affect some CAM's/SVG Editors, 
 but ignored by other</source>
-        <translation type="unfinished"></translation>
+        <translation>Elementuen zabalera lehenetsiak CAMen/SVG editore batzuei eragin diezaieke,
+baina beste batzuek ez ikusi egiten diote</translation>
     </message>
     <message>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoomarekin zerikusia duen lerro-ereduaren luzera,
+beraz, labean egiteko behar den urrats-balio lehenetsia</translation>
     </message>
     <message>
         <source>Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntuak</translation>
     </message>
     <message>
         <source>Export Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Esportatu puntuak</translation>
     </message>
     <message>
         <source>Whether to export points</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntuak esportatuko diren ala ez</translation>
     </message>
 </context>
 <context>
@@ -5758,1507 +5771,1520 @@ so default step value required for baking</source>
     <name>QG_DlgPoint</name>
     <message>
         <source>Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntua</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Geruza:</translation>
+        <translation>Geruza:</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished">Geometria</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <source>Position (y):</source>
-        <translation type="unfinished"></translation>
+        <translation>Posizioa (y):</translation>
     </message>
     <message>
         <source>Position (x):</source>
-        <translation type="unfinished"></translation>
+        <translation>Posizioa (x):</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgPolyline</name>
     <message>
         <source>Polyline</source>
-        <translation type="unfinished">Polilinea</translation>
+        <translation>Polilerroa</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Geruza:</translation>
+        <translation>Geruza:</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished">Geometria</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <source>Closed</source>
-        <translation type="unfinished">Itxia</translation>
+        <translation>Itxi</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgRotate</name>
     <message>
         <source>Rotation Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Biraketaren aukerak</translation>
     </message>
     <message>
         <source>Number of copies</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopia kopurua</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ezabatu jatorrizkoa</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Mantendu jatorrizkoa</translation>
     </message>
     <message>
         <source>&amp;Multiple Copies:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopia anitzak:</translation>
     </message>
     <message>
         <source>&amp;Angle (a):</source>
-        <translation type="unfinished">&amp;Angelua (a):</translation>
+        <translation>&amp;Angle (a):</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
-        <translation type="unfinished">Uneko &amp;atributuak erabili</translation>
+        <translation>Erabili uneko &amp; atributuak</translation>
     </message>
     <message>
         <source>Use current &amp;layer</source>
-        <translation type="unfinished">Uneko &amp;geruza erabili</translation>
+        <translation>Erabili uneko &amp; geruza</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgRotate2</name>
     <message>
         <source>Rotate Two Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Biratu bi aukerak</translation>
     </message>
     <message>
         <source>Number of copies</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopia kopurua</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ezabatu jatorrizkoa</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Mantendu jatorrizkoa</translation>
     </message>
     <message>
         <source>&amp;Multiple Copies</source>
-        <translation type="unfinished">Kopia &amp;Anitzak</translation>
+        <translation>Kopia anitzak</translation>
     </message>
     <message>
         <source>Angle (&amp;a):</source>
-        <translation type="unfinished"></translation>
+        <translation>Angelua (&amp;a):</translation>
     </message>
     <message>
         <source>Angle (&amp;b):</source>
-        <translation type="unfinished"></translation>
+        <translation>Angelua (&amp;b):</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
-        <translation type="unfinished">Uneko &amp;atributuak erabili</translation>
+        <translation>Erabili uneko &amp; atributuak</translation>
     </message>
     <message>
         <source>Use current &amp;layer</source>
-        <translation type="unfinished">Uneko &amp;geruza erabili</translation>
+        <translation>Erabili uneko &amp; geruza</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgScale</name>
     <message>
         <source>Scaling Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Eskalatzeko aukerak</translation>
     </message>
     <message>
         <source>Number of copies</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopia kopurua</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
-        <translation type="unfinished">Uneko &amp;atributuak erabili</translation>
+        <translation>Erabili uneko &amp; atributuak</translation>
     </message>
     <message>
         <source>Use current &amp;layer</source>
-        <translation type="unfinished">Uneko &amp;geruza erabili</translation>
+        <translation>Erabili uneko &amp; geruza</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ezabatu jatorrizkoa</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Mantendu jatorrizkoa</translation>
     </message>
     <message>
         <source>&amp;Multiple Copies</source>
-        <translation type="unfinished">Kopia &amp;Anitzak</translation>
+        <translation>Kopia anitzak</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Scale by the same factor at both x- and y- directions</source>
-        <translation type="unfinished"></translation>
+        <translation>Eskalatu faktore beraren arabera x eta y norabideetan</translation>
     </message>
     <message>
         <source>Isotropic Scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>Eskala isotropikoa</translation>
     </message>
     <message>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Bilatu erdiko eskala-erlazioak erreferentzia-puntu baten eta helburu-puntu baten bidez.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgSpline</name>
     <message>
         <source>Spline</source>
-        <translation type="unfinished"></translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Geruza:</translation>
+        <translation>Geruza:</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished">Geometria</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <source>Degree:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gradua:</translation>
     </message>
     <message>
         <source>Closed</source>
-        <translation type="unfinished">Itxia</translation>
+        <translation>Itxi</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgText</name>
     <message>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Testua</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation type="unfinished">Testua:</translation>
+        <translation>Testua:</translation>
     </message>
     <message>
         <source>Clear Text</source>
-        <translation type="unfinished">Testua Garbitu</translation>
+        <translation>Garbitu testua</translation>
     </message>
     <message>
         <source>Load Text From File</source>
-        <translation type="unfinished">Testua fitxategitik Hartu</translation>
+        <translation>Kargatu testua fitxategitik</translation>
     </message>
     <message>
         <source>Save Text To File</source>
-        <translation type="unfinished">Testua Fitxategian Gorde</translation>
+        <translation>Gorde testua fitxategian</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished">Moztu</translation>
+        <translation>Ebaki</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Kopiatu</translation>
+        <translation>Kopiatu</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished">Itsatsi</translation>
+        <translation>Itsatsi</translation>
     </message>
     <message>
         <source>Alignment</source>
-        <translation type="unfinished">Alignment</translation>
+        <translation>Lerrokatzea</translation>
     </message>
     <message>
         <source>Top Right</source>
-        <translation type="unfinished">Goian Eskuma</translation>
+        <translation>Goian eskuinean</translation>
     </message>
     <message>
         <source>Top Left</source>
-        <translation type="unfinished">Goian Ezkerra</translation>
+        <translation>Goian ezkerrean</translation>
     </message>
     <message>
         <source>Middle Left</source>
-        <translation type="unfinished">Erdian Ezkerra</translation>
+        <translation>Erdiko ezkerrekoa</translation>
     </message>
     <message>
         <source>Middle Center</source>
-        <translation type="unfinished">Erdian Erdigunea</translation>
+        <translation>Erdialdea</translation>
     </message>
     <message>
         <source>Middle Right</source>
-        <translation type="unfinished">Erdia Eskuma</translation>
+        <translation>Eskuinera</translation>
     </message>
     <message>
         <source>Bottom Left</source>
-        <translation type="unfinished">Behean Ezkerra</translation>
+        <translation>Behean ezkerrean</translation>
     </message>
     <message>
         <source>Bottom Right</source>
-        <translation type="unfinished">Behean Eskuma</translation>
+        <translation>Behean eskuinean</translation>
     </message>
     <message>
         <source>Bottom Center</source>
-        <translation type="unfinished">Behean Erdigunea</translation>
+        <translation>Beheko zentroa</translation>
     </message>
     <message>
         <source>Top Center</source>
-        <translation type="unfinished">Goian Erdigunea</translation>
+        <translation>Goiko zentroa</translation>
     </message>
     <message>
         <source>Insert Symbol</source>
-        <translation type="unfinished">Sinboloa sartu</translation>
+        <translation>Txertatu ikurra</translation>
     </message>
     <message>
         <source>Degree (°)</source>
-        <translation type="unfinished">Graduak (°)</translation>
+        <translation>Gradua (°)</translation>
     </message>
     <message>
         <source>Plus / Minus (±)</source>
-        <translation type="unfinished">Plus / Minus (±)</translation>
+        <translation>Plus / Minus (±)</translation>
     </message>
     <message>
         <source>At (@)</source>
-        <translation type="unfinished">Arroba (@)</translation>
+        <translation>At (@)</translation>
     </message>
     <message>
         <source>Hash (#)</source>
-        <translation type="unfinished">Hash (#)</translation>
+        <translation>Hash (#)</translation>
     </message>
     <message>
         <source>Dollar ($)</source>
-        <translation type="unfinished">Dollar ($)</translation>
+        <translation>Dolarra ($)</translation>
     </message>
     <message>
         <source>Copyright (©)</source>
-        <translation type="unfinished">Copyright (©)</translation>
+        <translation>Copyright-a (©)</translation>
     </message>
     <message>
         <source>Registered (®)</source>
-        <translation type="unfinished">Registered (®)</translation>
+        <translation>Erregistratua (®)</translation>
     </message>
     <message>
         <source>Paragraph (§)</source>
-        <translation type="unfinished">Paragrafoa (§)</translation>
+        <translation>Paragrafoa (§)</translation>
     </message>
     <message>
         <source>Pi (π)</source>
-        <translation type="unfinished">Pi (π)</translation>
+        <translation>Pi (π)</translation>
     </message>
     <message>
         <source>Pound (£)</source>
-        <translation type="unfinished">Libera (£)</translation>
+        <translation>Libera (£)</translation>
     </message>
     <message>
         <source>Yen (¥)</source>
-        <translation type="unfinished">Yen (¥)</translation>
+        <translation>Yen ())</translation>
     </message>
     <message>
         <source>Times (×)</source>
-        <translation type="unfinished">Biderkatu (×)</translation>
+        <translation>Garaiak (x)</translation>
     </message>
     <message>
         <source>Division (÷)</source>
-        <translation type="unfinished">Zatitu (÷)</translation>
+        <translation>Dibisioa ())</translation>
     </message>
     <message>
         <source>Insert Unicode</source>
-        <translation type="unfinished">Insert Unicode</translation>
+        <translation>Txertatu Unicode</translation>
     </message>
     <message>
         <source>Page:</source>
-        <translation type="unfinished">Orria:</translation>
+        <translation>Orria:</translation>
     </message>
     <message>
         <source>Char:</source>
-        <translation type="unfinished">Karakterea:</translation>
+        <translation>Char:</translation>
     </message>
     <message>
         <source>[0000-007F] Basic Latin</source>
-        <translation type="unfinished">[0000-007F] Oinarrizko Latina</translation>
+        <translation>[0000-007F] Oinarrizko latina</translation>
     </message>
     <message>
         <source>[0080-00FF] Latin-1 Supplementary</source>
-        <translation type="unfinished">[0080-00FF] Latin-1 Osagarria</translation>
+        <translation>[0080-00FF] Latina-1 osagarria</translation>
     </message>
     <message>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation type="unfinished">[0100-017F] Latin Luzatua</translation>
+        <translation>Latin hedatua: A</translation>
     </message>
     <message>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation type="unfinished">[0180-024F] Latin Luzatua-B</translation>
+        <translation>Latin hedatua B</translation>
     </message>
     <message>
         <source>[0250-02AF] IPA Extensions</source>
-        <translation type="unfinished">[0250-02AF] IPA Extensions</translation>
+        <translation>[0250-02AF] IPA hedapenak</translation>
     </message>
     <message>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
-        <translation type="unfinished">[02B0-02FF] Tarteak Aldatzaile Hizkiak</translation>
+        <translation>[02B0-02FF] Tartea aldatzeko letrak</translation>
     </message>
     <message>
         <source>[0300-036F] Combining Diacritical Marks</source>
-        <translation type="unfinished">[0300-036F] Combining Diacritical Marks</translation>
+        <translation>[0300-036F] Marka diakritiko konbinatuak</translation>
     </message>
     <message>
         <source>[0370-03FF] Greek and Coptic</source>
-        <translation type="unfinished">[0370-03FF] Greek and Coptic</translation>
+        <translation>[0370-03FF] Greziera eta koptoera</translation>
     </message>
     <message>
         <source>[0400-04FF] Cyrillic</source>
-        <translation type="unfinished">[0400-04FF] Cyrillic</translation>
+        <translation>[0400-04FF] zirilikoa</translation>
     </message>
     <message>
         <source>[0500-052F] Cyrillic Supplementary</source>
-        <translation type="unfinished">[0500-052F] Cyrillic Supplementary</translation>
+        <translation>[0500-052F] ziriliko gehigarria</translation>
     </message>
     <message>
         <source>[0530-058F] Armenian</source>
-        <translation type="unfinished">[0530-058F] Armenian</translation>
+        <translation>[0530-058F] armeniarra</translation>
     </message>
     <message>
         <source>[0590-05FF] Hebrew</source>
-        <translation type="unfinished">[0590-05FF] Hebrew</translation>
+        <translation>[0590-05FF] Hebreera</translation>
     </message>
     <message>
         <source>[0600-06FF] Arabic</source>
-        <translation type="unfinished">[0600-06FF] Arabic</translation>
+        <translation>[0600-06FF] Arabiarra</translation>
     </message>
     <message>
         <source>[0700-074F] Syriac</source>
-        <translation type="unfinished">[0700-074F] Syriac</translation>
+        <translation>[0700-074F] Syriac</translation>
     </message>
     <message>
         <source>[0780-07BF] Thaana</source>
-        <translation type="unfinished">[0780-07BF] Thaana</translation>
+        <translation>[0780-07BF] Thaana</translation>
     </message>
     <message>
         <source>[0900-097F] Devanagari</source>
-        <translation type="unfinished">[0900-097F] Devanagari</translation>
+        <translation>[0900-097F] Devanagari</translation>
     </message>
     <message>
         <source>[0980-09FF] Bengali</source>
-        <translation type="unfinished">[0980-09FF] Bengali</translation>
+        <translation>[0980-09FF] Bengalera</translation>
     </message>
     <message>
         <source>[0A00-0A7F] Gurmukhi</source>
-        <translation type="unfinished">[0A00-0A7F] Gurmukhi</translation>
+        <translation>[0A00-0A7F] Gurmukhi-koa</translation>
     </message>
     <message>
         <source>[0A80-0AFF] Gujarati</source>
-        <translation type="unfinished">[0A80-0AFF] Gujarati</translation>
+        <translation>[0A80-0AFF] Gujarati</translation>
     </message>
     <message>
         <source>[0B00-0B7F] Oriya</source>
-        <translation type="unfinished">[0B00-0B7F] Oriya</translation>
+        <translation>[0B00-0B7F] Oriya</translation>
     </message>
     <message>
         <source>[0B80-0BFF] Tamil</source>
-        <translation type="unfinished">[0B80-0BFF] Tamil</translation>
+        <translation>[0B80-0BFF] Tamilera</translation>
     </message>
     <message>
         <source>[0C00-0C7F] Telugu</source>
-        <translation type="unfinished">[0C00-0C7F] Telugu</translation>
+        <translation>[0C00-0C7F] Telugu</translation>
     </message>
     <message>
         <source>[0C80-0CFF] Kannada</source>
-        <translation type="unfinished">[0C80-0CFF] Kannada</translation>
+        <translation>[0C80-0CFF] Kannada</translation>
     </message>
     <message>
         <source>[0D00-0D7F] Malayalam</source>
-        <translation type="unfinished">[0D00-0D7F] Malayalam</translation>
+        <translation>[0D00-0D7F] Malayalam</translation>
     </message>
     <message>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation type="unfinished">[0D80-0DFF] Sinhala</translation>
+        <translation>[0D80-0DFF] Sinhala</translation>
     </message>
     <message>
         <source>[0E00-0E7F] Thai</source>
-        <translation type="unfinished">[0E00-0E7F] Thai</translation>
+        <translation>[0E00-0E7F] Thailandiera</translation>
     </message>
     <message>
         <source>[0E80-0EFF] Lao</source>
-        <translation type="unfinished">[0E80-0EFF] Lao</translation>
+        <translation>[0E80-0EFF] Lao</translation>
     </message>
     <message>
         <source>[0F00-0FFF] Tibetan</source>
-        <translation type="unfinished">[0F00-0FFF] Tibetan</translation>
+        <translation>[0F00-0FFF] Tibetera</translation>
     </message>
     <message>
         <source>[1000-109F] Myanmar</source>
-        <translation type="unfinished">[1000-109F] Myanmar</translation>
+        <translation>[1000-109F] Myanmar</translation>
     </message>
     <message>
         <source>[10A0-10FF] Georgian</source>
-        <translation type="unfinished">[10A0-10FF] Georgian</translation>
+        <translation>[10A0-10FF] Georgiarra</translation>
     </message>
     <message>
         <source>[1100-11FF] Hangul Jamo</source>
-        <translation type="unfinished">[1100-11FF] Hangul Jamo</translation>
+        <translation>[100-11FF] Hangul Jamo</translation>
     </message>
     <message>
         <source>[1200-137F] Ethiopic</source>
-        <translation type="unfinished">[1200-137F] Ethiopic</translation>
+        <translation>[1200-137F] Ethiopikoa</translation>
     </message>
     <message>
         <source>[13A0-13FF] Cherokee</source>
-        <translation type="unfinished">[13A0-13FF] Cherokee</translation>
+        <translation>[13A0-13FF] Cherokee</translation>
     </message>
     <message>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation type="unfinished">[1400-167F] Unified Canadian Aboriginal Syllabic</translation>
+        <translation>[1400-167F] Kanadako aborigenen silabiko bateratua</translation>
     </message>
     <message>
         <source>[1680-169F] Ogham</source>
-        <translation type="unfinished">[1680-169F] Ogham</translation>
+        <translation>[680-169F] Ogham</translation>
     </message>
     <message>
         <source>[16A0-16FF] Runic</source>
-        <translation type="unfinished">[16A0-16FF] Runic</translation>
+        <translation>[16A0-16FF] Runic</translation>
     </message>
     <message>
         <source>[1700-171F] Tagalog</source>
-        <translation type="unfinished">[1700-171F] Tagalog</translation>
+        <translation>[1700-171F Tagalog</translation>
     </message>
     <message>
         <source>[1720-173F] Hanunoo</source>
-        <translation type="unfinished">[1720-173F] Hanunoo</translation>
+        <translation>[720-173F] Hanunoo</translation>
     </message>
     <message>
         <source>[1740-175F] Buhid</source>
-        <translation type="unfinished">[1740-175F] Buhid</translation>
+        <translation>[1740-175F] Buhid</translation>
     </message>
     <message>
         <source>[1760-177F] Tagbanwa</source>
-        <translation type="unfinished">[1760-177F] Tagbanwa</translation>
+        <translation>[1760-177F] Tagbanwa</translation>
     </message>
     <message>
         <source>[1780-17FF] Khmer</source>
-        <translation type="unfinished">[1780-17FF] Khmer</translation>
+        <translation>[1780-17FF] Khmer</translation>
     </message>
     <message>
         <source>[1800-18AF] Mongolian</source>
-        <translation type="unfinished">[1800-18AF] Mongolian</translation>
+        <translation>[1800-18AF] Mongoliarra</translation>
     </message>
     <message>
         <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation type="unfinished">[1E00-1EFF] Latin Extended Additional</translation>
+        <translation>Latin hedatua gehigarria</translation>
     </message>
     <message>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation type="unfinished">[1F00-1FFF] Greek Extended</translation>
+        <translation>Greziera hedatua</translation>
     </message>
     <message>
         <source>[2000-206F] General Punctuation</source>
-        <translation type="unfinished">[2000-206F] General Punctuation</translation>
+        <translation>[2000-206F] Puntuazio orokorra</translation>
     </message>
     <message>
         <source>[2070-209F] Superscripts and Subscripts</source>
-        <translation type="unfinished">[2070-209F] Superscripts and Subscripts</translation>
+        <translation>[2070-209F] Goi-indizeak eta azpiindizeak</translation>
     </message>
     <message>
         <source>[20A0-20CF] Currency Symbols</source>
-        <translation type="unfinished">[20A0-20CF] Txanpon Sinboloak</translation>
+        <translation>[20A0-20CF] Moneta-ikurrak</translation>
     </message>
     <message>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
-        <translation type="unfinished">[20D0-20FF] Combining Marks for Symbols</translation>
+        <translation>[20D0-20FF] Ikurrak batzen</translation>
     </message>
     <message>
         <source>[2100-214F] Letterlike Symbols</source>
-        <translation type="unfinished">[2100-214F] Letterlike Symbols</translation>
+        <translation>[2100-214F] Letrazko ikurrak</translation>
     </message>
     <message>
         <source>[2150-218F] Number Forms</source>
-        <translation type="unfinished">[2150-218F] Zenbakien Sinboloak</translation>
+        <translation>[2150-218F] Zenbakiak</translation>
     </message>
     <message>
         <source>[2190-21FF] Arrows</source>
-        <translation type="unfinished">[2190-21FF] Geziak</translation>
+        <translation>[2190-21FF] Geziak</translation>
     </message>
     <message>
         <source>[2200-22FF] Mathematical Operators</source>
-        <translation type="unfinished">[2200-22FF] Mathematical Operators</translation>
+        <translation>[2200-22FF] Eragile matematikoak</translation>
     </message>
     <message>
         <source>[2300-23FF] Miscellaneous Technical</source>
-        <translation type="unfinished">[2300-23FF] Miscellaneous Technical</translation>
+        <translation>[2300-23FF] Hainbat teknika</translation>
     </message>
     <message>
         <source>[2400-243F] Control Pictures</source>
-        <translation type="unfinished">[2400-243F] Irudiek kontrolak</translation>
+        <translation>[2400-243F] Control Pictures</translation>
     </message>
     <message>
         <source>[2440-245F] Optical Character Recognition</source>
-        <translation type="unfinished">[2440-245F] Optical Character Recognition</translation>
+        <translation>[2440-245F] Karaktere-ezagutze optikoa</translation>
     </message>
     <message>
         <source>[2460-24FF] Enclosed Alphanumerics</source>
-        <translation type="unfinished">[2460-24FF] Enclosed Alphanumerics</translation>
+        <translation>[2460-24FF] Alfanumeriko inguratuak</translation>
     </message>
     <message>
         <source>[2500-257F] Box Drawing</source>
-        <translation type="unfinished">[2500-257F] Kutxen Irudiak</translation>
+        <translation>[2500-257F] Box Drawing</translation>
     </message>
     <message>
         <source>[2580-259F] Block Elements</source>
-        <translation type="unfinished">[2580-259F] Blokeen  Elementuak</translation>
+        <translation>[2580-259F] Bloke elementuak</translation>
     </message>
     <message>
         <source>[25A0-25FF] Geometric Shapes</source>
-        <translation type="unfinished">[25A0-25FF] Forma Geometrikoak</translation>
+        <translation>[25A0-25FF] Forma geometrikoak</translation>
     </message>
     <message>
         <source>[2600-26FF] Miscellaneous Symbols</source>
-        <translation type="unfinished">[2600-26FF] Miscellaneous Symbols</translation>
+        <translation>[2600-26FF] Hainbat ikur</translation>
     </message>
     <message>
         <source>[2700-27BF] Dingbats</source>
-        <translation type="unfinished">[2700-27BF] Apaingarriak</translation>
+        <translation>[2700-27BF] Dingbats</translation>
     </message>
     <message>
         <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
-        <translation type="unfinished">[27C0-27EF] Miscellaneous Mathematical Symbols-A</translation>
+        <translation>[27C0-27EF] Hainbat ikur matematiko... A</translation>
     </message>
     <message>
         <source>[27F0-27FF] Supplemental Arrows-A</source>
-        <translation type="unfinished">[27F0-27FF] Gezi Gehigarriak-A</translation>
+        <translation>[27F0-27FF] Gezi gehigarriak... A</translation>
     </message>
     <message>
         <source>[2800-28FF] Braille Patterns</source>
-        <translation type="unfinished">[2800-28FF] Braille Patroiak</translation>
+        <translation>Braille ereduak</translation>
     </message>
     <message>
         <source>[2900-297F] Supplemental Arrows-B</source>
-        <translation type="unfinished">[2900-297F] Gezi Gehigarriak-B</translation>
+        <translation>[2900-297F] Gezi gehigarriak B</translation>
     </message>
     <message>
         <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
-        <translation type="unfinished">[2980-29FF] Miscellaneous Mathematical Symbols-B</translation>
+        <translation>[2980-29FF] Hainbat ikur matematiko B</translation>
     </message>
     <message>
         <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
-        <translation type="unfinished">[2A00-2AFF] Supplemental Mathematical Operators</translation>
+        <translation>[2A00-2AFF] Eragile matematiko gehigarriak</translation>
     </message>
     <message>
         <source>[2E80-2EFF] CJK Radicals Supplement</source>
-        <translation type="unfinished">[2E80-2EFF] CJK Radicals Supplement</translation>
+        <translation>[2E80-2EFF] CJK erradikalen gehigarria</translation>
     </message>
     <message>
         <source>[2F00-2FDF] Kangxi Radicals</source>
-        <translation type="unfinished">[2F00-2FDF] Kangxi Radicals</translation>
+        <translation>[2F00-2FDF] Kangxi erradikalak</translation>
     </message>
     <message>
         <source>[2FF0-2FFF] Ideographic Description Characters</source>
-        <translation type="unfinished">[2FF0-2FFF] Ideographic Description Characters</translation>
+        <translation>[2FF0-2FFF] Deskribapen ideografikoko karaktereak</translation>
     </message>
     <message>
         <source>[3000-303F] CJK Symbols and Punctuation</source>
-        <translation type="unfinished">[3000-303F] CJK Symbols and Punctuation</translation>
+        <translation>[3000-303F] CJK ikurrak eta puntuazioa</translation>
     </message>
     <message>
         <source>[3040-309F] Hiragana</source>
-        <translation type="unfinished">[3040-309F] Hiragana</translation>
+        <translation>[3040-309F] Hiragana</translation>
     </message>
     <message>
         <source>[30A0-30FF] Katakana</source>
-        <translation type="unfinished">[30A0-30FF] Katakana</translation>
+        <translation>[30A0-30FF] Katakana</translation>
     </message>
     <message>
         <source>[3100-312F] Bopomofo</source>
-        <translation type="unfinished">[3100-312F] Bopomofo</translation>
+        <translation>[3100-312F] Bopomofo</translation>
     </message>
     <message>
         <source>[3130-318F] Hangul Compatibility Jamo</source>
-        <translation type="unfinished">[3130-318F] Hangul Compatibility Jamo</translation>
+        <translation>[3130-318F] Hangul Jamo bateragarritasuna</translation>
     </message>
     <message>
         <source>[3190-319F] Kanbun</source>
-        <translation type="unfinished">[3190-319F] Kanbun</translation>
+        <translation>[3190-319F] Kanbun</translation>
     </message>
     <message>
         <source>[31A0-31BF] Bopomofo Extended</source>
-        <translation type="unfinished">[31A0-31BF] Bopomofo Extended</translation>
+        <translation>Bopomofo hedatua</translation>
     </message>
     <message>
         <source>[3200-32FF] Enclosed CJK Letters and Months</source>
-        <translation type="unfinished">[3200-32FF] Enclosed CJK Letters and Months</translation>
+        <translation>[3200-32FF] CJK gutun eta hilabete inguratuak</translation>
     </message>
     <message>
         <source>[3300-33FF] CJK Compatibility</source>
-        <translation type="unfinished">[3300-33FF] CJK Compatibility</translation>
+        <translation>[3300-33FF] CJK bateragarritasuna</translation>
     </message>
     <message>
         <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
-        <translation type="unfinished">[3400-4DBF] CJK Unified Ideographs Extension A</translation>
+        <translation>[3400-4DBF] CJK ideografi bateratuak A hedapena</translation>
     </message>
     <message>
         <source>[4E00-9FAF] CJK Unified Ideographs</source>
-        <translation type="unfinished">[4E00-9FAF] CJK Unified Ideographs</translation>
+        <translation>CJK ideografi bateratuak</translation>
     </message>
     <message>
         <source>[A000-A48F] Yi Syllables</source>
-        <translation type="unfinished">[A000-A48F] Yi Syllables</translation>
+        <translation>Yi silabak</translation>
     </message>
     <message>
         <source>[A490-A4CF] Yi Radicals</source>
-        <translation type="unfinished">[A490-A4CF] Yi Radicals</translation>
+        <translation>[A490-A4CF] Yi erradikalak</translation>
     </message>
     <message>
         <source>[AC00-D7AF] Hangul Syllables</source>
-        <translation type="unfinished">[AC00-D7AF] Hangul Syllables</translation>
+        <translation>[AC00-D7AF] Hangul silabak</translation>
     </message>
     <message>
         <source>[D800-DBFF] High Surrogates</source>
-        <translation type="unfinished">[D800-DBFF] High Surrogates</translation>
+        <translation>[D800-DBFF] Ordezko altuak</translation>
     </message>
     <message>
         <source>[DC00-DFFF] Low Surrogate Area</source>
-        <translation type="unfinished">[DC00-DFFF] Low Surrogate Area</translation>
+        <translation>[DC00-DFFF] Ordezko eremu baxua</translation>
     </message>
     <message>
         <source>[E000-F8FF] Private Use Area</source>
-        <translation type="unfinished">[E000-F8FF] Private Use Area</translation>
+        <translation>Erabilera pribatuko eremua</translation>
     </message>
     <message>
         <source>[F900-FAFF] CJK Compatibility Ideographs</source>
-        <translation type="unfinished">[F900-FAFF] CJK Compatibility Ideographs</translation>
+        <translation>[F900-FAFF] CJK bateragarritasun-ideografiak</translation>
     </message>
     <message>
         <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
-        <translation type="unfinished">[FB00-FB4F] Alphabetic Presentation Forms</translation>
+        <translation>[FB00-FB4F] Aurkezpen alfabetikoaren formatuak</translation>
     </message>
     <message>
         <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
-        <translation type="unfinished">[FB50-FDFF] Arabic Presentation Forms-A</translation>
+        <translation>[FB50-FDFF] Aurkezpen arabiarraren formatuak... A</translation>
     </message>
     <message>
         <source>[FE00-FE0F] Variation Selectors</source>
-        <translation type="unfinished">[FE00-FE0F] Variation Selectors</translation>
+        <translation>[FE00-FE0F] Aldaketa-hautatzaileak</translation>
     </message>
     <message>
         <source>[FE20-FE2F] Combining Half Marks</source>
-        <translation type="unfinished">[FE20-FE2F] Combining Half Marks</translation>
+        <translation>[FE20-FE2F] Marka-erdi konbinatuak</translation>
     </message>
     <message>
         <source>[FE30-FE4F] CJK Compatibility Forms</source>
-        <translation type="unfinished">[FE30-FE4F] CJK Compatibility Forms</translation>
+        <translation>[FE30-FE4F] CJK bateragarritasunaren formatuak</translation>
     </message>
     <message>
         <source>[FE50-FE6F] Small Form Variants</source>
-        <translation type="unfinished">[FE50-FE6F] Small Form Variants</translation>
+        <translation>[FE50-FE6F] Formatu txikiko aldaerak</translation>
     </message>
     <message>
         <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
-        <translation type="unfinished">[FE70-FEFF] Arabic Presentation Forms-B</translation>
+        <translation>[FE70-FEFF] Aurkezpen arabiarraren formatuak B</translation>
     </message>
     <message>
         <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
-        <translation type="unfinished">FF00-FFEF] Halfwidth and Fullwidth Forms</translation>
+        <translation>[FF00-FFEF] Zabalera erdia eta zabalera osoko formatuak</translation>
     </message>
     <message>
         <source>[FFF0-FFFF] Specials</source>
-        <translation type="unfinished">[FFF0-FFFF] Bereziak</translation>
+        <translation>[FFF0-FFFFFF] Bereziak</translation>
     </message>
     <message>
         <source>[10300-1032F] Old Italic</source>
-        <translation type="unfinished">[10300-1032F] Old Italic</translation>
+        <translation>[10300-1032F] Etzan zaharra</translation>
     </message>
     <message>
         <source>[10330-1034F] Gothic</source>
-        <translation type="unfinished">[10330-1034F] Gothic</translation>
+        <translation>[10330-1034F] Gotikoa</translation>
     </message>
     <message>
         <source>[10400-1044F] Deseret</source>
-        <translation type="unfinished">[10400-1044F] Deseret</translation>
+        <translation>[10400-1044F] Deseret</translation>
     </message>
     <message>
         <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
-        <translation type="unfinished">[1D000-1D0FF] Bizantiar Musika Ikurrak</translation>
+        <translation>[1D000-1D0FF] Musika-ikur bizantziarrak</translation>
     </message>
     <message>
         <source>[1D100-1D1FF] Musical Symbols</source>
-        <translation type="unfinished">[1D100-1D1FF] Musika Ikurrak</translation>
+        <translation>[1D100-1D1FF] Musika-ikurrak</translation>
     </message>
     <message>
         <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
-        <translation type="unfinished">[1D400-1D7FF] Mathematical Alphanumeric Symbols</translation>
+        <translation>[1D400-1D7FF] Matematikako ikur alfanumerikoak</translation>
     </message>
     <message>
         <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
-        <translation type="unfinished">[20000-2A6DF] CJK Unified Ideographs Extension B</translation>
+        <translation>[20000-2A6DF] CJK Ideografo bateratuak B hedapena</translation>
     </message>
     <message>
         <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
-        <translation type="unfinished">[2F800-2FA1F] CJK Compatibility Ideographs Supplement</translation>
+        <translation>[2F800-2FA1F] CJK bateragarritasun-ideografien gehigarria</translation>
     </message>
     <message>
         <source>[E0000-E007F] Tags</source>
-        <translation type="unfinished">[E0000-E007F] Tags</translation>
+        <translation>[E0000-E007F] Etiketak</translation>
     </message>
     <message>
         <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
-        <translation type="unfinished">[F0000-FFFFD] Supplementary Private Use Area-A</translation>
+        <translation>[F0000-FFFFD] Erabilera pribatuko eremu gehigarria... A</translation>
     </message>
     <message>
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
-        <translation type="unfinished">[100000-10FFFD] Supplementary Private Use Area-B</translation>
+        <translation>[100000-10FFFD] Erabilera pribatuko arearen gehigarria B</translation>
     </message>
     <message>
         <source>&amp;Height:</source>
-        <translation type="unfinished">&amp;Altuera:</translation>
+        <translation>&amp; Altuera:</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Geruza:</translation>
+        <translation>Geruza:</translation>
     </message>
     <message>
         <source>Font settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Letra-tipoen ezarpenak</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Angelua:</translation>
+        <translation>Angelua:</translation>
     </message>
     <message>
         <source>Oblique:</source>
-        <translation type="unfinished"></translation>
+        <translation>Oblikoa:</translation>
     </message>
     <message>
         <source>Width factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zabalera-faktorea:</translation>
     </message>
     <message>
         <source>Font:</source>
-        <translation type="unfinished"></translation>
+        <translation>Letra-tipoa:</translation>
     </message>
     <message>
         <source>Baseline Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezkerrekoa</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Baseline Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Eskuinera</translation>
     </message>
     <message>
         <source>Baseline Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Baseline Center</translation>
     </message>
     <message>
         <source>Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Doitu</translation>
     </message>
     <message>
         <source>Diameter (⌀)</source>
-        <translation type="unfinished">Diametroa (⌀)</translation>
+        <translation>Diametroa ())</translation>
     </message>
     <message>
         <source>A&amp;ligned</source>
-        <translation type="unfinished"></translation>
+        <translation>A&amp;ligned</translation>
     </message>
     <message>
         <source>&amp;Middle</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Middle</translation>
     </message>
 </context>
 <context>
     <name>QG_ExitDialog</name>
     <message>
         <source>QCad</source>
-        <translation type="unfinished"></translation>
+        <translation>QCad</translation>
     </message>
     <message>
         <source>again Still No Text supplied.</source>
-        <translation type="unfinished"></translation>
+        <translation>berriro ez da testurik eman.</translation>
     </message>
     <message>
         <source>Discard All</source>
-        <translation type="unfinished"></translation>
+        <translation>Baztertu denak</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>Baztertu</translation>
     </message>
 </context>
 <context>
     <name>QG_FileDialog</name>
     <message>
         <source>Drawing Exchange DXF 2000 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Exchange DXF 2000 %1 marrazten</translation>
     </message>
     <message>
         <source>Drawing Exchange DXF R12 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Exchange DXF R12 %1 marrazten</translation>
     </message>
     <message>
         <source>LFF Font %1</source>
-        <translation type="unfinished"></translation>
+        <translation>LFF %1 letra-tipoa</translation>
     </message>
     <message>
         <source>QCad Font %1</source>
-        <translation type="unfinished"></translation>
+        <translation>QCad %1 letra-tipoa</translation>
     </message>
     <message>
         <source>Jww Drawing %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Jww Drawing %1</translation>
     </message>
     <message>
         <source>Drawing Exchange %1</source>
-        <translation type="unfinished"></translation>
+        <translation>% 1 trukea marrazten</translation>
     </message>
     <message>
         <source>QCad 1.x file %1</source>
-        <translation type="unfinished"></translation>
+        <translation>QCad 1.x fitxategia %1</translation>
     </message>
     <message>
         <source>Drawing Exchange DXF 2007 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Exchange DXF 2007 %1 marrazten</translation>
     </message>
     <message>
         <source>Drawing Exchange DXF 2004 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Exchange DXF 2004 marrazten %1</translation>
     </message>
     <message>
         <source>Drawing Exchange DXF R14 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Exchange DXF R14 %1 marrazten</translation>
     </message>
     <message>
         <source>Block</source>
         <comment>block file</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blokea</translation>
     </message>
     <message>
         <source>Drawing</source>
         <comment>drawing file</comment>
-        <translation type="unfinished"></translation>
+        <translation>Marrazkia</translation>
     </message>
     <message>
         <source>Open %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ireki %1</translation>
     </message>
     <message>
         <source>Save %1 As</source>
-        <translation type="unfinished"></translation>
+        <translation>Gorde %1 honela</translation>
     </message>
     <message>
         <source>dwg Drawing %1</source>
-        <translation type="unfinished"></translation>
+        <translation>dwg Marrazkia %1</translation>
     </message>
     <message>
         <source>Untitled</source>
-        <translation type="unfinished"></translation>
+        <translation>Izengabea</translation>
     </message>
 </context>
 <context>
     <name>QG_GraphicView</name>
     <message>
         <source>Edit Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Editatu propietateak</translation>
     </message>
     <message>
         <source>Edit Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Editatu blokea</translation>
     </message>
 </context>
 <context>
     <name>QG_ImageOptionsDialog</name>
     <message>
         <source>Image Export Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Irudiak esportatzeko aukerak</translation>
     </message>
     <message>
         <source>Bitmap Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitmap tamaina</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished">Zabalera:</translation>
+        <translation>Zabalera:</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished">Altuera:</translation>
+        <translation>Altuera:</translation>
     </message>
     <message>
         <source>Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Atzeko planoa</translation>
     </message>
     <message>
         <source>White</source>
-        <translation type="unfinished"></translation>
+        <translation>Zuria</translation>
     </message>
     <message>
         <source>Resolution:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bereizmena:</translation>
     </message>
     <message>
         <source>auto</source>
-        <translation type="unfinished">auto</translation>
+        <translation>auto</translation>
     </message>
     <message>
         <source>Colouring</source>
-        <translation type="unfinished"></translation>
+        <translation>Koloreztatzen</translation>
     </message>
     <message>
         <source>Black / White</source>
-        <translation type="unfinished">Zuri / Beltza</translation>
+        <translation>Beltza/zuria</translation>
     </message>
     <message>
         <source>Coloured</source>
-        <translation type="unfinished"></translation>
+        <translation>Koloreztatua</translation>
     </message>
     <message>
         <source>Borders</source>
-        <translation type="unfinished"></translation>
+        <translation>Mugak</translation>
     </message>
     <message>
         <source>Top / Bottom - Border:</source>
-        <translation type="unfinished"></translation>
+        <translation>Goikoa / Behekoa - Ertza:</translation>
     </message>
     <message>
         <source>Left / Right - Border:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezkerra/Eskuina - Ertza:</translation>
     </message>
     <message>
         <source>set same size</source>
-        <translation type="unfinished"></translation>
+        <translation>ezarri tamaina berdina</translation>
     </message>
     <message>
         <source>B&amp;lack</source>
-        <translation type="unfinished"></translation>
+        <translation>B&amp;lack</translation>
     </message>
 </context>
 <context>
     <name>QG_LayerBox</name>
     <message>
         <source>- Unchanged -</source>
-        <translation type="unfinished"></translation>
+        <translation>- Aldatu gabe -</translation>
     </message>
 </context>
 <context>
     <name>QG_LayerDialog</name>
     <message>
         <source>Layer Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Geruzaren ezarpenak</translation>
     </message>
     <message>
         <source>Layer Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Geruzaren izena:</translation>
     </message>
     <message>
         <source>Default Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Pen lehenetsia</translation>
     </message>
     <message>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eraikuntza-geruzak lerro zuzen amaigabeko entitateak ditu, eraikuntza geometrikorako erabiltzekoak.
+Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
     </message>
     <message>
         <source>Construction Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Eraikuntza-geruza</translation>
     </message>
 </context>
 <context>
     <name>QG_LayerWidget</name>
     <message>
         <source>Show all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Erakutsi geruza guztiak</translation>
     </message>
     <message>
         <source>Hide all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezkutatu geruza guztiak</translation>
     </message>
     <message>
         <source>Add a layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Gehitu geruza bat</translation>
     </message>
     <message>
         <source>Modify layer attributes / rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Aldatu geruzen atributuak / aldatu izena</translation>
     </message>
     <message>
         <source>Layer Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Geruza-menua</translation>
     </message>
     <message>
         <source>&amp;Defreeze all Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Desizoztu geruza guztiak</translation>
     </message>
     <message>
         <source>&amp;Freeze all Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Izoztu geruza guztiak</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">&amp;Geruza gehitu</translation>
+        <translation>&amp;Gehitu geruza</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">&amp;Geruza kendu</translation>
+        <translation>&amp;Kendu geruza</translation>
     </message>
     <message>
         <source>Looking for matching layer names</source>
-        <translation type="unfinished"></translation>
+        <translation>Bat datozen geruza-izenen bila</translation>
     </message>
     <message>
         <source>Edit Layer &amp;Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Editatu geruza eta atributuak</translation>
     </message>
     <message>
         <source>Toggle Layer &amp;Visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Txandakatu geruza eta ikusgaitasuna</translation>
     </message>
     <message>
         <source>Toggle Layer &amp;Printing</source>
-        <translation type="unfinished"></translation>
+        <translation>Txandakatu geruza eta inprimatzea</translation>
     </message>
     <message>
         <source>Toggle &amp;Construction Layer</source>
-        <translation type="unfinished">Toggle &amp;Construction Layer</translation>
+        <translation>Txandakatu eta egituratzeko geruza</translation>
     </message>
     <message>
         <source>Unlock all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Desblokeatu geruza guztiak</translation>
     </message>
     <message>
         <source>Lock all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Blokeatu geruza guztiak</translation>
     </message>
     <message>
         <source>Remove layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Kendu geruza</translation>
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Iragazkia</translation>
     </message>
     <message>
         <source>&amp;Unlock all Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Desblokeatu geruza guztiak</translation>
     </message>
     <message>
         <source>&amp;Lock all Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Blokeatu geruza guztiak</translation>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation type="unfinished">Toggle Layer Loc&amp;k</translation>
+        <translation>Txandakatu geruzaren loka&amp;k</translation>
     </message>
     <message>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation type="unfinished">E&amp;sportatu hautatutako geruza(k)</translation>
+        <translation>&amp;Esportatu hautatutako geruza(k)</translation>
     </message>
     <message>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation type="unfinished">Esportatu &amp;ikusgai dauden geruza(k)</translation>
+        <translation>Esportatu geruza ikusgaia(k)</translation>
     </message>
 </context>
 <context>
     <name>QG_LibraryWidget</name>
     <message>
         <source>Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Direktorioak</translation>
     </message>
     <message>
         <source>Insert</source>
-        <translation type="unfinished">Sartu</translation>
+        <translation>Txertatu</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Freskatu</translation>
     </message>
     <message>
         <source>Rebuild</source>
-        <translation type="unfinished"></translation>
+        <translation>Berreraiki</translation>
     </message>
 </context>
 <context>
     <name>QG_LineTypeBox</name>
     <message>
         <source>By Layer</source>
-        <translation type="unfinished">Geruzen bitartez</translation>
+        <translation>Geruzaren arabera</translation>
     </message>
     <message>
         <source>By Block</source>
-        <translation type="unfinished">Geruzen bitartez</translation>
+        <translation>Blokearen arabera</translation>
     </message>
     <message>
         <source>No Pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Penik ez</translation>
     </message>
     <message>
         <source>Continuous</source>
-        <translation type="unfinished"></translation>
+        <translation>Jarraitua</translation>
     </message>
     <message>
         <source>Dot</source>
-        <translation type="unfinished"></translation>
+        <translation>Dot</translation>
     </message>
     <message>
         <source>Dot (small)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dot (txikia)</translation>
     </message>
     <message>
         <source>Dot (large)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dot (handia)</translation>
     </message>
     <message>
         <source>Dash</source>
-        <translation type="unfinished"></translation>
+        <translation>Dash</translation>
     </message>
     <message>
         <source>Dash (small)</source>
-        <translation type="unfinished"></translation>
+        <translation>Marratxoa (txikia)</translation>
     </message>
     <message>
         <source>Dash (large)</source>
-        <translation type="unfinished"></translation>
+        <translation>Marra (handia)</translation>
     </message>
     <message>
         <source>Dash Dot</source>
-        <translation type="unfinished"></translation>
+        <translation>Dash Dot</translation>
     </message>
     <message>
         <source>Dash Dot (small)</source>
-        <translation type="unfinished"></translation>
+        <translation>Marratxoa (txikia)</translation>
     </message>
     <message>
         <source>Dash Dot (large)</source>
-        <translation type="unfinished"></translation>
+        <translation>Marratxoa (handia)</translation>
     </message>
     <message>
         <source>Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Zatitu</translation>
     </message>
     <message>
         <source>Divide (small)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zatiketa (txikia)</translation>
     </message>
     <message>
         <source>Divide (large)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zatiketa (handia)</translation>
     </message>
     <message>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Zentratu</translation>
     </message>
     <message>
         <source>Center (small)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zentratua (txikia)</translation>
     </message>
     <message>
         <source>Center (large)</source>
-        <translation type="unfinished"></translation>
+        <translation>Erdialdea (handia)</translation>
     </message>
     <message>
         <source>Border</source>
-        <translation type="unfinished"></translation>
+        <translation>Ertza</translation>
     </message>
     <message>
         <source>Border (small)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ertza (txikia)</translation>
     </message>
     <message>
         <source>Border (large)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ertza (handia)</translation>
     </message>
     <message>
         <source>- Unchanged -</source>
-        <translation type="unfinished"></translation>
+        <translation>- Aldatu gabe -</translation>
     </message>
     <message>
         <source>Dot (tiny)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dot (tiny)</translation>
     </message>
     <message>
         <source>Dash (tiny)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dash (tiny)</translation>
     </message>
     <message>
         <source>Dash Dot (tiny)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dash Dot (tiny)</translation>
     </message>
     <message>
         <source>Divide (tiny)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zatiketa (oraindik)</translation>
     </message>
     <message>
         <source>Center (tiny)</source>
-        <translation type="unfinished"></translation>
+        <translation>Erdialdea (tiny)</translation>
     </message>
     <message>
         <source>Border (tiny)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ertza (tiny)</translation>
     </message>
 </context>
 <context>
     <name>QG_MouseWidget</name>
     <message>
         <source>Mouse</source>
-        <translation type="unfinished">Sagua</translation>
+        <translation>Sagua</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished">Eskuma</translation>
+        <translation>Eskuinean</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished">Ezkerra</translation>
+        <translation>Ezkerra</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-/W3C/DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+p, li { zuriunea: aurreitzulbira; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" letra-familia: 'Ubuntu'; letra-tamaina:11pt; letra-pisua:400; letra-estiloa:normala;&gt;
+&lt;p style=" marjina-top:0px; marjina-behea:0px; marjina-ezkerra:0px; marjina-eskuina:0px; -qt-bloke-indent:0; testua:0px;"&gt;&lt;span style=" letra-familia: 'Helvetica'; letra-tamaina:9pt;&gt; Saguaren ezkerreko/eskuineko botoien ekintzak&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
-        <translation type="unfinished"></translation>
+        <translation>Lerroaren kolorea</translation>
     </message>
     <message>
         <source>Line width</source>
-        <translation type="unfinished"></translation>
+        <translation>Lerroaren zabalera</translation>
     </message>
     <message>
         <source>Line type</source>
-        <translation type="unfinished"></translation>
+        <translation>Lerro mota</translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineOptions</name>
     <message>
         <source>wrong action type</source>
-        <translation type="unfinished"></translation>
+        <translation>okerreko ekintza mota</translation>
     </message>
 </context>
 <context>
     <name>QG_RecentFiles</name>
     <message>
         <source>&amp;%1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;%1 %2</translation>
     </message>
 </context>
 <context>
     <name>QG_SelectionWidget</name>
     <message>
         <source>Selection</source>
-        <translation type="unfinished">Hautapena</translation>
+        <translation>Hautapena</translation>
     </message>
     <message>
         <source>Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatuta</translation>
     </message>
     <message>
         <source>Total Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Luzera guztira</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-/W3C/DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+p, li { zuriunea: aurreitzulbira; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" letra-familia: 'Helvetica'; letra-tamaina:7pt; letra-pisua:400; letra-estiloa:normala;'&gt;
+&lt;p style=" marjina-top:0px; marjina-behea:0px; marjina-ezkerra:0px; marjina-eskuina:0px; -qt-bloke-indent:0; testua:0px;"&gt; Hautatutako entitate kopurua&lt;p&gt;&lt;/body&gt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-/W3C/DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+p, li { zuriunea: aurreitzulbira; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" letra-familia: 'Helvetica'; letra-tamaina:7pt; letra-pisua:400; letra-estiloa:normala;'&gt;
+&lt;p style=" marjina-top:0px; marjina-behea:0px; marjina-ezkerra:0px; marjina-eskuina:0px; -qt-bloke-indent:0; testua:0px;"&gt; Hautatutako entitateen luzera osoa&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_SnapToolBar</name>
     <message>
         <source>Snap</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitu</translation>
     </message>
     <message>
         <source>Snap to Endpoints</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxiki amaiera-puntuetara</translation>
     </message>
     <message>
         <source>Snap to equidistant points of entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxiki entitatearen puntu berdinetara</translation>
     </message>
     <message>
         <source>Snap to center points</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitu erdiko puntuetara</translation>
     </message>
     <message>
         <source>Snap to intersections automatically</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitu ebakidura automatikoki</translation>
     </message>
     <message>
         <source>Snap to closest point on entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxiki entitatearen puntu hurbilenera</translation>
     </message>
     <message>
         <source>Snap to point with given distance to endpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitu puntura distantzia jakin batera</translation>
     </message>
     <message>
         <source>Snap to intersections manually</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxiki eskuz ebakitzeko</translation>
     </message>
     <message>
         <source>Snap to grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxiki sareta</translation>
     </message>
     <message>
         <source>Restrict Horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Murriztu horizontalki</translation>
     </message>
     <message>
         <source>Restrict Vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Murriztu bertikalki</translation>
     </message>
     <message>
         <source>Move relative Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Eraman zero erlatiboa</translation>
     </message>
     <message>
         <source>Lock relative Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Blokeatu zero erlatiboa</translation>
     </message>
     <message>
         <source>Free Snap</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitze librea</translation>
     </message>
     <message>
         <source>Snap on grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxiki sareta</translation>
     </message>
     <message>
         <source>Snap on Endpoints</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitu amaiera-puntuetan</translation>
     </message>
     <message>
         <source>Snap on Entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitu entitateari</translation>
     </message>
     <message>
         <source>Snap Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap Center</translation>
     </message>
     <message>
         <source>Snap Middle</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitu erdian</translation>
     </message>
     <message>
         <source>Snap Distance</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitu distantzia</translation>
     </message>
     <message>
         <source>Snap Intersection</source>
-        <translation type="unfinished"></translation>
+        <translation>Ebakidura</translation>
     </message>
     <message>
         <source>Restrict Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Murriztu horizontalki</translation>
     </message>
     <message>
         <source>Restrict Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Murriztu bertikala</translation>
     </message>
     <message>
         <source>Restrict Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Murriztu ortogonala</translation>
     </message>
     <message>
         <source>Restrict Nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>Murriztu ezer</translation>
     </message>
     <message>
         <source>Set relative zero position</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezarri zero posizio erlatiboa</translation>
     </message>
     <message>
         <source>Lock relative zero position</source>
-        <translation type="unfinished"></translation>
+        <translation>Blokeatu zero posizio erlatiboa</translation>
     </message>
     <message>
         <source>Exclusive Snap Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Snap modu esklusiboa</translation>
     </message>
     <message>
         <source>Relative zero position is %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Zero erlatiboaren posizioa %1 da</translation>
     </message>
     <message>
         <source>locked</source>
-        <translation type="unfinished"></translation>
+        <translation>blokeatuta</translation>
     </message>
     <message>
         <source>unlocked</source>
-        <translation type="unfinished"></translation>
+        <translation>desblokeatu</translation>
     </message>
     <message>
         <source>Snap Middle Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitu erdiko eskuliburua</translation>
     </message>
 </context>
 <context>
     <name>QG_WidgetPen</name>
     <message>
         <source>Pen</source>
-        <translation type="unfinished">Arkatza</translation>
+        <translation>Pen</translation>
     </message>
     <message>
         <source>Line type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lerro mota:</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished">Zabalera:</translation>
+        <translation>Zabalera:</translation>
     </message>
     <message>
         <source>Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolorea:</translation>
     </message>
 </context>
 <context>
     <name>QG_WidthBox</name>
     <message>
         <source>By Layer</source>
-        <translation type="unfinished">Geruzen bitartez</translation>
+        <translation>Geruzaren arabera</translation>
     </message>
     <message>
         <source>By Block</source>
@@ -7269,6426 +7295,6442 @@ p, li { white-space: pre-wrap; }
     <name>QMessageBox</name>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Abisua</translation>
     </message>
     <message>
         <source>Remove Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Kendu geruza</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation type="unfinished"></translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>Ezin da "%s" geruza kendu.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Geruza elkarrizketa-koadroa</translation>
     </message>
     <message>
         <source>Remove Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Kendu blokea</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation type="unfinished"></translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>"% 1" blokea eta bere entitate guztiak ezabatuko dira.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Geruzaren propietateak</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation type="unfinished"></translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>"% 1" izeneko geruza badago lehendik. Zehaztu beste izen bat.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+        <source>Layer "%1" and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>"% 1" geruza eta bertako entitate guztiak ezabatuko dira.
+Ekintza hau ezin da desegin.</translation>
     </message>
     <message>
-        <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation type="unfinished"></translation>
+        <source>Layer "0" can never be removed.</source>
+        <translation>"0" geruza ezin da inoiz kendu.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>Kendu %n geruza(k)<numerusform />
+            <numerusform />
         </translation>
     </message>
     <message>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geruza zerrendatuak eta entitate guztiak ezabatuko dira.</translation>
     </message>
     <message>
         <source>Warning: this action can NOT be undone!</source>
-        <translation type="unfinished"></translation>
+        <translation>Abisua: ekintza hau ezin da desegin!</translation>
     </message>
     <message>
-        <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation type="unfinished"></translation>
+        <source>Warning: layer "0" can never be removed.</source>
+        <translation>Abisua: "0" geruza ezin da inoiz kendu.</translation>
     </message>
     <message>
         <source>Layers for removal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kentzeko geruzak:</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n block(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>Kendu %n blokea(k)<numerusform />
+            <numerusform />
         </translation>
     </message>
     <message>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zerrendatutako blokeak eta entitate guztiak ezabatuko dira.</translation>
     </message>
     <message>
         <source>Blocks for removal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kentzeko blokeak:</translation>
     </message>
     <message>
         <source>Layer empty name is not allowed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez da onartzen geruzaren izen hutsa.</translation>
     </message>
     <message>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Saiatu geruza sortzen izen bikoizgarriarekin. Geruza-izen bikoiztua da
+[%1].
+Zehaztu beste izen bat.</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Errorea</translation>
     </message>
     <message>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geruza-zerrendaren bereizlearen katea hutsik dago. Ezin izango da geruza-zuhaitza eraiki.
+Zehaztu beste balio bat.</translation>
     </message>
     <message>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation type="unfinished"></translation>
+        <translation>Baliogabeko balioa ematen dio %1 koloreari.
+Zehaztu beste balio bat.</translation>
     </message>
     <message>
         <source>Remove empty layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Kendu geruza hutsak</translation>
     </message>
     <message>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation type="unfinished"></translation>
+        <translation>Objekturik gabeko geruzak, hala ere, iragazten dira eta ez dira ikusten.
+
+Garbitu iragazki-maskara eta errepikatu.</translation>
     </message>
     <message>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez da geruzarik aurkitu, ez dago kentzeko ezer.</translation>
     </message>
     <message>
         <source>Add Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Gehitu geruza</translation>
     </message>
     <message>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Horrelako geruza txiki bat badago jadanik
+[%1].
+Zehaztu beste izen bat.</translation>
     </message>
     <message>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Horrelako geruza txiki bat badago jadanik
+[%1].</translation>
     </message>
     <message>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Geruza dimentsionala geruza aktibo arruntean bakarrik gehi daiteke.</translation>
     </message>
     <message>
         <source>Move Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Mugitu hautapena</translation>
     </message>
     <message>
         <source>Duplicate Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Bikoiztu hautapena</translation>
     </message>
     <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
+        <source>Replace "By Layer" value to source layers values?
 
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
+If Yes - entities with "By Layer" pens will look on new layer exactly as on previous layers and "By Layer" value will be replaced by resolved pens.
 
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="unfinished"></translation>
+If No - "By Layer" values remains and so pen of target layer will define pen for such entities.</source>
+        <translation>Ordeztu "geruzaren arabera" balioa iturburuko geruzen balioetan?
+
+Bai - "geruzaz" boligrafoak dituzten entitateek geruza berria ikusiko dute aurreko geruzetan bezala, eta "geruzaz" balioa luma ebatziek ordeztuko dute.
+
+Ez - "geruzaren arabera" balioak mantentzen badira eta helburu-geruzaren lumak horrelako entitateentzako arkatza definituko du.</translation>
     </message>
     <message>
         <source>Layer DialogEx</source>
-        <translation type="unfinished"></translation>
+        <translation>Geruza elkarrizketa-koadroaEx</translation>
     </message>
     <message>
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
-        <translation type="unfinished"></translation>
+        <translation>Baliogabeko balioa eman zaio %1 koloreari.
+Zehaztu beste balio bat.</translation>
     </message>
     <message>
         <source>Invalid path to pens file.
 %1 
 Please specify a different value.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pens fitxategirako bide baliogabea.
+%1
+Zehaztu beste balio bat.</translation>
     </message>
     <message>
         <source>Remove pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Kendu luma</translation>
     </message>
     <message>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pena paletatik kenduko da, marrazki-erakundeak ez dira kaltetuko.</translation>
     </message>
     <message>
-        <source>Are you sure you&apos;d like to proceed?</source>
-        <translation type="unfinished"></translation>
+        <source>Are you sure you'd like to proceed?</source>
+        <translation>Ziur zaude aurrera jarraitu nahi duzula?</translation>
     </message>
     <message>
         <source>Pen for removal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kentzeko luma:</translation>
     </message>
     <message>
         <source>Remove pens</source>
-        <translation type="unfinished"></translation>
+        <translation>Kendu boligrafoak</translation>
     </message>
     <message>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Panelak paletatik kenduko dira, marrazki-erakundeak ez dira kaltetuko.</translation>
     </message>
     <message>
         <source>Pens for removal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kentzeko lumak:</translation>
     </message>
     <message>
         <source>Select Entities </source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu entitateak</translation>
     </message>
     <message>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez dago geruza ikusgaietan lumarekin bat datorren entitaterik.</translation>
     </message>
     <message>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Horrelako entitateak geruza izoztuetan daude.</translation>
     </message>
     <message>
         <source>Such entities exist on locked layers.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Horrelako entitateak geruza itxietan daude.</translation>
     </message>
     <message>
         <source>Please use different pen attributes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Erabili arkatzaren atributu desberdinak.</translation>
     </message>
     <message>
         <source>Set pen by entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezarri arkatza entitatearen arabera</translation>
     </message>
     <message>
         <source>Please select only one entity to pick pen setting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu entitate bat arkatzaren ezarpena hautatzeko.</translation>
     </message>
     <message>
         <source>Saving Pens Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Pens datuak gordetzen</translation>
     </message>
     <message>
         <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezin da arkatzen datuak gorde zehaztutako pens fitxategian. Fitxategirako bide zuzena zehaztu nahi duzu?</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Save Drawing As</source>
-        <translation type="unfinished"></translation>
+        <translation>Gorde marrazkia honela</translation>
     </message>
     <message>
         <source>%1 already exists.
 Do you want to replace it?</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 badago lehendik ere.
+Ordeztea nahi duzu?</translation>
     </message>
     <message>
         <source>Open Drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Ireki marrazkia</translation>
     </message>
     <message>
         <source>Open Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Ireki irudia</translation>
     </message>
     <message>
         <source>Windows Bitmap</source>
-        <translation type="unfinished"></translation>
+        <translation>Windows bit-mapa</translation>
     </message>
     <message>
         <source>Joint Photographic Experts Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Joint Photographic Experts Group</translation>
     </message>
     <message>
         <source>Multiple-image Network Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Irudi anitzeko sareko grafikoak</translation>
     </message>
     <message>
         <source>Portable Bit Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Bit-mapa eramangarria</translation>
     </message>
     <message>
         <source>Portable Grey Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapa gris eramangarria</translation>
     </message>
     <message>
         <source>Portable Network Graphic</source>
-        <translation type="unfinished"></translation>
+        <translation>Portable Network Graphic</translation>
     </message>
     <message>
         <source>Portable Pixel Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Pixel-mapa eramangarria</translation>
     </message>
     <message>
         <source>X Bitmap Format</source>
-        <translation type="unfinished"></translation>
+        <translation>X bitmap formatua</translation>
     </message>
     <message>
         <source>X Pixel Map</source>
-        <translation type="unfinished"></translation>
+        <translation>X Pixel-mapa</translation>
     </message>
     <message>
         <source>Graphics Interchange Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Graphics Interchange Format</translation>
     </message>
     <message>
         <source>Drawing Exchange %1</source>
-        <translation type="unfinished"></translation>
+        <translation>% 1 trukea marrazten</translation>
     </message>
     <message>
         <source>QCad 1.x file %1</source>
-        <translation type="unfinished"></translation>
+        <translation>QCad 1.x fitxategia %1</translation>
     </message>
     <message>
         <source>Font %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 letra-tipoa</translation>
     </message>
     <message>
         <source>All Files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fitxategi guztiak (*.*)</translation>
     </message>
     <message>
         <source>Inch</source>
-        <translation type="unfinished"></translation>
+        <translation>Inch</translation>
     </message>
     <message>
         <source>Foot</source>
-        <translation type="unfinished"></translation>
+        <translation>Oinatz</translation>
     </message>
     <message>
         <source>Mile</source>
-        <translation type="unfinished"></translation>
+        <translation>Mileto</translation>
     </message>
     <message>
         <source>Millimeter</source>
-        <translation type="unfinished"></translation>
+        <translation>Milimetroa</translation>
     </message>
     <message>
         <source>Centimeter</source>
-        <translation type="unfinished"></translation>
+        <translation>Zentimetroa</translation>
     </message>
     <message>
         <source>Meter</source>
-        <translation type="unfinished"></translation>
+        <translation>Meter</translation>
     </message>
     <message>
         <source>Kilometer</source>
-        <translation type="unfinished"></translation>
+        <translation>Kilometroak</translation>
     </message>
     <message>
         <source>Microinch</source>
-        <translation type="unfinished"></translation>
+        <translation>Microinch</translation>
     </message>
     <message>
         <source>Mil</source>
-        <translation type="unfinished"></translation>
+        <translation>Mil</translation>
     </message>
     <message>
         <source>Yard</source>
-        <translation type="unfinished"></translation>
+        <translation>Yard</translation>
     </message>
     <message>
         <source>Angstrom</source>
-        <translation type="unfinished"></translation>
+        <translation>Angstrom</translation>
     </message>
     <message>
         <source>Nanometer</source>
-        <translation type="unfinished"></translation>
+        <translation>Nanometroa</translation>
     </message>
     <message>
         <source>Micron</source>
-        <translation type="unfinished"></translation>
+        <translation>Micron</translation>
     </message>
     <message>
         <source>Decimeter</source>
-        <translation type="unfinished"></translation>
+        <translation>Dezimetroa</translation>
     </message>
     <message>
         <source>Decameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Dekametroa</translation>
     </message>
     <message>
         <source>Hectometer</source>
-        <translation type="unfinished"></translation>
+        <translation>Hektometroa</translation>
     </message>
     <message>
         <source>Gigameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Gigameter</translation>
     </message>
     <message>
         <source>Astro</source>
-        <translation type="unfinished"></translation>
+        <translation>Astronomoa</translation>
     </message>
     <message>
         <source>Lightyear</source>
-        <translation type="unfinished"></translation>
+        <translation>Argi-urtea</translation>
     </message>
     <message>
         <source>Parsec</source>
-        <translation type="unfinished"></translation>
+        <translation>Parsec</translation>
     </message>
     <message>
         <source>Loading..</source>
-        <translation type="unfinished"></translation>
+        <translation>Kargatzen.</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 fitxategia kargatzen.</translation>
     </message>
     <message>
         <source>Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Kargatzen...</translation>
     </message>
     <message>
         <source>enter an integer number</source>
-        <translation type="unfinished"></translation>
+        <translation>sartu osoko zenbakia</translation>
     </message>
     <message>
         <source>LibreCAD query</source>
-        <translation type="unfinished"></translation>
+        <translation>LibreCAD kontsulta</translation>
     </message>
     <message>
         <source>enter a number</source>
-        <translation type="unfinished"></translation>
+        <translation>sartu zenbaki bat</translation>
     </message>
     <message>
         <source>enter text</source>
-        <translation type="unfinished"></translation>
+        <translation>sartu testua</translation>
     </message>
     <message>
         <source>LFF Font %1</source>
-        <translation type="unfinished"></translation>
+        <translation>LFF %1 letra-tipoa</translation>
     </message>
     <message>
         <source>Jww %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Jwww %1</translation>
     </message>
     <message>
         <source>Scalable Vector Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafiko eskalagarriak</translation>
     </message>
     <message>
         <source>SGI Black &amp; White</source>
-        <translation type="unfinished"></translation>
+        <translation>SGI beltza eta zuria</translation>
     </message>
     <message>
         <source>Encapsulated PostScript</source>
-        <translation type="unfinished"></translation>
+        <translation>PostScript kapsulatua</translation>
     </message>
     <message>
         <source>Encapsulated PostScript Format</source>
-        <translation type="unfinished"></translation>
+        <translation>PostScript formatu kapsulatua</translation>
     </message>
     <message>
         <source>Encapsulated PostScript Interchange</source>
-        <translation type="unfinished"></translation>
+        <translation>PostScript Interchange kapsulatua</translation>
     </message>
     <message>
         <source>Windows Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Windows ikonoa</translation>
     </message>
     <message>
         <source>JPEG 2000</source>
-        <translation type="unfinished"></translation>
+        <translation>JPEG 2000</translation>
     </message>
     <message>
         <source>ZSoft Paintbrush</source>
-        <translation type="unfinished"></translation>
+        <translation>ZSoft Paintbrush</translation>
     </message>
     <message>
         <source>PC Paint</source>
-        <translation type="unfinished"></translation>
+        <translation>PC Paint</translation>
     </message>
     <message>
         <source>SGI-Bilddatei</source>
-        <translation type="unfinished"></translation>
+        <translation>SGI-Bilddatei</translation>
     </message>
     <message>
         <source>Targa Image File</source>
-        <translation type="unfinished"></translation>
+        <translation>Targa irudi-fitxategia</translation>
     </message>
     <message>
         <source>Tagged Image File Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Tagged Image File Format</translation>
     </message>
     <message>
         <source>Old Drawing Exchange %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Marrazki-truke zaharra %1</translation>
     </message>
     <message>
         <source>Opened dwg file version %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dwg fitxategiaren %1 bertsioa ireki da.</translation>
     </message>
     <message>
         <source>unknown error opening dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>errore ezezaguna dwg fitxategia irekitzean</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
-        <translation type="unfinished"></translation>
+        <source>can't open this dwg file</source>
+        <translation>ezin da dwg fitxategia ireki</translation>
     </message>
     <message>
         <source>unsupported dwg version</source>
-        <translation type="unfinished"></translation>
+        <translation>onartzen ez den dwg bertsioa</translation>
     </message>
     <message>
         <source>error reading file header in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>errorea fitxategi-goiburua dwg fitxategian irakurtzean</translation>
     </message>
     <message>
         <source>error reading header vars in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>errorea goiburuko varak dwg fitxategian irakurtzean</translation>
     </message>
     <message>
         <source>error reading classes in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>errorea dwg fitxategiko klaseak irakurtzean</translation>
     </message>
     <message>
         <source>error reading offsets in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>errorea dwg fitxategian desplazamenduak irakurtzean</translation>
     </message>
     <message>
         <source>error reading tables in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>errorea dwg fitxategian taulak irakurtzean</translation>
     </message>
     <message>
         <source>error reading entities in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>errorea dwg fitxategiko entitateak irakurtzean</translation>
     </message>
     <message>
         <source>dwg Drawing %1</source>
-        <translation type="unfinished"></translation>
+        <translation>dwg Marrazkia %1</translation>
     </message>
     <message>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Diskoko fitxategia aldatuta. Gorde beste fitxategi batean datuak galtzea saihesteko! Fitxategi-aldaketa: %1</translation>
     </message>
     <message>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation type="unfinished"></translation>
+        <translation>Hatch-ek huts egin zuen tartearen ondorioz: %1 (%2, %3) eta (%4, %5) artekoa</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Abisua</translation>
     </message>
     <message>
         <source>error reading blocks in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>errorea dwg fitxategiko blokeak irakurtzean</translation>
     </message>
     <message>
         <source>error reading objects in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>errorea dwg fitxategiko objektuak irakurtzean</translation>
     </message>
     <message>
         <source>All Image Files (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Irudi-fitxategi guztiak (%1)</translation>
     </message>
     <message>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation type="unfinished"></translation>
+        <translation>: komando bikoiztua: %1 jadanik %2k hartu du</translation>
     </message>
     <message>
         <source>point</source>
         <comment>draw point</comment>
-        <translation type="unfinished"></translation>
+        <translation>puntua</translation>
     </message>
     <message>
         <source>po</source>
         <comment>draw point</comment>
-        <translation type="unfinished"></translation>
+        <translation>pospolo</translation>
     </message>
     <message>
         <source>line</source>
         <comment>draw line</comment>
-        <translation type="unfinished"></translation>
+        <translation>lerroa</translation>
     </message>
     <message>
         <source>li</source>
         <comment>draw line</comment>
-        <translation type="unfinished"></translation>
+        <translation>limosna</translation>
     </message>
     <message>
         <source>l</source>
         <comment>draw line</comment>
-        <translation type="unfinished"></translation>
+        <translation>l</translation>
     </message>
     <message>
         <source>polyline</source>
         <comment>draw polyline</comment>
-        <translation type="unfinished"></translation>
+        <translation>polilerroa</translation>
     </message>
     <message>
         <source>pl</source>
         <comment>draw polyline</comment>
-        <translation type="unfinished"></translation>
+        <translation>pl</translation>
     </message>
     <message>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation type="unfinished"></translation>
+        <translation>libre</translation>
     </message>
     <message>
         <source>fhl</source>
         <comment>draw freehand line</comment>
-        <translation type="unfinished"></translation>
+        <translation>fhl</translation>
     </message>
     <message>
         <source>spline</source>
         <comment>draw spline</comment>
-        <translation type="unfinished"></translation>
+        <translation>spline</translation>
     </message>
     <message>
         <source>spl</source>
         <comment>draw spline</comment>
-        <translation type="unfinished"></translation>
+        <translation>spl</translation>
     </message>
     <message>
         <source>spline2</source>
         <comment>spline through points</comment>
-        <translation type="unfinished"></translation>
+        <translation>spline2</translation>
     </message>
     <message>
         <source>stp</source>
         <comment>spline through points</comment>
-        <translation type="unfinished"></translation>
+        <translation>stp</translation>
     </message>
     <message>
         <source>ptp</source>
         <comment>parallel through point</comment>
-        <translation type="unfinished"></translation>
+        <translation>ptp</translation>
     </message>
     <message>
         <source>bisect</source>
         <comment>angle bisector</comment>
-        <translation type="unfinished"></translation>
+        <translation>bisect</translation>
     </message>
     <message>
         <source>bi</source>
         <comment>angle bisector</comment>
-        <translation type="unfinished"></translation>
+        <translation>bi</translation>
     </message>
     <message>
         <source>tanpc</source>
         <comment>tangent point and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>tanpc</translation>
     </message>
     <message>
         <source>ortho</source>
         <comment>perpendicular line</comment>
-        <translation type="unfinished"></translation>
+        <translation>ortho</translation>
     </message>
     <message>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation type="unfinished"></translation>
+        <translation>rect</translation>
     </message>
     <message>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
-        <translation type="unfinished"></translation>
+        <translation>polygon2v</translation>
     </message>
     <message>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation type="unfinished"></translation>
+        <translation>poli2</translation>
     </message>
     <message>
         <source>circle</source>
         <comment>draw circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>zirkulua</translation>
     </message>
     <message>
         <source>ci</source>
         <comment>draw circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>ci</translation>
     </message>
     <message>
         <source>c2</source>
         <comment>circle 2 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>c2</translation>
     </message>
     <message>
         <source>c3</source>
         <comment>circle 3 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>c3</translation>
     </message>
     <message>
         <source>tan3</source>
         <comment>circle tangent to 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>tan3</translation>
     </message>
     <message>
         <source>ct3</source>
         <comment>circle tangent to 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>ct3</translation>
     </message>
     <message>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation>elipseina</translation>
     </message>
     <message>
         <source>ei</source>
         <comment>inscribed ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation>ei</translation>
     </message>
     <message>
         <source>ie</source>
         <comment>inscribed ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation>ie</translation>
     </message>
     <message>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation type="unfinished"></translation>
+        <translation>hatch</translation>
     </message>
     <message>
         <source>ha</source>
         <comment>draw hatch</comment>
-        <translation type="unfinished"></translation>
+        <translation>ha</translation>
     </message>
     <message>
         <source>mtext</source>
         <comment>draw mtext</comment>
-        <translation type="unfinished"></translation>
+        <translation>mtext</translation>
     </message>
     <message>
         <source>mtxt</source>
         <comment>draw mtext</comment>
-        <translation type="unfinished"></translation>
+        <translation>mtxt</translation>
     </message>
     <message>
         <source>text</source>
         <comment>draw text</comment>
-        <translation type="unfinished"></translation>
+        <translation>testua</translation>
     </message>
     <message>
         <source>txt</source>
         <comment>draw text</comment>
-        <translation type="unfinished"></translation>
+        <translation>txt</translation>
     </message>
     <message>
         <source>regen</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished"></translation>
+        <translation>regen</translation>
     </message>
     <message>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished"></translation>
+        <translation>berrantolaketa</translation>
     </message>
     <message>
         <source>rg</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished"></translation>
+        <translation>rg</translation>
     </message>
     <message>
         <source>zr</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished"></translation>
+        <translation>zr</translation>
     </message>
     <message>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
-        <translation type="unfinished"></translation>
+        <translation>zoom-leihoa</translation>
     </message>
     <message>
         <source>zw</source>
         <comment>zoom - window</comment>
-        <translation type="unfinished"></translation>
+        <translation>zw</translation>
     </message>
     <message>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
-        <translation type="unfinished"></translation>
+        <translation>zoom automatikoa</translation>
     </message>
     <message>
         <source>za</source>
         <comment>zoom - auto</comment>
-        <translation type="unfinished"></translation>
+        <translation>zapatua</translation>
     </message>
     <message>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation type="unfinished"></translation>
+        <translation>zoompan</translation>
     </message>
     <message>
         <source>zp</source>
         <comment>zoom - pan</comment>
-        <translation type="unfinished"></translation>
+        <translation>zp</translation>
     </message>
     <message>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
-        <translation type="unfinished"></translation>
+        <translation>zoom-previous</translation>
     </message>
     <message>
         <source>zv</source>
         <comment>zoom - previous</comment>
-        <translation type="unfinished"></translation>
+        <translation>zv</translation>
     </message>
     <message>
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation type="unfinished"></translation>
+        <translation>hil</translation>
     </message>
     <message>
         <source>k</source>
         <comment>kill all actions</comment>
-        <translation type="unfinished"></translation>
+        <translation>k</translation>
     </message>
     <message>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation type="unfinished"></translation>
+        <translation>desegin</translation>
     </message>
     <message>
         <source>u</source>
         <comment>undo cycle</comment>
-        <translation type="unfinished"></translation>
+        <translation>u</translation>
     </message>
     <message>
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation type="unfinished"></translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
         <comment>redo cycle</comment>
-        <translation type="unfinished"></translation>
+        <translation>r</translation>
     </message>
     <message>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation type="unfinished"></translation>
+        <translation>ilunduta</translation>
     </message>
     <message>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
-        <translation type="unfinished"></translation>
+        <translation>lausotze horizontala</translation>
     </message>
     <message>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation type="unfinished"></translation>
+        <translation>dh</translation>
     </message>
     <message>
         <source>dimvertical</source>
         <comment>dimension - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation>lausoa</translation>
     </message>
     <message>
         <source>dv</source>
         <comment>dimension - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation>dv</translation>
     </message>
     <message>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
-        <translation type="unfinished"></translation>
+        <translation>lineala</translation>
     </message>
     <message>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation type="unfinished"></translation>
+        <translation>dl</translation>
     </message>
     <message>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimangular</translation>
     </message>
     <message>
         <source>dan</source>
         <comment>dimension - angular</comment>
-        <translation type="unfinished"></translation>
+        <translation>dan</translation>
     </message>
     <message>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimradial</translation>
     </message>
     <message>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimdiametric</translation>
     </message>
     <message>
         <source>dimdiameter</source>
         <comment>dimension - diametric</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimdiametroa</translation>
     </message>
     <message>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation type="unfinished"></translation>
+        <translation>dd</translation>
     </message>
     <message>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
-        <translation type="unfinished"></translation>
+        <translation>lausotzailea</translation>
     </message>
     <message>
         <source>ld</source>
         <comment>dimension - leader</comment>
-        <translation type="unfinished"></translation>
+        <translation>ld</translation>
     </message>
     <message>
         <source>dimregen</source>
         <comment>dimension - regenerate</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimregen</translation>
     </message>
     <message>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation type="unfinished"></translation>
+        <translation>murriztapena</translation>
     </message>
     <message>
         <source>rn</source>
         <comment>restrict - nothing</comment>
-        <translation type="unfinished"></translation>
+        <translation>rn</translation>
     </message>
     <message>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation type="unfinished"></translation>
+        <translation>restrictorthogonal</translation>
     </message>
     <message>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
-        <translation type="unfinished"></translation>
+        <translation>rr</translation>
     </message>
     <message>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation type="unfinished"></translation>
+        <translation>murriztea</translation>
     </message>
     <message>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
-        <translation type="unfinished"></translation>
+        <translation>rh</translation>
     </message>
     <message>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation>murriztailea</translation>
     </message>
     <message>
         <source>rv</source>
         <comment>restrict - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation>rv</translation>
     </message>
     <message>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
-        <translation type="unfinished"></translation>
+        <translation>mv</translation>
     </message>
     <message>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation type="unfinished"></translation>
+        <translation>bev</translation>
     </message>
     <message>
         <source>ch</source>
         <comment>modify - bevel</comment>
-        <translation type="unfinished"></translation>
+        <translation>k</translation>
     </message>
     <message>
         <source>fi</source>
         <comment>modify - fillet</comment>
-        <translation type="unfinished"></translation>
+        <translation>fideo</translation>
     </message>
     <message>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"></translation>
+        <translation>moztuta</translation>
     </message>
     <message>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"></translation>
+        <translation>div</translation>
     </message>
     <message>
         <source>mi</source>
         <comment>modify -  mirror</comment>
-        <translation type="unfinished"></translation>
+        <translation>mi</translation>
     </message>
     <message>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
-        <translation type="unfinished"></translation>
+        <translation>rev</translation>
     </message>
     <message>
         <source>ro</source>
         <comment>modify - rotate</comment>
-        <translation type="unfinished"></translation>
+        <translation>ro</translation>
     </message>
     <message>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation type="unfinished"></translation>
+        <translation>sz</translation>
     </message>
     <message>
         <source>tm</source>
         <comment>modify - trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation>tm</translation>
     </message>
     <message>
         <source>tm2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation>tm2</translation>
     </message>
     <message>
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation type="unfinished"></translation>
+        <translation>les</translation>
     </message>
     <message>
         <source>ss</source>
         <comment>modify - stretch</comment>
-        <translation type="unfinished"></translation>
+        <translation>s</translation>
     </message>
     <message>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation type="unfinished"></translation>
+        <translation>er</translation>
     </message>
     <message>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
-        <translation type="unfinished"></translation>
+        <translation>del</translation>
     </message>
     <message>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>xp</translation>
     </message>
     <message>
         <source>snapfree</source>
         <comment>snap - free</comment>
-        <translation type="unfinished"></translation>
+        <translation>snapfree</translation>
     </message>
     <message>
         <source>os</source>
         <comment>snap - free</comment>
-        <translation type="unfinished"></translation>
+        <translation>ostikoka</translation>
     </message>
     <message>
         <source>snapcenter</source>
         <comment>snap - center</comment>
-        <translation type="unfinished"></translation>
+        <translation>snapcenter</translation>
     </message>
     <message>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation type="unfinished"></translation>
+        <translation>k</translation>
     </message>
     <message>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation type="unfinished"></translation>
+        <translation>snapdist</translation>
     </message>
     <message>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
-        <translation type="unfinished"></translation>
+        <translation>sd</translation>
     </message>
     <message>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation type="unfinished"></translation>
+        <translation>snapend</translation>
     </message>
     <message>
         <source>se</source>
         <comment>snap - end points</comment>
-        <translation type="unfinished"></translation>
+        <translation>sedentarioa</translation>
     </message>
     <message>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation type="unfinished"></translation>
+        <translation>snapgrid</translation>
     </message>
     <message>
         <source>sg</source>
         <comment>snap - grid</comment>
-        <translation type="unfinished"></translation>
+        <translation>sg</translation>
     </message>
     <message>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation type="unfinished"></translation>
+        <translation>ebakidura</translation>
     </message>
     <message>
         <source>si</source>
         <comment>snap - intersection</comment>
-        <translation type="unfinished"></translation>
+        <translation>si</translation>
     </message>
     <message>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation type="unfinished"></translation>
+        <translation>snapmiddle</translation>
     </message>
     <message>
         <source>sm</source>
         <comment>snap - middle points</comment>
-        <translation type="unfinished"></translation>
+        <translation>sms</translation>
     </message>
     <message>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation type="unfinished"></translation>
+        <translation>snaponentity</translation>
     </message>
     <message>
         <source>sn</source>
         <comment>snap - on entity</comment>
-        <translation type="unfinished"></translation>
+        <translation>sn</translation>
     </message>
     <message>
         <source>np</source>
         <comment>snap - on entity</comment>
-        <translation type="unfinished"></translation>
+        <translation>np</translation>
     </message>
     <message>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation type="unfinished"></translation>
+        <translation>zero</translation>
     </message>
     <message>
         <source>rz</source>
         <comment>set relative zero position</comment>
-        <translation type="unfinished"></translation>
+        <translation>rz</translation>
     </message>
     <message>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>selectall</translation>
     </message>
     <message>
         <source>sa</source>
         <comment>Select all entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>samalda</translation>
     </message>
     <message>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>desautatu</translation>
     </message>
     <message>
         <source>tn</source>
         <comment>deselect all entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>t</translation>
     </message>
     <message>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation type="unfinished"></translation>
+        <translation>attr</translation>
     </message>
     <message>
         <source>ma</source>
         <comment>modify attribute</comment>
-        <translation type="unfinished"></translation>
+        <translation>ma</translation>
     </message>
     <message>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>propultsioa</translation>
     </message>
     <message>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>dist</translation>
     </message>
     <message>
         <source>dpp</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>dpp</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation type="unfinished"></translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>angle</source>
-        <translation type="unfinished"></translation>
+        <translation>angeluzuzena</translation>
     </message>
     <message>
         <source>dpi</source>
-        <translation type="unfinished"></translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <source>close</source>
-        <translation type="unfinished"></translation>
+        <translation>itxi</translation>
     </message>
     <message>
         <source>chord length</source>
-        <translation type="unfinished"></translation>
+        <translation>akordearen luzera</translation>
     </message>
     <message>
         <source>columns</source>
-        <translation type="unfinished"></translation>
+        <translation>zutabeak</translation>
     </message>
     <message>
         <source>columnspacing</source>
-        <translation type="unfinished"></translation>
+        <translation>zutabeen tartea</translation>
     </message>
     <message>
         <source>factor</source>
-        <translation type="unfinished"></translation>
+        <translation>faktorea</translation>
     </message>
     <message>
         <source>length</source>
-        <translation type="unfinished"></translation>
+        <translation>luzera</translation>
     </message>
     <message>
         <source>number</source>
-        <translation type="unfinished"></translation>
+        <translation>zenbakia</translation>
     </message>
     <message>
         <source>radius</source>
-        <translation type="unfinished"></translation>
+        <translation>erradioa</translation>
     </message>
     <message>
         <source>rows</source>
-        <translation type="unfinished"></translation>
+        <translation>errenkadak</translation>
     </message>
     <message>
         <source>rowspacing</source>
-        <translation type="unfinished"></translation>
+        <translation>errenkadak</translation>
     </message>
     <message>
         <source>through</source>
-        <translation type="unfinished"></translation>
+        <translation>bidez</translation>
     </message>
     <message>
         <source>trim</source>
-        <translation type="unfinished"></translation>
+        <translation>trim</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>angle</comment>
-        <translation type="unfinished"></translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>an</source>
         <comment>angle</comment>
-        <translation type="unfinished"></translation>
+        <translation>bat</translation>
     </message>
     <message>
         <source>center</source>
-        <translation type="unfinished"></translation>
+        <translation>zentroa</translation>
     </message>
     <message>
         <source>cen</source>
         <comment>center</comment>
-        <translation type="unfinished"></translation>
+        <translation>zentratu</translation>
     </message>
     <message>
         <source>ce</source>
         <comment>center</comment>
-        <translation type="unfinished"></translation>
+        <translation>ce</translation>
     </message>
     <message>
         <source>cl</source>
         <comment>chord length</comment>
-        <translation type="unfinished"></translation>
+        <translation>cl</translation>
     </message>
     <message>
         <source>c</source>
         <comment>close</comment>
-        <translation type="unfinished"></translation>
+        <translation>c</translation>
     </message>
     <message>
         <source>cols</source>
         <comment>columns</comment>
-        <translation type="unfinished"></translation>
+        <translation>koloak</translation>
     </message>
     <message>
         <source>co</source>
         <comment>columns</comment>
-        <translation type="unfinished"></translation>
+        <translation>cocteau</translation>
     </message>
     <message>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation type="unfinished"></translation>
+        <translation>zutabeen tartea</translation>
     </message>
     <message>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation type="unfinished"></translation>
+        <translation>colspacing</translation>
     </message>
     <message>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
-        <translation type="unfinished"></translation>
+        <translation>cs</translation>
     </message>
     <message>
         <source>fact</source>
         <comment>factor</comment>
-        <translation type="unfinished"></translation>
+        <translation>errealitatea</translation>
     </message>
     <message>
         <source>f</source>
         <comment>factor</comment>
-        <translation type="unfinished"></translation>
+        <translation>f</translation>
     </message>
     <message>
         <source>help</source>
-        <translation type="unfinished"></translation>
+        <translation>laguntza</translation>
     </message>
     <message>
         <source>?</source>
         <comment>help</comment>
-        <translation type="unfinished"></translation>
+        <translation>?</translation>
     </message>
     <message>
         <source>length</source>
         <comment>length</comment>
-        <translation type="unfinished"></translation>
+        <translation>luzera</translation>
     </message>
     <message>
         <source>len</source>
         <comment>length</comment>
-        <translation type="unfinished"></translation>
+        <translation>len</translation>
     </message>
     <message>
         <source>l</source>
         <comment>length</comment>
-        <translation type="unfinished"></translation>
+        <translation>l</translation>
     </message>
     <message>
         <source>length1</source>
         <comment>length1</comment>
-        <translation type="unfinished"></translation>
+        <translation>luzera 1</translation>
     </message>
     <message>
         <source>len1</source>
         <comment>length1</comment>
-        <translation type="unfinished"></translation>
+        <translation>len1</translation>
     </message>
     <message>
         <source>l1</source>
         <comment>length1</comment>
-        <translation type="unfinished"></translation>
+        <translation>l1</translation>
     </message>
     <message>
         <source>length2</source>
         <comment>length2</comment>
-        <translation type="unfinished"></translation>
+        <translation>luzera</translation>
     </message>
     <message>
         <source>len2</source>
         <comment>length2</comment>
-        <translation type="unfinished"></translation>
+        <translation>len2</translation>
     </message>
     <message>
         <source>l2</source>
         <comment>length2</comment>
-        <translation type="unfinished"></translation>
+        <translation>l2</translation>
     </message>
     <message>
         <source>number</source>
         <comment>number</comment>
-        <translation type="unfinished"></translation>
+        <translation>zenbakia</translation>
     </message>
     <message>
         <source>num</source>
         <comment>number</comment>
-        <translation type="unfinished"></translation>
+        <translation>num</translation>
     </message>
     <message>
         <source>n</source>
         <comment>number</comment>
-        <translation type="unfinished"></translation>
+        <translation>n</translation>
     </message>
     <message>
         <source>ra</source>
         <comment>radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>ra</translation>
     </message>
     <message>
         <source>reversed</source>
         <comment>reversed</comment>
-        <translation type="unfinished"></translation>
+        <translation>alderantziz</translation>
     </message>
     <message>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation type="unfinished"></translation>
+        <translation>rev</translation>
     </message>
     <message>
         <source>row</source>
         <comment>row</comment>
-        <translation type="unfinished"></translation>
+        <translation>errenkada</translation>
     </message>
     <message>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation type="unfinished"></translation>
+        <translation>errenkadak</translation>
     </message>
     <message>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
-        <translation type="unfinished"></translation>
+        <translation>rs</translation>
     </message>
     <message>
         <source>text</source>
-        <translation type="unfinished"></translation>
+        <translation>testua</translation>
     </message>
     <message>
         <source>t</source>
         <comment>text</comment>
-        <translation type="unfinished"></translation>
+        <translation>t</translation>
     </message>
     <message>
         <source>t</source>
         <comment>through</comment>
-        <translation type="unfinished"></translation>
+        <translation>t</translation>
     </message>
     <message>
         <source>undo</source>
-        <translation type="unfinished"></translation>
+        <translation>desegin</translation>
     </message>
     <message>
         <source>u</source>
         <comment>undo</comment>
-        <translation type="unfinished"></translation>
+        <translation>u</translation>
     </message>
     <message>
         <source>redo</source>
-        <translation type="unfinished"></translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
         <comment>redo</comment>
-        <translation type="unfinished"></translation>
+        <translation>r</translation>
     </message>
     <message>
         <source>back</source>
-        <translation type="unfinished"></translation>
+        <translation>atzera</translation>
     </message>
     <message>
         <source>b</source>
         <comment>back</comment>
-        <translation type="unfinished"></translation>
+        <translation>b</translation>
     </message>
     <message>
         <source>paperoffset</source>
-        <translation type="unfinished"></translation>
+        <translation>paper-offset</translation>
     </message>
     <message>
         <source>graphoffset</source>
-        <translation type="unfinished"></translation>
+        <translation>grafikoaoffset</translation>
     </message>
     <message>
         <source>Command: %1 (%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Komandoa: %1 (%2)</translation>
     </message>
     <message>
         <source>RS_Commands:: command not found: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>RS Commands: ez da komandoa aurkitu: %1</translation>
     </message>
     <message>
         <source>Command not found: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez da komandoa aurkitu: %1</translation>
     </message>
     <message>
         <source>Accepted keycode: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Onartutako gako-kodea: %1</translation>
     </message>
     <message>
         <source>Available commands:</source>
-        <translation type="unfinished"></translation>
+        <translation>Komando erabilgarriak:</translation>
     </message>
     <message>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation type="unfinished">Bat ere ez</translation>
+        <translation>Bat ere ez</translation>
     </message>
     <message>
         <source>error reading file metadata in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>errorea fitxategiko metadatuak irakurtzean dwg fitxategian</translation>
     </message>
     <message>
         <source>Calculator error for input: </source>
-        <translation type="unfinished"></translation>
+        <translation>Kalkulu-errorea sarrerarako:</translation>
     </message>
     <message>
         <source>bw</source>
-        <translation type="unfinished"></translation>
+        <translation>bw</translation>
     </message>
     <message>
         <source>blackwhite</source>
-        <translation type="unfinished"></translation>
+        <translation>zuri-beltza</translation>
     </message>
     <message>
         <source>color</source>
-        <translation type="unfinished"></translation>
+        <translation>kolorea</translation>
     </message>
     <message>
         <source>di</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"></translation>
+        <translation>di-da</translation>
     </message>
     <message>
         <source>t2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation>t2</translation>
     </message>
     <message>
         <source>mp</source>
         <comment>modify properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>mp</translation>
     </message>
     <message>
         <source>Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Blokea</translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation type="unfinished">Zirkulua</translation>
+        <translation>Zirkulua</translation>
     </message>
     <message>
         <source>Curve</source>
-        <translation type="unfinished">Kurba</translation>
+        <translation>Curve</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Editatu</translation>
+        <translation>Editatu</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation type="unfinished">Elipsea</translation>
+        <translation>Elipsea</translation>
     </message>
     <message>
         <source>File</source>
-        <translation type="unfinished">Fitxategia</translation>
+        <translation>Fitxategia</translation>
     </message>
     <message>
         <source>Dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Neurria</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished">Info</translation>
+        <translation>Informazioa</translation>
     </message>
     <message>
         <source>Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Geruza</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished">Marra</translation>
+        <translation>Lerroa</translation>
     </message>
     <message>
         <source>Modify</source>
-        <translation type="unfinished">Aldatu</translation>
+        <translation>Aldatu</translation>
     </message>
     <message>
         <source>Options</source>
-        <translation type="unfinished">Aukerak</translation>
+        <translation>Aukerak</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestelakoak</translation>
     </message>
     <message>
         <source>Polyline</source>
-        <translation type="unfinished">Polilinea</translation>
+        <translation>Polilerroa</translation>
     </message>
     <message>
         <source>Restriction</source>
-        <translation type="unfinished"></translation>
+        <translation>Errepresioa</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished">Aukeratu</translation>
+        <translation>Hautatu</translation>
     </message>
     <message>
         <source>Snap</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitu</translation>
     </message>
     <message>
         <source>Snap Extras</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxiki estrak</translation>
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished">Ikusi</translation>
+        <translation>Ikusi</translation>
     </message>
     <message>
         <source>Widgets</source>
-        <translation type="unfinished"></translation>
+        <translation>Trepetak</translation>
     </message>
     <message>
         <source>Creators</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortzaileak</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Denak</translation>
     </message>
     <message>
         <source>Invalid objects removed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Objektu baliogabeak kendu dira:</translation>
     </message>
     <message>
         <source>Pen Wizard</source>
-        <translation type="unfinished"></translation>
+        <translation>Pen Wizard</translation>
     </message>
     <message>
         <source>Select objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu objektuak</translation>
     </message>
     <message>
         <source>Apply to selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplikatu hautatutakoari</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Kendu</translation>
     </message>
     <message>
         <source>You must input a distance first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lehenik distantzia bat sartu behar duzu.</translation>
     </message>
     <message>
         <source>cal</source>
-        <translation type="unfinished"></translation>
+        <translation>egut</translation>
     </message>
     <message>
         <source>Calculator mode: On</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalkulagailuaren modua:</translation>
     </message>
     <message>
         <source>Calculator mode: Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalkulagailuaren modua: itzali</translation>
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished">Lizentzia</translation>
+        <translation>Lizentzia</translation>
     </message>
     <message>
         <source>No %1 layers found</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez da %1 geruzarik aurkitu</translation>
     </message>
     <message>
         <source>line2p</source>
         <comment>draw line</comment>
-        <translation type="unfinished"></translation>
+        <translation>line2p</translation>
     </message>
     <message>
         <source>lineang</source>
         <comment>angled line</comment>
-        <translation type="unfinished"></translation>
+        <translation>lineang</translation>
     </message>
     <message>
         <source>la</source>
         <comment>angled line</comment>
-        <translation type="unfinished"></translation>
+        <translation>la</translation>
     </message>
     <message>
         <source>linehor</source>
         <comment>horizontal line</comment>
-        <translation type="unfinished"></translation>
+        <translation>linehor</translation>
     </message>
     <message>
         <source>lh</source>
         <comment>horizontal line</comment>
-        <translation type="unfinished"></translation>
+        <translation>lh</translation>
     </message>
     <message>
         <source>linever</source>
         <comment>vertical line</comment>
-        <translation type="unfinished"></translation>
+        <translation>linever</translation>
     </message>
     <message>
         <source>lv</source>
         <comment>vertical line</comment>
-        <translation type="unfinished"></translation>
+        <translation>lv</translation>
     </message>
     <message>
         <source>linerec</source>
         <comment>draw rectangle</comment>
-        <translation type="unfinished"></translation>
+        <translation>linerec</translation>
     </message>
     <message>
         <source>re</source>
         <comment>draw rectangle</comment>
-        <translation type="unfinished"></translation>
+        <translation>errege</translation>
     </message>
     <message>
         <source>linepar</source>
         <comment>create parallel</comment>
-        <translation type="unfinished"></translation>
+        <translation>linepar</translation>
     </message>
     <message>
         <source>lineoff</source>
         <comment>create parallel</comment>
-        <translation type="unfinished"></translation>
+        <translation>lineoff</translation>
     </message>
     <message>
         <source>pa</source>
         <comment>create parallel</comment>
-        <translation type="unfinished"></translation>
+        <translation>pa</translation>
     </message>
     <message>
         <source>ll</source>
         <comment>create parallel</comment>
-        <translation type="unfinished"></translation>
+        <translation>ll</translation>
     </message>
     <message>
         <source>lineparthro</source>
         <comment>parallel through point</comment>
-        <translation type="unfinished"></translation>
+        <translation>lineparthro</translation>
     </message>
     <message>
         <source>lp</source>
         <comment>parallel through point</comment>
-        <translation type="unfinished"></translation>
+        <translation>lp</translation>
     </message>
     <message>
         <source>linebisect</source>
         <comment>angle bisector</comment>
-        <translation type="unfinished"></translation>
+        <translation>linebisect</translation>
     </message>
     <message>
         <source>linetancp</source>
         <comment>tangent point and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>linetancp</translation>
     </message>
     <message>
         <source>lt</source>
         <comment>tangent point and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>t'erdi</translation>
     </message>
     <message>
         <source>linetan2c</source>
         <comment>tangent two circles</comment>
-        <translation type="unfinished"></translation>
+        <translation>linetan2c</translation>
     </message>
     <message>
         <source>lc</source>
         <comment>tangent two circles</comment>
-        <translation type="unfinished"></translation>
+        <translation>lc</translation>
     </message>
     <message>
         <source>linetancper</source>
         <comment>tangent line and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>linetancper</translation>
     </message>
     <message>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>edo</translation>
     </message>
     <message>
         <source>lineperp</source>
         <comment>perpendicular line</comment>
-        <translation type="unfinished"></translation>
+        <translation>lineperp</translation>
     </message>
     <message>
         <source>lo</source>
         <comment>perpendicular line</comment>
-        <translation type="unfinished"></translation>
+        <translation>lo</translation>
     </message>
     <message>
         <source>linerelang</source>
         <comment>relative line</comment>
-        <translation type="unfinished"></translation>
+        <translation>linerelang</translation>
     </message>
     <message>
         <source>lr</source>
         <comment>relative line</comment>
-        <translation type="unfinished"></translation>
+        <translation>lr</translation>
     </message>
     <message>
         <source>polygoncencor</source>
         <comment>polygon centre point</comment>
-        <translation type="unfinished"></translation>
+        <translation>polygoncencor</translation>
     </message>
     <message>
         <source>pp</source>
         <comment>polygon centre point</comment>
-        <translation type="unfinished"></translation>
+        <translation>pp</translation>
     </message>
     <message>
         <source>polycp</source>
         <comment>polygon centre point</comment>
-        <translation type="unfinished"></translation>
+        <translation>policp</translation>
     </message>
     <message>
         <source>pcp</source>
         <comment>polygon centre point</comment>
-        <translation type="unfinished"></translation>
+        <translation>pcp</translation>
     </message>
     <message>
         <source>polygoncentan</source>
         <comment>polygon centre vertex</comment>
-        <translation type="unfinished"></translation>
+        <translation>polygoncentan</translation>
     </message>
     <message>
         <source>pv</source>
         <comment>polygon centre vertex</comment>
-        <translation type="unfinished"></translation>
+        <translation>pv</translation>
     </message>
     <message>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
-        <translation type="unfinished"></translation>
+        <translation>poliktak</translation>
     </message>
     <message>
         <source>p2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation type="unfinished"></translation>
+        <translation>p2</translation>
     </message>
     <message>
         <source>c</source>
         <comment>draw circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>c</translation>
     </message>
     <message>
         <source>circle2p</source>
         <comment>circle 2 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>zirkulua2p</translation>
     </message>
     <message>
         <source>c2p</source>
         <comment>circle 2 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>c2p</translation>
     </message>
     <message>
         <source>circle2pr</source>
         <comment>circle 2 points radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>zirkulua2pr</translation>
     </message>
     <message>
         <source>cc</source>
         <comment>circle 2 points radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>cc</translation>
     </message>
     <message>
         <source>circle3p</source>
         <comment>circle 3 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>zirkulua3p</translation>
     </message>
     <message>
         <source>c3p</source>
         <comment>circle 3 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>c3p</translation>
     </message>
     <message>
         <source>circlecr</source>
         <comment>circle point radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>zirkulua</translation>
     </message>
     <message>
         <source>cr</source>
         <comment>circle point radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>creatu</translation>
     </message>
     <message>
         <source>ccr</source>
         <comment>circle point radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>ccr</translation>
     </message>
     <message>
         <source>circletan2cp</source>
         <comment>circle 2 tangent point</comment>
-        <translation type="unfinished"></translation>
+        <translation>zirkuluan2cp</translation>
     </message>
     <message>
         <source>tr</source>
         <comment>circle 2 tangent point</comment>
-        <translation type="unfinished"></translation>
+        <translation>tr</translation>
     </message>
     <message>
         <source>circletan2p</source>
         <comment>circle tangent 2 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>zirkuluan2p</translation>
     </message>
     <message>
         <source>td</source>
         <comment>circle tangent 2 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>td</translation>
     </message>
     <message>
         <source>circletan2cr</source>
         <comment>circle 2 tangent radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>zirkulutan2cr</translation>
     </message>
     <message>
         <source>tc</source>
         <comment>circle 2 tangent radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>tc</translation>
     </message>
     <message>
         <source>circletan3</source>
         <comment>circle tangent to 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>zirkuluan3</translation>
     </message>
     <message>
         <source>t3</source>
         <comment>circle tangent to 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>t3</translation>
     </message>
     <message>
         <source>arc</source>
         <comment>arc point radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>arkua</translation>
     </message>
     <message>
         <source>ar</source>
         <comment>arc point radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>ar</translation>
     </message>
     <message>
         <source>a</source>
         <comment>arc point radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>a</translation>
     </message>
     <message>
         <source>arc3p</source>
         <comment>draw 3pt arc</comment>
-        <translation type="unfinished"></translation>
+        <translation>arc3p</translation>
     </message>
     <message>
         <source>a3</source>
         <comment>draw 3pt arc</comment>
-        <translation type="unfinished"></translation>
+        <translation>a3</translation>
     </message>
     <message>
         <source>arctan</source>
         <comment>arc tangent</comment>
-        <translation type="unfinished"></translation>
+        <translation>arctan</translation>
     </message>
     <message>
         <source>at</source>
         <comment>arc tangent</comment>
-        <translation type="unfinished"></translation>
+        <translation>at</translation>
     </message>
     <message>
         <source>sf</source>
         <comment>draw spline</comment>
-        <translation type="unfinished"></translation>
+        <translation>sf</translation>
     </message>
     <message>
         <source>sp</source>
         <comment>spline through points</comment>
-        <translation type="unfinished"></translation>
+        <translation>sp</translation>
     </message>
     <message>
         <source>arcellc2ax</source>
         <comment>arc ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation>arcellc2ax</translation>
     </message>
     <message>
         <source>ae</source>
         <comment>arc ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation>ae</translation>
     </message>
     <message>
         <source>fh</source>
         <comment>draw freehand line</comment>
-        <translation type="unfinished"></translation>
+        <translation>fh</translation>
     </message>
     <message>
         <source>ellipsec2p</source>
         <comment>ellipse axis</comment>
-        <translation type="unfinished"></translation>
+        <translation>elipsec2p</translation>
     </message>
     <message>
         <source>ea</source>
         <comment>ellipse axis</comment>
-        <translation type="unfinished"></translation>
+        <translation>ea</translation>
     </message>
     <message>
         <source>ellipse3p</source>
         <comment>ellipse foci</comment>
-        <translation type="unfinished"></translation>
+        <translation>elipse3p</translation>
     </message>
     <message>
         <source>ef</source>
         <comment>ellipse foci</comment>
-        <translation type="unfinished"></translation>
+        <translation>ef</translation>
     </message>
     <message>
         <source>ellipse4p</source>
         <comment>ellipse 4 point</comment>
-        <translation type="unfinished"></translation>
+        <translation>elipse4p</translation>
     </message>
     <message>
         <source>e4</source>
         <comment>ellipse 4 point</comment>
-        <translation type="unfinished"></translation>
+        <translation>e4</translation>
     </message>
     <message>
         <source>ellipsec3p</source>
         <comment>ellipse center 3 point</comment>
-        <translation type="unfinished"></translation>
+        <translation>elipsec3p</translation>
     </message>
     <message>
         <source>e3</source>
         <comment>ellipse center 3 point</comment>
-        <translation type="unfinished"></translation>
+        <translation>e3</translation>
     </message>
     <message>
         <source>plineadd</source>
         <comment>pl add node</comment>
-        <translation type="unfinished"></translation>
+        <translation>plineadd</translation>
     </message>
     <message>
         <source>pi</source>
         <comment>pl add node</comment>
-        <translation type="unfinished"></translation>
+        <translation>pipi</translation>
     </message>
     <message>
         <source>plineapp</source>
         <comment>pl append node</comment>
-        <translation type="unfinished"></translation>
+        <translation>plineapp</translation>
     </message>
     <message>
         <source>pn</source>
         <comment>pl append node</comment>
-        <translation type="unfinished"></translation>
+        <translation>pn</translation>
     </message>
     <message>
         <source>plinedel</source>
         <comment>pl delete node</comment>
-        <translation type="unfinished"></translation>
+        <translation>plinedel</translation>
     </message>
     <message>
         <source>pd</source>
         <comment>pl delete node</comment>
-        <translation type="unfinished"></translation>
+        <translation>pd</translation>
     </message>
     <message>
         <source>plinedeltwn</source>
         <comment>pl del between nodes</comment>
-        <translation type="unfinished"></translation>
+        <translation>plinedeltwn</translation>
     </message>
     <message>
         <source>pr</source>
         <comment>pl del between nodes</comment>
-        <translation type="unfinished"></translation>
+        <translation>prc</translation>
     </message>
     <message>
         <source>plinetrm</source>
         <comment>pl trim segments</comment>
-        <translation type="unfinished"></translation>
+        <translation>plinetrm</translation>
     </message>
     <message>
         <source>pt</source>
         <comment>pl trim segments</comment>
-        <translation type="unfinished"></translation>
+        <translation>pt</translation>
     </message>
     <message>
         <source>plinepar</source>
         <comment>pl equidistant</comment>
-        <translation type="unfinished"></translation>
+        <translation>plinepar</translation>
     </message>
     <message>
         <source>pe</source>
         <comment>pl equidistant</comment>
-        <translation type="unfinished"></translation>
+        <translation>pegatina</translation>
     </message>
     <message>
         <source>plinejoin</source>
         <comment>pl join</comment>
-        <translation type="unfinished"></translation>
+        <translation>plinejoin</translation>
     </message>
     <message>
         <source>pj</source>
         <comment>pl join</comment>
-        <translation type="unfinished"></translation>
+        <translation>pj</translation>
     </message>
     <message>
         <source>sx</source>
         <comment>deselect all entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>sx</translation>
     </message>
     <message>
         <source>invertselect</source>
         <comment>invert select</comment>
-        <translation type="unfinished"></translation>
+        <translation>invertselect</translation>
     </message>
     <message>
         <source>is</source>
         <comment>invert select</comment>
-        <translation type="unfinished"></translation>
+        <translation>da</translation>
     </message>
     <message>
         <source>ds</source>
         <comment>dimension - aligned</comment>
-        <translation type="unfinished"></translation>
+        <translation>ds</translation>
     </message>
     <message>
         <source>dimradius</source>
         <comment>dimension - radial</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimradius</translation>
     </message>
     <message>
         <source>dr</source>
         <comment>dimension - radial</comment>
-        <translation type="unfinished"></translation>
+        <translation>dr</translation>
     </message>
     <message>
         <source>da</source>
         <comment>dimension - angular</comment>
-        <translation type="unfinished"></translation>
+        <translation>da</translation>
     </message>
     <message>
         <source>dg</source>
         <comment>dimension - regenerate</comment>
-        <translation type="unfinished"></translation>
+        <translation>dg</translation>
     </message>
     <message>
         <source>modmove</source>
         <comment>modify - move (copy)</comment>
-        <translation type="unfinished"></translation>
+        <translation>modmove</translation>
     </message>
     <message>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
-        <translation type="unfinished"></translation>
+        <translation>modrotate</translation>
     </message>
     <message>
         <source>modscale</source>
         <comment>modify - scale</comment>
-        <translation type="unfinished"></translation>
+        <translation>modscale</translation>
     </message>
     <message>
         <source>modmirror</source>
         <comment>modify -  mirror</comment>
-        <translation type="unfinished"></translation>
+        <translation>modmirroror</translation>
     </message>
     <message>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
-        <translation type="unfinished"></translation>
+        <translation>modmovrot</translation>
     </message>
     <message>
         <source>mr</source>
         <comment>modify - move rotate</comment>
-        <translation type="unfinished"></translation>
+        <translation>mr</translation>
     </message>
     <message>
         <source>mod2rot</source>
         <comment>modify - rotate2</comment>
-        <translation type="unfinished"></translation>
+        <translation>mod2rot</translation>
     </message>
     <message>
         <source>r2</source>
         <comment>modify - rotate2</comment>
-        <translation type="unfinished"></translation>
+        <translation>r2</translation>
     </message>
     <message>
         <source>modrevert</source>
         <comment>modify -  revert direction</comment>
-        <translation type="unfinished"></translation>
+        <translation>modrevert</translation>
     </message>
     <message>
         <source>md</source>
         <comment>modify -  revert direction</comment>
-        <translation type="unfinished"></translation>
+        <translation>md</translation>
     </message>
     <message>
         <source>modtrim</source>
         <comment>modify - trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation>modtrim</translation>
     </message>
     <message>
         <source>modtrim2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation>modtrim2</translation>
     </message>
     <message>
         <source>modlengthen</source>
         <comment>modify - lengthen</comment>
-        <translation type="unfinished"></translation>
+        <translation>modlengthen</translation>
     </message>
     <message>
         <source>modoffset</source>
         <comment>modify - offset</comment>
-        <translation type="unfinished"></translation>
+        <translation>modoffset</translation>
     </message>
     <message>
         <source>mo</source>
         <comment>modify - offset</comment>
-        <translation type="unfinished"></translation>
+        <translation>m</translation>
     </message>
     <message>
         <source>moff</source>
         <comment>modify - offset</comment>
-        <translation type="unfinished"></translation>
+        <translation>moff</translation>
     </message>
     <message>
         <source>modbevel</source>
         <comment>modify - bevel</comment>
-        <translation type="unfinished"></translation>
+        <translation>modbevel</translation>
     </message>
     <message>
         <source>modfillet</source>
         <comment>modify - fillet</comment>
-        <translation type="unfinished"></translation>
+        <translation>modfillet</translation>
     </message>
     <message>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"></translation>
+        <translation>moddivide</translation>
     </message>
     <message>
         <source>modstretch</source>
         <comment>modify - stretch</comment>
-        <translation type="unfinished"></translation>
+        <translation>modstretch</translation>
     </message>
     <message>
         <source>modproperties</source>
         <comment>modify properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>modproperties</translation>
     </message>
     <message>
         <source>modattr</source>
         <comment>modify attribute</comment>
-        <translation type="unfinished"></translation>
+        <translation>modattr</translation>
     </message>
     <message>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
-        <translation type="unfinished"></translation>
+        <translation>modexpltext</translation>
     </message>
     <message>
         <source>xt</source>
         <comment>explode text strings</comment>
-        <translation type="unfinished"></translation>
+        <translation>xt</translation>
     </message>
     <message>
         <source>modexplode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>modexplode</translation>
     </message>
     <message>
         <source>moddelete</source>
         <comment>modify - delete (erase)</comment>
-        <translation type="unfinished"></translation>
+        <translation>moddelete</translation>
     </message>
     <message>
         <source>infodistance</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>informazioaren distantzia</translation>
     </message>
     <message>
         <source>id</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>id</translation>
     </message>
     <message>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>infodistep</translation>
     </message>
     <message>
         <source>ii</source>
         <comment>distance entity to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>ii</translation>
     </message>
     <message>
         <source>dep</source>
         <comment>distance entity to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>dep</translation>
     </message>
     <message>
         <source>infoangle</source>
         <comment>measure angle</comment>
-        <translation type="unfinished"></translation>
+        <translation>infoangle</translation>
     </message>
     <message>
         <source>ia</source>
         <comment>measure angle</comment>
-        <translation type="unfinished"></translation>
+        <translation>ia</translation>
     </message>
     <message>
         <source>infoarea</source>
         <comment>measure area</comment>
-        <translation type="unfinished"></translation>
+        <translation>infoarea</translation>
     </message>
     <message>
         <source>aa</source>
         <comment>measure area</comment>
-        <translation type="unfinished"></translation>
+        <translation>aa</translation>
     </message>
     <message>
         <source>mt</source>
         <comment>draw mtext</comment>
-        <translation type="unfinished"></translation>
+        <translation>mt</translation>
     </message>
     <message>
         <source>tx</source>
         <comment>draw text</comment>
-        <translation type="unfinished"></translation>
+        <translation>tx</translation>
     </message>
     <message>
         <source>so</source>
         <comment>snap - free</comment>
-        <translation type="unfinished"></translation>
+        <translation>beraz</translation>
     </message>
     <message>
         <source>ki</source>
         <comment>kill all actions</comment>
-        <translation type="unfinished"></translation>
+        <translation>k. a</translation>
     </message>
     <message>
         <source>un</source>
         <comment>undo cycle</comment>
-        <translation type="unfinished"></translation>
+        <translation>ez</translation>
     </message>
     <message>
         <source>rd</source>
         <comment>redo cycle</comment>
-        <translation type="unfinished"></translation>
+        <translation />
     </message>
     <message>
         <source>drawpref</source>
         <comment>drawing preferences</comment>
-        <translation type="unfinished"></translation>
+        <translation>drawpref</translation>
     </message>
     <message>
         <source>dp</source>
         <comment>drawing preferences</comment>
-        <translation type="unfinished"></translation>
+        <translation>dp</translation>
     </message>
     <message>
         <source>equation</source>
-        <translation type="unfinished"></translation>
+        <translation>ekuazioa</translation>
     </message>
     <message>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
-        <translation type="unfinished"></translation>
+        <translation>luzera 1</translation>
     </message>
     <message>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
-        <translation type="unfinished"></translation>
+        <translation>luzera</translation>
     </message>
     <message>
         <source>eqn</source>
         <comment>equation</comment>
-        <translation type="unfinished"></translation>
+        <translation>eqn</translation>
     </message>
     <message>
         <source>eq</source>
         <comment>equation</comment>
-        <translation type="unfinished"></translation>
+        <translation>eq</translation>
     </message>
     <message>
         <source>Custom</source>
         <comment>Paper format</comment>
-        <translation type="unfinished">Custom</translation>
+        <translation>Pertsonalizatua</translation>
     </message>
     <message>
         <source>A0</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>A0</translation>
     </message>
     <message>
         <source>A1</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>A1</translation>
     </message>
     <message>
         <source>A2</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>A2</translation>
     </message>
     <message>
         <source>A3</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>A3</translation>
     </message>
     <message>
         <source>A4</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>A4</translation>
     </message>
     <message>
         <source>Letter / ANSI A</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gutuna / ANSI A</translation>
     </message>
     <message>
         <source>Legal</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Legala</translation>
     </message>
     <message>
         <source>Tabloid / ANSI B</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tabloid / ANSI B</translation>
     </message>
     <message>
         <source>ANSI C</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>ANSI C</translation>
     </message>
     <message>
         <source>ANSI D</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>ANSI D</translation>
     </message>
     <message>
         <source>ANSI E</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>ANSI E</translation>
     </message>
     <message>
         <source>Arch A</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Arch A</translation>
     </message>
     <message>
         <source>Arch B</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Arch B</translation>
     </message>
     <message>
         <source>Arch C</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Arch C</translation>
     </message>
     <message>
         <source>Arch D</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Arch D</translation>
     </message>
     <message>
         <source>Arch E</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Arch E</translation>
     </message>
     <message>
         <source>custom</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>pertsonalizatua</translation>
     </message>
     <message>
         <source>a0</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>a0</translation>
     </message>
     <message>
         <source>a1</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>a1</translation>
     </message>
     <message>
         <source>a2</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>a2</translation>
     </message>
     <message>
         <source>a3</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>a3</translation>
     </message>
     <message>
         <source>a4</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>a4</translation>
     </message>
     <message>
         <source>letter</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>gutuna</translation>
     </message>
     <message>
         <source>legal</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>legala</translation>
     </message>
     <message>
         <source>tabloid</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>tabloidea</translation>
     </message>
     <message>
         <source>ansi c</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>ansi c</translation>
     </message>
     <message>
         <source>ansi d</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>ansi d</translation>
     </message>
     <message>
         <source>ansi e</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>ansi e</translation>
     </message>
     <message>
         <source>arch a</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>arkua</translation>
     </message>
     <message>
         <source>arch b</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>b</translation>
     </message>
     <message>
         <source>arch c</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>arkua</translation>
     </message>
     <message>
         <source>arch d</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>arkua</translation>
     </message>
     <message>
         <source>arch e</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>arkua e</translation>
     </message>
     <message>
         <source>DWG support is not complete!</source>
-        <translation type="unfinished"></translation>
+        <translation>DWG euskarria ez dago osorik!</translation>
     </message>
     <message>
         <source>If this file fails to open try an older DWG format</source>
-        <translation type="unfinished"></translation>
+        <translation>Fitxategi honek irekitzen ez badu, saiatu DWG formatu zaharrago batekin</translation>
     </message>
     <message>
         <source>or try to find a converter to make it a DXF file.</source>
-        <translation type="unfinished"></translation>
+        <translation>edo saiatu bihurgailu bat bilatzen DXF fitxategi bihurtzeko.</translation>
     </message>
     <message>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Informazioa</translation>
     </message>
     <message>
         <source>Error</source>
         <comment>fileImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Errorea</translation>
     </message>
     <message>
         <source>Import error:</source>
         <comment>fileImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Inportazioaren errorea:</translation>
     </message>
     <message>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nolanahi ere, badira zenbait entitate identifikatuta.</translation>
     </message>
     <message>
         <source>If you open the file now, the drawing may be not complete or unusable.</source>
         <comment>dwgImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fitxategia orain irekitzen baduzu, marrazkia ez da erabatekoa edo erabilezina izango.</translation>
     </message>
     <message>
         <source>Ignore error and open the file?</source>
         <comment>dwgImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ezikusi egin erroreei eta ireki fitxategia?</translation>
     </message>
     <message>
         <source>no DXF/DWG error</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>dXF/DWG errorerik ez</translation>
     </message>
     <message>
         <source>error opening DXF/DWG file</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>errorea DXF/DWG fitxategia irekitzean</translation>
     </message>
     <message>
         <source>unsupported DXF/DWG file version</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>onartu gabeko DXF/DWG fitxategi-bertsioa</translation>
     </message>
     <message>
         <source>error reading DXF/DWG meta data</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>errorea DXF/DWG metadatuak irakurtzean</translation>
     </message>
     <message>
         <source>error reading DXF/DWG file header</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>errorea DXF/DWG fitxategi-goiburua irakurtzean</translation>
     </message>
     <message>
         <source>error reading DXF/DWG header dara</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>errorea DXF/DWG goiburua irakurtzean</translation>
     </message>
     <message>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>errorea DXF/DWG objektu-mapa irakurtzean</translation>
     </message>
     <message>
         <source>error reading DXF/DWG classes</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>errorea DXF/DWG klaseak irakurtzean</translation>
     </message>
     <message>
         <source>error reading DXF/DWG tables</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>errorea DXF/DWG taulak irakurtzean</translation>
     </message>
     <message>
         <source>error reading DXF/DWG blocks</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>errorea DXF/DWG blokeak irakurtzean</translation>
     </message>
     <message>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>errorea DXF/DWG entitateak irakurtzean</translation>
     </message>
     <message>
         <source>error reading DXF/DWG objects</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>errorea DXF/DWG objektuak irakurtzean</translation>
     </message>
     <message>
         <source>error reading DXF/DWG sections</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>errorea DXF/DWG atalak irakurtzean</translation>
     </message>
     <message>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>errorea DXF/DWG kodea irakurtzean</translation>
     </message>
     <message>
         <source>undefined error</source>
         <comment>RS_FilterInterface</comment>
-        <translation type="unfinished"></translation>
+        <translation>definitu gabeko errorea</translation>
     </message>
     <message>
         <source>usage: </source>
-        <translation type="unfinished"></translation>
+        <translation>erabilera:</translation>
     </message>
     <message>
         <source> [options] &lt;dxf_files&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>[aukerak] &lt;dxf files&gt;</translation>
     </message>
     <message>
         <source> *.dxf</source>
-        <translation type="unfinished"></translation>
+        <translation>*.dxf</translation>
     </message>
     <message>
         <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation type="unfinished"></translation>
+        <translation>-- inprimatu dxf fitxategi guztiak izen bereko pdf fitxategietara.</translation>
     </message>
     <message>
         <source> -o some.pdf *.dxf</source>
-        <translation type="unfinished"></translation>
+        <translation>-o batzuk.pdf *.dxf</translation>
     </message>
     <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation type="unfinished"></translation>
+        <source>-- print all dxf files to 'some.pdf' file.</source>
+        <translation>-- inprimatu dxf fitxategi guztiak 'bat.pdf' fitxategian.</translation>
     </message>
     <message>
         <source>Auto fit and center drawing to page.</source>
-        <translation type="unfinished"></translation>
+        <translation>Doitze automatikoa eta erdiko marrazkia orrian.</translation>
     </message>
     <message>
         <source>Auto center drawing on page.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zentratu automatikoki orrian.</translation>
     </message>
     <message>
         <source>Print grayscale.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inprimatu gris-eskala.</translation>
     </message>
     <message>
         <source>Print monochrome (black/white).</source>
-        <translation type="unfinished"></translation>
+        <translation>Inprimatu monokromoa (beltza/zuria).</translation>
     </message>
     <message>
         <source>Paper size (Width x Height) in mm.</source>
         <comment>WxH</comment>
-        <translation type="unfinished"></translation>
+        <translation>Paperaren tamaina (Width x Height) mm-tan.</translation>
     </message>
     <message>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
-        <translation type="unfinished"></translation>
+        <translation>Irteerako bereizmena (DPI).</translation>
     </message>
     <message>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
-        <translation type="unfinished"></translation>
+        <translation>Irteera-eskala. Adibidez: 0,01 (1,100 eskalan).</translation>
     </message>
     <message>
         <source>Paper margins in mm (integer or float).</source>
-        <translation type="unfinished"></translation>
+        <translation>Paper-marjinak mm-tan (osoak edo mugikorrak).</translation>
     </message>
     <message>
         <source>Print on multiple pages (Horiz. x Vert.).</source>
-        <translation type="unfinished"></translation>
+        <translation>Inprimatu hainbat orrialdetan (Horiz. x Vert).</translation>
     </message>
     <message>
         <source>Output PDF file.</source>
         <comment>file</comment>
-        <translation type="unfinished"></translation>
+        <translation>Erakutsi PDF fitxategia.</translation>
     </message>
     <message>
         <source>Target output directory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Helburuko irteerako direktorioa.</translation>
     </message>
     <message>
         <source>&lt;dxf_files&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;dxf files&gt;</translation>
     </message>
     <message>
         <source>Input DXF file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sarrerako DXF fitxategia(k)</translation>
     </message>
     <message>
         <source>Keycode mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Gako-kodeen modua</translation>
     </message>
     <message>
         <source>Load command file</source>
-        <translation type="unfinished"></translation>
+        <translation>Kargatu komando-fitxategia</translation>
     </message>
     <message>
         <source>Paste multiple commands</source>
-        <translation type="unfinished"></translation>
+        <translation>Itsatsi komando anitzak</translation>
     </message>
     <message>
         <source>Combine all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Konbinatu geruza guztiak</translation>
     </message>
     <message>
-        <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation type="unfinished"></translation>
+        <source>File "%1" already exists. Do you want to replace it?</source>
+        <translation>"% 1" fitxategia badago lehendik ere. Ordeztea nahi duzu?</translation>
     </message>
     <message>
         <source>/CustomColor%1</source>
-        <translation type="unfinished"></translation>
+        <translation>/Kolore pertsonalizatua% 1</translation>
     </message>
     <message>
         <source>Custom Picked</source>
-        <translation type="unfinished"></translation>
+        <translation>Aukeratutako pertsonalizatua</translation>
     </message>
     <message>
         <source>noname</source>
         <comment>default layer name</comment>
-        <translation type="unfinished"></translation>
+        <translation>izenik ez</translation>
     </message>
     <message>
         <source>R</source>
         <comment>Radial dimension prefix</comment>
-        <translation type="unfinished"></translation>
+        <translation>R</translation>
     </message>
     <message>
         <source>sline</source>
         <comment>draw snake line</comment>
-        <translation type="unfinished"></translation>
+        <translation>sline</translation>
     </message>
     <message>
         <source>sli</source>
         <comment>draw snake line</comment>
-        <translation type="unfinished"></translation>
+        <translation>sli</translation>
     </message>
     <message>
         <source>sl</source>
         <comment>draw snake line</comment>
-        <translation type="unfinished"></translation>
+        <translation>sl</translation>
     </message>
     <message>
         <source>slinex</source>
         <comment>draw snake line (X)</comment>
-        <translation type="unfinished"></translation>
+        <translation>slinex</translation>
     </message>
     <message>
         <source>slix</source>
         <comment>draw snake line (X)</comment>
-        <translation type="unfinished"></translation>
+        <translation>slix</translation>
     </message>
     <message>
         <source>rlx</source>
         <comment>draw snake line (X)</comment>
-        <translation type="unfinished"></translation>
+        <translation>rlx</translation>
     </message>
     <message>
         <source>sliney</source>
         <comment>draw snake line (Y)</comment>
-        <translation type="unfinished"></translation>
+        <translation>sliney</translation>
     </message>
     <message>
         <source>sliy</source>
         <comment>draw snake line (Y)</comment>
-        <translation type="unfinished"></translation>
+        <translation>sliy</translation>
     </message>
     <message>
         <source>rly</source>
         <comment>draw snake line (Y)</comment>
-        <translation type="unfinished"></translation>
+        <translation>rly</translation>
     </message>
     <message>
         <source>rect1</source>
         <comment>draw rectangle (1 Point)</comment>
-        <translation type="unfinished"></translation>
+        <translation>rect1</translation>
     </message>
     <message>
         <source>re1</source>
         <comment>draw rectangle (1 Point)</comment>
-        <translation type="unfinished"></translation>
+        <translation>re1</translation>
     </message>
     <message>
         <source>rect2</source>
         <comment>draw rectangle (2 Points)</comment>
-        <translation type="unfinished"></translation>
+        <translation>rect2</translation>
     </message>
     <message>
         <source>re2</source>
         <comment>draw rectangle (2 Points)</comment>
-        <translation type="unfinished"></translation>
+        <translation>re2</translation>
     </message>
     <message>
         <source>rect3</source>
         <comment>draw rectangle (3 Points)</comment>
-        <translation type="unfinished"></translation>
+        <translation>rect3</translation>
     </message>
     <message>
         <source>re3</source>
         <comment>draw rectangle (3 Points)</comment>
-        <translation type="unfinished"></translation>
+        <translation>re3</translation>
     </message>
     <message>
         <source>slicel</source>
         <comment>slice/divide line</comment>
-        <translation type="unfinished"></translation>
+        <translation>xerra</translation>
     </message>
     <message>
         <source>sll</source>
         <comment>slice/divide line</comment>
-        <translation type="unfinished"></translation>
+        <translation>sll</translation>
     </message>
     <message>
         <source>slicec</source>
         <comment>slice/divide circle/arc</comment>
-        <translation type="unfinished"></translation>
+        <translation>xerra</translation>
     </message>
     <message>
         <source>slc</source>
         <comment>slice/divide circle/arc</comment>
-        <translation type="unfinished"></translation>
+        <translation>slc</translation>
     </message>
     <message>
         <source>star</source>
         <comment>draw star</comment>
-        <translation type="unfinished"></translation>
+        <translation>izarra</translation>
     </message>
     <message>
         <source>st</source>
         <comment>draw star</comment>
-        <translation type="unfinished"></translation>
+        <translation>st</translation>
     </message>
     <message>
         <source>cross</source>
         <comment>draw cross for circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>gurutzea</translation>
     </message>
     <message>
         <source>cx</source>
         <comment>draw cross for circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>cx</translation>
     </message>
     <message>
         <source>linepoints</source>
         <comment>draw line of points</comment>
-        <translation type="unfinished"></translation>
+        <translation>puntuak</translation>
     </message>
     <message>
         <source>lpoints</source>
         <comment>draw line of points</comment>
-        <translation type="unfinished"></translation>
+        <translation>puntuak</translation>
     </message>
     <message>
         <source>criclebyarc</source>
         <comment>draw circle by arc</comment>
-        <translation type="unfinished"></translation>
+        <translation>kriclebyarc</translation>
     </message>
     <message>
         <source>cba</source>
         <comment>draw circle by arc</comment>
-        <translation type="unfinished"></translation>
+        <translation>cba</translation>
     </message>
     <message>
         <source>duplicate</source>
         <comment>duplicate entity</comment>
-        <translation type="unfinished"></translation>
+        <translation>bikoiztua</translation>
     </message>
     <message>
         <source>dup</source>
         <comment>duplicate entity</comment>
-        <translation type="unfinished"></translation>
+        <translation>dup</translation>
     </message>
     <message>
         <source>linejoin</source>
         <comment>lines join</comment>
-        <translation type="unfinished"></translation>
+        <translation>linejoin</translation>
     </message>
     <message>
         <source>lj</source>
         <comment>lines join</comment>
-        <translation type="unfinished"></translation>
+        <translation>lj</translation>
     </message>
     <message>
         <source>breakdivide</source>
         <comment>break or divide entity</comment>
-        <translation type="unfinished"></translation>
+        <translation>breakdivide</translation>
     </message>
     <message>
         <source>bd</source>
         <comment>break or divide entity</comment>
-        <translation type="unfinished"></translation>
+        <translation>bd</translation>
     </message>
     <message>
         <source>gapline</source>
         <comment>line gap</comment>
-        <translation type="unfinished"></translation>
+        <translation>hutsunea</translation>
     </message>
     <message>
         <source>gl</source>
         <comment>line gap</comment>
-        <translation type="unfinished"></translation>
+        <translation>glosa</translation>
     </message>
     <message>
         <source>parabola4p</source>
         <comment>Parabola 4 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>parabola4p</translation>
     </message>
     <message>
         <source>pl4</source>
         <comment>Parabola 4 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>pl4</translation>
     </message>
     <message>
         <source>parabolafd</source>
         <comment>Parabola focus directrix</comment>
-        <translation type="unfinished"></translation>
+        <translation>parabolafd</translation>
     </message>
     <message>
         <source>plfd</source>
         <comment>Parabola focus directrix</comment>
-        <translation type="unfinished"></translation>
+        <translation>plfd</translation>
     </message>
     <message>
         <source>angleline</source>
         <comment>draw angle from line</comment>
-        <translation type="unfinished"></translation>
+        <translation>angeluzuzena</translation>
     </message>
     <message>
         <source>rortoline</source>
         <comment>draw orthogonal</comment>
-        <translation type="unfinished"></translation>
+        <translation>rortoline</translation>
     </message>
     <message>
         <source>rort</source>
         <comment>draw orthogonal</comment>
-        <translation type="unfinished"></translation>
+        <translation>rort</translation>
     </message>
     <message>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
-        <translation type="unfinished"></translation>
+        <translation>point2line</translation>
     </message>
     <message>
         <source>p2l</source>
         <comment>draw line from point to line</comment>
-        <translation type="unfinished"></translation>
+        <translation>p2l</translation>
     </message>
     <message>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
-        <translation type="unfinished"></translation>
+        <translation>snapmiddlemanual</translation>
     </message>
     <message>
         <source>snapmanual</source>
         <comment>snap middle manual</comment>
-        <translation type="unfinished"></translation>
+        <translation>snapmanual</translation>
     </message>
     <message>
         <source>smm</source>
         <comment>snap middle manual</comment>
-        <translation type="unfinished"></translation>
+        <translation>smm</translation>
     </message>
     <message>
         <source>x</source>
-        <translation type="unfinished"></translation>
+        <translation>x</translation>
     </message>
     <message>
         <source>y</source>
-        <translation type="unfinished"></translation>
+        <translation>y</translation>
     </message>
     <message>
         <source>p</source>
-        <translation type="unfinished"></translation>
+        <translation>p</translation>
     </message>
     <message>
         <source>anglerel</source>
-        <translation type="unfinished"></translation>
+        <translation>angeluarra</translation>
     </message>
     <message>
         <source>start</source>
-        <translation type="unfinished"></translation>
+        <translation>hasi</translation>
     </message>
     <message>
         <source>offset</source>
-        <translation type="unfinished"></translation>
+        <translation>desplazamendua</translation>
     </message>
     <message>
         <source>linesnap</source>
-        <translation type="unfinished"></translation>
+        <translation>linenap</translation>
     </message>
     <message>
         <source>ticksnap</source>
-        <translation type="unfinished"></translation>
+        <translation>ticksnap</translation>
     </message>
     <message>
         <source>width</source>
-        <translation type="unfinished"></translation>
+        <translation>zabalera</translation>
     </message>
     <message>
         <source>height</source>
-        <translation type="unfinished"></translation>
+        <translation>altuera</translation>
     </message>
     <message>
         <source>pos</source>
-        <translation type="unfinished"></translation>
+        <translation>pos</translation>
     </message>
     <message>
         <source>size</source>
-        <translation type="unfinished"></translation>
+        <translation>tamaina</translation>
     </message>
     <message>
         <source>bevels</source>
-        <translation type="unfinished"></translation>
+        <translation>bevels</translation>
     </message>
     <message>
         <source>nopoly</source>
-        <translation type="unfinished"></translation>
+        <translation>nopoly</translation>
     </message>
     <message>
         <source>usepoly</source>
-        <translation type="unfinished"></translation>
+        <translation>usepoly</translation>
     </message>
     <message>
         <source>corners</source>
-        <translation type="unfinished"></translation>
+        <translation>izkinak</translation>
     </message>
     <message>
         <source>str</source>
-        <translation type="unfinished"></translation>
+        <translation>estolda</translation>
     </message>
     <message>
         <source>round</source>
-        <translation type="unfinished"></translation>
+        <translation>borobila</translation>
     </message>
     <message>
         <source>snap1</source>
-        <translation type="unfinished"></translation>
+        <translation>snap1</translation>
     </message>
     <message>
         <source>topl</source>
-        <translation type="unfinished"></translation>
+        <translation>topl</translation>
     </message>
     <message>
         <source>top</source>
-        <translation type="unfinished"></translation>
+        <translation>goian</translation>
     </message>
     <message>
         <source>topr</source>
-        <translation type="unfinished"></translation>
+        <translation>topr</translation>
     </message>
     <message>
         <source>left</source>
-        <translation type="unfinished"></translation>
+        <translation>ezkerrera</translation>
     </message>
     <message>
         <source>middle</source>
-        <translation type="unfinished"></translation>
+        <translation>erdikoa</translation>
     </message>
     <message>
         <source>right</source>
-        <translation type="unfinished"></translation>
+        <translation>eskuinetara</translation>
     </message>
     <message>
         <source>bottoml</source>
-        <translation type="unfinished"></translation>
+        <translation>bottoml</translation>
     </message>
     <message>
         <source>bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>behean</translation>
     </message>
     <message>
         <source>bottomr</source>
-        <translation type="unfinished"></translation>
+        <translation>bottomr</translation>
     </message>
     <message>
         <source>snapcorner</source>
-        <translation type="unfinished"></translation>
+        <translation>snapcorner</translation>
     </message>
     <message>
         <source>snapshift</source>
-        <translation type="unfinished"></translation>
+        <translation>kommutadorea</translation>
     </message>
     <message>
         <source>sizein</source>
-        <translation type="unfinished"></translation>
+        <translation>tamaina</translation>
     </message>
     <message>
         <source>sizeout</source>
-        <translation type="unfinished"></translation>
+        <translation>tamaina</translation>
     </message>
     <message>
         <source>hor</source>
-        <translation type="unfinished"></translation>
+        <translation>hor dago</translation>
     </message>
     <message>
         <source>vert</source>
-        <translation type="unfinished"></translation>
+        <translation>alderantzikatu</translation>
     </message>
     <message>
         <source>snap2</source>
-        <translation type="unfinished"></translation>
+        <translation>snap2</translation>
     </message>
     <message>
         <source>corner</source>
-        <translation type="unfinished"></translation>
+        <translation>izkinan</translation>
     </message>
     <message>
         <source>mid-vert</source>
-        <translation type="unfinished"></translation>
+        <translation>erdiko alderaketa</translation>
     </message>
     <message>
         <source>mid-hor</source>
-        <translation type="unfinished"></translation>
+        <translation>erdiko zaldia</translation>
     </message>
     <message>
         <source>quad</source>
-        <translation type="unfinished"></translation>
+        <translation>quad</translation>
     </message>
     <message>
         <source>noquad</source>
-        <translation type="unfinished"></translation>
+        <translation>noquad</translation>
     </message>
     <message>
         <source>angle_inner</source>
-        <translation type="unfinished"></translation>
+        <translation>angelua</translation>
     </message>
     <message>
         <source>edges</source>
-        <translation type="unfinished"></translation>
+        <translation>ertzak</translation>
     </message>
     <message>
         <source>edge-none</source>
-        <translation type="unfinished"></translation>
+        <translation>bat ere ez</translation>
     </message>
     <message>
         <source>edge-both</source>
-        <translation type="unfinished"></translation>
+        <translation>bi ertzetan</translation>
     </message>
     <message>
         <source>edge-start</source>
-        <translation type="unfinished"></translation>
+        <translation>ertz-hasiera</translation>
     </message>
     <message>
         <source>edge-end</source>
-        <translation type="unfinished"></translation>
+        <translation>ertz-amaiera</translation>
     </message>
     <message>
         <source>end</source>
-        <translation type="unfinished"></translation>
+        <translation>amaiera</translation>
     </message>
     <message>
         <source>both</source>
-        <translation type="unfinished"></translation>
+        <translation>biak batera</translation>
     </message>
     <message>
         <source>none</source>
-        <translation type="unfinished"></translation>
+        <translation>bat ere ez</translation>
     </message>
     <message>
         <source>fit</source>
-        <translation type="unfinished"></translation>
+        <translation>fite</translation>
     </message>
     <message>
         <source>nofit</source>
-        <translation type="unfinished"></translation>
+        <translation>nofit</translation>
     </message>
     <message>
         <source>dist_fixed</source>
-        <translation type="unfinished"></translation>
+        <translation>konfigurazioa</translation>
     </message>
     <message>
         <source>dist_flex</source>
-        <translation type="unfinished"></translation>
+        <translation>dist flexua</translation>
     </message>
     <message>
         <source>distance</source>
-        <translation type="unfinished"></translation>
+        <translation>distantzia</translation>
     </message>
     <message>
         <source>sym</source>
-        <translation type="unfinished"></translation>
+        <translation>sym</translation>
     </message>
     <message>
         <source>nosym</source>
-        <translation type="unfinished"></translation>
+        <translation>nosym</translation>
     </message>
     <message>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Hatch: ez da eredurik aurkitu. Jarri ereduaren bide-izena aplikazioen hobespenetan</translation>
     </message>
     <message>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hatch: ereduak huts egin du: %1</translation>
     </message>
     <message>
         <source>PenTB</source>
-        <translation type="unfinished"></translation>
+        <translation>PenTB</translation>
     </message>
     <message>
         <source>By Layer</source>
-        <translation type="unfinished">Geruzen bitartez</translation>
+        <translation>Geruzaren arabera</translation>
     </message>
     <message>
         <source>By Block</source>
-        <translation type="unfinished">Geruzen bitartez</translation>
+        <translation>Blokearen arabera</translation>
     </message>
     <message>
         <source>- Unchanged -</source>
-        <translation type="unfinished"></translation>
+        <translation>- Aldatu gabe -</translation>
     </message>
     <message>
         <source>User Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Erabiltzailearen kolorea</translation>
     </message>
     <message>
         <source>cal </source>
         <comment>command to trigger cli calculator</comment>
-        <translation type="unfinished"></translation>
+        <translation>egut</translation>
     </message>
     <message>
         <source>calculate </source>
         <comment>command to trigger cli calculator</comment>
-        <translation type="unfinished"></translation>
+        <translation>kalkulatu</translation>
     </message>
     <message>
         <source>-Unchanged-</source>
-        <translation type="unfinished"></translation>
+        <translation>-Aldatu gabe..</translation>
     </message>
     <message>
         <source>ByLayer</source>
-        <translation type="unfinished"></translation>
+        <translation>ByLayer</translation>
     </message>
     <message>
         <source>ByBlock</source>
-        <translation type="unfinished"></translation>
+        <translation>ByBlock</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Lehenetsia</translation>
     </message>
     <message>
         <source>0.00mm</source>
-        <translation type="unfinished"></translation>
+        <translation>0.00mm</translation>
     </message>
     <message>
         <source>0.05mm</source>
-        <translation type="unfinished"></translation>
+        <translation>0.05mm</translation>
     </message>
     <message>
         <source>0.09mm</source>
-        <translation type="unfinished"></translation>
+        <translation>0.09mm</translation>
     </message>
     <message>
         <source>0.13mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>0.13mmISO</translation>
     </message>
     <message>
         <source>0.15mm</source>
-        <translation type="unfinished"></translation>
+        <translation>0.15mm</translation>
     </message>
     <message>
         <source>0.18mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>0.18mmISO</translation>
     </message>
     <message>
         <source>0.20mm</source>
-        <translation type="unfinished"></translation>
+        <translation>0.20mm</translation>
     </message>
     <message>
         <source>0.25mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>0.25mmISO</translation>
     </message>
     <message>
         <source>0.30mm</source>
-        <translation type="unfinished"></translation>
+        <translation>0.30mm</translation>
     </message>
     <message>
         <source>0.35mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>0.35mmISO</translation>
     </message>
     <message>
         <source>0.40mm</source>
-        <translation type="unfinished"></translation>
+        <translation>0.40mm</translation>
     </message>
     <message>
         <source>0.50mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>0.50mmISO</translation>
     </message>
     <message>
         <source>0.53mm</source>
-        <translation type="unfinished"></translation>
+        <translation>0.53mm</translation>
     </message>
     <message>
         <source>0.60mm</source>
-        <translation type="unfinished"></translation>
+        <translation>0.60mm</translation>
     </message>
     <message>
         <source>0.70mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>0.70mmISO</translation>
     </message>
     <message>
         <source>0.80mm</source>
-        <translation type="unfinished"></translation>
+        <translation>0,0mm</translation>
     </message>
     <message>
         <source>0.90mm</source>
-        <translation type="unfinished"></translation>
+        <translation>0.90mm</translation>
     </message>
     <message>
         <source>1.00mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>1.00mmISO</translation>
     </message>
     <message>
         <source>1.06mm</source>
-        <translation type="unfinished"></translation>
+        <translation>1.06mm</translation>
     </message>
     <message>
         <source>1.20mm</source>
-        <translation type="unfinished"></translation>
+        <translation>1.20mm</translation>
     </message>
     <message>
         <source>1.40mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>1.40mmISO</translation>
     </message>
     <message>
         <source>1.58mm</source>
-        <translation type="unfinished"></translation>
+        <translation>1.58mm</translation>
     </message>
     <message>
         <source>2.00mmISO</source>
-        <translation type="unfinished"></translation>
+        <translation>2.00mmISO</translation>
     </message>
     <message>
         <source>2.11mm</source>
-        <translation type="unfinished"></translation>
+        <translation>2.11mm</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu erreferentzia-puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksInsert</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ez da baliozko adierazpena</translation>
+        <translation>Ez da baliozko adierazpena</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu erreferentzia-puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu angelua:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu faktorea:</translation>
     </message>
     <message>
         <source>Enter columns:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu zutabeak:</translation>
     </message>
     <message>
         <source>Enter rows:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu errenkadak:</translation>
     </message>
     <message>
         <source>Enter column spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu zutabeen tartea:</translation>
     </message>
     <message>
         <source>Enter row spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu errenkada-tartea:</translation>
     </message>
     <message>
         <source>Block cannot contain an insert of itself.</source>
-        <translation type="unfinished"></translation>
+        <translation>Blokeak ezin du bere burua txertatu.</translation>
     </message>
     <message>
         <source> has nested insert of current block in:
 </source>
-        <translation type="unfinished"></translation>
+        <translation>uneko blokearen txertaketa habiaratua du:</translation>
     </message>
     <message>
         <source>
 This block cannot be inserted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezin da bloke hau sartu.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksSave</name>
     <message>
         <source>No block activated to save</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez dago blokerik aktibatuta gordetzeko</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDefault</name>
     <message>
         <source>Choose second edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Aukeratu bigarren ertza</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimAligned</name>
     <message>
         <source>Specify first extension line origin</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu lehen luzapen-lerroaren jatorria</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify second extension line origin</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu bigarren luzapen-lerroaren jatorria</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu dimentsio-lerroaren kokalekua</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu dimentsioaren testua:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimAngular</name>
     <message>
         <source>Select first line</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu lehen lerroa</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Select second line</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu bigarren lerroa</translation>
     </message>
     <message>
         <source>Specify dimension arc line location</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu neurria arku-lerroaren kokalekua</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu dimentsioaren testua:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimDiametric</name>
     <message>
         <source>Not a circle or arc entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez zirkulu edo arku entitate bat</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ez da baliozko adierazpena</translation>
+        <translation>Ez da baliozko adierazpena</translation>
     </message>
     <message>
         <source>Select arc or circle entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu arku edo zirkuluaren entitatea</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu dimentsio-lerroaren kokalekua</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu dimentsioaren testua:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimLeader</name>
     <message>
         <source>Specify target point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu helburu-puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu hurrengo puntua</translation>
     </message>
     <message>
         <source>Finish</source>
-        <translation type="unfinished"></translation>
+        <translation>Amaitu</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimLinear</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ez da baliozko adierazpena</translation>
+        <translation>Ez da baliozko adierazpena</translation>
     </message>
     <message>
         <source>Specify first extension line origin</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu lehen luzapen-lerroaren jatorria</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify second extension line origin</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu bigarren luzapen-lerroaren jatorria</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu dimentsio-lerroaren kokalekua</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu dimentsioaren testua:</translation>
     </message>
     <message>
         <source>Enter dimension line angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu dimentsioaren angelua:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimRadial</name>
     <message>
         <source>Not a circle or arc entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez zirkulu edo arku entitate bat</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ez da baliozko adierazpena</translation>
+        <translation>Ez da baliozko adierazpena</translation>
     </message>
     <message>
         <source>Select arc or circle entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu arku edo zirkuluaren entitatea</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify dimension line position or enter angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu lerroaren posizioa edo sartu angelua:</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu dimentsioaren testua:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawArc</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ez da baliozko adierazpena</translation>
+        <translation>Ez da baliozko adierazpena</translation>
     </message>
     <message>
         <source>Not a valid chord length</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez da baliozko akordearen luzera</translation>
     </message>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished">Zehaztu zentroa</translation>
+        <translation>Zehaztu zentroa</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu erradioa</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify start angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu hasierako angelua:</translation>
     </message>
     <message>
         <source>Specify included angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu angelua:</translation>
     </message>
     <message>
         <source>Specify chord length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Adierazi akordearen luzera:</translation>
     </message>
     <message>
         <source>Specify end angle or [angle/chord length]</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu amaierako angelua edo [angeluaren luzera]</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawArc3P</name>
     <message>
         <source>Invalid arc data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Arku-datu baliogabeak.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished">Bigarren puntua aukeratu</translation>
+        <translation>Zehaztu bigarren puntua</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify endpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu amaierako puntua</translation>
     </message>
     <message>
         <source>Specify startpoint or [center]</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu hasierako puntua edo [zentroa]</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawArcTangential</name>
     <message>
         <source>Specify base entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu oinarrizko entitatea</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify end angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu amaierako angelua</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify end point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu amaierako puntua</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircle</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ez da baliozko adierazpena</translation>
+        <translation>Ez da baliozko adierazpena</translation>
     </message>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished">Zehaztu zentroa</translation>
+        <translation>Zehaztu zentroa</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify point on circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu puntua zirkuluan</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircle2P</name>
     <message>
         <source>Invalid Circle data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zirkuluaren datu baliogabeak.</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="unfinished">Lehen puntua adierazi</translation>
+        <translation>Zehaztu lehen puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished">Bigarren puntua aukeratu</translation>
+        <translation>Zehaztu bigarren puntua</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircle3P</name>
     <message>
         <source>Invalid circle data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zirkuluaren datu baliogabeak.</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="unfinished">Lehen puntua adierazi</translation>
+        <translation>Zehaztu lehen puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished">Bigarren puntua aukeratu</translation>
+        <translation>Zehaztu bigarren puntua</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify third point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu hirugarren puntua</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleCR</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ez da baliozko adierazpena</translation>
+        <translation>Ez da baliozko adierazpena</translation>
     </message>
     <message>
         <source>Specify circle center</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu zirkulu-zentroa</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify circle radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu zirkuluaren erradioa</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (expression)</source>
-        <translation type="unfinished"></translation>
+        <translation>erradioa=%1 ez da baliozkoa (adierazpena)</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (negative)</source>
-        <translation type="unfinished"></translation>
+        <translation>erradioa=%1 ez da baliozkoa (negatiboa)</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (zero)</source>
-        <translation type="unfinished"></translation>
+        <translation>erradioa=%1 baliogabea da (zero)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleInscribe</name>
     <message>
         <source>Specify the first line</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu lehen lerroa</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify the second line</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu bigarren lerroa</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify the third line</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu hirugarren lerroa</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan1_2P</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify the first point on the tangent circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu zirkulu tangentearen lehen puntua</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify the second point on the tangent circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu zirkulu tangentearen bigarren puntua</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu zirkulu tangentearen zentroa</translation>
     </message>
     <message>
         <source>Specify a line/arc/circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu lerroa/arc/circle</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan2</name>
     <message>
         <source>Specify the first line/arc/circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu lehen lerroa/arc/circle</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify the second line/arc/circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu bigarren lerroa/arc/circle</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu zirkulu tangentearen zentroa</translation>
     </message>
     <message>
-        <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation type="unfinished"></translation>
+        <source>Invalid expression '%1' for radius</source>
+        <translation>'%1' adierazpen baliogabea erradiorako</translation>
     </message>
     <message>
-        <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <source>Invalid negative radius '%1'</source>
+        <translation>Baliogabeko '%1' erradio negatiboa</translation>
     </message>
     <message>
-        <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <source>Invalid zero radius '%1'</source>
+        <translation>Baliogabeko '%1' zero erradioa</translation>
     </message>
     <message>
-        <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <source>No tangent circle possible for radius '%1'</source>
+        <translation>Ez dago zirkulu tangenterik posible '%1' erradioan</translation>
     </message>
     <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <source>No common tangential circle for radius '%1'</source>
+        <translation>Ez dago zirkulu tangente arruntik '%1' erradioarentzat</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan2_1P</name>
     <message>
         <source>Specify a line/arc/circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu lerroa/arc/circle</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify the another arc/circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu beste arkua/zirkulua</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify a point on the tangent circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu puntu bat tangentearen zirkuluan</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu zirkulu tangentearen zentroa</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan3</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu zirkulu tangentearen zentroa</translation>
     </message>
     <message>
         <source>Specify the first line/arc/circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu lehen lerroa/arc/circle</translation>
     </message>
     <message>
         <source>Specify the second line/arc/circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu bigarren lerroa/arc/circle</translation>
     </message>
     <message>
         <source>Specify the third line/arc/circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu hirugarren lerroa/arc/circle</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
         <source>Specify the first point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu elipsearen lehen puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify the second point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu elipsearen bigarren puntua</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu elipsearen hirugarren puntua</translation>
     </message>
     <message>
         <source>Specify the fourth point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu elipsearen laugarren puntua</translation>
     </message>
     <message>
         <source>Can not determine uniquely an ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezin da elipse bakar bat zehaztu</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseAxis</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ez da baliozko adierazpena</translation>
+        <translation>Ez da baliozko adierazpena</translation>
     </message>
     <message>
         <source>Specify ellipse center</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu elipse-zentroa</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify endpoint of major axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu ardatz nagusiaren amaiera-puntua</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu ardatzaren amaierako puntua edo luzera:</translation>
     </message>
     <message>
         <source>Specify start angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu hasierako angelua</translation>
     </message>
     <message>
         <source>Specify end angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu amaierako angelua</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseCenter3Points</name>
     <message>
         <source>Specify the center of ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu elipsearen zentroa</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify the first point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu elipsearen lehen puntua</translation>
     </message>
     <message>
         <source>Specify the second point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu elipsearen bigarren puntua</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu elipsearen hirugarren puntua</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseFociPoint</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ez da baliozko adierazpena</translation>
+        <translation>Ez da baliozko adierazpena</translation>
     </message>
     <message>
         <source>Specify first focus of ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu elipsearen lehen fokua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify second focus of ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu elipsearen bigarren fokua</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify a point on ellipse or total distance to foci</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu elipse-puntu bat edo foci-rako distantzia osoa</translation>
     </message>
     <message>
         <source>specify a point on ellipse, or total distance to foci</source>
-        <translation type="unfinished"></translation>
+        <translation>elipse-puntu bat zehaztu, edo foci-rako distantzia osoa</translation>
     </message>
     <message>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation type="unfinished"></translation>
+        <translation>%1en distantzia fociren arteko distantzia baino txikiagoa da</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseInscribe</name>
     <message>
         <source>Specify the first line</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu lehen lerroa</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify the second line</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu bigarren lerroa</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify the third line</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu hirugarren lerroa</translation>
     </message>
     <message>
         <source>Specify the fourth line</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu laugarren lerroa</translation>
     </message>
     <message>
         <source>Can not determine uniquely an ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezin da elipse bakar bat zehaztu</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawHatch</name>
     <message>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation type="unfinished"></translation>
+        <translation>Atzipen eremu baliogabea. Mesedez, egiaztatu hautatutako entitateek ingurune itxi bat edo gehiago osatzen dutela.</translation>
     </message>
     <message>
         <source>Hatch created successfully.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hatch ongi sortu zen.</translation>
     </message>
     <message>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation type="unfinished"></translation>
+        <translation>Hatch errorea: ingurune baliogabea aurkitu da!</translation>
     </message>
     <message>
         <source>Hatch Error: Pattern not found!</source>
-        <translation type="unfinished"></translation>
+        <translation>Hatch errorea: eredua ez da aurkitu!</translation>
     </message>
     <message>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation type="unfinished"></translation>
+        <translation>Hatch Error: Contour edo eredua txikiegia da!</translation>
     </message>
     <message>
         <source>Hatch Error: Contour too big!</source>
-        <translation type="unfinished"></translation>
+        <translation>Hatch errorea: Contour handiegia da!</translation>
     </message>
     <message>
         <source>Hatch Error: Undefined Error!</source>
-        <translation type="unfinished"></translation>
+        <translation>Hatch errorea: definitu gabeko errorea!</translation>
     </message>
     <message>
         <source>Total hatch area = %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Erabateko ataka-area = %1</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawImage</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ez da baliozko adierazpena</translation>
+        <translation>Ez da baliozko adierazpena</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu erreferentzia-puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu angelua:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu faktorea:</translation>
     </message>
     <message>
         <source>Enter dpi:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu dpi:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLine</name>
     <message>
         <source>Specify first point</source>
-        <translation type="unfinished">Lehen puntua adierazi</translation>
+        <translation>Zehaztu lehen puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu hurrengo puntua edo [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu hurrengo puntua</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezin da lerro-sekuentzia itxi: oraindik ez dago nahikoa entitate definituta edo jadanik itxita.</translation>
     </message>
     <message>
         <source>Cannot undo: Begin of history reached</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezin da desegin: historiaren hasiera iritsi da</translation>
     </message>
     <message>
         <source>Cannot redo: End of history reached</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezin da berreskuratu: historiaren amaiera iritsi da</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineAngle</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ez da baliozko adierazpena</translation>
+        <translation>Ez da baliozko adierazpena</translation>
     </message>
     <message>
         <source>Specify position</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu posizioa</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu angelua:</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Enter length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu luzera:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineBisector</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ez da baliozko adierazpena</translation>
+        <translation>Ez da baliozko adierazpena</translation>
     </message>
     <message>
         <source>Select first line</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu lehen lerroa</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Select second line</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu bigarren lerroa</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Enter bisector length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu bisektorearen luzera:</translation>
     </message>
     <message>
         <source>Enter number of bisectors:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu bisektore kopurua:</translation>
     </message>
     <message>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zenbaki-sektoreko lerroak ez daude barrutian:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineFree</name>
     <message>
         <source>Click and drag to draw a line</source>
-        <translation type="unfinished"></translation>
+        <translation>Egin klik eta arrastatu marra bat marrazteko</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineHorVert</name>
     <message>
         <source>Specify first point</source>
-        <translation type="unfinished">Lehen puntua adierazi</translation>
+        <translation>Zehaztu lehen puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished">Bigarren puntua aukeratu</translation>
+        <translation>Zehaztu bigarren puntua</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineOrthTan</name>
     <message>
         <source>Select a line</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu lerro bat</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Select circle, arc or ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu zirkulua, arkua edo elipsia</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineParallel</name>
     <message>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu distantzia &lt;%1&gt; edo hautatu entitatea edo [%2]</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation type="unfinished">Sartu zenbakia:</translation>
+        <translation>Sartu zenbakia:</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ez da baliozko adierazpena</translation>
+        <translation>Ez da baliozko adierazpena</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..99</source>
-        <translation type="unfinished">Ez da baliozko zenbakia. Saiatu 1..99</translation>
+        <translation>Ez da baliozko zenbakia. Saiatu 1.99</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineParallelThrough</name>
     <message>
         <source>Select entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu entitatea</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify through point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu puntuaren bidez</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zenbakia:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..99</source>
-        <translation type="unfinished">Ez da baliozko zenbakia. Saiatu 1..99</translation>
+        <translation>Ez da baliozko zenbakia. Saiatu 1.99</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ez da baliozko adierazpena</translation>
+        <translation>Ez da baliozko adierazpena</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLinePolygonCenCor</name>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished">Zehaztu zentroa</translation>
+        <translation>Zehaztu zentroa</translation>
     </message>
     <message>
         <source>Specify a corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu izkina bat</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation type="unfinished">Sartu zenbakia:</translation>
+        <translation>Sartu zenbakia:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished">Ez da baliozko zenbakia. Saiatu 1..9999</translation>
+        <translation>Ez da baliozko zenbakia. Saiatu 1.9999</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ez da baliozko adierazpena</translation>
+        <translation>Ez da baliozko adierazpena</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLinePolygonCorCor</name>
     <message>
         <source>Specify first corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu lehen ertza</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu bigarren ertza</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zenbakia:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished">Ez da baliozko zenbakia. Saiatu 1..9999</translation>
+        <translation>Ez da baliozko zenbakia. Saiatu 1.9999</translation>
     </message>
     <message>
         <source>Not a valid expression.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez da baliozko adierazpena.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineRectangle</name>
     <message>
         <source>Specify first corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu lehen ertza</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu bigarren ertza</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineRelAngle</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ez da baliozko adierazpena</translation>
+        <translation>Ez da baliozko adierazpena</translation>
     </message>
     <message>
         <source>Select base entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu oinarrizko entitatea</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify position</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu posizioa</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
         <source>Specify point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Select circle, arc or ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu zirkulua, arkua edo elipsia</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent2</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Select first circle/ellipse/parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu lehen zirkulua/elipsia/parabola</translation>
     </message>
     <message>
         <source>Select second circle/ellipse/parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu bigarren zirkulua/elipsia/parabola</translation>
     </message>
     <message>
         <source>Select the tangent line closest to cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu kurtsoretik hurbilen dagoen marra tangentea</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawMText</name>
     <message>
         <source>Specify insertion point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu txertatze-puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Enter text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu testua:</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <source>Specify location</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu kokalekua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawPolyline</name>
     <message>
         <source>Specify first point</source>
-        <translation type="unfinished">Lehen puntua adierazi</translation>
+        <translation>Zehaztu lehen puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu hurrengo puntua edo [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu hurrengo puntua</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezin da lerro-sekuentzia itxi: oraindik ez dago nahikoa entitate definituta.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">Ezin daiteke desegin: Ez daude zehazturik entitate nahikoak</translation>
+        <translation>Ezin da desegin: oraindik ez dago nahikoa entitate definituta.</translation>
     </message>
     <message>
         <source>Enter the end point x</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu x amaierako puntua</translation>
     </message>
     <message>
         <source>Enter number of polylines</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu polilerro kopurua</translation>
     </message>
     <message>
         <source>equation</source>
-        <translation type="unfinished"></translation>
+        <translation>ekuazioa</translation>
     </message>
     <message>
         <source>Enter an equation, f(x)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu ekuazio bat, f(x)</translation>
     </message>
     <message>
         <source>x</source>
-        <translation type="unfinished"></translation>
+        <translation>x</translation>
     </message>
     <message>
         <source>Enter the start point x</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu x hasierako puntua</translation>
     </message>
     <message>
         <source>The entered x is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartutako x ez da baliozkoa.</translation>
     </message>
     <message>
         <source>The step size entered is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartutako urratsaren tamaina ez da baliozkoa.</translation>
     </message>
     <message>
         <source>The value x entered is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartutako x balioa ez da baliozkoa.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawSpline</name>
     <message>
         <source>Specify first control point</source>
-        <translation type="unfinished">Lehen kontrol puntua zehaztu</translation>
+        <translation>Zehaztu lehen kontrol-puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify next control point or [%1]</source>
-        <translation type="unfinished">Hurrengo kontrol puntua zehaztu edo [%1]</translation>
+        <translation>Zehaztu hurrengo kontrol-puntua edo [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify next control point</source>
-        <translation type="unfinished">Kontrol puntua zehaztu</translation>
+        <translation>Zehaztu hurrengo kontrol-puntua</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">Ezin daiteke desegin: Ez daude zehazturik entitate nahikoak</translation>
+        <translation>Ezin da desegin: oraindik ez dago nahikoa entitate definituta.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawText</name>
     <message>
         <source>Specify insertion point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu txertatze-puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Enter text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu testua:</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished">Bigarren puntua aukeratu</translation>
+        <translation>Zehaztu bigarren puntua</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionEditCopy</name>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu erreferentzia-puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionEditPaste</name>
     <message>
         <source>Set reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezarri erreferentzia-puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionEditUndo</name>
     <message>
         <source>Nothing to undo!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez dago ezer desegiteko!</translation>
     </message>
     <message>
         <source>Nothing to redo!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez dago ezer konpontzeko!</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Lines are parallel</source>
-        <translation type="unfinished"></translation>
+        <translation>Lerroak paraleloak dira</translation>
     </message>
     <message>
         <source>Specify first line</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu lehen lerroa</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify second line</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu bigarren lerroa</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Angle: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Angelua: %1</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Circumference: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Zirkunferentzia: %1</translation>
     </message>
     <message>
         <source>Point: %1/%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntua: %1/%2</translation>
     </message>
     <message>
         <source>Specify first point of polygon</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu poligonoaren lehen puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify next point of polygon</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu poligonoaren hurrengo puntua</translation>
     </message>
     <message>
         <source>Closing Point: %1/%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Amaiera-puntua: %1/%2</translation>
     </message>
     <message>
         <source>Area: %1 %2^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Area: %1 %2^2</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoDist</name>
     <message>
         <source>Specify first point of distance</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu distantziaren lehen puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify second point of distance</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu distantziaren bigarren puntua</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
-        <translation type="unfinished"></translation>
+        <translation>Distantzia: %1 Kartesiarra: (%2, %3), Polarra: (%4&lt;%5)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoDist2</name>
     <message>
         <source>Distance: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Distantzia: %1</translation>
     </message>
     <message>
         <source>Specify entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu entitatea</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu puntua</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoInside</name>
     <message>
         <source>Point is inside selected contour.</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntua hautatutako ingurunearen barruan dago.</translation>
     </message>
     <message>
         <source>Point is outside selected contour.</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntua hautatutako ingurunetik kanpo dago.</translation>
     </message>
     <message>
         <source>Specify point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoTotalLength</name>
     <message>
         <source>Total Length of selected entities: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatutako erakundeen luzera osoa: %1</translation>
     </message>
     <message>
         <source>At least one of the selected entities cannot be measured.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatutako entitateetako bat behintzat ezin da neurtu.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLibraryInsert</name>
     <message>
         <source>Insert Library Object</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu liburutegiko objektua</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ez da baliozko adierazpena</translation>
+        <translation>Ez da baliozko adierazpena</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu erreferentzia-puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu angelua:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source />
+        <translation />
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu faktorea:</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <source>Cannot open file '%1'</source>
+        <translation>Ezin da '%1' fitxategia ireki</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLockRelativeZero</name>
     <message>
         <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>(Blokeatu Zero erlatiboa)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyBevel</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ez da baliozko adierazpena</translation>
+        <translation>Ez da baliozko adierazpena</translation>
     </message>
     <message>
         <source>Select first entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu lehen entitatea</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Select second entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu bigarren entitatea</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Enter length 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu 1. luzera:</translation>
     </message>
     <message>
         <source>Enter length 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu luzera:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyCut</name>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez da erakunderik aurkitu.</translation>
     </message>
     <message>
         <source>Cutting point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ebazteko puntua ez da baliozkoa.</translation>
     </message>
     <message>
         <source>Cutting point is not on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ebaketa-puntua ez dago entitatean.</translation>
     </message>
     <message>
         <source>Specify entity to cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu ebaki beharreko entitatea</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify cutting point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu ebaketa-puntua</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Entitateak lerro, arku, zirkulu, elipse edo interpolazio-lerro bat izan behar du.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyDeleteFree</name>
     <message>
         <source>Specify first break point on a polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu polilerroko lehen eten-puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify second break point on the same polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu bigarren eten-puntua lerro berean</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Polilerro berean ez dauden entitateak.</translation>
     </message>
     <message>
         <source>Parent of second entity is not a polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Bigarren entitatearen gurasoa ez da polilerroa</translation>
     </message>
     <message>
         <source>Parent of first entity is not a polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Lehen entitatearen gurasoa ez da polilerroa</translation>
     </message>
     <message>
         <source>Parent of second entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation>Bigarren entitatearen gurasoa ez da baliozkoa</translation>
     </message>
     <message>
         <source>One of the chosen entities is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation>Aukeratutako erakundeetako bat nullptr da</translation>
     </message>
     <message>
         <source>Parent of first entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation>Lehen entitatearen gurasoa ez da baliozkoa</translation>
     </message>
     <message>
         <source>First entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation>Lehen entitatea ez da baliozkoa</translation>
     </message>
     <message>
         <source>Second entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation>Bigarren entitateak ez du balio</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyDeleteQuick</name>
     <message>
         <source>Pick entity to delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu ezabatzeko entitatea</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyEntity</name>
     <message>
         <source>Click on entity to modify</source>
-        <translation type="unfinished"></translation>
+        <translation>Egin klik entitatean aldatzeko</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyMirror</name>
     <message>
         <source>Specify first point of mirror line</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu ispiluaren lerroaren lehen puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify second point of mirror line</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu ispiluaren lerroaren bigarren puntua</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyMove</name>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu erreferentzia-puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu helburu-puntua</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Invalid number of copies, use %1 </source>
-        <translation type="unfinished"></translation>
+        <translation>Kopia kopuru baliogabea, erabili %1</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyMoveRotate</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ez da baliozko adierazpena</translation>
+        <translation>Ez da baliozko adierazpena</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu erreferentzia-puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu helburu-puntua</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Enter rotation angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu biraketaren angelua:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyOffset</name>
     <message>
         <source>Specify direction of offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu desplazamenduaren norabidea</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyRotate</name>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu erreferentzia-puntua</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify rotation center</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu biraketaren zentroa</translation>
     </message>
     <message>
         <source>Specify target point to rotate to</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu biratu beharreko helburu-puntua</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyRotate2</name>
     <message>
         <source>Specify absolute reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu erreferentzia-puntu absolutua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify relative reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu erreferentzia-puntu erlatiboa</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyRound</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ez da baliozko adierazpena</translation>
+        <translation>Ez da baliozko adierazpena</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify second entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu bigarren entitatea</translation>
     </message>
     <message>
         <source>Enter radius:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sartu erradioa:</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu lehen entitatea edo sartu erradioa &lt;%1&gt;</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyScale</name>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu erreferentzia-puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify scale center</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu eskala-zentroa</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu helburu-puntua</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyStretch</name>
     <message>
         <source>Specify first corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu lehen ertza</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu bigarren ertza</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu erreferentzia-puntua</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu helburu-puntua</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyTrim</name>
     <message>
         <source>Select first trim entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu lehen trim entitatea</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Select limiting entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu entitate mugatzailea</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Select second trim entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu bigarren entitatea</translation>
     </message>
     <message>
         <source>Select entity to trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu entitatea trimatzeko</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyTrimAmount</name>
     <message>
         <source>No entity found. </source>
-        <translation type="unfinished"></translation>
+        <translation>Ez da inor aurkitu.</translation>
     </message>
     <message>
         <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aukeratutako erakundea bloke batean dago. Editatu blokea.</translation>
     </message>
     <message>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aukeratutako Entitatea ez da entitate atomiko bat edo ezin da moztu.</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ez da baliozko adierazpena</translation>
+        <translation>Ez da baliozko adierazpena</translation>
     </message>
     <message>
         <source>Select entity to trim or enter distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu ebakitzeko edo distantzian sartzeko entitatea:</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionOrder</name>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez da erakunderik aurkitu.</translation>
     </message>
     <message>
         <source>Choose entity for order</source>
-        <translation type="unfinished"></translation>
+        <translation>Aukeratu erakundea ordenarako</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineAdd</name>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez da erakunderik aurkitu.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Entitateak polilerroa izan behar du.</translation>
     </message>
     <message>
         <source>Adding point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gehitu-puntua ez da baliozkoa.</translation>
     </message>
     <message>
         <source>Adding point is not on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gehitu-puntua ez dago entitatean.</translation>
     </message>
     <message>
         <source>Specify polyline to add nodes</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu polilerroa nodoak gehitzeko</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
-        <translation type="unfinished"></translation>
+        <source>Specify adding node's point</source>
+        <translation>Zehaztu nodoaren puntua gehitzea</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineAppend</name>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez da erakunderik aurkitu.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Entitateak polilerroa izan behar du.</translation>
     </message>
     <message>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Egin klik existitzen den polilerroaren hasiera edo amaieratik gertu.</translation>
     </message>
     <message>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu poligonoa hasiera edo amaiera puntutik gertu</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu hurrengo puntua edo [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu hurrengo puntua</translation>
     </message>
     <message>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezin dira nodoak erantsi poligono itxi batean.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">Ezin daiteke desegin: Ez daude zehazturik entitate nahikoak</translation>
+        <translation>Ezin da desegin: oraindik ez dago nahikoa entitate definituta.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineDel</name>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez da erakunderik aurkitu.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Entitateak polilerroa izan behar du.</translation>
     </message>
     <message>
         <source>Specify polyline to delete node</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu nodoa ezabatzeko polilerroa</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation type="unfinished"></translation>
+        <source>Specify deleting node's point</source>
+        <translation>Zehaztu nodoaren puntua ezabatzea</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Deleting point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntua ezabatzea ez da baliozkoa.</translation>
     </message>
     <message>
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntua ezabatzea ez dago entitatean.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineDelBetween</name>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez da erakunderik aurkitu.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Entitateak polilerroa izan behar du.</translation>
     </message>
     <message>
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntua ezabatzea ez dago entitatean.</translation>
     </message>
     <message>
         <source>Specify polyline to delete between two nodes</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu polilerroa bi nodoren artean ezabatzeko</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify first node</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu lehen nodoa</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify second node</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu bigarren nodoa</translation>
     </message>
     <message>
         <source>Deleting point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntua ezabatzea ez da baliozkoa.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineEquidistant</name>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez da erakunderik aurkitu.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Entitateak polilerroa izan behar du.</translation>
     </message>
     <message>
         <source>Choose the original polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Aukeratu jatorrizko polilerroa</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineSegment</name>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez da erakunderik aurkitu.</translation>
     </message>
     <message>
         <source>Choose one of the segments on the original polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Aukeratu jatorrizko polilerroko segmentuetako bat</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Entity can not be a closed polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Entitatea ezin da polilerro itxia izan.</translation>
     </message>
     <message>
         <source>Polyline created</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortutako polilerroa</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineTrim</name>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez da erakunderik aurkitu.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Entitateak polilerroa izan behar du.</translation>
     </message>
     <message>
         <source>Specifying point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntua zehaztea ez da baliozkoa.</translation>
     </message>
     <message>
         <source>No Segment found on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez da segmenturik aurkitu entitatean.</translation>
     </message>
     <message>
         <source>Specify polyline to trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu polilerroa trimera</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify first segment</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu lehen segmentua</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Specify second segment</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu bigarren segmentua</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPrintPreview</name>
     <message>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
-        <translation type="unfinished"></translation>
+        <translation>RS ActionPrintPreview::fit(): paper-tamaina baliogabea</translation>
     </message>
     <message>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Paperezko koordenadetan inprimaturiko desplazamendua (%1, %2)</translation>
     </message>
     <message>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Inprimagailu-desplazamendua grafikoaren koordenatuetan (%1, %2)</translation>
     </message>
     <message>
         <source>Printout offset in graph coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Inprimagailu-desplazamendua koordenatu grafikoetan</translation>
     </message>
     <message>
         <source>Printout offset in paper coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Paperezko koordenadetan inprimatutako desplazamendua</translation>
     </message>
     <message>
         <source>: select printout offset coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>: hautatu desplazamenduko koordenatuak</translation>
     </message>
     <message>
         <source>type in offset from command line to offset printout</source>
-        <translation type="unfinished"></translation>
+        <translation>idatzi desplazamendua komando-lerrotik inprimatzeko desplazamenduan</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation type="unfinished"></translation>
+        <source>Printout offset ignores relative zero. Ignoring '@'</source>
+        <translation>Inprimatze-desplazamenduak ez dio zero erlatiboari jaramonik egiten. Ez ikusi egiten '@'</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>
-        <translation type="unfinished"></translation>
+        <translation>Inprimatu beltza/zuria</translation>
     </message>
     <message>
         <source>Printout in color</source>
-        <translation type="unfinished"></translation>
+        <translation>Inprimatu koloretan</translation>
     </message>
     <message>
         <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
-        <translation type="unfinished"></translation>
+        <translation>RS ActionPrintPreview:calcPagesNum(): Orrialdeen muga gainditu da.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelect</name>
     <message>
         <source>Select to modify attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu atributuak aldatzeko</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Select to delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu ezabatzeko</translation>
     </message>
     <message>
         <source>Select to delete immediately</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu berehala ezabatzeko</translation>
     </message>
     <message>
         <source>Select to move</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu lekuz aldatzeko</translation>
     </message>
     <message>
         <source>Select to rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu biratzeko</translation>
     </message>
     <message>
         <source>Select to scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu eskalara</translation>
     </message>
     <message>
         <source>Select to mirror</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu ispilura</translation>
     </message>
     <message>
         <source>Select to move and rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu mugitu eta biratu</translation>
     </message>
     <message>
         <source>Select for two axis rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu bi ardatzen biraketarako</translation>
     </message>
     <message>
         <source>Select to explode text</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu testua lehertzeko</translation>
     </message>
     <message>
         <source>Select to create block</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu blokea sortzeko</translation>
     </message>
     <message>
         <source>Select to copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu kopiatzeko</translation>
     </message>
     <message>
         <source>Select to cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu ebakitzeko</translation>
     </message>
     <message>
         <source>No entity selected!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez da entitaterik hautatu!</translation>
     </message>
     <message>
         <source>Select to create offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu desplazamendua sortzeko</translation>
     </message>
     <message>
         <source>Select entities to order</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu entitateak ordenatzeko</translation>
     </message>
     <message>
         <source>Select to explode block</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu blokea lehertzeko</translation>
     </message>
     <message>
         <source>Select to revert direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu norabidea alderantzikatzeko</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectContour</name>
     <message>
         <source>Entity must be an Atomic Entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Entitateak entitate atomiko bat izan behar du.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectIntersected</name>
     <message>
         <source>Choose first point of intersection line</source>
-        <translation type="unfinished"></translation>
+        <translation>Aukeratu ebakidura-lerroaren lehen puntua</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Choose second point of intersection line</source>
-        <translation type="unfinished"></translation>
+        <translation>Aukeratu ebakidura-lerroaren bigarren puntua</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectWindow</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Choose second edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Aukeratu bigarren ertza</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Click and drag for the selection window</source>
-        <translation type="unfinished"></translation>
+        <translation>Egin klik eta arrastatu hautapen-leihoan</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSetRelativeZero</name>
     <message>
         <source>Set relative Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezarri zero erlatiboa</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Set &amp;Relative Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezarri zero gorria</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSnapIntersectionManual</name>
     <message>
         <source>I&amp;ntersection Manually</source>
-        <translation type="unfinished"></translation>
+        <translation>I&amp;ntersection eskuz</translation>
     </message>
     <message>
         <source>Select first entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu lehen entitatea</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
     <message>
         <source>Select second entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Hautatu bigarren entitatea</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionToolRegenerateDimensions</name>
     <message>
         <source>Regenerated %1 dimension entities</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 dimentsioko entitate birsortzaileak</translation>
     </message>
     <message>
         <source>No dimension entities found</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez da dimentsio-erakunderik aurkitu</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomPan</name>
     <message>
         <source>Click and drag to pan zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>Egin klik eta arrastatu zooma panelera</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Zoom panning</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoomaren panoramika</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomWindow</name>
     <message>
         <source>Specify first edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu lehen ertza</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Utzi</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <source>Specify second edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Zehaztu bigarren ertza</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atzera</translation>
+        <translation>Atzera</translation>
     </message>
 </context>
 <context>
     <name>RS_GraphicView</name>
     <message>
         <source>Draft</source>
-        <translation type="unfinished"></translation>
+        <translation>Zirriborroa</translation>
     </message>
 </context>
 <context>
     <name>TextFileViewer</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished">Markoa</translation>
+        <translation>Markoa</translation>
     </message>
 </context>
 <context>
     <name>Ui_ArcOptions</name>
     <message>
         <source>Arc Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Arku-aukerak</translation>
     </message>
     <message>
         <source>Counterclockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Counterclockwise</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Erlojuaren noranzkoan</translation>
     </message>
 </context>
 <context>
     <name>Ui_ArcTangentialOptions</name>
     <message>
         <source>Tangential Arc Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Arku tangentzialaren aukerak</translation>
     </message>
     <message>
         <source>Radius of the tangential arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Arku tangentearen erradioa</translation>
     </message>
     <message>
         <source>Total subtending angle of the tangential arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Arku tangentearen angelua guztira</translation>
     </message>
     <message>
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Erradioa</translation>
     </message>
     <message>
         <source>Angle</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished">Angelua</translation>
+        <translation>Angelua</translation>
     </message>
 </context>
 <context>
     <name>Ui_BevelOptions</name>
     <message>
         <source>Bevel Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Alakaren aukerak</translation>
     </message>
     <message>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished"></translation>
+        <translation>Egiaztatu bi entitateak belaontzira botatzea</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Length 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>1. luzera:</translation>
     </message>
     <message>
         <source>Length 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>2. luzera:</translation>
     </message>
 </context>
 <context>
     <name>Ui_CircleOptions</name>
     <message>
         <source>Circle Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Zirkuluaren aukerak</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished">Erradioa:</translation>
+        <translation>Erradioa:</translation>
     </message>
 </context>
 <context>
     <name>Ui_CircleTan2Options</name>
     <message>
         <source>Circle Tangential2 Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Zirkulu tangentziala 2 aukerak</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Zirkulu tangentearen erradioa &lt;/p&gt;&lt;/body&gt;&lt;/html&gt; marrazteko</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished">Erradioa:</translation>
+        <translation>Erradioa:</translation>
     </message>
     <message>
         <source>Radius of tangential circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Zirkulu tangentearen erradioa</translation>
     </message>
 </context>
 <context>
     <name>Ui_DimLinearOptions</name>
     <message>
         <source>Linear Dimension Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimentsio linealaren aukerak</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Angelua:</translation>
+        <translation>Angelua:</translation>
     </message>
 </context>
 <context>
     <name>Ui_DimOptions</name>
     <message>
         <source>Dimension Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimentsio-aukerak</translation>
     </message>
     <message>
         <source>Label:</source>
-        <translation type="unfinished">Etiketa:</translation>
+        <translation>Etiketa:</translation>
     </message>
     <message>
         <source>⌀</source>
-        <translation type="unfinished"></translation>
+        <translation>⌀</translation>
     </message>
     <message>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation>°</translation>
     </message>
     <message>
         <source>±</source>
-        <translation type="unfinished"></translation>
+        <translation>±</translation>
     </message>
     <message>
         <source>π</source>
-        <translation type="unfinished"></translation>
+        <translation>π</translation>
     </message>
     <message>
         <source>×</source>
-        <translation type="unfinished"></translation>
+        <translation>×</translation>
     </message>
     <message>
         <source>÷</source>
-        <translation type="unfinished"></translation>
+        <translation>÷</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
     <name>Ui_ImageOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Txertatu aukerak</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Angelua:</translation>
+        <translation>Angelua:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Biratze-angelua</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Faktorea:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Eskala-faktorea</translation>
     </message>
     <message>
         <source>DPI</source>
-        <translation type="unfinished">DPI</translation>
+        <translation>DPI</translation>
     </message>
     <message>
         <source>DPI of Image</source>
-        <translation type="unfinished"></translation>
+        <translation>DPI irudia</translation>
     </message>
 </context>
 <context>
     <name>Ui_InsertOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Txertatu aukerak</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Angelua:</translation>
+        <translation>Angelua:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Biratze-angelua</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Faktorea:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Eskala-faktorea</translation>
     </message>
     <message>
         <source>Array:</source>
-        <translation type="unfinished"></translation>
+        <translation>Array-a:</translation>
     </message>
     <message>
         <source>Number of Columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Zutabe kopurua</translation>
     </message>
     <message>
         <source>Number of Rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Errenkada kopurua</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation type="unfinished">Spacing:</translation>
+        <translation>Tartea:</translation>
     </message>
     <message>
         <source>Column Spacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Zutabe-tartea</translation>
     </message>
     <message>
         <source>Row Spacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Errenkada-tartea</translation>
     </message>
 </context>
 <context>
     <name>Ui_LibraryInsertOptions</name>
     <message>
         <source>Library Insert Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Liburutegiaren aukerak</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Angelua:</translation>
+        <translation>Angelua:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Biratze-angelua</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Faktorea:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Eskala-faktorea</translation>
     </message>
 </context>
 <context>
     <name>Ui_LineAngleOptions</name>
     <message>
         <source>Line Angle Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Lerro-angeluaren aukerak</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Angelua:</translation>
+        <translation>Angelua:</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Lerro-angelua</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished">Luzera:</translation>
+        <translation>Luzera:</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation type="unfinished"></translation>
+        <translation>Lerroaren luzera</translation>
     </message>
     <message>
         <source>Snap Point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitze-puntua:</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Hasi</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation type="unfinished"></translation>
+        <translation>Erdialdean</translation>
     </message>
     <message>
         <source>End</source>
-        <translation type="unfinished"></translation>
+        <translation>Amaiera</translation>
     </message>
 </context>
 <context>
     <name>Ui_LineBisectorOptions</name>
     <message>
         <source>Line Bisector Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Line Bisector aukerak</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished">Luzera:</translation>
+        <translation>Luzera:</translation>
     </message>
     <message>
         <source>Length of bisector</source>
-        <translation type="unfinished"></translation>
+        <translation>Bisektorearen luzera</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zenbakia:</translation>
     </message>
     <message>
         <source>Number of bisectors to create</source>
-        <translation type="unfinished"></translation>
+        <translation>Bisektore kopurua sortzeko</translation>
     </message>
 </context>
 <context>
     <name>Ui_LineOptions</name>
     <message>
         <source>Line Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Lerro-aukerak</translation>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortu ingurune itxia marraztatutako lerroetatik</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Itxi</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Desegin azken marra marraztea</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Desegin</translation>
+        <translation>Desegin</translation>
     </message>
     <message>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Lerroaren azken marrazkia berregiten du</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>Redo</translation>
     </message>
 </context>
 <context>
     <name>Ui_LineOptionsRel</name>
     <message>
         <source>Line Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Lerro-aukerak</translation>
     </message>
     <message>
         <source>Direction:</source>
-        <translation type="unfinished"></translation>
+        <translation>Norabidea:</translation>
     </message>
     <message>
         <source>Polyline</source>
-        <translation type="unfinished">Polilinea</translation>
+        <translation>Polilerroa</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished">Angelua</translation>
+        <translation>Angelua</translation>
     </message>
     <message>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <source>Rel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rel</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Desegin azken marra marraztea</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Desegin</translation>
+        <translation>Desegin</translation>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortu ingurune itxia marraztatutako lerroetatik</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Itxi</translation>
     </message>
     <message>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Lerroaren azken marrazkia berregiten du</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>Redo</translation>
     </message>
     <message>
         <source>Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntua</translation>
     </message>
 </context>
 <context>
     <name>Ui_LineParallelOptions</name>
     <message>
         <source>Line Parallel Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Lerro paraleloen aukerak</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Distantzia:</translation>
     </message>
     <message>
         <source>Distance to original entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Jatorrizko entitatearen distantzia</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zenbakia:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortzeko paralelo kopurua</translation>
     </message>
 </context>
 <context>
     <name>Ui_LineParallelThroughOptions</name>
     <message>
         <source>Line Parallel Through Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Linea paraleloa aukeren bidez</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zenbakia:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortzeko paralelo kopurua</translation>
     </message>
 </context>
 <context>
     <name>Ui_LinePolygon2Options</name>
     <message>
         <source>Polygon Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Poligonoen aukerak</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zenbakia:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation type="unfinished"></translation>
+        <translation>Ertz kopurua</translation>
     </message>
 </context>
 <context>
     <name>Ui_LinePolygonOptions</name>
     <message>
         <source>Polygon Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Poligonoen aukerak</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zenbakia:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation type="unfinished"></translation>
+        <translation>Ertz kopurua</translation>
     </message>
 </context>
 <context>
     <name>Ui_LineRelAngleOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation type="unfinished">Line Relative Angle Options</translation>
+        <translation>Angelu erlatiboaren aukerak</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Angelua:</translation>
+        <translation>Angelua:</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Lerro-angelua</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished">Luzera:</translation>
+        <translation>Luzera:</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation type="unfinished"></translation>
+        <translation>Lerroaren luzera</translation>
     </message>
 </context>
 <context>
     <name>Ui_MTextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation type="unfinished">Testu Aukerak</translation>
+        <translation>Testu-aukerak</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation type="unfinished">Testua:</translation>
+        <translation>Testua:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Angelua:</translation>
+        <translation>Angelua:</translation>
     </message>
 </context>
 <context>
     <name>Ui_ModifyOffsetOptions</name>
     <message>
         <source>Modify Offset Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Desplazatu aukerak</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Distantzia:</translation>
     </message>
     <message>
         <source>Offset from original entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Jatorrizko entitatearen desplazamendua</translation>
     </message>
 </context>
 <context>
     <name>Ui_MoveRotateOptions</name>
     <message>
         <source>Move Rotate Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Biratu aukerak</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Angelua:</translation>
+        <translation>Angelua:</translation>
     </message>
 </context>
 <context>
     <name>Ui_PolylineOptions</name>
     <message>
         <source>Polyline Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Polilerroa</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Itxi</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Desegin</translation>
+        <translation>Desegin</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished">Marra</translation>
+        <translation>Lerroa</translation>
     </message>
     <message>
         <source>Tangential</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangente</translation>
     </message>
     <message>
         <source>Tan Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Tan Radius</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished">Angelua</translation>
+        <translation>Angelua</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished">Erradioa:</translation>
+        <translation>Erradioa:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Angelua:</translation>
+        <translation>Angelua:</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Counter Clockwise</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Erlojuaren noranzkoan</translation>
     </message>
 </context>
 <context>
     <name>Ui_PrintPreviewOptions</name>
     <message>
         <source>Print Preview Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Inprimatzeko aurrebistaren aukerak</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale uneko balioarekin blokeatuta dago&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>fixed</source>
-        <translation type="unfinished"></translation>
+        <translation>finkoa</translation>
     </message>
     <message>
         <source>Toggle Black / White mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Txandakatu beltza/zuria modua</translation>
     </message>
     <message>
         <source>Center to page</source>
-        <translation type="unfinished"></translation>
+        <translation>Zentratu orrialdera</translation>
     </message>
     <message>
         <source>Fit to page</source>
-        <translation type="unfinished"></translation>
+        <translation>Doitu orrira</translation>
     </message>
     <message>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplikatu inprimatzeko eskala marra-zabaleran</translation>
     </message>
     <message>
         <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalkulatu marrazkia edukitzeko behar den orrialde kopurua</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size: drawing size&lt;/p&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>Ui_RoundOptions</name>
     <message>
         <source>Round Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Aukera orokorrak</translation>
     </message>
     <message>
         <source>Check to trim both edges to the rounding</source>
-        <translation type="unfinished"></translation>
+        <translation>Egiaztatu bi ertzak biribilgunera mozteko</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished">Erradioa:</translation>
+        <translation>Erradioa:</translation>
     </message>
 </context>
 <context>
     <name>Ui_SnapDistOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitzeko distantziaren aukerak</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Distantzia:</translation>
     </message>
 </context>
 <context>
     <name>Ui_SnapMiddleOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Atxikitzeko distantziaren aukerak</translation>
     </message>
     <message>
         <source>Middle Points:</source>
@@ -13707,7 +13749,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Degree:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gradua:</translation>
     </message>
     <message>
         <source>Closed</source>
@@ -13760,35 +13802,35 @@ This block cannot be inserted.</source>
     <name>WidgetCreator</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished">Markoa</translation>
+        <translation>Markoa</translation>
     </message>
     <message>
         <source>&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&gt;</translation>
     </message>
     <message>
         <source>&lt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Izena</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortu</translation>
     </message>
     <message>
         <source>Destroy</source>
-        <translation type="unfinished"></translation>
+        <translation>Suntsitu</translation>
     </message>
     <message>
         <source>Assign</source>
-        <translation type="unfinished"></translation>
+        <translation>Esleitu</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Eguneratu</translation>
     </message>
 </context>
 <context>
