@@ -1,9 +1,23 @@
-### translate ts files by local hosted libretranslate
-### to start: 
-###   pip install libretranslate
-###   libretranslate --port 5000
-###   python ts_libre.py 
-### the python script will translate ts files in the subfolder translations/
+"""
+PURPOSE:
+    Automates the translation of Qt Linguist (.ts) files using a local or remote 
+    LibreTranslate API instance. It specifically handles regional locale codes 
+    (e.g., zh_TW, es_MX) by mapping them to API-compatible ISO codes and 
+    processes only "unfinished" or empty translation tags in batches.
+
+DEPENDENCIES:
+    - python 3.7+
+    - aiohttp: For asynchronous HTTP requests (pip install aiohttp)
+    - LibreTranslate: A running instance (http://localhost:5000)
+    - xml.etree.ElementTree: Standard library for XML parsing
+
+USAGE:
+    1. Ensure LibreTranslate is running locally: `libretranslate --update-models`
+    2. Place this script in the directory scripts/ in the LibreCAD source
+       folder
+    3. The script targets files at: ../librecad/ts/*.ts
+    4. Run the script: `python ts_libre.py`
+"""
 
 import xml.etree.ElementTree as ET
 import asyncio
@@ -14,7 +28,11 @@ from typing import List, Dict
 # ────────────────────────────────────────────────
 #  CONFIGURATION & LANGUAGE MAPPING
 # ────────────────────────────────────────────────
-FOLDER_PATH = "translations"
+# Get the folder where THIS script is located
+SCRIPT_DIR = Path(__file__).parent
+# Resolve the relative path: ../librecad/ts/
+TS_FOLDER = (SCRIPT_DIR / ".." / "librecad" / "ts").resolve()
+
 LIBRE_URL = "http://localhost:5000/translate"
 BATCH_SIZE = 50
 CONCURRENT_TASKS = 4
@@ -27,19 +45,20 @@ SPECIAL_MAPPING = {
     "pt_br": "pt",  # Portuguese (Brazil)
 }
 
-def get_api_lang(path: Path, root_lang: str) -> str:
-    """Extracts and cleans the language code from the filename."""
-    # Split by first underscore to get everything after 'librecad_'
-    parts = path.stem.split('_', 1)
-    if len(parts) < 2:
-        return root_lang[:2] if root_lang else "en"
+def get_api_lang(path: Path) -> str:
+    """
+    Extracts the language code from filenames like 'librecad_zh_tw.ts'.
+    Returns 'zt' for zh_tw, 'es' for es_mx, etc.
+    """
+    # Remove 'librecad_' prefix and '.ts' suffix
+    name_core = path.stem.replace("librecad_", "").lower()
     
-    raw_code = parts[1].lower()
+    # 1. Check for manual mapping
+    if name_core in SPECIAL_MAPPING:
+        return SPECIAL_MAPPING[name_core]
     
-    # Check manual mapping first, otherwise strip regional suffix (es_mx -> es)
-    if raw_code in SPECIAL_MAPPING:
-        return SPECIAL_MAPPING[raw_code]
-    return raw_code.split('_')[0]
+    # 2. Handle regional codes by taking the first part (es_mx -> es)
+    return name_core.split('_')[0]
 
 # Global Counter
 total_translated = 0
@@ -57,7 +76,7 @@ async def translate_batch(session: aiohttp.ClientSession, batch: List[Dict], tar
     }
 
     try:
-        async with session.post(LIBRE_URL, json=payload) as resp:
+        async with session.post(LIBRE_URL, json=payload, timeout=30) as resp:
             if resp.status == 200:
                 result_data = await resp.json()
                 translated_texts = result_data.get("translatedText", [])
@@ -75,17 +94,22 @@ async def translate_batch(session: aiohttp.ClientSession, batch: List[Dict], tar
                 total_translated += count
                 print(f"  [Progress] +{count} (Total: {total_translated})")
             else:
-                print(f"  [Error] API {resp.status}: {await resp.text()}")
+                error_msg = await resp.text()
+                print(f"  [Error] API {resp.status} for '{target_lang}': {error_msg}")
     except Exception as e:
         print(f"  [Error] Batch failed: {e}")
 
 async def process_file(session: aiohttp.ClientSession, path: Path):
-    tree = ET.parse(path)
+    try:
+        tree = ET.parse(path)
+    except ET.ParseError:
+        print(f"  [Error] Could not parse XML: {path.name}")
+        return
+
     root = tree.getroot()
+    target_lang = get_api_lang(path)
     
-    # Determine the correct language code for the API
-    target_lang = get_api_lang(path, root.get("language"))
-    
+    # Skip source language (English)
     if target_lang == "en":
         return
 
@@ -94,9 +118,11 @@ async def process_file(session: aiohttp.ClientSession, path: Path):
         src_text = msg.findtext("source", "").strip()
         trans_el = msg.find("translation")
         
-        # Collect if empty or marked 'unfinished'
-        if trans_el is not None and (trans_el.get("type") == "unfinished" or not (trans_el.text or "").strip()):
-            if src_text:
+        if trans_el is not None:
+            is_unfinished = trans_el.get("type") == "unfinished"
+            is_empty = not (trans_el.text or "").strip()
+            
+            if src_text and (is_unfinished or is_empty):
                 to_translate.append({"src": src_text, "el": trans_el})
 
     if not to_translate:
@@ -115,11 +141,16 @@ async def process_file(session: aiohttp.ClientSession, path: Path):
     tree.write(path, encoding="utf-8", xml_declaration=True)
 
 async def main():
-    files = sorted(list(Path(FOLDER_PATH).glob("*.ts")))
-    if not files:
-        print(f"No .ts files found in {FOLDER_PATH}")
+    if not TS_FOLDER.exists():
+        print(f"Error: Folder not found at {TS_FOLDER}")
         return
 
+    files = sorted(list(TS_FOLDER.glob("*.ts")))
+    if not files:
+        print(f"No .ts files found in {TS_FOLDER}")
+        return
+
+    print(f"Scanning: {TS_FOLDER}")
     async with aiohttp.ClientSession() as session:
         for file in files:
             await process_file(session, file)
