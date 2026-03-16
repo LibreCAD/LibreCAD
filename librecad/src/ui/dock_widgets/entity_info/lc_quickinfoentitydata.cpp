@@ -1236,9 +1236,9 @@ void LC_QuickInfoEntityData::collectSplinePointsProperties(LC_SplinePoints *spli
 QString LC_QuickInfoEntityData::prepareParabolaDescription(LC_Parabola *parabola, RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(parabola, tr("PARABOLA"), level);
     LC_ParabolaData &data = parabola->getData();
-    appendWCSAbsolute(result, tr("Focus"), data.focus);
-    appendWCSAbsolute(result, tr("Vertex"), data.vertex);
-    appendWCSAngle(result, tr("Axis Angle"), data.axis.angle());
+    appendWCSAbsolute(result, tr("Focus"), data.m_focus);
+    appendWCSAbsolute(result, tr("Vertex"), data.m_vertex);
+    appendWCSAngle(result, tr("Axis Angle"), data.m_axis.angle());
     if (level != RS2::EntityDescriptionLevel::DescriptionCatched) {
         appendLinear(result, tr("Length"), parabola->getLength());
     }
@@ -1252,14 +1252,14 @@ QString LC_QuickInfoEntityData::prepareParabolaDescription(LC_Parabola *parabola
 void LC_QuickInfoEntityData::collectParabolaProperties(LC_Parabola *parabola){
     m_entityName = tr("PARABOLA");
     LC_ParabolaData &data = parabola->getData();
-    addVectorProperty(tr("Focus"), data.focus);
-    addVectorProperty(tr("Vertex"), data.vertex);
-    addAngleProperty(tr("Axis Angle"), data.axis.angle());
+    addVectorProperty(tr("Focus"), data.m_focus);
+    addVectorProperty(tr("Vertex"), data.m_vertex);
+    addAngleProperty(tr("Axis Angle"), data.m_axis.angle());
     addLinearProperty(tr("Length"),  parabola->getLength());
 
     const QString &name = tr("Control Point");
-    for (size_t i = 0; i < data.controlPoints.size(); i++){
-        RS_Vector cp = data.controlPoints.at(i);
+    for (size_t i = 0; i < data.m_controlPoints.size(); i++){
+        RS_Vector cp = data.m_controlPoints.at(i);
         addVectorProperty(name, i + 1, cp); 
     }
 }

@@ -899,6 +899,12 @@ void RS_Circle::draw(RS_Painter* painter)
     return;
   }
 
+  const double radiusUi = painter->toGuiDX(getRadius());
+  if (radiusUi < RS_Painter::getMaximumArcNonErrorRadius()) {
+    painter->drawCircleWCS(getCenter(), getRadius());
+    return;
+  }
+
   QPainterPath path;
 
          // Arbitrary starting point at angle=0, mainly to satisfy moveTo requirement

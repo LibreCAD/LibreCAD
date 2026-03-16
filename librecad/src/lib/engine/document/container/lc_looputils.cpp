@@ -298,7 +298,7 @@ bool LoopExtractor::validate() const {
     }
     if (type == RS2::EntityParabola) {  // Valid primitive
       LC_Parabola* para = static_cast<LC_Parabola*>(e);
-      return para->getData().valid;
+      return para->getData().m_valid;
     }
     // Fallback: check self-closure
     return e->getStartpoint().distanceTo(e->getEndpoint()) <= ENDPOINT_TOLERANCE;
@@ -1069,11 +1069,11 @@ RS_Entity* LC_Loops::createSubEntity(RS_Entity* e, const RS_Vector& p1, const RS
     std::array<RS_Vector, 2> ends = {p1, p2};
     std::array<RS_Vector, 2> tans = {tan1, tan2};
     LC_ParabolaData sub_data = LC_ParabolaData::FromEndPointsTangents(ends, tans);
-    if (sub_data.valid) {
+    if (sub_data.m_valid) {
       return new LC_Parabola(nullptr, sub_data);
     }
     // Fallback: Interpolate controls
-    auto cps = para->getData().controlPoints;
+    auto cps = para->getData().m_controlPoints;
     std::sort(cps.begin(), cps.end(), [](const RS_Vector& a, const RS_Vector& b){ return a.x < b.x; });
     double x1 = p1.x, x2 = p2.x;
     if (x1 > x2) std::swap(x1, x2);
@@ -1160,9 +1160,9 @@ std::vector<RS_Vector> LC_Loops::sortPointsAlongEntity(RS_Entity* e, std::vector
   } else if (type == RS2::EntityParabola) {  // IMPROVED: Exact x-param normalization
     LC_Parabola* para = static_cast<LC_Parabola*>(e);
     LC_ParabolaData& d = para->getData();
-    if (!d.valid) return {};
-    double x_min = std::min({d.controlPoints[0].x, d.controlPoints[1].x, d.controlPoints[2].x});
-    double x_max = std::max({d.controlPoints[0].x, d.controlPoints[1].x, d.controlPoints[2].x});
+    if (!d.m_valid) return {};
+    double x_min = std::min({d.m_controlPoints[0].x, d.m_controlPoints[1].x, d.m_controlPoints[2].x});
+    double x_max = std::max({d.m_controlPoints[0].x, d.m_controlPoints[1].x, d.m_controlPoints[2].x});
     double x_range = x_max - x_min;
     if (x_range < RS_TOLERANCE) return {};
     for (RS_Vector v : inters) {

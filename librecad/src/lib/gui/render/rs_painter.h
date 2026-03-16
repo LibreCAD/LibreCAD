@@ -117,7 +117,7 @@ public:
 
     void drawEllipseArcWCS(
         const RS_Vector &wcsCenter, double wcsMajorRadius, double ratio, double wcsAngleDegrees,
-        double angle1Degrees, double angle2Degrees, double angleLength, bool reversed);
+        double angle1Degrees, double angleLength, bool reversed);
 
     void drawSplinePointsWCS(const std::vector<RS_Vector> &wcsControlPoints, bool closed);
     void drawCircleWCS(const RS_Vector &wcsCenter, double wcsRadius);
@@ -132,7 +132,7 @@ public:
                         const RS_Vector& wcsV4, const RS_Vector& wcsV5);
     void drawPolygonWCS(const std::vector<RS_Vector>& wcsPoints);
 
-    void drawArcWCS(const RS_Vector &wcsCenter, double wcsRadius, double wcsStartAngleDegrees, double angularLength);
+    //void drawArcWCS(const RS_Vector &wcsCenter, double wcsRadius, double wcsStartAngleDegrees, double angularLength);
     void drawSplineWCS(const RS_Spline &spline);
     void drawLineWCS(const RS_Vector &wcsP1, const RS_Vector &wcP2);
     void drawLineUIScaled(QPointF from, QPointF to, double lineWidthFactor);
@@ -440,10 +440,10 @@ protected:
     // painting in UI coordinates
     void drawEllipseUI(double uiCenterX, double uiCenterY, double uiRadiusMajor, double uiRadiusMinor, double uiAngleDegrees);
     void drawEllipseArcUI(double uiCenterX, double uiCenterY, double uiMajorRadius, double uiMinorRadius, double uiMajorAngleDegrees,
-                          double angle1Degrees, double angle2Degrees, double angleLength, bool reversed);
+                          double angle1Degrees, double angleLength, bool reversed);
     void drawEllipseUI(const RS_Vector& uiCenter, const RS_Vector& uiRadii, double uiAngleDegrees);
     void drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& uiRadii, double uiMajorAngleDegrees,
-                           double angle1Degrees, double angle2Degrees, double angleLength, bool reversed);
+                           double angle1Degrees, double angleLength, bool reversed);
     void drawSplinePointsUI(const std::vector<RS_Vector> &uiControlPoints, bool closed);
     void drawArcSplinePointsUI(const std::vector<RS_Vector> &uiControlPoints, QPainterPath &path);
 

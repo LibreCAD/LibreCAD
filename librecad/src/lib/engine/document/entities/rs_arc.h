@@ -281,7 +281,7 @@ protected:
     RS_ArcData data{};
 private:
     // cached values for performance
-    RS_Vector middlePoint;
+    RS_Vector m_middlePoint;
     RS_Vector m_startPoint;
     RS_Vector m_endPoint;
 
