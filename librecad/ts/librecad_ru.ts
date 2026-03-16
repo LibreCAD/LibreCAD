@@ -456,7 +456,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawboundingbox.cpp" line="93"/>
         <source>Note: Bounding box was created for world coordinate system.</source>
-        <translation>Внимание: Охватывающий прямоугольник был создан для Мировой Системы Координат</translation>
+        <translation>Внимание: Охватывающий прямоугольник был создан для Мировой Системы координат</translation>
     </message>
 </context>
 <context>
@@ -2678,7 +2678,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
         <source>UCS operations</source>
-        <translation>Операции с Пользовательскими Системами Координат</translation>
+        <translation>Операции с Пользовательскими Системами координат</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="80"/>
@@ -2873,12 +2873,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="451"/>
         <source>To WCS</source>
-        <translation>К Мировой Системе Координат</translation>
+        <translation>К Мировой Системе координат</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="456"/>
         <source>Create UCS</source>
-        <translation>Создать Пользовательскую Систему Координат</translation>
+        <translation>Создать Пользовательскую Систему координат</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="457"/>
@@ -3596,7 +3596,7 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="37"/>
         <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
-        <translation>Команда поддерживает только Мировую Систему Координат, и не может быть выполнена если активна Пользовательская Система Координат</translation>
+        <translation>Команда поддерживает только Мировую Систему координат, и не может быть выполнена если активна Пользовательская Система координат</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="136"/>
@@ -3631,7 +3631,7 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="231"/>
         <source>Coordinate is accepted only for Align to &quot;Position&quot;</source>
-        <translation>Координата задается только при выравнивании к координате</translation>
+        <translation>Координата задается только при выравнивании к &quot;Позиции&quot;</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifyalign.cpp" line="247"/>
@@ -3732,7 +3732,7 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="39"/>
         <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
-        <translation>Команда поддерживает только Мировую Систему Координат, и не может быть выполнена если активна Пользовательская Система Координат</translation>
+        <translation>Команда поддерживает только Мировую Систему координат, и не может быть выполнена если активна Пользовательская Система координат</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="97"/>
@@ -3787,7 +3787,7 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifyalignsingle.cpp" line="352"/>
         <source>Coordinate is accepted only for Align to &quot;Position&quot;</source>
-        <translation>Координата задается только при выравнивании к координате</translation>
+        <translation>Координата задаётся только при выравнивании к &quot;Позиции&quot;</translation>
     </message>
 </context>
 <context>
@@ -3795,12 +3795,12 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="141"/>
         <source>Invalid entity selected - no segments between intersections to break/divide.</source>
-        <translation>Выбран неподходящий объект - нет сегментов между пересечениями с другими объектами</translation>
+        <translation>Выбран неподходящий объект - нет сегментов между пересечениями с другими объектами.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="240"/>
         <source>Break/Divide Line</source>
-        <translation>Разделение Прямой</translation>
+        <translation>Разбить/Разделить Прямую</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="241"/>
@@ -3819,7 +3819,7 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="361"/>
         <source>Break/Divide Circle</source>
-        <translation>Разделение Окружности</translation>
+        <translation>Разбить/Разделить Окружность</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="362"/>
@@ -3836,7 +3836,7 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="460"/>
         <source>Break/Divide Arc</source>
-        <translation>Разделение Дуги</translation>
+        <translation>Разбить/Разделить Дугу</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifybreakdivide.cpp" line="512"/>
@@ -3879,7 +3879,7 @@ End Edge Point: (%9 , %10)</source>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="69"/>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="94"/>
         <source>Line Gap</source>
-        <translation>Разрыв</translation>
+        <translation>Разрыв линии</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="70"/>
@@ -3896,7 +3896,7 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="434"/>
         <source>Select line</source>
-        <translation>Выберите прямую</translation>
+        <translation>Выберите линию</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinegap.cpp" line="434"/>
@@ -3940,7 +3940,7 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="196"/>
         <source>Lines already intersects, can&apos;t merge</source>
-        <translation>Прямый уже пересекаются, нечего объединять</translation>
+        <translation>Прямые уже пересекаются, нечего объединять</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="804"/>
@@ -3955,7 +3955,7 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_actionmodifylinejoin.cpp" line="810"/>
         <source>Select part of first line that should remain after trim</source>
-        <translation>Выберите часть первой прямой которая должна остаться после отсечения</translation>
+        <translation>Выберите часть первой прямой, которая должна остаться после отсечения</translation>
     </message>
 </context>
 <context>
@@ -3976,7 +3976,7 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actionpastetopoints.cpp" line="110"/>
         <source>Select and paste</source>
-        <translation>Выбрать и сразу вставить</translation>
+        <translation>Выбрать и вставить</translation>
     </message>
 </context>
 <context>
@@ -4213,7 +4213,7 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/dock_widgets/ucs_list/lc_actionucsbydimordinate.cpp" line="62"/>
         <source>Select ordinate dimension to set UCS</source>
-        <translation>Выберите ординатный размер для установки системы координат</translation>
+        <translation>Выберите ординатный размер для установки Системы координат</translation>
     </message>
 </context>
 <context>
@@ -4663,11 +4663,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/entity/lc_arcpropertieseditingwidget.ui" line="476"/>
         <location filename="../src/ui/dialogs/entity/lc_arcpropertieseditingwidget.ui" line="531"/>
         <source>Pick angle value from the drawing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Piick angle value from the drawing</source>
-        <translation type="vanished">Измерить угол на чертеже</translation>
+        <translation>Измерить угол на чертеже</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_arcpropertieseditingwidget.ui" line="502"/>
@@ -4980,12 +4976,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="208"/>
         <source>Origin Indicator</source>
-        <translation>Начало координат</translation>
+        <translation>Индикатор Начала координат</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="209"/>
         <source>Origin Indicator 2</source>
-        <translation>Начало координат 2</translation>
+        <translation>Индикатор Начала координат 2</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="210"/>
@@ -4995,7 +4991,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="211"/>
         <source>Right Angle</source>
-        <translation>Прямой угол</translation>
+        <translation>Правый угол</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="212"/>
@@ -6807,7 +6803,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="404"/>
         <source>New Style Name</source>
-        <translation>Имя нового стиля:</translation>
+        <translation>Имя нового стиля</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="410"/>
@@ -7492,17 +7488,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="58"/>
         <source>Toolip with view details for table items</source>
-        <translation>Показывать всплывающую подсказку с деталями </translation>
+        <translation>Показывать всплывающую подсказку с деталями</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="68"/>
         <source>UCS Details column</source>
-        <translation>Показывать колонку детелей системы координат</translation>
+        <translation>Столбец деталей Системы координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="75"/>
         <source>If checked, type of grid for saved view will be shown</source>
-        <translation>Если выбрано, будет показана колонка с типом сетки сохраненного вида</translation>
+        <translation>Если выбрано, будет показан столбец с типом сетки сохранённого вида</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="78"/>
@@ -7517,7 +7513,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="65"/>
         <source>If checked, the column with details of view&apos;s coordinate system will be show</source>
-        <translation>Если выбрано, будет показана колонка с деталями системы координат вида</translation>
+        <translation>Если выбрано, будет показана колонка с деталями Системы координат вида</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="85"/>
@@ -7532,7 +7528,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="98"/>
         <source>UCS Type icon column</source>
-        <translation>Показывать колонку типа системы координат</translation>
+        <translation>Показывать колонку типа Системы координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="105"/>
@@ -7972,7 +7968,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="14"/>
         <source>UCS List Options</source>
-        <translation>Опции Списка Систем Координат</translation>
+        <translation>Опции Списка Систем координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="20"/>
@@ -7987,7 +7983,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="26"/>
         <source>If сhecked, the tooltip with additional information about UCS will be shown for table item.</source>
-        <translation>Если выбрано, будет показываться всплывающая подсказка с иформацией о системе координат.</translation>
+        <translation>Если выбрано, будет показываться всплывающая подсказка с иформацией о Системе координат.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="39"/>
@@ -7997,12 +7993,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="46"/>
         <source>If checked, column with details of UCS origin and angle will be shown in the table</source>
-        <translation>Если выбрано, будет показана колонка с деталями базовой точки и угла системы координат</translation>
+        <translation>Если выбрано, будет показана колонка с деталями базовой точки и угла Системы координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="49"/>
         <source>UCS Details column</source>
-        <translation>Показывать столбец детелей системы координат</translation>
+        <translation>Показывать столбец детелей Системы координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="59"/>
@@ -8023,18 +8019,18 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="88"/>
         <source>Ask for confirmation before UCS removal</source>
-        <translation>Спрашивать подтверждение перед удалением системы координат</translation>
+        <translation>Спрашивать подтверждение перед удалением Системы координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="95"/>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
-        <translation>Если выбрано в во время создания вида будет введено имя существующей системы координат, то 
-позиция существующей системы будет обновлена. Иначе, для создания новой системы координат будет требоваться ввод уникального имени.</translation>
+        <translation>Если выбрано в во время создания вида будет введено имя существующей Системы координат, то 
+позиция существующей системы будет обновлена. Иначе, для создания новой Системы координат будет требоваться ввод уникального имени.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="98"/>
         <source>Silently update existing UCS if the same exists</source>
-        <translation>Обновлять существующую систему координат</translation>
+        <translation>Обновлять существующую Систему координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="108"/>
@@ -8059,17 +8055,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="136"/>
         <source>If enabled, click on the table item will apply coordinates system. Otherwise, coordinates system should be applied explicitly.</source>
-        <translation>Если выбрано, одиночный клик на строке таблицы будет применять систему координат. Иначе, система координат должна быть применена явно.</translation>
+        <translation>Если выбрано, одиночный клик на строке таблицы будет применять Систему координат. Иначе, Система координат должна быть применена явно.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="153"/>
         <source>Defines which action should be performed on double click on the item of the table. </source>
-        <translation>Определяет что должно произойти при двойном щелчке мышью на строке таблицы систем координат</translation>
+        <translation>Определяет что должно произойти при двойном щелчке мышью на строке таблицы Систем координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="139"/>
         <source>Restore UCS on single click by table item</source>
-        <translation>Применять систему координат при одиночном клике на элемент таблицы</translation>
+        <translation>Применять Систему координат при одиночном клике на элемент таблицы</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="146"/>
@@ -8079,17 +8075,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="36"/>
         <source>If checked, the column with icon for type of UCS will be shown in the table. </source>
-        <translation>Если выбрано, будет показываться колонка с иконкой типа системы координат (пользовательская/мировая)</translation>
+        <translation>Если выбрано, будет показываться колонка с иконкой типа Системы координат (пользовательская/мировая).</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="56"/>
         <source>If checked, the column with type of grid for UCS will be shown</source>
-        <translation>Если выбрано, будет показываться колонка с типом сетки для системы координат</translation>
+        <translation>Если выбрано, будет показываться колонка с типом сетки для Системы координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="114"/>
         <source>Defines how drawing&apos;s view window should be adjusted after UCS is applied</source>
-        <translation>Определяет как нужно обновить вид в окне чертежа после применения системы координат</translation>
+        <translation>Определяет как нужно обновить вид в окне чертежа после применения Системы координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="157"/>
@@ -8099,32 +8095,32 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="162"/>
         <source>Edit UCS</source>
-        <translation>Редактировать</translation>
+        <translation>Редактировать Систему координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="167"/>
         <source>Apply UCS</source>
-        <translation>Применить</translation>
+        <translation>Применить Систему координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="172"/>
         <source>Highlight UCS</source>
-        <translation>Показать положение</translation>
+        <translation>Подсветить Систему координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="180"/>
         <source>As UCS is applied, perform</source>
-        <translation>После применения системы координтат, выполнить</translation>
+        <translation>После применения Системы координат, выполнить</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="190"/>
         <source>UCS Highlight</source>
-        <translation>Подсветка Системы Координат</translation>
+        <translation>Подсветить Систему координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="196"/>
         <source>Defines delay between UCS marker blinks</source>
-        <translation>Задает интервал задержки между миганием маркера</translation>
+        <translation>Задаёт интервал задержки между миганием маркера</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="199"/>
@@ -8139,12 +8135,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="225"/>
         <source>Blink Delay:</source>
-        <translation>Интервал мигания: </translation>
+        <translation>Интервал мигания:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="232"/>
         <source>Defines amount of blinks of UCS marker for UCS highlighting</source>
-        <translation>Определяет количество миганий маркера системы координат для ее подсветки</translation>
+        <translation>Определяет количество миганий маркера Системы координат для её подсветки</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="235"/>
@@ -8159,7 +8155,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="49"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="55"/>
         <source>UCS Edit</source>
-        <translation>Пользовательская Система Координат</translation>
+        <translation>Изменить Систему координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="37"/>
@@ -8202,7 +8198,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="50"/>
         <source>Please specify name of UCS</source>
-        <translation>Пожалуйста укажите название пользовательской системы координат</translation>
+        <translation>Пожалуйста, укажите название пользовательской Системы координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="56"/>
@@ -9492,12 +9488,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
         <source>If checked, UCSs from the document will be included into exported drawings. Otherwise, UCSs are not included.</source>
-        <translation>Если выбрано, то при экспорте слоев будут также экспортироваться и системы координат.</translation>
+        <translation>Если выбрано, то при экспорте слоев будут также экспортироваться и Системы координат.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="99"/>
         <source>Export UCSs too</source>
-        <translation>Экспортировать системы координат</translation>
+        <translation>Экспортировать Системы координат тоже</translation>
     </message>
 </context>
 <context>
@@ -9505,22 +9501,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="20"/>
         <source>Layers Tree Options</source>
-        <translation>Настройки дерева слоев</translation>
+        <translation>Настройки Дерева слоёв</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="36"/>
         <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation>Настройи соглашения имен которое используется для создания иерархии слоев из одноуровневого списка слоев.Иерархия строится используя разделители имен между уровнями слев.</translation>
+        <translation>Настройи соглашения имён, которое используется для создания иерархии слоев из одноуровневого списка слоев. Иерархия строится, используя разделители имён между уровнями слоёв</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="39"/>
         <source>Naming Convention</source>
-        <translation>Соглашение имен</translation>
+        <translation>Соглашение имён</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="64"/>
         <source>Separator used for split inner name of layer to hierarchical names</source>
-        <translation>Строка-разделитель уровней в иерархии слоев</translation>
+        <translation>Строка-разделитель уровней в иерархии слоёв</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="77"/>
@@ -9530,7 +9526,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
         <source>Secondary Layer Suffixes</source>
-        <translation>Суффиксы вторичных слоев</translation>
+        <translation>Суффиксы вторичных слоёв</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="103"/>
@@ -9540,7 +9536,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="116"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>Суффикс в имени слоя, который определяет что слоя является слоем размеров</translation>
+        <translation>Суффикс в имени слоя, который определяет что слой является слоем размеров</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="126"/>
@@ -9560,7 +9556,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="162"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
-        <translation>Суффикс имени слоя который определяет что слой является слоем с альтернативной позицие объектов</translation>
+        <translation>Суффикс имени слоя который определяет, что слой является слоем с альтернативной позицией объектов.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="175"/>
@@ -9575,7 +9571,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="194"/>
         <source>Prefix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Префикс который будет добавлен к имени слоя если слой с таким именем уже существует</translation>
+        <translation>Префикс, который будет добавлен к имени слоя, если слой с таким именем уже существует</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="204"/>
@@ -9585,7 +9581,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="217"/>
         <source>Suffix of layer&apos;s name that is used if layer with such name exists (say, when duplicate is created)</source>
-        <translation>Суффикс в имени слоя, который будет добавлен к имени слоя если слой с таким именем уже существует</translation>
+        <translation>Суффикс в имени слоя, который будет добавлен к имени слоя, если слой с таким именем уже существует</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="231"/>
@@ -11216,7 +11212,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="159"/>
         <source>Position</source>
-        <translation>Координате</translation>
+        <translation>Позиции</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignoptions.ui" line="164"/>
@@ -11286,17 +11282,17 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignrefoptions.ui" line="59"/>
         <source>Keep Originals</source>
-        <translation>&amp;Сохранить оригиналы</translation>
+        <translation>Сохранить оригиналы</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignrefoptions.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation>Если выбрано, созданые объекты будут созданы в активном слое, иначе они будут слоях объектов-оригиналов</translation>
+        <translation>Если выбрано, то созданые объекты будут созданы в активном слое, иначе они будут в слоях объектов-оригиналов.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignrefoptions.ui" line="69"/>
         <source>User Current Layer</source>
-        <translation>В &amp;текущий слой</translation>
+        <translation>Текущий слой пользователя</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignrefoptions.ui" line="76"/>
@@ -11307,7 +11303,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifyalignrefoptions.ui" line="79"/>
         <source>Scale</source>
-        <translation>Масштабировать</translation>
+        <translation>Масштаб</translation>
     </message>
 </context>
 <context>
@@ -11337,7 +11333,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifybreakdivideoptions.ui" line="58"/>
         <source>Remove Selected</source>
-        <translation>Выбраные</translation>
+        <translation>Удалить Выбраные</translation>
     </message>
 </context>
 <context>
@@ -11360,7 +11356,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="95"/>
         <source>Line Snap:</source>
-        <translation>Где в прямой:</translation>
+        <translation>Линия привязки:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="54"/>
@@ -11442,7 +11438,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="134"/>
         <source>Size of the gap, if not free</source>
-        <translation>Фиксированная длина разрыва если она не задается вручную</translation>
+        <translation>Фиксированная длина разрыва, если она не задаётся вручную</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_modifygapoptions.ui" line="155"/>
@@ -14293,32 +14289,32 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="393"/>
         <source>&amp;Clear</source>
-        <translation>Очистить</translation>
+        <translation>&amp;Очистить</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="394"/>
         <source>&amp;Select Entity</source>
-        <translation>Выбрать объект</translation>
+        <translation>&amp;Выбрать объект</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="397"/>
         <source>&amp;Select in Drawing</source>
-        <translation>Выделить на чертеже</translation>
+        <translation>&amp;Выделить на чертеже</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="398"/>
         <source>&amp;Edit Properties</source>
-        <translation>Редактировать Свойства</translation>
+        <translation>&amp;Редактировать Свойства</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="400"/>
         <source>&amp;Collect Coordinates</source>
-        <translation>Собрать координаты</translation>
+        <translation>&amp;Собрать координаты</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="789"/>
         <source>No data - select entity of coordinates first...</source>
-        <translation>Нет данных-сначала выберите объекты или координаты...</translation>
+        <translation>Нет данных - сначала выберите объекты или координаты...</translation>
     </message>
 </context>
 <context>
@@ -14326,7 +14322,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="14"/>
         <source>Dialog</source>
-        <translation>Настройки</translation>
+        <translation>Диалог</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="30"/>
@@ -16152,7 +16148,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="336"/>
         <source>UCS</source>
-        <translation>Системa Координат</translation>
+        <translation>Системa Координат пользователя</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="357"/>
@@ -16239,37 +16235,37 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="37"/>
         <source>Create new user coordinates system.</source>
-        <translation>Создать Систему Координат</translation>
+        <translation>Создать Систему координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="54"/>
         <source>Restores selected user coordinates system.</source>
-        <translation>Применить Систему Координат</translation>
+        <translation>Применить Систему координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="68"/>
         <source>Preview of coordinate system origin and angle.</source>
-        <translation>Просмотр Системы Координат</translation>
+        <translation>Просмотр исходной Системы координат и угла.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="82"/>
         <source>Saves currently used coordinate system (it is usefull if UCS comes from saved view)</source>
-        <translation>Сохранить Систему Координат</translation>
+        <translation>Сохранить Систему координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="96"/>
         <source>Set UCS by ordinate dimension</source>
-        <translation>Установить систему координат по ординатному размеру</translation>
+        <translation>Установить Систему координат по ординатному размеру</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="110"/>
         <source>Edit selected user coordinates name. No-name UCS are temporary and are not saved.</source>
-        <translation>Редактировать Систему Координат</translation>
+        <translation>Редактировать Систему координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="124"/>
         <source>Removes selected user coordinates system.</source>
-        <translation>Удалить Систему Координат</translation>
+        <translation>Удалить Систему координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="127"/>
@@ -16284,7 +16280,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="197"/>
         <source>Filtering user coordinates by name</source>
-        <translation>Фильтр систем координат по имени</translation>
+        <translation>Фильтр Систем координат по имени</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="200"/>
@@ -16300,99 +16296,99 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="318"/>
         <source>Delete All UCS</source>
-        <translation>Удаление Всех Систем Координат</translation>
+        <translation>Удаление ВСЕХ Систем координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="319"/>
         <source>Are you sure to delete ALL UCS?
  Warning: this action can NOT be undone!</source>
-        <translation>Вы уверены в удалении ВСЕХ систем координат?
+        <translation>Вы уверены в удалении ВСЕХ Систем координат?
 Предупреждение: Это действие не может быть отменено!</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="343"/>
         <source>Delete UCS</source>
-        <translation>Удалить систему координат</translation>
+        <translation>Удалить Систему координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="344"/>
         <source>Are you sure to delete UCS
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
-        <translation>Вы уверены что хотите удалить Систему Координат
+        <translation>Вы уверены что хотите удалить Систему координат
  &quot;%1&quot;?
 Предупреждение: Эта операция не может быть отменена!</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="377"/>
         <source>Delete UCSs</source>
-        <translation>Удалить системы координат</translation>
+        <translation>Удалить Системы координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="378"/>
         <source>Are you sure to delete UCS %1?
 Warning: this action can NOT be undone!</source>
-        <translation>Вы уверены что хотите удалить Систему Координат -  %1?
+        <translation>Вы уверены что хотите удалить Систему координат -  %1?
 Предупреждение: эта операция не может быть отменена!</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="430"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="443"/>
         <source>Rename UCS</source>
-        <translation>Переименование Системы Координат</translation>
+        <translation>Переименовать Системы координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="431"/>
         <source>UCS name:</source>
-        <translation>Имя системы координат: </translation>
+        <translation>Имя Системы координат: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="444"/>
         <source>UCS with provided name already exists, select another one</source>
-        <translation>Система Координат с таким именем уже существуюет, укажите другое имя.</translation>
+        <translation>Система координат с таким именем уже существуюет, укажите другое имя.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="491"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="501"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="527"/>
         <source>&amp;Save UCS</source>
-        <translation>&amp;Сохранить систему координат</translation>
+        <translation>&amp;Сохранить Систему координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="494"/>
         <source>&amp;Update UCS</source>
-        <translation>Редактировать</translation>
+        <translation>Редактировать Систему координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="495"/>
         <source>R&amp;emove Selected UCSs</source>
-        <translation>Удалить Выбранные</translation>
+        <translation>Удалить выбранные Системы координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="508"/>
         <source>&amp;Apply UCS</source>
-        <translation>&amp;Применить Систему Координат</translation>
+        <translation>&amp;Применить Систему координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="509"/>
         <source>&amp;Preview UCS</source>
-        <translation>Показать &amp;где</translation>
+        <translation>Показать &amp;Систему координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="512"/>
         <source>&amp;Rename UCS</source>
-        <translation>Переименовать</translation>
+        <translation>Переименовать Систему координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="513"/>
         <source>R&amp;emove UCS</source>
-        <translation>Удалить </translation>
+        <translation>Удалить Систему координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="518"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="534"/>
         <source>Remove A&amp;ll UCSs</source>
-        <translation>Удалить Все </translation>
+        <translation>Удалить Все Системв координат</translation>
     </message>
 </context>
 <context>
@@ -16410,7 +16406,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/other/lc_ucssetoptions.ui" line="61"/>
         <source>Angle X-axis of new coordinate system</source>
-        <translation>Угол оси Х для новой Пользовательской Системы Координат</translation>
+        <translation>Угол оси Х для новой Пользовательской Системы координат</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/other/lc_ucssetoptions.ui" line="68"/>
@@ -16438,12 +16434,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="44"/>
         <source>Type of current coordinate system</source>
-        <translation>Тип активной системы координат</translation>
+        <translation>Тип активной Системы координат</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="96"/>
         <source>Name of selected coordinate system</source>
-        <translation>Название активной системы координат</translation>
+        <translation>Название активной Системы координат</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="105"/>
@@ -16454,7 +16450,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="115"/>
         <source>Position of origin and angle of current UCS&apos;s in world coordinates.</source>
-        <translation>Позиция начала отсчета и угол поворота оси X активной Пользовательской системы координат в Мировых координатах.</translation>
+        <translation>Позиция начала отсчёта и угол текущей пользовательской Системы координат в мировых координатах.</translation>
     </message>
 </context>
 <context>
@@ -16462,7 +16458,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="239"/>
         <source>Library Browser</source>
-        <translation>Обзор</translation>
+        <translation>Обзор Библиотеки</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="261"/>
@@ -16554,7 +16550,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
         <source>UCSs</source>
-        <translation>Системы Координат</translation>
+        <translation>Системы координат</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="139"/>
@@ -16579,12 +16575,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
         <source>User Coordinate Systems</source>
-        <translation>Система Координат</translation>
+        <translation>Пользовательские Системы координат</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="200"/>
         <source>Layers Tree</source>
-        <translation>Дерево Слоев</translation>
+        <translation>Дерево Слоёв</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="225"/>
@@ -16622,7 +16618,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="379"/>
         <source>PenWiz</source>
-        <translation>Перо</translation>
+        <translation>Волш.Перо</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="429"/>
@@ -16663,7 +16659,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="514"/>
         <source>UCS Status</source>
-        <translation>Статус Системы Координат</translation>
+        <translation>Статус Системы координат</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="515"/>
@@ -16673,7 +16669,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="519"/>
         <source>Current size of Grid/MetaGrid. Click to change grid size.</source>
-        <translation>Текущий размер сетки/дополнительной сетки. Щелкните мышью для изменения.</translation>
+        <translation>Текущий размер сетки/дополнительной сетки. Щелкните мышью для изменения размера сетки.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="105"/>
@@ -16724,7 +16720,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="503"/>
         <source>For &quot;classic&quot; statusbar only. </source>
-        <translation>Только для &quot;классического&quot; режима</translation>
+        <translation>Только для &quot;классической&quot; паекои состояния.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="113"/>
@@ -16741,7 +16737,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="288"/>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="355"/>
         <source>Click to select color</source>
-        <translation>Нажмите чтобы выбрать цвет</translation>
+        <translation>Нажмите для выбора цвета</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="265"/>
@@ -16756,7 +16752,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="423"/>
         <source>Accent Color:</source>
-        <translation>Цвет Акцента: </translation>
+        <translation>Добавленный цвет: </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="369"/>
@@ -16781,27 +16777,27 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="247"/>
         <source>Color for accent elements (originally green)</source>
-        <translation>Цвет элементов акцента (оришинально - зеленый)</translation>
+        <translation>Цвет элементов акцента (в оригинале - зелёный)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="302"/>
         <source>Color for main elements (originally black)</source>
-        <translation>Цвет основных элементов (оригинально - черный)</translation>
+        <translation>Цвет основных элементов (в оригинале - чёрный)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="331"/>
         <source>Color for filled background (originally white)</source>
-        <translation>Цвет заполненного фона (оригинально - белый)</translation>
+        <translation>Цвет заполнения фона (в оригинале - белый)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="379"/>
         <source>Defines location of custom user-provided icons.</source>
-        <translation>Определяет расположение папки в которой хранятся внешние иконки и стили</translation>
+        <translation>Определяет расположение папки, в которой хранятся иконки пользователя.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="386"/>
         <source>Saved Icons Style:</source>
-        <translation>Сохраненные Стили: </translation>
+        <translation>Сохраненные Стили иконок: </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="396"/>
@@ -16831,7 +16827,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="442"/>
         <source>If selected, title bar for docked dock widgets will be vertical. Otherwise, it will be horizontal.</source>
-        <translation>Если выбрано, используется вертикальный заголовок области стыковки. Иначе он горизонтальный. </translation>
+        <translation>Если выбрано, используется вертикальный заголовок области стыковки. Иначе он горизонтальный.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="445"/>
@@ -19316,7 +19312,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="378"/>
         <source>Units of measurements to use in drawing </source>
-        <translation>Единицы измерения координат чертежа</translation>
+        <translation>Единицы измерения для использования на чертеже</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="564"/>
@@ -19346,17 +19342,17 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="637"/>
         <source>Counterclockwise, 90 degrees is north.</source>
-        <translation>Против часовой стрелки, 90 градусов на севере</translation>
+        <translation>Против часовой стрелки, 90 градусов на север.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="666"/>
         <source>Clockwise, 90 degrees is sourth.</source>
-        <translation>По часовой стрелке, 90 градусов на юге</translation>
+        <translation>По часовой стрелке, 90 градусов на юг.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="753"/>
         <source>Right isometric grid</source>
-        <translation>Изометрическа сетка проекция &quot;Справа&quot;</translation>
+        <translation>Изометрическая сетка проекция &quot;Справа&quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="756"/>
@@ -20005,7 +20001,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1905"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1320"/>
         <source>Screen %</source>
-        <translation>Экран %</translation>
+        <translation>% от экрана</translation>
     </message>
 </context>
 <context>
@@ -20201,7 +20197,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4680"/>
         <source>If checked, new drawing will be created with grid disabled</source>
-        <translation>Если выбрано, новые чертежи создаются с выключенной сеткой</translation>
+        <translation>Если выбрано, то новые чертежи создаются с выключенной сеткой</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4683"/>
@@ -20211,12 +20207,12 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4965"/>
         <source>New Versions</source>
-        <translation>Проверка новых версий</translation>
+        <translation>Новые версии</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4971"/>
         <source>Check GitHub for new releases of LibreCAD on program startup</source>
-        <translation>Проверяет не появилась ли новая версия программы</translation>
+        <translation>Проверить GitHub - не появилась ли новая версия программы</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4974"/>
@@ -20226,22 +20222,22 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4981"/>
         <source>If checked, pre-release versions will be ignored</source>
-        <translation>Если выбрано, промежуточные версии будут игнорироваться</translation>
+        <translation>Если выбрано, предварительные версии будут игнорироваться</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4987"/>
         <source>Ignore pre-release versions</source>
-        <translation>Игнорировать не финальные версии (alfa,beta)</translation>
+        <translation>Игнорировать предварительные версии</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4889"/>
         <source>Open last opened files</source>
-        <translation>Открывать последние редактировавшиеся чертеже</translation>
+        <translation>Открывать последние редактировавшиеся чертежи</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4896"/>
         <source>If enabled, drop-down menus may become floating</source>
-        <translation>Если выбрано, выпадающие меню могут быть плавающими</translation>
+        <translation>Если выбрано, то выпадающие меню могут быть плавающими</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4899"/>
@@ -20251,8 +20247,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4916"/>
         <source>If unchecked, individual widgets of statusbar are toolbars</source>
-        <translation>Если выбрано, индивидуальные компоненты статусной строки фиксированы и не могут находиться в других местах.
-Иначе, индивидуальные компоненты ведут себя как панели инструментов.</translation>
+        <translation>Если не выбрано, то индивидуальные компоненты строки состояния ведут себя как панели инструментов.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4919"/>
@@ -20830,7 +20825,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1148"/>
         <source>Points Grid</source>
-        <translation>Сетка Точек</translation>
+        <translation>Сетка Точками</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1206"/>
@@ -20840,12 +20835,12 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1233"/>
         <source>Type of Meta Grid line if grid is drawn as points</source>
-        <translation>Тип линий дополнительной сетки если сетка рисуется точками</translation>
+        <translation>Тип линий дополнительной сетки, если сетка отрисовывается точками</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1240"/>
         <source>Width of Meta Grid line if grid is drawn by points</source>
-        <translation>Толщина линий дополнительной сетки если сетка отрисовывается точками</translation>
+        <translation>Толщина линий дополнительной сетки, если сетка отрисовывается точками</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1256"/>
@@ -20863,7 +20858,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1270"/>
         <source>Color for Meta Grid lines if grid drawn by points</source>
-        <translation>Цвет линий Мета-Сетки если сетка нарисована точками</translation>
+        <translation>Цвет линий дополнительной сетки, если сетка отрисовывается точками</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1288"/>
@@ -20879,32 +20874,32 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1434"/>
         <source>Width of grid lines</source>
-        <translation>Толщина линий сетки если сетка отрисовыватся линиями</translation>
+        <translation>Толщина линий сетки с линиями</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1450"/>
         <source>Line type for grid lines</source>
-        <translation>Тип линий для сетки с линиями</translation>
+        <translation>Тип линий сетки с линиями</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1457"/>
         <source>Color for grid lines</source>
-        <translation>Цвет линий сетки</translation>
+        <translation>Цвет линий сетки с линиями</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1337"/>
         <source>Type of Meta Grid lines if grid is drawn by lines</source>
-        <translation>Тип линий дополнительной сетки если сетка рисуется линиями</translation>
+        <translation>Тип линий дополнительной сетки, если сетка рисуется линиями</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1344"/>
         <source>Width of Meta Grid lines if grid is drawn by lines</source>
-        <translation>Толщина линий дополнительной сетки если сетка рисуется линиями</translation>
+        <translation>Толщина линий дополнительной сетки, если сетка рисуется линиями</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1374"/>
         <source>Color of Meta Grid if grid drawn by lines</source>
-        <translation>Цвет дополнительной сетки если сетка рисуется линиями</translation>
+        <translation>Цвет дополнительной сетки, если сетка рисуется линиями</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2158"/>
@@ -20934,7 +20929,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2304"/>
         <source>If checked, axises will be inifinite lines</source>
-        <translation>Если выбрано, то оси координат будут нарисованы на весь экран</translation>
+        <translation>Если выбрано, то оси будут бесконечными линиями</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2307"/>
@@ -20989,7 +20984,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2188"/>
         <source>Size of Axis Lines drawn in absolute zero point</source>
-        <translation>Размер коротких осей координат которые рисуются в точке абсолютного нуля</translation>
+        <translation>Размер линий осей, которые рисуются в точке абсолютного нуля</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2314"/>
@@ -20999,7 +20994,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2204"/>
         <source>Defines how to draw extended X axis</source>
-        <translation>Определяет как рисовать расширенную ось X</translation>
+        <translation>Определяет, как рисовать расширенную ось X</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2546"/>
@@ -21009,7 +21004,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2569"/>
         <source>If checked, relative zero marker will not be drawn</source>
-        <translation>Если выбрано, маркер Относительного Нуля не будет показан на чертеже</translation>
+        <translation>Если выбрано, маркер Относительного нуля не будет показан на чертеже</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2500"/>
@@ -21019,7 +21014,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="928"/>
         <source>Grid General</source>
-        <translation>Общие настройки</translation>
+        <translation>Общие настройки сетки</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="934"/>
@@ -21029,7 +21024,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1026"/>
         <source>If checked, grid will not be adjusted to current units of drawing</source>
-        <translation>Если выбрано, то сетка не будет привязываться к текущим единицам измерения чертежа.</translation>
+        <translation>Если выбрано, то сетка не будет привязываться к текущим единицам измерения чертежа</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1029"/>
@@ -21159,7 +21154,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2675"/>
         <source>Highlight entities on mouse hover</source>
-        <translation>Подсвечивать объекты находящиеся под курсором мыши</translation>
+        <translation>Подсвечивать объекты, находящиеся под курсором мыши</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2644"/>
@@ -21169,7 +21164,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2662"/>
         <source>If selected, entity will be highlighted in &quot;Draft&quot; mode using entity&apos;s linewidth instead of 1px</source>
-        <translation>Если выбрано,в режиме &quot;Черновик&quot; объект будет подсвечиваться с его реальной толщиной линии а не черновой </translation>
+        <translation>Если выбрано, то в режиме &quot;Черновик&quot; объект будет подсвечиваться с его толщиной линии в 1 пиксель</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2767"/>
@@ -21216,7 +21211,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3715"/>
         <source>Active preview&apos;s explanatory entity&apos;s Color:</source>
-        <translation>Цвет активныхпоясняющих объектов:</translation>
+        <translation>Цвет активных поясняющих объектов:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3768"/>
@@ -21226,7 +21221,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2611"/>
         <source>&amp;Highlighted entity Color:</source>
-        <translation>Цвет &amp;подсвеченных обектов:</translation>
+        <translation>Цвет &amp;подсвеченных объектов:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2665"/>
@@ -21453,12 +21448,12 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1688"/>
         <source>If checked, &quot;Snap To Grid&quot; is ignored if grid is not drawn.</source>
-        <translation>Если выбрано, то активный режим привязки к сетке будет игнорироваться если сетка не видна. Иначе, этот режим будет срабатывать даже если сетка не видна. </translation>
+        <translation>Если выбрано, то активный режим привязки к сетке будет игнорироваться, если сетка не видна. Иначе, этот режим будет срабатывать, даже если сетка не видна. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1691"/>
         <source>Ignore &quot;Snap to Grid&quot; if grid is not drawn</source>
-        <translation>Игнорировать режим привязки к сетке если сетка скрыта</translation>
+        <translation>Игнорировать режим привязки к сетке, если сетка скрыта</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4264"/>
@@ -21625,12 +21620,12 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3820"/>
         <source>If checked, components of coordinate will be drawn in one line. Otherwise, each component will be on own line. </source>
-        <translation>Если выбрано, то помпоненты координат будут отрисованы в одну строку. Иначе, будет 2 строки. </translation>
+        <translation>Если выбрано, то компоненты координат будут отрисованы в одну строку. Иначе, будет 2 строки. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3823"/>
         <source>Draw coordinates in one line</source>
-        <translation>Рисовать координаты одной строкой</translation>
+        <translation>Рисовать координаты в одной строке</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="416"/>
@@ -21691,7 +21686,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1983"/>
         <source>Distance in screen coordinates that is used for catching entities </source>
-        <translation>Дистанция в экранныхкоординатах используемая для захвата объектов</translation>
+        <translation>Дистанция в экранных координатах, используемая для захвата объектов</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1996"/>
@@ -21701,7 +21696,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2003"/>
         <source>Snap distance (in pixels) for catching entities.</source>
-        <translation>Расстояние (в экранных единицах) которое используется при захвате объектов</translation>
+        <translation>Расстояние (в пикселях) для захвата объектов.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2006"/>
@@ -21737,22 +21732,22 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3873"/>
         <source>Offset of labels from the cursor point.</source>
-        <translation>Отступы базовых точек областей курсора относительно точки привязки</translation>
+        <translation>Отступы базовых точек областей курсора относительно точки привязки.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3892"/>
         <source>Cursor position offset:</source>
-        <translation>Смещение областей относительно точки курсора</translation>
+        <translation>Смещение положения курсора:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3902"/>
         <source>If checked, informational cursor will be enabled and shown where applicable.</source>
-        <translation>Если включено, то Информируюущий Указатель будет разрешен и будет показан где это применимо.</translation>
+        <translation>Если включено, то информационный указатель будет разрешен и будет показан там, где это применимо.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3905"/>
         <source>Enable Informational Cursor</source>
-        <translation>Включить Информирующий Указатель</translation>
+        <translation>Включить Информационный указатель</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3912"/>
@@ -21777,7 +21772,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4054"/>
         <source>Color for absolute snap coordinates.</source>
-        <translation>Цвет области абсолютных координат привязки</translation>
+        <translation>Цвет области абсолютных координат привязки.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3964"/>
@@ -21787,17 +21782,17 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3967"/>
         <source>Show relative distance and angle</source>
-        <translation>Показывать относительные расстояние и угол привязки</translation>
+        <translation>Показывать относительные расстояние и угол</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4077"/>
         <source>Color for snap type/restriction</source>
-        <translation>Цвет для типа привязки и ограничений, и свойств объектов</translation>
+        <translation>Цвет для типа и ограничений привязки</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4014"/>
         <source>If checked, the prompt of the active command will be shown.</source>
-        <translation>Если выбрано, то в информирующем указателе будет показываться подсказка текущей активной команды.</translation>
+        <translation>Если выбрано, то в информационном указателе будет показываться подсказка текущей активной команды.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4017"/>
@@ -21807,7 +21802,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3941"/>
         <source>If checked, show relative coordinate</source>
-        <translation>Если выбрано, то относительные координаты точки привязки также будут показаны.</translation>
+        <translation>Если выбрано, то относительные координаты точки привязки также будут показаны</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3947"/>
@@ -21832,17 +21827,17 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4120"/>
         <source>Color for relative distance and angle</source>
-        <translation>Цвет для относительной координаты точки привязки</translation>
+        <translation>Цвет для относительной дистанции и угла</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3954"/>
         <source>If checked, absolute position of snap point will be shown.</source>
-        <translation>Если выбрана, будет показываться абсолютная позиции точки привязки</translation>
+        <translation>Если выбрана, будет показываться абсолютная позиции точки привязки.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3957"/>
         <source>Show absolute coordinate</source>
-        <translation>Показывать абсолютные координаты привязки</translation>
+        <translation>Показывать абсолютные координаты</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4179"/>
@@ -21908,12 +21903,12 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2474"/>
         <source>If selected, marker for coodinate system will be shown in zero point of current user coordinates system. </source>
-        <translation>Если выбрано, то в точке начала отсчета текущей системы координат будет показываться маркер</translation>
+        <translation>Если выбрано, то в точке начала отсчёта текущей Системы координат будет показываться маркер.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="444"/>
         <source>Show Draft mode marker</source>
-        <translation>Показвать маркер черновика:</translation>
+        <translation>Показвать маркер черновика</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="451"/>
@@ -21928,17 +21923,17 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2395"/>
         <source>Coordinates Zero Marker</source>
-        <translation>Маркер Системы Координат</translation>
+        <translation>Маркер Системы координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2408"/>
         <source>Marker Size</source>
-        <translation>Размер маркера:</translation>
+        <translation>Размер маркера</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2422"/>
         <source>Size of axis of coordinate system&apos;s zero marker</source>
-        <translation>Размер маркера:</translation>
+        <translation>Размер осей маркера нуля Системы координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2464"/>
@@ -21963,7 +21958,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2033"/>
         <source>Coordinate System</source>
-        <translation>Система Координат</translation>
+        <translation>Система координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2057"/>
@@ -22068,12 +22063,12 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4166"/>
         <source>If set and user coordinate system is active, absolute coodinate in world coordinate system will be also shown.</source>
-        <translation>Если выбрано и активна Пользовательская система координат, то значения абсолютной координаты будет также показано и в Мировой системе.</translation>
+        <translation>Если выбрано и активна пользовательская Система координат, то значения абсолютной координаты будет также показано и в Мировой системе.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4172"/>
         <source>Show world coordinates if in user coordinate system</source>
-        <translation>Также и в Мировой Системе Координат</translation>
+        <translation>Также и в Мировой Системе координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4410"/>
@@ -22164,12 +22159,12 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4631"/>
         <source>Counterclockwise, 90 degrees is north.</source>
-        <translation>Против часовой стрелки, 90 градусов на севере</translation>
+        <translation>Против часовой стрелки, 90 градусов на север.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4660"/>
         <source>Clockwise, 90 degrees is sourth.</source>
-        <translation>По часовой стрелке, 90 градусов на юге.</translation>
+        <translation>По часовой стрелке, 90 градусов на юг.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4706"/>
@@ -22179,13 +22174,13 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4713"/>
         <source>#</source>
-        <translation></translation>
+        <translation>№</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4718"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4787"/>
         <source>~</source>
-        <translation></translation>
+        <translation>~</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4723"/>
@@ -31584,7 +31579,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="278"/>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
-        <translation>RS_ActionPrintPreview::fit(): некорректный размер бумаги</translation>
+        <translation>RS_ActionPrintPreview::fit(): Некорректный размер бумаги</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="160"/>
@@ -32440,7 +32435,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="191"/>
         <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation>Если выбрано, то прямая будет ортогональна к оси базиса углов. Иначе. к оси координат.</translation>
+        <translation>Если выбрано, то прямая будет ортогональна к оси базиса углов. Иначе - к оси координат</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="194"/>
