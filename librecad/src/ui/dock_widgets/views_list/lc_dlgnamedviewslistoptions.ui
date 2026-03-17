@@ -23,7 +23,7 @@
       <item row="0" column="0">
        <widget class="QCheckBox" name="cbRemovalConfirmation">
         <property name="toolTip">
-         <string>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </string>
+         <string>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</string>
         </property>
         <property name="text">
          <string>Ask for confirmation before views removal</string>
@@ -55,14 +55,14 @@
          <string>If show, tooltip with additional information about view will be shown for table item.</string>
         </property>
         <property name="text">
-         <string>Toolip with view details for table items</string>
+         <string>Tooltip with view details for table items</string>
         </property>
        </widget>
       </item>
       <item row="4" column="0">
        <widget class="QCheckBox" name="cbColumnUCSDetails">
         <property name="toolTip">
-         <string>If checked, the column with details of view's coordinate system will be show</string>
+         <string>If checked, the column with details of view's coordinate system will be show.</string>
         </property>
         <property name="text">
          <string>UCS Details column</string>
@@ -72,7 +72,7 @@
       <item row="1" column="0">
        <widget class="QCheckBox" name="cbColumnGridType">
         <property name="toolTip">
-         <string>If checked, type of grid for saved view will be shown</string>
+         <string>If checked, type of grid for saved view will be shown.</string>
         </property>
         <property name="text">
          <string>Grid Type icon column</string>
@@ -141,7 +141,7 @@
       <item row="1" column="1">
        <widget class="QComboBox" name="cbDoubleClickPolicy">
         <property name="toolTip">
-         <string>Defines which action should be performed on double click on view item of the table. </string>
+         <string>Defines which action should be performed on double click on view item of the table.</string>
         </property>
         <item>
          <property name="text">
