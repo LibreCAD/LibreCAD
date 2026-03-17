@@ -1,1 +1,11 @@
-  { "Keys": [ ] }
+{
+    "IID": "org.librecad.PluginInterface/1.0",
+    "MetaData": {
+        "Name": "Align",
+        "Description": "Aligns selected entities to a reference point or line",
+        "Version": "1.0",
+        "License": "GPL-2.0-or-later",
+        "Category": "Modify",
+        "Keys": ["align"]
+    }
+}

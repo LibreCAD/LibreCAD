@@ -49,7 +49,7 @@ struct LC_ActionDrawParabolaFD::ActionData {
         double x1 = getX(point);
         const auto& [p1, t1] = fromX(x1);
         data = LC_ParabolaData::FromEndPointsTangents({p0, p1}, {t0, t1});
-        return data.valid;
+        return data.m_valid;
     }
 
     bool setStart(const RS_Vector& point) {
@@ -114,7 +114,7 @@ void LC_ActionDrawParabolaFD::init(int status) {
 }
 
 void LC_ActionDrawParabolaFD::doTrigger() {
-    if(m_actionData->data.valid){
+  if(m_actionData->data.isValid()){
         auto* en = new LC_Parabola{m_container, m_actionData->data};
         undoCycleAdd(en);
     }
@@ -206,7 +206,7 @@ void LC_ActionDrawParabolaFD::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 }
 
 LC_Parabola* LC_ActionDrawParabolaFD::preparePreview(){
-    if (m_actionData->data.valid) {
+  if (m_actionData->data.isValid()) {
         auto* pl = new LC_Parabola{m_preview.get(), m_actionData->data};
         previewEntity(pl);
         return pl;

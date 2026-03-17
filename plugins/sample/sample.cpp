@@ -30,7 +30,8 @@ PluginCapabilities LC_Sample::getCapabilities() const
 {
     PluginCapabilities pluginCapabilities;
     pluginCapabilities.menuEntryPoints
-            << PluginMenuLocation("plugins_menu", tr("Sample plugin"));
+        << PluginMenuLocation("plugins_menu", tr("Sample plugin"),
+            tr("Sample test tip..."));
     return pluginCapabilities;
 }
 

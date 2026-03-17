@@ -37,6 +37,7 @@
 #include "lc_actiondrawcirclebyarc.h"
 #include "lc_actiondrawcross.h"
 #include "lc_actiondrawdimbaseline.h"
+#include "lc_actiondrawdual.h"
 #include "lc_actiondrawellipse1point.h"
 #include "lc_actiondrawgdtfeaturecontrolframe.h"
 #include "lc_actiondrawlineanglerel.h"
@@ -646,6 +647,9 @@ namespace InnerFactory{
             }
             case RS2::ActionDrawImage: {
                 return new RS_ActionDrawImage(ctx);
+            }
+            case RS2::ActionDrawDual: {
+                return new LC_ActionDrawDual(ctx);
             }
             case RS2::ActionDimAligned: {
                 return new RS_ActionDimAligned(ctx);

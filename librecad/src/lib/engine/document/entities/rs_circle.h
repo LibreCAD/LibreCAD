@@ -33,6 +33,7 @@
 #include "lc_cachedlengthentity.h"
 
 class LC_Quadratic;
+class QPainterPath;
 
 /**
  * Holds the data that defines a circle.
@@ -175,6 +176,9 @@ with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are th
     RS_Entity& shear(double k) override;
     void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
     void draw(RS_Painter* painter) override;
+    /** Creates QPainterPath representation (used for both drawing and solid fill contours) */
+    void createPainterPath(RS_Painter* painter, QPainterPath& path) const;
+
     /** return the equation of the entity
 for quadratic,
 

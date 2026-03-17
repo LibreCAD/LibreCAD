@@ -1063,27 +1063,32 @@ RS_Block* RS_Creation::createBlock(const RS_BlockData* data,
 /**
      * Inserts a library item from the given path into the drawing.
      */
-RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
+RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data)
+{
+  RS_DEBUG->print(RS_Debug::D_DEBUGGING,
+                  "createLibraryInsert: file='%s' angle=%.1f° factor=%.3f",
+                  data.file.toLatin1().data(), RS_Math::rad2deg(data.angle), data.factor);
 
-    RS_DEBUG->print("RS_Creation::createLibraryInsert");
-
-    RS_Graphic* insertGraphic = data.graphic;
-    if (insertGraphic == nullptr) {
-        return nullptr;
-    }
-
-    // unit conversion:
-    if (m_graphic != nullptr) {
-        double uf = RS_Units::convert(1.0, insertGraphic->getUnit(),m_graphic->getUnit());
-        insertGraphic->scale(RS_Vector(0.0, 0.0), RS_Vector(uf, uf));
-    }
-    QString insertFileName = QFileInfo(data.file).completeBaseName();
-    RS_Modification m(*m_container, m_viewport);
-    m.paste( RS_PasteData(data.insertionPoint,data.factor, data.angle, true,insertFileName),insertGraphic);
-
-    RS_DEBUG->print("RS_Creation::createLibraryInsert: OK");
-
+  if (data.graphic == nullptr || data.graphic->count() == 0) {
+    RS_DEBUG->print(RS_Debug::D_WARNING, "createLibraryInsert: invalid/empty graphic");
     return nullptr;
+  }
+
+  QString blockName = QFileInfo(data.file).completeBaseName();
+  if (blockName.isEmpty())
+    blockName = "LibPart_" + QString::number(QDateTime::currentMSecsSinceEpoch());
+
+  RS_PasteData pasteData(data.insertionPoint, data.factor, data.angle, true, blockName);
+
+  RS_Modification mod(*m_container, m_viewport);
+  RS_Insert* ret = mod.paste(pasteData, data.graphic);  // uses fixed paste() above
+
+  if (ret != nullptr)
+    RS_DEBUG->print("%s(): pasted RS_Insert %llu done", __func__, ret->getId());
+  else
+    RS_DEBUG->print("%s(): failed to create an RS_Insert", __func__);
+
+  return ret;
 }
 
 bool RS_Creation::setupAndAddEntity(RS_Entity* en) const{
