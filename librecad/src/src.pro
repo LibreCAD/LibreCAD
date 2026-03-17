@@ -57,7 +57,7 @@ unix {
         TARGET = LibreCAD
         VERSION=$$system(echo "$${LC_VERSION}" | sed -e 's/\-.*//g')
         QMAKE_INFO_PLIST = Info.plist.app
-        DEFINES += QC_APPDIR="\"LibreCAD\""
+        DEFINES += QC_APPDIR=\\\"LibreCAD\\\"
         ICON = ../res/images/librecad.icns
         contains(DISABLE_POSTSCRIPT, false) {
             QMAKE_POST_LINK = /bin/sh $$_PRO_FILE_PWD_/../../scripts/postprocess-osx.sh $$OUT_PWD/$${DESTDIR}/$${TARGET}.app/ $$[QT_INSTALL_BINS];
@@ -66,7 +66,7 @@ unix {
     }
     else {
         TARGET = librecad
-        DEFINES += QC_APPDIR="\"librecad\""
+        DEFINES += QC_APPDIR=\\\"librecad\\\"
         RC_FILE = ../res/images/librecad.icns
         contains(DISABLE_POSTSCRIPT, false) {
             QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-unix.sh
@@ -76,9 +76,9 @@ unix {
 }
 win32 {
     TARGET = LibreCAD
+    DEFINES += QC_APPDIR=\\\"librecad\\\"
 
     CONFIG += console
-    DEFINES += QC_APPDIR="\"LibreCAD\""
 
     # add MSYSGIT_DIR = PathToGitBinFolder (without quotes) in custom.pro file, for commit hash in about dialog
     !isEmpty( MSYSGIT_DIR ) {
@@ -338,6 +338,7 @@ HEADERS += \
     actions/drawing/selection/lc_actionsingleentityselectbase.h \
     lib/actions/lc_actioninfomessagebuilder.h \
     lib/actions/lc_overlayboxaction.h \
+    lib/engine/document/container/lc_pathbuilder.h \
     lib/engine/document/dimstyles/lc_dimstyle.h \
     lib/engine/document/dimstyles/lc_dimstyleslist.h \
     lib/engine/document/dimstyles/lc_dimarrowregistry.h \
@@ -473,6 +474,7 @@ HEADERS += \
     lib/gui/lc_latecompletionrequestor.h \
     lib/gui/render/headless/lc_printviewportrenderer.h \
     lib/gui/render/lc_graphicviewportrenderer.h \
+    lib/math/lc_quadraticutils.h \
     lib/modification/lc_division.h \
     plugins/lc_plugininvoker.h \
     lib/actions/lc_actioncontext.h \
@@ -653,6 +655,7 @@ SOURCES += \
     actions/drawing/selection/lc_actionsingleentityselectbase.cpp \
     lib/actions/lc_actioninfomessagebuilder.cpp \
     lib/actions/lc_overlayboxaction.cpp \
+    lib/engine/document/container/lc_pathbuilder.cpp \
     lib/engine/document/dimstyles/lc_dimstyle.cpp \
     lib/engine/document/dimstyles/lc_dimstyleslist.cpp \
     lib/engine/document/dimstyles/lc_dimarrowregistry.cpp \
@@ -700,6 +703,7 @@ SOURCES += \
     lib/gui/lc_graphicviewportlistener.cpp \
     lib/gui/lc_latecompletionrequestor.cpp \
     lib/gui/render/headless/lc_printviewportrenderer.cpp \
+    lib/math/lc_quadraticutils.cpp \
     lib/modification/lc_division.cpp \
     plugins/lc_plugininvoker.cpp \
     lib/actions/lc_actioncontext.cpp \
@@ -968,11 +972,12 @@ HEADERS += actions/dock_widgets/block/rs_actionblocksadd.h \
     actions/drawing/draw/circle/rs_actiondrawcircletan3.h \
     actions/drawing/draw/curve/lc_actiondrawparabola4points.h \
     actions/drawing/draw/curve/lc_actiondrawparabolaFD.h \
-    actions/drawing/draw/spline/lc_actiondrawsplinepoints.h \
     actions/drawing/draw/curve/rs_actiondrawarc.h \
     actions/drawing/draw/curve/rs_actiondrawarc3p.h \
     actions/drawing/draw/curve/rs_actiondrawarctangential.h \
+    actions/drawing/draw/curve/lc_actiondrawdual.h \
     actions/drawing/draw/curve/rs_actiondrawlinefree.h \
+    actions/drawing/draw/spline/lc_actiondrawsplinepoints.h \
     actions/drawing/draw/spline/rs_actiondrawspline.h \
     actions/drawing/draw/dimensions/lc_actiondimarc.h \
     actions/drawing/draw/dimensions/lc_actiondimlinearbase.h \
@@ -1138,11 +1143,12 @@ SOURCES += actions/dock_widgets/block/rs_actionblocksadd.cpp \
     actions/drawing/draw/circle/rs_actiondrawcircletan3.cpp \
     actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp \
     actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp \
-    actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp \
     actions/drawing/draw/curve/rs_actiondrawarc.cpp \
     actions/drawing/draw/curve/rs_actiondrawarc3p.cpp \
     actions/drawing/draw/curve/rs_actiondrawarctangential.cpp \
     actions/drawing/draw/curve/rs_actiondrawlinefree.cpp \
+    actions/drawing/draw/curve/lc_actiondrawdual.cpp \
+    actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp \
     actions/drawing/draw/spline/rs_actiondrawspline.cpp \
     actions/drawing/draw/dimensions/lc_actiondimarc.cpp \
     actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp \

@@ -1,1 +1,16 @@
-  { "Keys": [ ] }
+{
+    "IID": "org.librecad.PluginInterface/1.0",
+    "MetaData": {
+        "Name": "Same Properties",
+        "Description": "Applies the properties (layer, color, line type, line width) of a reference entity to selected entities",
+        "Version": "1.0",
+        "License": "GPL-2.0-or-later",
+        "Category": "Modify",
+        "Keys": [
+            "sameprop",
+            "sameproperties",
+            "matchprop",
+            "propertiesmatch"
+        ]
+    }
+}

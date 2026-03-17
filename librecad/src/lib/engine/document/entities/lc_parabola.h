@@ -51,7 +51,9 @@ struct LC_ParabolaData
     RS_LineData GetAxis() const;
     RS_LineData GetDirectrix() const;
     RS_Vector GetFocus() const;
-
+    bool isValid() const {
+      return m_valid;
+    }
 
     /** \brief return the equation of the entity
     a quadratic contains coefficients for quadratic:
@@ -68,15 +70,15 @@ struct LC_ParabolaData
     std::array<RS_Vector, 2> FromXWithTangent(double x) const;
 
     // The three control points, and all other properties are calculated from control points
-    std::array<RS_Vector, 3> controlPoints;
+    std::array<RS_Vector, 3> m_controlPoints;
     void CalculatePrimitives();
     // properties should be calculated from control points
-    RS_Vector focus;
+    RS_Vector m_focus;
     // a vector from the vertex to focus
-    RS_Vector axis;
-    RS_Vector vertex;
-    // whether valid for a parabola
-    bool valid = false;
+    RS_Vector m_axis;
+    RS_Vector m_vertex;
+    // whether m_valid for a parabola
+    bool m_valid = false;
 };
 
 std::ostream& operator << (std::ostream& os, const LC_ParabolaData& ld);

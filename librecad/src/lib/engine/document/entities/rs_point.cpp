@@ -28,6 +28,7 @@
 
 #include "rs_circle.h"
 #include "rs_painter.h"
+#include "lc_quadratic.h"
 
 RS_Point::RS_Point(RS_EntityContainer* parent,
                    const RS_PointData& d)
@@ -184,6 +185,14 @@ RS_Entity& RS_Point::shear(double k){
 void RS_Point::draw(RS_Painter* painter) {
     painter->drawPointEntityWCS(data.pos);
 }
+
+LC_Quadratic RS_Point::getQuadratic() const
+{
+  const double a = data.pos.x;
+  const double b = data.pos.y;
+  return LC_Quadratic({1., 0., 1., -2.*a, -2.*b, a*a + b*b});
+}
+
 
 /**
  * Dumps the point's data to stdout.

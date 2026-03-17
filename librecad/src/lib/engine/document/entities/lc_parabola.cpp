@@ -33,10 +33,10 @@ namespace {
 LC_SplinePointsData convert2SplineData(const LC_ParabolaData& data)
 {
     LC_SplinePointsData splineData{};
-    splineData.controlPoints = {data.controlPoints.cbegin(), data.controlPoints.cend()};
+    splineData.controlPoints = {data.m_controlPoints.cbegin(), data.m_controlPoints.cend()};
     // spline points are probably not used
-    RS_Vector sp1 = (data.controlPoints.front() + data.controlPoints.back())*0.25 + data.controlPoints.at(1)*0.5;
-    splineData.splinePoints = {data.controlPoints.front(), sp1, data.controlPoints.back()};
+    RS_Vector sp1 = (data.m_controlPoints.front() + data.m_controlPoints.back())*0.25 + data.m_controlPoints.at(1)*0.5;
+    splineData.splinePoints = {data.m_controlPoints.front(), sp1, data.m_controlPoints.back()};
     splineData.useControlPoints = true;
     splineData.closed = false;
     return splineData;
@@ -237,13 +237,13 @@ std::vector<LC_ParabolaData> LC_ParabolaData::From4Points(const std::vector<RS_V
     std::transform(axes.cbegin(), axes.cend(), std::back_inserter(ret), [&points](const RS_Vector& axis) {
         return fromPointsAxis(points, axis);
     });
-    ret.erase(std::remove_if(ret.begin(), ret.end(), [](const LC_ParabolaData& d){return !d.valid;}), ret.end());
+    ret.erase(std::remove_if(ret.begin(), ret.end(), [](const LC_ParabolaData& d){return !d.m_valid;}), ret.end());
     return ret;
 }
 
 LC_ParabolaData::LC_ParabolaData(std::array<RS_Vector, 3> controlPoints):
-    controlPoints{std::move(controlPoints)}
-  , valid{true}
+    m_controlPoints{std::move(controlPoints)}
+  , m_valid{true}
 {
     CalculatePrimitives();
 }
@@ -256,58 +256,58 @@ void LC_ParabolaData::CalculatePrimitives()
     // the tangent: 2(1-2t) c1 + 2t c2
 
     // control points
-    RS_Vector c1 = controlPoints.at(1) - controlPoints.at(0);
-    RS_Vector c2 = controlPoints.at(2) - controlPoints.at(0);
+    RS_Vector c1 = m_controlPoints.at(1) - m_controlPoints.at(0);
+    RS_Vector c2 = m_controlPoints.at(2) - m_controlPoints.at(0);
     // The parabola
     auto f0 = [&c1, &c2](double t) {
         return c1*(2. * t * (1. - t)) + c2 * ( t * t);
     };
 
-    axis = c2 * 0.5 - c1;
-    if(axis.squared() < RS_TOLERANCE2) {
-        valid = false;
+    m_axis = c2 * 0.5 - c1;
+    if(m_axis.squared() < RS_TOLERANCE2) {
+        m_valid = false;
         return;
     }
     // <c2 * 0.5 - c1 | c1 * (2. - 4. * t) + c2 * 2.*t> = 0
     // <c1|c2>-2<c1|c1> = (2<c1|c2>-4<c1|c1>-<c2|c2>+2<c1|c2>)t
     // =-|c2 - 2c1|^2t
-    double t = -0.5*axis.dotP(c1)/axis.squared();
+    double t = -0.5*m_axis.dotP(c1)/m_axis.squared();
     auto localVertex = f0(t);
-    axis.normalize();
-    double dy = (c2 - localVertex).dotP(axis);
-    double dx = (c2 - localVertex).dotP({- axis.y, axis.x});
+    m_axis.normalize();
+    double dy = (c2 - localVertex).dotP(m_axis);
+    double dx = (c2 - localVertex).dotP({- m_axis.y, m_axis.x});
     // dy = dx^2/(4h) , h = dx^2/(4dy)
     const double h = dx*dx/(4.*dy);
-    vertex = localVertex + controlPoints.front();
-    axis *= h;
-    focus = vertex + axis;
+    m_vertex = localVertex + m_controlPoints.front();
+    m_axis *= h;
+    m_focus = m_vertex + m_axis;
 }
 
 RS_LineData LC_ParabolaData::GetAxis() const
 {
-    const auto vp = (controlPoints.front() + controlPoints.back())*0.5 - vertex;
-    return {vertex, vertex + axis*(0.5*vp.dotP(axis)/axis.squared())};
+    const RS_Vector vp = (m_controlPoints.front() + m_controlPoints.back())*0.5 - m_vertex;
+    return {m_vertex, m_vertex + m_axis*(0.5*vp.dotP(m_axis)/m_axis.squared())};
 }
 
 double LC_ParabolaData::FindX(const RS_Vector& point) const
 {
     // in regular coordinates (4hy=x^2)
-    const auto vp = RS_Vector{point}.rotate(vertex, M_PI/2 - axis.angle()) - vertex;
+    const RS_Vector vp = RS_Vector{point}.rotate(m_vertex, M_PI/2 - m_axis.angle()) - m_vertex;
     return vp.x;
 }
 
 RS_Vector LC_ParabolaData::FromX(double x) const
 {
     // in regular coordinates (4hy=x^2)
-    auto vp = RS_Vector{x, x*x/(4.*axis.magnitude())}.rotate(axis.angle() - M_PI/2) + vertex;
+    const RS_Vector vp = RS_Vector{x, x*x/(4.*m_axis.magnitude())}.rotate(m_axis.angle() - M_PI/2) + m_vertex;
     return vp;
 }
 
 std::array<RS_Vector, 2> LC_ParabolaData::FromXWithTangent(double x) const
 {
-    const double h = vertex.distanceTo(focus) * 0.5;
-    return {RS_Vector{x, x*x/(4.*h)}.rotate(axis.angle() - M_PI/2) + vertex,
-            RS_Vector{2.*h, x}.rotate(axis.angle() - M_PI/2)};
+    const double h = m_vertex.distanceTo(m_focus) * 0.5;
+    return {RS_Vector{x, x*x/(4.*h)}.rotate(m_axis.angle() - M_PI/2) + m_vertex,
+            RS_Vector{2.*h, x}.rotate(m_axis.angle() - M_PI/2)};
 }
 
 /** \brief return the equation of the entity
@@ -319,14 +319,14 @@ m0 x + m1 y + m2 =0
 **/
 LC_Quadratic LC_ParabolaData::getQuadratic() const
 {
-    if (!valid)
+    if (!m_valid)
         return LC_Quadratic{};
     std::vector<double> ce(6, 0.);
     ce[0] = 1.;
-    ce[4] = -4. * axis.magnitude();
+    ce[4] = -4. * m_axis.magnitude();
     LC_Quadratic lq{ce};
-    lq.rotate(axis.angle() - M_PI/2);
-    lq.move(vertex);
+    lq.rotate(m_axis.angle() - M_PI/2);
+    lq.move(m_vertex);
     return lq;
 }
 
@@ -359,23 +359,23 @@ RS_Vector LC_Parabola::getTangentDirection(const RS_Vector& point)const
     if(sol.empty())
         return {};
     RS_Vector tangentPoint = getTangentPoint(point).at(0);
-    RS_Vector p0 = rotateToQuadratic(tangentPoint) - data.vertex;
-    return RS_Vector{2.*data.axis.magnitude(), p0.x}.rotate(data.axis.angle() - M_PI/2).normalized();
+    RS_Vector p0 = rotateToQuadratic(tangentPoint) - data.m_vertex;
+    return RS_Vector{2.*data.m_axis.magnitude(), p0.x}.rotate(data.m_axis.angle() - M_PI/2).normalized();
 }
 
 RS_VectorSolutions LC_Parabola::getTangentPoint(const RS_Vector& point) const
 {
-    RS_Vector p0 = rotateToQuadratic(point) - data.vertex;
+    RS_Vector p0 = rotateToQuadratic(point) - data.m_vertex;
     // y=x^2/(4h)
     // (x^2/(4h) - py) = x/(2h)(x - px)
     // x^2/(4h) - px/(2h) x + py = 0
     // (x - px)^2 = px^2 - 4h py
     // x = px \pm \sqrt(px^2 - 4h py) ; py <= px^2/(4h)
-    const double h = data.axis.magnitude();
+    const double h = data.m_axis.magnitude();
     if (4.0*h*p0.y >= p0.x * p0.x + RS_TOLERANCE)
         return {};
     auto pf = [this, &h](double x){
-        return RS_Vector{x, x*x/(4.*h)}.rotate(data.axis.angle() - M_PI/2.) + data.vertex;
+        return RS_Vector{x, x*x/(4.*h)}.rotate(data.m_axis.angle() - M_PI/2.) + data.m_vertex;
     };
     double dx = std::sqrt(std::abs(p0.x*p0.x - 4. * h * p0.y));
     if (dx <= RS_TOLERANCE)
@@ -386,12 +386,12 @@ RS_VectorSolutions LC_Parabola::getTangentPoint(const RS_Vector& point) const
 RS_Vector LC_Parabola::dualLineTangentPoint(const RS_Vector& line) const
 {
     // rotate to regular form
-    auto uv = RS_Vector{line}.rotate(M_PI/2. - data.axis.angle());
+    auto uv = RS_Vector{line}.rotate(M_PI/2. - data.m_axis.angle());
     // slope = {2h, x} <(2h,x)|uv> = 0
     // x=-2h uv.x/(uv.y)
     if (std::abs(uv.y) < RS_TOLERANCE)
         return RS_Vector{false};
-    return data.FromX(-2.*data.axis.magnitude()*uv.x/uv.y);
+    return data.FromX(-2.*data.m_axis.magnitude()*uv.x/uv.y);
 }
 
 
@@ -438,7 +438,7 @@ RS_Vector LC_Parabola::prepareTrim(const RS_Vector& trimCoord,
 
 RS_Vector LC_Parabola::rotateToQuadratic(RS_Vector vp) const
 {
-    return vp.rotate(data.vertex, M_PI/2 - data.axis.angle());
+    return vp.rotate(data.m_vertex, M_PI/2 - data.m_axis.angle());
 }
 
 void LC_Parabola::LC_Parabola::moveStartpoint(const RS_Vector& pos)
@@ -447,7 +447,7 @@ void LC_Parabola::LC_Parabola::moveStartpoint(const RS_Vector& pos)
     RS_Vector t0=getTangentDirection(p0);
     auto t1 = RS_Vector{getDirection2()};
     data = LC_ParabolaData::FromEndPointsTangents(
-                { p0, data.controlPoints.back() },
+                { p0, data.m_controlPoints.back() },
                 { t0, t1}
                 );
     LC_SplinePoints::getData() = convert2SplineData(data);
@@ -460,7 +460,7 @@ void LC_Parabola::LC_Parabola::moveEndpoint(const RS_Vector& pos)
     RS_Vector p2=getNearestPointOnEntity(pos);
     RS_Vector t2=RS_Vector{getTangentDirection(p2)};
     data = LC_ParabolaData::FromEndPointsTangents(
-                { data.controlPoints.front(), p2 },
+                { data.m_controlPoints.front(), p2 },
                 { t0, t2}
                 );
     LC_SplinePoints::getData() = convert2SplineData(data);
@@ -469,53 +469,53 @@ void LC_Parabola::LC_Parabola::moveEndpoint(const RS_Vector& pos)
 
 double LC_Parabola::getDirection1() const
 {
-    return (data.controlPoints.at(1) - data.controlPoints.front()).angle();
+    return (data.m_controlPoints.at(1) - data.m_controlPoints.front()).angle();
 }
 
 double LC_Parabola::getDirection2() const
 {
-    return (data.controlPoints.back() - data.controlPoints.at(1)).angle();
+    return (data.m_controlPoints.back() - data.m_controlPoints.at(1)).angle();
 }
 RS_VectorSolutions LC_Parabola::getRefPoints() const
 {
-    return {data.controlPoints.front(), data.controlPoints.at(1), data.controlPoints.back()};
+    return {data.m_controlPoints.front(), data.m_controlPoints.at(1), data.m_controlPoints.back()};
 }
 
 
 void LC_Parabola::move(const RS_Vector& offset)
 {
-    for(auto& point: data.controlPoints)
+    for(auto& point: data.m_controlPoints)
         point.move(offset);
     update();
 }
 void LC_Parabola::rotate(const RS_Vector& center, double angle)
 {
-    for(auto& point: data.controlPoints)
+    for(auto& point: data.m_controlPoints)
         point.rotate(center, angle);
     update();
 }
 void LC_Parabola::rotate(const RS_Vector& center, const RS_Vector& angleVector)
 {
-    for(auto& point: data.controlPoints)
+    for(auto& point: data.m_controlPoints)
         point.rotate(center, angleVector);
     update();
 }
 void LC_Parabola::scale(const RS_Vector& center, const RS_Vector& factor)
 {
-    for(auto& point: data.controlPoints)
+    for(auto& point: data.m_controlPoints)
         point.scale(center, factor);
     update();
 }
 void LC_Parabola::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2)
 {
-    for(auto& point: data.controlPoints)
+    for(auto& point: data.m_controlPoints)
         point.mirror(axisPoint1, axisPoint2);
     update();
 }
 
 RS_Entity& LC_Parabola::shear(double k)
 {
-    for(auto& point: data.controlPoints)
+    for(auto& point: data.m_controlPoints)
         point.shear(k);
     update();
     return *this;
@@ -523,7 +523,7 @@ RS_Entity& LC_Parabola::shear(double k)
 
 void LC_Parabola::moveRef(const RS_Vector& ref, const RS_Vector& offset)
 {
-    for(auto& point: data.controlPoints)
+    for(auto& point: data.m_controlPoints)
         if (point.squaredTo(ref) < RS_TOLERANCE2) {
             point.move(offset);
             break;
@@ -534,7 +534,7 @@ void LC_Parabola::moveRef(const RS_Vector& ref, const RS_Vector& offset)
 
 void LC_Parabola::revertDirection()
 {
-    std::swap(data.controlPoints.front(), data.controlPoints.back());
+    std::swap(data.m_controlPoints.front(), data.m_controlPoints.back());
 }
 
 void LC_Parabola::LC_Parabola::update()
@@ -549,7 +549,7 @@ RS_Vector LC_Parabola::getNearestOrthTan([[maybe_unused]] const RS_Vector& coord
                                         bool onEntity ) const
 {
     // transform to regular form: 4hy=x^2
-    auto line = RS_Vector{ normal.getDirection1() }.rotate(M_PI/2 - data.axis.angle());
+    auto line = RS_Vector{ normal.getDirection1() }.rotate(M_PI/2 - data.m_axis.angle());
     // parabola tangent: <{2.*h, x}|line>=0, x=line.y/(2h line.x)>
     if (onEntity) {
         const double x0 = data.FindX(getStartpoint());
@@ -559,14 +559,14 @@ RS_Vector LC_Parabola::getNearestOrthTan([[maybe_unused]] const RS_Vector& coord
     }
     if (std::abs(line.y) < RS_TOLERANCE)
         return RS_Vector{false};
-    const double x = -2.*data.axis.magnitude()*line.x/line.y;
-    return RS_Vector{x, x*x/(4.*data.axis.magnitude())}.rotate(data.axis.angle() - M_PI/2) + data.vertex;
+    const double x = -2.*data.m_axis.magnitude()*line.x/line.y;
+    return RS_Vector{x, x*x/(4.*data.m_axis.magnitude())}.rotate(data.m_axis.angle() - M_PI/2) + data.m_vertex;
 }
 
 std::unique_ptr<LC_Parabola> LC_Parabola::approximateOffset(double dist) const
 {
-    auto controlPoints = data.controlPoints;
-    RS_Vector displacement = data.axis.normalized() * (- dist);
+    auto controlPoints = data.m_controlPoints;
+    RS_Vector displacement = data.m_axis.normalized() * (- dist);
     for(RS_Vector& controlPoint: controlPoints)
         controlPoint.move(displacement);
     LC_ParabolaData offsetData{controlPoints};
@@ -575,12 +575,12 @@ std::unique_ptr<LC_Parabola> LC_Parabola::approximateOffset(double dist) const
 
 double LC_Parabola::areaLineIntegral() const
 {
-    if (!data.valid) {
+    if (!data.m_valid) {
         return 0.0;
     }
-    const RS_Vector& p0 = data.controlPoints[0];
-    const RS_Vector& p1 = data.controlPoints[1];
-    const RS_Vector& p2 = data.controlPoints[2];
+    const RS_Vector& p0 = data.m_controlPoints[0];
+    const RS_Vector& p1 = data.m_controlPoints[1];
+    const RS_Vector& p2 = data.m_controlPoints[2];
     double x0 = p0.x, y0 = p0.y;
     double x1 = p1.x, y1 = p1.y;
     double x2 = p2.x, y2 = p2.y;
@@ -594,9 +594,9 @@ double LC_Parabola::areaLineIntegral() const
 
 double LC_Parabola::getLength() const
 {
-    if (!data.valid)
+    if (!data.m_valid)
         return 0.0;
-    double h = data.axis.magnitude();
+    double h = data.m_axis.magnitude();
     if (h < RS_TOLERANCE)
         return 0.0;
 

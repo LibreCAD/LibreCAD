@@ -1,1 +1,12 @@
-  { "Keys": [ ] }
+{
+    "IID": "org.librecad.PluginInterface/1.0",
+    "MetaData": {
+        "Name": "Gear",
+        "Author": "Cédric Bosdonnat, Luis Colorado & contributors",
+        "Description": "Generates parametric involute spur gears (teeth count, module, pressure angle, etc.)",
+        "Version": "0.3.0",
+        "License": "GPL-2.0-or-later",
+        "Category": "Drawing Tools",
+        "Keys": ["gear", "involute"]
+    }
+}

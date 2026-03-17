@@ -33,7 +33,8 @@ PluginCapabilities PicFile::getCapabilities() const
 {
     PluginCapabilities pluginCapabilities;
     pluginCapabilities.menuEntryPoints
-            << PluginMenuLocation("plugins_menu", tr("Read PIC file"));
+        << PluginMenuLocation("plugins_menu", tr("Read PIC file"),
+            tr("PIC test tip..."));
     return pluginCapabilities;
 }
 

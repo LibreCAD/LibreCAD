@@ -31,6 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 class RS_Vector;
 class RS_VectorSolutions;
 class RS_AtomicEntity;
+class RS_Entity;
 
 /**
  * Class for generic linear and quadratic equation
@@ -104,6 +105,15 @@ public:
           */
     double evaluateAt(const RS_Vector& p) const;
 
+    // Coefficient accessors (const, inline-friendly)
+    double getA() const { return m_mQuad(0, 0); }          // coefficient of x²
+    double getB() const { return 2.0 * m_mQuad(0, 1); }    // coefficient of xy
+    double getC() const { return m_mQuad(1, 1); }          // coefficient of y²
+    double getD() const { return m_vLinear(0); }            // coefficient of x
+    double getE() const { return m_vLinear(1); }            // coefficient of y
+    double getF() const { return m_dConst; }               // constant term
+
+    RS_Entity* toEntity() const;
     /**
      * @brief getDualCurve: the dual curve of the current conic section
      * @return the quadratic of the dual curve, if the current curve is a conic section;

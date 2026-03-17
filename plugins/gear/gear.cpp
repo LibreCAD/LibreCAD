@@ -37,7 +37,9 @@ PluginCapabilities LC_Gear::getCapabilities() const
 {
     PluginCapabilities pluginCapabilities;
     pluginCapabilities.menuEntryPoints
-            << PluginMenuLocation("plugins_menu", tr("Gear plugin"));
+    // Menu name, Plugin name, Plugin ToolTip (short manual for user)
+        << PluginMenuLocation("plugins_menu", tr("Gear plugin"),
+            tr("Select point for center of gear and press left mouse button.\nThen fill in the fields and press 'Accept' button."));
     return pluginCapabilities;
 }
 
