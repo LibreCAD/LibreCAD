@@ -47,9 +47,9 @@ mkdir windows\ts
 windeployqt.exe --release windows\LibreCAD.exe --verbose 2 --force
 dir librecad\ts\*.ts
 for %%f in (librecad\ts\*.ts plugins\ts\*.ts) do (
-  lrelease.exe "%%f" -qm ..\..\windows\ts\
+  lrelease.exe "%%f"
 )
-dir windows\ts
+dir librecad\ts
 echo [INFO] Extracting version (SCMREVISION)...
 set SCMREVISION=unknown
 rem Parse default LC_VERSION from src.pro (find line starting with LC_VERSION= , allowing spaces)
