@@ -41,8 +41,8 @@ SetCompressor /SOLID lzma
     !define APPNAME "LibreCAD"
 !endif
 !define UNINSTKEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
-!define MUI_ICON "..\..\librecad\res\main\librecad.ico"
-!define MUI_UNICON "..\..\librecad\res\main\uninstall.ico"
+!define MUI_ICON "..\..\librecad\res\images\librecad.ico"
+!define MUI_UNICON "..\..\librecad\res\images\uninstall.ico"
 ;--------------------------------
 ; Dynamic architecture suffix, install directory, and registry view
 !if defined(AMD64)
