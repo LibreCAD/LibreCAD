@@ -1316,10 +1316,14 @@ void QG_DlgOptionsGeneral::initReferencePoints(){
 
 void QG_DlgOptionsGeneral::updateLPtSzUnits(){
     //	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DlgOptionsDrawing::updateLPtSzUnits, rbRelSize->isChecked() = %d",rbRelSize->isChecked());
-    if (rbRelSize->isChecked())
+    if (rbRelSize->isChecked()) {
         lPtSzUnits->setText(QApplication::translate("QG_DlgOptionsDrawing", "Screen %", nullptr));
-    else
+        label_11->setText(QApplication::translate("QG_DlgOptionsDrawing", "(0 => 5% relative to screen size)", nullptr));
+        }
+    else {
         lPtSzUnits->setText(QApplication::translate("QG_DlgOptionsDrawing", "Dwg Units", nullptr));
+        label_11->setText(QApplication::translate("QG_DlgOptionsDrawing", "", nullptr));
+        }
 }
 
 void QG_DlgOptionsGeneral::saveReferencePoints(){
