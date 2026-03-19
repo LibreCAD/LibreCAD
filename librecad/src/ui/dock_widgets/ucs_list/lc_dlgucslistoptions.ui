@@ -26,14 +26,14 @@
          <string>If сhecked, the tooltip with additional information about UCS will be shown for table item.</string>
         </property>
         <property name="text">
-         <string>Toolip with UCS details for table items</string>
+         <string>Tooltip with UCS details for table items</string>
         </property>
        </widget>
       </item>
       <item row="0" column="0">
        <widget class="QCheckBox" name="cbShowTypeIcon">
         <property name="toolTip">
-         <string>If checked, the column with icon for type of UCS will be shown in the table. </string>
+         <string>If checked, the column with icon for type of UCS will be shown in the table.</string>
         </property>
         <property name="text">
          <string>Type icon column</string>
@@ -43,7 +43,7 @@
       <item row="1" column="0">
        <widget class="QCheckBox" name="cbShowPositionAndAngle">
         <property name="toolTip">
-         <string>If checked, column with details of UCS origin and angle will be shown in the table</string>
+         <string>If checked, column with details of UCS origin and angle will be shown in the table.</string>
         </property>
         <property name="text">
          <string>UCS Details column</string>
@@ -53,7 +53,7 @@
       <item row="2" column="0">
        <widget class="QCheckBox" name="cbShowGridType">
         <property name="toolTip">
-         <string>If checked, the column with type of grid for UCS will be shown</string>
+         <string>If checked, the column with type of grid for UCS will be shown.</string>
         </property>
         <property name="text">
          <string>Grid Type column</string>
@@ -82,7 +82,7 @@
       <item row="0" column="0">
        <widget class="QCheckBox" name="cbRemovalConfirmation">
         <property name="toolTip">
-         <string>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </string>
+         <string>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</string>
         </property>
         <property name="text">
          <string>Ask for confirmation before UCS removal</string>
@@ -111,7 +111,7 @@
       <item row="2" column="1">
        <widget class="QComboBox" name="cbUCSApplyPolicy">
         <property name="toolTip">
-         <string>Defines how drawing's view window should be adjusted after UCS is applied</string>
+         <string>Defines how drawing's view window should be adjusted after UCS is applied.</string>
         </property>
         <item>
          <property name="text">
@@ -150,7 +150,7 @@
       <item row="1" column="1">
        <widget class="QComboBox" name="cbDoubleClickPolicy">
         <property name="toolTip">
-         <string>Defines which action should be performed on double click on the item of the table. </string>
+         <string>Defines which action should be performed on double click on the item of the table.</string>
         </property>
         <item>
          <property name="text">
@@ -193,7 +193,7 @@
       <item row="0" column="3">
        <widget class="QSpinBox" name="sbHighlightBlinkDelay">
         <property name="toolTip">
-         <string>Defines delay between UCS marker blinks</string>
+         <string>Defines delay between UCS marker blinks.</string>
         </property>
         <property name="suffix">
          <string> ms</string>
@@ -229,7 +229,7 @@
       <item row="0" column="1">
        <widget class="QSpinBox" name="sbHighlightBlinkCount">
         <property name="toolTip">
-         <string>Defines amount of blinks of UCS marker for UCS highlighting</string>
+         <string>Defines amount of blinks of UCS marker for UCS highlighting.</string>
         </property>
         <property name="suffix">
          <string> times</string>
