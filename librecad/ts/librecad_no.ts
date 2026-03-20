@@ -5,18 +5,18 @@
     <message>
         <location filename="../src/ui/dock_widgets/pen_wizard/colorwizard.ui" line="14" />
         <source>Frame</source>
-        <translation type="unfinished" />
+        <translation>Ramme</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_wizard/colorwizard.ui" line="59" />
         <source>Add to favorites</source>
-        <translation type="unfinished" />
+        <translation>Legg til i favoritter</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_wizard/colorwizard.ui" line="62" />
         <location filename="../src/ui/dock_widgets/pen_wizard/colorwizard.ui" line="86" />
         <source>...</source>
-        <translation type="unfinished" />
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -24,17 +24,17 @@
     <message>
         <location filename="../src/ui/components/comboboxes/comboboxoption.ui" line="14" />
         <source>Frame</source>
-        <translation type="unfinished" />
+        <translation>Ramme</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/comboboxoption.ui" line="26" />
         <source>GroupBox</source>
-        <translation type="unfinished" />
+        <translation>Gruppeboks</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/comboboxoption.ui" line="41" />
         <source>Set</source>
-        <translation type="unfinished" />
+        <translation>Angi</translation>
     </message>
 </context>
 <context>
@@ -42,7 +42,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="41" />
         <source>Start point may set in distance or point state only</source>
-        <translation type="unfinished" />
+        <translation>Startpunkt kan bare angis i avstand- eller punktmodus</translation>
     </message>
 </context>
 <context>
@@ -50,79 +50,81 @@
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="166" />
         <source>To be created:</source>
-        <translation type="unfinished" />
+        <translation>Skal opprettes:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="166" />
         <source>Rectangle</source>
-        <translation type="unfinished" />
+        <translation>Rektangel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="167" />
         <source>Width:</source>
-        <translation type="unfinished" />
+        <translation>Bredde:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="168" />
         <source>Height:</source>
-        <translation type="unfinished" />
+        <translation>Høyde:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="169" />
         <source>Center:</source>
-        <translation type="unfinished" />
+        <translation>Senter:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="198" />
         <source>Invalid Angle</source>
-        <translation type="unfinished" />
+        <translation>Ugyldig vinkel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="209" />
         <source>Invalid radius</source>
-        <translation type="unfinished" />
+        <translation>Ugyldig radius</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="354" />
         <source>Invalid value</source>
-        <translation type="unfinished" />
+        <translation>Ugyldig verdi</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="410" />
         <source>Specify insertion point</source>
-        <translation type="unfinished" />
+        <translation>Angi innsettingspunkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="413" />
         <source>Specify angle</source>
-        <translation type="unfinished" />
+        <translation>Angi vinkel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="416" />
         <source>Specify size (width, height)</source>
-        <translation type="unfinished" />
+        <translation>Angi størrelse (bredde, høyde)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="419" />
         <source>Specify corners type
 [str|round|bevels]</source>
-        <translation type="unfinished" />
+        <translation>Angi hjørnetype
+[rett|avrundet|skrå]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="422" />
         <source>Specify corner bevel length (x,y)</source>
-        <translation type="unfinished" />
+        <translation>Angi hjørneskrå lengde (x,y)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="425" />
         <source>Specify corner radius</source>
-        <translation type="unfinished" />
+        <translation>Angi hjørneradius</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="428" />
         <source>Specify edges mode
 [both|hor|vert]</source>
-        <translation type="unfinished" />
+        <translation>Angi kantmodus
+[begge|horisontal|vertikal]</translation>
     </message>
 </context>
 <context>
@@ -130,12 +132,12 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="731" />
         <source> is not divided as it is locked.</source>
-        <translation type="unfinished" />
+        <translation>kan ikke deles fordi den er låst.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="739" />
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation type="unfinished" />
+        <translation>kan ikke deles fordi den er del av en flerlinje. Utvid flerlinjen først.</translation>
     </message>
 </context>
 <context>
@@ -143,32 +145,32 @@
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="116" />
         <source>Not a circle or arc entity</source>
-        <translation type="unfinished" />
+        <translation>Ikke en sirkel- eller bueenhet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="193" />
         <source>Not a valid expression</source>
-        <translation type="unfinished" />
+        <translation>Ugyldig uttrykk</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="216" />
         <source>Select arc or circle entity</source>
-        <translation type="unfinished" />
+        <translation>Velg bue- eller sirkelenhet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="216" />
         <source>Free angle</source>
-        <translation type="unfinished" />
+        <translation>Fri vinkel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="219" />
         <source>Specify dimension line position or enter angle:</source>
-        <translation type="unfinished" />
+        <translation>Angi posisjon for dimensjonslinje eller skriv inn vinkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="222" />
         <source>Enter dimension text:</source>
-        <translation type="unfinished" />
+        <translation>Skriv inn dimensjonstekst:</translation>
     </message>
 </context>
 <context>
@@ -176,12 +178,12 @@
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="189" />
         <source>Select arc entity</source>
-        <translation type="unfinished" />
+        <translation>Velg bueenhet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="192" />
         <source>Specify dimension arc location</source>
-        <translation type="unfinished" />
+        <translation>Angi plassering for buedimensjon</translation>
     </message>
 </context>
 <context>
@@ -189,32 +191,32 @@
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="312" />
         <source>Specify first extension line origin</source>
-        <translation type="unfinished" />
+        <translation>Angi opprinnelse for første forlengelseslinje</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="302" />
         <source>Specify second extension line origin</source>
-        <translation type="unfinished" />
+        <translation>Angi opprinnelse for andre forlengelseslinje</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="306" />
         <source>Specify dimension line location</source>
-        <translation type="unfinished" />
+        <translation>Angi plassering for dimensjonslinje</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="306" />
         <source>Snap to Adjacent Dim</source>
-        <translation type="unfinished" />
+        <translation>Fest til nærliggende dimensjon</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="321" />
         <source>Enter dimension text:</source>
-        <translation type="unfinished" />
+        <translation>Skriv inn dimensjonstekst:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="324" />
         <source>Enter dimension line angle:</source>
-        <translation type="unfinished" />
+        <translation>Skriv inn vinkel for dimensjonslinje:</translation>
     </message>
 </context>
 <context>
@@ -222,17 +224,17 @@
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="212" />
         <source>Specify first point</source>
-        <translation type="unfinished" />
+        <translation>Angi første punkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="216" />
         <source>Specify leader end point</source>
-        <translation type="unfinished" />
+        <translation>Angi sluttpunkt for leder</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="216" />
         <source>Change Ordinate</source>
-        <translation type="unfinished" />
+        <translation>Endre ordinat</translation>
     </message>
 </context>
 <context>
@@ -240,7 +242,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinaterebase.cpp" line="41" />
         <source>Select and rebase</source>
-        <translation type="unfinished" />
+        <translation>Velg og juster base</translation>
     </message>
 </context>
 <context>
@@ -248,17 +250,17 @@
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="159" />
         <source>Specify dimension to pick the style</source>
-        <translation type="unfinished" />
+        <translation>Angi dimensjon for å velge stil</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="162" />
         <source>Specify dimension to apply style</source>
-        <translation type="unfinished" />
+        <translation>Angi dimensjon for å bruke stil</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="162" />
         <source>Do not apply style override</source>
-        <translation type="unfinished" />
+        <translation>Ikke bruk stiloverstyring</translation>
     </message>
 </context>
 <context>
@@ -266,82 +268,82 @@
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="14" />
         <source>Form</source>
-        <translation type="unfinished" />
+        <translation>Skjema</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="61" />
         <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="unfinished" />
+        <translation>Høyde på buen (avstanden mellom korde og toppunkt på buen)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="64" />
         <source>Height:</source>
-        <translation type="unfinished" />
+        <translation>Høyde:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="127" />
         <source>Counterclockwise</source>
-        <translation type="unfinished" />
+        <translation>Mot klokken</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="144" />
         <source>Pick angle from the drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg vinkel fra tegningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="92" />
         <source>Radius of arc</source>
-        <translation type="unfinished" />
+        <translation>Radius på bue</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="95" />
         <source>Radius:</source>
-        <translation type="unfinished" />
+        <translation>Radius:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="44" />
         <source>Clockwise</source>
-        <translation type="unfinished" />
+        <translation>Med klokken</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="105" />
         <source>Central angle of the arc</source>
-        <translation type="unfinished" />
+        <translation>Sentralvinkel på buen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="108" />
         <source>Angle:</source>
-        <translation type="unfinished" />
+        <translation>Vinkel:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="71" />
         <source>Length of the arc</source>
-        <translation type="unfinished" />
+        <translation>Lengde på buen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="74" />
         <source>Length:</source>
-        <translation type="unfinished" />
+        <translation>Lengde:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.cpp" line="48" />
         <source>Pick radius from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg radius fra tegningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.cpp" line="55" />
         <source>Pick height from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg høyde fra tegningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.cpp" line="62" />
         <source>Pick length from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg lengde fra tegningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.cpp" line="69" />
         <source>Pick angle from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg vinkel fra tegningen</translation>
     </message>
 </context>
 <context>
@@ -349,12 +351,12 @@
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp" line="94" />
         <source>Enter value of central angle</source>
-        <translation type="unfinished" />
+        <translation>Skriv inn verdi for sentralvinkel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp" line="98" />
         <source>Alternate angle to outer arc</source>
-        <translation type="unfinished" />
+        <translation>Alternativ vinkel for ytre bue</translation>
     </message>
 </context>
 <context>
@@ -362,32 +364,32 @@
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="104" />
         <source>The end point is too close to the start point</source>
-        <translation type="unfinished" />
+        <translation>Sluttpunktet er for nær startpunktet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="145" />
         <source>Positive value is expected</source>
-        <translation type="unfinished" />
+        <translation>Forventet positiv verdi</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="148" />
         <source>Not a valid expression</source>
-        <translation type="unfinished" />
+        <translation>Ugyldig uttrykk</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="186" />
         <source>Specify first point of arc</source>
-        <translation type="unfinished" />
+        <translation>Angi første punkt på buen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="190" />
         <source>Specify second point of arc</source>
-        <translation type="unfinished" />
+        <translation>Angi andre punkt på buen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="203" />
         <source>Opposite Arc direction</source>
-        <translation type="unfinished" />
+        <translation>Motsatt bue-retning</translation>
     </message>
 </context>
 <context>
@@ -395,12 +397,12 @@
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp" line="103" />
         <source>Enter height of arc</source>
-        <translation type="unfinished" />
+        <translation>Skriv inn høyde på buen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp" line="107" />
         <source>Alternative arc where diameter is reduced by height</source>
-        <translation type="unfinished" />
+        <translation>Alternativ bue der diameter reduseres med høyde</translation>
     </message>
 </context>
 <context>
@@ -408,17 +410,17 @@
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="42" />
         <source>The distance between the two points must be less than the arc length</source>
-        <translation type="unfinished" />
+        <translation>Avstanden mellom de to punktene må være mindre enn buen lengde</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="103" />
         <source>Enter length of arc</source>
-        <translation type="unfinished" />
+        <translation>Skriv inn lengde på buen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="107" />
         <source>Alternate solutions</source>
-        <translation type="unfinished" />
+        <translation>Alternative løsninger</translation>
     </message>
 </context>
 <context>
@@ -426,12 +428,12 @@
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.cpp" line="96" />
         <source>Enter radius of arc</source>
-        <translation type="unfinished" />
+        <translation>Skriv inn radius på buen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.cpp" line="100" />
         <source>Create outer arc</source>
-        <translation type="unfinished" />
+        <translation>Opprett ytre bue</translation>
     </message>
 </context>
 <context>
@@ -439,22 +441,22 @@
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawboundingbox.cpp" line="46" />
         <source>Select entities for bounding box (Enter to complete)</source>
-        <translation type="unfinished" />
+        <translation>Velg enheter for avgrensningsboks (Enter for å fullføre)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawboundingbox.cpp" line="46" />
         <source>Select and draw</source>
-        <translation type="unfinished" />
+        <translation>Velg og tegn</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawboundingbox.cpp" line="46" />
         <source>Select contour</source>
-        <translation type="unfinished" />
+        <translation>Velg kontur</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawboundingbox.cpp" line="93" />
         <source>Note: Bounding box was created for world coordinate system.</source>
-        <translation type="unfinished" />
+        <translation>Merk: Avgrensningsboks ble opprettet for verdenskoordinatsystem.</translation>
     </message>
 </context>
 <context>
@@ -463,27 +465,28 @@
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="196" />
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation type="unfinished" />
+        <translation>radius=%1 er for liten for valgte punkter
+avstand mellom punkter=%2 er større enn diameter=%3</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="208" />
         <source>Select from two possible circle centers</source>
-        <translation type="unfinished" />
+        <translation>Velg fra to mulige sirkelsentre</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="230" />
         <source>Specify first point</source>
-        <translation type="unfinished" />
+        <translation>Angi første punkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="233" />
         <source>Specify second point</source>
-        <translation type="unfinished" />
+        <translation>Angi andre punkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="236" />
         <source>Select circle center</source>
-        <translation type="unfinished" />
+        <translation>Velg sirkelsenter</translation>
     </message>
 </context>
 <context>
@@ -491,7 +494,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcirclebyarc.cpp" line="232" />
         <source>Select arc or ellipse arc</source>
-        <translation type="unfinished" />
+        <translation>Velg bue eller ellipsebue</translation>
     </message>
 </context>
 <context>
@@ -499,7 +502,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawcross.cpp" line="384" />
         <source>Select circle, arc or ellipse</source>
-        <translation type="unfinished" />
+        <translation>Velg sirkel, bue eller ellipse</translation>
     </message>
 </context>
 <context>
@@ -507,37 +510,37 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="418" />
         <source>Select base linear/aligned dimension</source>
-        <translation type="unfinished" />
+        <translation>Velg basis lineær/justert dimensjon</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="418" />
         <source>Select distant extension point</source>
-        <translation type="unfinished" />
+        <translation>Velg fjernt forlengelsespunkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="421" />
         <source>Specify second extension line origin</source>
-        <translation type="unfinished" />
+        <translation>Angi opprinnelse for andre forlengelseslinje</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="421" />
         <source>Mirror offset direction</source>
-        <translation type="unfinished" />
+        <translation>Speil forskyvningsretning</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="424" />
         <source>Specify dimension line location</source>
-        <translation type="unfinished" />
+        <translation>Angi plassering for dimensjonslinje</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="424" />
         <source>Snap to Adjacent Dim</source>
-        <translation type="unfinished" />
+        <translation>Fest til nærliggende dimensjon</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="427" />
         <source>Enter dimension text:</source>
-        <translation type="unfinished" />
+        <translation>Skriv inn dimensjonstekst:</translation>
     </message>
 </context>
 <context>
@@ -545,37 +548,37 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="48" />
         <source>Select Center</source>
-        <translation type="unfinished" />
+        <translation>Velg senter</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="55" />
         <source>No center specified.</source>
-        <translation type="unfinished" />
+        <translation>Ingen senter angitt.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="97" />
         <source>No entities selected. Dual creation cancelled.</source>
-        <translation type="unfinished" />
+        <translation>Ingen enheter valgt. Dobbel opprettelse avbrutt.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="131" />
         <source>No supported entities could be dualized.</source>
-        <translation type="unfinished" />
+        <translation>Ingen støttede enheter kunne gjøres dobbelte.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="146" />
         <source>Dual created around center (%1 entities)</source>
-        <translation type="unfinished" />
+        <translation>Dobbel opprettet rundt senter (%1 enheter)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="159" />
         <source>Select to create dual (Enter to complete)</source>
-        <translation type="unfinished" />
+        <translation>Velg for å opprette dobbel (Enter for å fullføre)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="159" />
         <source>Select contour</source>
-        <translation type="unfinished" />
+        <translation>Velg kontur</translation>
     </message>
 </context>
 <context>
@@ -583,29 +586,29 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="269" />
         <source>Specify ellipse center</source>
-        <translation type="unfinished" />
+        <translation>Angi ellipse senter</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="273" />
         <source>Specify angle for major axis</source>
-        <translation type="unfinished" />
+        <translation>Angi vinkel for hovedakse</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="277" />
         <source>Set start angle of arc</source>
-        <translation type="unfinished" />
+        <translation>Angi startvinkel for bue</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="281" />
         <source>Set end angle of arc</source>
-        <translation type="unfinished" />
+        <translation>Angi sluttvinkel for bue</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="317" />
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="328" />
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="339" />
         <source>Not a valid expression</source>
-        <translation type="unfinished" />
+        <translation>Ugyldig uttrykk</translation>
     </message>
 </context>
 <context>
@@ -614,43 +617,43 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="100" />
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="211" />
         <source>Foci cannot be coincident</source>
-        <translation type="unfinished" />
+        <translation>Fokuspunkter kan ikke falle sammen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="106" />
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="225" />
         <source>Start and end points cannot be the same</source>
-        <translation type="unfinished" />
+        <translation>Start- og sluttpunkt kan ikke være det samme</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="114" />
         <source>Invalid foci or point</source>
-        <translation type="unfinished" />
+        <translation>Ugyldige fokuspunkter eller punkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="126" />
         <source>Points not on hyperbola</source>
-        <translation type="unfinished" />
+        <translation>Punkter ligger ikke på hyperbel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="241" />
         <source>Specify first focus</source>
-        <translation type="unfinished" />
+        <translation>Angi første fokus</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="244" />
         <source>Specify second focus</source>
-        <translation type="unfinished" />
+        <translation>Angi andre fokus</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="247" />
         <source>Specify start point on branch</source>
-        <translation type="unfinished" />
+        <translation>Angi startpunkt på gren</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="250" />
         <source>Specify end point on branch</source>
-        <translation type="unfinished" />
+        <translation>Angi sluttpunkt på gren</translation>
     </message>
 </context>
 <context>
@@ -658,12 +661,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="451" />
         <source>Select base line</source>
-        <translation type="unfinished" />
+        <translation>Velg basislinje</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="454" />
         <source>Specify length</source>
-        <translation type="unfinished" />
+        <translation>Angi lengde</translation>
     </message>
 </context>
 <context>
@@ -671,12 +674,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinefrompointtoline.cpp" line="404" />
         <source>Select Initial Point</source>
-        <translation type="unfinished" />
+        <translation>Velg startpunkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinefrompointtoline.cpp" line="407" />
         <source>Select Line</source>
-        <translation type="unfinished" />
+        <translation>Velg linje</translation>
     </message>
 </context>
 <context>
@@ -684,78 +687,86 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="503" />
         <source>Specify First Point</source>
-        <translation type="unfinished" />
+        <translation>Angi første punkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="507" />
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="unfinished" />
+        <translation>Angi andre punkt
+eller [antall|x|y|vinkel|p|kanter|avstand]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="510" />
         <source>Specify Second Point
 or [number]</source>
-        <translation type="unfinished" />
+        <translation>Angi andre punkt
+eller [antall]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="514" />
         <source>Specify line direction
 [x|y|angle|p|distance]</source>
-        <translation type="unfinished" />
+        <translation>Angi linjeretning
+[x|y|vinkel|p|avstand]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="517" />
         <source>Specify line direction angle
 or [x|y|p|number|edges|distance]</source>
-        <translation type="unfinished" />
+        <translation>Angi linjeretningsvinkel
+eller [x|y|p|antall|kanter|avstand]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="520" />
         <source>Specify edge points mode
 [none|start|end|both|distance]</source>
-        <translation type="unfinished" />
+        <translation>Angi kantpunktsmodus
+[ingen|start|slutt|begge|avstand]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="523" />
         <source>Specify fixed distance between points
 or[x|y|p|number|edges]</source>
-        <translation type="unfinished" />
+        <translation>Angi fast avstand mellom punkter
+eller[x|y|p|antall|kanter]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534" />
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537" />
         <source>Specify distance (%1)
 or [%2]</source>
-        <translation type="unfinished" />
+        <translation>Angi avstand (%1)
+eller [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534" />
         <source>X</source>
-        <translation type="unfinished" />
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534" />
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537" />
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542" />
         <source>Back</source>
-        <translation type="unfinished" />
+        <translation>Tilbake</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537" />
         <source>Y</source>
-        <translation type="unfinished" />
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542" />
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
-        <translation type="unfinished" />
+        <translation>Angi avstand (vinkel %1 grader)
+eller [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="547" />
         <source>Specify points count</source>
-        <translation type="unfinished" />
+        <translation>Angi antall punkter</translation>
     </message>
 </context>
 <context>
@@ -763,22 +774,22 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon4.cpp" line="33" />
         <source>Specify second corner</source>
-        <translation type="unfinished" />
+        <translation>Angi andre hjørne</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon4.cpp" line="36" />
         <source>Specify second tangent</source>
-        <translation type="unfinished" />
+        <translation>Angi andre tangent</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon4.cpp" line="42" />
         <source>Specify first corner</source>
-        <translation type="unfinished" />
+        <translation>Angi første hjørne</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon4.cpp" line="45" />
         <source>Specify first tangent</source>
-        <translation type="unfinished" />
+        <translation>Angi første tangent</translation>
     </message>
 </context>
 <context>
@@ -786,62 +797,62 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="196" />
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished" />
+        <translation>Ikke et gyldig tall. Prøv 1..9999</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="208" />
         <source>Invalid value of rounding radius</source>
-        <translation type="unfinished" />
+        <translation>Ugyldig verdi for avrundingsradius</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="218" />
         <source>Not a valid expression</source>
-        <translation type="unfinished" />
+        <translation>Ugyldig uttrykk</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="250" />
         <source>Enter number:</source>
-        <translation type="unfinished" />
+        <translation>Skriv inn tall:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="253" />
         <source>Enter rounding radius:</source>
-        <translation type="unfinished" />
+        <translation>Skriv inn avrundingsradius:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="261" />
         <source>Specify center</source>
-        <translation type="unfinished" />
+        <translation>Angi senter</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="280" />
         <source>To be created:</source>
-        <translation type="unfinished" />
+        <translation>Skal opprettes:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="281" />
         <source>Center:</source>
-        <translation type="unfinished" />
+        <translation>Senter:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="282" />
         <source>Start angle:</source>
-        <translation type="unfinished" />
+        <translation>Startvinkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="283" />
         <source>Radius:</source>
-        <translation type="unfinished" />
+        <translation>Radius:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="284" />
         <source>Radius Inner:</source>
-        <translation type="unfinished" />
+        <translation>Indre radius:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="280" />
         <source>Polygon</source>
-        <translation type="unfinished" />
+        <translation>Polygon</translation>
     </message>
 </context>
 <context>
@@ -849,7 +860,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon3.cpp" line="51" />
         <source>Specify a tangent</source>
-        <translation type="unfinished" />
+        <translation>Angi en tangent</translation>
     </message>
 </context>
 <context>
@@ -857,70 +868,70 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="468" />
         <source>Specify first point</source>
-        <translation type="unfinished" />
+        <translation>Angi første punkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="477" />
         <source>Specify direction (x or y) or [%1]</source>
-        <translation type="unfinished" />
+        <translation>Angi retning (x eller y) eller [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="491" />
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="495" />
         <source>Specify distance (%1) or [%2]</source>
-        <translation type="unfinished" />
+        <translation>Angi avstand (%1) eller [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="134" />
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="491" />
         <source>X</source>
-        <translation type="unfinished" />
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="117" />
         <source>Point</source>
-        <translation type="unfinished" />
+        <translation>Punkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="121" />
         <source>Angle</source>
-        <translation type="unfinished" />
+        <translation>Vinkel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="128" />
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="495" />
         <source>Y</source>
-        <translation type="unfinished" />
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="153" />
         <source>Direction:</source>
-        <translation type="unfinished" />
+        <translation>Retning:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="501" />
         <source>Specify distance (%1 deg) or [%2]</source>
-        <translation type="unfinished" />
+        <translation>Angi avstand (%1 grader) eller [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="516" />
         <source>Specify angle or [%1]</source>
-        <translation type="unfinished" />
+        <translation>Angi vinkel eller [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="528" />
         <source>Specify point or [%1]</source>
-        <translation type="unfinished" />
+        <translation>Angi punkt eller [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="577" />
         <source>Cannot undo: Begin of history reached</source>
-        <translation type="unfinished" />
+        <translation>Kan ikke angre: Begynnelsen av historikken nådd</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="614" />
         <source>Cannot redo: End of history reached</source>
-        <translation type="unfinished" />
+        <translation>Kan ikke gjøre om: Slutten av historikken nådd</translation>
     </message>
 </context>
 <context>
@@ -928,27 +939,27 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="262" />
         <source>Not a valid expression</source>
-        <translation type="unfinished" />
+        <translation>Ugyldig uttrykk</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="282" />
         <source>Select first entity</source>
-        <translation type="unfinished" />
+        <translation>Velg første enhet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="286" />
         <source>Select second entity</source>
-        <translation type="unfinished" />
+        <translation>Velg andre enhet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="286" />
         <source>Alternate endpoints</source>
-        <translation type="unfinished" />
+        <translation>Alternative endepunkter</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="290" />
         <source>Enter offset value</source>
-        <translation type="unfinished" />
+        <translation>Skriv inn forskyvningsverdi</translation>
     </message>
 </context>
 <context>
@@ -956,27 +967,27 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="181" />
         <source>Specify the first point on parabola</source>
-        <translation type="unfinished" />
+        <translation>Angi første punkt på parabel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="184" />
         <source>Specify the second point on parabola</source>
-        <translation type="unfinished" />
+        <translation>Angi andre punkt på parabel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="187" />
         <source>Specify the third point on parabola</source>
-        <translation type="unfinished" />
+        <translation>Angi tredje punkt på parabel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="190" />
         <source>Specify the fourth point on parabola</source>
-        <translation type="unfinished" />
+        <translation>Angi fjerde punkt på parabel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="193" />
         <source>Specify the Axis on parabola</source>
-        <translation type="unfinished" />
+        <translation>Angi aksen på parabel</translation>
     </message>
 </context>
 <context>
@@ -984,22 +995,22 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="275" />
         <source>Specify the focus of parabola</source>
-        <translation type="unfinished" />
+        <translation>Angi fokus for parabel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="278" />
         <source>Select line that is parallel to directrix of parabola or set vertex point</source>
-        <translation type="unfinished" />
+        <translation>Velg linje parallell med direktris for parabel eller angi toppunkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="282" />
         <source>Specify the start point on parabola</source>
-        <translation type="unfinished" />
+        <translation>Angi startpunkt på parabel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="286" />
         <source>Specify the end point on parabola</source>
-        <translation type="unfinished" />
+        <translation>Angi sluttpunkt på parabel</translation>
     </message>
 </context>
 <context>
@@ -1007,58 +1018,58 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="172" />
         <source>Second point is too close to the first one</source>
-        <translation type="unfinished" />
+        <translation>Andre punkt er for nær det første</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="183" />
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="194" />
         <source>Third point is too close to the second one</source>
-        <translation type="unfinished" />
+        <translation>Tredje punkt er for nær det andre</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="240" />
         <source>Invalid value provided</source>
-        <translation type="unfinished" />
+        <translation>Ugyldig verdi oppgitt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="258" />
         <source>Specify first point</source>
-        <translation type="unfinished" />
+        <translation>Angi første punkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="262" />
         <source>Specify second point</source>
-        <translation type="unfinished" />
+        <translation>Angi andre punkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="266" />
         <source>Specify third point</source>
-        <translation type="unfinished" />
+        <translation>Angi tredje punkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="270" />
         <source>Specify fourth point</source>
-        <translation type="unfinished" />
+        <translation>Angi fjerde punkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="270" />
         <source>Last point position is un-adjusted</source>
-        <translation type="unfinished" />
+        <translation>Siste punktposisjon er ikke justert</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="271" />
         <source>Last point position is adjusted to first</source>
-        <translation type="unfinished" />
+        <translation>Siste punktposisjon er justert til første</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="275" />
         <source>Enter number of points by X</source>
-        <translation type="unfinished" />
+        <translation>Skriv inn antall punkter etter X</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="279" />
         <source>Enter number of points by Y</source>
-        <translation type="unfinished" />
+        <translation>Skriv inn antall punkter etter Y</translation>
     </message>
 </context>
 <context>
@@ -1066,32 +1077,32 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="368" />
         <source>Specify height</source>
-        <translation type="unfinished" />
+        <translation>Angi høyde</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="371" />
         <source>Specify width</source>
-        <translation type="unfinished" />
+        <translation>Angi bredde</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="374" />
         <source>Specify size (width, height))</source>
-        <translation type="unfinished" />
+        <translation>Angi størrelse (bredde, høyde)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="377" />
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
-        <translation type="unfinished" />
+        <translation>Angi referansepunkt [øvre venstre|øvre|øvre høyre|venstre|midt|høyre|nedre venstre|nedre|nedre høyre]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="380" />
         <source>Specify point that defines base angle for rectangle</source>
-        <translation type="unfinished" />
+        <translation>Angi punkt som definerer basisvinkel for rektangel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="380" />
         <source>Don't keep insertion point</source>
-        <translation type="unfinished" />
+        <translation>Ikke behold innsettingspunkt</translation>
     </message>
 </context>
 <context>
@@ -1099,27 +1110,27 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="280" />
         <source>Specify second point</source>
-        <translation type="unfinished" />
+        <translation>Angi andre punkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="280" />
         <source>Draw Square</source>
-        <translation type="unfinished" />
+        <translation>Tegn kvadrat</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="283" />
         <source>Specify point 1 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation type="unfinished" />
+        <translation>Angi punkt 1 feste [hjørne|midt vertikal|midt horisontal|midt]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="286" />
         <source>Specify point 2 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation type="unfinished" />
+        <translation>Angi punkt 2 feste [hjørne|midt vertikal|midt horisontal|midt]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="289" />
         <source>Specify size (width, height)</source>
-        <translation type="unfinished" />
+        <translation>Angi størrelse (bredde, høyde)</translation>
     </message>
 </context>
 <context>
@@ -1128,47 +1139,47 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="551" />
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="569" />
         <source>Specify first point first</source>
-        <translation type="unfinished" />
+        <translation>Angi første punkt først</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="560" />
         <source>Specify width or second point first</source>
-        <translation type="unfinished" />
+        <translation>Angi bredde eller andre punkt først</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="589" />
         <source>Specify width</source>
-        <translation type="unfinished" />
+        <translation>Angi bredde</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="592" />
         <source>Specify height</source>
-        <translation type="unfinished" />
+        <translation>Angi høyde</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="595" />
         <source>Specify start point)</source>
-        <translation type="unfinished" />
+        <translation>Angi startpunkt)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="598" />
         <source>Specify second point</source>
-        <translation type="unfinished" />
+        <translation>Angi andre punkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="601" />
         <source>Specify third point</source>
-        <translation type="unfinished" />
+        <translation>Angi tredje punkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="604" />
         <source>Specify angle</source>
-        <translation type="unfinished" />
+        <translation>Angi vinkel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="607" />
         <source>Specify inner angle</source>
-        <translation type="unfinished" />
+        <translation>Angi indre vinkel</translation>
     </message>
 </context>
 <context>
@@ -1176,27 +1187,27 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="212" />
         <source>Line</source>
-        <translation type="unfinished" />
+        <translation>Linje</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="222" />
         <source>Arc</source>
-        <translation type="unfinished" />
+        <translation>Bue</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="232" />
         <source>Circle</source>
-        <translation type="unfinished" />
+        <translation>Sirkel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="596" />
         <source>Select line</source>
-        <translation type="unfinished" />
+        <translation>Velg linje</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="599" />
         <source>Select circle or arc</source>
-        <translation type="unfinished" />
+        <translation>Velg sirkel eller bue</translation>
     </message>
 </context>
 <context>
@@ -1204,33 +1215,33 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="214" />
         <source>Specify first control point</source>
-        <translation type="unfinished" />
+        <translation>Angi første kontrollpunkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231" />
         <source>Specify next control point or [%1]</source>
-        <translation type="unfinished" />
+        <translation>Angi neste kontrollpunkt eller [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231" />
         <source>Back</source>
-        <translation type="unfinished" />
+        <translation>Tilbake</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="233" />
         <source>Specify next control point</source>
-        <translation type="unfinished" />
+        <translation>Angi neste kontrollpunkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="265" />
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="286" />
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished" />
+        <translation>Kan ikke angre: Ikke nok enheter definert ennå.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="302" />
         <source>Cannot undo: Nothing could be redone.</source>
-        <translation type="unfinished" />
+        <translation>Kan ikke angre: Ingenting kan gjøres om.</translation>
     </message>
 </context>
 <context>
@@ -1238,37 +1249,37 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="182" />
         <source>Invalid rays number, should be in range [3..99]</source>
-        <translation type="unfinished" />
+        <translation>Ugyldig antall stråler, må være i området [3..99]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="190" />
         <source>Invalid value</source>
-        <translation type="unfinished" />
+        <translation>Ugyldig verdi</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="616" />
         <source>Set center point</source>
-        <translation type="unfinished" />
+        <translation>Angi senterpunkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="619" />
         <source>Set outer point</source>
-        <translation type="unfinished" />
+        <translation>Angi ytre punkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="622" />
         <source>Set inner point</source>
-        <translation type="unfinished" />
+        <translation>Angi indre punkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="625" />
         <source>Set rounding radiuses (outer, inner)</source>
-        <translation type="unfinished" />
+        <translation>Angi avrundingsradius (ytre, indre)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="628" />
         <source>Set rays number</source>
-        <translation type="unfinished" />
+        <translation>Angi antall stråler</translation>
     </message>
 </context>
 <context>
@@ -1276,17 +1287,17 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="42" />
         <source>Clipboard is empty</source>
-        <translation type="unfinished" />
+        <translation>Utklippstavlen er tom</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="129" />
         <source>Set paste reference point</source>
-        <translation type="unfinished" />
+        <translation>Angi referansepunkt for innliming</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="129" />
         <source>Paste Multiple</source>
-        <translation type="unfinished" />
+        <translation>Lim inn flere</translation>
     </message>
 </context>
 <context>
@@ -1294,1250 +1305,1250 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="514" />
         <source>&amp;Window Zoom</source>
-        <translation type="unfinished" />
+        <translation>&amp;Vinduszoom</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="328" />
         <source>Zoom &amp;Panning</source>
-        <translation type="unfinished" />
+        <translation>Zoom &amp;panorering</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="239" />
         <source>Select Entity</source>
-        <translation type="unfinished" />
+        <translation>Velg enhet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="240" />
         <source>Select Window</source>
-        <translation type="unfinished" />
+        <translation>Velg vindu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="241" />
         <source>Deselect Window</source>
-        <translation type="unfinished" />
+        <translation>Avvelg vindu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="242" />
         <source>(De-)Select &amp;Contour</source>
-        <translation type="unfinished" />
+        <translation>(Av)velg &amp;kontur</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="243" />
         <source>Select Intersected Entities</source>
-        <translation type="unfinished" />
+        <translation>Velg skjærende enheter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="244" />
         <source>Deselect Intersected Entities</source>
-        <translation type="unfinished" />
+        <translation>Avvelg skjærende enheter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="245" />
         <source>(De-)Select Layer</source>
-        <translation type="unfinished" />
+        <translation>(Av)velg lag</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="228" />
         <source>&amp;Points</source>
-        <translation type="unfinished" />
+        <translation>&amp;Punkter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="200" />
         <source>&amp;2 Points</source>
-        <translation type="unfinished" />
+        <translation>&amp;2 punkter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="201" />
         <source>&amp;Angle</source>
-        <translation type="unfinished" />
+        <translation>&amp;Vinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="202" />
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="341" />
         <source>&amp;Horizontal</source>
-        <translation type="unfinished" />
+        <translation>&amp;Horisontal</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="203" />
         <source>Vertical</source>
-        <translation type="unfinished" />
+        <translation>Vertikal</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="204" />
         <source>&amp;Freehand Line</source>
-        <translation type="unfinished" />
+        <translation>&amp;Frihåndslinje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="205" />
         <source>&amp;Parallel</source>
-        <translation type="unfinished" />
+        <translation>&amp;Parallell</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="206" />
         <source>Parallel through point</source>
-        <translation type="unfinished" />
+        <translation>Parallell gjennom punkt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="186" />
         <source>Rectangle</source>
-        <translation type="unfinished" />
+        <translation>Rektangel</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="207" />
         <source>Bisector</source>
-        <translation type="unfinished" />
+        <translation>Halveringslinje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="208" />
         <source>Tangent (P,C)</source>
-        <translation type="unfinished" />
+        <translation>Tangent (P,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="209" />
         <source>Tangent (C,C)</source>
-        <translation type="unfinished" />
+        <translation>Tangent (C,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="210" />
         <source>Tangent &amp;Orthogonal</source>
-        <translation type="unfinished" />
+        <translation>Tangent &amp;rettvinklet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="211" />
         <source>Orthogonal</source>
-        <translation type="unfinished" />
+        <translation>Rettvinklet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="212" />
         <source>Relative angle</source>
-        <translation type="unfinished" />
+        <translation>Relativ vinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="187" />
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation type="unfinished" />
+        <translation>Poly&amp;gon (senter,hjørne)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="189" />
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation type="unfinished" />
+        <translation>Polygo&amp;n (hjørne,hjørne)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="213" />
         <source>Snake</source>
-        <translation type="unfinished" />
+        <translation>Slange</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="214" />
         <source>Snake (X)</source>
-        <translation type="unfinished" />
+        <translation>Slange (X)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="215" />
         <source>Snake (Y)</source>
-        <translation type="unfinished" />
+        <translation>Slange (Y)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="192" />
         <source>Rectangle (1 Point)</source>
-        <translation type="unfinished" />
+        <translation>Rektangel (1 punkt)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="193" />
         <source>Rectangle (2 Points)</source>
-        <translation type="unfinished" />
+        <translation>Rektangel (2 punkter)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194" />
         <source>Rectangle (3 Points)</source>
-        <translation type="unfinished" />
+        <translation>Rektangel (3 punkter)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="191" />
         <source>Star</source>
-        <translation type="unfinished" />
+        <translation>Stjerne</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="216" />
         <source>Angle From Line</source>
-        <translation type="unfinished" />
+        <translation>Vinkel fra linje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="217" />
         <source>Orthogonal From Line</source>
-        <translation type="unfinished" />
+        <translation>Rettvinklet fra linje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="218" />
         <source>From Point To Line</source>
-        <translation type="unfinished" />
+        <translation>Fra punkt til linje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="221" />
         <source>Slice/Divide Line</source>
-        <translation type="unfinished" />
+        <translation>Del/linje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="222" />
         <source>Slice/Divide Circle</source>
-        <translation type="unfinished" />
+        <translation>Del/sirkel</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="229" />
         <source>Line of Points</source>
-        <translation type="unfinished" />
+        <translation>Linje av punkter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="251" />
         <source>Center, &amp;Point</source>
-        <translation type="unfinished" />
+        <translation>Senter, &amp;punkt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252" />
         <source>By Arc</source>
-        <translation type="unfinished" />
+        <translation>Etter bue</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="253" />
         <source>Center, &amp;Radius</source>
-        <translation type="unfinished" />
+        <translation>Senter, &amp;radius</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="254" />
         <source>2 Points</source>
-        <translation type="unfinished" />
+        <translation>2 punkter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="255" />
         <source>2 Points, Radius</source>
-        <translation type="unfinished" />
+        <translation>2 punkter, radius</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="256" />
         <source>3 Points</source>
-        <translation type="unfinished" />
+        <translation>3 punkter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="257" />
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="276" />
         <source>&amp;Concentric</source>
-        <translation type="unfinished" />
+        <translation>&amp;Konsentrisk</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="258" />
         <source>Circle &amp;Inscribed</source>
-        <translation type="unfinished" />
+        <translation>Sirkel &amp;innskrevet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262" />
         <source>Tangential, 2 P&amp;oints</source>
-        <translation type="unfinished" />
+        <translation>Tangent, 2 p&amp;unkter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="268" />
         <source>&amp;Center, Point, Angles</source>
-        <translation type="unfinished" />
+        <translation>&amp;Senter, punkt, vinkler</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="271" />
         <source>&amp;3 Points</source>
-        <translation type="unfinished" />
+        <translation>&amp;3 punkter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="274" />
         <source>&amp;2 Points, Length</source>
-        <translation type="unfinished" />
+        <translation>&amp;2 punkter, lengde</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="275" />
         <source>&amp;2 Points, Height</source>
-        <translation type="unfinished" />
+        <translation>&amp;2 punkter, høyde</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="277" />
         <source>Arc &amp;Tangential</source>
-        <translation type="unfinished" />
+        <translation>Bue &amp;tangent</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="289" />
         <source>&amp;Append spline point</source>
-        <translation type="unfinished" />
+        <translation>&amp;Legg til spline-punkt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="291" />
         <source>&amp;Insert spline points</source>
-        <translation type="unfinished" />
+        <translation>&amp;Sett inn spline-punkter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="302" />
         <source>&amp;Ellipse (Axis)</source>
-        <translation type="unfinished" />
+        <translation>&amp;Ellipse (akse)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303" />
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation type="unfinished" />
+        <translation>Ellipse &amp;bue (akse)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="304" />
         <source>Ellipse &amp;Foci Point</source>
-        <translation type="unfinished" />
+        <translation>Ellipse &amp;fokuspunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="305" />
         <source>Ellipse &amp;4 Point</source>
-        <translation type="unfinished" />
+        <translation>Ellipse &amp;4 punkt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="306" />
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation type="unfinished" />
+        <translation>Ellipse senter og &amp;3 punkter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="307" />
         <source>Ellipse &amp;Inscribed</source>
-        <translation type="unfinished" />
+        <translation>Ellipse &amp;innskrevet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="287" />
         <source>&amp;Spline</source>
-        <translation type="unfinished" />
+        <translation>&amp;Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="288" />
         <source>&amp;Spline through points</source>
-        <translation type="unfinished" />
+        <translation>&amp;Spline gjennom punkter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="313" />
         <source>&amp;Polyline</source>
-        <translation type="unfinished" />
+        <translation>&amp;Flerlinje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="314" />
         <source>&amp;Add node</source>
-        <translation type="unfinished" />
+        <translation>&amp;Legg til node</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="315" />
         <source>A&amp;ppend node</source>
-        <translation type="unfinished" />
+        <translation>&amp;Legg til node</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="316" />
         <source>&amp;Delete node</source>
-        <translation type="unfinished" />
+        <translation>&amp;Slett node</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="317" />
         <source>Delete &amp;between two nodes</source>
-        <translation type="unfinished" />
+        <translation>Slett &amp;mellom to noder</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="318" />
         <source>&amp;Trim segments</source>
-        <translation type="unfinished" />
+        <translation>&amp;Beskjær segmenter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="319" />
         <source>Create &amp;Equidistant Polylines</source>
-        <translation type="unfinished" />
+        <translation>Opprett &amp;likeavstandsflerlinjer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="321" />
         <source>Polyline Arcs to Chords</source>
-        <translation type="unfinished" />
+        <translation>Flerlinjebuer til korder</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="329" />
         <source>&amp;MText</source>
-        <translation type="unfinished" />
+        <translation>&amp;Flersidig tekst</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="330" />
         <source>&amp;Text</source>
-        <translation type="unfinished" />
+        <translation>&amp;Tekst</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331" />
         <source>&amp;Hatch</source>
-        <translation type="unfinished" />
+        <translation>&amp;Skraffer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="332" />
         <source>Insert &amp;Image</source>
-        <translation type="unfinished" />
+        <translation>Sett inn &amp;bilde</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="339" />
         <source>&amp;Aligned</source>
-        <translation type="unfinished" />
+        <translation>&amp;Justert</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="340" />
         <source>&amp;Linear</source>
-        <translation type="unfinished" />
+        <translation>&amp;Lineær</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="342" />
         <source>&amp;Vertical</source>
-        <translation type="unfinished" />
+        <translation>&amp;Vertikal</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="343" />
         <source>&amp;Radial</source>
-        <translation type="unfinished" />
+        <translation>&amp;Radial</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="344" />
         <source>&amp;Diametric</source>
-        <translation type="unfinished" />
+        <translation>&amp;Diametral</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="345" />
         <source>&amp;Angular</source>
-        <translation type="unfinished" />
+        <translation>&amp;Vinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="347" />
         <source>&amp;Leader</source>
-        <translation type="unfinished" />
+        <translation>&amp;Leder</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="368" />
         <source>&amp;Attributes</source>
-        <translation type="unfinished" />
+        <translation>&amp;Attributter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="369" />
         <source>&amp;Delete</source>
-        <translation type="unfinished" />
+        <translation>&amp;Slett</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="370" />
         <source>&amp;Move / Copy</source>
-        <translation type="unfinished" />
+        <translation>&amp;Flytt / kopier</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="371" />
         <source>Re&amp;vert direction</source>
-        <translation type="unfinished" />
+        <translation>Re&amp;verser retning</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="423" />
         <source>Caught Entity</source>
-        <translation type="unfinished" />
+        <translation>Fanget enhet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="489" />
         <source>Move to Bottom</source>
-        <translation type="unfinished" />
+        <translation>Flytt til bunn</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="490" />
         <source>Lower After Entity</source>
-        <translation type="unfinished" />
+        <translation>Senk etter enhet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="491" />
         <source>Raise Over Entity</source>
-        <translation type="unfinished" />
+        <translation>Hev over enhet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="492" />
         <source>Move to Top</source>
-        <translation type="unfinished" />
+        <translation>Flytt til topp</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="565" />
         <source>Current &amp;Drawing Preferences</source>
-        <translation type="unfinished" />
+        <translation>Nåværende &amp;tegningspreferanser</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="579" />
         <source>Print Pre&amp;view</source>
-        <translation type="unfinished" />
+        <translation>Skriv ut for&amp;håndsvisning</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619" />
         <source>Custom Menu Creator</source>
-        <translation type="unfinished" />
+        <translation>Tilpasset menyoppretter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620" />
         <source>Custom Toolbar Creator</source>
-        <translation type="unfinished" />
+        <translation>Tilpasset verktøylinjeoppretter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="641" />
         <source>&amp;Save View</source>
-        <translation type="unfinished" />
+        <translation>&amp;Lagre visning</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="643" />
         <source>Restore Current View</source>
-        <translation type="unfinished" />
+        <translation>Gjenopprett nåværende visning</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="644" />
         <source>Restore View 1</source>
-        <translation type="unfinished" />
+        <translation>Gjenopprett visning 1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="645" />
         <source>Restore View 2</source>
-        <translation type="unfinished" />
+        <translation>Gjenopprett visning 2</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="646" />
         <source>Restore View 3</source>
-        <translation type="unfinished" />
+        <translation>Gjenopprett visning 3</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="647" />
         <source>Restore View 4</source>
-        <translation type="unfinished" />
+        <translation>Gjenopprett visning 4</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="648" />
         <source>Restore View 5</source>
-        <translation type="unfinished" />
+        <translation>Gjenopprett visning 5</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="372" />
         <source>&amp;Rotate</source>
-        <translation type="unfinished" />
+        <translation>&amp;Roter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="373" />
         <source>&amp;Scale</source>
-        <translation type="unfinished" />
+        <translation>&amp;Skaler</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="374" />
         <source>&amp;Mirror</source>
-        <translation type="unfinished" />
+        <translation>&amp;Speil</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="376" />
         <source>Rotate T&amp;wo</source>
-        <translation type="unfinished" />
+        <translation>Roter t&amp;o</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="377" />
         <source>&amp;Properties</source>
-        <translation type="unfinished" />
+        <translation>&amp;Egenskaper</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378" />
         <source>&amp;Trim</source>
-        <translation type="unfinished" />
+        <translation>&amp;Beskjær</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="380" />
         <source>&amp;Lengthen</source>
-        <translation type="unfinished" />
+        <translation>&amp;Forleng</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="382" />
         <source>&amp;Divide</source>
-        <translation type="unfinished" />
+        <translation>&amp;Del</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="383" />
         <source>&amp;Stretch</source>
-        <translation type="unfinished" />
+        <translation>&amp;Strekk</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="384" />
         <source>&amp;Bevel</source>
-        <translation type="unfinished" />
+        <translation>&amp;Avfasing</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="385" />
         <source>&amp;Fillet</source>
-        <translation type="unfinished" />
+        <translation>&amp;Avrunding</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="386" />
         <source>&amp;Explode Text into Letters</source>
-        <translation type="unfinished" />
+        <translation>&amp;Spreng tekst til bokstaver</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="500" />
         <source>&amp;Distance Point to Point</source>
-        <translation type="unfinished" />
+        <translation>&amp;Avstand punkt til punkt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="503" />
         <source>An&amp;gle between two lines</source>
-        <translation type="unfinished" />
+        <translation>Vin&amp;kel mellom to linjer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="505" />
         <source>Polygonal &amp;Area</source>
-        <translation type="unfinished" />
+        <translation>Polygonalt &amp;areal</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="662" />
         <source>&amp;Undo</source>
-        <translation type="unfinished" />
+        <translation>&amp;Angre</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="663" />
         <source>&amp;Redo</source>
-        <translation type="unfinished" />
+        <translation>&amp;Gjør om</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="670" />
         <source>Regenerate Dimensions</source>
-        <translation type="unfinished" />
+        <translation>Gjenopprett dimensjoner</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="673" />
         <source>&amp;Dimension Styles</source>
-        <translation type="unfinished" />
+        <translation>&amp;Dimensjonsstiler</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="683" />
         <source>Pick Point</source>
-        <translation type="unfinished" />
+        <translation>Velg punkt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="684" />
         <source>Pick Distance</source>
-        <translation type="unfinished" />
+        <translation>Velg avstand</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="685" />
         <source>Pick Angle</source>
-        <translation type="unfinished" />
+        <translation>Velg vinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="691" />
         <source>Cu&amp;t</source>
-        <translation type="unfinished" />
+        <translation>Klipp&amp;</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="693" />
         <source>&amp;Copy</source>
-        <translation type="unfinished" />
+        <translation>&amp;Kopier</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="695" />
         <source>&amp;Paste</source>
-        <translation type="unfinished" />
+        <translation>&amp;Lim inn</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="190" />
         <source>Polygo&amp;n (Tan,Tan)</source>
-        <translation type="unfinished" />
+        <translation>Polygo&amp;n (tangent,tangent)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="230" />
         <source>Middle Points</source>
-        <translation type="unfinished" />
+        <translation>Midtpunkter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="231" />
         <source>Lattice of Points</source>
-        <translation type="unfinished" />
+        <translation>Punktgitter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="232" />
         <source>Select Points</source>
-        <translation type="unfinished" />
+        <translation>Velg punkter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="233" />
         <source>Paste to Points</source>
-        <translation type="unfinished" />
+        <translation>Lim inn til punkter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="269" />
         <source>&amp;Center, Point, Chord</source>
-        <translation type="unfinished" />
+        <translation>&amp;Senter, punkt, korde</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="270" />
         <source>&amp;Center, Point, Arc Angle</source>
-        <translation type="unfinished" />
+        <translation>&amp;Senter, punkt, buevinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="272" />
         <source>&amp;2 Points, Angle</source>
-        <translation type="unfinished" />
+        <translation>&amp;2 punkter, vinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="273" />
         <source>&amp;2 Points, Radius</source>
-        <translation type="unfinished" />
+        <translation>&amp;2 punkter, radius</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="284" />
         <source>Para&amp;bola 4 points</source>
-        <translation type="unfinished" />
+        <translation>Para&amp;bel 4 punkter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="285" />
         <source>Parabola &amp;Focus Directrix</source>
-        <translation type="unfinished" />
+        <translation>Parabel &amp;fokus direktris</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="290" />
         <source>&amp;Remove spline points</source>
-        <translation type="unfinished" />
+        <translation>&amp;Fjern spline-punkter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="292" />
         <source>&amp;Explode spline to lines</source>
-        <translation type="unfinished" />
+        <translation>&amp;Spreng spline til linjer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="293" />
         <source>&amp;Spline from polyline</source>
-        <translation type="unfinished" />
+        <translation>&amp;Spline fra flerlinje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="294" />
         <source>&amp;Remove between two points</source>
-        <translation type="unfinished" />
+        <translation>&amp;Fjern mellom to punkter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="300" />
         <source>&amp;Ellipse (1 Point)</source>
-        <translation type="unfinished" />
+        <translation>&amp;Ellipse (1 punkt)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="301" />
         <source>&amp;Ellipse Arc (1 Point)</source>
-        <translation type="unfinished" />
+        <translation>&amp;Ellipsebue (1 punkt)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="320" />
         <source>Polyline from Existing &amp;Segments</source>
-        <translation type="unfinished" />
+        <translation>Flerlinje fra eksisterende &amp;segmenter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="322" />
         <source>Polyline Change Segment Type</source>
-        <translation type="unfinished" />
+        <translation>Endre segmenttype for flerlinje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="333" />
         <source>Bounding &amp;Box</source>
-        <translation type="unfinished" />
+        <translation>Avgrensnings&amp;boks</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="348" />
         <source>&amp;Baseline</source>
-        <translation type="unfinished" />
+        <translation>&amp;Basislinje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="349" />
         <source>&amp;Continue</source>
-        <translation type="unfinished" />
+        <translation>&amp;Fortsett</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="388" />
         <source>Break/Divide</source>
-        <translation type="unfinished" />
+        <translation>Bryt/del</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="389" />
         <source>Line Gap</source>
-        <translation type="unfinished" />
+        <translation>Linjeavstand</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="390" />
         <source>Line Join</source>
-        <translation type="unfinished" />
+        <translation>Linjesammenføyning</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="391" />
         <source>Duplicate</source>
-        <translation type="unfinished" />
+        <translation>Dupliser</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="392" />
         <source>Align</source>
-        <translation type="unfinished" />
+        <translation>Juster</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="393" />
         <source>Align One</source>
-        <translation type="unfinished" />
+        <translation>Juster én</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="394" />
         <source>Align Reference Points</source>
-        <translation type="unfinished" />
+        <translation>Juster referansepunkter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="400" />
         <source>Update Current Pen by Active Layer' Pen</source>
-        <translation type="unfinished" />
+        <translation>Oppdater nåværende penn med aktiv lags penn</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="406" />
         <source>&amp;Pick Pen From Entity</source>
-        <translation type="unfinished" />
+        <translation>&amp;Velg penn fra enhet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="407" />
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation type="unfinished" />
+        <translation>&amp;Velg penn fra enhet (løst)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="408" />
         <source>Apply Pen to Entity</source>
-        <translation type="unfinished" />
+        <translation>Bruk penn på enhet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="409" />
         <source>Copy Pen</source>
-        <translation type="unfinished" />
+        <translation>Kopier penn</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="415" />
         <source>Show Entity Description</source>
-        <translation type="unfinished" />
+        <translation>Vis enhetsbeskrivelse</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="418" />
         <source>Enable Info Cursor</source>
-        <translation type="unfinished" />
+        <translation>Aktiver infokursor</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="419" />
         <source>Absolute Pos</source>
-        <translation type="unfinished" />
+        <translation>Absolutt posisjon</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74" />
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="420" />
         <source>Snap</source>
-        <translation type="unfinished" />
+        <translation>Fest</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="53" />
         <source>Block</source>
-        <translation type="unfinished" />
+        <translation>Blokk</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="53" />
         <source>Block related operations</source>
-        <translation type="unfinished" />
+        <translation>Blokkrelaterte operasjoner</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="54" />
         <source>Circle</source>
-        <translation type="unfinished" />
+        <translation>Sirkel</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="54" />
         <source>Circle drawing commands</source>
-        <translation type="unfinished" />
+        <translation>Sirkeltegnekommandoer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="55" />
         <source>Arc</source>
-        <translation type="unfinished" />
+        <translation>Bue</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="55" />
         <source>Arc drawing commands</source>
-        <translation type="unfinished" />
+        <translation>Buetegnekommandoer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="56" />
         <source>Spline</source>
-        <translation type="unfinished" />
+        <translation>Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="56" />
         <source>Spline drawing commands</source>
-        <translation type="unfinished" />
+        <translation>Splinetegnekommandoer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="57" />
         <source>Edit</source>
-        <translation type="unfinished" />
+        <translation>Rediger</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="57" />
         <source>Editing operations</source>
-        <translation type="unfinished" />
+        <translation>Redigeringsoperasjoner</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="58" />
         <source>Ellipse</source>
-        <translation type="unfinished" />
+        <translation>Ellipse</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="58" />
         <source>Ellipse drawing commands</source>
-        <translation type="unfinished" />
+        <translation>Ellipsetegnekommandoer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59" />
         <source>File</source>
-        <translation type="unfinished" />
+        <translation>Fil</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59" />
         <source>File Operations</source>
-        <translation type="unfinished" />
+        <translation>Filoperasjoner</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60" />
         <source>Dimension</source>
-        <translation type="unfinished" />
+        <translation>Dimensjon</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60" />
         <source>Dimensions creation commands</source>
-        <translation type="unfinished" />
+        <translation>Dimensjonsopprettelseskommandoer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="61" />
         <source>Info</source>
-        <translation type="unfinished" />
+        <translation>Info</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="61" />
         <source>Informational commands</source>
-        <translation type="unfinished" />
+        <translation>Informasjonskommandoer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="62" />
         <source>Layer</source>
-        <translation type="unfinished" />
+        <translation>Lag</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="62" />
         <source>Layers operations</source>
-        <translation type="unfinished" />
+        <translation>Lagoperasjoner</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="63" />
         <source>Line</source>
-        <translation type="unfinished" />
+        <translation>Linje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="63" />
         <source>Line drawing commands</source>
-        <translation type="unfinished" />
+        <translation>Linjetegnekommandoer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="64" />
         <source>Point</source>
-        <translation type="unfinished" />
+        <translation>Punkt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="64" />
         <source>Point drawing commands</source>
-        <translation type="unfinished" />
+        <translation>Punkttegnekommandoer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="65" />
         <source>Polygon</source>
-        <translation type="unfinished" />
+        <translation>Polygon</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="65" />
         <source>Polygon drawing commands</source>
-        <translation type="unfinished" />
+        <translation>Polygontegnekommandoer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66" />
         <source>Modify</source>
-        <translation type="unfinished" />
+        <translation>Endre</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66" />
         <source>Modification operations</source>
-        <translation type="unfinished" />
+        <translation>Endringsoperasjoner</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67" />
         <source>Options</source>
-        <translation type="unfinished" />
+        <translation>Alternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67" />
         <source>Options management</source>
-        <translation type="unfinished" />
+        <translation>Alternativhåndtering</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="68" />
         <source>Other</source>
-        <translation type="unfinished" />
+        <translation>Annet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="68" />
         <source>Other operations</source>
-        <translation type="unfinished" />
+        <translation>Andre operasjoner</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="69" />
         <source>Relative Zero</source>
-        <translation type="unfinished" />
+        <translation>Relativ null</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="70" />
         <source>Polyline</source>
-        <translation type="unfinished" />
+        <translation>Flerlinje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="70" />
         <source>Polyline drawing commands</source>
-        <translation type="unfinished" />
+        <translation>Flerlinjetegnekommandoer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="71" />
         <source>PenTB</source>
-        <translation type="unfinished" />
+        <translation>PennTB</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="71" />
         <source>Pen related operations</source>
-        <translation type="unfinished" />
+        <translation>Pennrelaterte operasjoner</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="72" />
         <source>Restriction</source>
-        <translation type="unfinished" />
+        <translation>Begrensning</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="72" />
         <source>Snap restrictions</source>
-        <translation type="unfinished" />
+        <translation>Festebegrensninger</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="73" />
         <source>Select</source>
-        <translation type="unfinished" />
+        <translation>Velg</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="73" />
         <source>Entity selection operations</source>
-        <translation type="unfinished" />
+        <translation>Enhetsvelgoperasjoner</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74" />
         <source>Snapping operations</source>
-        <translation type="unfinished" />
+        <translation>Festeoperasjoner</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="75" />
         <source>Snap Extras</source>
-        <translation type="unfinished" />
+        <translation>Ekstra feste</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="75" />
         <source>Additional Snaps</source>
-        <translation type="unfinished" />
+        <translation>Tilleggsfeste</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="76" />
         <source>View</source>
-        <translation type="unfinished" />
+        <translation>Visning</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="76" />
         <source>View related operations</source>
-        <translation type="unfinished" />
+        <translation>Visningsrelaterte operasjoner</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77" />
         <source>Named Views</source>
-        <translation type="unfinished" />
+        <translation>Navngitte visninger</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77" />
         <source>Persistent Views operations</source>
-        <translation type="unfinished" />
+        <translation>Persistente visningsoperasjoner</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78" />
         <source>Workspaces</source>
-        <translation type="unfinished" />
+        <translation>Arbeidsområder</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78" />
         <source>Workspaces operations</source>
-        <translation type="unfinished" />
+        <translation>Arbeidsområdeoperasjoner</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79" />
         <source>UCS</source>
-        <translation type="unfinished" />
+        <translation>UCS</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79" />
         <source>UCS operations</source>
-        <translation type="unfinished" />
+        <translation>UCS-operasjoner</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="80" />
         <source>Widgets</source>
-        <translation type="unfinished" />
+        <translation>Widgeter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="80" />
         <source>Widgets management</source>
-        <translation type="unfinished" />
+        <translation>Widgethåndtering</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="81" />
         <source>InfoCursor</source>
-        <translation type="unfinished" />
+        <translation>Infokursor</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="81" />
         <source>Informational Cursor</source>
-        <translation type="unfinished" />
+        <translation>Informasjonskursor</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="82" />
         <source>Entity Layer</source>
-        <translation type="unfinished" />
+        <translation>Enhetslag</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="82" />
         <source>Entity's Layer</source>
-        <translation type="unfinished" />
+        <translation>Enhetens lag</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="83" />
         <source>Interactive</source>
-        <translation type="unfinished" />
+        <translation>Interaktiv</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="83" />
         <source>Interactive Pick</source>
-        <translation type="unfinished" />
+        <translation>Interaktiv valg</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="104" />
         <source>Activate Entity's Layer</source>
-        <translation type="unfinished" />
+        <translation>Aktiver enhetens lag</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="105" />
         <source>Hide Entity's Layer</source>
-        <translation type="unfinished" />
+        <translation>Skjul enhetens lag</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="106" />
         <source>Hide Other Layers than Entity's</source>
-        <translation type="unfinished" />
+        <translation>Skjul andre lag enn enhetens</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="107" />
         <source>Lock Entity's Layer</source>
-        <translation type="unfinished" />
+        <translation>Lås enhetens lag</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="108" />
         <source>Toggle Entity's Layer Construction</source>
-        <translation type="unfinished" />
+        <translation>Bytt enhetens lagkonstruksjon</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109" />
         <source>Toggle Entity's Layer Printing</source>
-        <translation type="unfinished" />
+        <translation>Bytt enhetens lagutskrift</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="219" />
         <source>Centerline</source>
-        <translation type="unfinished" />
+        <translation>Senterlinje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="220" />
         <source>Center Mark</source>
-        <translation type="unfinished" />
+        <translation>Sentermerke</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="259" />
         <source>Tangential 2 Entities, Radius</source>
-        <translation type="unfinished" />
+        <translation>Tangent 2 enheter, radius</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="260" />
         <source>Tangential 2 Entities, 1 Point</source>
-        <translation type="unfinished" />
+        <translation>Tangent 2 enheter, 1 punkt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261" />
         <source>Tangential &amp;3 Entities</source>
-        <translation type="unfinished" />
+        <translation>Tangent &amp;3 enheter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="278" />
         <source>&amp;Dual Curve</source>
-        <translation type="unfinished" />
+        <translation>&amp;Dobbeltkurve</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="286" />
         <source>&amp;Hyperbola &amp;Foci Point</source>
-        <translation type="unfinished" />
+        <translation>&amp;Hyperbel &amp;fokuspunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="350" />
         <source>&amp;Ordinate</source>
-        <translation type="unfinished" />
+        <translation>&amp;Ordinat</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="351" />
         <source>Select Ordinates by base</source>
-        <translation type="unfinished" />
+        <translation>Velg ordinater etter base</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="352" />
         <source>Ordinates Re-base</source>
-        <translation type="unfinished" />
+        <translation>Re-base ordinater</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="353" />
         <source>Feature Control Frame</source>
-        <translation type="unfinished" />
+        <translation>Funksjonskontrollramme</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="354" />
         <source>Copy Style</source>
-        <translation type="unfinished" />
+        <translation>Kopier stil</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="355" />
         <source>Modify Style</source>
-        <translation type="unfinished" />
+        <translation>Endre stil</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="421" />
         <source>Relative</source>
-        <translation type="unfinished" />
+        <translation>Relativ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="422" />
         <source>Prompt</source>
-        <translation type="unfinished" />
+        <translation>Prompt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="429" />
         <source>Snap on grid</source>
-        <translation type="unfinished" />
+        <translation>Fest til rutenett</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="430" />
         <source>Snap Middle Manual</source>
-        <translation type="unfinished" />
+        <translation>Manuell midtfeste</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="431" />
         <source>Snap on Endpoints</source>
-        <translation type="unfinished" />
+        <translation>Fest til endepunkter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="432" />
@@ -30734,7 +30745,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="582" />
         <source>Select to rotate (Enter to complete)</source>
-        <translation type="unfinished" />
+        <translation>Velg for å rotere (Enter for å fullføre)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="132" />
@@ -30742,24 +30753,24 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="201" />
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="241" />
         <source>Rotation</source>
-        <translation type="unfinished" />
+        <translation>Rotasjon</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="133" />
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="202" />
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="242" />
         <source>Angle:</source>
-        <translation type="unfinished" />
+        <translation>Vinkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="203" />
         <source>Source Point:</source>
-        <translation type="unfinished" />
+        <translation>Kildepunkt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="204" />
         <source>Target Point:</source>
-        <translation type="unfinished" />
+        <translation>Målpunkt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="136" />
@@ -30767,55 +30778,55 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="205" />
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="245" />
         <source>Offset:</source>
-        <translation type="unfinished" />
+        <translation>Forskyvning:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="134" />
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="146" />
         <source>Reference Point:</source>
-        <translation type="unfinished" />
+        <translation>Referansepunkt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="135" />
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="147" />
         <source>Center Point:</source>
-        <translation type="unfinished" />
+        <translation>Senterpunkt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="248" />
         <source>Second Angle:</source>
-        <translation type="unfinished" />
+        <translation>Andre vinkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="582" />
         <source>Rotate immediately after selection</source>
-        <translation type="unfinished" />
+        <translation>Roter umiddelbart etter valg</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="582" />
         <source>Select contour</source>
-        <translation type="unfinished" />
+        <translation>Velg kontur</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="588" />
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="591" />
         <source>Snap to center of selection</source>
-        <translation type="unfinished" />
+        <translation>Fest til sentrum av utvalg</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="591" />
         <source>Specify rotation center</source>
-        <translation type="unfinished" />
+        <translation>Angi rotasjonssenter</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="594" />
         <source>Specify target point to rotate to</source>
-        <translation type="unfinished" />
+        <translation>Angi målpunkt å rotere til</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="597" />
         <source>Specify target point for rotation around reference point</source>
-        <translation type="unfinished" />
+        <translation>Angi målpunkt for rotasjon rundt referansepunkt</translation>
     </message>
 </context>
 <context>
@@ -30823,52 +30834,52 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="93" />
         <source>Rotating Twice</source>
-        <translation type="unfinished" />
+        <translation>Roterer to ganger</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="94" />
         <source>Center 1:</source>
-        <translation type="unfinished" />
+        <translation>Senter 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="95" />
         <source>Angle 1:</source>
-        <translation type="unfinished" />
+        <translation>Vinkel 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="96" />
         <source>Center 2:</source>
-        <translation type="unfinished" />
+        <translation>Senter 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="97" />
         <source>Angle 2:</source>
-        <translation type="unfinished" />
+        <translation>Vinkel 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="170" />
         <source>Select for two axis rotation  (Enter to complete)</source>
-        <translation type="unfinished" />
+        <translation>Velg for rotasjon rundt to akser (Enter for å fullføre)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="170" />
         <source>Rotate 2 Axis immediately after selection</source>
-        <translation type="unfinished" />
+        <translation>Roter 2 akser umiddelbart etter valg</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="170" />
         <source>Select contour</source>
-        <translation type="unfinished" />
+        <translation>Velg kontur</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="176" />
         <source>Specify absolute reference point</source>
-        <translation type="unfinished" />
+        <translation>Angi absolutt referansepunkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="179" />
         <source>Specify relative reference point</source>
-        <translation type="unfinished" />
+        <translation>Angi relativ referansepunkt</translation>
     </message>
 </context>
 <context>
@@ -30876,38 +30887,38 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="229" />
         <source>Round</source>
-        <translation type="unfinished" />
+        <translation>Avrund</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="230" />
         <source>Point 1:</source>
-        <translation type="unfinished" />
+        <translation>Punkt 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="231" />
         <source>Point 2:</source>
-        <translation type="unfinished" />
+        <translation>Punkt 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="347" />
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="362" />
         <source>Not a valid expression</source>
-        <translation type="unfinished" />
+        <translation>Ugyldig uttrykk</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="424" />
         <source>Specify second entity</source>
-        <translation type="unfinished" />
+        <translation>Angi andre enhet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="427" />
         <source>Enter radius:</source>
-        <translation type="unfinished" />
+        <translation>Skriv inn radius:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421" />
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="unfinished" />
+        <translation>Angi første enhet eller skriv inn radius &lt;%1&gt;</translation>
     </message>
 </context>
 <context>
@@ -30915,77 +30926,77 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="169" />
         <source>Scale</source>
-        <translation type="unfinished" />
+        <translation>Skaler</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="170" />
         <source>Center:</source>
-        <translation type="unfinished" />
+        <translation>Senter:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="171" />
         <source>Source Point:</source>
-        <translation type="unfinished" />
+        <translation>Kildepunkt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="172" />
         <source>Target Point:</source>
-        <translation type="unfinished" />
+        <translation>Målpunkt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="173" />
         <source>Offset:</source>
-        <translation type="unfinished" />
+        <translation>Forskyvning:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="176" />
         <source>Scale by X:</source>
-        <translation type="unfinished" />
+        <translation>Skaler etter X:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="177" />
         <source>Scale by Y:</source>
-        <translation type="unfinished" />
+        <translation>Skaler etter Y:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="362" />
         <source>Specify scale center</source>
-        <translation type="unfinished" />
+        <translation>Angi skaleringssenter</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="362" />
         <source>Snap to center of selection</source>
-        <translation type="unfinished" />
+        <translation>Fest til sentrum av utvalg</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="366" />
         <source>Specify source point</source>
-        <translation type="unfinished" />
+        <translation>Angi kildepunkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="369" />
         <source>Specify target point</source>
-        <translation type="unfinished" />
+        <translation>Angi målpunkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="369" />
         <source>Free snap</source>
-        <translation type="unfinished" />
+        <translation>Fri feste</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="378" />
         <source>Select to scale  (Enter to complete)</source>
-        <translation type="unfinished" />
+        <translation>Velg for å skalere (Enter for å fullføre)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="378" />
         <source>Scale immediately after selection</source>
-        <translation type="unfinished" />
+        <translation>Skaler umiddelbart etter valg</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="378" />
         <source>Select contour</source>
-        <translation type="unfinished" />
+        <translation>Velg kontur</translation>
     </message>
 </context>
 <context>
@@ -30995,53 +31006,53 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="91" />
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="111" />
         <source>Stretch</source>
-        <translation type="unfinished" />
+        <translation>Strekk</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="80" />
         <source>Start Corner:</source>
-        <translation type="unfinished" />
+        <translation>Start hjørne:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="81" />
         <source>End Corner:</source>
-        <translation type="unfinished" />
+        <translation>Slutt hjørne:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="92" />
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="112" />
         <source>Reference Point:</source>
-        <translation type="unfinished" />
+        <translation>Referansepunkt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="113" />
         <source>Target Point:</source>
-        <translation type="unfinished" />
+        <translation>Målpunkt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="114" />
         <source>Offset:</source>
-        <translation type="unfinished" />
+        <translation>Forskyvning:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="196" />
         <source>Specify first corner</source>
-        <translation type="unfinished" />
+        <translation>Angi første hjørne</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="199" />
         <source>Specify second corner</source>
-        <translation type="unfinished" />
+        <translation>Angi andre hjørne</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="202" />
         <source>Specify reference point</source>
-        <translation type="unfinished" />
+        <translation>Angi referansepunkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="205" />
         <source>Specify target point</source>
-        <translation type="unfinished" />
+        <translation>Angi målpunkt</translation>
     </message>
 </context>
 <context>
@@ -31049,42 +31060,42 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="112" />
         <source>Trim</source>
-        <translation type="unfinished" />
+        <translation>Beskjær</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="112" />
         <source>Trim Two</source>
-        <translation type="unfinished" />
+        <translation>Beskjær to</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="114" />
         <source>Intersection:</source>
-        <translation type="unfinished" />
+        <translation>Skjæring:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="116" />
         <source>Intersection 2:</source>
-        <translation type="unfinished" />
+        <translation>Skjæring 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="200" />
         <source>Select first trim entity</source>
-        <translation type="unfinished" />
+        <translation>Velg første beskjæringsenhet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="202" />
         <source>Select limiting entity</source>
-        <translation type="unfinished" />
+        <translation>Velg begrensende enhet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="207" />
         <source>Select second trim entity</source>
-        <translation type="unfinished" />
+        <translation>Velg andre beskjæringsenhet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="209" />
         <source>Select entity to trim</source>
-        <translation type="unfinished" />
+        <translation>Velg enhet å beskjære</translation>
     </message>
 </context>
 <context>
@@ -31092,22 +31103,22 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="173" />
         <source>No entity found.</source>
-        <translation type="unfinished" />
+        <translation>Ingen enhet funnet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="180" />
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="unfinished" />
+        <translation>Den valgte enheten er ikke en atomisk enhet eller kan ikke beskjæres.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="205" />
         <source>Not a valid expression</source>
-        <translation type="unfinished" />
+        <translation>Ugyldig uttrykk</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="236" />
         <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="unfinished" />
+        <translation>Velg linje/bue å beskjære ELLER skriv inn lengdeverdi:</translation>
     </message>
 </context>
 <context>
@@ -31115,27 +31126,27 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="109" />
         <source>No Entity found.</source>
-        <translation type="unfinished" />
+        <translation>Ingen enhet funnet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="126" />
         <source>Choose entities (Enter to Complete)</source>
-        <translation type="unfinished" />
+        <translation>Velg enheter (Enter for å fullføre)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="126" />
         <source>Order immediately after selection</source>
-        <translation type="unfinished" />
+        <translation>Ordne umiddelbart etter valg</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="126" />
         <source>Select contour</source>
-        <translation type="unfinished" />
+        <translation>Velg kontur</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="130" />
         <source>Choose entity for order</source>
-        <translation type="unfinished" />
+        <translation>Velg enhet for rekkefølge</translation>
     </message>
 </context>
 <context>
@@ -31144,32 +31155,32 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="102" />
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="129" />
         <source>No Entity found.</source>
-        <translation type="unfinished" />
+        <translation>Ingen enhet funnet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="104" />
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished" />
+        <translation>Enheten må være en flerlinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="131" />
         <source>Adding point is invalid.</source>
-        <translation type="unfinished" />
+        <translation>Å legge til punkt er ugyldig.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="136" />
         <source>Adding point is not on entity.</source>
-        <translation type="unfinished" />
+        <translation>Punktet som legges til ligger ikke på enheten.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="168" />
         <source>Specify polyline to add nodes</source>
-        <translation type="unfinished" />
+        <translation>Angi flerlinje for å legge til noder</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="171" />
         <source>Specify adding node's point</source>
-        <translation type="unfinished" />
+        <translation>Angi punkt for node som legges til</translation>
     </message>
 </context>
 <context>
@@ -31177,37 +31188,37 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="119" />
         <source>No Entity found.</source>
-        <translation type="unfinished" />
+        <translation>Ingen enhet funnet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="122" />
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished" />
+        <translation>Enheten må være en flerlinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="162" />
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="unfinished" />
+        <translation>Klikk et sted nær begynnelsen eller slutten av eksisterende flerlinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="285" />
         <source>Enter number of polylines</source>
-        <translation type="unfinished" />
+        <translation>Skriv inn antall flerlinjer</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="299" />
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="unfinished" />
+        <translation>Angi flerlinjen et sted nær begynnelsen eller sluttpunktet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="125" />
         <source>Can not append nodes in a closed polyline.</source>
-        <translation type="unfinished" />
+        <translation>Kan ikke legge til noder i en lukket flerlinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="319" />
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished" />
+        <translation>Kan ikke angre: Ikke nok enheter definert ennå.</translation>
     </message>
 </context>
 <context>
@@ -31216,32 +31227,32 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="92" />
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="112" />
         <source>No Entity found.</source>
-        <translation type="unfinished" />
+        <translation>Ingen enhet funnet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="94" />
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished" />
+        <translation>Enheten må være en flerlinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="142" />
         <source>Specify polyline to delete node</source>
-        <translation type="unfinished" />
+        <translation>Angi flerlinje for å slette node</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="145" />
         <source>Specify deleting node's point</source>
-        <translation type="unfinished" />
+        <translation>Angi punkt for node som slettes</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="128" />
         <source>Deleting point is invalid.</source>
-        <translation type="unfinished" />
+        <translation>Å slette punkt er ugyldig.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="119" />
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished" />
+        <translation>Punktet som slettes ligger ikke på enheten.</translation>
     </message>
 </context>
 <context>
@@ -31250,49 +31261,49 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="116" />
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="136" />
         <source>No Entity found.</source>
-        <translation type="unfinished" />
+        <translation>Ingen enhet funnet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="118" />
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished" />
+        <translation>Enheten må være en flerlinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="143" />
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="166" />
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished" />
+        <translation>Punktet som slettes ligger ikke på enheten.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="158" />
         <source>No polyline found.</source>
-        <translation type="unfinished" />
+        <translation>Ingen flerlinje funnet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="177" />
         <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="unfinished" />
+        <translation>Minst to segmenter av flerlinjen bør være mellom valgte punkter.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="195" />
         <source>Specify polyline to delete between two nodes</source>
-        <translation type="unfinished" />
+        <translation>Angi flerlinje for å slette mellom to noder</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="198" />
         <source>Specify first node</source>
-        <translation type="unfinished" />
+        <translation>Angi første node</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="201" />
         <source>Specify second node</source>
-        <translation type="unfinished" />
+        <translation>Angi andre node</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="151" />
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="182" />
         <source>Deleting point is invalid.</source>
-        <translation type="unfinished" />
+        <translation>Å slette punkt er ugyldig.</translation>
     </message>
 </context>
 <context>
@@ -31300,17 +31311,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="321" />
         <source>No Entity found.</source>
-        <translation type="unfinished" />
+        <translation>Ingen enhet funnet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="323" />
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished" />
+        <translation>Enheten må være en flerlinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="381" />
         <source>Choose the original polyline</source>
-        <translation type="unfinished" />
+        <translation>Velg den opprinnelige flerlinjen</translation>
     </message>
 </context>
 <context>
@@ -31318,23 +31329,23 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="333" />
         <source>No Entity found.</source>
-        <translation type="unfinished" />
+        <translation>Ingen enhet funnet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="357" />
         <source>Choose one of the segments on the original polyline</source>
-        <translation type="unfinished" />
+        <translation>Velg ett av segmentene på den opprinnelige flerlinjen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="335" />
         <source>Entity can not be a closed polyline.</source>
-        <translation type="unfinished" />
+        <translation>Enheten kan ikke være en lukket flerlinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="63" />
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="84" />
         <source>Polyline created</source>
-        <translation type="unfinished" />
+        <translation>Flerlinje opprettet</translation>
     </message>
 </context>
 <context>
@@ -31342,37 +31353,37 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="111" />
         <source>No Entity found.</source>
-        <translation type="unfinished" />
+        <translation>Ingen enhet funnet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="113" />
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished" />
+        <translation>Enheten må være en flerlinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="138" />
         <source>First segment should be on selected polyline.</source>
-        <translation type="unfinished" />
+        <translation>Første segment bør være på valgt flerlinje.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="150" />
         <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="unfinished" />
+        <translation>Andre segment bør være på valgt flerlinje og ikke lik det første.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="183" />
         <source>Specify polyline to trim</source>
-        <translation type="unfinished" />
+        <translation>Angi flerlinje for å beskjære</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="186" />
         <source>Specify first segment</source>
-        <translation type="unfinished" />
+        <translation>Angi første segment</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="189" />
         <source>Specify second segment</source>
-        <translation type="unfinished" />
+        <translation>Angi andre segment</translation>
     </message>
 </context>
 <context>
@@ -31380,72 +31391,72 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="278" />
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
-        <translation type="unfinished" />
+        <translation>RS_ActionPrintPreview::fit(): Ugyldig papirstørrelse</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="160" />
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation type="unfinished" />
+        <translation>Utskriftsforskyvning i papirkoordinater med (%1, %2)</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="163" />
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation type="unfinished" />
+        <translation>Utskriftsforskyvning i grafkoordinater med (%1, %2)</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="185" />
         <source>Printout offset in graph coordinates</source>
-        <translation type="unfinished" />
+        <translation>Utskriftsforskyvning i grafkoordinater</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="189" />
         <source>Printout offset in paper coordinates</source>
-        <translation type="unfinished" />
+        <translation>Utskriftsforskyvning i papirkoordinater</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="222" />
         <source>: select printout offset coordinates</source>
-        <translation type="unfinished" />
+        <translation>: velg utskriftsforskyvningskoordinater</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="223" />
         <source>type in offset from command line to offset printout</source>
-        <translation type="unfinished" />
+        <translation>skriv inn forskyvning fra kommandolinjen for å forskyve utskrift</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="393" />
         <source>Limit of pages has been exceeded.</source>
-        <translation type="unfinished" />
+        <translation>Grensen for sider er overskredet.</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="453" />
         <source>Drag with Left Button to Position Paper or with Middle Button to Pan</source>
-        <translation type="unfinished" />
+        <translation>Dra med venstre knapp for å plassere papir eller med midtre knapp for å panorere</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="453" />
         <source>Move Horizontally</source>
-        <translation type="unfinished" />
+        <translation>Flytt horisontalt</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="453" />
         <source>Move Vertically</source>
-        <translation type="unfinished" />
+        <translation>Flytt vertikalt</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="197" />
         <source>Printout offset ignores relative zero. Ignoring '@'</source>
-        <translation type="unfinished" />
+        <translation>Utskriftsforskyvning ignorerer relativ null. Ignorerer '@'</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="177" />
         <source>Printout in Black/White</source>
-        <translation type="unfinished" />
+        <translation>Utskrift i svart/hvitt</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="181" />
         <source>Printout in color</source>
-        <translation type="unfinished" />
+        <translation>Utskrift i farge</translation>
     </message>
 </context>
 <context>
@@ -31453,12 +31464,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="63" />
         <source>Entity must be an Atomic Entity.</source>
-        <translation type="unfinished" />
+        <translation>Enheten må være en atomisk enhet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="82" />
         <source>Specify entity to select</source>
-        <translation type="unfinished" />
+        <translation>Angi enhet å velge</translation>
     </message>
 </context>
 <context>
@@ -31466,22 +31477,22 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="173" />
         <source>Choose first point of intersection line</source>
-        <translation type="unfinished" />
+        <translation>Velg første punkt på skjæringslinje</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="173" />
         <source>Select intersecting entity</source>
-        <translation type="unfinished" />
+        <translation>Velg skjærende enhet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="173" />
         <source>Select child entities</source>
-        <translation type="unfinished" />
+        <translation>Velg underenheter</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="176" />
         <source>Choose second point of intersection line</source>
-        <translation type="unfinished" />
+        <translation>Velg andre punkt på skjæringslinje</translation>
     </message>
 </context>
 <context>
@@ -31489,7 +31500,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectlayer.cpp" line="69" />
         <source>Specify entity with desired layer</source>
-        <translation type="unfinished" />
+        <translation>Angi enhet med ønsket lag</translation>
     </message>
 </context>
 <context>
@@ -31497,12 +31508,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectsingle.cpp" line="114" />
         <source>Specify entity to select</source>
-        <translation type="unfinished" />
+        <translation>Angi enhet å velge</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectsingle.cpp" line="114" />
         <source>Select contour</source>
-        <translation type="unfinished" />
+        <translation>Velg kontur</translation>
     </message>
 </context>
 <context>
@@ -31510,57 +31521,57 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="116" />
         <source>De-Selecting</source>
-        <translation type="unfinished" />
+        <translation>Avvelger</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="116" />
         <source>Selecting</source>
-        <translation type="unfinished" />
+        <translation>Velger</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="117" />
         <source> entities </source>
-        <translation type="unfinished" />
+        <translation>enheter</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="118" />
         <source>that intersect with box</source>
-        <translation type="unfinished" />
+        <translation>som skjærer med boks</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="118" />
         <source>that are within box</source>
-        <translation type="unfinished" />
+        <translation>som er innenfor boks</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="166" />
         <source>Choose second edge</source>
-        <translation type="unfinished" />
+        <translation>Velg andre kant</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="168" />
         <source>Select Intersecting</source>
-        <translation type="unfinished" />
+        <translation>Velg skjærende</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="167" />
         <source>De-select entities</source>
-        <translation type="unfinished" />
+        <translation>Avvelg enheter</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="167" />
         <source>Select entities</source>
-        <translation type="unfinished" />
+        <translation>Velg enheter</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="168" />
         <source>De-select intersecting</source>
-        <translation type="unfinished" />
+        <translation>Avvelg skjærende</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="163" />
         <source>Click and drag for the selection window</source>
-        <translation type="unfinished" />
+        <translation>Klikk og dra for utvalgsvinduet</translation>
     </message>
 </context>
 <context>
@@ -31568,7 +31579,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/rel_zero/rs_actionsetrelativezero.cpp" line="72" />
         <source>Set relative Zero</source>
-        <translation type="unfinished" />
+        <translation>Angi relativ null</translation>
     </message>
 </context>
 <context>
@@ -31576,12 +31587,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="142" />
         <source>Select first entity</source>
-        <translation type="unfinished" />
+        <translation>Velg første enhet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="145" />
         <source>Select second entity</source>
-        <translation type="unfinished" />
+        <translation>Velg andre enhet</translation>
     </message>
 </context>
 <context>
@@ -31589,12 +31600,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="63" />
         <source>Regenerated %1 dimension entities</source>
-        <translation type="unfinished" />
+        <translation>Gjenopprettet %1 dimensjonsenheter</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="66" />
         <source>No dimension entities found</source>
-        <translation type="unfinished" />
+        <translation>Ingen dimensjonsenheter funnet</translation>
     </message>
 </context>
 <context>
@@ -31602,12 +31613,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="105" />
         <source>Click and drag to pan zoom</source>
-        <translation type="unfinished" />
+        <translation>Klikk og dra for å panorere zoom</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="108" />
         <source>Zoom panning</source>
-        <translation type="unfinished" />
+        <translation>Zoom panorering</translation>
     </message>
 </context>
 <context>
@@ -31615,12 +31626,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="140" />
         <source>Specify first edge</source>
-        <translation type="unfinished" />
+        <translation>Angi første kant</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="143" />
         <source>Specify second edge</source>
-        <translation type="unfinished" />
+        <translation>Angi andre kant</translation>
     </message>
 </context>
 <context>
@@ -31628,87 +31639,87 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="980" />
         <source>Vertical</source>
-        <translation type="unfinished" />
+        <translation>Vertikal</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="982" />
         <source>Horizontal</source>
-        <translation type="unfinished" />
+        <translation>Horisontal</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="984" />
         <source>Orthogonal</source>
-        <translation type="unfinished" />
+        <translation>Rettvinklet</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="993" />
         <source>Grid</source>
-        <translation type="unfinished" />
+        <translation>Rutenett</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="995" />
         <source>Entity</source>
-        <translation type="unfinished" />
+        <translation>Enhet</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="997" />
         <source>Endpoint</source>
-        <translation type="unfinished" />
+        <translation>Endepunkt</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="999" />
         <source>Intersection</source>
-        <translation type="unfinished" />
+        <translation>Skjæring</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1001" />
         <source>Middle</source>
-        <translation type="unfinished" />
+        <translation>Midtpunkt</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1003" />
         <source>Distance</source>
-        <translation type="unfinished" />
+        <translation>Avstand</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1005" />
         <source>Center</source>
-        <translation type="unfinished" />
+        <translation>Senter</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1007" />
         <source>Angle</source>
-        <translation type="unfinished" />
+        <translation>Vinkel</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1009" />
         <source>Angle Relative</source>
-        <translation type="unfinished" />
+        <translation>Relativ vinkel</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1011" />
         <source>Angle (on Entity)</source>
-        <translation type="unfinished" />
+        <translation>Vinkel (på enhet)</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1183" />
         <source>Dist: </source>
-        <translation type="unfinished" />
+        <translation>Avstand:</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1188" />
         <source>Angle: </source>
-        <translation type="unfinished" />
+        <translation>Vinkel:</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1193" />
         <source>dX: </source>
-        <translation type="unfinished" />
+        <translation>dX:</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1194" />
         <source>dY: </source>
-        <translation type="unfinished" />
+        <translation>dY:</translation>
     </message>
 </context>
 <context>
@@ -31716,7 +31727,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/components/textfileviewer.ui" line="14" />
         <source>Frame</source>
-        <translation type="unfinished" />
+        <translation>Ramme</translation>
     </message>
 </context>
 <context>
@@ -31724,17 +31735,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arcoptions.ui" line="26" />
         <source>Arc Options</source>
-        <translation type="unfinished" />
+        <translation>Buealternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arcoptions.ui" line="85" />
         <source>Counterclockwise</source>
-        <translation type="unfinished" />
+        <translation>Mot klokken</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arcoptions.ui" line="56" />
         <source>Clockwise</source>
-        <translation type="unfinished" />
+        <translation>Med klokken</translation>
     </message>
 </context>
 <context>
@@ -31742,49 +31753,49 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="26" />
         <source>Tangential Arc Options</source>
-        <translation type="unfinished" />
+        <translation>Alternativer for tangentbue</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="87" />
         <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="unfinished" />
+        <translation>Hvis valgt, opprettes tangentbue med spesifisert radius</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="47" />
         <source>Radius of the tangential arc</source>
-        <translation type="unfinished" />
+        <translation>Radius på tangentbuen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="112" />
         <source>If selected, arc with specified angle will be created</source>
-        <translation type="unfinished" />
+        <translation>Hvis valgt, opprettes bue med spesifisert vinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="60" />
         <source>Total subtending angle of the tangential arc</source>
-        <translation type="unfinished" />
+        <translation>Total underliggende vinkel på tangentbuen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="67" />
         <source>Pick radius form drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg radius fra tegning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="90" />
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished" />
+        <translation>Radius</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="115" />
         <source>Angle</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished" />
+        <translation>Vinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="128" />
         <source>Pick angle from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg vinkel fra tegning</translation>
     </message>
 </context>
 <context>
@@ -31792,47 +31803,47 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="32" />
         <source>Bevel Options</source>
-        <translation type="unfinished" />
+        <translation>Avfasingsalternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="59" />
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished" />
+        <translation>Merk av for å beskjære begge enheter til avfasning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="62" />
         <source>Trim</source>
-        <translation type="unfinished" />
+        <translation>Beskjær</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="85" />
         <source>Length 1:</source>
-        <translation type="unfinished" />
+        <translation>Lengde 1:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="95" />
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished" />
+        <translation>Lengde på avfasning i X-retning.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="102" />
         <source>Pick first length form drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg første lengde fra tegning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="116" />
         <source>Length 2:</source>
-        <translation type="unfinished" />
+        <translation>Lengde 2:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="126" />
         <source>Length of bevel in Y direction. </source>
-        <translation type="unfinished" />
+        <translation>Lengde på avfasning i Y-retning.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="133" />
         <source>Pick second length form drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg andre lengde fra tegning</translation>
     </message>
 </context>
 <context>
@@ -31840,22 +31851,22 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/circle/qg_circleoptions.ui" line="32" />
         <source>Circle Options</source>
-        <translation type="unfinished" />
+        <translation>Sirkelalternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/qg_circleoptions.ui" line="50" />
         <source>Radius:</source>
-        <translation type="unfinished" />
+        <translation>Radius:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/qg_circleoptions.ui" line="66" />
         <source>Radius of circle</source>
-        <translation type="unfinished" />
+        <translation>Radius på sirkel</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/qg_circleoptions.ui" line="73" />
         <source>Pick radius from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg radius fra tegning</translation>
     </message>
 </context>
 <context>
@@ -31863,27 +31874,27 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/circle/qg_circletan2options.ui" line="32" />
         <source>Circle Tangential2 Options</source>
-        <translation type="unfinished" />
+        <translation>Sirkel tangent 2 alternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/qg_circletan2options.ui" line="56" />
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished" />
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius på den tangente sirkelen som skal tegnes&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/qg_circletan2options.ui" line="59" />
         <source>Radius:</source>
-        <translation type="unfinished" />
+        <translation>Radius:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/qg_circletan2options.ui" line="75" />
         <source>Radius of tangential circle</source>
-        <translation type="unfinished" />
+        <translation>Radius på tangent sirkel</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/qg_circletan2options.ui" line="82" />
         <source>Pick radius from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg radius fra tegning</translation>
     </message>
 </context>
 <context>
@@ -31891,135 +31902,135 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32" />
         <source>Dimension Options</source>
-        <translation type="unfinished" />
+        <translation>Dimensjonsalternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="50" />
         <source>Style:</source>
-        <translation type="unfinished" />
+        <translation>Stil:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="57" />
         <source>Dimension style</source>
-        <translation type="unfinished" />
+        <translation>Dimensjonsstil</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="76" />
         <source>Label:</source>
-        <translation type="unfinished" />
+        <translation>Etikett:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="92" />
         <source>Prefix character</source>
-        <translation type="unfinished" />
+        <translation>Prefikstegn</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="115" />
         <source>User-specified dimension's label. Enter value or either "&lt;&gt;" or just leave empty for automatic measurement.</source>
-        <translation type="unfinished" />
+        <translation>Brukerdefinert dimensjonsetikett. Skriv inn verdi eller "&lt;&gt;" eller la stå tom for automatisk måling.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="128" />
         <source>Suffix symbol</source>
-        <translation type="unfinished" />
+        <translation>Suffikssymbol</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="132" />
         <source>⌀</source>
-        <translation type="unfinished" />
+        <translation>⌀</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="137" />
         <source>°</source>
-        <translation type="unfinished" />
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="142" />
         <source>±</source>
-        <translation type="unfinished" />
+        <translation>±</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="147" />
         <source>π</source>
-        <translation type="unfinished" />
+        <translation>π</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="152" />
         <source>×</source>
-        <translation type="unfinished" />
+        <translation>×</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="157" />
         <source>÷</source>
-        <translation type="unfinished" />
+        <translation>÷</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="171" />
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="201" />
         <source>...</source>
-        <translation type="unfinished" />
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="188" />
         <source>Tolerance - Upper Limit</source>
-        <translation type="unfinished" />
+        <translation>Toleranse - Øvre grense</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="218" />
         <source>Tolerance - Lower Limit</source>
-        <translation type="unfinished" />
+        <translation>Toleranse - Nedre grense</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="243" />
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="363" />
         <source>Angle:</source>
-        <translation type="unfinished" />
+        <translation>Vinkel:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="265" />
         <source>Dimension angle</source>
-        <translation type="unfinished" />
+        <translation>Dimensjonsvinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="287" />
         <source>Horizontal Dimension</source>
-        <translation type="unfinished" />
+        <translation>Horisontal dimensjon</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="316" />
         <source>Vertical Dimension</source>
-        <translation type="unfinished" />
+        <translation>Vertikal dimensjon</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="333" />
         <source>Distance:</source>
-        <translation type="unfinished" />
+        <translation>Avstand:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="346" />
         <source>Distance between dimensions in baseline</source>
-        <translation type="unfinished" />
+        <translation>Avstand mellom dimensjoner i basislinje</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="353" />
         <source>If checked, distance between dimenions is defined by mouse</source>
-        <translation type="unfinished" />
+        <translation>Hvis merket, defineres avstand mellom dimensjoner med mus</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="356" />
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="386" />
         <source>Free</source>
-        <translation type="unfinished" />
+        <translation>Fri</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="376" />
         <source>Angle for dimension</source>
-        <translation type="unfinished" />
+        <translation>Vinkel for dimensjon</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="383" />
         <source>If checked, angle for dimension is defined by mouse</source>
-        <translation type="unfinished" />
+        <translation>Hvis merket, defineres vinkel for dimensjon med mus</translation>
     </message>
 </context>
 <context>
@@ -32027,42 +32038,42 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="32" />
         <source>Insert Options</source>
-        <translation type="unfinished" />
+        <translation>Innsettingsalternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="53" />
         <source>Angle:</source>
-        <translation type="unfinished" />
+        <translation>Vinkel:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="63" />
         <source>Rotation Angle</source>
-        <translation type="unfinished" />
+        <translation>Rotasjonsvinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="70" />
         <source>Pick angle from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg vinkel fra tegning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="84" />
         <source>Scale Factor:</source>
-        <translation type="unfinished" />
+        <translation>Skaleringsfaktor:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="113" />
         <source>DPI:</source>
-        <translation type="unfinished" />
+        <translation>DPI:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="106" />
         <source>Scale Factor</source>
-        <translation type="unfinished" />
+        <translation>Skaleringsfaktor</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="120" />
         <source>DPI of Image</source>
-        <translation type="unfinished" />
+        <translation>DPI for bilde</translation>
     </message>
 </context>
 <context>
@@ -32070,72 +32081,72 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="32" />
         <source>Insert Options</source>
-        <translation type="unfinished" />
+        <translation>Innsettingsalternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="256" />
         <source>Angle:</source>
-        <translation type="unfinished" />
+        <translation>Vinkel:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="215" />
         <source>Rotation Angle</source>
-        <translation type="unfinished" />
+        <translation>Rotasjonsvinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="157" />
         <source>Factor:</source>
-        <translation type="unfinished" />
+        <translation>Faktor:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="131" />
         <source>Scale Factor</source>
-        <translation type="unfinished" />
+        <translation>Skaleringsfaktor</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="193" />
         <source>Array:</source>
-        <translation type="unfinished" />
+        <translation>Array:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="297" />
         <source>Number of Columns</source>
-        <translation type="unfinished" />
+        <translation>Antall kolonner</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="79" />
         <source>Number of Rows</source>
-        <translation type="unfinished" />
+        <translation>Antall rader</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="53" />
         <source>Pick row spacing from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg radavstand fra tegning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="92" />
         <source>Pick column spacing from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg kolonneavstand fra tegning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="167" />
         <source>Pick angle from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg vinkel fra tegning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="234" />
         <source>Spacing:</source>
-        <translation type="unfinished" />
+        <translation>Avstand:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="278" />
         <source>Column Spacing</source>
-        <translation type="unfinished" />
+        <translation>Kolonneavstand</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="322" />
         <source>Row Spacing</source>
-        <translation type="unfinished" />
+        <translation>Radavstand</translation>
     </message>
 </context>
 <context>
@@ -32143,32 +32154,32 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/insert/qg_libraryinsertoptions.ui" line="32" />
         <source>Library Insert Options</source>
-        <translation type="unfinished" />
+        <translation>Bibliotekinnsettingsalternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_libraryinsertoptions.ui" line="88" />
         <source>Angle:</source>
-        <translation type="unfinished" />
+        <translation>Vinkel:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_libraryinsertoptions.ui" line="104" />
         <source>Rotation Angle</source>
-        <translation type="unfinished" />
+        <translation>Rotasjonsvinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_libraryinsertoptions.ui" line="111" />
         <source>Pick angle from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg vinkel fra tegning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_libraryinsertoptions.ui" line="59" />
         <source>Factor:</source>
-        <translation type="unfinished" />
+        <translation>Faktor:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_libraryinsertoptions.ui" line="75" />
         <source>Scale Factor</source>
-        <translation type="unfinished" />
+        <translation>Skaleringsfaktor</translation>
     </message>
 </context>
 <context>
@@ -32176,72 +32187,72 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="32" />
         <source>Line Angle Options</source>
-        <translation type="unfinished" />
+        <translation>Linjevinkelalternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="95" />
         <source>Angle:</source>
-        <translation type="unfinished" />
+        <translation>Vinkel:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="210" />
         <source>Point on created line that will be placed into insertion point</source>
-        <translation type="unfinished" />
+        <translation>Punkt på opprettet linje som plasseres i innsettingspunktet</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="133" />
         <source>Line angle</source>
-        <translation type="unfinished" />
+        <translation>Linjevinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="159" />
         <source>Length:</source>
-        <translation type="unfinished" />
+        <translation>Lengde:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="184" />
         <source>Length of line</source>
-        <translation type="unfinished" />
+        <translation>Lengde på linje</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="56" />
         <source>Snap Point:</source>
-        <translation type="unfinished" />
+        <translation>Festepunkt:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="69" />
         <source>Pick line angle from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg linjevinkel fra tegning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="214" />
         <source>Start</source>
-        <translation type="unfinished" />
+        <translation>Start</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="219" />
         <source>Middle</source>
-        <translation type="unfinished" />
+        <translation>Midtpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="224" />
         <source>End</source>
-        <translation type="unfinished" />
+        <translation>Slutt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="232" />
         <source>PIck line length from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg linjelengde fra tegning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="191" />
         <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation type="unfinished" />
+        <translation>Hvis valgt, vil linjen være rettvinklet mot aksen til vinkelgrunnlaget. Ellers - mot skjermaksen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="194" />
         <source>To Angles Basis</source>
-        <translation type="unfinished" />
+        <translation>Til vinkelgrunnlag</translation>
     </message>
 </context>
 <context>
@@ -32249,32 +32260,32 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_linebisectoroptions.ui" line="32" />
         <source>Line Bisector Options</source>
-        <translation type="unfinished" />
+        <translation>Halveringslinjealternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linebisectoroptions.ui" line="56" />
         <source>Length:</source>
-        <translation type="unfinished" />
+        <translation>Lengde:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linebisectoroptions.ui" line="72" />
         <source>Length of bisector</source>
-        <translation type="unfinished" />
+        <translation>Lengde på halveringslinje</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linebisectoroptions.ui" line="79" />
         <source>Pick line length from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg linjelengde fra tegning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linebisectoroptions.ui" line="93" />
         <source>Number:</source>
-        <translation type="unfinished" />
+        <translation>Antall:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linebisectoroptions.ui" line="103" />
         <source>Number of bisectors to create</source>
-        <translation type="unfinished" />
+        <translation>Antall halveringslinjer som skal opprettes</translation>
     </message>
 </context>
 <context>
@@ -32282,37 +32293,37 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineoptions.ui" line="32" />
         <source>Line Options</source>
-        <translation type="unfinished" />
+        <translation>Linjealternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineoptions.ui" line="53" />
         <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished" />
+        <translation>Form en lukket kontur fra tegnede linjer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineoptions.ui" line="56" />
         <source>Close</source>
-        <translation type="unfinished" />
+        <translation>Lukk</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineoptions.ui" line="72" />
         <source>Undo the last line drawing</source>
-        <translation type="unfinished" />
+        <translation>Angre siste linjetegning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineoptions.ui" line="75" />
         <source>Undo</source>
-        <translation type="unfinished" />
+        <translation>Angre</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineoptions.ui" line="82" />
         <source>Redo the last line drawing</source>
-        <translation type="unfinished" />
+        <translation>Gjenopprett siste linjetegning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineoptions.ui" line="85" />
         <source>Redo</source>
-        <translation type="unfinished" />
+        <translation>Gjenopprett</translation>
     </message>
 </context>
 <context>
@@ -32320,113 +32331,113 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="32" />
         <source>Line Options</source>
-        <translation type="unfinished" />
+        <translation>Linjealternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="62" />
         <source>Direction:</source>
-        <translation type="unfinished" />
+        <translation>Retning:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="321" />
         <source>Creates polyline from line segments</source>
-        <translation type="unfinished" />
+        <translation>Oppretter flerlinje fra linjesegmenter</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="324" />
         <source>Polyline</source>
-        <translation type="unfinished" />
+        <translation>Flerlinje</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="331" />
         <source>Pick angle from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg vinkel fra tegning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="190" />
         <source>Vertical line</source>
-        <translation type="unfinished" />
+        <translation>Vertikal linje</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="193" />
         <source>Y</source>
-        <translation type="unfinished" />
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="237" />
         <source>Line by specified angle</source>
-        <translation type="unfinished" />
+        <translation>Linje etter spesifisert vinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="240" />
         <source>Angle</source>
-        <translation type="unfinished" />
+        <translation>Vinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="124" />
         <source>Horizontal line</source>
-        <translation type="unfinished" />
+        <translation>Horisontal linje</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="127" />
         <source>X</source>
-        <translation type="unfinished" />
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="311" />
         <source>If checked, angle is relative to previous segment</source>
         <extracomment>Angle is relative to previous segment</extracomment>
-        <translation type="unfinished" />
+        <translation>Hvis merket, er vinkelen relativ til forrige segment</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="314" />
         <source>Rel</source>
-        <translation type="unfinished" />
+        <translation>Rel</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="257" />
         <source>Undo the last line drawing</source>
-        <translation type="unfinished" />
+        <translation>Angre siste linjetegning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="260" />
         <source>Undo</source>
-        <translation type="unfinished" />
+        <translation>Angre</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="267" />
         <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished" />
+        <translation>Form en lukket kontur fra tegnede linjer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="270" />
         <source>Close</source>
-        <translation type="unfinished" />
+        <translation>Lukk</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="247" />
         <source>Redo the last line drawing</source>
-        <translation type="unfinished" />
+        <translation>Gjenopprett siste linjetegning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="250" />
         <source>Redo</source>
-        <translation type="unfinished" />
+        <translation>Gjenopprett</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="218" />
         <source>Angle of line</source>
-        <translation type="unfinished" />
+        <translation>Linjevinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="168" />
         <source>Line to arbitrary point</source>
-        <translation type="unfinished" />
+        <translation>Linje til vilkårlig punkt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="171" />
         <source>Point</source>
-        <translation type="unfinished" />
+        <translation>Punkt</translation>
     </message>
 </context>
 <context>
@@ -32434,32 +32445,32 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparalleloptions.ui" line="32" />
         <source>Line Parallel Options</source>
-        <translation type="unfinished" />
+        <translation>Parallellinjealternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparalleloptions.ui" line="56" />
         <source>Distance:</source>
-        <translation type="unfinished" />
+        <translation>Avstand:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparalleloptions.ui" line="72" />
         <source>Distance to original entity</source>
-        <translation type="unfinished" />
+        <translation>Avstand til opprinnelig enhet</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparalleloptions.ui" line="79" />
         <source>Pick distance from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg avstand fra tegning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparalleloptions.ui" line="99" />
         <source>Number:</source>
-        <translation type="unfinished" />
+        <translation>Antall:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparalleloptions.ui" line="109" />
         <source>Number of parallels to create</source>
-        <translation type="unfinished" />
+        <translation>Antall paralleller som skal opprettes</translation>
     </message>
 </context>
 <context>
@@ -32467,27 +32478,27 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparallelthroughoptions.ui" line="32" />
         <source>Line Parallel Through Options</source>
-        <translation type="unfinished" />
+        <translation>Parallellinje gjennom alternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparallelthroughoptions.ui" line="62" />
         <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="unfinished" />
+        <translation>Hvis merket, opprettes paralleller på begge sider av enheten</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparallelthroughoptions.ui" line="65" />
         <source>Symmetric</source>
-        <translation type="unfinished" />
+        <translation>Symmetrisk</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparallelthroughoptions.ui" line="101" />
         <source>Number:</source>
-        <translation type="unfinished" />
+        <translation>Antall:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparallelthroughoptions.ui" line="72" />
         <source>Number of parallels to create</source>
-        <translation type="unfinished" />
+        <translation>Antall paralleller som skal opprettes</translation>
     </message>
 </context>
 <context>
@@ -32495,57 +32506,57 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="32" />
         <source>Polygon Options</source>
-        <translation type="unfinished" />
+        <translation>Polygonalternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="109" />
         <source>Number:</source>
-        <translation type="unfinished" />
+        <translation>Antall:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="80" />
         <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="unfinished" />
+        <translation>Hvis merket, avrundes toppunktene på polygonet.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="83" />
         <source>Radius</source>
-        <translation type="unfinished" />
+        <translation>Radius</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="126" />
         <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="unfinished" />
+        <translation>Hvis merket, tegnes polygonet som flerlinje. Ellers opprettes individuelle enheter.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="129" />
         <source>Polyline</source>
-        <translation type="unfinished" />
+        <translation>Flerlinje</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="143" />
         <source>Pick radius from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg radius fra tegning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="90" />
         <source>Number of edges</source>
-        <translation type="unfinished" />
+        <translation>Antall kanter</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="119" />
         <source>Rounding radius for vertex bevel.</source>
-        <translation type="unfinished" />
+        <translation>Avrundingsradius for toppunktavfasning.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="70" />
         <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="unfinished" />
+        <translation>Hvis valgt, er referansepunktene for toppunktene på polygonet. Ellers er de for midtpunkt på kantene.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="73" />
         <source>Vertex to Vertex</source>
-        <translation type="unfinished" />
+        <translation>Toppunkt til toppunkt</translation>
     </message>
 </context>
 <context>
@@ -32553,37 +32564,37 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_linerelangleoptions.ui" line="32" />
         <source>Line Relative Angle Options</source>
-        <translation type="unfinished" />
+        <translation>Relativ vinkel for linjealternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linerelangleoptions.ui" line="56" />
         <source>Angle:</source>
-        <translation type="unfinished" />
+        <translation>Vinkel:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linerelangleoptions.ui" line="72" />
         <source>Line angle</source>
-        <translation type="unfinished" />
+        <translation>Linjevinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linerelangleoptions.ui" line="79" />
         <source>Pick angle from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg vinkel fra tegning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linerelangleoptions.ui" line="99" />
         <source>Length:</source>
-        <translation type="unfinished" />
+        <translation>Lengde:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linerelangleoptions.ui" line="115" />
         <source>Length of line</source>
-        <translation type="unfinished" />
+        <translation>Lengde på linje</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linerelangleoptions.ui" line="122" />
         <source>Pick length from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg lengde fra tegning</translation>
     </message>
 </context>
 <context>
@@ -32591,32 +32602,32 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/text/qg_mtextoptions.ui" line="32" />
         <source>Text Options</source>
-        <translation type="unfinished" />
+        <translation>Tekstalternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/qg_mtextoptions.ui" line="53" />
         <source>Text:</source>
-        <translation type="unfinished" />
+        <translation>Tekst:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/qg_mtextoptions.ui" line="81" />
         <source>Text to insert</source>
-        <translation type="unfinished" />
+        <translation>Tekst å sette inn</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/qg_mtextoptions.ui" line="94" />
         <source>Angle:</source>
-        <translation type="unfinished" />
+        <translation>Vinkel:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/qg_mtextoptions.ui" line="110" />
         <source>Rotation angle</source>
-        <translation type="unfinished" />
+        <translation>Rotasjonsvinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/qg_mtextoptions.ui" line="117" />
         <source>Pick angle from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg vinkel fra tegning</translation>
     </message>
 </context>
 <context>
@@ -32624,72 +32635,72 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="32" />
         <source>Modify Offset Options</source>
-        <translation type="unfinished" />
+        <translation>Alternativer for endring av forskyvning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="158" />
         <source>Distance for offset from original entity</source>
-        <translation type="unfinished" />
+        <translation>Avstand for forskyvning fra opprinnelig enhet</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="93" />
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished" />
+        <translation>Hvis merket, plasseres opprettede enheter i nåværende lag, ellers i opprinnelige lag.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="96" />
         <source>Use Current Layer</source>
-        <translation type="unfinished" />
+        <translation>Bruk nåværende lag</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="63" />
         <source>Number of copies.</source>
-        <translation type="unfinished" />
+        <translation>Antall kopier.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="136" />
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="unfinished" />
+        <translation>Hvis merket, beholdes opprinnelige enheter, ellers fjernes de.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="139" />
         <source>Keep Originals</source>
-        <translation type="unfinished" />
+        <translation>Behold opprinnelige</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="109" />
         <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation type="unfinished" />
+        <translation>Hvis merket, brukes faste verdier for forskyvningsavstand, ellers defineres den med mus.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="112" />
         <source>Fixed Distance</source>
-        <translation type="unfinished" />
+        <translation>Fast avstand</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="119" />
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="unfinished" />
+        <translation>Hvis merket, brukes nåværende attributter på opprettede enheter, ellers brukes opprinnelige.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="122" />
         <source>Use Current Attributes</source>
-        <translation type="unfinished" />
+        <translation>Bruk nåværende attributter</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="172" />
         <source>Pick distance from the drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg avstand fra tegningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="76" />
         <source>If checked, multiple copies will be created. </source>
-        <translation type="unfinished" />
+        <translation>Hvis merket, opprettes flere kopier.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="79" />
         <source>Multiple Copies</source>
-        <translation type="unfinished" />
+        <translation>Flere kopier</translation>
     </message>
 </context>
 <context>
@@ -32697,87 +32708,87 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="32" />
         <source>Move Rotate Options</source>
-        <translation type="unfinished" />
+        <translation>Flytt/roter-alternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="50" />
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="unfinished" />
+        <translation>Hvis merket, brukes nåværende attributter på opprettede enheter, ellers brukes opprinnelige.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="53" />
         <source>Use Current Attributes</source>
-        <translation type="unfinished" />
+        <translation>Bruk nåværende attributter</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="173" />
         <source>If checked, multiple copies will be created. </source>
-        <translation type="unfinished" />
+        <translation>Hvis merket, opprettes flere kopier.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="176" />
         <source>Multiple Copies</source>
-        <translation type="unfinished" />
+        <translation>Flere kopier</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="183" />
         <source>Pick angle from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg vinkel fra tegning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="90" />
         <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation type="unfinished" />
+        <translation>Hvis merket, roteres alle kopier med samme vinkel. Ellers vil vinkelen være proporsjonal med antall for hver kopi.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="93" />
         <source>Same angle for copies</source>
-        <translation type="unfinished" />
+        <translation>Samme vinkel for kopier</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="166" />
         <source>Rotation angle. </source>
-        <translation type="unfinished" />
+        <translation>Rotasjonsvinkel.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="60" />
         <source>Number of copies.</source>
-        <translation type="unfinished" />
+        <translation>Antall kopier.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="134" />
         <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation type="unfinished" />
+        <translation>Hvis merket, defineres rotasjonsvinkel med mus. Ellers brukes spesifisert verdi.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="137" />
         <source>Free</source>
-        <translation type="unfinished" />
+        <translation>Fri</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="100" />
         <source>Angle:</source>
-        <translation type="unfinished" />
+        <translation>Vinkel:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="144" />
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished" />
+        <translation>Hvis merket, plasseres opprettede enheter i nåværende lag, ellers i opprinnelige lag.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="147" />
         <source>Use Current Layer</source>
-        <translation type="unfinished" />
+        <translation>Bruk nåværende lag</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="80" />
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="unfinished" />
+        <translation>Hvis merket, beholdes opprinnelige enheter, ellers fjernes de.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="83" />
         <source>Keep Originals</source>
-        <translation type="unfinished" />
+        <translation>Behold opprinnelige</translation>
     </message>
 </context>
 <context>
@@ -32785,123 +32796,123 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="32" />
         <source>Polyline Options</source>
-        <translation type="unfinished" />
+        <translation>Flerlinjealternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="53" />
         <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="unfinished" />
+        <translation>Kobler ender av flerlinjen slik at lukket kontur opprettes</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="56" />
         <source>Close</source>
-        <translation type="unfinished" />
+        <translation>Lukk</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="63" />
         <source>Undo for previous vertex</source>
-        <translation type="unfinished" />
+        <translation>Angre forrige toppunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="66" />
         <source>Undo</source>
-        <translation type="unfinished" />
+        <translation>Angre</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="73" />
         <source>Segment Type:</source>
-        <translation type="unfinished" />
+        <translation>Segmenttype:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="92" />
         <source>Defines which segment of polyline should be created</source>
-        <translation type="unfinished" />
+        <translation>Definerer hvilket segment av flerlinjen som skal opprettes</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="96" />
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="124" />
         <source>Line</source>
-        <translation type="unfinished" />
+        <translation>Linje</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="101" />
         <source>Tangential</source>
-        <translation type="unfinished" />
+        <translation>Tangent</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="106" />
         <source>Tan Radius</source>
-        <translation type="unfinished" />
+        <translation>Tangent radius</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="111" />
         <source>Tan Angle</source>
-        <translation type="unfinished" />
+        <translation>Tangent vinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="116" />
         <source>Angle</source>
-        <translation type="unfinished" />
+        <translation>Vinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="144" />
         <source>Tangential arc</source>
-        <translation type="unfinished" />
+        <translation>Tangentbue</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="164" />
         <source>Tangental arc with fixed radius</source>
-        <translation type="unfinished" />
+        <translation>Tangentbue med fast radius</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="184" />
         <source>Tangental arc with fixed angle</source>
-        <translation type="unfinished" />
+        <translation>Tangentbue med fast vinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="204" />
         <source>Arc with angle</source>
-        <translation type="unfinished" />
+        <translation>Bue med vinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="224" />
         <source>Radius:</source>
-        <translation type="unfinished" />
+        <translation>Radius:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="249" />
         <source>Radius of arc</source>
-        <translation type="unfinished" />
+        <translation>Radius på bue</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="256" />
         <source>Pick radius form drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg radius fra tegning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="270" />
         <source>Angle:</source>
-        <translation type="unfinished" />
+        <translation>Vinkel:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="295" />
         <source>Angle of arc</source>
-        <translation type="unfinished" />
+        <translation>Vinkel på bue</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="302" />
         <source>Pick angle from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg vinkel fra tegning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="351" />
         <source>Counter Clockwise</source>
-        <translation type="unfinished" />
+        <translation>Mot klokken</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="337" />
         <source>Clockwise</source>
-        <translation type="unfinished" />
+        <translation>Med klokken</translation>
     </message>
 </context>
 <context>
@@ -32909,107 +32920,107 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="20" />
         <source>Print Preview Options</source>
-        <translation type="unfinished" />
+        <translation>Alternativer for forhåndsvisning før utskrift</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="23" />
         <source>Landscape Orientation</source>
-        <translation type="unfinished" />
+        <translation>Landskapsorientering</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="78" />
         <source>Drawing Settings</source>
-        <translation type="unfinished" />
+        <translation>Tegningsinnstillinger</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="99" />
         <source>Scale:</source>
-        <translation type="unfinished" />
+        <translation>Skala:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="118" />
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished" />
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;utskriftstørrelse : tegningstørrelse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="149" />
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished" />
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Utskriftsskala er låst til gjeldende verdi&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="152" />
         <source>fixed</source>
-        <translation type="unfinished" />
+        <translation>fast</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="201" />
         <source>Toggle Black / White mode</source>
-        <translation type="unfinished" />
+        <translation>Bytt svart/hvitt-modus</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="172" />
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished" />
+        <translation>Bruk utskriftsskala på linjebredde</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="44" />
         <source>Landscape Orientation of paper</source>
-        <translation type="unfinished" />
+        <translation>Landskapsorientering av papir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="61" />
         <source>Portrait Orientation of paper</source>
-        <translation type="unfinished" />
+        <translation>Portrettorientering av papir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="237" />
         <source>Page in center of drawing</source>
-        <translation type="unfinished" />
+        <translation>Side i sentrum av tegning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="263" />
         <source>Zoom to Print Area</source>
-        <translation type="unfinished" />
+        <translation>Zoom til utskriftsområde</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="290" />
         <source>Fit to 1 Page</source>
-        <translation type="unfinished" />
+        <translation>Tilpass til 1 side</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="310" />
         <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
-        <translation type="unfinished" />
+        <translation>Hvis aktivert, vil papirplass inkludere spesifisert antall sider organisert i kolonner og rader</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="313" />
         <source>Tiled Print</source>
-        <translation type="unfinished" />
+        <translation>Flislagt utskrift</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="329" />
         <source>Pages Rows::</source>
-        <translation type="unfinished" />
+        <translation>Siderader::</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="336" />
         <source>Amount of pages columns</source>
-        <translation type="unfinished" />
+        <translation>Antall kolonner på sider</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="346" />
         <source>Pages Columns:</source>
-        <translation type="unfinished" />
+        <translation>Sidekolonner:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="353" />
         <source>Amount of pages rows</source>
-        <translation type="unfinished" />
+        <translation>Antall rader på sider</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="369" />
         <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="unfinished" />
+        <translation>Beregn antall sider som trengs for å inneholde tegningen</translation>
     </message>
 </context>
 <context>
@@ -33017,32 +33028,32 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_roundoptions.ui" line="32" />
         <source>Round Options</source>
-        <translation type="unfinished" />
+        <translation>Avrundingsalternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_roundoptions.ui" line="59" />
         <source>Check to trim both edges to the rounding</source>
-        <translation type="unfinished" />
+        <translation>Merk av for å beskjære begge kanter til avrunding</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_roundoptions.ui" line="62" />
         <source>Trim</source>
-        <translation type="unfinished" />
+        <translation>Beskjær</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_roundoptions.ui" line="85" />
         <source>Radius:</source>
-        <translation type="unfinished" />
+        <translation>Radius:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_roundoptions.ui" line="95" />
         <source>Rounding radius</source>
-        <translation type="unfinished" />
+        <translation>Avrundingsradius</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_roundoptions.ui" line="102" />
         <source>Pick radius from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg radius fra tegning</translation>
     </message>
 </context>
 <context>
@@ -33050,22 +33061,22 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32" />
         <source>Snap Distance Options</source>
-        <translation type="unfinished" />
+        <translation>Festeavstandalternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="50" />
         <source>Snap Distance:</source>
-        <translation type="unfinished" />
+        <translation>Festeavstand:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="60" />
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation type="unfinished" />
+        <translation>Avstand fra festepunkt til opprinnelig løst festepunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="67" />
         <source>Pick distance from drawing.</source>
-        <translation type="unfinished" />
+        <translation>Velg avstand fra tegning.</translation>
     </message>
 </context>
 <context>
@@ -33073,17 +33084,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="35" />
         <source>Snap Distance Options</source>
-        <translation type="unfinished" />
+        <translation>Festeavstandalternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="59" />
         <source>Snap Middle Points:</source>
-        <translation type="unfinished" />
+        <translation>Fest midtpunkter:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81" />
         <source>Number of equidistant division points</source>
-        <translation type="unfinished" />
+        <translation>Antall likeavstandspunkter for deling</translation>
     </message>
 </context>
 <context>
@@ -33091,37 +33102,37 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/spline/qg_splineoptions.ui" line="32" />
         <source>Spline Options</source>
-        <translation type="unfinished" />
+        <translation>Spline-alternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/qg_splineoptions.ui" line="56" />
         <source>Degree:</source>
-        <translation type="unfinished" />
+        <translation>Grad:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/qg_splineoptions.ui" line="72" />
         <source>Spline's degree used for approximation between points</source>
-        <translation type="unfinished" />
+        <translation>Spline-grad brukt for tilnærming mellom punkter</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/qg_splineoptions.ui" line="94" />
         <source>If selected, closed spline is created</source>
-        <translation type="unfinished" />
+        <translation>Hvis valgt, opprettes lukket spline</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/qg_splineoptions.ui" line="97" />
         <source>Closed</source>
-        <translation type="unfinished" />
+        <translation>Lukket</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/qg_splineoptions.ui" line="110" />
         <source>Undo previous point</source>
-        <translation type="unfinished" />
+        <translation>Angre forrige punkt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/qg_splineoptions.ui" line="113" />
         <source>Undo</source>
-        <translation type="unfinished" />
+        <translation>Angre</translation>
     </message>
 </context>
 <context>
@@ -33129,27 +33140,27 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/text/qg_textoptions.ui" line="32" />
         <source>Text Options</source>
-        <translation type="unfinished" />
+        <translation>Tekstalternativer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/qg_textoptions.ui" line="53" />
         <source>Text:</source>
-        <translation type="unfinished" />
+        <translation>Tekst:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/qg_textoptions.ui" line="66" />
         <source>Angle:</source>
-        <translation type="unfinished" />
+        <translation>Vinkel:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/qg_textoptions.ui" line="76" />
         <source>Rotation angle</source>
-        <translation type="unfinished" />
+        <translation>Rotasjonsvinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/qg_textoptions.ui" line="83" />
         <source>Pick angle from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg vinkel fra tegning</translation>
     </message>
 </context>
 <context>
@@ -33157,47 +33168,47 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="20" />
         <source>Trim Amount Options</source>
-        <translation type="unfinished" />
+        <translation>Alternativer for beskjæringsmengde</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="23" />
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="unfinished" />
+        <translation>Avstand. Negative verdier for beskjæring, positive verdier for forlengelse.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="53" />
         <source>Total</source>
-        <translation type="unfinished" />
+        <translation>Total</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="72" />
         <source>Length:</source>
-        <translation type="unfinished" />
+        <translation>Lengde:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="97" />
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="unfinished" />
+        <translation>Avstand. Negative verdier for beskjæring, positive verdier for forlengelse. Negativt tegn ignoreres ved beskjæring til endelig totallengde.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="110" />
         <source>Pick length from drawing</source>
-        <translation type="unfinished" />
+        <translation>Velg lengde fra tegning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="137" />
         <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="unfinished" />
+        <translation>Hvis merket, utføres beskjæring/forlengelse på begge sider av linjen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="140" />
         <source>Symmetric</source>
-        <translation type="unfinished" />
+        <translation>Symmetrisk</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="50" />
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished" />
+        <translation>Inngangslengden brukes som totallengde etter beskjæring, i stedet for lengdeøkning</translation>
     </message>
 </context>
 </TS>

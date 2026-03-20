@@ -24062,8 +24062,8 @@ Ky veprim nuk mund të zhbëhet.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1776" />
         <source>Remove %n layer(s)</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform />
+            <numerusform />
         </translation>
     </message>
     <message>
@@ -24108,8 +24108,8 @@ Ky veprim nuk mund të zhbëhet.</translation>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="514" />
         <source>Remove %n block(s)</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform />
+            <numerusform />
         </translation>
     </message>
     <message>

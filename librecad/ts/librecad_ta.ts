@@ -5,18 +5,18 @@
     <message>
         <location filename="../src/ui/dock_widgets/pen_wizard/colorwizard.ui" line="14" />
         <source>Frame</source>
-        <translation type="unfinished" />
+        <translation>சட்டகம்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_wizard/colorwizard.ui" line="59" />
         <source>Add to favorites</source>
-        <translation type="unfinished" />
+        <translation>பிடித்தவைகளில் சேர்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_wizard/colorwizard.ui" line="62" />
         <location filename="../src/ui/dock_widgets/pen_wizard/colorwizard.ui" line="86" />
         <source>...</source>
-        <translation type="unfinished" />
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -24,17 +24,17 @@
     <message>
         <location filename="../src/ui/components/comboboxes/comboboxoption.ui" line="14" />
         <source>Frame</source>
-        <translation type="unfinished" />
+        <translation>சட்டகம்</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/comboboxoption.ui" line="26" />
         <source>GroupBox</source>
-        <translation type="unfinished" />
+        <translation>குழு பெட்டி</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/comboboxoption.ui" line="41" />
         <source>Set</source>
-        <translation type="unfinished" />
+        <translation>அமை</translation>
     </message>
 </context>
 <context>
@@ -42,7 +42,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="41" />
         <source>Start point may set in distance or point state only</source>
-        <translation type="unfinished" />
+        <translation>தொடக்க புள்ளியை தூரம் அல்லது புள்ளி நிலையில் மட்டுமே அமைக்க முடியும்</translation>
     </message>
 </context>
 <context>
@@ -50,79 +50,81 @@
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="166" />
         <source>To be created:</source>
-        <translation type="unfinished" />
+        <translation>உருவாக்க வேண்டியது:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="166" />
         <source>Rectangle</source>
-        <translation type="unfinished" />
+        <translation>செவ்வகம்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="167" />
         <source>Width:</source>
-        <translation type="unfinished" />
+        <translation>அகலம்:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="168" />
         <source>Height:</source>
-        <translation type="unfinished" />
+        <translation>உயரம்:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="169" />
         <source>Center:</source>
-        <translation type="unfinished" />
+        <translation>நடுக்கம்:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="198" />
         <source>Invalid Angle</source>
-        <translation type="unfinished" />
+        <translation>தவறான கோணம்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="209" />
         <source>Invalid radius</source>
-        <translation type="unfinished" />
+        <translation>தவறான ஆரம்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="354" />
         <source>Invalid value</source>
-        <translation type="unfinished" />
+        <translation>தவறான மதிப்பு</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="410" />
         <source>Specify insertion point</source>
-        <translation type="unfinished" />
+        <translation>செருகும் புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="413" />
         <source>Specify angle</source>
-        <translation type="unfinished" />
+        <translation>கோணத்தை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="416" />
         <source>Specify size (width, height)</source>
-        <translation type="unfinished" />
+        <translation>அளவை குறிப்பிடவும் (அகலம், உயரம்)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="419" />
         <source>Specify corners type
 [str|round|bevels]</source>
-        <translation type="unfinished" />
+        <translation>மூலைகளின் வகையை குறிப்பிடவும்
+[நேரான|வளைவு|சாய்வு]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="422" />
         <source>Specify corner bevel length (x,y)</source>
-        <translation type="unfinished" />
+        <translation>மூலை சாய்வு நீளத்தை குறிப்பிடவும் (x,y)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="425" />
         <source>Specify corner radius</source>
-        <translation type="unfinished" />
+        <translation>மூலை ஆரத்தை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="428" />
         <source>Specify edges mode
 [both|hor|vert]</source>
-        <translation type="unfinished" />
+        <translation>விளிம்பு பயன்முறையை குறிப்பிடவும்
+[இரண்டும்|கிடைமட்ட|செங்குத்து]</translation>
     </message>
 </context>
 <context>
@@ -130,12 +132,12 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="731" />
         <source> is not divided as it is locked.</source>
-        <translation type="unfinished" />
+        <translation>பூட்டப்பட்டுள்ளதால் பிரிக்க முடியாது.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="739" />
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation type="unfinished" />
+        <translation>பலகோட்டின் பகுதியாக இருப்பதால் பிரிக்க முடியாது. முதலில் பலகோட்டை விரிவாக்கவும்.</translation>
     </message>
 </context>
 <context>
@@ -143,32 +145,32 @@
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="116" />
         <source>Not a circle or arc entity</source>
-        <translation type="unfinished" />
+        <translation>வட்டம் அல்லது வளைவு பொருள் அல்ல</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="193" />
         <source>Not a valid expression</source>
-        <translation type="unfinished" />
+        <translation>செல்லுபடியாகும் வெளிப்பாடு அல்ல</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="216" />
         <source>Select arc or circle entity</source>
-        <translation type="unfinished" />
+        <translation>வளைவு அல்லது வட்டப் பொருளைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="216" />
         <source>Free angle</source>
-        <translation type="unfinished" />
+        <translation>சுதந்திர கோணம்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="219" />
         <source>Specify dimension line position or enter angle:</source>
-        <translation type="unfinished" />
+        <translation>பரிமாணக் கோட்டின் நிலையை குறிப்பிடவும் அல்லது கோணத்தை உள்ளிடவும்:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="222" />
         <source>Enter dimension text:</source>
-        <translation type="unfinished" />
+        <translation>பரிமாண உரையை உள்ளிடவும்:</translation>
     </message>
 </context>
 <context>
@@ -176,12 +178,12 @@
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="189" />
         <source>Select arc entity</source>
-        <translation type="unfinished" />
+        <translation>வளைவுப் பொருளைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="192" />
         <source>Specify dimension arc location</source>
-        <translation type="unfinished" />
+        <translation>பரிமாண வளைவின் இருப்பிடத்தை குறிப்பிடவும்</translation>
     </message>
 </context>
 <context>
@@ -189,32 +191,32 @@
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="312" />
         <source>Specify first extension line origin</source>
-        <translation type="unfinished" />
+        <translation>முதல் நீட்டிப்புக் கோட்டின் தோற்றத்தை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="302" />
         <source>Specify second extension line origin</source>
-        <translation type="unfinished" />
+        <translation>இரண்டாவது நீட்டிப்புக் கோட்டின் தோற்றத்தை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="306" />
         <source>Specify dimension line location</source>
-        <translation type="unfinished" />
+        <translation>பரிமாணக் கோட்டின் இருப்பிடத்தை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="306" />
         <source>Snap to Adjacent Dim</source>
-        <translation type="unfinished" />
+        <translation>அருகிலுள்ள பரிமாணத்திற்கு ஒட்டு</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="321" />
         <source>Enter dimension text:</source>
-        <translation type="unfinished" />
+        <translation>பரிமாண உரையை உள்ளிடவும்:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="324" />
         <source>Enter dimension line angle:</source>
-        <translation type="unfinished" />
+        <translation>பரிமாணக் கோட்டின் கோணத்தை உள்ளிடவும்:</translation>
     </message>
 </context>
 <context>
@@ -222,17 +224,17 @@
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="212" />
         <source>Specify first point</source>
-        <translation type="unfinished" />
+        <translation>முதல் புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="216" />
         <source>Specify leader end point</source>
-        <translation type="unfinished" />
+        <translation>முன்னோடி முடிவுப் புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="216" />
         <source>Change Ordinate</source>
-        <translation type="unfinished" />
+        <translation>ஒருங்கிணைப்பை மாற்றவும்</translation>
     </message>
 </context>
 <context>
@@ -240,7 +242,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinaterebase.cpp" line="41" />
         <source>Select and rebase</source>
-        <translation type="unfinished" />
+        <translation>தேர்ந்தெடுத்து மீட்டமைக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -248,17 +250,17 @@
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="159" />
         <source>Specify dimension to pick the style</source>
-        <translation type="unfinished" />
+        <translation>பாணியைத் தேர்ந்தெடுக்க பரிமாணத்தை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="162" />
         <source>Specify dimension to apply style</source>
-        <translation type="unfinished" />
+        <translation>பாணியைப் பயன்படுத்த பரிமாணத்தை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="162" />
         <source>Do not apply style override</source>
-        <translation type="unfinished" />
+        <translation>பாணி மேலெழுதலை பயன்படுத்த வேண்டாம்</translation>
     </message>
 </context>
 <context>
@@ -266,82 +268,82 @@
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="14" />
         <source>Form</source>
-        <translation type="unfinished" />
+        <translation>படிவம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="61" />
         <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="unfinished" />
+        <translation>வளைவின் உயரம் (கோடு மற்றும் மேல் வளைவு புள்ளிக்கு இடையிலான தூரம்)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="64" />
         <source>Height:</source>
-        <translation type="unfinished" />
+        <translation>உயரம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="127" />
         <source>Counterclockwise</source>
-        <translation type="unfinished" />
+        <translation>எதிர்திசை</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="144" />
         <source>Pick angle from the drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="92" />
         <source>Radius of arc</source>
-        <translation type="unfinished" />
+        <translation>வளைவின் ஆரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="95" />
         <source>Radius:</source>
-        <translation type="unfinished" />
+        <translation>ஆரம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="44" />
         <source>Clockwise</source>
-        <translation type="unfinished" />
+        <translation>சுற்றுமுகம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="105" />
         <source>Central angle of the arc</source>
-        <translation type="unfinished" />
+        <translation>வளைவின் மையக் கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="108" />
         <source>Angle:</source>
-        <translation type="unfinished" />
+        <translation>கோணம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="71" />
         <source>Length of the arc</source>
-        <translation type="unfinished" />
+        <translation>வளைவின் நீளம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="74" />
         <source>Length:</source>
-        <translation type="unfinished" />
+        <translation>நீளம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.cpp" line="48" />
         <source>Pick radius from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து ஆரத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.cpp" line="55" />
         <source>Pick height from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து உயரத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.cpp" line="62" />
         <source>Pick length from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து நீளத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.cpp" line="69" />
         <source>Pick angle from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -349,12 +351,12 @@
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp" line="94" />
         <source>Enter value of central angle</source>
-        <translation type="unfinished" />
+        <translation>மையக் கோணத்தின் மதிப்பை உள்ளிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp" line="98" />
         <source>Alternate angle to outer arc</source>
-        <translation type="unfinished" />
+        <translation>வெளி வளைவுக்கு மாற்று கோணம்</translation>
     </message>
 </context>
 <context>
@@ -362,32 +364,32 @@
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="104" />
         <source>The end point is too close to the start point</source>
-        <translation type="unfinished" />
+        <translation>முடிவுப் புள்ளி தொடக்கப் புள்ளியுடன் மிகவும் நெருக்கமாக உள்ளது</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="145" />
         <source>Positive value is expected</source>
-        <translation type="unfinished" />
+        <translation>நேர்மறை மதிப்பு எதிர்பார்க்கப்படுகிறது</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="148" />
         <source>Not a valid expression</source>
-        <translation type="unfinished" />
+        <translation>செல்லுபடியாகும் வெளிப்பாடு அல்ல</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="186" />
         <source>Specify first point of arc</source>
-        <translation type="unfinished" />
+        <translation>வளைவின் முதல் புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="190" />
         <source>Specify second point of arc</source>
-        <translation type="unfinished" />
+        <translation>வளைவின் இரண்டாவது புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="203" />
         <source>Opposite Arc direction</source>
-        <translation type="unfinished" />
+        <translation>எதிர் வளைவு திசை</translation>
     </message>
 </context>
 <context>
@@ -395,12 +397,12 @@
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp" line="103" />
         <source>Enter height of arc</source>
-        <translation type="unfinished" />
+        <translation>வளைவின் உயரத்தை உள்ளிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsheight.cpp" line="107" />
         <source>Alternative arc where diameter is reduced by height</source>
-        <translation type="unfinished" />
+        <translation>உயரத்தால் விட்டம் குறைக்கப்பட்ட மாற்று வளைவு</translation>
     </message>
 </context>
 <context>
@@ -408,17 +410,17 @@
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="42" />
         <source>The distance between the two points must be less than the arc length</source>
-        <translation type="unfinished" />
+        <translation>இரு புள்ளிகளுக்கிடையிலான தூரம் வளைவு நீளத்தை விட குறைவாக இருக்க வேண்டும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="103" />
         <source>Enter length of arc</source>
-        <translation type="unfinished" />
+        <translation>வளைவின் நீளத்தை உள்ளிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointslength.cpp" line="107" />
         <source>Alternate solutions</source>
-        <translation type="unfinished" />
+        <translation>மாற்று தீர்வுகள்</translation>
     </message>
 </context>
 <context>
@@ -426,12 +428,12 @@
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.cpp" line="96" />
         <source>Enter radius of arc</source>
-        <translation type="unfinished" />
+        <translation>வளைவின் ஆரத்தை உள்ளிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsradius.cpp" line="100" />
         <source>Create outer arc</source>
-        <translation type="unfinished" />
+        <translation>வெளி வளைவை உருவாக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -439,22 +441,22 @@
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawboundingbox.cpp" line="46" />
         <source>Select entities for bounding box (Enter to complete)</source>
-        <translation type="unfinished" />
+        <translation>வரம்பு பெட்டிக்கான பொருட்களைத் தேர்ந்தெடுக்கவும் (முடிக்க Enter அழுத்தவும்)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawboundingbox.cpp" line="46" />
         <source>Select and draw</source>
-        <translation type="unfinished" />
+        <translation>தேர்ந்தெடுத்து வரையவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawboundingbox.cpp" line="46" />
         <source>Select contour</source>
-        <translation type="unfinished" />
+        <translation>வெளிப்புறத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawboundingbox.cpp" line="93" />
         <source>Note: Bounding box was created for world coordinate system.</source>
-        <translation type="unfinished" />
+        <translation>குறிப்பு: உலக ஒருங்கிணைப்பு அமைப்பிற்காக வரம்பு பெட்டி உருவாக்கப்பட்டது.</translation>
     </message>
 </context>
 <context>
@@ -463,27 +465,28 @@
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="196" />
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation type="unfinished" />
+        <translation>ஆரம்=%1 தேர்ந்தெடுக்கப்பட்ட புள்ளிகளுக்கு மிகச் சிறியது
+புள்ளிகளுக்கிடையிலான தூரம்=%2 விட்டத்தை விட பெரியது=%3</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="208" />
         <source>Select from two possible circle centers</source>
-        <translation type="unfinished" />
+        <translation>இரண்டு சாத்தியமான வட்ட மையங்களிலிருந்து தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="230" />
         <source>Specify first point</source>
-        <translation type="unfinished" />
+        <translation>முதல் புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="233" />
         <source>Specify second point</source>
-        <translation type="unfinished" />
+        <translation>இரண்டாவது புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="236" />
         <source>Select circle center</source>
-        <translation type="unfinished" />
+        <translation>வட்ட மையத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -491,7 +494,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcirclebyarc.cpp" line="232" />
         <source>Select arc or ellipse arc</source>
-        <translation type="unfinished" />
+        <translation>வளைவு அல்லது நீள்வட்ட வளைவைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -499,7 +502,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawcross.cpp" line="384" />
         <source>Select circle, arc or ellipse</source>
-        <translation type="unfinished" />
+        <translation>வட்டம், வளைவு அல்லது நீள்வட்டத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -507,37 +510,37 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="418" />
         <source>Select base linear/aligned dimension</source>
-        <translation type="unfinished" />
+        <translation>அடிப்படை நேரியல்/சீரமைக்கப்பட்ட பரிமாணத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="418" />
         <source>Select distant extension point</source>
-        <translation type="unfinished" />
+        <translation>தொலைவு நீட்டிப்புப் புள்ளியைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="421" />
         <source>Specify second extension line origin</source>
-        <translation type="unfinished" />
+        <translation>இரண்டாவது நீட்டிப்புக் கோட்டின் தோற்றத்தை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="421" />
         <source>Mirror offset direction</source>
-        <translation type="unfinished" />
+        <translation>பிரதிபலிப்பு விலக்கல் திசை</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="424" />
         <source>Specify dimension line location</source>
-        <translation type="unfinished" />
+        <translation>பரிமாணக் கோட்டின் இருப்பிடத்தை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="424" />
         <source>Snap to Adjacent Dim</source>
-        <translation type="unfinished" />
+        <translation>அருகிலுள்ள பரிமாணத்திற்கு ஒட்டு</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="427" />
         <source>Enter dimension text:</source>
-        <translation type="unfinished" />
+        <translation>பரிமாண உரையை உள்ளிடவும்:</translation>
     </message>
 </context>
 <context>
@@ -545,37 +548,37 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="48" />
         <source>Select Center</source>
-        <translation type="unfinished" />
+        <translation>மையத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="55" />
         <source>No center specified.</source>
-        <translation type="unfinished" />
+        <translation>மையம் குறிப்பிடப்படவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="97" />
         <source>No entities selected. Dual creation cancelled.</source>
-        <translation type="unfinished" />
+        <translation>பொருட்கள் தேர்ந்தெடுக்கப்படவில்லை. இரட்டை உருவாக்கம் ரத்து செய்யப்பட்டது.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="131" />
         <source>No supported entities could be dualized.</source>
-        <translation type="unfinished" />
+        <translation>ஆதரிக்கப்படும் பொருட்கள் இரட்டைப்படுத்த முடியவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="146" />
         <source>Dual created around center (%1 entities)</source>
-        <translation type="unfinished" />
+        <translation>மையத்தைச் சுற்றி இரட்டை உருவாக்கப்பட்டது (%1 பொருட்கள்)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="159" />
         <source>Select to create dual (Enter to complete)</source>
-        <translation type="unfinished" />
+        <translation>இரட்டை உருவாக்க தேர்ந்தெடுக்கவும் (முடிக்க Enter அழுத்தவும்)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="159" />
         <source>Select contour</source>
-        <translation type="unfinished" />
+        <translation>வெளிப்புறத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -583,29 +586,29 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="269" />
         <source>Specify ellipse center</source>
-        <translation type="unfinished" />
+        <translation>நீள்வட்ட மையத்தை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="273" />
         <source>Specify angle for major axis</source>
-        <translation type="unfinished" />
+        <translation>முக்கிய அச்சுக்கான கோணத்தை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="277" />
         <source>Set start angle of arc</source>
-        <translation type="unfinished" />
+        <translation>வளைவின் தொடக்க கோணத்தை அமைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="281" />
         <source>Set end angle of arc</source>
-        <translation type="unfinished" />
+        <translation>வளைவின் முடிவு கோணத்தை அமைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="317" />
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="328" />
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="339" />
         <source>Not a valid expression</source>
-        <translation type="unfinished" />
+        <translation>செல்லுபடியாகும் வெளிப்பாடு அல்ல</translation>
     </message>
 </context>
 <context>
@@ -614,43 +617,43 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="100" />
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="211" />
         <source>Foci cannot be coincident</source>
-        <translation type="unfinished" />
+        <translation>குவியங்கள் ஒன்றுடன் ஒன்று இருக்க முடியாது</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="106" />
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="225" />
         <source>Start and end points cannot be the same</source>
-        <translation type="unfinished" />
+        <translation>தொடக்க மற்றும் முடிவுப் புள்ளிகள் ஒன்றாக இருக்க முடியாது</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="114" />
         <source>Invalid foci or point</source>
-        <translation type="unfinished" />
+        <translation>தவறான குவியம் அல்லது புள்ளி</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="126" />
         <source>Points not on hyperbola</source>
-        <translation type="unfinished" />
+        <translation>புள்ளிகள் ஹைப்பர்போலாவில் இல்லை</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="241" />
         <source>Specify first focus</source>
-        <translation type="unfinished" />
+        <translation>முதல் குவியத்தை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="244" />
         <source>Specify second focus</source>
-        <translation type="unfinished" />
+        <translation>இரண்டாவது குவியத்தை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="247" />
         <source>Specify start point on branch</source>
-        <translation type="unfinished" />
+        <translation>கிளையில் தொடக்க புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="250" />
         <source>Specify end point on branch</source>
-        <translation type="unfinished" />
+        <translation>கிளையில் முடிவுப் புள்ளியை குறிப்பிடவும்</translation>
     </message>
 </context>
 <context>
@@ -658,12 +661,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="451" />
         <source>Select base line</source>
-        <translation type="unfinished" />
+        <translation>அடிப்படை கோட்டைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="454" />
         <source>Specify length</source>
-        <translation type="unfinished" />
+        <translation>நீளத்தை குறிப்பிடவும்</translation>
     </message>
 </context>
 <context>
@@ -671,12 +674,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinefrompointtoline.cpp" line="404" />
         <source>Select Initial Point</source>
-        <translation type="unfinished" />
+        <translation>தொடக்க புள்ளியைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinefrompointtoline.cpp" line="407" />
         <source>Select Line</source>
-        <translation type="unfinished" />
+        <translation>கோட்டைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -684,78 +687,86 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="503" />
         <source>Specify First Point</source>
-        <translation type="unfinished" />
+        <translation>முதல் புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="507" />
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="unfinished" />
+        <translation>இரண்டாவது புள்ளியை குறிப்பிடவும்
+அல்லது [எண்|x|y|கோணம்|p|விளிம்புகள்|தூரம்]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="510" />
         <source>Specify Second Point
 or [number]</source>
-        <translation type="unfinished" />
+        <translation>இரண்டாவது புள்ளியை குறிப்பிடவும்
+அல்லது [எண்]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="514" />
         <source>Specify line direction
 [x|y|angle|p|distance]</source>
-        <translation type="unfinished" />
+        <translation>கோட்டின் திசையை குறிப்பிடவும்
+[x|y|கோணம்|p|தூரம்]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="517" />
         <source>Specify line direction angle
 or [x|y|p|number|edges|distance]</source>
-        <translation type="unfinished" />
+        <translation>கோட்டின் திசை கோணத்தை குறிப்பிடவும்
+அல்லது [x|y|p|எண்|விளிம்புகள்|தூரம்]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="520" />
         <source>Specify edge points mode
 [none|start|end|both|distance]</source>
-        <translation type="unfinished" />
+        <translation>விளிம்பு புள்ளிகள் பயன்முறையை குறிப்பிடவும்
+[எதுவுமில்லை|தொடக்க|முடிவு|இரண்டும்|தூரம்]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="523" />
         <source>Specify fixed distance between points
 or[x|y|p|number|edges]</source>
-        <translation type="unfinished" />
+        <translation>புள்ளிகளுக்கிடையே நிலையான தூரத்தை குறிப்பிடவும்
+அல்லது[x|y|p|எண்|விளிம்புகள்]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534" />
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537" />
         <source>Specify distance (%1)
 or [%2]</source>
-        <translation type="unfinished" />
+        <translation>தூரத்தை குறிப்பிடவும் (%1)
+அல்லது [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534" />
         <source>X</source>
-        <translation type="unfinished" />
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534" />
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537" />
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542" />
         <source>Back</source>
-        <translation type="unfinished" />
+        <translation>பின்வாங்கு</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537" />
         <source>Y</source>
-        <translation type="unfinished" />
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542" />
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
-        <translation type="unfinished" />
+        <translation>தூரத்தை குறிப்பிடவும் (கோணம் %1 பாகை)
+அல்லது [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="547" />
         <source>Specify points count</source>
-        <translation type="unfinished" />
+        <translation>புள்ளிகளின் எண்ணிக்கையை குறிப்பிடவும்</translation>
     </message>
 </context>
 <context>
@@ -763,22 +774,22 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon4.cpp" line="33" />
         <source>Specify second corner</source>
-        <translation type="unfinished" />
+        <translation>இரண்டாவது மூலையை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon4.cpp" line="36" />
         <source>Specify second tangent</source>
-        <translation type="unfinished" />
+        <translation>இரண்டாவது தொடுகோட்டை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon4.cpp" line="42" />
         <source>Specify first corner</source>
-        <translation type="unfinished" />
+        <translation>முதல் மூலையை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon4.cpp" line="45" />
         <source>Specify first tangent</source>
-        <translation type="unfinished" />
+        <translation>முதல் தொடுகோட்டை குறிப்பிடவும்</translation>
     </message>
 </context>
 <context>
@@ -786,62 +797,62 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="196" />
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished" />
+        <translation>செல்லுபடியாகும் எண் அல்ல. 1..9999 ஐ முயற்சிக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="208" />
         <source>Invalid value of rounding radius</source>
-        <translation type="unfinished" />
+        <translation>வட்டமாக்கல் ஆரத்தின் தவறான மதிப்பு</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="218" />
         <source>Not a valid expression</source>
-        <translation type="unfinished" />
+        <translation>செல்லுபடியாகும் வெளிப்பாடு அல்ல</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="250" />
         <source>Enter number:</source>
-        <translation type="unfinished" />
+        <translation>எண்ணை உள்ளிடவும்:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="253" />
         <source>Enter rounding radius:</source>
-        <translation type="unfinished" />
+        <translation>வட்டமாக்கல் ஆரத்தை உள்ளிடவும்:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="261" />
         <source>Specify center</source>
-        <translation type="unfinished" />
+        <translation>மையத்தை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="280" />
         <source>To be created:</source>
-        <translation type="unfinished" />
+        <translation>உருவாக்க வேண்டியது:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="281" />
         <source>Center:</source>
-        <translation type="unfinished" />
+        <translation>மையம்:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="282" />
         <source>Start angle:</source>
-        <translation type="unfinished" />
+        <translation>தொடக்க கோணம்:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="283" />
         <source>Radius:</source>
-        <translation type="unfinished" />
+        <translation>ஆரம்:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="284" />
         <source>Radius Inner:</source>
-        <translation type="unfinished" />
+        <translation>உள் ஆரம்:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="280" />
         <source>Polygon</source>
-        <translation type="unfinished" />
+        <translation>பலகோணம்</translation>
     </message>
 </context>
 <context>
@@ -849,7 +860,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygon3.cpp" line="51" />
         <source>Specify a tangent</source>
-        <translation type="unfinished" />
+        <translation>ஒரு தொடுகோட்டை குறிப்பிடவும்</translation>
     </message>
 </context>
 <context>
@@ -857,70 +868,70 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="468" />
         <source>Specify first point</source>
-        <translation type="unfinished" />
+        <translation>முதல் புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="477" />
         <source>Specify direction (x or y) or [%1]</source>
-        <translation type="unfinished" />
+        <translation>திசையை குறிப்பிடவும் (x அல்லது y) அல்லது [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="491" />
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="495" />
         <source>Specify distance (%1) or [%2]</source>
-        <translation type="unfinished" />
+        <translation>தூரத்தை குறிப்பிடவும் (%1) அல்லது [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="134" />
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="491" />
         <source>X</source>
-        <translation type="unfinished" />
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="117" />
         <source>Point</source>
-        <translation type="unfinished" />
+        <translation>புள்ளி</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="121" />
         <source>Angle</source>
-        <translation type="unfinished" />
+        <translation>கோணம்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="128" />
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="495" />
         <source>Y</source>
-        <translation type="unfinished" />
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="153" />
         <source>Direction:</source>
-        <translation type="unfinished" />
+        <translation>திசை:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="501" />
         <source>Specify distance (%1 deg) or [%2]</source>
-        <translation type="unfinished" />
+        <translation>தூரத்தை குறிப்பிடவும் (%1 பாகை) அல்லது [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="516" />
         <source>Specify angle or [%1]</source>
-        <translation type="unfinished" />
+        <translation>கோணத்தை குறிப்பிடவும் அல்லது [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="528" />
         <source>Specify point or [%1]</source>
-        <translation type="unfinished" />
+        <translation>புள்ளியை குறிப்பிடவும் அல்லது [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="577" />
         <source>Cannot undo: Begin of history reached</source>
-        <translation type="unfinished" />
+        <translation>பின்வாங்க முடியாது: வரலாற்றின் தொடக்கம் அடைந்தது</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="614" />
         <source>Cannot redo: End of history reached</source>
-        <translation type="unfinished" />
+        <translation>மீண்டும் செய்ய முடியாது: வரலாற்றின் முடிவு அடைந்தது</translation>
     </message>
 </context>
 <context>
@@ -928,27 +939,27 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="262" />
         <source>Not a valid expression</source>
-        <translation type="unfinished" />
+        <translation>செல்லுபடியாகும் வெளிப்பாடு அல்ல</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="282" />
         <source>Select first entity</source>
-        <translation type="unfinished" />
+        <translation>முதல் பொருளைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="286" />
         <source>Select second entity</source>
-        <translation type="unfinished" />
+        <translation>இரண்டாவது பொருளைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="286" />
         <source>Alternate endpoints</source>
-        <translation type="unfinished" />
+        <translation>மாற்று முனைகள்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawmidline.cpp" line="290" />
         <source>Enter offset value</source>
-        <translation type="unfinished" />
+        <translation>விலக்கல் மதிப்பை உள்ளிடவும்</translation>
     </message>
 </context>
 <context>
@@ -956,27 +967,27 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="181" />
         <source>Specify the first point on parabola</source>
-        <translation type="unfinished" />
+        <translation>பரபோலாவில் முதல் புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="184" />
         <source>Specify the second point on parabola</source>
-        <translation type="unfinished" />
+        <translation>பரபோலாவில் இரண்டாவது புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="187" />
         <source>Specify the third point on parabola</source>
-        <translation type="unfinished" />
+        <translation>பரபோலாவில் மூன்றாவது புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="190" />
         <source>Specify the fourth point on parabola</source>
-        <translation type="unfinished" />
+        <translation>பரபோலாவில் நான்காவது புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="193" />
         <source>Specify the Axis on parabola</source>
-        <translation type="unfinished" />
+        <translation>பரபோலாவில் அச்சை குறிப்பிடவும்</translation>
     </message>
 </context>
 <context>
@@ -984,22 +995,22 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="275" />
         <source>Specify the focus of parabola</source>
-        <translation type="unfinished" />
+        <translation>பரபோலாவின் குவியத்தை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="278" />
         <source>Select line that is parallel to directrix of parabola or set vertex point</source>
-        <translation type="unfinished" />
+        <translation>பரபோலாவின் நேர்கோட்டுக்கு இணையான கோட்டைத் தேர்ந்தெடுக்கவும் அல்லது உச்சி புள்ளியை அமைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="282" />
         <source>Specify the start point on parabola</source>
-        <translation type="unfinished" />
+        <translation>பரபோலாவில் தொடக்க புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="286" />
         <source>Specify the end point on parabola</source>
-        <translation type="unfinished" />
+        <translation>பரபோலாவில் முடிவுப் புள்ளியை குறிப்பிடவும்</translation>
     </message>
 </context>
 <context>
@@ -1007,58 +1018,58 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="172" />
         <source>Second point is too close to the first one</source>
-        <translation type="unfinished" />
+        <translation>இரண்டாவது புள்ளி முதல் புள்ளியுடன் மிகவும் நெருக்கமாக உள்ளது</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="183" />
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="194" />
         <source>Third point is too close to the second one</source>
-        <translation type="unfinished" />
+        <translation>மூன்றாவது புள்ளி இரண்டாவது புள்ளியுடன் மிகவும் நெருக்கமாக உள்ளது</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="240" />
         <source>Invalid value provided</source>
-        <translation type="unfinished" />
+        <translation>தவறான மதிப்பு வழங்கப்பட்டது</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="258" />
         <source>Specify first point</source>
-        <translation type="unfinished" />
+        <translation>முதல் புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="262" />
         <source>Specify second point</source>
-        <translation type="unfinished" />
+        <translation>இரண்டாவது புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="266" />
         <source>Specify third point</source>
-        <translation type="unfinished" />
+        <translation>மூன்றாவது புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="270" />
         <source>Specify fourth point</source>
-        <translation type="unfinished" />
+        <translation>நான்காவது புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="270" />
         <source>Last point position is un-adjusted</source>
-        <translation type="unfinished" />
+        <translation>கடைசி புள்ளியின் நிலை சரிசெய்யப்படவில்லை</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="271" />
         <source>Last point position is adjusted to first</source>
-        <translation type="unfinished" />
+        <translation>கடைசி புள்ளியின் நிலை முதல் புள்ளிக்கு சரிசெய்யப்பட்டது</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="275" />
         <source>Enter number of points by X</source>
-        <translation type="unfinished" />
+        <translation>X ஆல் புள்ளிகளின் எண்ணிக்கையை உள்ளிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="279" />
         <source>Enter number of points by Y</source>
-        <translation type="unfinished" />
+        <translation>Y ஆல் புள்ளிகளின் எண்ணிக்கையை உள்ளிடவும்</translation>
     </message>
 </context>
 <context>
@@ -1066,32 +1077,32 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="368" />
         <source>Specify height</source>
-        <translation type="unfinished" />
+        <translation>உயரத்தை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="371" />
         <source>Specify width</source>
-        <translation type="unfinished" />
+        <translation>அகலத்தை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="374" />
         <source>Specify size (width, height))</source>
-        <translation type="unfinished" />
+        <translation>அளவை குறிப்பிடவும் (அகலம், உயரம்))</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="377" />
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
-        <translation type="unfinished" />
+        <translation>குறிப்பு புள்ளியை குறிப்பிடவும் [மேல் இடது|மேல்|மேல் வலது|இடது|நடு|வலது|கீழ் இடது|கீழ்|கீழ் வலது]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="380" />
         <source>Specify point that defines base angle for rectangle</source>
-        <translation type="unfinished" />
+        <translation>செவ்வகத்திற்கான அடிப்படை கோணத்தை வரையறுக்கும் புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="380" />
         <source>Don't keep insertion point</source>
-        <translation type="unfinished" />
+        <translation>செருகும் புள்ளியை வைத்திருக்க வேண்டாம்</translation>
     </message>
 </context>
 <context>
@@ -1099,27 +1110,27 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="280" />
         <source>Specify second point</source>
-        <translation type="unfinished" />
+        <translation>இரண்டாவது புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="280" />
         <source>Draw Square</source>
-        <translation type="unfinished" />
+        <translation>சதுரத்தை வரையவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="283" />
         <source>Specify point 1 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation type="unfinished" />
+        <translation>புள்ளி 1 ஒட்டை குறிப்பிடவும் [மூலை|நடு செங்குத்து|நடு கிடைமட்ட|நடு]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="286" />
         <source>Specify point 2 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation type="unfinished" />
+        <translation>புள்ளி 2 ஒட்டை குறிப்பிடவும் [மூலை|நடு செங்குத்து|நடு கிடைமட்ட|நடு]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="289" />
         <source>Specify size (width, height)</source>
-        <translation type="unfinished" />
+        <translation>அளவை குறிப்பிடவும் (அகலம், உயரம்)</translation>
     </message>
 </context>
 <context>
@@ -1128,47 +1139,47 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="551" />
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="569" />
         <source>Specify first point first</source>
-        <translation type="unfinished" />
+        <translation>முதலில் முதல் புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="560" />
         <source>Specify width or second point first</source>
-        <translation type="unfinished" />
+        <translation>அகலம் அல்லது இரண்டாவது புள்ளியை முதலில் குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="589" />
         <source>Specify width</source>
-        <translation type="unfinished" />
+        <translation>அகலத்தை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="592" />
         <source>Specify height</source>
-        <translation type="unfinished" />
+        <translation>உயரத்தை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="595" />
         <source>Specify start point)</source>
-        <translation type="unfinished" />
+        <translation>தொடக்க புள்ளியை குறிப்பிடவும்)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="598" />
         <source>Specify second point</source>
-        <translation type="unfinished" />
+        <translation>இரண்டாவது புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="601" />
         <source>Specify third point</source>
-        <translation type="unfinished" />
+        <translation>மூன்றாவது புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="604" />
         <source>Specify angle</source>
-        <translation type="unfinished" />
+        <translation>கோணத்தை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="607" />
         <source>Specify inner angle</source>
-        <translation type="unfinished" />
+        <translation>உள் கோணத்தை குறிப்பிடவும்</translation>
     </message>
 </context>
 <context>
@@ -1176,27 +1187,27 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="212" />
         <source>Line</source>
-        <translation type="unfinished" />
+        <translation>கோடு</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="222" />
         <source>Arc</source>
-        <translation type="unfinished" />
+        <translation>வளைவு</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="232" />
         <source>Circle</source>
-        <translation type="unfinished" />
+        <translation>வட்டம்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="596" />
         <source>Select line</source>
-        <translation type="unfinished" />
+        <translation>கோட்டைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp" line="599" />
         <source>Select circle or arc</source>
-        <translation type="unfinished" />
+        <translation>வட்டம் அல்லது வளைவைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -1204,33 +1215,33 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="214" />
         <source>Specify first control point</source>
-        <translation type="unfinished" />
+        <translation>முதல் கட்டுப்பாட்டுப் புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231" />
         <source>Specify next control point or [%1]</source>
-        <translation type="unfinished" />
+        <translation>அடுத்த கட்டுப்பாட்டுப் புள்ளியை குறிப்பிடவும் அல்லது [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231" />
         <source>Back</source>
-        <translation type="unfinished" />
+        <translation>பின்வாங்கு</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="233" />
         <source>Specify next control point</source>
-        <translation type="unfinished" />
+        <translation>அடுத்த கட்டுப்பாட்டுப் புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="265" />
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="286" />
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished" />
+        <translation>பின்வாங்க முடியாது: இன்னும் போதுமான பொருட்கள் வரையறுக்கப்படவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="302" />
         <source>Cannot undo: Nothing could be redone.</source>
-        <translation type="unfinished" />
+        <translation>பின்வாங்க முடியாது: எதுவும் மீண்டும் செய்ய முடியாது.</translation>
     </message>
 </context>
 <context>
@@ -1238,37 +1249,37 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="182" />
         <source>Invalid rays number, should be in range [3..99]</source>
-        <translation type="unfinished" />
+        <translation>தவறான கதிர்கள் எண்ணிக்கை, [3..99] வரம்பில் இருக்க வேண்டும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="190" />
         <source>Invalid value</source>
-        <translation type="unfinished" />
+        <translation>தவறான மதிப்பு</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="616" />
         <source>Set center point</source>
-        <translation type="unfinished" />
+        <translation>மையப் புள்ளியை அமைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="619" />
         <source>Set outer point</source>
-        <translation type="unfinished" />
+        <translation>வெளிப்புற புள்ளியை அமைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="622" />
         <source>Set inner point</source>
-        <translation type="unfinished" />
+        <translation>உள்புள்ளியை அமைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="625" />
         <source>Set rounding radiuses (outer, inner)</source>
-        <translation type="unfinished" />
+        <translation>வட்டமாக்கல் ஆரங்களை அமைக்கவும் (வெளி, உள்)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="628" />
         <source>Set rays number</source>
-        <translation type="unfinished" />
+        <translation>கதிர்கள் எண்ணிக்கையை அமைக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -1276,17 +1287,17 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="42" />
         <source>Clipboard is empty</source>
-        <translation type="unfinished" />
+        <translation>கிளிப்போர்டு காலியாக உள்ளது</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="129" />
         <source>Set paste reference point</source>
-        <translation type="unfinished" />
+        <translation>ஒட்டு குறிப்பு புள்ளியை அமைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_actioneditpastetransform.cpp" line="129" />
         <source>Paste Multiple</source>
-        <translation type="unfinished" />
+        <translation>பலவற்றை ஒட்டவும்</translation>
     </message>
 </context>
 <context>
@@ -1294,1250 +1305,1250 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="514" />
         <source>&amp;Window Zoom</source>
-        <translation type="unfinished" />
+        <translation>&amp;சாளர பெரிதாக்கம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="328" />
         <source>Zoom &amp;Panning</source>
-        <translation type="unfinished" />
+        <translation>பெரிதாக்கம் &amp;பன்னிங்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="239" />
         <source>Select Entity</source>
-        <translation type="unfinished" />
+        <translation>பொருளைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="240" />
         <source>Select Window</source>
-        <translation type="unfinished" />
+        <translation>சாளரத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="241" />
         <source>Deselect Window</source>
-        <translation type="unfinished" />
+        <translation>சாளரத்தைத் தேர்வுநீக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="242" />
         <source>(De-)Select &amp;Contour</source>
-        <translation type="unfinished" />
+        <translation>(தேர்வுநீக்கு) &amp;வெளிப்புறம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="243" />
         <source>Select Intersected Entities</source>
-        <translation type="unfinished" />
+        <translation>குறுக்கிட்ட பொருட்களைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="244" />
         <source>Deselect Intersected Entities</source>
-        <translation type="unfinished" />
+        <translation>குறுக்கிட்ட பொருட்களைத் தேர்வுநீக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="245" />
         <source>(De-)Select Layer</source>
-        <translation type="unfinished" />
+        <translation>(தேர்வுநீக்கு) அடுக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="228" />
         <source>&amp;Points</source>
-        <translation type="unfinished" />
+        <translation>&amp;புள்ளிகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="200" />
         <source>&amp;2 Points</source>
-        <translation type="unfinished" />
+        <translation>&amp;2 புள்ளிகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="201" />
         <source>&amp;Angle</source>
-        <translation type="unfinished" />
+        <translation>&amp;கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="202" />
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="341" />
         <source>&amp;Horizontal</source>
-        <translation type="unfinished" />
+        <translation>&amp;கிடைமட்டம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="203" />
         <source>Vertical</source>
-        <translation type="unfinished" />
+        <translation>செங்குத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="204" />
         <source>&amp;Freehand Line</source>
-        <translation type="unfinished" />
+        <translation>&amp;கையால் வரையப்பட்ட கோடு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="205" />
         <source>&amp;Parallel</source>
-        <translation type="unfinished" />
+        <translation>&amp;இணை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="206" />
         <source>Parallel through point</source>
-        <translation type="unfinished" />
+        <translation>புள்ளி வழியாக இணை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="186" />
         <source>Rectangle</source>
-        <translation type="unfinished" />
+        <translation>செவ்வகம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="207" />
         <source>Bisector</source>
-        <translation type="unfinished" />
+        <translation>இருபாகுப் பிரிப்பி</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="208" />
         <source>Tangent (P,C)</source>
-        <translation type="unfinished" />
+        <translation>தொடுகோடு (P,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="209" />
         <source>Tangent (C,C)</source>
-        <translation type="unfinished" />
+        <translation>தொடுகோடு (C,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="210" />
         <source>Tangent &amp;Orthogonal</source>
-        <translation type="unfinished" />
+        <translation>தொடுகோடு &amp;லம்பம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="211" />
         <source>Orthogonal</source>
-        <translation type="unfinished" />
+        <translation>லம்பம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="212" />
         <source>Relative angle</source>
-        <translation type="unfinished" />
+        <translation>உறவு கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="187" />
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation type="unfinished" />
+        <translation>பல&amp;கோணம் (மையம்,மூலை)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="189" />
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation type="unfinished" />
+        <translation>பலகோண&amp;ம் (மூலை,மூலை)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="213" />
         <source>Snake</source>
-        <translation type="unfinished" />
+        <translation>பாம்பு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="214" />
         <source>Snake (X)</source>
-        <translation type="unfinished" />
+        <translation>பாம்பு (X)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="215" />
         <source>Snake (Y)</source>
-        <translation type="unfinished" />
+        <translation>பாம்பு (Y)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="192" />
         <source>Rectangle (1 Point)</source>
-        <translation type="unfinished" />
+        <translation>செவ்வகம் (1 புள்ளி)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="193" />
         <source>Rectangle (2 Points)</source>
-        <translation type="unfinished" />
+        <translation>செவ்வகம் (2 புள்ளிகள்)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194" />
         <source>Rectangle (3 Points)</source>
-        <translation type="unfinished" />
+        <translation>செவ்வகம் (3 புள்ளிகள்)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="191" />
         <source>Star</source>
-        <translation type="unfinished" />
+        <translation>நட்சத்திரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="216" />
         <source>Angle From Line</source>
-        <translation type="unfinished" />
+        <translation>கோட்டிலிருந்து கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="217" />
         <source>Orthogonal From Line</source>
-        <translation type="unfinished" />
+        <translation>கோட்டிலிருந்து லம்பம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="218" />
         <source>From Point To Line</source>
-        <translation type="unfinished" />
+        <translation>புள்ளியிலிருந்து கோட்டுக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="221" />
         <source>Slice/Divide Line</source>
-        <translation type="unfinished" />
+        <translation>வெட்டு/பிரி கோடு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="222" />
         <source>Slice/Divide Circle</source>
-        <translation type="unfinished" />
+        <translation>வெட்டு/பிரி வட்டம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="229" />
         <source>Line of Points</source>
-        <translation type="unfinished" />
+        <translation>புள்ளிகளின் கோடு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="251" />
         <source>Center, &amp;Point</source>
-        <translation type="unfinished" />
+        <translation>மையம், &amp;புள்ளி</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252" />
         <source>By Arc</source>
-        <translation type="unfinished" />
+        <translation>வளைவு வழியாக</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="253" />
         <source>Center, &amp;Radius</source>
-        <translation type="unfinished" />
+        <translation>மையம், &amp;ஆரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="254" />
         <source>2 Points</source>
-        <translation type="unfinished" />
+        <translation>2 புள்ளிகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="255" />
         <source>2 Points, Radius</source>
-        <translation type="unfinished" />
+        <translation>2 புள்ளிகள், ஆரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="256" />
         <source>3 Points</source>
-        <translation type="unfinished" />
+        <translation>3 புள்ளிகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="257" />
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="276" />
         <source>&amp;Concentric</source>
-        <translation type="unfinished" />
+        <translation>&amp;ஒரே மையம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="258" />
         <source>Circle &amp;Inscribed</source>
-        <translation type="unfinished" />
+        <translation>வட்டம் &amp;உள்ளீடு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262" />
         <source>Tangential, 2 P&amp;oints</source>
-        <translation type="unfinished" />
+        <translation>தொடுகோடு, 2 ப&amp;ுள்ளிகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="268" />
         <source>&amp;Center, Point, Angles</source>
-        <translation type="unfinished" />
+        <translation>&amp;மையம், புள்ளி, கோணங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="271" />
         <source>&amp;3 Points</source>
-        <translation type="unfinished" />
+        <translation>&amp;3 புள்ளிகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="274" />
         <source>&amp;2 Points, Length</source>
-        <translation type="unfinished" />
+        <translation>&amp;2 புள்ளிகள், நீளம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="275" />
         <source>&amp;2 Points, Height</source>
-        <translation type="unfinished" />
+        <translation>&amp;2 புள்ளிகள், உயரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="277" />
         <source>Arc &amp;Tangential</source>
-        <translation type="unfinished" />
+        <translation>வளைவு &amp;தொடுகோடு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="289" />
         <source>&amp;Append spline point</source>
-        <translation type="unfinished" />
+        <translation>&amp;பிணைப்பு புள்ளியை இணைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="291" />
         <source>&amp;Insert spline points</source>
-        <translation type="unfinished" />
+        <translation>&amp;பிணைப்பு புள்ளிகளைச் செருகவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="302" />
         <source>&amp;Ellipse (Axis)</source>
-        <translation type="unfinished" />
+        <translation>&amp;நீள்வட்டம் (அச்சு)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303" />
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation type="unfinished" />
+        <translation>நீள்வட்ட &amp;வளைவு (அச்சு)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="304" />
         <source>Ellipse &amp;Foci Point</source>
-        <translation type="unfinished" />
+        <translation>நீள்வட்ட &amp;குவிய புள்ளி</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="305" />
         <source>Ellipse &amp;4 Point</source>
-        <translation type="unfinished" />
+        <translation>நீள்வட்ட &amp;4 புள்ளி</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="306" />
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation type="unfinished" />
+        <translation>நீள்வட்ட மையம் மற்றும் &amp;3 புள்ளிகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="307" />
         <source>Ellipse &amp;Inscribed</source>
-        <translation type="unfinished" />
+        <translation>நீள்வட்ட &amp;உள்ளீடு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="287" />
         <source>&amp;Spline</source>
-        <translation type="unfinished" />
+        <translation>&amp;பிணைப்பு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="288" />
         <source>&amp;Spline through points</source>
-        <translation type="unfinished" />
+        <translation>&amp;புள்ளிகள் வழியாக பிணைப்பு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="313" />
         <source>&amp;Polyline</source>
-        <translation type="unfinished" />
+        <translation>&amp;பலகோடு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="314" />
         <source>&amp;Add node</source>
-        <translation type="unfinished" />
+        <translation>&amp;முனை சேர்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="315" />
         <source>A&amp;ppend node</source>
-        <translation type="unfinished" />
+        <translation>முனையை &amp;இணைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="316" />
         <source>&amp;Delete node</source>
-        <translation type="unfinished" />
+        <translation>&amp;முனையை நீக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="317" />
         <source>Delete &amp;between two nodes</source>
-        <translation type="unfinished" />
+        <translation>&amp;இரண்டு முனைகளுக்கு இடையில் நீக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="318" />
         <source>&amp;Trim segments</source>
-        <translation type="unfinished" />
+        <translation>&amp;பகுதிகளை வெட்டவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="319" />
         <source>Create &amp;Equidistant Polylines</source>
-        <translation type="unfinished" />
+        <translation>&amp;சமதூர பலகோடுகளை உருவாக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="321" />
         <source>Polyline Arcs to Chords</source>
-        <translation type="unfinished" />
+        <translation>பலகோடு வளைவுகளை நாண்களாக</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="329" />
         <source>&amp;MText</source>
-        <translation type="unfinished" />
+        <translation>&amp;பலவரி உரை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="330" />
         <source>&amp;Text</source>
-        <translation type="unfinished" />
+        <translation>&amp;உரை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331" />
         <source>&amp;Hatch</source>
-        <translation type="unfinished" />
+        <translation>&amp;நிரப்பு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="332" />
         <source>Insert &amp;Image</source>
-        <translation type="unfinished" />
+        <translation>&amp;படத்தைச் செருகவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="339" />
         <source>&amp;Aligned</source>
-        <translation type="unfinished" />
+        <translation>&amp;சீரமைக்கப்பட்ட</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="340" />
         <source>&amp;Linear</source>
-        <translation type="unfinished" />
+        <translation>&amp;நேரியல்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="342" />
         <source>&amp;Vertical</source>
-        <translation type="unfinished" />
+        <translation>&amp;செங்குத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="343" />
         <source>&amp;Radial</source>
-        <translation type="unfinished" />
+        <translation>&amp;ஆர வடிவ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="344" />
         <source>&amp;Diametric</source>
-        <translation type="unfinished" />
+        <translation>&amp;விட்ட வடிவ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="345" />
         <source>&amp;Angular</source>
-        <translation type="unfinished" />
+        <translation>&amp;கோண வடிவ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="347" />
         <source>&amp;Leader</source>
-        <translation type="unfinished" />
+        <translation>&amp;முன்னோடி</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="368" />
         <source>&amp;Attributes</source>
-        <translation type="unfinished" />
+        <translation>&amp;பண்புகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="369" />
         <source>&amp;Delete</source>
-        <translation type="unfinished" />
+        <translation>&amp;நீக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="370" />
         <source>&amp;Move / Copy</source>
-        <translation type="unfinished" />
+        <translation>&amp;நகர்த்து / நகலெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="371" />
         <source>Re&amp;vert direction</source>
-        <translation type="unfinished" />
+        <translation>திசையை &amp;திருப்பு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="423" />
         <source>Caught Entity</source>
-        <translation type="unfinished" />
+        <translation>பிடிபட்ட பொருள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="489" />
         <source>Move to Bottom</source>
-        <translation type="unfinished" />
+        <translation>கீழே நகர்த்து</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="490" />
         <source>Lower After Entity</source>
-        <translation type="unfinished" />
+        <translation>பொருளுக்குப் பின் கீழே</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="491" />
         <source>Raise Over Entity</source>
-        <translation type="unfinished" />
+        <translation>பொருளுக்கு மேல் உயர்த்து</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="492" />
         <source>Move to Top</source>
-        <translation type="unfinished" />
+        <translation>மேலே நகர்த்து</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="565" />
         <source>Current &amp;Drawing Preferences</source>
-        <translation type="unfinished" />
+        <translation>தற்போதைய &amp;வரைபட விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="579" />
         <source>Print Pre&amp;view</source>
-        <translation type="unfinished" />
+        <translation>அச்சு முன்&amp;பார்வை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619" />
         <source>Custom Menu Creator</source>
-        <translation type="unfinished" />
+        <translation>தனிப்பயன் பட்டியல் உருவாக்கி</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620" />
         <source>Custom Toolbar Creator</source>
-        <translation type="unfinished" />
+        <translation>தனிப்பயன் கருவிப்பட்டை உருவாக்கி</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="641" />
         <source>&amp;Save View</source>
-        <translation type="unfinished" />
+        <translation>&amp;காட்சியை சேமி</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="643" />
         <source>Restore Current View</source>
-        <translation type="unfinished" />
+        <translation>தற்போதைய காட்சியை மீட்டமை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="644" />
         <source>Restore View 1</source>
-        <translation type="unfinished" />
+        <translation>காட்சி 1 ஐ மீட்டமை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="645" />
         <source>Restore View 2</source>
-        <translation type="unfinished" />
+        <translation>காட்சி 2 ஐ மீட்டமை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="646" />
         <source>Restore View 3</source>
-        <translation type="unfinished" />
+        <translation>காட்சி 3 ஐ மீட்டமை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="647" />
         <source>Restore View 4</source>
-        <translation type="unfinished" />
+        <translation>காட்சி 4 ஐ மீட்டமை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="648" />
         <source>Restore View 5</source>
-        <translation type="unfinished" />
+        <translation>காட்சி 5 ஐ மீட்டமை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="372" />
         <source>&amp;Rotate</source>
-        <translation type="unfinished" />
+        <translation>&amp;சுழற்று</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="373" />
         <source>&amp;Scale</source>
-        <translation type="unfinished" />
+        <translation>&amp;அளவு மாற்று</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="374" />
         <source>&amp;Mirror</source>
-        <translation type="unfinished" />
+        <translation>&amp;பிரதிபலிப்பு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="376" />
         <source>Rotate T&amp;wo</source>
-        <translation type="unfinished" />
+        <translation>இரண்டு &amp;சுழற்று</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="377" />
         <source>&amp;Properties</source>
-        <translation type="unfinished" />
+        <translation>&amp;பண்புகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378" />
         <source>&amp;Trim</source>
-        <translation type="unfinished" />
+        <translation>&amp;வெட்டு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="380" />
         <source>&amp;Lengthen</source>
-        <translation type="unfinished" />
+        <translation>&amp;நீட்டு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="382" />
         <source>&amp;Divide</source>
-        <translation type="unfinished" />
+        <translation>&amp;பிரி</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="383" />
         <source>&amp;Stretch</source>
-        <translation type="unfinished" />
+        <translation>&amp;நீட்டு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="384" />
         <source>&amp;Bevel</source>
-        <translation type="unfinished" />
+        <translation>&amp;சாய்வு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="385" />
         <source>&amp;Fillet</source>
-        <translation type="unfinished" />
+        <translation>&amp;வளைவு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="386" />
         <source>&amp;Explode Text into Letters</source>
-        <translation type="unfinished" />
+        <translation>&amp;உரையை எழுத்துக்களாக வெடிக்கச் செய்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="500" />
         <source>&amp;Distance Point to Point</source>
-        <translation type="unfinished" />
+        <translation>&amp;புள்ளி முதல் புள்ளி வரை தூரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="503" />
         <source>An&amp;gle between two lines</source>
-        <translation type="unfinished" />
+        <translation>இரண்டு கோடுகளுக்கு &amp;இடையிலான கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="505" />
         <source>Polygonal &amp;Area</source>
-        <translation type="unfinished" />
+        <translation>பலகோண &amp;பரப்பு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="662" />
         <source>&amp;Undo</source>
-        <translation type="unfinished" />
+        <translation>&amp;பின்வாங்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="663" />
         <source>&amp;Redo</source>
-        <translation type="unfinished" />
+        <translation>&amp;மீண்டும் செய்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="670" />
         <source>Regenerate Dimensions</source>
-        <translation type="unfinished" />
+        <translation>பரிமாணங்களை மீண்டும் உருவாக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="673" />
         <source>&amp;Dimension Styles</source>
-        <translation type="unfinished" />
+        <translation>&amp;பரிமாண பாணிகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="683" />
         <source>Pick Point</source>
-        <translation type="unfinished" />
+        <translation>புள்ளியைத் தேர்ந்தெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="684" />
         <source>Pick Distance</source>
-        <translation type="unfinished" />
+        <translation>தூரத்தைத் தேர்ந்தெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="685" />
         <source>Pick Angle</source>
-        <translation type="unfinished" />
+        <translation>கோணத்தைத் தேர்ந்தெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="691" />
         <source>Cu&amp;t</source>
-        <translation type="unfinished" />
+        <translation>வெ&amp;ட்டு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="693" />
         <source>&amp;Copy</source>
-        <translation type="unfinished" />
+        <translation>&amp;நகலெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="695" />
         <source>&amp;Paste</source>
-        <translation type="unfinished" />
+        <translation>&amp;ஒட்டு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="190" />
         <source>Polygo&amp;n (Tan,Tan)</source>
-        <translation type="unfinished" />
+        <translation>பலகோ&amp;ணம் (தொடு,தொடு)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="230" />
         <source>Middle Points</source>
-        <translation type="unfinished" />
+        <translation>நடு புள்ளிகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="231" />
         <source>Lattice of Points</source>
-        <translation type="unfinished" />
+        <translation>புள்ளிகளின் கட்டம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="232" />
         <source>Select Points</source>
-        <translation type="unfinished" />
+        <translation>புள்ளிகளைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="233" />
         <source>Paste to Points</source>
-        <translation type="unfinished" />
+        <translation>புள்ளிகளுக்கு ஒட்டு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="269" />
         <source>&amp;Center, Point, Chord</source>
-        <translation type="unfinished" />
+        <translation>&amp;மையம், புள்ளி, நாண்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="270" />
         <source>&amp;Center, Point, Arc Angle</source>
-        <translation type="unfinished" />
+        <translation>&amp;மையம், புள்ளி, வளைவு கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="272" />
         <source>&amp;2 Points, Angle</source>
-        <translation type="unfinished" />
+        <translation>&amp;2 புள்ளிகள், கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="273" />
         <source>&amp;2 Points, Radius</source>
-        <translation type="unfinished" />
+        <translation>&amp;2 புள்ளிகள், ஆரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="284" />
         <source>Para&amp;bola 4 points</source>
-        <translation type="unfinished" />
+        <translation>பரபோ&amp;லா 4 புள்ளிகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="285" />
         <source>Parabola &amp;Focus Directrix</source>
-        <translation type="unfinished" />
+        <translation>பரபோலா &amp;குவிய நேர்கோடு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="290" />
         <source>&amp;Remove spline points</source>
-        <translation type="unfinished" />
+        <translation>&amp;பிணைப்பு புள்ளிகளை நீக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="292" />
         <source>&amp;Explode spline to lines</source>
-        <translation type="unfinished" />
+        <translation>&amp;பிணைப்பை கோடுகளாக வெடிக்கச் செய்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="293" />
         <source>&amp;Spline from polyline</source>
-        <translation type="unfinished" />
+        <translation>&amp;பலகோட்டிலிருந்து பிணைப்பு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="294" />
         <source>&amp;Remove between two points</source>
-        <translation type="unfinished" />
+        <translation>&amp;இரண்டு புள்ளிகளுக்கு இடையில் நீக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="300" />
         <source>&amp;Ellipse (1 Point)</source>
-        <translation type="unfinished" />
+        <translation>&amp;நீள்வட்டம் (1 புள்ளி)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="301" />
         <source>&amp;Ellipse Arc (1 Point)</source>
-        <translation type="unfinished" />
+        <translation>&amp;நீள்வட்ட வளைவு (1 புள்ளி)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="320" />
         <source>Polyline from Existing &amp;Segments</source>
-        <translation type="unfinished" />
+        <translation>இருக்கும் &amp;பகுதிகளிலிருந்து பலகோடு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="322" />
         <source>Polyline Change Segment Type</source>
-        <translation type="unfinished" />
+        <translation>பலகோடு பகுதி வகையை மாற்று</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="333" />
         <source>Bounding &amp;Box</source>
-        <translation type="unfinished" />
+        <translation>வரம்பு &amp;பெட்டி</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="348" />
         <source>&amp;Baseline</source>
-        <translation type="unfinished" />
+        <translation>&amp;அடிப்படை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="349" />
         <source>&amp;Continue</source>
-        <translation type="unfinished" />
+        <translation>&amp;தொடர்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="388" />
         <source>Break/Divide</source>
-        <translation type="unfinished" />
+        <translation>வெட்டு/பிரி</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="389" />
         <source>Line Gap</source>
-        <translation type="unfinished" />
+        <translation>கோடு இடைவெளி</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="390" />
         <source>Line Join</source>
-        <translation type="unfinished" />
+        <translation>கோடு இணைப்பு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="391" />
         <source>Duplicate</source>
-        <translation type="unfinished" />
+        <translation>நகல்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="392" />
         <source>Align</source>
-        <translation type="unfinished" />
+        <translation>சீரமை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="393" />
         <source>Align One</source>
-        <translation type="unfinished" />
+        <translation>ஒன்றை சீரமை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="394" />
         <source>Align Reference Points</source>
-        <translation type="unfinished" />
+        <translation>குறிப்பு புள்ளிகளை சீரமை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="400" />
         <source>Update Current Pen by Active Layer' Pen</source>
-        <translation type="unfinished" />
+        <translation>செயலில் உள்ள அடுக்கின் பேனாவால் தற்போதைய பேனாவை புதுப்பி</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="406" />
         <source>&amp;Pick Pen From Entity</source>
-        <translation type="unfinished" />
+        <translation>பொருளிலிருந்து &amp;பேனாவைத் தேர்ந்தெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="407" />
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation type="unfinished" />
+        <translation>பொருளிலிருந்து &amp;பேனாவைத் தேர்ந்தெடு (தீர்க்கப்பட்டது)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="408" />
         <source>Apply Pen to Entity</source>
-        <translation type="unfinished" />
+        <translation>பொருளுக்கு பேனாவைப் பயன்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="409" />
         <source>Copy Pen</source>
-        <translation type="unfinished" />
+        <translation>பேனாவை நகலெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="415" />
         <source>Show Entity Description</source>
-        <translation type="unfinished" />
+        <translation>பொருள் விளக்கத்தைக் காட்டு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="418" />
         <source>Enable Info Cursor</source>
-        <translation type="unfinished" />
+        <translation>தகவல் சுட்டியை இயக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="419" />
         <source>Absolute Pos</source>
-        <translation type="unfinished" />
+        <translation>தனிப்பட்ட நிலை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74" />
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="420" />
         <source>Snap</source>
-        <translation type="unfinished" />
+        <translation>ஒட்டு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="53" />
         <source>Block</source>
-        <translation type="unfinished" />
+        <translation>தொகுதி</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="53" />
         <source>Block related operations</source>
-        <translation type="unfinished" />
+        <translation>தொகுதி தொடர்பான செயல்பாடுகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="54" />
         <source>Circle</source>
-        <translation type="unfinished" />
+        <translation>வட்டம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="54" />
         <source>Circle drawing commands</source>
-        <translation type="unfinished" />
+        <translation>வட்டம் வரைதல் கட்டளைகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="55" />
         <source>Arc</source>
-        <translation type="unfinished" />
+        <translation>வளைவு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="55" />
         <source>Arc drawing commands</source>
-        <translation type="unfinished" />
+        <translation>வளைவு வரைதல் கட்டளைகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="56" />
         <source>Spline</source>
-        <translation type="unfinished" />
+        <translation>பிணைப்பு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="56" />
         <source>Spline drawing commands</source>
-        <translation type="unfinished" />
+        <translation>பிணைப்பு வரைதல் கட்டளைகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="57" />
         <source>Edit</source>
-        <translation type="unfinished" />
+        <translation>திருத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="57" />
         <source>Editing operations</source>
-        <translation type="unfinished" />
+        <translation>திருத்தும் செயல்பாடுகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="58" />
         <source>Ellipse</source>
-        <translation type="unfinished" />
+        <translation>நீள்வட்டம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="58" />
         <source>Ellipse drawing commands</source>
-        <translation type="unfinished" />
+        <translation>நீள்வட்ட வரைதல் கட்டளைகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59" />
         <source>File</source>
-        <translation type="unfinished" />
+        <translation>கோப்பு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59" />
         <source>File Operations</source>
-        <translation type="unfinished" />
+        <translation>கோப்பு செயல்பாடுகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60" />
         <source>Dimension</source>
-        <translation type="unfinished" />
+        <translation>பரிமாணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60" />
         <source>Dimensions creation commands</source>
-        <translation type="unfinished" />
+        <translation>பரிமாண உருவாக்க கட்டளைகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="61" />
         <source>Info</source>
-        <translation type="unfinished" />
+        <translation>தகவல்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="61" />
         <source>Informational commands</source>
-        <translation type="unfinished" />
+        <translation>தகவல் கட்டளைகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="62" />
         <source>Layer</source>
-        <translation type="unfinished" />
+        <translation>அடுக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="62" />
         <source>Layers operations</source>
-        <translation type="unfinished" />
+        <translation>அடுக்கு செயல்பாடுகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="63" />
         <source>Line</source>
-        <translation type="unfinished" />
+        <translation>கோடு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="63" />
         <source>Line drawing commands</source>
-        <translation type="unfinished" />
+        <translation>கோடு வரைதல் கட்டளைகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="64" />
         <source>Point</source>
-        <translation type="unfinished" />
+        <translation>புள்ளி</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="64" />
         <source>Point drawing commands</source>
-        <translation type="unfinished" />
+        <translation>புள்ளி வரைதல் கட்டளைகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="65" />
         <source>Polygon</source>
-        <translation type="unfinished" />
+        <translation>பலகோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="65" />
         <source>Polygon drawing commands</source>
-        <translation type="unfinished" />
+        <translation>பலகோண வரைதல் கட்டளைகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66" />
         <source>Modify</source>
-        <translation type="unfinished" />
+        <translation>மாற்று</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66" />
         <source>Modification operations</source>
-        <translation type="unfinished" />
+        <translation>மாற்றும் செயல்பாடுகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67" />
         <source>Options</source>
-        <translation type="unfinished" />
+        <translation>விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67" />
         <source>Options management</source>
-        <translation type="unfinished" />
+        <translation>விருப்பங்கள் மேலாண்மை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="68" />
         <source>Other</source>
-        <translation type="unfinished" />
+        <translation>மற்றவை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="68" />
         <source>Other operations</source>
-        <translation type="unfinished" />
+        <translation>மற்ற செயல்பாடுகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="69" />
         <source>Relative Zero</source>
-        <translation type="unfinished" />
+        <translation>உறவு பூஜ்யம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="70" />
         <source>Polyline</source>
-        <translation type="unfinished" />
+        <translation>பலகோடு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="70" />
         <source>Polyline drawing commands</source>
-        <translation type="unfinished" />
+        <translation>பலகோடு வரைதல் கட்டளைகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="71" />
         <source>PenTB</source>
-        <translation type="unfinished" />
+        <translation>பேனாTB</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="71" />
         <source>Pen related operations</source>
-        <translation type="unfinished" />
+        <translation>பேனா தொடர்பான செயல்பாடுகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="72" />
         <source>Restriction</source>
-        <translation type="unfinished" />
+        <translation>கட்டுப்பாடு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="72" />
         <source>Snap restrictions</source>
-        <translation type="unfinished" />
+        <translation>ஒட்டு கட்டுப்பாடுகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="73" />
         <source>Select</source>
-        <translation type="unfinished" />
+        <translation>தேர்ந்தெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="73" />
         <source>Entity selection operations</source>
-        <translation type="unfinished" />
+        <translation>பொருள் தேர்வு செயல்பாடுகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74" />
         <source>Snapping operations</source>
-        <translation type="unfinished" />
+        <translation>ஒட்டு செயல்பாடுகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="75" />
         <source>Snap Extras</source>
-        <translation type="unfinished" />
+        <translation>கூடுதல் ஒட்டுகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="75" />
         <source>Additional Snaps</source>
-        <translation type="unfinished" />
+        <translation>கூடுதல் ஒட்டுகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="76" />
         <source>View</source>
-        <translation type="unfinished" />
+        <translation>காட்சி</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="76" />
         <source>View related operations</source>
-        <translation type="unfinished" />
+        <translation>காட்சி தொடர்பான செயல்பாடுகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77" />
         <source>Named Views</source>
-        <translation type="unfinished" />
+        <translation>பெயரிடப்பட்ட காட்சிகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77" />
         <source>Persistent Views operations</source>
-        <translation type="unfinished" />
+        <translation>நிலையான காட்சி செயல்பாடுகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78" />
         <source>Workspaces</source>
-        <translation type="unfinished" />
+        <translation>பணியிடங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78" />
         <source>Workspaces operations</source>
-        <translation type="unfinished" />
+        <translation>பணியிட செயல்பாடுகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79" />
         <source>UCS</source>
-        <translation type="unfinished" />
+        <translation>UCS</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79" />
         <source>UCS operations</source>
-        <translation type="unfinished" />
+        <translation>UCS செயல்பாடுகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="80" />
         <source>Widgets</source>
-        <translation type="unfinished" />
+        <translation>விட்ஜெட்டுகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="80" />
         <source>Widgets management</source>
-        <translation type="unfinished" />
+        <translation>விட்ஜெட் மேலாண்மை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="81" />
         <source>InfoCursor</source>
-        <translation type="unfinished" />
+        <translation>தகவல் சுட்டி</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="81" />
         <source>Informational Cursor</source>
-        <translation type="unfinished" />
+        <translation>தகவல் சுட்டி</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="82" />
         <source>Entity Layer</source>
-        <translation type="unfinished" />
+        <translation>பொருள் அடுக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="82" />
         <source>Entity's Layer</source>
-        <translation type="unfinished" />
+        <translation>பொருளின் அடுக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="83" />
         <source>Interactive</source>
-        <translation type="unfinished" />
+        <translation>ஊடாடும்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="83" />
         <source>Interactive Pick</source>
-        <translation type="unfinished" />
+        <translation>ஊடாடும் தேர்வு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="104" />
         <source>Activate Entity's Layer</source>
-        <translation type="unfinished" />
+        <translation>பொருளின் அடுக்கை செயல்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="105" />
         <source>Hide Entity's Layer</source>
-        <translation type="unfinished" />
+        <translation>பொருளின் அடுக்கை மறை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="106" />
         <source>Hide Other Layers than Entity's</source>
-        <translation type="unfinished" />
+        <translation>பொருளின் அடுக்கைத் தவிர மற்ற அடுக்குகளை மறை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="107" />
         <source>Lock Entity's Layer</source>
-        <translation type="unfinished" />
+        <translation>பொருளின் அடுக்கை பூட்டு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="108" />
         <source>Toggle Entity's Layer Construction</source>
-        <translation type="unfinished" />
+        <translation>பொருளின் அடுக்கு கட்டுமானத்தை மாற்று</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109" />
         <source>Toggle Entity's Layer Printing</source>
-        <translation type="unfinished" />
+        <translation>பொருளின் அடுக்கு அச்சை மாற்று</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="219" />
         <source>Centerline</source>
-        <translation type="unfinished" />
+        <translation>மையக்கோடு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="220" />
         <source>Center Mark</source>
-        <translation type="unfinished" />
+        <translation>மையக் குறி</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="259" />
         <source>Tangential 2 Entities, Radius</source>
-        <translation type="unfinished" />
+        <translation>தொடுகோடு 2 பொருட்கள், ஆரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="260" />
         <source>Tangential 2 Entities, 1 Point</source>
-        <translation type="unfinished" />
+        <translation>தொடுகோடு 2 பொருட்கள், 1 புள்ளி</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261" />
         <source>Tangential &amp;3 Entities</source>
-        <translation type="unfinished" />
+        <translation>தொடுகோடு &amp;3 பொருட்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="278" />
         <source>&amp;Dual Curve</source>
-        <translation type="unfinished" />
+        <translation>&amp;இரட்டை வளைவு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="286" />
         <source>&amp;Hyperbola &amp;Foci Point</source>
-        <translation type="unfinished" />
+        <translation>&amp;ஹைப்பர்போலா &amp;குவிய புள்ளி</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="350" />
         <source>&amp;Ordinate</source>
-        <translation type="unfinished" />
+        <translation>&amp;ஒருங்கிணைப்பு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="351" />
         <source>Select Ordinates by base</source>
-        <translation type="unfinished" />
+        <translation>அடிப்படையால் ஒருங்கிணைப்புகளைத் தேர்ந்தெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="352" />
         <source>Ordinates Re-base</source>
-        <translation type="unfinished" />
+        <translation>ஒருங்கிணைப்புகளை மீட்டமை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="353" />
         <source>Feature Control Frame</source>
-        <translation type="unfinished" />
+        <translation>அம்சக் கட்டுப்பாட்டு சட்டகம்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="354" />
         <source>Copy Style</source>
-        <translation type="unfinished" />
+        <translation>பாணியை நகலெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="355" />
         <source>Modify Style</source>
-        <translation type="unfinished" />
+        <translation>பாணியை மாற்று</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="421" />
         <source>Relative</source>
-        <translation type="unfinished" />
+        <translation>உறவு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="422" />
         <source>Prompt</source>
-        <translation type="unfinished" />
+        <translation>தூண்டல்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="429" />
         <source>Snap on grid</source>
-        <translation type="unfinished" />
+        <translation>கட்டத்தில் ஒட்டு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="430" />
         <source>Snap Middle Manual</source>
-        <translation type="unfinished" />
+        <translation>நடு ஒட்டு கைமுறை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="431" />
         <source>Snap on Endpoints</source>
-        <translation type="unfinished" />
+        <translation>முனைகளில் ஒட்டு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="432" />
@@ -30734,7 +30745,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="582" />
         <source>Select to rotate (Enter to complete)</source>
-        <translation type="unfinished" />
+        <translation>சுழற்ற தேர்ந்தெடுக்கவும் (முடிக்க Enter அழுத்தவும்)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="132" />
@@ -30742,24 +30753,24 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="201" />
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="241" />
         <source>Rotation</source>
-        <translation type="unfinished" />
+        <translation>சுழற்சி</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="133" />
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="202" />
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="242" />
         <source>Angle:</source>
-        <translation type="unfinished" />
+        <translation>கோணம்:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="203" />
         <source>Source Point:</source>
-        <translation type="unfinished" />
+        <translation>மூல புள்ளி:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="204" />
         <source>Target Point:</source>
-        <translation type="unfinished" />
+        <translation>இலக்கு புள்ளி:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="136" />
@@ -30767,55 +30778,55 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="205" />
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="245" />
         <source>Offset:</source>
-        <translation type="unfinished" />
+        <translation>விலக்கல்:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="134" />
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="146" />
         <source>Reference Point:</source>
-        <translation type="unfinished" />
+        <translation>குறிப்பு புள்ளி:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="135" />
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="147" />
         <source>Center Point:</source>
-        <translation type="unfinished" />
+        <translation>மையப் புள்ளி:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="248" />
         <source>Second Angle:</source>
-        <translation type="unfinished" />
+        <translation>இரண்டாவது கோணம்:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="582" />
         <source>Rotate immediately after selection</source>
-        <translation type="unfinished" />
+        <translation>தேர்வுக்குப் பின் உடனடியாக சுழற்றவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="582" />
         <source>Select contour</source>
-        <translation type="unfinished" />
+        <translation>வெளிப்புறத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="588" />
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="591" />
         <source>Snap to center of selection</source>
-        <translation type="unfinished" />
+        <translation>தேர்வின் மையத்திற்கு ஒட்டு</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="591" />
         <source>Specify rotation center</source>
-        <translation type="unfinished" />
+        <translation>சுழற்சி மையத்தை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="594" />
         <source>Specify target point to rotate to</source>
-        <translation type="unfinished" />
+        <translation>சுழற்றுவதற்கான இலக்கு புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate.cpp" line="597" />
         <source>Specify target point for rotation around reference point</source>
-        <translation type="unfinished" />
+        <translation>குறிப்பு புள்ளியைச் சுற்றி சுழற்சிக்கான இலக்கு புள்ளியை குறிப்பிடவும்</translation>
     </message>
 </context>
 <context>
@@ -30823,52 +30834,52 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="93" />
         <source>Rotating Twice</source>
-        <translation type="unfinished" />
+        <translation>இரண்டு முறை சுழற்றுதல்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="94" />
         <source>Center 1:</source>
-        <translation type="unfinished" />
+        <translation>மையம் 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="95" />
         <source>Angle 1:</source>
-        <translation type="unfinished" />
+        <translation>கோணம் 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="96" />
         <source>Center 2:</source>
-        <translation type="unfinished" />
+        <translation>மையம் 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="97" />
         <source>Angle 2:</source>
-        <translation type="unfinished" />
+        <translation>கோணம் 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="170" />
         <source>Select for two axis rotation  (Enter to complete)</source>
-        <translation type="unfinished" />
+        <translation>இரண்டு அச்சு சுழற்சிக்கு தேர்ந்தெடுக்கவும் (முடிக்க Enter அழுத்தவும்)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="170" />
         <source>Rotate 2 Axis immediately after selection</source>
-        <translation type="unfinished" />
+        <translation>தேர்வுக்குப் பின் உடனடியாக 2 அச்சு சுழற்றவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="170" />
         <source>Select contour</source>
-        <translation type="unfinished" />
+        <translation>வெளிப்புறத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="176" />
         <source>Specify absolute reference point</source>
-        <translation type="unfinished" />
+        <translation>தனிப்பட்ட குறிப்பு புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyrotate2.cpp" line="179" />
         <source>Specify relative reference point</source>
-        <translation type="unfinished" />
+        <translation>உறவு குறிப்பு புள்ளியை குறிப்பிடவும்</translation>
     </message>
 </context>
 <context>
@@ -30876,38 +30887,38 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="229" />
         <source>Round</source>
-        <translation type="unfinished" />
+        <translation>வட்டமாக்கு</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="230" />
         <source>Point 1:</source>
-        <translation type="unfinished" />
+        <translation>புள்ளி 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="231" />
         <source>Point 2:</source>
-        <translation type="unfinished" />
+        <translation>புள்ளி 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="347" />
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="362" />
         <source>Not a valid expression</source>
-        <translation type="unfinished" />
+        <translation>செல்லுபடியாகும் வெளிப்பாடு அல்ல</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="424" />
         <source>Specify second entity</source>
-        <translation type="unfinished" />
+        <translation>இரண்டாவது பொருளை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="427" />
         <source>Enter radius:</source>
-        <translation type="unfinished" />
+        <translation>ஆரத்தை உள்ளிடவும்:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421" />
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="unfinished" />
+        <translation>முதல் பொருளை குறிப்பிடவும் அல்லது ஆரத்தை உள்ளிடவும் &lt;%1&gt;</translation>
     </message>
 </context>
 <context>
@@ -30915,77 +30926,77 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="169" />
         <source>Scale</source>
-        <translation type="unfinished" />
+        <translation>அளவு மாற்று</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="170" />
         <source>Center:</source>
-        <translation type="unfinished" />
+        <translation>மையம்:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="171" />
         <source>Source Point:</source>
-        <translation type="unfinished" />
+        <translation>மூல புள்ளி:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="172" />
         <source>Target Point:</source>
-        <translation type="unfinished" />
+        <translation>இலக்கு புள்ளி:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="173" />
         <source>Offset:</source>
-        <translation type="unfinished" />
+        <translation>விலக்கல்:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="176" />
         <source>Scale by X:</source>
-        <translation type="unfinished" />
+        <translation>X ஆல் அளவு மாற்று:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="177" />
         <source>Scale by Y:</source>
-        <translation type="unfinished" />
+        <translation>Y ஆல் அளவு மாற்று:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="362" />
         <source>Specify scale center</source>
-        <translation type="unfinished" />
+        <translation>அளவு மாற்று மையத்தை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="362" />
         <source>Snap to center of selection</source>
-        <translation type="unfinished" />
+        <translation>தேர்வின் மையத்திற்கு ஒட்டு</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="366" />
         <source>Specify source point</source>
-        <translation type="unfinished" />
+        <translation>மூல புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="369" />
         <source>Specify target point</source>
-        <translation type="unfinished" />
+        <translation>இலக்கு புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="369" />
         <source>Free snap</source>
-        <translation type="unfinished" />
+        <translation>சுதந்திர ஒட்டு</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="378" />
         <source>Select to scale  (Enter to complete)</source>
-        <translation type="unfinished" />
+        <translation>அளவு மாற்ற தேர்ந்தெடுக்கவும் (முடிக்க Enter அழுத்தவும்)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="378" />
         <source>Scale immediately after selection</source>
-        <translation type="unfinished" />
+        <translation>தேர்வுக்குப் பின் உடனடியாக அளவு மாற்று</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyscale.cpp" line="378" />
         <source>Select contour</source>
-        <translation type="unfinished" />
+        <translation>வெளிப்புறத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -30995,53 +31006,53 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="91" />
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="111" />
         <source>Stretch</source>
-        <translation type="unfinished" />
+        <translation>நீட்டு</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="80" />
         <source>Start Corner:</source>
-        <translation type="unfinished" />
+        <translation>தொடக்க மூலை:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="81" />
         <source>End Corner:</source>
-        <translation type="unfinished" />
+        <translation>முடிவு மூலை:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="92" />
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="112" />
         <source>Reference Point:</source>
-        <translation type="unfinished" />
+        <translation>குறிப்பு புள்ளி:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="113" />
         <source>Target Point:</source>
-        <translation type="unfinished" />
+        <translation>இலக்கு புள்ளி:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="114" />
         <source>Offset:</source>
-        <translation type="unfinished" />
+        <translation>விலக்கல்:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="196" />
         <source>Specify first corner</source>
-        <translation type="unfinished" />
+        <translation>முதல் மூலையை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="199" />
         <source>Specify second corner</source>
-        <translation type="unfinished" />
+        <translation>இரண்டாவது மூலையை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="202" />
         <source>Specify reference point</source>
-        <translation type="unfinished" />
+        <translation>குறிப்பு புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifystretch.cpp" line="205" />
         <source>Specify target point</source>
-        <translation type="unfinished" />
+        <translation>இலக்கு புள்ளியை குறிப்பிடவும்</translation>
     </message>
 </context>
 <context>
@@ -31049,42 +31060,42 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="112" />
         <source>Trim</source>
-        <translation type="unfinished" />
+        <translation>வெட்டு</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="112" />
         <source>Trim Two</source>
-        <translation type="unfinished" />
+        <translation>இரண்டை வெட்டு</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="114" />
         <source>Intersection:</source>
-        <translation type="unfinished" />
+        <translation>குறுக்கீடு:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="116" />
         <source>Intersection 2:</source>
-        <translation type="unfinished" />
+        <translation>குறுக்கீடு 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="200" />
         <source>Select first trim entity</source>
-        <translation type="unfinished" />
+        <translation>முதல் வெட்டு பொருளைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="202" />
         <source>Select limiting entity</source>
-        <translation type="unfinished" />
+        <translation>வரம்பு பொருளைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="207" />
         <source>Select second trim entity</source>
-        <translation type="unfinished" />
+        <translation>இரண்டாவது வெட்டு பொருளைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrim.cpp" line="209" />
         <source>Select entity to trim</source>
-        <translation type="unfinished" />
+        <translation>வெட்ட வேண்டிய பொருளைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -31092,22 +31103,22 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="173" />
         <source>No entity found.</source>
-        <translation type="unfinished" />
+        <translation>பொருள் கிடைக்கவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="180" />
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="unfinished" />
+        <translation>தேர்ந்தெடுக்கப்பட்ட பொருள் அணு பொருள் அல்ல அல்லது வெட்ட முடியாது.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="205" />
         <source>Not a valid expression</source>
-        <translation type="unfinished" />
+        <translation>செல்லுபடியாகும் வெளிப்பாடு அல்ல</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifytrimamount.cpp" line="236" />
         <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="unfinished" />
+        <translation>வெட்ட வேண்டிய கோடு/வளைவைத் தேர்ந்தெடுக்கவும் அல்லது நீள மதிப்பை உள்ளிடவும்:</translation>
     </message>
 </context>
 <context>
@@ -31115,27 +31126,27 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="109" />
         <source>No Entity found.</source>
-        <translation type="unfinished" />
+        <translation>பொருள் கிடைக்கவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="126" />
         <source>Choose entities (Enter to Complete)</source>
-        <translation type="unfinished" />
+        <translation>பொருட்களைத் தேர்ந்தெடுக்கவும் (முடிக்க Enter அழுத்தவும்)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="126" />
         <source>Order immediately after selection</source>
-        <translation type="unfinished" />
+        <translation>தேர்வுக்குப் பின் உடனடியாக வரிசைப்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="126" />
         <source>Select contour</source>
-        <translation type="unfinished" />
+        <translation>வெளிப்புறத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionorder.cpp" line="130" />
         <source>Choose entity for order</source>
-        <translation type="unfinished" />
+        <translation>வரிசைப்படுத்த பொருளைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -31144,32 +31155,32 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="102" />
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="129" />
         <source>No Entity found.</source>
-        <translation type="unfinished" />
+        <translation>பொருள் கிடைக்கவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="104" />
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished" />
+        <translation>பொருள் பலகோடாக இருக்க வேண்டும்.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="131" />
         <source>Adding point is invalid.</source>
-        <translation type="unfinished" />
+        <translation>சேர்க்கும் புள்ளி செல்லாது.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="136" />
         <source>Adding point is not on entity.</source>
-        <translation type="unfinished" />
+        <translation>சேர்க்கும் புள்ளி பொருளில் இல்லை.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="168" />
         <source>Specify polyline to add nodes</source>
-        <translation type="unfinished" />
+        <translation>முனைகளைச் சேர்க்க பலகோட்டை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineadd.cpp" line="171" />
         <source>Specify adding node's point</source>
-        <translation type="unfinished" />
+        <translation>சேர்க்கும் முனையின் புள்ளியை குறிப்பிடவும்</translation>
     </message>
 </context>
 <context>
@@ -31177,37 +31188,37 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="119" />
         <source>No Entity found.</source>
-        <translation type="unfinished" />
+        <translation>பொருள் கிடைக்கவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="122" />
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished" />
+        <translation>பொருள் பலகோடாக இருக்க வேண்டும்.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="162" />
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="unfinished" />
+        <translation>இருக்கும் பலகோட்டின் தொடக்கம் அல்லது முடிவுக்கு அருகில் எங்காவது கிளிக் செய்யவும்.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="285" />
         <source>Enter number of polylines</source>
-        <translation type="unfinished" />
+        <translation>பலகோடுகளின் எண்ணிக்கையை உள்ளிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="299" />
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="unfinished" />
+        <translation>பலகோட்டை தொடக்கம் அல்லது முடிவுப் புள்ளிக்கு அருகில் குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="125" />
         <source>Can not append nodes in a closed polyline.</source>
-        <translation type="unfinished" />
+        <translation>மூடிய பலகோட்டில் முனைகளை இணைக்க முடியாது.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineappend.cpp" line="319" />
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished" />
+        <translation>பின்வாங்க முடியாது: இன்னும் போதுமான பொருட்கள் வரையறுக்கப்படவில்லை.</translation>
     </message>
 </context>
 <context>
@@ -31216,32 +31227,32 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="92" />
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="112" />
         <source>No Entity found.</source>
-        <translation type="unfinished" />
+        <translation>பொருள் கிடைக்கவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="94" />
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished" />
+        <translation>பொருள் பலகோடாக இருக்க வேண்டும்.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="142" />
         <source>Specify polyline to delete node</source>
-        <translation type="unfinished" />
+        <translation>முனையை நீக்க பலகோட்டை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="145" />
         <source>Specify deleting node's point</source>
-        <translation type="unfinished" />
+        <translation>நீக்கும் முனையின் புள்ளியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="128" />
         <source>Deleting point is invalid.</source>
-        <translation type="unfinished" />
+        <translation>நீக்கும் புள்ளி செல்லாது.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedel.cpp" line="119" />
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished" />
+        <translation>நீக்கும் புள்ளி பொருளில் இல்லை.</translation>
     </message>
 </context>
 <context>
@@ -31250,49 +31261,49 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="116" />
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="136" />
         <source>No Entity found.</source>
-        <translation type="unfinished" />
+        <translation>பொருள் கிடைக்கவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="118" />
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished" />
+        <translation>பொருள் பலகோடாக இருக்க வேண்டும்.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="143" />
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="166" />
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished" />
+        <translation>நீக்கும் புள்ளி பொருளில் இல்லை.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="158" />
         <source>No polyline found.</source>
-        <translation type="unfinished" />
+        <translation>பலகோடு கிடைக்கவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="177" />
         <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="unfinished" />
+        <translation>தேர்ந்தெடுக்கப்பட்ட புள்ளிகளுக்கு இடையில் குறைந்தது இரண்டு பலகோடு பகுதிகள் இருக்க வேண்டும்.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="195" />
         <source>Specify polyline to delete between two nodes</source>
-        <translation type="unfinished" />
+        <translation>இரண்டு முனைகளுக்கு இடையில் நீக்க பலகோட்டை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="198" />
         <source>Specify first node</source>
-        <translation type="unfinished" />
+        <translation>முதல் முனையை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="201" />
         <source>Specify second node</source>
-        <translation type="unfinished" />
+        <translation>இரண்டாவது முனையை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="151" />
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinedelbetween.cpp" line="182" />
         <source>Deleting point is invalid.</source>
-        <translation type="unfinished" />
+        <translation>நீக்கும் புள்ளி செல்லாது.</translation>
     </message>
 </context>
 <context>
@@ -31300,17 +31311,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="321" />
         <source>No Entity found.</source>
-        <translation type="unfinished" />
+        <translation>பொருள் கிடைக்கவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="323" />
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished" />
+        <translation>பொருள் பலகோடாக இருக்க வேண்டும்.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylineequidistant.cpp" line="381" />
         <source>Choose the original polyline</source>
-        <translation type="unfinished" />
+        <translation>அசல் பலகோட்டைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -31318,23 +31329,23 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="333" />
         <source>No Entity found.</source>
-        <translation type="unfinished" />
+        <translation>பொருள் கிடைக்கவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="357" />
         <source>Choose one of the segments on the original polyline</source>
-        <translation type="unfinished" />
+        <translation>அசல் பலகோட்டில் உள்ள பகுதிகளில் ஒன்றைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="335" />
         <source>Entity can not be a closed polyline.</source>
-        <translation type="unfinished" />
+        <translation>பொருள் மூடிய பலகோடாக இருக்க முடியாது.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="63" />
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinesegment.cpp" line="84" />
         <source>Polyline created</source>
-        <translation type="unfinished" />
+        <translation>பலகோடு உருவாக்கப்பட்டது</translation>
     </message>
 </context>
 <context>
@@ -31342,37 +31353,37 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="111" />
         <source>No Entity found.</source>
-        <translation type="unfinished" />
+        <translation>பொருள் கிடைக்கவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="113" />
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished" />
+        <translation>பொருள் பலகோடாக இருக்க வேண்டும்.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="138" />
         <source>First segment should be on selected polyline.</source>
-        <translation type="unfinished" />
+        <translation>முதல் பகுதி தேர்ந்தெடுக்கப்பட்ட பலகோட்டில் இருக்க வேண்டும்.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="150" />
         <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="unfinished" />
+        <translation>இரண்டாவது பகுதி தேர்ந்தெடுக்கப்பட்ட பலகோட்டில் இருக்க வேண்டும் மற்றும் முதல் ஒன்றுக்கு சமமாக இருக்கக் கூடாது.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="183" />
         <source>Specify polyline to trim</source>
-        <translation type="unfinished" />
+        <translation>வெட்ட வேண்டிய பலகோட்டை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="186" />
         <source>Specify first segment</source>
-        <translation type="unfinished" />
+        <translation>முதல் பகுதியை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actionpolylinetrim.cpp" line="189" />
         <source>Specify second segment</source>
-        <translation type="unfinished" />
+        <translation>இரண்டாவது பகுதியை குறிப்பிடவும்</translation>
     </message>
 </context>
 <context>
@@ -31380,72 +31391,72 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="278" />
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
-        <translation type="unfinished" />
+        <translation>RS_ActionPrintPreview::fit(): தவறான காகித அளவு</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="160" />
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation type="unfinished" />
+        <translation>காகித ஒருங்கிணைப்புகளில் அச்சு விலக்கல் (%1, %2)</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="163" />
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation type="unfinished" />
+        <translation>வரைபட ஒருங்கிணைப்புகளில் அச்சு விலக்கல் (%1, %2)</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="185" />
         <source>Printout offset in graph coordinates</source>
-        <translation type="unfinished" />
+        <translation>வரைபட ஒருங்கிணைப்புகளில் அச்சு விலக்கல்</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="189" />
         <source>Printout offset in paper coordinates</source>
-        <translation type="unfinished" />
+        <translation>காகித ஒருங்கிணைப்புகளில் அச்சு விலக்கல்</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="222" />
         <source>: select printout offset coordinates</source>
-        <translation type="unfinished" />
+        <translation>: அச்சு விலக்கல் ஒருங்கிணைப்புகளைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="223" />
         <source>type in offset from command line to offset printout</source>
-        <translation type="unfinished" />
+        <translation>அச்சு விலக்கலுக்கு கட்டளை வரியிலிருந்து விலக்கலை உள்ளிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="393" />
         <source>Limit of pages has been exceeded.</source>
-        <translation type="unfinished" />
+        <translation>பக்கங்களின் வரம்பு மீறப்பட்டது.</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="453" />
         <source>Drag with Left Button to Position Paper or with Middle Button to Pan</source>
-        <translation type="unfinished" />
+        <translation>காகிதத்தை நிலைப்படுத்த இடது பொத்தானை இழுக்கவும் அல்லது பன்னிங் செய்ய நடு பொத்தானை இழுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="453" />
         <source>Move Horizontally</source>
-        <translation type="unfinished" />
+        <translation>கிடைமட்டமாக நகர்த்து</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="453" />
         <source>Move Vertically</source>
-        <translation type="unfinished" />
+        <translation>செங்குத்தாக நகர்த்து</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="197" />
         <source>Printout offset ignores relative zero. Ignoring '@'</source>
-        <translation type="unfinished" />
+        <translation>அச்சு விலக்கல் உறவு பூஜ்யத்தை புறக்கணிக்கிறது. '@' ஐ புறக்கணிக்கிறது</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="177" />
         <source>Printout in Black/White</source>
-        <translation type="unfinished" />
+        <translation>கருப்பு/வெள்ளை அச்சு</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="181" />
         <source>Printout in color</source>
-        <translation type="unfinished" />
+        <translation>வண்ண அச்சு</translation>
     </message>
 </context>
 <context>
@@ -31453,12 +31464,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="63" />
         <source>Entity must be an Atomic Entity.</source>
-        <translation type="unfinished" />
+        <translation>பொருள் அணு பொருளாக இருக்க வேண்டும்.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectcontour.cpp" line="82" />
         <source>Specify entity to select</source>
-        <translation type="unfinished" />
+        <translation>தேர்ந்தெடுக்க பொருளை குறிப்பிடவும்</translation>
     </message>
 </context>
 <context>
@@ -31466,22 +31477,22 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="173" />
         <source>Choose first point of intersection line</source>
-        <translation type="unfinished" />
+        <translation>குறுக்கீட்டுக் கோட்டின் முதல் புள்ளியைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="173" />
         <source>Select intersecting entity</source>
-        <translation type="unfinished" />
+        <translation>குறுக்கிடும் பொருளைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="173" />
         <source>Select child entities</source>
-        <translation type="unfinished" />
+        <translation>குழந்தை பொருட்களைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectintersected.cpp" line="176" />
         <source>Choose second point of intersection line</source>
-        <translation type="unfinished" />
+        <translation>குறுக்கீட்டுக் கோட்டின் இரண்டாவது புள்ளியைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -31489,7 +31500,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectlayer.cpp" line="69" />
         <source>Specify entity with desired layer</source>
-        <translation type="unfinished" />
+        <translation>விரும்பிய அடுக்குடன் பொருளை குறிப்பிடவும்</translation>
     </message>
 </context>
 <context>
@@ -31497,12 +31508,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectsingle.cpp" line="114" />
         <source>Specify entity to select</source>
-        <translation type="unfinished" />
+        <translation>தேர்ந்தெடுக்க பொருளை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectsingle.cpp" line="114" />
         <source>Select contour</source>
-        <translation type="unfinished" />
+        <translation>வெளிப்புறத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -31510,57 +31521,57 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="116" />
         <source>De-Selecting</source>
-        <translation type="unfinished" />
+        <translation>தேர்வுநீக்குதல்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="116" />
         <source>Selecting</source>
-        <translation type="unfinished" />
+        <translation>தேர்ந்தெடுத்தல்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="117" />
         <source> entities </source>
-        <translation type="unfinished" />
+        <translation>பொருட்கள்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="118" />
         <source>that intersect with box</source>
-        <translation type="unfinished" />
+        <translation>பெட்டியுடன் குறுக்கிடும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="118" />
         <source>that are within box</source>
-        <translation type="unfinished" />
+        <translation>பெட்டிக்குள் உள்ள</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="166" />
         <source>Choose second edge</source>
-        <translation type="unfinished" />
+        <translation>இரண்டாவது விளிம்பைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="168" />
         <source>Select Intersecting</source>
-        <translation type="unfinished" />
+        <translation>குறுக்கிடும் பொருட்களைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="167" />
         <source>De-select entities</source>
-        <translation type="unfinished" />
+        <translation>பொருட்களைத் தேர்வுநீக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="167" />
         <source>Select entities</source>
-        <translation type="unfinished" />
+        <translation>பொருட்களைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="168" />
         <source>De-select intersecting</source>
-        <translation type="unfinished" />
+        <translation>குறுக்கிடும் பொருட்களைத் தேர்வுநீக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/rs_actionselectwindow.cpp" line="163" />
         <source>Click and drag for the selection window</source>
-        <translation type="unfinished" />
+        <translation>தேர்வு சாளரத்திற்கு கிளிக் செய்து இழுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -31568,7 +31579,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/rel_zero/rs_actionsetrelativezero.cpp" line="72" />
         <source>Set relative Zero</source>
-        <translation type="unfinished" />
+        <translation>உறவு பூஜ்யத்தை அமைக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -31576,12 +31587,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="142" />
         <source>Select first entity</source>
-        <translation type="unfinished" />
+        <translation>முதல் பொருளைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="145" />
         <source>Select second entity</source>
-        <translation type="unfinished" />
+        <translation>இரண்டாவது பொருளைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -31589,12 +31600,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="63" />
         <source>Regenerated %1 dimension entities</source>
-        <translation type="unfinished" />
+        <translation>%1 பரிமாண பொருட்கள் மீண்டும் உருவாக்கப்பட்டன</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="66" />
         <source>No dimension entities found</source>
-        <translation type="unfinished" />
+        <translation>பரிமாண பொருட்கள் எதுவும் கிடைக்கவில்லை</translation>
     </message>
 </context>
 <context>
@@ -31602,12 +31613,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="105" />
         <source>Click and drag to pan zoom</source>
-        <translation type="unfinished" />
+        <translation>பெரிதாக்க பன்னிங் செய்ய கிளிக் செய்து இழுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="108" />
         <source>Zoom panning</source>
-        <translation type="unfinished" />
+        <translation>பெரிதாக்க பன்னிங்</translation>
     </message>
 </context>
 <context>
@@ -31615,12 +31626,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="140" />
         <source>Specify first edge</source>
-        <translation type="unfinished" />
+        <translation>முதல் விளிம்பை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="143" />
         <source>Specify second edge</source>
-        <translation type="unfinished" />
+        <translation>இரண்டாவது விளிம்பை குறிப்பிடவும்</translation>
     </message>
 </context>
 <context>
@@ -31628,87 +31639,87 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="980" />
         <source>Vertical</source>
-        <translation type="unfinished" />
+        <translation>செங்குத்து</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="982" />
         <source>Horizontal</source>
-        <translation type="unfinished" />
+        <translation>கிடைமட்டம்</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="984" />
         <source>Orthogonal</source>
-        <translation type="unfinished" />
+        <translation>லம்பம்</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="993" />
         <source>Grid</source>
-        <translation type="unfinished" />
+        <translation>கட்டம்</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="995" />
         <source>Entity</source>
-        <translation type="unfinished" />
+        <translation>பொருள்</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="997" />
         <source>Endpoint</source>
-        <translation type="unfinished" />
+        <translation>முனை</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="999" />
         <source>Intersection</source>
-        <translation type="unfinished" />
+        <translation>குறுக்கீடு</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1001" />
         <source>Middle</source>
-        <translation type="unfinished" />
+        <translation>நடு</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1003" />
         <source>Distance</source>
-        <translation type="unfinished" />
+        <translation>தூரம்</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1005" />
         <source>Center</source>
-        <translation type="unfinished" />
+        <translation>மையம்</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1007" />
         <source>Angle</source>
-        <translation type="unfinished" />
+        <translation>கோணம்</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1009" />
         <source>Angle Relative</source>
-        <translation type="unfinished" />
+        <translation>உறவு கோணம்</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1011" />
         <source>Angle (on Entity)</source>
-        <translation type="unfinished" />
+        <translation>கோணம் (பொருளில்)</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1183" />
         <source>Dist: </source>
-        <translation type="unfinished" />
+        <translation>தூரம்:</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1188" />
         <source>Angle: </source>
-        <translation type="unfinished" />
+        <translation>கோணம்:</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1193" />
         <source>dX: </source>
-        <translation type="unfinished" />
+        <translation>dX:</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1194" />
         <source>dY: </source>
-        <translation type="unfinished" />
+        <translation>dY:</translation>
     </message>
 </context>
 <context>
@@ -31716,7 +31727,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/components/textfileviewer.ui" line="14" />
         <source>Frame</source>
-        <translation type="unfinished" />
+        <translation>சட்டகம்</translation>
     </message>
 </context>
 <context>
@@ -31724,17 +31735,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arcoptions.ui" line="26" />
         <source>Arc Options</source>
-        <translation type="unfinished" />
+        <translation>வளைவு விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arcoptions.ui" line="85" />
         <source>Counterclockwise</source>
-        <translation type="unfinished" />
+        <translation>எதிர்திசை</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arcoptions.ui" line="56" />
         <source>Clockwise</source>
-        <translation type="unfinished" />
+        <translation>சுற்றுமுகம்</translation>
     </message>
 </context>
 <context>
@@ -31742,49 +31753,49 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="26" />
         <source>Tangential Arc Options</source>
-        <translation type="unfinished" />
+        <translation>தொடுகோடு வளைவு விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="87" />
         <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="unfinished" />
+        <translation>தேர்ந்தெடுக்கப்பட்டால், குறிப்பிட்ட ஆரத்துடன் தொடுகோடு வளைவு உருவாக்கப்படும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="47" />
         <source>Radius of the tangential arc</source>
-        <translation type="unfinished" />
+        <translation>தொடுகோடு வளைவின் ஆரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="112" />
         <source>If selected, arc with specified angle will be created</source>
-        <translation type="unfinished" />
+        <translation>தேர்ந்தெடுக்கப்பட்டால், குறிப்பிட்ட கோணத்துடன் வளைவு உருவாக்கப்படும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="60" />
         <source>Total subtending angle of the tangential arc</source>
-        <translation type="unfinished" />
+        <translation>தொடுகோடு வளைவின் மொத்த உள் கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="67" />
         <source>Pick radius form drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து ஆரத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="90" />
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished" />
+        <translation>ஆரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="115" />
         <source>Angle</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished" />
+        <translation>கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/qg_arctangentialoptions.ui" line="128" />
         <source>Pick angle from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -31792,47 +31803,47 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="32" />
         <source>Bevel Options</source>
-        <translation type="unfinished" />
+        <translation>சாய்வு விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="59" />
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished" />
+        <translation>இரண்டு பொருட்களையும் சாய்வுக்கு வெட்ட சரிபார்க்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="62" />
         <source>Trim</source>
-        <translation type="unfinished" />
+        <translation>வெட்டு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="85" />
         <source>Length 1:</source>
-        <translation type="unfinished" />
+        <translation>நீளம் 1:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="95" />
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished" />
+        <translation>X திசையில் சாய்வின் நீளம்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="102" />
         <source>Pick first length form drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து முதல் நீளத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="116" />
         <source>Length 2:</source>
-        <translation type="unfinished" />
+        <translation>நீளம் 2:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="126" />
         <source>Length of bevel in Y direction. </source>
-        <translation type="unfinished" />
+        <translation>Y திசையில் சாய்வின் நீளம்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_beveloptions.ui" line="133" />
         <source>Pick second length form drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து இரண்டாவது நீளத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -31840,22 +31851,22 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/circle/qg_circleoptions.ui" line="32" />
         <source>Circle Options</source>
-        <translation type="unfinished" />
+        <translation>வட்ட விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/qg_circleoptions.ui" line="50" />
         <source>Radius:</source>
-        <translation type="unfinished" />
+        <translation>ஆரம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/qg_circleoptions.ui" line="66" />
         <source>Radius of circle</source>
-        <translation type="unfinished" />
+        <translation>வட்டத்தின் ஆரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/qg_circleoptions.ui" line="73" />
         <source>Pick radius from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து ஆரத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -31863,27 +31874,27 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/circle/qg_circletan2options.ui" line="32" />
         <source>Circle Tangential2 Options</source>
-        <translation type="unfinished" />
+        <translation>வட்ட தொடுகோடு2 விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/qg_circletan2options.ui" line="56" />
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished" />
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;வரைய வேண்டிய தொடுகோடு வட்டத்தின் ஆரம்&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/qg_circletan2options.ui" line="59" />
         <source>Radius:</source>
-        <translation type="unfinished" />
+        <translation>ஆரம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/qg_circletan2options.ui" line="75" />
         <source>Radius of tangential circle</source>
-        <translation type="unfinished" />
+        <translation>தொடுகோடு வட்டத்தின் ஆரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/qg_circletan2options.ui" line="82" />
         <source>Pick radius from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து ஆரத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -31891,135 +31902,135 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32" />
         <source>Dimension Options</source>
-        <translation type="unfinished" />
+        <translation>பரிமாண விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="50" />
         <source>Style:</source>
-        <translation type="unfinished" />
+        <translation>பாணி:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="57" />
         <source>Dimension style</source>
-        <translation type="unfinished" />
+        <translation>பரிமாண பாணி</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="76" />
         <source>Label:</source>
-        <translation type="unfinished" />
+        <translation>லேபிள்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="92" />
         <source>Prefix character</source>
-        <translation type="unfinished" />
+        <translation>முன்னொட்டு எழுத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="115" />
         <source>User-specified dimension's label. Enter value or either "&lt;&gt;" or just leave empty for automatic measurement.</source>
-        <translation type="unfinished" />
+        <translation>பயனர் குறிப்பிட்ட பரிமாண லேபிள். மதிப்பை உள்ளிடவும் அல்லது "&lt;&gt;" அல்லது தானியங்கி அளவீட்டிற்கு காலியாக விடவும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="128" />
         <source>Suffix symbol</source>
-        <translation type="unfinished" />
+        <translation>பின்னொட்டு குறி</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="132" />
         <source>⌀</source>
-        <translation type="unfinished" />
+        <translation>⌀</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="137" />
         <source>°</source>
-        <translation type="unfinished" />
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="142" />
         <source>±</source>
-        <translation type="unfinished" />
+        <translation>±</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="147" />
         <source>π</source>
-        <translation type="unfinished" />
+        <translation>π</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="152" />
         <source>×</source>
-        <translation type="unfinished" />
+        <translation>×</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="157" />
         <source>÷</source>
-        <translation type="unfinished" />
+        <translation>÷</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="171" />
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="201" />
         <source>...</source>
-        <translation type="unfinished" />
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="188" />
         <source>Tolerance - Upper Limit</source>
-        <translation type="unfinished" />
+        <translation>தாங்கல் - மேல் வரம்பு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="218" />
         <source>Tolerance - Lower Limit</source>
-        <translation type="unfinished" />
+        <translation>தாங்கல் - கீழ் வரம்பு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="243" />
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="363" />
         <source>Angle:</source>
-        <translation type="unfinished" />
+        <translation>கோணம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="265" />
         <source>Dimension angle</source>
-        <translation type="unfinished" />
+        <translation>பரிமாண கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="287" />
         <source>Horizontal Dimension</source>
-        <translation type="unfinished" />
+        <translation>கிடைமட்ட பரிமாணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="316" />
         <source>Vertical Dimension</source>
-        <translation type="unfinished" />
+        <translation>செங்குத்து பரிமாணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="333" />
         <source>Distance:</source>
-        <translation type="unfinished" />
+        <translation>தூரம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="346" />
         <source>Distance between dimensions in baseline</source>
-        <translation type="unfinished" />
+        <translation>அடிப்படையில் பரிமாணங்களுக்கு இடையிலான தூரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="353" />
         <source>If checked, distance between dimenions is defined by mouse</source>
-        <translation type="unfinished" />
+        <translation>சரிபார்க்கப்பட்டால், பரிமாணங்களுக்கிடையிலான தூரம் சுட்டியால் வரையறுக்கப்படும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="356" />
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="386" />
         <source>Free</source>
-        <translation type="unfinished" />
+        <translation>சுதந்திரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="376" />
         <source>Angle for dimension</source>
-        <translation type="unfinished" />
+        <translation>பரிமாணத்திற்கான கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="383" />
         <source>If checked, angle for dimension is defined by mouse</source>
-        <translation type="unfinished" />
+        <translation>சரிபார்க்கப்பட்டால், பரிமாணத்திற்கான கோணம் சுட்டியால் வரையறுக்கப்படும்</translation>
     </message>
 </context>
 <context>
@@ -32027,42 +32038,42 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="32" />
         <source>Insert Options</source>
-        <translation type="unfinished" />
+        <translation>செருகல் விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="53" />
         <source>Angle:</source>
-        <translation type="unfinished" />
+        <translation>கோணம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="63" />
         <source>Rotation Angle</source>
-        <translation type="unfinished" />
+        <translation>சுழற்சி கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="70" />
         <source>Pick angle from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="84" />
         <source>Scale Factor:</source>
-        <translation type="unfinished" />
+        <translation>அளவு காரணி:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="113" />
         <source>DPI:</source>
-        <translation type="unfinished" />
+        <translation>DPI:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="106" />
         <source>Scale Factor</source>
-        <translation type="unfinished" />
+        <translation>அளவு காரணி</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/qg_imageoptions.ui" line="120" />
         <source>DPI of Image</source>
-        <translation type="unfinished" />
+        <translation>படத்தின் DPI</translation>
     </message>
 </context>
 <context>
@@ -32070,72 +32081,72 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="32" />
         <source>Insert Options</source>
-        <translation type="unfinished" />
+        <translation>செருகல் விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="256" />
         <source>Angle:</source>
-        <translation type="unfinished" />
+        <translation>கோணம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="215" />
         <source>Rotation Angle</source>
-        <translation type="unfinished" />
+        <translation>சுழற்சி கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="157" />
         <source>Factor:</source>
-        <translation type="unfinished" />
+        <translation>காரணி:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="131" />
         <source>Scale Factor</source>
-        <translation type="unfinished" />
+        <translation>அளவு காரணி</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="193" />
         <source>Array:</source>
-        <translation type="unfinished" />
+        <translation>வரிசை:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="297" />
         <source>Number of Columns</source>
-        <translation type="unfinished" />
+        <translation>நெடுவரிசைகளின் எண்ணிக்கை</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="79" />
         <source>Number of Rows</source>
-        <translation type="unfinished" />
+        <translation>வரிசைகளின் எண்ணிக்கை</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="53" />
         <source>Pick row spacing from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து வரிசை இடைவெளியைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="92" />
         <source>Pick column spacing from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து நெடுவரிசை இடைவெளியைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="167" />
         <source>Pick angle from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="234" />
         <source>Spacing:</source>
-        <translation type="unfinished" />
+        <translation>இடைவெளி:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="278" />
         <source>Column Spacing</source>
-        <translation type="unfinished" />
+        <translation>நெடுவரிசை இடைவெளி</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_insertoptions.ui" line="322" />
         <source>Row Spacing</source>
-        <translation type="unfinished" />
+        <translation>வரிசை இடைவெளி</translation>
     </message>
 </context>
 <context>
@@ -32143,32 +32154,32 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/insert/qg_libraryinsertoptions.ui" line="32" />
         <source>Library Insert Options</source>
-        <translation type="unfinished" />
+        <translation>நூலக செருகல் விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_libraryinsertoptions.ui" line="88" />
         <source>Angle:</source>
-        <translation type="unfinished" />
+        <translation>கோணம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_libraryinsertoptions.ui" line="104" />
         <source>Rotation Angle</source>
-        <translation type="unfinished" />
+        <translation>சுழற்சி கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_libraryinsertoptions.ui" line="111" />
         <source>Pick angle from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_libraryinsertoptions.ui" line="59" />
         <source>Factor:</source>
-        <translation type="unfinished" />
+        <translation>காரணி:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/qg_libraryinsertoptions.ui" line="75" />
         <source>Scale Factor</source>
-        <translation type="unfinished" />
+        <translation>அளவு காரணி</translation>
     </message>
 </context>
 <context>
@@ -32176,72 +32187,72 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="32" />
         <source>Line Angle Options</source>
-        <translation type="unfinished" />
+        <translation>கோடு கோண விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="95" />
         <source>Angle:</source>
-        <translation type="unfinished" />
+        <translation>கோணம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="210" />
         <source>Point on created line that will be placed into insertion point</source>
-        <translation type="unfinished" />
+        <translation>உருவாக்கப்பட்ட கோட்டில் செருகும் புள்ளியில் வைக்கப்படும் புள்ளி</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="133" />
         <source>Line angle</source>
-        <translation type="unfinished" />
+        <translation>கோடு கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="159" />
         <source>Length:</source>
-        <translation type="unfinished" />
+        <translation>நீளம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="184" />
         <source>Length of line</source>
-        <translation type="unfinished" />
+        <translation>கோட்டின் நீளம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="56" />
         <source>Snap Point:</source>
-        <translation type="unfinished" />
+        <translation>ஒட்டு புள்ளி:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="69" />
         <source>Pick line angle from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து கோடு கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="214" />
         <source>Start</source>
-        <translation type="unfinished" />
+        <translation>தொடக்கம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="219" />
         <source>Middle</source>
-        <translation type="unfinished" />
+        <translation>நடு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="224" />
         <source>End</source>
-        <translation type="unfinished" />
+        <translation>முடிவு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="232" />
         <source>PIck line length from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து கோடு நீளத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="191" />
         <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation type="unfinished" />
+        <translation>தேர்ந்தெடுக்கப்பட்டால், கோடு கோண அடிப்படையின் அச்சுக்கு லம்பமாக இருக்கும். இல்லையெனில் - திரை அச்சுக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineangleoptions.ui" line="194" />
         <source>To Angles Basis</source>
-        <translation type="unfinished" />
+        <translation>கோண அடிப்படைக்கு</translation>
     </message>
 </context>
 <context>
@@ -32249,32 +32260,32 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_linebisectoroptions.ui" line="32" />
         <source>Line Bisector Options</source>
-        <translation type="unfinished" />
+        <translation>கோடு இருபாகுப் பிரிப்பி விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linebisectoroptions.ui" line="56" />
         <source>Length:</source>
-        <translation type="unfinished" />
+        <translation>நீளம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linebisectoroptions.ui" line="72" />
         <source>Length of bisector</source>
-        <translation type="unfinished" />
+        <translation>இருபாகுப் பிரிப்பியின் நீளம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linebisectoroptions.ui" line="79" />
         <source>Pick line length from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து கோடு நீளத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linebisectoroptions.ui" line="93" />
         <source>Number:</source>
-        <translation type="unfinished" />
+        <translation>எண்ணிக்கை:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linebisectoroptions.ui" line="103" />
         <source>Number of bisectors to create</source>
-        <translation type="unfinished" />
+        <translation>உருவாக்க வேண்டிய இருபாகுப் பிரிப்பிகளின் எண்ணிக்கை</translation>
     </message>
 </context>
 <context>
@@ -32282,37 +32293,37 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineoptions.ui" line="32" />
         <source>Line Options</source>
-        <translation type="unfinished" />
+        <translation>கோடு விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineoptions.ui" line="53" />
         <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished" />
+        <translation>வரையப்பட்ட கோடுகளிலிருந்து மூடிய வெளிப்புறத்தை உருவாக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineoptions.ui" line="56" />
         <source>Close</source>
-        <translation type="unfinished" />
+        <translation>மூடு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineoptions.ui" line="72" />
         <source>Undo the last line drawing</source>
-        <translation type="unfinished" />
+        <translation>கடைசி கோடு வரைதலை பின்வாங்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineoptions.ui" line="75" />
         <source>Undo</source>
-        <translation type="unfinished" />
+        <translation>பின்வாங்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineoptions.ui" line="82" />
         <source>Redo the last line drawing</source>
-        <translation type="unfinished" />
+        <translation>கடைசி கோடு வரைதலை மீண்டும் செய்யவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineoptions.ui" line="85" />
         <source>Redo</source>
-        <translation type="unfinished" />
+        <translation>மீண்டும் செய்</translation>
     </message>
 </context>
 <context>
@@ -32320,113 +32331,113 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="32" />
         <source>Line Options</source>
-        <translation type="unfinished" />
+        <translation>கோடு விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="62" />
         <source>Direction:</source>
-        <translation type="unfinished" />
+        <translation>திசை:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="321" />
         <source>Creates polyline from line segments</source>
-        <translation type="unfinished" />
+        <translation>கோடு பகுதிகளிலிருந்து பலகோட்டை உருவாக்குகிறது</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="324" />
         <source>Polyline</source>
-        <translation type="unfinished" />
+        <translation>பலகோடு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="331" />
         <source>Pick angle from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="190" />
         <source>Vertical line</source>
-        <translation type="unfinished" />
+        <translation>செங்குத்துக் கோடு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="193" />
         <source>Y</source>
-        <translation type="unfinished" />
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="237" />
         <source>Line by specified angle</source>
-        <translation type="unfinished" />
+        <translation>குறிப்பிட்ட கோணத்தால் கோடு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="240" />
         <source>Angle</source>
-        <translation type="unfinished" />
+        <translation>கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="124" />
         <source>Horizontal line</source>
-        <translation type="unfinished" />
+        <translation>கிடைமட்டக் கோடு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="127" />
         <source>X</source>
-        <translation type="unfinished" />
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="311" />
         <source>If checked, angle is relative to previous segment</source>
         <extracomment>Angle is relative to previous segment</extracomment>
-        <translation type="unfinished" />
+        <translation>சரிபார்க்கப்பட்டால், கோணம் முந்தைய பகுதியுடன் உறவுடையது</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="314" />
         <source>Rel</source>
-        <translation type="unfinished" />
+        <translation>உறவு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="257" />
         <source>Undo the last line drawing</source>
-        <translation type="unfinished" />
+        <translation>கடைசி கோடு வரைதலை பின்வாங்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="260" />
         <source>Undo</source>
-        <translation type="unfinished" />
+        <translation>பின்வாங்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="267" />
         <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished" />
+        <translation>வரையப்பட்ட கோடுகளிலிருந்து மூடிய வெளிப்புறத்தை உருவாக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="270" />
         <source>Close</source>
-        <translation type="unfinished" />
+        <translation>மூடு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="247" />
         <source>Redo the last line drawing</source>
-        <translation type="unfinished" />
+        <translation>கடைசி கோடு வரைதலை மீண்டும் செய்யவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="250" />
         <source>Redo</source>
-        <translation type="unfinished" />
+        <translation>மீண்டும் செய்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="218" />
         <source>Angle of line</source>
-        <translation type="unfinished" />
+        <translation>கோட்டின் கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="168" />
         <source>Line to arbitrary point</source>
-        <translation type="unfinished" />
+        <translation>தன்னிச்சையான புள்ளிக்கு கோடு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_lineoptions.ui" line="171" />
         <source>Point</source>
-        <translation type="unfinished" />
+        <translation>புள்ளி</translation>
     </message>
 </context>
 <context>
@@ -32434,32 +32445,32 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparalleloptions.ui" line="32" />
         <source>Line Parallel Options</source>
-        <translation type="unfinished" />
+        <translation>இணை கோடு விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparalleloptions.ui" line="56" />
         <source>Distance:</source>
-        <translation type="unfinished" />
+        <translation>தூரம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparalleloptions.ui" line="72" />
         <source>Distance to original entity</source>
-        <translation type="unfinished" />
+        <translation>அசல் பொருளுக்கு தூரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparalleloptions.ui" line="79" />
         <source>Pick distance from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து தூரத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparalleloptions.ui" line="99" />
         <source>Number:</source>
-        <translation type="unfinished" />
+        <translation>எண்ணிக்கை:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparalleloptions.ui" line="109" />
         <source>Number of parallels to create</source>
-        <translation type="unfinished" />
+        <translation>உருவாக்க வேண்டிய இணைகளின் எண்ணிக்கை</translation>
     </message>
 </context>
 <context>
@@ -32467,27 +32478,27 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparallelthroughoptions.ui" line="32" />
         <source>Line Parallel Through Options</source>
-        <translation type="unfinished" />
+        <translation>புள்ளி வழியாக இணை கோடு விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparallelthroughoptions.ui" line="62" />
         <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="unfinished" />
+        <translation>சரிபார்க்கப்பட்டால், பொருளின் இருபக்கங்களிலும் இணைகள் உருவாக்கப்படும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparallelthroughoptions.ui" line="65" />
         <source>Symmetric</source>
-        <translation type="unfinished" />
+        <translation>சமச்சீர்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparallelthroughoptions.ui" line="101" />
         <source>Number:</source>
-        <translation type="unfinished" />
+        <translation>எண்ணிக்கை:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_lineparallelthroughoptions.ui" line="72" />
         <source>Number of parallels to create</source>
-        <translation type="unfinished" />
+        <translation>உருவாக்க வேண்டிய இணைகளின் எண்ணிக்கை</translation>
     </message>
 </context>
 <context>
@@ -32495,57 +32506,57 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="32" />
         <source>Polygon Options</source>
-        <translation type="unfinished" />
+        <translation>பலகோண விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="109" />
         <source>Number:</source>
-        <translation type="unfinished" />
+        <translation>எண்ணிக்கை:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="80" />
         <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="unfinished" />
+        <translation>சரிபார்க்கப்பட்டால், பலகோணத்தின் உச்சிகள் வட்டமாக்கப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="83" />
         <source>Radius</source>
-        <translation type="unfinished" />
+        <translation>ஆரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="126" />
         <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="unfinished" />
+        <translation>சரிபார்க்கப்பட்டால், பலகோணம் பலகோடாக வரையப்படும். இல்லையெனில், தனிப்பட்ட பொருட்கள் உருவாக்கப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="129" />
         <source>Polyline</source>
-        <translation type="unfinished" />
+        <translation>பலகோடு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="143" />
         <source>Pick radius from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து ஆரத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="90" />
         <source>Number of edges</source>
-        <translation type="unfinished" />
+        <translation>விளிம்புகளின் எண்ணிக்கை</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="119" />
         <source>Rounding radius for vertex bevel.</source>
-        <translation type="unfinished" />
+        <translation>உச்சி சாய்வுக்கான வட்டமாக்கல் ஆரம்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="70" />
         <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="unfinished" />
+        <translation>தேர்ந்தெடுக்கப்பட்டால், குறிப்பு புள்ளிகள் பலகோணத்தின் உச்சிகளுக்கு. இல்லையெனில், விளிம்புகளின் நடு புள்ளிகளுக்கு.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/qg_linepolygonoptions.ui" line="73" />
         <source>Vertex to Vertex</source>
-        <translation type="unfinished" />
+        <translation>உச்சி முதல் உச்சி</translation>
     </message>
 </context>
 <context>
@@ -32553,37 +32564,37 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/line/qg_linerelangleoptions.ui" line="32" />
         <source>Line Relative Angle Options</source>
-        <translation type="unfinished" />
+        <translation>கோடு உறவு கோண விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linerelangleoptions.ui" line="56" />
         <source>Angle:</source>
-        <translation type="unfinished" />
+        <translation>கோணம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linerelangleoptions.ui" line="72" />
         <source>Line angle</source>
-        <translation type="unfinished" />
+        <translation>கோடு கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linerelangleoptions.ui" line="79" />
         <source>Pick angle from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linerelangleoptions.ui" line="99" />
         <source>Length:</source>
-        <translation type="unfinished" />
+        <translation>நீளம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linerelangleoptions.ui" line="115" />
         <source>Length of line</source>
-        <translation type="unfinished" />
+        <translation>கோட்டின் நீளம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/qg_linerelangleoptions.ui" line="122" />
         <source>Pick length from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து நீளத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -32591,32 +32602,32 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/text/qg_mtextoptions.ui" line="32" />
         <source>Text Options</source>
-        <translation type="unfinished" />
+        <translation>உரை விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/qg_mtextoptions.ui" line="53" />
         <source>Text:</source>
-        <translation type="unfinished" />
+        <translation>உரை:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/qg_mtextoptions.ui" line="81" />
         <source>Text to insert</source>
-        <translation type="unfinished" />
+        <translation>செருக வேண்டிய உரை</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/qg_mtextoptions.ui" line="94" />
         <source>Angle:</source>
-        <translation type="unfinished" />
+        <translation>கோணம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/qg_mtextoptions.ui" line="110" />
         <source>Rotation angle</source>
-        <translation type="unfinished" />
+        <translation>சுழற்சி கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/qg_mtextoptions.ui" line="117" />
         <source>Pick angle from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -32624,72 +32635,72 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="32" />
         <source>Modify Offset Options</source>
-        <translation type="unfinished" />
+        <translation>மாற்ற விலக்கல் விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="158" />
         <source>Distance for offset from original entity</source>
-        <translation type="unfinished" />
+        <translation>அசல் பொருளிலிருந்து விலக்கலுக்கான தூரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="93" />
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished" />
+        <translation>சரிபார்க்கப்பட்டால், உருவாக்கப்பட்ட பொருட்கள் தற்போதைய அடுக்கில் வைக்கப்படும், இல்லையெனில் அவை அசல் அடுக்குகளில் இருக்கும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="96" />
         <source>Use Current Layer</source>
-        <translation type="unfinished" />
+        <translation>தற்போதைய அடுக்கைப் பயன்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="63" />
         <source>Number of copies.</source>
-        <translation type="unfinished" />
+        <translation>நகல்களின் எண்ணிக்கை.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="136" />
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="unfinished" />
+        <translation>சரிபார்க்கப்பட்டால், அசல் பொருட்கள் தக்கவைக்கப்படும், இல்லையெனில் அவை நீக்கப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="139" />
         <source>Keep Originals</source>
-        <translation type="unfinished" />
+        <translation>அசல்களைத் தக்கவைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="109" />
         <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation type="unfinished" />
+        <translation>சரிபார்க்கப்பட்டால், விலக்கலின் தூரத்தின் நிலையான மதிப்புகள் பயன்படுத்தப்படும், இல்லையெனில் அது சுட்டியால் வரையறுக்கப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="112" />
         <source>Fixed Distance</source>
-        <translation type="unfinished" />
+        <translation>நிலையான தூரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="119" />
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="unfinished" />
+        <translation>சரிபார்க்கப்பட்டால், தற்போதைய பண்புகள் உருவாக்கப்பட்ட பொருட்களுக்கு பயன்படுத்தப்படும், இல்லையெனில் அசல் பண்புகள் பயன்படுத்தப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="122" />
         <source>Use Current Attributes</source>
-        <translation type="unfinished" />
+        <translation>தற்போதைய பண்புகளைப் பயன்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="172" />
         <source>Pick distance from the drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து தூரத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="76" />
         <source>If checked, multiple copies will be created. </source>
-        <translation type="unfinished" />
+        <translation>சரிபார்க்கப்பட்டால், பல நகல்கள் உருவாக்கப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_modifyoffsetoptions.ui" line="79" />
         <source>Multiple Copies</source>
-        <translation type="unfinished" />
+        <translation>பல நகல்கள்</translation>
     </message>
 </context>
 <context>
@@ -32697,87 +32708,87 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="32" />
         <source>Move Rotate Options</source>
-        <translation type="unfinished" />
+        <translation>நகர்த்து சுழற்று விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="50" />
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="unfinished" />
+        <translation>சரிபார்க்கப்பட்டால், தற்போதைய பண்புகள் உருவாக்கப்பட்ட பொருட்களுக்கு பயன்படுத்தப்படும், இல்லையெனில் அசல் பண்புகள் பயன்படுத்தப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="53" />
         <source>Use Current Attributes</source>
-        <translation type="unfinished" />
+        <translation>தற்போதைய பண்புகளைப் பயன்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="173" />
         <source>If checked, multiple copies will be created. </source>
-        <translation type="unfinished" />
+        <translation>சரிபார்க்கப்பட்டால், பல நகல்கள் உருவாக்கப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="176" />
         <source>Multiple Copies</source>
-        <translation type="unfinished" />
+        <translation>பல நகல்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="183" />
         <source>Pick angle from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="90" />
         <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation type="unfinished" />
+        <translation>சரிபார்க்கப்பட்டால், அனைத்து நகல்களும் அதே கோணத்தால் சுழற்றப்படும். இல்லையெனில், கோணம் ஒவ்வொரு நகலின் எண்ணிக்கைக்கு ஏற்ப இருக்கும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="93" />
         <source>Same angle for copies</source>
-        <translation type="unfinished" />
+        <translation>நகல்களுக்கு அதே கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="166" />
         <source>Rotation angle. </source>
-        <translation type="unfinished" />
+        <translation>சுழற்சி கோணம்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="60" />
         <source>Number of copies.</source>
-        <translation type="unfinished" />
+        <translation>நகல்களின் எண்ணிக்கை.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="134" />
         <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation type="unfinished" />
+        <translation>சரிபார்க்கப்பட்டால், சுழற்சி கோணம் சுட்டியால் வரையறுக்கப்படும். இல்லையெனில், குறிப்பிட்ட மதிப்பு பயன்படுத்தப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="137" />
         <source>Free</source>
-        <translation type="unfinished" />
+        <translation>சுதந்திரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="100" />
         <source>Angle:</source>
-        <translation type="unfinished" />
+        <translation>கோணம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="144" />
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished" />
+        <translation>சரிபார்க்கப்பட்டால், உருவாக்கப்பட்ட பொருட்கள் தற்போதைய அடுக்கில் வைக்கப்படும், இல்லையெனில் அவை அசல் அடுக்குகளில் இருக்கும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="147" />
         <source>Use Current Layer</source>
-        <translation type="unfinished" />
+        <translation>தற்போதைய அடுக்கைப் பயன்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="80" />
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="unfinished" />
+        <translation>சரிபார்க்கப்பட்டால், அசல் பொருட்கள் தக்கவைக்கப்படும், இல்லையெனில் அவை நீக்கப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_moverotateoptions.ui" line="83" />
         <source>Keep Originals</source>
-        <translation type="unfinished" />
+        <translation>அசல்களைத் தக்கவைக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -32785,123 +32796,123 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="32" />
         <source>Polyline Options</source>
-        <translation type="unfinished" />
+        <translation>பலகோடு விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="53" />
         <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="unfinished" />
+        <translation>பலகோட்டின் முனைகளை இணைத்து மூடிய வெளிப்புறத்தை உருவாக்குகிறது</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="56" />
         <source>Close</source>
-        <translation type="unfinished" />
+        <translation>மூடு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="63" />
         <source>Undo for previous vertex</source>
-        <translation type="unfinished" />
+        <translation>முந்தைய உச்சிக்கு பின்வாங்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="66" />
         <source>Undo</source>
-        <translation type="unfinished" />
+        <translation>பின்வாங்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="73" />
         <source>Segment Type:</source>
-        <translation type="unfinished" />
+        <translation>பகுதி வகை:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="92" />
         <source>Defines which segment of polyline should be created</source>
-        <translation type="unfinished" />
+        <translation>பலகோட்டின் எந்த பகுதியை உருவாக்க வேண்டும் என வரையறுக்கிறது</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="96" />
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="124" />
         <source>Line</source>
-        <translation type="unfinished" />
+        <translation>கோடு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="101" />
         <source>Tangential</source>
-        <translation type="unfinished" />
+        <translation>தொடுகோடு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="106" />
         <source>Tan Radius</source>
-        <translation type="unfinished" />
+        <translation>தொடுகோடு ஆரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="111" />
         <source>Tan Angle</source>
-        <translation type="unfinished" />
+        <translation>தொடுகோடு கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="116" />
         <source>Angle</source>
-        <translation type="unfinished" />
+        <translation>கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="144" />
         <source>Tangential arc</source>
-        <translation type="unfinished" />
+        <translation>தொடுகோடு வளைவு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="164" />
         <source>Tangental arc with fixed radius</source>
-        <translation type="unfinished" />
+        <translation>நிலையான ஆரத்துடன் தொடுகோடு வளைவு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="184" />
         <source>Tangental arc with fixed angle</source>
-        <translation type="unfinished" />
+        <translation>நிலையான கோணத்துடன் தொடுகோடு வளைவு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="204" />
         <source>Arc with angle</source>
-        <translation type="unfinished" />
+        <translation>கோணத்துடன் வளைவு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="224" />
         <source>Radius:</source>
-        <translation type="unfinished" />
+        <translation>ஆரம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="249" />
         <source>Radius of arc</source>
-        <translation type="unfinished" />
+        <translation>வளைவின் ஆரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="256" />
         <source>Pick radius form drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து ஆரத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="270" />
         <source>Angle:</source>
-        <translation type="unfinished" />
+        <translation>கோணம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="295" />
         <source>Angle of arc</source>
-        <translation type="unfinished" />
+        <translation>வளைவின் கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="302" />
         <source>Pick angle from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="351" />
         <source>Counter Clockwise</source>
-        <translation type="unfinished" />
+        <translation>எதிர்திசை</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/qg_polylineoptions.ui" line="337" />
         <source>Clockwise</source>
-        <translation type="unfinished" />
+        <translation>சுற்றுமுகம்</translation>
     </message>
 </context>
 <context>
@@ -32909,107 +32920,107 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="20" />
         <source>Print Preview Options</source>
-        <translation type="unfinished" />
+        <translation>அச்சு முன்பார்வை விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="23" />
         <source>Landscape Orientation</source>
-        <translation type="unfinished" />
+        <translation>நிலப்பரப்பு திசை</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="78" />
         <source>Drawing Settings</source>
-        <translation type="unfinished" />
+        <translation>வரைபட அமைப்புகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="99" />
         <source>Scale:</source>
-        <translation type="unfinished" />
+        <translation>அளவு:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="118" />
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished" />
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;அச்சு அளவு : வரைபட அளவு&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="149" />
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished" />
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;அச்சு அளவு தற்போதைய மதிப்பில் பூட்டப்பட்டுள்ளது&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="152" />
         <source>fixed</source>
-        <translation type="unfinished" />
+        <translation>நிலையான</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="201" />
         <source>Toggle Black / White mode</source>
-        <translation type="unfinished" />
+        <translation>கருப்பு / வெள்ளை பயன்முறையை மாற்று</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="172" />
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished" />
+        <translation>கோடு அகலத்திற்கு அச்சு அளவைப் பயன்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="44" />
         <source>Landscape Orientation of paper</source>
-        <translation type="unfinished" />
+        <translation>காகிதத்தின் நிலப்பரப்பு திசை</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="61" />
         <source>Portrait Orientation of paper</source>
-        <translation type="unfinished" />
+        <translation>காகிதத்தின் நேர்த்தி திசை</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="237" />
         <source>Page in center of drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்தின் மையத்தில் பக்கம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="263" />
         <source>Zoom to Print Area</source>
-        <translation type="unfinished" />
+        <translation>அச்சு பகுதிக்கு பெரிதாக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="290" />
         <source>Fit to 1 Page</source>
-        <translation type="unfinished" />
+        <translation>1 பக்கத்திற்கு பொருத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="310" />
         <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
-        <translation type="unfinished" />
+        <translation>இயக்கப்பட்டால், காகித இடம் நெடுவரிசைகள் மற்றும் வரிசைகளில் ஒழுங்கமைக்கப்பட்ட குறிப்பிட்ட அளவு பக்கங்களை உள்ளடக்கும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="313" />
         <source>Tiled Print</source>
-        <translation type="unfinished" />
+        <translation>ஓடு அச்சு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="329" />
         <source>Pages Rows::</source>
-        <translation type="unfinished" />
+        <translation>பக்க வரிசைகள்::</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="336" />
         <source>Amount of pages columns</source>
-        <translation type="unfinished" />
+        <translation>பக்க நெடுவரிசைகளின் அளவு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="346" />
         <source>Pages Columns:</source>
-        <translation type="unfinished" />
+        <translation>பக்க நெடுவரிசைகள்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="353" />
         <source>Amount of pages rows</source>
-        <translation type="unfinished" />
+        <translation>பக்க வரிசைகளின் அளவு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/qg_printpreviewoptions.ui" line="369" />
         <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்தை கொண்டிருக்க தேவையான பக்கங்களின் எண்ணிக்கையை கணக்கிடு</translation>
     </message>
 </context>
 <context>
@@ -33017,32 +33028,32 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_roundoptions.ui" line="32" />
         <source>Round Options</source>
-        <translation type="unfinished" />
+        <translation>வட்டமாக்கல் விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_roundoptions.ui" line="59" />
         <source>Check to trim both edges to the rounding</source>
-        <translation type="unfinished" />
+        <translation>இரண்டு விளிம்புகளையும் வட்டமாக்கலுக்கு வெட்ட சரிபார்க்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_roundoptions.ui" line="62" />
         <source>Trim</source>
-        <translation type="unfinished" />
+        <translation>வெட்டு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_roundoptions.ui" line="85" />
         <source>Radius:</source>
-        <translation type="unfinished" />
+        <translation>ஆரம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_roundoptions.ui" line="95" />
         <source>Rounding radius</source>
-        <translation type="unfinished" />
+        <translation>வட்டமாக்கல் ஆரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_roundoptions.ui" line="102" />
         <source>Pick radius from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து ஆரத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -33050,22 +33061,22 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32" />
         <source>Snap Distance Options</source>
-        <translation type="unfinished" />
+        <translation>ஒட்டு தூர விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="50" />
         <source>Snap Distance:</source>
-        <translation type="unfinished" />
+        <translation>ஒட்டு தூரம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="60" />
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation type="unfinished" />
+        <translation>முதலில் தீர்க்கப்பட்ட ஒட்டு புள்ளியிலிருந்து ஒட்டு புள்ளியின் தூரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="67" />
         <source>Pick distance from drawing.</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து தூரத்தைத் தேர்ந்தெடுக்கவும்.</translation>
     </message>
 </context>
 <context>
@@ -33073,17 +33084,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="35" />
         <source>Snap Distance Options</source>
-        <translation type="unfinished" />
+        <translation>ஒட்டு தூர விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="59" />
         <source>Snap Middle Points:</source>
-        <translation type="unfinished" />
+        <translation>நடு புள்ளிகளை ஒட்டு:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81" />
         <source>Number of equidistant division points</source>
-        <translation type="unfinished" />
+        <translation>சமதூர பிரிவு புள்ளிகளின் எண்ணிக்கை</translation>
     </message>
 </context>
 <context>
@@ -33091,37 +33102,37 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/spline/qg_splineoptions.ui" line="32" />
         <source>Spline Options</source>
-        <translation type="unfinished" />
+        <translation>பிணைப்பு விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/qg_splineoptions.ui" line="56" />
         <source>Degree:</source>
-        <translation type="unfinished" />
+        <translation>படி:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/qg_splineoptions.ui" line="72" />
         <source>Spline's degree used for approximation between points</source>
-        <translation type="unfinished" />
+        <translation>புள்ளிகளுக்கு இடையிலான தோராயத்திற்கு பயன்படுத்தப்படும் பிணைப்பின் படி</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/qg_splineoptions.ui" line="94" />
         <source>If selected, closed spline is created</source>
-        <translation type="unfinished" />
+        <translation>தேர்ந்தெடுக்கப்பட்டால், மூடிய பிணைப்பு உருவாக்கப்படும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/qg_splineoptions.ui" line="97" />
         <source>Closed</source>
-        <translation type="unfinished" />
+        <translation>மூடிய</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/qg_splineoptions.ui" line="110" />
         <source>Undo previous point</source>
-        <translation type="unfinished" />
+        <translation>முந்தைய புள்ளியை பின்வாங்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/qg_splineoptions.ui" line="113" />
         <source>Undo</source>
-        <translation type="unfinished" />
+        <translation>பின்வாங்கு</translation>
     </message>
 </context>
 <context>
@@ -33129,27 +33140,27 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/text/qg_textoptions.ui" line="32" />
         <source>Text Options</source>
-        <translation type="unfinished" />
+        <translation>உரை விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/qg_textoptions.ui" line="53" />
         <source>Text:</source>
-        <translation type="unfinished" />
+        <translation>உரை:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/qg_textoptions.ui" line="66" />
         <source>Angle:</source>
-        <translation type="unfinished" />
+        <translation>கோணம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/qg_textoptions.ui" line="76" />
         <source>Rotation angle</source>
-        <translation type="unfinished" />
+        <translation>சுழற்சி கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/qg_textoptions.ui" line="83" />
         <source>Pick angle from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து கோணத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -33157,47 +33168,47 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="20" />
         <source>Trim Amount Options</source>
-        <translation type="unfinished" />
+        <translation>வெட்டு அளவு விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="23" />
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="unfinished" />
+        <translation>தூரம். வெட்டுவதற்கு எதிர்மறை மதிப்புகள், நீட்டுவதற்கு நேர்மறை மதிப்புகள்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="53" />
         <source>Total</source>
-        <translation type="unfinished" />
+        <translation>மொத்தம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="72" />
         <source>Length:</source>
-        <translation type="unfinished" />
+        <translation>நீளம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="97" />
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="unfinished" />
+        <translation>தூரம். வெட்டுவதற்கு எதிர்மறை மதிப்புகள், நீட்டுவதற்கு நேர்மறை மதிப்புகள். இறுதி மொத்த நீளத்திற்கு வெட்டும்போது எதிர்மறை அடையாளம் புறக்கணிக்கப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="110" />
         <source>Pick length from drawing</source>
-        <translation type="unfinished" />
+        <translation>வரைபடத்திலிருந்து நீளத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="137" />
         <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="unfinished" />
+        <translation>சரிபார்க்கப்பட்டால், கோட்டின் இருபக்கங்களுக்கும் வெட்டு/நீட்டம் செய்யப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="140" />
         <source>Symmetric</source>
-        <translation type="unfinished" />
+        <translation>சமச்சீர்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/qg_trimamountoptions.ui" line="50" />
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished" />
+        <translation>உள்ளீட்டு நீளம் நீளம் அதிகரிப்பதற்கு பதிலாக வெட்டுக்குப் பின் மொத்த நீளமாகப் பயன்படுத்தப்படும்</translation>
     </message>
 </context>
 </TS>
