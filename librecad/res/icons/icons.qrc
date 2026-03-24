@@ -377,5 +377,11 @@
         <file alias="hyperbola_foci_point.lci">hyperbola_foci_point.svg</file>
         <file alias="item_by_layer.lci">item_by_layer.svg</file>
         <file alias="line_far_point.lci">line_far_point.svg</file>
+        <file alias="snap_visual.lci">snap_visual.svg</file>
+        <file alias="snap_center_short.lci">snap_center_short.svg</file>
+        <file alias="snap_entity_short.lci">snap_entity_short.svg</file>
+        <file alias="snap_endpoints_short.lci">snap_endpoints_short.svg</file>
+        <file alias="snap_middle_short.lci">snap_middle_short.svg</file>
+        <file alias="snap_distance_short.lci">snap_distance_short.svg</file>
     </qresource>
 </RCC>
