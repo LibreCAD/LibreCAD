@@ -77,6 +77,10 @@ RS_Entity* LC_ActionDrawSplinePoints::doTriggerCreateEntity() {
     return nullptr;
 }
 
+bool LC_ActionDrawSplinePoints::isInVisualSnapStatus(int status) {
+    return (status == SetStartPoint) || (status == SetNextPoint);
+}
+
 void LC_ActionDrawSplinePoints::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     const RS_Vector mouse = e->snapPoint;
     switch (status) {
@@ -128,11 +132,13 @@ void LC_ActionDrawSplinePoints::onCoordinateEvent(const int status, [[maybe_unus
                 }
             }
             setStatus(SetNextPoint);
+            addSnappedPointToVisualSnap(coord);
             moveRelativeZero(coord);
             updateActionPrompt();
             break;
         }
         case SetNextPoint: {
+            addSnappedPointToVisualSnap(coord);
             moveRelativeZero(coord);
             if (splinePoints != nullptr) {
                 splinePoints->addPoint(coord);

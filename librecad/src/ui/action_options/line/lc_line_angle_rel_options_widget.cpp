@@ -63,7 +63,7 @@ void LC_LineAngleRelOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     const bool angleIsRelative = m_action->isAngleRelative();
     const bool lengthIsFree = m_action->isLengthFree();
     const bool divide = m_action->isDivideLine();
-    const QString distance = QString("%1").arg(m_action->getSnapDistance());
+    const QString distance = QString("%1").arg(m_action->getIntersectionOffsetDistance());
 
     LC_GuardedSignalsBlocker({
         ui->leAngle,
@@ -124,7 +124,7 @@ void LC_LineAngleRelOptionsWidget::onDistanceEditingFinished() {
         const QString& expr = ui->leDistance->text();
         double value = 0.;
         if (toDouble(expr, value, 0.0, false)) {
-            m_action->setSnapDistance(value);
+            m_action->setIntersectionOffsetDistance(value);
             m_action->updateOptions();
         }
     }

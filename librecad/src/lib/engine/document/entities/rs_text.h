@@ -281,7 +281,7 @@ protected:
     /**
      * @return The insertion point as endpoint.
      */
-    RS_Vector doGetNearestEndpoint(const RS_Vector& coord, double* dist) const override;
+    RS_Vector doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const override;
     RS_Vector doGetNearestRef(const RS_Vector& coord, double* dist) const override;
     RS_Vector doGetNearestSelectedRef(const RS_Vector& coord, double* dist) const override;
 };

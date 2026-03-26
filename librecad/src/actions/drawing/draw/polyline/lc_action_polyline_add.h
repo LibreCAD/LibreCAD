@@ -65,5 +65,6 @@ protected:
     void setPolylineToModify(RS_Entity* en);
     bool doTriggerModifications(LC_DocumentModificationBatch& ctx) override;
     void doTriggerCompletion(bool success) override;
+    bool isInVisualSnapStatus(int status) override;
 };
 #endif

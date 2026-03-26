@@ -98,6 +98,10 @@ void LC_ActionModifyRotate::doLoadOptions() {
     setRefPointAngleAbsolute(angle2abs);
 }
 
+bool LC_ActionModifyRotate::isInVisualSnapStatus(int status) {
+    return (status == SetReferencePoint) || (status == SetTargetPoint) || (status == SetCenterPoint) || (status == SetTargetPoint2ndRotation);
+}
+
 void LC_ActionModifyRotate::init(const int status) {
     LC_ActionPreSelectionAwareBase::init(status);
 }
@@ -388,6 +392,7 @@ void LC_ActionModifyRotate::onCoordinateEvent(const int status, [[maybe_unused]]
     }
     switch (status) {
         case SetReferencePoint: {
+            addSnappedPointToVisualSnap(pos);
             if (m_selectRefPointFirst) {
                 m_rotateData->refPoint = pos;
                 moveRelativeZero(pos);
@@ -426,6 +431,7 @@ void LC_ActionModifyRotate::onCoordinateEvent(const int status, [[maybe_unused]]
             break;
         }
         case SetCenterPoint: {
+            addSnappedPointToVisualSnap(pos);
             if (m_selectRefPointFirst) {
                 const RS_Vector radius = pos - m_rotateData->refPoint;
                 const bool rotationOverSamePoint = radius.squared() <= RS_TOLERANCE;
@@ -473,6 +479,7 @@ void LC_ActionModifyRotate::onCoordinateEvent(const int status, [[maybe_unused]]
             break;
         }
         case SetTargetPoint: {
+            addSnappedPointToVisualSnap(pos);
             const double angleCenterToPosWCS = m_rotateData->center.angleTo(pos);
             double rotationAngle;
             if (m_relativeAngle) {
@@ -504,6 +511,7 @@ void LC_ActionModifyRotate::onCoordinateEvent(const int status, [[maybe_unused]]
             break;
         }
         case SetTargetPoint2ndRotation: {
+            addSnappedPointToVisualSnap(pos);
             RS_Vector newRefPoint = m_rotateData->refPoint;
             newRefPoint.rotate(m_rotateData->center, m_rotateData->angle);
             const RS_Vector delta = pos - newRefPoint;

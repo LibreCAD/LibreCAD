@@ -57,11 +57,16 @@ void RS_ActionDrawEllipseFociPoint::init(const int status) {
 }
 
 double RS_ActionDrawEllipseFociPoint::findRatio() const {
-    return std::sqrt(m_actionData->halfDistance * m_actionData->halfDistance - m_actionData->halfDistanceFoci * m_actionData->halfDistanceFoci) / m_actionData->halfDistance;
+    return std::sqrt(
+            m_actionData->halfDistance * m_actionData->halfDistance - m_actionData->halfDistanceFoci * m_actionData->halfDistanceFoci) /
+        m_actionData->halfDistance;
 }
 
 RS_Entity* RS_ActionDrawEllipseFociPoint::doTriggerCreateEntity() {
-    auto* ellipse = new RS_Ellipse{m_document, {m_actionData->center, m_actionData->major * m_actionData->halfDistance, findRatio(), 0., 0., false}};
+    auto* ellipse = new RS_Ellipse{
+        m_document,
+        {m_actionData->center, m_actionData->major * m_actionData->halfDistance, findRatio(), 0., 0., false}
+    };
 
     moveRelativeZero(ellipse->getCenter());
     return ellipse;
@@ -69,6 +74,10 @@ RS_Entity* RS_ActionDrawEllipseFociPoint::doTriggerCreateEntity() {
 
 void RS_ActionDrawEllipseFociPoint::doTriggerCompletion([[maybe_unused]] bool success) {
     setStatus(SetFocus1);
+}
+
+bool RS_ActionDrawEllipseFociPoint::isInVisualSnapStatus(int status) {
+    return (status == SetFocus1) || (status == SetFocus2) || (status == SetPoint);
 }
 
 void RS_ActionDrawEllipseFociPoint::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
@@ -132,6 +141,7 @@ void RS_ActionDrawEllipseFociPoint::onMouseRightButtonRelease(const int status, 
 void RS_ActionDrawEllipseFociPoint::onCoordinateEvent(const int status, [[maybe_unused]] bool isZero, const RS_Vector& coord) {
     switch (status) {
         case SetFocus1: {
+            addSnappedPointToVisualSnap(coord);
             moveRelativeZero(coord);
             m_actionData->focus1 = coord;
             setStatus(SetFocus2);
@@ -144,6 +154,7 @@ void RS_ActionDrawEllipseFociPoint::onCoordinateEvent(const int status, [[maybe_
                 m_actionData->center = (m_actionData->focus1 + m_actionData->focus2) * 0.5;
                 m_actionData->major = m_actionData->focus1 - m_actionData->center;
                 m_actionData->major /= m_actionData->halfDistanceFoci;
+                addSnappedPointToVisualSnap(coord);
                 moveRelativeZero(m_actionData->center);
                 setStatus(SetPoint);
             }
@@ -154,6 +165,7 @@ void RS_ActionDrawEllipseFociPoint::onCoordinateEvent(const int status, [[maybe_
             m_actionData->halfDistance = 0.5 * (m_actionData->focus1.distanceTo(m_actionData->point) + m_actionData->focus2.distanceTo(
                 m_actionData->point));
             if (m_actionData->halfDistance > m_actionData->halfDistanceFoci + RS_TOLERANCE) {
+                addSnappedPointToVisualSnap(coord);
                 moveRelativeZero(coord);
                 trigger();
             }

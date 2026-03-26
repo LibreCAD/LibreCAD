@@ -64,6 +64,10 @@ void LC_ActionDrawPointsLattice::doTriggerCompletion([[maybe_unused]] bool succe
     setStatus(SetPoint1);
 }
 
+bool LC_ActionDrawPointsLattice::isInVisualSnapStatus(int status) {
+    return (status == SetPoint1) || (status == SetPoint2) || (status == SetPoint3) || (status == SetPoint4);
+}
+
 void LC_ActionDrawPointsLattice::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     const RS_Vector mouse = e->snapPoint;
     QVector<RS_Vector> pointsToCreate;
@@ -172,43 +176,47 @@ void LC_ActionDrawPointsLattice::onMouseRightButtonRelease(const int status, [[m
     }
 }
 
-void LC_ActionDrawPointsLattice::onCoordinateEvent(const int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
+void LC_ActionDrawPointsLattice::onCoordinateEvent(const int status, [[maybe_unused]]bool isZero, const RS_Vector &coord) {
     switch (status){
         case SetPoint1:{
-            m_point1 = pos;
-            moveRelativeZero(pos);
+            m_point1 = coord;
+            addSnappedPointToVisualSnap(coord);
+            moveRelativeZero(coord);
             setStatus(SetPoint2);
             break;
         }
         case SetPoint2:{
-            if (LC_LineMath::isNotMeaningfulDistance(pos, m_point1)){
+            if (LC_LineMath::isNotMeaningfulDistance(coord, m_point1)){
                 commandMessage(tr("Second point is too close to the first one"));
             }
             else{
-                m_point2 = pos;
-                moveRelativeZero(pos);
+                m_point2 = coord;
+                addSnappedPointToVisualSnap(coord);
+                moveRelativeZero(coord);
                 setStatus(SetPoint3);
             }
             break;
         }
         case SetPoint3:{
-            if (LC_LineMath::isNotMeaningfulDistance(pos, m_point2)){
+            if (LC_LineMath::isNotMeaningfulDistance(coord, m_point2)){
                 commandMessage(tr("Third point is too close to the second one"));
             }
             else{
-                m_point3 = pos;
-                moveRelativeZero(pos);
+                m_point3 = coord;
+                addSnappedPointToVisualSnap(coord);
+                moveRelativeZero(coord);
                 setStatus(SetPoint4);
             }
             break;
         }
         case SetPoint4:{
-            if (LC_LineMath::isNotMeaningfulDistance(pos, m_point3)){
+            if (LC_LineMath::isNotMeaningfulDistance(coord, m_point3)){
                 commandMessage(tr("Third point is too close to the second one"));
             }
             else{
-                m_point4 = pos;
-                moveRelativeZero(pos);
+                m_point4 = coord;
+                addSnappedPointToVisualSnap(coord);
+                moveRelativeZero(coord);
                 trigger();
             }
             break;

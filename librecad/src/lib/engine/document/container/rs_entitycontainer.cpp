@@ -28,6 +28,7 @@
 #include "rs_entitycontainer.h"
 
 #include <iostream>
+#include <boost/geometry/core/closure.hpp>
 
 #include "lc_containertraverser.h"
 #include "lc_looputils.h"
@@ -69,7 +70,7 @@ namespace {
     // Find the nearest distance between the endpoints of an entity to a given point
     double endPointDistance(const RS_Vector& point, const RS_Entity& entity) {
         double distance = RS_MAXDOUBLE;
-        entity.getNearestEndpoint(point, &distance);
+        entity.getNearestEndpoint(point, nullptr, &distance);
         return distance;
     }
 }
@@ -1100,11 +1101,13 @@ bool RS_EntityContainer::areNeighborsEntities(const RS_Entity* const e1, const R
  * @return The point which is closest to 'coord'
  * (one of the vertices)
  */
-RS_Vector RS_EntityContainer::doGetNearestEndpoint(const RS_Vector& coord, double* dist) const {
+RS_Vector RS_EntityContainer::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
     double minDist = RS_MAXDOUBLE; // minimum measured distance
     double curDist = 0.; // currently measured distance
     RS_Vector closestPoint(false); // closest found endpoint
+    RS_Entity* closestEntity {nullptr};
 
+    // fixme - actually, there could be improvement for snapping - by takind into consideration only entities within visual area
     for (const RS_Entity* en : *this) {
         if (en != nullptr && en->getId() != 0 && en->isVisible()) {
             const auto parent = en->getParent();
@@ -1114,9 +1117,11 @@ RS_Vector RS_EntityContainer::doGetNearestEndpoint(const RS_Vector& coord, doubl
             }
             if (checkForEndpoint) {
                 //no end point for Insert, text, Dim
-                const RS_Vector point = en->getNearestEndpoint(coord, &curDist);
+                RS_Entity* closestCandidate;
+                const RS_Vector point = en->getNearestEndpoint(coord, &closestCandidate, &curDist);
                 if (point.valid && curDist < minDist) {
                     closestPoint = point;
+                    closestEntity = closestCandidate;
                     minDist = curDist;
                     if (dist != nullptr) {
                         *dist = minDist;
@@ -1124,6 +1129,9 @@ RS_Vector RS_EntityContainer::doGetNearestEndpoint(const RS_Vector& coord, doubl
                 }
             }
         }
+    }
+    if (entity != nullptr) {
+        *entity = closestEntity;
     }
     return closestPoint;
 }
@@ -1141,7 +1149,7 @@ RS_Vector RS_EntityContainer::obtainNearestEndpoint(const RS_Vector& coord, doub
         if (en->getParent() == nullptr || !en->getParent()->ignoredOnModification()) {
             //no end point for Insert, text, Dim
             //            std::cout<<"find nearest for entity "<<i0<<std::endl;
-            const RS_Vector point = en->getNearestEndpoint(coord, &curDist);
+            const RS_Vector point = en->getNearestEndpoint(coord, nullptr, &curDist);
             if (point.valid && curDist < minDist) {
                 closestPoint = point;
                 minDist = curDist;
@@ -1166,23 +1174,29 @@ RS_Vector RS_EntityContainer::doGetNearestPointOnEntity(const RS_Vector& coord, 
     return point;
 }
 
-RS_Vector RS_EntityContainer::doGetNearestCenter(const RS_Vector& coord, double* dist) const {
+RS_Vector RS_EntityContainer::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
     double minDist = RS_MAXDOUBLE; // minimum measured distance
     double curDist = RS_MAXDOUBLE; // currently measured distance
     RS_Vector closestPoint(false); // closest found endpoint
+    RS_Entity* closestCenterEntity{nullptr};
 
     for (const auto en : m_entities) {
         if (en != nullptr && en->getId() != 0 && en->isVisible() && !en->getParent()->ignoredSnap()) {
             //no center point for spline, text, Dim
-            const RS_Vector point = en->getNearestCenter(coord, &curDist);
+            RS_Entity* centerEntity;
+            const RS_Vector point = en->getNearestCenter(coord, &curDist, &centerEntity);
             if (point.valid && curDist < minDist) {
                 closestPoint = point;
+                closestCenterEntity = centerEntity;
                 minDist = curDist;
             }
         }
     }
     if (dist != nullptr) {
         *dist = minDist;
+    }
+    if (entity != nullptr) {
+        *entity = closestCenterEntity;
     }
     return closestPoint;
 }
@@ -1218,7 +1232,7 @@ RS_Vector RS_EntityContainer::doGetNearestDist(const double distance, const RS_V
 /**
  * @return The intersection which is closest to 'coord'
  */
-RS_Vector RS_EntityContainer::getNearestIntersection(const RS_Vector& coord, double* dist) const {
+RS_Vector RS_EntityContainer::getNearestIntersection(const RS_Vector& coord, double* dist, RS_Entity** entity, RS_Entity** otherEntity) const {
     double minDist = RS_MAXDOUBLE; // minimum measured distance
     RS_Vector closestPoint(false); // closest found endpoint
     const RS_Entity* closestEntity = getNearestEntity(coord, nullptr, RS2::ResolveAllButTextImage);
@@ -1242,6 +1256,12 @@ RS_Vector RS_EntityContainer::getNearestIntersection(const RS_Vector& coord, dou
             if (sol.getNumber() > 0 && curDist < minDist) {
                 closestPoint = point;
                 minDist = curDist;
+                if (entity != nullptr) {
+                    *entity = const_cast<RS_Entity*>(closestEntity);
+                }
+                if (otherEntity != nullptr) {
+                    *otherEntity = const_cast<RS_Entity*>(en);
+                }
             }
         }
     }

@@ -91,9 +91,12 @@ void RS_Point::setPos(const RS_Vector& pos) {
     m_data.pos = pos;
 }
 
-RS_Vector RS_Point::doGetNearestEndpoint(const RS_Vector& coord, double* dist) const {
+RS_Vector RS_Point::doGetNearestEndpoint(const RS_Vector& coord, double* dist,  RS_Entity** entity) const {
     if (dist != nullptr) {
         *dist = m_data.pos.distanceTo(coord);
+    }
+    if (entity != nullptr) {
+        *entity = const_cast<RS_Point*>(this);
     }
 
     return m_data.pos;
@@ -109,9 +112,12 @@ RS_Vector RS_Point::doGetNearestPointOnEntity(const RS_Vector& coord, [[maybe_un
     return m_data.pos;
 }
 
-RS_Vector RS_Point::doGetNearestCenter(const RS_Vector& coord, double* dist) const {
+RS_Vector RS_Point::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
     if (dist != nullptr) {
         *dist = m_data.pos.distanceTo(coord);
+    }
+    if (entity != nullptr) {
+        *entity = const_cast<RS_Point*>(this);
     }
     return m_data.pos;
 }

@@ -45,6 +45,10 @@ void LC_ActionModifyAlignSingle::doLoadOptions() {
     m_alignType = loadInt("AlignTo", 0);
 }
 
+bool LC_ActionModifyAlignSingle::isInVisualSnapStatus(int status) {
+    return (status == SetRefPoint);
+}
+
 void LC_ActionModifyAlignSingle::init(const int status) {
     if (m_viewport->hasUCS()) {
         commandMessage(tr(

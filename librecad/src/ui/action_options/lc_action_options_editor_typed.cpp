@@ -145,7 +145,7 @@ void LC_ActionOptionsEditorTyped::showOptionsInPropertySheetWidget() {
     propertySheetWidget->showToolOptions(m_optionFiller.get());
 }
 
-void LC_ActionOptionsEditorTyped::updateOptionsUIInPropertySheetWidget(int mode, const QVariant *value) {
+void LC_ActionOptionsEditorTyped::updateOptionsUIInPropertySheetWidget([[maybe_unused]]int mode, [[maybe_unused]]const QVariant *value) {
     const auto propertySheetWidget = QC_ApplicationWindow::getAppWindow()->getPropertySheetWidget();
     propertySheetWidget->refill();
 }
@@ -159,7 +159,7 @@ void LC_ActionOptionsEditorTyped::hideOptionsInPropertySheetWidget() {
     }
 }
 
-void LC_ActionOptionsEditorTyped::updateOptionsInPropertySheetWidget(const QString& tagToFocus) {
+void LC_ActionOptionsEditorTyped::updateOptionsInPropertySheetWidget([[maybe_unused]]const QString& tagToFocus) {
     const auto propertySheetWidget = QC_ApplicationWindow::getAppWindow()->getPropertySheetWidget();
     propertySheetWidget->refill();
 }

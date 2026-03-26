@@ -183,9 +183,9 @@ bool RS_GraphicView::killAllActionsWithResult() const {
 /**
  * Go back in menu or current action.
  */
-void RS_GraphicView::back() const {
+void RS_GraphicView::back(Qt::KeyboardModifiers modifiers) const {
     if (m_eventHandler && m_eventHandler->hasAction()) {
-        m_eventHandler->back();
+        m_eventHandler->back(modifiers);
     }
 }
 

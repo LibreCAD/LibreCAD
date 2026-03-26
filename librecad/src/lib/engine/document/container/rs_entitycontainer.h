@@ -160,7 +160,7 @@ public:
     void update() override;
     virtual void renameInserts(const QString& oldName, const QString& newName);
     RS_Entity* getNearestEntity(const RS_Vector& coord, double* dist = nullptr, RS2::ResolveLevel level = RS2::ResolveAll) const;
-    RS_Vector getNearestIntersection(const RS_Vector& coord, double* dist = nullptr) const;
+    RS_Vector getNearestIntersection(const RS_Vector& coord, double* dist = nullptr, RS_Entity** entity = nullptr, RS_Entity** otherEntity=nullptr) const;
     RS_Vector getNearestVirtualIntersection(const RS_Vector& coord, double angle, double* dist) const;
     virtual RefInfo getNearestSelectedRefInfo(const RS_Vector& coord, double* dist = nullptr) const;
     virtual bool optimizeContours();
@@ -253,9 +253,9 @@ protected:
 
     RS_Vector doGetNearestPointOnEntity(const RS_Vector& coord, bool onEntity, double* dist, RS_Entity** entity) const override;
     double doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity, RS2::ResolveLevel level, double solidDist) const override;
-    RS_Vector doGetNearestEndpoint(const RS_Vector& coord, double* dist) const override;
+    RS_Vector doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const override;
     RS_Vector doGetNearestRef(const RS_Vector& coord, double* dist) const override;
-    RS_Vector doGetNearestCenter(const RS_Vector& coord, double* dist) const override;
+    RS_Vector doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const override;
     RS_Vector doGetNearestMiddle(const RS_Vector& coord, double* dist, int middlePoints) const override;
     RS_Vector doGetNearestSelectedRef(const RS_Vector& coord, double* dist) const override;
     RS_Vector obtainNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** pEntity) const;

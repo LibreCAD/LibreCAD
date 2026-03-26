@@ -624,7 +624,7 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event) {
         switch (event->button()) {
             case Qt::RightButton: {
                 if (getEventHandler()->hasAction()) {
-                    back();
+                    back(event->modifiers());
                 }
                 break;
             }

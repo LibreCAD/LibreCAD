@@ -118,6 +118,10 @@ void RS_ActionEditCopyPaste::doTriggerSelectionUpdate(const bool keepSelected, c
     LC_ActionPreSelectionAwareBase::doTriggerSelectionUpdate(keepSelected, ctx); // fixme - complete!
 }
 
+bool RS_ActionEditCopyPaste::isInVisualSnapStatus(int status) {
+    return (status == SetReferencePoint);
+}
+
 void RS_ActionEditCopyPaste::doTriggerCompletion(const bool success) {
     LC_ActionPreSelectionAwareBase::doTriggerCompletion(success); // fixme - complete!
 }

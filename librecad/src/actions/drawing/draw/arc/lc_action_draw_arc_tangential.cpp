@@ -60,6 +60,10 @@ void LC_ActionDrawArcTangential::doLoadOptions() {
     m_angleLength = loadDouble("Angle", M_PI_2);
 }
 
+bool LC_ActionDrawArcTangential::isInVisualSnapStatus(int status) {
+    return status == SetEndAngle;
+}
+
 void LC_ActionDrawArcTangential::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]] const RS_Vector& clickPosition) {
     setBaseEntity(contextEntity, m_actionContext->getContextMenuActionClickPosition());
 }

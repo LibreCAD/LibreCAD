@@ -78,15 +78,21 @@ void LC_ActionDrawCircleCenterPoint::onMouseMoveEvent(const int status, const LC
     }
 }
 
+bool LC_ActionDrawCircleCenterPoint::isInVisualSnapStatus(int status) {
+    return (status == SetCenter) || (status == SetRadius);
+}
+
 void LC_ActionDrawCircleCenterPoint::onCoordinateEvent(const int status, [[maybe_unused]] bool isZero, const RS_Vector& coord) {
     switch (status) {
         case SetCenter:
             m_circleData->center = coord;
+            addSnappedPointToVisualSnap(coord);
             moveRelativeZero(coord);
             setStatus(SetRadius);
             break;
         case SetRadius:
             if (m_circleData->center.valid) {
+                addSnappedPointToVisualSnap(coord);
                 moveRelativeZero(coord);
                 m_circleData->radius = m_circleData->center.distanceTo(coord);
                 trigger();

@@ -82,5 +82,6 @@ protected:
     bool doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) override;
     void doSaveOptions() override;
     void doLoadOptions() override;
+    bool isInVisualSnapStatus(int status) override;
 };
 #endif

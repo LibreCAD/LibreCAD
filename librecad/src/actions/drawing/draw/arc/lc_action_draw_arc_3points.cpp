@@ -100,6 +100,10 @@ void LC_ActionDrawArc3Points::preparePreview(const bool alternatePoints) const {
     }
 }
 
+bool LC_ActionDrawArc3Points::isInVisualSnapStatus(int status) {
+    return (status == SetPoint1) || (status == SetPoint2) || (status == SetPoint3);
+}
+
 void LC_ActionDrawArc3Points::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     RS_Vector mouse = e->snapPoint;
 
@@ -177,18 +181,21 @@ void LC_ActionDrawArc3Points::onCoordinateEvent(const int status, [[maybe_unused
     switch (status) {
         case SetPoint1: {
             m_actionData->point1 = coord;
+            addSnappedPointToVisualSnap(coord);
             moveRelativeZero(coord);
             setStatus(SetPoint2);
             break;
         }
         case SetPoint2: {
             m_actionData->point2 = coord;
+            addSnappedPointToVisualSnap(coord);
             moveRelativeZero(coord);
             setStatus(SetPoint3);
             break;
         }
         case SetPoint3: {
             m_actionData->point3 = coord;
+            addSnappedPointToVisualSnap(coord);
             trigger();
             break;
         }

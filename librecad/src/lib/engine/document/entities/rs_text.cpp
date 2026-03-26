@@ -400,9 +400,12 @@ void RS_Text::updateBaselinePoints() {
     m_baselineEndPoint = m_baselineStartPoint + RS_Vector::polar(m_usedTextWidth, m_data.angle);
 }
 
-RS_Vector RS_Text::doGetNearestEndpoint(const RS_Vector& coord, double* dist) const {
+RS_Vector RS_Text::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
     if (dist != nullptr) {
         *dist = m_data.insertionPoint.distanceTo(coord);
+    }
+    if (entity != nullptr) {
+        *entity = const_cast<RS_Text*>(this);
     }
     return m_data.insertionPoint;
 }

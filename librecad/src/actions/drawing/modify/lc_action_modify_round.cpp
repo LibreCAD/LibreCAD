@@ -51,7 +51,7 @@ namespace {
 // Whether the point is on an endPoint of the entity
     bool atEndPoint(const RS_Entity &entity, const RS_Vector &point){
         double distance = 1.;
-        const RS_Vector nearestPoint = entity.getNearestEndpoint(point, &distance);
+        const RS_Vector nearestPoint = entity.getNearestEndpoint(point, nullptr, &distance);
         return nearestPoint.valid && distance < RS_TOLERANCE;
     }
 

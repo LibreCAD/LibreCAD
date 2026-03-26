@@ -41,7 +41,7 @@ class RS_LayerListListener;
 class RS_LayerList {
 public:
     explicit RS_LayerList();
-    virtual ~RS_LayerList() = default;
+    virtual ~RS_LayerList();
     /**
      * @return Number of layers in the list.
      */

@@ -137,6 +137,7 @@ void LC_ActionSnapMiddleManual::onCoordinateEvent(const int status, [[maybe_unus
         case SetStartPoint: {
             m_actionData->startPoint = pos;
             setStatus(SetEndPoint);
+            addSnappedPointToVisualSnap(pos);
             moveRelativeZero(pos);
             updateActionPrompt();
             break;
@@ -149,6 +150,7 @@ void LC_ActionSnapMiddleManual::onCoordinateEvent(const int status, [[maybe_unus
                 const RS_Vector middleManualPoint =
                     m_actionData->startPoint + (m_actionData->endPoint - m_actionData->startPoint) * m_actionData->percentage;
 
+                addSnappedPointToVisualSnap(pos);
                 moveRelativeZero(middleManualPoint);
 
                 if (m_predecessor != nullptr) {
@@ -220,6 +222,10 @@ QStringList LC_ActionSnapMiddleManual::doGetAvailableCommands(const int status){
             break;
     }
     return actionCommandsList;
+}
+
+bool LC_ActionSnapMiddleManual::isInVisualSnapStatus(int status) {
+    return (status == SetStartPoint) || (status == SetEndPoint);
 }
 
 void LC_ActionSnapMiddleManual::updateActionPrompt(){

@@ -34,7 +34,7 @@
  *  Constructs a QG_LineParallelOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-LC_LineParallelOptionsWidget::LC_LineParallelOptionsWidget(const RS2::ActionType actionType):ui(new Ui::LC_LineParallelOptionsWidget{}) {
+LC_LineParallelOptionsWidget::LC_LineParallelOptionsWidget():ui(new Ui::LC_LineParallelOptionsWidget{}) {
     ui->setupUi(this);
     connect(ui->leDist, &QLineEdit::editingFinished, this, &LC_LineParallelOptionsWidget::onDistEditingFinished);
     connect(ui->sbNumber, &QSpinBox::valueChanged, this, &LC_LineParallelOptionsWidget::onNumberValueChanged);

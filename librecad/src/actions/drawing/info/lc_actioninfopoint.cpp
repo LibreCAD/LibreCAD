@@ -131,3 +131,7 @@ void LC_ActionInfoPoint::updateActionPrompt(){
 RS2::CursorType LC_ActionInfoPoint::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::SelectCursor;
 }
+
+bool LC_ActionInfoPoint::isInVisualSnapStatus(int status) {
+    return (status == SetPoint);
+}

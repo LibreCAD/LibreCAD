@@ -52,6 +52,9 @@ QAction* QG_SnapToolBar::addOwnAction(const QString& name, const QMap<QString, Q
 QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, const LC_ActionGroupManager* agm,
                                const QMap<QString, QAction*>& actionsMap)
     : QToolBar(parent), m_actionHandler(ah) {
+
+    m_actionSnapVisual = addOwnAction("SnapVisual", actionsMap);
+
     const auto action = justAddAction("ExclusiveSnapMode", actionsMap);
     connect(action, &QAction::triggered, agm, &LC_ActionGroupManager::toggleExclusiveSnapMode);
 
@@ -109,6 +112,7 @@ void QG_SnapToolBar::saveSnapMode() const {
 }
 
 void QG_SnapToolBar::setSnaps(const RS_SnapMode& s) const {
+    m_actionSnapVisual->setChecked(s.snapVisual);
     m_actionSnapFree->setChecked(s.snapFree);
     m_actionSnapGrid->setChecked(s.snapGrid);
     m_actionSnapEnd->setChecked(s.snapEndpoint);
@@ -130,7 +134,7 @@ void QG_SnapToolBar::setSnaps(const RS_SnapMode& s) const {
 
 RS_SnapMode QG_SnapToolBar::getSnaps() const {
     RS_SnapMode s;
-
+    s.snapVisual = m_actionSnapVisual->isChecked();
     s.snapFree = m_actionSnapFree->isChecked();
     s.snapGrid = m_actionSnapGrid->isChecked();
     s.snapEndpoint = m_actionSnapEnd->isChecked();

@@ -136,8 +136,6 @@ protected:
         }
     };
 
-
-
     /*
      * should we create polyline or just individual lines
      */

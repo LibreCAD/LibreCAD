@@ -59,6 +59,7 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateActionPrompt() override;
     void updateInfoCursor(const RS_Vector &mouse, const RS_Vector &relZero) const;
+    bool isInVisualSnapStatus(int status) override;
 };
 
 #endif

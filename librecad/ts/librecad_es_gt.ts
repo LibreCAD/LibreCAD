@@ -10583,7 +10583,7 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionBlocksInsert</name>
+    <name>lc_action_block_insert.</name>
     <message>
         <source>Insert Block</source>
         <translation type="obsolete">Insertar bloque</translation>
@@ -12960,7 +12960,7 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionModifyAttributes</name>
+    <name>lc_action_modify_attributes.</name>
     <message>
         <source>Attributes</source>
         <translation type="obsolete">Atributos</translation>
@@ -12975,7 +12975,7 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionModifyBevel</name>
+    <name>lc_action_modify_bevel.</name>
     <message>
         <source>Bevel</source>
         <translation type="obsolete">Chaflán</translation>

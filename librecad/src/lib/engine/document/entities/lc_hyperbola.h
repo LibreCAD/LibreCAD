@@ -286,8 +286,7 @@ protected:
 
     RS_Vector doGetNearestDist(double distance, const RS_Vector &coord,
                              double *dist) const override;
-    RS_Vector doGetNearestEndpoint(const RS_Vector &coord,
-                               double *dist) const override;
+    RS_Vector doGetNearestEndpoint(const RS_Vector &coord, double *dist, RS_Entity** entity) const override;
     RS_Vector doGetNearestPointOnEntity(const RS_Vector &coord, bool onEntity,
                             double *dist,
                             RS_Entity **entity) const override;

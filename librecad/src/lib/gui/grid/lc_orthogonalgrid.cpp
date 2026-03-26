@@ -22,7 +22,10 @@
 
 #include "lc_orthogonalgrid.h"
 
+#include "drw_base.h"
 #include "lc_lattice.h"
+#include "lc_linemath.h"
+#include "rs_debug.h"
 #include "rs_math.h"
 
 LC_OrthogonalGrid::LC_OrthogonalGrid(LC_GridOptions* options) : LC_GridSystem(options) {
@@ -104,6 +107,114 @@ RS_Vector LC_OrthogonalGrid::snapGrid(const RS_Vector& coord) const {
         correctionVector = RS_Vector(remainder(vp.x, gridX), remainder(vp.y, gridY));
     }
     return coord - correctionVector;
+}
+
+RS_Vector LC_OrthogonalGrid::snapGrid(const RS_Vector& coord, const RS_Vector& rayStart, const RS_Vector& rayEnd) {
+    const double gridX = m_gridCellSize.x;
+    const double gridY = m_gridCellSize.y;
+    if (gridX < RS_TOLERANCE || gridY < RS_TOLERANCE) {
+        return coord;
+    }
+    // LC_ERR << " ****************************************************************************************************";
+    // LC_ERR << " coord" << coord;
+    // LC_ERR << " RayStart" << rayStart;
+    // LC_ERR << " RayEnd" << rayEnd;
+    // LC_ERR << " Base Point" << m_gridBasePoint;
+
+    RS_Vector correctionVector;
+    if (m_hasAxisIndefinite) {
+        if (m_indefiniteX) {
+            RS_Vector basepoint(0, m_gridBasePoint.y);
+            const RS_Vector vp(coord - basepoint);
+            correctionVector = RS_Vector(0, remainder(vp.y, gridY));
+        }
+        else {
+            RS_Vector basepoint(m_gridBasePoint.x, 0);
+            const RS_Vector vp(coord - basepoint);
+            correctionVector = RS_Vector(remainder(vp.x, gridX), 0);
+        }
+    }
+    else {
+        const RS_Vector vp(coord - m_gridBasePoint);
+        correctionVector = RS_Vector(remainder(vp.x, gridX), remainder(vp.y, gridY));
+    }
+
+    RS_Vector correctedPos = coord - correctionVector;
+    // LC_ERR << " correctedPos " << correctedPos;
+
+    double cellLeft;
+    double cellRight;
+    double cellTop;
+    double cellBottom;
+    double correctedX = correctedPos.x;
+    if (correctedX > coord.x) {
+        cellRight = correctedX;
+        cellLeft = correctedX - gridX;
+    }
+    else {
+        cellRight = correctedX + gridX;
+        cellLeft = correctedX;
+    }
+    double correctedY = correctedPos.y;
+    if (correctedY > coord.y) {
+        cellTop = correctedY;
+        cellBottom = correctedY - gridY;
+    }
+    else {
+        cellTop = correctedY + gridY;
+        cellBottom = correctedY;
+    }
+
+    RS_Vector leftBottom(cellLeft, cellBottom);
+    RS_Vector leftTop(cellLeft, cellTop);
+    RS_Vector rightBottom(cellRight, cellBottom);
+    RS_Vector rightTop(cellRight, cellTop);
+
+    // LC_ERR << " leftBottom " << leftBottom;
+    // LC_ERR << " leftTop " << leftTop;
+    // LC_ERR << " rightBottom " << rightBottom;
+    // LC_ERR << " rightTop " << rightTop;
+
+    RS_VectorSolutions corners({leftBottom, leftTop, rightBottom, rightTop});
+    size_t closesIndex;
+    double distanceToClosestCorner;
+    RS_Vector closestCellCorner = corners.getClosest(coord, &distanceToClosestCorner, &closesIndex);
+
+    // LC_ERR << " closestCellCorner " << closestCellCorner;
+    // LC_ERR << " closesIndex " << closesIndex;
+
+    const RS_Vector intersectionVert = LC_LineMath::getIntersectionLineLineFast(rayStart, rayEnd, closestCellCorner, RS_Vector(closestCellCorner.x, closestCellCorner.y+10));
+    const RS_Vector intersectionHor = LC_LineMath::getIntersectionLineLineFast(rayStart, rayEnd, closestCellCorner, RS_Vector(closestCellCorner.x+10, closestCellCorner.y));
+
+    double distanceIntersectionToCorner = RS_MAXDOUBLE;
+    bool verticalIsCloser = false;
+    if (intersectionVert.valid) {
+        // LC_ERR << "intersectionVert.valid";
+        distanceIntersectionToCorner = intersectionVert.distanceTo(/*closestCellCorner*/coord);
+        verticalIsCloser = true;
+    }
+    if (intersectionHor.valid) {
+        // LC_ERR << "intersectionHor.valid";
+        double dist = intersectionHor.distanceTo(/*closestCellCorner*/coord);
+        if (dist < distanceIntersectionToCorner) {
+            verticalIsCloser = false;
+        }
+    }
+    RS_Vector result(true);
+    if (verticalIsCloser) {
+        result.x = closestCellCorner.x;
+        result.y = intersectionVert.y;
+        // LC_ERR << " Vertical is closer ";
+    }
+    else {
+        result.x = intersectionHor.x;
+        result.y = closestCellCorner.y;
+        // LC_ERR << " horizontal is closer ";
+    }
+
+    // LC_ERR << " result " << result;
+
+    return result;
 }
 
 void LC_OrthogonalGrid::fillPointsLatticeWithGapsForMetaGrid() const {

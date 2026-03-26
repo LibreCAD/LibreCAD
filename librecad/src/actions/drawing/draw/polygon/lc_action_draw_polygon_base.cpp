@@ -55,6 +55,10 @@ void LC_ActionDrawPolygonBase::doLoadOptions() {
     m_roundingRadius = loadDouble("Radius", 10);
 }
 
+bool LC_ActionDrawPolygonBase::isInVisualSnapStatus(int status) {
+    return (status == SetPoint1) || (status == SetPoint2);
+}
+
 bool LC_ActionDrawPolygonBase::doTriggerModifications(LC_DocumentModificationBatch& ctx) {
     PolygonInfo polygonInfo;
     preparePolygonInfo(polygonInfo, m_actionData->point2);
@@ -135,11 +139,13 @@ void LC_ActionDrawPolygonBase::onCoordinateEvent(const int status,  [[maybe_unus
         case SetPoint1: {
             m_actionData->point1 = coord;
             setStatus(SetPoint2);
+            addSnappedPointToVisualSnap(coord);
             moveRelativeZero(coord);
             break;
         }
         case SetPoint2: {
             m_actionData->point2 = coord;
+            addSnappedPointToVisualSnap(coord);
             trigger();
             break;
         }

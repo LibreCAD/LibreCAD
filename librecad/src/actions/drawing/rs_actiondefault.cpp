@@ -125,6 +125,10 @@ void RS_ActionDefault::checkSupportOfQuickEntityInfo(){
 }
 
 void RS_ActionDefault::keyPressEvent(QKeyEvent *e){
+    LC_OverlayBoxAction::keyPressEvent(e);
+    if (e->isAccepted()) {
+        return;
+    }
     //        std::cout<<"RS_ActionDefault::keyPressEvent(): begin"<<std::endl;
     switch (e->key()) {
         case Qt::Key_Shift:

@@ -24,6 +24,8 @@
 
 #include "lc_lattice.h"
 #include "lc_linemath.h"
+#include "lc_rectregion.h"
+#include "rs_debug.h"
 #include "rs_math.h"
 
 LC_IsometricGrid::LC_IsometricGrid(LC_GridOptions *options, const int isoProjection):LC_GridSystem(options) {
@@ -66,6 +68,72 @@ RS_Vector LC_IsometricGrid::snapGrid(const RS_Vector &coord) const {
 
     const RS_Vector result = m_gridBasePoint + foundCellPoint + normalizedPosition - positionInSnapCell;
     return result;
+}
+
+RS_Vector LC_IsometricGrid::snapGrid(const RS_Vector& coord, const RS_Vector& rayStart, const RS_Vector& rayEnd) {
+    const RS_Vector normalizedPosition(coord - m_gridBasePoint);
+
+    // LC_ERR << " RayStart" << rayStart;
+    // LC_ERR << " RayEnd" << rayEnd;
+
+    //use remainder instead of fmod to locate the left-bottom corner for both positive and negative displacement
+
+    const double xInSnapCell = remainder(normalizedPosition.x, 2 * m_gridDeltaX.x);
+    const double yInSnapCell = remainder(normalizedPosition.y, 2 * m_gridDeltaY.y);
+
+    const RS_Vector positionInSnapCell(xInSnapCell, yInSnapCell);
+
+    // LC_ERR << " Position in cell" << positionInSnapCell;
+
+    // LC_ERR << " CELL1" << m_snapVectorSolution.at(1);
+    // LC_ERR << " CELL2" << m_snapVectorSolution.at(2);
+    // LC_ERR << " CELL3" << m_snapVectorSolution.at(3);
+    // LC_ERR << " CELL4" << m_snapVectorSolution.at(4);
+
+    double dist;
+    size_t index;
+    const RS_Vector closestCellpoint = m_snapVectorSolution.getClosest(positionInSnapCell, &dist, &index);
+
+    // LC_ERR << " Closest" << closestCellpoint;
+
+    const RS_Vector cornerGlobal =  m_gridBasePoint + closestCellpoint + normalizedPosition - positionInSnapCell;
+
+    // LC_ERR << " Global" << cornerGlobal;
+
+
+    const RS_Vector intersectionVert = LC_LineMath::getIntersectionLineLineFast(rayStart, rayEnd, cornerGlobal, RS_Vector(cornerGlobal.x, cornerGlobal.y+10));
+    const RS_Vector intersectionHor = LC_LineMath::getIntersectionLineLineFast(rayStart, rayEnd, cornerGlobal, RS_Vector(cornerGlobal.x+10, cornerGlobal.y));
+
+    // LC_ERR << " intersectionVert" << intersectionVert;
+    // LC_ERR << " intersectionHor" << intersectionHor;
+
+    double minDist = RS_MAXDOUBLE;
+
+    RS_Vector minIntersectionPoint{false};
+    if (intersectionVert.valid) {
+       dist = intersectionVert.distanceTo(cornerGlobal);
+       minDist = dist;
+       minIntersectionPoint = intersectionVert;
+        // LC_ERR << " min intersectionVert";
+    }
+
+    if (intersectionHor.valid) {
+        dist = intersectionHor.distanceTo(cornerGlobal);
+        if (dist < minDist) {
+            minIntersectionPoint = intersectionHor;
+            // LC_ERR << " min intersection HOr!";
+        }
+    }
+
+    if (!minIntersectionPoint.valid) {
+        // LC_ERR << "ISO - GridRay: no intersections";
+        return coord;
+    }
+    else {
+        // LC_ERR << "###################   #####################ISO - GridRay: HAS intersections";
+        const RS_Vector result = minIntersectionPoint;
+        return result;
+    }
 }
 
 void LC_IsometricGrid::prepareGridOther(const RS_Vector &viewZero, const RS_Vector &viewSize) {

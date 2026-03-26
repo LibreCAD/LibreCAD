@@ -51,7 +51,7 @@ void LC_PolylineOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* co
                           return action->getRadius();
                       }, [action](double val) {
                           action->setRadius(val);
-                      }, container, [action](LC_PropertyViewDescriptor& d) {
+                      }, container, [action]([[maybe_unused]]LC_PropertyViewDescriptor& d) {
                           return action->getMode() != LC_ActionDrawPolyline::SegmentMode::TangentalArcFixedRadius;
                       });
 
@@ -59,13 +59,13 @@ void LC_PolylineOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* co
                            return action->getAngleDegrees();
                        }, [action](double val) {
                            action->setAngleDegrees(val);
-                       }, container, [action](LC_PropertyViewDescriptor& d) {
+                       }, container, [action]([[maybe_unused]]LC_PropertyViewDescriptor& d) {
                            int mode = action->getMode();
                            return !((mode == LC_ActionDrawPolyline::SegmentMode::TangentalArcFixedAngle) || (mode ==
                                LC_ActionDrawPolyline::SegmentMode::ArcFixedAngle));
                        });
 
-    addBoolean({"a_reversed", tr("Reversed"), tr("If checked, outer edges will be rounded")}, [action]()-> bool {
+    addBoolean({"a_reversed", tr("Reversed"), tr("If selected, arc will be clockwise, otherwise - counterclockwise")}, [action]()-> bool {
                    return action->isReversed();
                }, [action](bool val)-> void {
                    action->setReversed(val);
@@ -74,7 +74,7 @@ void LC_PolylineOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* co
                    return mode != LC_ActionDrawPolyline::SegmentMode::ArcFixedAngle;
                });
 
-    createCommandsLine(container, "a_commands2", tr("Close"), tr("Connects ends of the polyline so closed contour is created"), tr("Undo"),
+    createCommandsLine(container, "a_commands2", tr("Close"), tr("Connects endpoints of the polyline so closed contour is created"), tr("Undo"),
                        tr("Undo for previous vertex"), [action](int linkIndex)-> void {
                            if (linkIndex == 0) {
                                action->close();

@@ -137,5 +137,6 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &coord) override;
     bool doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) override;
     bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
+    bool isInVisualSnapStatus(int status) override;
 };
 #endif

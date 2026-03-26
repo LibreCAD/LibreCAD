@@ -41,6 +41,7 @@ void RS_ActionSetRelativeZero::trigger(){
     if (m_position->valid) {
         const bool wasLocked = m_viewport->isRelativeZeroLocked();
         m_viewport->lockRelativeZero(false);
+        addSnappedPointToVisualSnap(*m_position);
         moveRelativeZero(*m_position);
         RS_Undoable *relativeZeroUndoable = m_viewport->getRelativeZeroUndoable();
         if (relativeZeroUndoable != nullptr) {
@@ -75,6 +76,10 @@ void RS_ActionSetRelativeZero::updateActionPrompt(){
             updatePrompt();
             break;
     }
+}
+
+bool RS_ActionSetRelativeZero::isInVisualSnapStatus([[maybe_unused]]int status) {
+    return true;
 }
 
 RS2::CursorType RS_ActionSetRelativeZero::doGetMouseCursor([[maybe_unused]] int status){

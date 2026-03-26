@@ -59,10 +59,10 @@ void LC_ActionPenPick::onMouseMoveEvent(const int status, const LC_MouseEvent* e
 
 void LC_ActionPenPick::pickPen(const RS_Entity* en) {
     applyPenToPenToolBar(en);
-    init( getStatus() - 1);
+    init(getStatus() - 1);
     finish();
     redraw();
-    m_graphicView->back();
+    m_graphicView->back(Qt::KeyboardModifier::NoModifier);
 }
 
 void LC_ActionPenPick::onMouseLeftButtonRelease(const int status, const LC_MouseEvent* e) {

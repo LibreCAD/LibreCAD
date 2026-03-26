@@ -41,7 +41,7 @@ LC_ScaleOptionsWidget::LC_ScaleOptionsWidget(): ui(new Ui::LC_ScaleOptionsWidget
     connect(ui->sbNumberOfCopies, &QSpinBox::valueChanged, this, &LC_ScaleOptionsWidget::onCopiesNumberValueChanged);
 }
 
-void LC_ScaleOptionsWidget::updateUI(const int mode, const QVariant* value) {
+void LC_ScaleOptionsWidget::updateUI(const int mode, [[maybe_unused]]const QVariant* value) {
     if (mode == 0) {
         // update on SetTargetPoint
         const QString factorX = fromDouble(m_action->getFactorX());

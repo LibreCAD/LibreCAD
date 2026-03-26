@@ -106,7 +106,7 @@
       </sizepolicy>
      </property>
      <property name="toolTip">
-      <string>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</string>
+      <string>If checked, fixed distance of offset will be used, otherwise it will be defined by mouse.</string>
      </property>
      <property name="text">
       <string>Fixed Distance</string>

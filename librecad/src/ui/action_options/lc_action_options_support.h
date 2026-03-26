@@ -45,7 +45,7 @@ public:
      * @param value
      */
     [[deprecated]]
-    virtual void updateUI([[maybe_unused]]int mode, const QVariant* value){}
+    virtual void updateUI([[maybe_unused]]int mode, [[maybe_unused]]const QVariant* value){}
 protected:
 
     /**

@@ -71,6 +71,10 @@ void LC_ActionDrawPolyline::doLoadOptions() {
     m_reversed = loadBool("Reversed", false);
 }
 
+bool LC_ActionDrawPolyline::isInVisualSnapStatus(int status) {
+    return (status == SetStartpoint) || (status == SetNextPoint);
+}
+
 void LC_ActionDrawPolyline::reset() const {
     m_actionData->polyline = nullptr;
     m_actionData->data = {};
@@ -366,6 +370,7 @@ void LC_ActionDrawPolyline::onCoordinateEvent(const int status, [[maybe_unused]]
             }
             drawSnapper();
             moveRelativeZero(mouse);
+            addSnappedPointToVisualSnap(mouse);
             setStatus(SetNextPoint);
             break;
         }
@@ -435,6 +440,7 @@ void LC_ActionDrawPolyline::onCoordinateEvent(const int status, [[maybe_unused]]
                 updatePromptTRBack(tr("Enter number of polylines")); // fixme - check if this is correct
             }
             drawSnapper();
+            addSnappedPointToVisualSnap(mouse);
             moveRelativeZero(mouse);
             break;
         }

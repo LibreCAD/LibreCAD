@@ -180,10 +180,11 @@ protected:
    * distance between 'coord' and the closest center point. The passed
    * pointer can also be NULL in which case the distance will be
    * lost.
+   * @param centerEntity
    *
    * @return The closest center point.
    */
-    RS_Vector doGetNearestCenter(const RS_Vector& coord, double* dist) const override;
+    RS_Vector doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const override;
 };
 
 #endif

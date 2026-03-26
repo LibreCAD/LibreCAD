@@ -27,6 +27,7 @@
 #include "lc_action_options_properties_filler.h"
 
 class LC_CenterMarkOptionsFiller: public LC_ActionOptionsPropertiesFiller{
+    Q_OBJECT
 public:
     LC_CenterMarkOptionsFiller() = default;
     ~LC_CenterMarkOptionsFiller() override = default;

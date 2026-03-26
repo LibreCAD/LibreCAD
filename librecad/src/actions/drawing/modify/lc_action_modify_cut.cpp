@@ -74,6 +74,10 @@ void LC_ActionModifyCut::doTriggerCompletion(const bool success) {
     }
 }
 
+bool LC_ActionModifyCut::isInVisualSnapStatus(int status) {
+    return (status = SetCutCoord);
+}
+
 void LC_ActionModifyCut::finish(){
     m_cutEntity = nullptr;
     RS_PreviewActionInterface::finish();

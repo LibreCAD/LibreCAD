@@ -73,8 +73,8 @@ void LC_DuplicateOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* c
     static LC_EnumDescriptor layerTypeDescriptor = {
         "LayerTypeDescriptor",
         {
-            {LC_AbstractActionWithPreview::LayerApplyMode::LAYER_ACTIVE, tr("Active")},
-            {LC_AbstractActionWithPreview::LayerApplyMode::LAYER_ORIGINAL, tr("Original")}
+            {LC_AbstractActionWithPreview::LayerApplyMode::LAYER_ACTIVE, tr("Active", "layer")},
+            {LC_AbstractActionWithPreview::LayerApplyMode::LAYER_ORIGINAL, tr("Original", "layer")}
         }
     };
 

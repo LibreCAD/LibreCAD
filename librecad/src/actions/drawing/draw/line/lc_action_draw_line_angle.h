@@ -137,8 +137,8 @@ protected:
     bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
     void doTriggerCompletion(bool success) override;
     RS_Entity* doTriggerCreateEntity() override;
-
     void doSaveOptions() override;
     void doLoadOptions() override;
+    bool isInVisualSnapStatus(int status) override;
 };
 #endif

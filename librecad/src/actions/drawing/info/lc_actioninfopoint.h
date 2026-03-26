@@ -53,6 +53,7 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector& mouse) override;
     void updateActionPrompt() override;
     RS2::CursorType doGetMouseCursor(int status) override;
+    bool isInVisualSnapStatus(int status) override;
 };
 
 #endif

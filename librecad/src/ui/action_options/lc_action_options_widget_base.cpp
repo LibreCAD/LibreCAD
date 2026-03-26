@@ -29,9 +29,8 @@
 LC_ActionOptionsWidgetBase::LC_ActionOptionsWidgetBase():LC_ActionOptionsWidget(nullptr) {
 }
 
-
 LC_ActionOptionsWidgetBase::~LC_ActionOptionsWidgetBase()= default;
 
-bool LC_ActionOptionsWidgetBase::checkActionRttiValid(const RS2::ActionType actionType){
+bool LC_ActionOptionsWidgetBase::checkActionRttiValid([[maybe_unused]]const RS2::ActionType actionType){
     return true;
 }

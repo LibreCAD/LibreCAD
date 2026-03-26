@@ -41,6 +41,7 @@
 #include "lc_refellipse.h"
 #include "lc_refline.h"
 #include "lc_refpoint.h"
+#include "lc_visual_snap_manager.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_debug.h"
@@ -63,7 +64,8 @@
  * Sets the entity container on which the action class inherited
  * from this interface operates.
  */
-RS_PreviewActionInterface::RS_PreviewActionInterface(const QString& actionName, LC_ActionContext* actionContext, const RS2::ActionType actionType) :
+RS_PreviewActionInterface::RS_PreviewActionInterface(const QString& actionName, LC_ActionContext* actionContext,
+                                                     const RS2::ActionType actionType) :
     RS_ActionInterface(actionName, actionContext, actionType), m_msgBuilder{std::make_unique<LC_ActionInfoMessageBuilder>(this)},
     m_preview(std::make_unique<RS_Preview>(actionContext->getDocument(), m_viewport)), m_highlight(std::make_unique<LC_Highlight>()) {
     m_preview->setLayer(nullptr);
@@ -226,31 +228,41 @@ RS_Vector RS_PreviewActionInterface::getSnapAngleAwarePoint(const LC_MouseEvent*
         if (m_snapMode.restriction == RS2::RestrictNothing) {
             if (isSnapToGrid()) {
                 // support of vertical/horizontal restriction if snap to grid is enabled.
-                RS_Vector gridPosition = /*snapGrid(e->graphPoint)*/pos;
-                RS_Vector vpv;
-                RS_Vector vph;
-                RS_Vector delta;
-                if (m_viewport->hasUCS()) {
-                    const RS_Vector ucsBasePoint = m_viewport->toUCS(basepoint);
-                    const RS_Vector ucsFreePosition = m_viewport->toUCS(gridPosition);
-                    delta = ucsFreePosition - ucsBasePoint;
-                    vpv = m_viewport->toWorld(RS_Vector(ucsBasePoint.x, ucsFreePosition.y));
-                    vph = m_viewport->toWorld(RS_Vector(ucsFreePosition.x, ucsBasePoint.y));
+                if (m_angleSnapSnapToGridLinesIfGrid) { // snap to grid lines
+                    double wcsResultingAngle;
+                    double ucsResultingAngle;
+                    const RS_Vector pointOnAngleRay = obtainEndPointForAngleSnap(e->graphPoint, basepoint, m_snapToAngleStep,
+                                                                                 wcsResultingAngle, ucsResultingAngle);
+                    constexpr double rayOffset = 10;
+                    result = snapGrid(pointOnAngleRay, basepoint, basepoint.relative(rayOffset, wcsResultingAngle));
                 }
-                else {
-                    delta = gridPosition - basepoint;
-                    vpv = RS_Vector(basepoint.x, gridPosition.y);
-                    vph = RS_Vector(gridPosition.x, basepoint.y);
-                }
+                else { // snap to horizontal and vertical lines
+                    const RS_Vector gridPosition = /*snapGrid(e->graphPoint)*/pos;
+                    RS_Vector vpv;
+                    RS_Vector vph;
+                    RS_Vector delta;
+                    if (m_viewport->hasUCS()) {
+                        const RS_Vector ucsBasePoint = m_viewport->toUCS(basepoint);
+                        const RS_Vector ucsFreePosition = m_viewport->toUCS(gridPosition);
+                        delta = ucsFreePosition - ucsBasePoint;
+                        vpv = m_viewport->toWorld(RS_Vector(ucsBasePoint.x, ucsFreePosition.y));
+                        vph = m_viewport->toWorld(RS_Vector(ucsFreePosition.x, ucsBasePoint.y));
+                    }
+                    else {
+                        delta = gridPosition - basepoint;
+                        vpv = RS_Vector(basepoint.x, gridPosition.y);
+                        vph = RS_Vector(gridPosition.x, basepoint.y);
+                    }
 
-                if (std::abs(delta.x) < std::abs(delta.y)) {
-                    result = vpv;
-                }
-                else {
-                    result = vph;
-                }
-                if (drawMark) {
-                    previewSnapAngleMark(basepoint, result);
+                    if (std::abs(delta.x) < std::abs(delta.y)) {
+                        result = vpv;
+                    }
+                    else {
+                        result = vph;
+                    }
+                    if (drawMark) {
+                        previewSnapAngleMark(basepoint, result);
+                    }
                 }
             }
             else {
@@ -294,7 +306,7 @@ RS_Circle* RS_PreviewActionInterface::previewCircle(const RS_CircleData& circleD
 }
 
 void RS_PreviewActionInterface::previewToCreateCircle(const RS_CircleData& circleData) const {
-    auto* result = previewCircle(circleData);
+    const auto* result = previewCircle(circleData);
     prepareEntityDescription(result, RS2::EntityDescriptionLevel::DescriptionCreating);
 }
 
@@ -342,7 +354,7 @@ RS_Arc* RS_PreviewActionInterface::previewArc(const RS_ArcData& arcData) const {
 }
 
 void RS_PreviewActionInterface::previewRefArc(const RS_ArcData& arcData) const {
-    auto* arc = new LC_RefArc(m_preview.get(), arcData);
+    const auto* arc = new LC_RefArc(m_preview.get(), arcData);
     m_preview->addEntity(arc);
 }
 
@@ -353,7 +365,7 @@ RS_Arc* RS_PreviewActionInterface::obtainPreviewRefArc(const RS_ArcData& arcData
 }
 
 void RS_PreviewActionInterface::previewRefEllipse(const RS_EllipseData& arcData) const {
-    auto* ellipse = new LC_RefEllipse(m_preview.get(), arcData);
+    const auto* ellipse = new LC_RefEllipse(m_preview.get(), arcData);
     m_preview->addEntity(ellipse);
 }
 
@@ -370,7 +382,7 @@ RS_Line* RS_PreviewActionInterface::previewLine(const RS_LineData& data) const {
 }
 
 void RS_PreviewActionInterface::previewLine(const RS_Vector& start, const RS_Vector& end) const {
-    auto* line = new RS_Line(this->m_preview.get(), start, end);
+    const auto* line = new RS_Line(this->m_preview.get(), start, end);
     m_preview->addEntity(line);
 }
 
@@ -436,7 +448,7 @@ RS_Line* RS_PreviewActionInterface::obtainPreviewRefLine(const RS_Vector& start,
 }
 
 void RS_PreviewActionInterface::previewRefConstructionLine(const RS_Vector& start, const RS_Vector& end) const {
-    auto* line = new LC_RefConstructionLine(this->m_preview.get(), start, end);
+    const auto* line = new LC_RefConstructionLine(this->m_preview.get(), start, end);
     m_preview->addEntity(line);
 }
 
@@ -490,15 +502,18 @@ void RS_PreviewActionInterface::initFromSettings() {
     m_doNotAllowNonDecimalAnglesInput = LC_GET_ONE_BOOL("CADPreferences", "InputAnglesAsDecimalsOnly", false);
 }
 
+
+
 void RS_PreviewActionInterface::previewSnapAngleMark(const RS_Vector& center, const double angle) const {
-    double angleBase = m_formatter->getAnglesBase();
-    bool isAnglesCounterClockWise = m_formatter->isAnglesCounterClockWise();
+    const double angleBase = m_formatter->getAnglesBase();
+    const bool isAnglesCounterClockWise = m_formatter->isAnglesCounterClockWise();
     previewSnapAngleMark(center, angle, angleBase, isAnglesCounterClockWise);
 }
 
 // fixme - sand - snap to relative angle support!!!
 // fixme - rework to natural paint via overlay
-void RS_PreviewActionInterface::previewSnapAngleMark(const RS_Vector& center, const double angle, double angleBase, bool isAnglesCounterClockWise) const {
+void RS_PreviewActionInterface::previewSnapAngleMark(const RS_Vector& center, const double angle, double angleBase,
+                                                     bool isAnglesCounterClockWise) const {
     // todo - add separate option that will control visibility of mark?
     const int radiusInPixels = m_angleSnapMarkerSize; // todo - move to settings
     const int lineInPixels = radiusInPixels * 2; // todo - move to settings
@@ -562,7 +577,6 @@ void RS_PreviewActionInterface::moveRelativeZero(const RS_Vector& zero) {
 void RS_PreviewActionInterface::markRelativeZero() const {
     m_viewport->markRelativeZero();
 }
-
 bool RS_PreviewActionInterface::is(const RS_Entity* e, const RS2::EntityType type) const {
     return e != nullptr && e->is(type);
 }
@@ -775,16 +789,121 @@ void RS_PreviewActionInterface::drawPreviewAndHighlights() {
     drawPreview();
 }
 
+bool RS_PreviewActionInterface::isVisualSnapApplicable() {
+    return RS_Snapper::isVisualSnapApplicable() && isInVisualSnapStatus(getStatus());
+}
+
+namespace {
+    //list of entity types supported by current action
+    const EntityTypeList g_visualSnapEntities = {RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
+}
+
+void RS_PreviewActionInterface::onVisualSnapSolutionRefresh() {
+    deletePreview();
+    m_visualSnapManager->refreshSolutionPreview(m_preview.get());
+    drawPreview();
+    m_graphicView->redraw(static_cast<RS2::RedrawMethod>(RS2::RedrawOverlay + RS2::RedrawImmediately));
+}
+
+void RS_PreviewActionInterface::onVisualSnapPointRegistered(LC_VisualSnapVertex* point, bool remove) {
+    m_visualSnapManager->previewVertex(m_preview.get(), point, remove);
+    drawPreview();
+    m_graphicView->redraw(static_cast<RS2::RedrawMethod>(RS2::RedrawOverlay + RS2::RedrawImmediately));
+}
+
+void RS_PreviewActionInterface::onVisualSnapEntityRegistered(RS_Entity* entity) {
+    if (entity != nullptr) {
+        // previewEntity(entity);
+        deleteHighlights();
+        drawPreview();
+    }
+    m_graphicView->redraw(static_cast<RS2::RedrawMethod>(RS2::RedrawDrawing + RS2::RedrawImmediately));
+}
+
 void RS_PreviewActionInterface::mouseMoveEvent(QMouseEvent* event) {
     const int status = getStatus();
+    const bool applyVisualSnap = isVisualSnapApplicable();
+    m_visualSnapManager->skipDelayedOperations();
     const LC_MouseEvent lcEvent = toLCMouseMoveEvent(event);
     deletePreviewAndHighlights();
+    if (applyVisualSnap) {
+        RS_Entity* ent = catchEntity(lcEvent.graphPoint, g_visualSnapEntities, RS2::ResolveAll);
+        bool tryToProcessVertex = true;
+        if (ent != nullptr) {
+            if (m_visualSnapManager->isNotInVisualSnap(ent)) {
+                highlightHover(ent);
+                m_visualSnapManager->processEntityDelayed(ent);
+            }
+            else {
+                if (isControl(event)) {
+                    m_visualSnapManager->processEntityDelayed(ent);
+                    tryToProcessVertex = false;
+                }
+            }
+        }
+
+        if (tryToProcessVertex) {
+            if (m_visualSnapManager->isManualVertexAddWithCTRL()) {
+                if (isControl(event)) {
+                    m_visualSnapManager->tryProcessVertexDelayed(m_impData->snapType, lcEvent.snapPoint, lcEvent.graphPoint, m_impData->entity,
+                                                                 m_impData->entity);
+                }
+            }
+            else {
+                m_visualSnapManager->tryProcessVertexDelayed(m_impData->snapType, lcEvent.snapPoint, lcEvent.graphPoint, m_impData->entity,
+                                                             m_impData->entity);
+            }
+        }
+
+        m_visualSnapManager->previewSolution(m_preview.get());
+    }
+    // fixme - should it be optional? Which color should be used for restriction lines (same as relzero??)
+    m_visualSnapManager->previewOrdinaryRestrictions(m_preview.get());
     onMouseMoveEvent(status, &lcEvent);
     drawPreviewAndHighlights();
 }
 
+// fixme - check and ensure that coordinate is properly set if it is specified by command line
+void RS_PreviewActionInterface::addSnappedPointToVisualSnap(const RS_Vector& v, bool clearOther) {
+    if (m_visualSnapManager->isAutoAddSnappedPoint()) {
+        m_visualSnapManager->addSnappedPointAsVertex(v, RS2::SnapType::ENDPOINT, nullptr, clearOther);
+    }
+    else {
+        m_visualSnapManager->saveLastSnappedPoint(v);
+    }
+}
+
+void RS_PreviewActionInterface::keyPressEvent(QKeyEvent* e) {
+    switch (e->key()) {
+        case (Qt::Key_Tab): {
+            createVisualSnapGuidesForCurrentPoint();
+            break;
+        }
+        default:
+            break;
+    }
+
+}
+
+void RS_PreviewActionInterface::createVisualSnapGuidesForCurrentPoint() {
+    if (isInVisualSnapStatus(getStatus())) {
+        m_visualSnapManager->addGuidesForBasePoint(m_lastMouseMoveEvent.snapPoint, m_lastMouseMoveEvent.graphPoint, getRelativeZero());
+    }
+}
+
 QStringList RS_PreviewActionInterface::getAvailableCommands() {
     return doGetAvailableCommands(getStatus());
+}
+
+void RS_PreviewActionInterface::setStatus(int status) {
+    RS_ActionInterface::setStatus(status);
+    if (isClearVisualSnapMarks()) {
+        m_visualSnapManager->clear();
+    }
+}
+
+bool RS_PreviewActionInterface::isClearVisualSnapMarks() {
+    return false;//!m_snapMode.snapVisualSurvive; // fixme - snap - should it be more intelligent policy?
 }
 
 void RS_PreviewActionInterface::onMouseLeftButtonRelease(const int status, QMouseEvent* e) {
@@ -793,6 +912,14 @@ void RS_PreviewActionInterface::onMouseLeftButtonRelease(const int status, QMous
 }
 
 void RS_PreviewActionInterface::onMouseRightButtonRelease(const int status, QMouseEvent* e) {
+    if (hasVisualSnap()) {
+        bool control = isControl(e);
+        if (control) {
+            removePrevioustVisualSnapAddition();
+            e->accept();
+            return;
+        }
+    }
     const LC_MouseEvent lcEvent = toLCMouseMoveEvent(e);
     onMouseRightButtonRelease(status, &lcEvent);
 }
@@ -835,6 +962,7 @@ LC_MouseEvent RS_PreviewActionInterface::toLCMouseMoveEvent(QMouseEvent* e) {
     result.isControl = isControl(e);
     result.isAlt = isAlt(e);
     result.originalEvent = e;
+    m_lastMouseMoveEvent = result;
     return result;
 }
 

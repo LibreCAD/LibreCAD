@@ -128,6 +128,7 @@ private:
     void createEntities(const RS_Vector &potentialEndPoint, QList<RS_Entity *> &entitiesList) const;
 protected:
     bool doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) override;
+    bool isInVisualSnapStatus(int status) override;
 };
 
 #endif

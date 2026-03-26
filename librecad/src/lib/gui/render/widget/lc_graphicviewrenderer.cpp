@@ -28,6 +28,11 @@
 #include "lc_graphicviewport.h"
 #include "lc_linemath.h"
 #include "lc_overlayentitiescontainer.h"
+#include "lc_ref_snap_circle.h"
+#include "lc_ref_snap_construction_line.h"
+#include "lc_ref_snap_entity.h"
+#include "lc_ref_snap_line.h"
+#include "lc_ref_snap_mark.h"
 #include "rs_entity.h"
 #include "rs_entitycontainer.h"
 #include "rs_grid.h"
@@ -84,6 +89,11 @@ void LC_GraphicViewRenderer::loadSettings() {
         m_colorPreviewReferenceEntities = RS_Color(LC_GET_STR("previewReferencesColor", RS_Settings::PREVIEW_REF_COLOR));
         m_colorPreviewReferenceHighlightedEntities = RS_Color(LC_GET_STR("previewReferencesHighlightColor",
                                                                          RS_Settings::PREVIEW_REF_HIGHLIGHT_COLOR));
+
+        m_colorVisualSnapGuideEntities = RS_Color(LC_GET_STR("VisualSnapGuideEntitiesColor", RS_Settings::VISUAL_SNAP_ENTITIES));
+        m_colorVisualSnapVertexes = RS_Color(LC_GET_STR("VisualSnapVertexesColor", RS_Settings::VISUAL_SNAP_VERTEXES));
+        m_colorVisualSnapProjectedSnap= RS_Color(LC_GET_STR("VisualSnapProjectedSnapColor", RS_Settings::VISUAL_SNAP_PROJECTED_SNAP));
+        m_colorVisualSnapDocumentEntities= RS_Color(LC_GET_STR("VisualSnapDocumentEntitiesColor", RS_Settings::VISUAL_SNAP_DOCUMENT_ENTITIES));
 
         const QString& name = LC_GET_STR("draft_mode_marker", RS_Settings::SELECT);
         m_draftSignColor = RS_Color(name);
@@ -368,6 +378,7 @@ void LC_GraphicViewRenderer::setPenForOverlayEntity(RS_Painter* painter, const R
         case RS2::EntityRefCircle:
         case RS2::EntityRefArc: {
             // todo - if not ref point are enabled, draw as transparent? Actually, if actions are correct, we should not be there..
+            // fixme - cache pen for ref marks in painter!
             RS_Pen pen = e->getPen(true);
             if (e->isHighlighted()) {
                 pen.setColor(m_colorPreviewReferenceHighlightedEntities);
@@ -380,6 +391,73 @@ void LC_GraphicViewRenderer::setPenForOverlayEntity(RS_Painter* painter, const R
 
             // todo - sand - ucs -  USE THE SAME CACHING OF THE PEN!!!! The amount of overlay entities should be small, yet still...
             e->setPen(pen);
+            painter->setPen(pen);
+            break;
+        }
+        case RS2::EntitySnapMark: {
+            RS_Pen pen;
+            // fixme - cache pen for snap marks in painter!
+            auto snapMark = static_cast<const LC_RefSnapMark*>(e);
+            pen.setColor(snapMark->getMarkType() == LC_RefSnapMark::PROJECTED ? m_colorVisualSnapProjectedSnap : m_colorVisualSnapVertexes);
+            pen.setLineType(RS2::SolidLine);
+            pen.setWidth(RS2::LineWidth::Width00);
+            painter->setPen(pen);
+            break;
+        }
+        case RS2::EntitySnapConstructionLine: {
+            RS_Pen pen;
+            pen.setColor(m_colorVisualSnapGuideEntities); // fixme - cache pen for snap marks in painter!
+            const auto ent = static_cast<const LC_RefSnapConstructionLine*>(e);
+            if (ent->isStrict()) {
+                pen.setLineType(RS2::SolidLine);
+            }
+            else {
+                pen.setLineType(RS2::DotLineTiny);
+            }
+            pen.setWidth(RS2::LineWidth::Width00);
+            painter->setPen(pen);
+            break;
+        }
+        case RS2::EntitySnapCircle: {
+            RS_Pen pen;
+            pen.setColor(m_colorVisualSnapGuideEntities); // fixme - cache pen for snap marks in painter!
+            const auto ent = static_cast<const LC_RefSnapCircle*>(e);
+            if (ent->isStrict()) {
+                pen.setLineType(RS2::SolidLine);
+            }
+            else {
+                pen.setLineType(RS2::DotLineTiny);
+            }
+            pen.setWidth(RS2::LineWidth::Width00);
+            painter->setPen(pen);
+            break;
+        }
+        case RS2::EntitySnapArc: {
+            RS_Pen pen;
+            pen.setColor(m_colorVisualSnapGuideEntities); // fixme - cache pen for snap marks in painter!
+            const auto ent = static_cast<const LC_RefSnapCircle*>(e);
+            if (ent->isStrict()) {
+                pen.setLineType(RS2::SolidLine);
+            }
+            else {
+                pen.setLineType(RS2::DotLineTiny);
+            }
+            pen.setWidth(RS2::LineWidth::Width00);
+            painter->setPen(pen);
+            break;
+        }
+        case RS2::EntitySnapLine:{
+            RS_Pen pen;
+            pen.setColor(m_colorVisualSnapGuideEntities); // fixme - cache pen for snap marks in painter!
+            const auto ent = static_cast<const LC_RefSnapLine*>(e);
+            if (ent->isStrict()) {
+                pen.setLineType(RS2::SolidLine);
+            }
+            else {
+                pen.setLineType(RS2::DotLineTiny);
+            }
+            pen.setWidth(RS2::LineWidth::Width00);
+            // e->setPen(pen);
             painter->setPen(pen);
             break;
         }
@@ -417,11 +495,13 @@ void LC_GraphicViewRenderer::setPenForEntity(RS_Painter* painter, const RS_Entit
     const bool highlighted = e->getFlag(RS2::FlagHighlighted);
     const bool selected = e->getFlag(RS2::FlagSelected);
     const bool overlayPaint = inOverlay || m_inOverlayDrawing;
+    const bool inVisualSnap = e->getFlag(RS2::FlagInVisualSnap);
     // try to avoid pen setup if the pen and entity flags are the same as for previous entity. This is important for performance reasons, so we'll reuse
     // painter pen set previously. This check assumed that that all previous entity drawing were performed via this function and no
     // arbitrary QPainter::setPen was called between drawing entities.
     const double patternOffset = painter->currentDashOffset();
-    if (m_lastPaintedHighlighted == highlighted && m_lastPaintedSelected == selected && m_lastPaintOverlay == overlayPaint) {
+    // fixme - replace several booleans by Flags value
+    if (m_lastPaintedHighlighted == highlighted && m_lastPaintedSelected == selected && m_lastPaintOverlay == overlayPaint && m_lastPenInVisualSnap == inVisualSnap) {
         if (m_lastPaintEntityPen.isSameAs(pen, patternOffset)) {
             return;
         }
@@ -430,6 +510,7 @@ void LC_GraphicViewRenderer::setPenForEntity(RS_Painter* painter, const RS_Entit
         m_lastPaintedHighlighted = highlighted;
         m_lastPaintedSelected = selected;
         m_lastPaintOverlay = overlayPaint;
+        m_lastPenInVisualSnap = inVisualSnap;
     }
 
 #ifdef DEBUG_RENDERING
@@ -473,6 +554,10 @@ void LC_GraphicViewRenderer::setPenForEntity(RS_Painter* painter, const RS_Entit
             pen.setColor(m_colorSelectedEntity);
             pen.setLineType(RS2::SolidLine);
         }
+        else if (inVisualSnap) {
+            pen.setColor(m_colorVisualSnapDocumentEntities);
+            pen.setLineType(RS2::SolidLine);
+        }
         else {
             if (pen.getColor().isEqualIgnoringFlags(m_colorBackground) || (pen.getColor().toIntColor() == RS_Color::Black)
                 // fixme - sand - think about Black... is it really necessary there?
@@ -490,6 +575,10 @@ void LC_GraphicViewRenderer::setPenForEntity(RS_Painter* painter, const RS_Entit
         }
         // this entity is highlighted:
         else if (highlighted) {
+            pen.setColor(m_colorVisualSnapDocumentEntities);
+            pen.setLineType(RS2::SolidLine);
+        }
+        else if (inVisualSnap) {
             pen.setColor(m_colorHighlightedEntity);
         }
         else if (e->getFlag(RS2::FlagTransparent)) {
@@ -529,11 +618,12 @@ void LC_GraphicViewRenderer::setPenForDraftEntity(RS_Painter* painter, const RS_
     const bool highlighted = e->getFlag(RS2::FlagHighlighted);
     const bool selected = e->getFlag(RS2::FlagSelected);
     const bool overlayPaint = inOverlay || m_inOverlayDrawing;
+    const bool inVisualSnap = e->getFlag(RS2::FlagInVisualSnap);
     // try to avoid pen setup if the pen and entity flags are the same as for previous entity. This is important for performance reasons, so we'll reuse
     // painter pen set previously. This check assumed that that all previous entity drawing were performed via this function and no
     // arbitrary QPainter::setPen was called between drawing entities.
     const double patternOffset = painter->currentDashOffset();
-    if (m_lastPaintedHighlighted == highlighted && m_lastPaintedSelected == selected && m_lastPaintOverlay == overlayPaint) {
+    if (m_lastPaintedHighlighted == highlighted && m_lastPaintedSelected == selected && m_lastPaintOverlay == overlayPaint && m_lastPenInVisualSnap == inVisualSnap) {
         if (m_lastPaintEntityPen.isSameAs(pen, patternOffset)) {
             return;
         }
@@ -542,6 +632,7 @@ void LC_GraphicViewRenderer::setPenForDraftEntity(RS_Painter* painter, const RS_
         m_lastPaintedHighlighted = highlighted;
         m_lastPaintedSelected = selected;
         m_lastPaintOverlay = overlayPaint;
+        m_lastPenInVisualSnap = inVisualSnap;
     }
     pen.setScreenWidth(0.0);
 
@@ -551,6 +642,9 @@ void LC_GraphicViewRenderer::setPenForDraftEntity(RS_Painter* painter, const RS_
             // for glowing effects on mouse hovering, draw solid lines
             pen.setColor(m_colorSelectedEntity);
             pen.setLineType(RS2::SolidLine);
+        }
+        else if (inVisualSnap) {
+            pen.setColor(m_colorVisualSnapDocumentEntities);
         }
         else {
             if (pen.getColor().isEqualIgnoringFlags(m_colorBackground) || (pen.getColor().toIntColor() == RS_Color::Black && pen.getColor().
@@ -568,6 +662,9 @@ void LC_GraphicViewRenderer::setPenForDraftEntity(RS_Painter* painter, const RS_
         }
         else if (highlighted) {
             pen.setColor(m_colorHighlightedEntity);
+        }
+        else if (inVisualSnap) {
+            pen.setColor(m_colorVisualSnapDocumentEntities);
         }
         else if (e->getFlag(RS2::FlagTransparent)) {
             pen.setColor(m_colorBackground);

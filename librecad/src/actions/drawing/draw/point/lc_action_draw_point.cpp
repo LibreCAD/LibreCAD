@@ -44,6 +44,10 @@ RS_Entity* RS_ActionDrawPoint::doTriggerCreateEntity() {
     return nullptr;
 }
 
+bool RS_ActionDrawPoint::isInVisualSnapStatus([[maybe_unused]]int status) {
+    return true;
+}
+
 void RS_ActionDrawPoint::doTriggerCompletion([[maybe_unused]]bool success) {
     moveRelativeZero(*m_pointPosition);
 }
@@ -74,6 +78,7 @@ void RS_ActionDrawPoint::onMouseRightButtonRelease(const int status, [[maybe_unu
 
 void RS_ActionDrawPoint::onCoordinateEvent( [[maybe_unused]]int status, [[maybe_unused]]bool isZero, const RS_Vector &coord) {
     *m_pointPosition = coord;
+    addSnappedPointToVisualSnap(coord);
     trigger();
 }
 

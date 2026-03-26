@@ -50,6 +50,10 @@ void LC_ActionModifyAlignRef::doLoadOptions() {
     setKeepOriginals(keepOriginals);
 }
 
+bool LC_ActionModifyAlignRef::isInVisualSnapStatus(int status) {
+    return (status == SetRefPoint1) || (status == SetRefPoint2) || (status == SetTargetPoint1) || (status == SetTargetPoint2);
+}
+
 bool LC_ActionModifyAlignRef::doTriggerModifications(LC_DocumentModificationBatch& ctx) {
     prepareAlignRefData(m_actionData.targetPoint2);
     RS_Modification::alignRef(m_actionData.data, m_selectedEntities, false, ctx);
@@ -192,18 +196,21 @@ void LC_ActionModifyAlignRef::onCoordinateEvent(const int status, [[maybe_unused
     switch (status){
         case SetRefPoint1:{
             m_actionData.referencePoint1 = pos;
+            addSnappedPointToVisualSnap(pos);
             moveRelativeZero(pos);
             setStatus(SetTargetPoint1);
             break;
         }
         case SetTargetPoint1:{
             m_actionData.targetPoint1 = pos;
+            addSnappedPointToVisualSnap(pos);
             setStatus(SetRefPoint2);
             break;
         }
         case SetRefPoint2:{
             if (LC_LineMath::isMeaningfulDistance(m_actionData.referencePoint1, pos)){
                 m_actionData.referencePoint2 = pos;
+                addSnappedPointToVisualSnap(pos);
                 moveRelativeZero(m_actionData.targetPoint1);
                 setStatus(SetTargetPoint2);
             }
@@ -215,6 +222,7 @@ void LC_ActionModifyAlignRef::onCoordinateEvent(const int status, [[maybe_unused
         case SetTargetPoint2:{
             if (LC_LineMath::isMeaningfulDistance(m_actionData.targetPoint1, pos)){
                 m_actionData.targetPoint2 = pos;
+                addSnappedPointToVisualSnap(pos);
                 moveRelativeZero(pos);
                 trigger();
             }

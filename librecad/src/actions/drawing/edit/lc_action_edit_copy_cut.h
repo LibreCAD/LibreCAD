@@ -63,5 +63,6 @@ protected:
     bool doTriggerModifications(LC_DocumentModificationBatch& ctx) override;
     void doTriggerCompletion(bool success) override;
     void doTriggerSelectionUpdate(bool keepSelected, const LC_DocumentModificationBatch& ctx) override;
+    bool isInVisualSnapStatus(int status) override;
 };
 #endif

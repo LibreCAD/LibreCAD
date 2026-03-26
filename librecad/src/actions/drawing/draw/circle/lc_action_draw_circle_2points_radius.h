@@ -58,6 +58,7 @@ protected:
     void updateActionPrompt() override;
     void doTriggerCompletion(bool success) override;
     RS_Entity* doTriggerCreateEntity() override;
+    bool isInVisualSnapStatus(int status) override;
     void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
 };
 #endif

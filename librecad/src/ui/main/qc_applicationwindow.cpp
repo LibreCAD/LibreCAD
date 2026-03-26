@@ -1621,11 +1621,23 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
             RS_GraphicView* graphicView = getCurrentGraphicView();
             if (graphicView != nullptr) {
                 const auto currentAction = m_actionHandler->getCurrentAction();
-                const RS2::ActionType actionType = currentAction->rtti();
-                if (RS2::isInteractiveInputAction(actionType)) {
-                    graphicView->keyPressEvent(e);
-                    e->accept();
-                    doDefaultProcessing = false;
+                if (currentAction != nullptr) {
+                    const RS2::ActionType actionType = currentAction->rtti();
+                    if (RS2::isInteractiveInputAction(actionType)) {
+                        graphicView->keyPressEvent(e);
+                        e->accept();
+                        doDefaultProcessing = false;
+                    }
+                    else if (currentAction->hasVisualSnap()) { // fixme - should we rely on hardcoded shortcut or it's better to use some action?
+                        if (e->modifiers() && e->modifiers() & Qt::ShiftModifier) {
+                            currentAction->removePrevioustVisualSnapAddition();
+                            e->accept();
+                        } else {
+                            currentAction->stopVisualSnap();
+                            e->accept();
+                        }
+                        doDefaultProcessing = false;
+                    }
                 }
             }
             if (doDefaultProcessing) {
@@ -1634,7 +1646,22 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
             }
             break;
         }
-
+        /* Fixme - keyboard
+         * it might be better to to use backspace instead of SHIFT+ESC?
+         * Yet using Backspace may clash with command widget - so let it be commented until Cms will be reworked
+         *case Qt::Key_Backspace: {
+            RS_GraphicView* graphicView = getCurrentGraphicView();
+            if (graphicView != nullptr) {
+                const auto currentAction = m_actionHandler->getCurrentAction();
+                if (currentAction != nullptr) {
+                    if (currentAction->hasVisualSnap()) {
+                        currentAction->removePrevioustVisualSnapAddition();
+                        e->accept();
+                    }
+                }
+            }
+            break;
+        }*/
         case Qt::Key_Return:
         case Qt::Key_Enter:
             // slotKillAllActions();
@@ -1657,9 +1684,10 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
         case Qt::Key_Left:
         case Qt::Key_Right:
         case Qt::Key_Up:
-        case Qt::Key_Down: {
+        case Qt::Key_Down:
+        case Qt::Key_Tab:{
             RS_GraphicView* graphicView = getCurrentGraphicView();
-            if (graphicView) {
+            if (graphicView != nullptr) {
                 QWidget* focusWidget = QApplication::focusWidget();
                 const bool focuseNotInLineEdit = dynamic_cast<QLineEdit*>(focusWidget) == nullptr;
                 if (focuseNotInLineEdit || true) {

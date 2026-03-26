@@ -81,6 +81,10 @@ void LC_ActionDrawSpline::doLoadOptions() {
     setClosed(closed);
 }
 
+bool LC_ActionDrawSpline::isInVisualSnapStatus(int status) {
+    return (status == SetStartPoint) || (status == SetNextPoint);
+}
+
 void LC_ActionDrawSpline::reset() const {
     m_actionData->spline = nullptr;
     m_actionData->history.clear();
@@ -162,12 +166,14 @@ void LC_ActionDrawSpline::onCoordinateEvent(const int status, [[maybe_unused]] b
                 m_actionData->spline->addControlPoint(coord);
             }
             setStatus(SetNextPoint);
+            addSnappedPointToVisualSnap(coord);
             moveRelativeZero(coord);
             updateActionPrompt();
             break;
         }
         case SetNextPoint: {
             moveRelativeZero(coord);
+            addSnappedPointToVisualSnap(coord);
             m_actionData->history.append(coord);
             if (m_actionData->spline) {
                 m_actionData->spline->addControlPoint(coord);

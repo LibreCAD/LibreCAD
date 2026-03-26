@@ -25,7 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define LC_ACTIONDRAWSLICEDIVIDE_H
 
 #include "lc_abstractactionwithpreview.h"
-#include "lc_action_options_base.h"
+
 
 class LC_ActionDrawSliceDivide:public LC_AbstractActionWithPreview {
     Q_OBJECT

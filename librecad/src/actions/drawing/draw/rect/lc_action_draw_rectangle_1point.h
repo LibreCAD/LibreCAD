@@ -90,5 +90,6 @@ protected:
     void doAfterTrigger() override;
     bool doUpdateAngleByInteractiveInput(const QString& tag, double angleRad) override;
     bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
+    bool isInVisualSnapStatus(int status) override;
 };
 #endif

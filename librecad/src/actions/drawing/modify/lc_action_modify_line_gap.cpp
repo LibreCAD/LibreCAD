@@ -42,7 +42,7 @@ void LC_ActionModifyLineGap::doSaveOptions() {
     save("GapSize", m_gapSize);
     save("GapFree", m_freeGapSize);
     save("LineSnap", m_lineSnapMode);
-    save("SnapDistance", m_snapDistance);
+    save("SnapDistance", m_gapSnapDistance);
     save("GapSnap", m_gapSnapMode);
 }
 
@@ -50,8 +50,12 @@ void LC_ActionModifyLineGap::doLoadOptions() {
     m_gapSize = loadDouble("GapSize", 1.0);
     m_freeGapSize = loadBool("GapFree", true);
     m_lineSnapMode = loadInt("LineSnap", 0);
-    m_snapDistance  = loadDouble("SnapDistance", 0.0);
+    m_gapSnapDistance  = loadDouble("SnapDistance", 0.0);
     m_gapSnapMode = loadInt("GapSnap", 0);
+}
+
+bool LC_ActionModifyLineGap::isInVisualSnapStatus(int status) {
+    return (status == SetGapEndPoint);
 }
 
 void LC_ActionModifyLineGap::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
@@ -307,7 +311,7 @@ RS_Vector LC_ActionModifyLineGap::obtainLineSnapPointForMode(const RS_Line* targ
 
 
     int lineSnap = m_lineSnapMode;
-    double distanceForSnap = m_snapDistance;
+    double distanceForSnap = m_gapSnapDistance;
 
     // alternating snap point for simpler handling of end segments of line
     // here we actually mirror snapping to another edge of line
@@ -315,21 +319,21 @@ RS_Vector LC_ActionModifyLineGap::obtainLineSnapPointForMode(const RS_Line* targ
         switch (m_lineSnapMode){
             case LINE_SNAP_START:
                 lineSnap = LINE_SNAP_END;
-                distanceForSnap = -m_snapDistance;
+                distanceForSnap = -m_gapSnapDistance;
                 break;
             case LINE_SNAP_END:
                 lineSnap = LINE_SNAP_START;
-                distanceForSnap = -m_snapDistance;
+                distanceForSnap = -m_gapSnapDistance;
                 break;
             case LINE_SNAP_MIDDLE:
-                distanceForSnap = -m_snapDistance;
+                distanceForSnap = -m_gapSnapDistance;
                 break;
             default:
                break;
         }
     }
 
-    if (LC_LineMath::isMeaningful(m_snapDistance)){
+    if (LC_LineMath::isMeaningful(m_gapSnapDistance)){
         // angle of target line
         const double angle = targetLine->getAngle1();
 
@@ -499,7 +503,7 @@ bool LC_ActionModifyLineGap::doUpdateDistanceByInteractiveInput(const QString& t
         return true;
     }
     if (tag == "snap") {
-        setSnapDistance(distance);
+        setGapSnapDistance(distance);
         return true;
     }
     return false;

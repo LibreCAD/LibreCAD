@@ -73,6 +73,10 @@ void LC_ActionPolylineAdd::doTriggerCompletion([[maybe_unused]]bool success) {
     select(m_polylineToModify);
 }
 
+bool LC_ActionPolylineAdd::isInVisualSnapStatus(int status) {
+    return LC_UndoableDocumentModificationAction::isInVisualSnapStatus(status) || (status == SetAddCoord);
+}
+
 void LC_ActionPolylineAdd::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     switch (status) {
         case ChooseSegment: {

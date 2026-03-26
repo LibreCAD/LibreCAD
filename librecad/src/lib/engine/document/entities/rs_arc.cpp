@@ -201,7 +201,7 @@ double RS_Arc::getDirection2() const {
     return m_data.getDirection2();
 }
 
-RS_Vector RS_Arc::doGetNearestEndpoint(const RS_Vector& coord, double* dist) const {
+RS_Vector RS_Arc::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
     const auto startpoint = getStartpoint();
     const auto endpoint = getEndpoint();
 
@@ -216,6 +216,9 @@ RS_Vector RS_Arc::doGetNearestEndpoint(const RS_Vector& coord, double* dist) con
     }
     if (dist != nullptr) {
         *dist = sqrt(dist1);
+    }
+    if (entity != nullptr) {
+        *entity = const_cast<RS_Arc*>(this);
     }
     return startpoint;
 }
@@ -272,7 +275,7 @@ RS_Vector RS_Arc::doGetNearestPointOnEntity(const RS_Vector& coord, const bool o
         vec += m_data.center;
     }
     else {
-        vec = getNearestEndpoint(coord, dist);
+        vec = getNearestEndpoint(coord, nullptr, dist);
         return vec;
     }
     if (dist != nullptr) {
@@ -283,9 +286,12 @@ RS_Vector RS_Arc::doGetNearestPointOnEntity(const RS_Vector& coord, const bool o
     return vec;
 }
 
-RS_Vector RS_Arc::doGetNearestCenter(const RS_Vector& coord, double* dist) const {
+RS_Vector RS_Arc::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
     if (dist != nullptr) {
         *dist = coord.distanceTo(m_data.center);
+    }
+    if (entity != nullptr) {
+        *entity = const_cast<RS_Arc*>(this);
     }
     return m_data.center;
 }

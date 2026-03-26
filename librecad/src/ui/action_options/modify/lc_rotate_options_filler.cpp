@@ -32,7 +32,7 @@ void LC_RotateOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* cont
     addBoolean({
                    "a_centerFirst",
                    tr("By Center"),
-                   tr("If selected, first it is necessary to specify center point. Otherwise - reference point. ")
+                   tr("If selected, first it is necessary to specify center point. Otherwise - reference point")
                }, [action]()-> bool {
                    return action->isCenterPointFirst();
                }, [action](bool val)-> void {
@@ -70,7 +70,7 @@ void LC_RotateOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* cont
     addBoolean({
                    "a_rotateTwice",
                    tr("Rotate Twice"),
-                   tr("If checked, second rotation is around reference point ")
+                   tr("If checked, second rotation is around reference point")
                }, [action]()-> bool {
                    return action->isRotateAlsoAroundReferencePoint();
                }, [action](bool val)-> void {

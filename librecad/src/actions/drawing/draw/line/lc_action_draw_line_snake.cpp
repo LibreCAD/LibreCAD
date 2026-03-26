@@ -108,6 +108,7 @@ void LC_ActionDrawLineSnake::doSetStartPoint(const RS_Vector& start) {
         m_direction = m_primaryDirection;
         setStatus(SetDistance);
     }
+    addSnappedPointToVisualSnap(start);
     moveRelativeZero(start);
     updateActionPrompt();
 }
@@ -189,6 +190,10 @@ bool LC_ActionDrawLineSnake::doUpdateAngleByInteractiveInput(const QString& tag,
         return true;
     }
     return false;
+}
+
+bool LC_ActionDrawLineSnake::isInVisualSnapStatus(int status) {
+    return (status == SetStartPoint) || (status == SetPoint) || (status == SetDistance) || (status == SetAngle);
 }
 
 bool LC_ActionDrawLineSnake::isStartPointValid() const {

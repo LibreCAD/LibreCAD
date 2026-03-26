@@ -570,6 +570,10 @@ bool LC_ActionDrawRectangle1Point::doUpdateDistanceByInteractiveInput(const QStr
     return false;
 }
 
+bool LC_ActionDrawRectangle1Point::isInVisualSnapStatus(int status) {
+    return (status == SetPoint1) || (status == SetAngleFree);
+}
+
 LC_ActionOptionsWidget* LC_ActionDrawRectangle1Point::createOptionsWidget(){
     return new LC_Rectangle1PointOptionsWidget();
 }

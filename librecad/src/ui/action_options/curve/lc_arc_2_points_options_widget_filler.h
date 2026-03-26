@@ -23,6 +23,7 @@
 
 #ifndef LC_ARC2POINTSOPTIONSWIDGETFILLER_H
 #define LC_ARC2POINTSOPTIONSWIDGETFILLER_H
+
 #include "lc_action_options_properties_filler.h"
 
 class LC_Arc2PointsOptionsWidgetFiller : public LC_ActionOptionsPropertiesFiller{

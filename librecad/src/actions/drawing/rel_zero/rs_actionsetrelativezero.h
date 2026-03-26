@@ -52,5 +52,6 @@ protected:
     void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateActionPrompt() override;
+    bool isInVisualSnapStatus(int status) override;
 };
 #endif

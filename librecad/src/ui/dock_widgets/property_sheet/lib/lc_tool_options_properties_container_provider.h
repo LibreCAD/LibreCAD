@@ -30,7 +30,7 @@ class LC_ToolOptionsPropertiesContainerProvider {
 protected:
     ~LC_ToolOptionsPropertiesContainerProvider() = default;
 public:
-    virtual void fillToolOptionsContainer(LC_PropertyContainer* propertyContainer){};
+    virtual void fillToolOptionsContainer([[maybe_unused]]LC_PropertyContainer* propertyContainer){};
 };
 
 #endif

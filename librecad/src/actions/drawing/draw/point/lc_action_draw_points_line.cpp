@@ -60,6 +60,10 @@ void LC_ActionDrawPointsLine::doLoadOptions() {
     }
 }
 
+bool LC_ActionDrawPointsLine::isInVisualSnapStatus(int status) {
+    return (status == SetStartPoint) || (status == SetPoint) || (status == SetDistance) || (status == SetAngle);
+}
+
 /**
  * just cleanup if needed
  * @param status new status
@@ -273,6 +277,7 @@ void LC_ActionDrawPointsLine::onCoordinateEvent(const int status, [[maybe_unused
                     const RS_Vector possiblePoint = restrictHorizontal(m_startpoint, coord);
                     if (isNonZeroLine(possiblePoint)) {
                         m_endpoint = possiblePoint;
+                        addSnappedPointToVisualSnap(possiblePoint);
                         trigger();
                     }
                     break;
@@ -281,6 +286,7 @@ void LC_ActionDrawPointsLine::onCoordinateEvent(const int status, [[maybe_unused
                     // calculate  point on y axis
                     const RS_Vector possiblePoint = restrictVertical(m_startpoint, coord);
                     if (isNonZeroLine(possiblePoint)) {
+                        addSnappedPointToVisualSnap(possiblePoint);
                         m_endpoint = possiblePoint;
                         trigger();
                     }
@@ -290,6 +296,7 @@ void LC_ActionDrawPointsLine::onCoordinateEvent(const int status, [[maybe_unused
                     // calculate end point in given angle direction
                     const RS_Vector possiblePoint = getPossibleEndPointForAngle(coord);
                     if (isNonZeroLine(possiblePoint)) {
+                        addSnappedPointToVisualSnap(possiblePoint);
                         m_endpoint = possiblePoint;
                         trigger();
                     }
@@ -302,6 +309,7 @@ void LC_ActionDrawPointsLine::onCoordinateEvent(const int status, [[maybe_unused
         case SetAngle: {
             const RS_Vector possiblePoint = getPossibleEndPointForAngle(coord);
             if (isNonZeroLine(possiblePoint)) {
+                addSnappedPointToVisualSnap(possiblePoint);
                 m_endpoint = possiblePoint;
                 trigger();
             }
@@ -312,6 +320,7 @@ void LC_ActionDrawPointsLine::onCoordinateEvent(const int status, [[maybe_unused
             // set end to provided point
             if (isNonZeroLine(coord)) {
                 // refuse zero length lines
+                addSnappedPointToVisualSnap(coord);
                 m_endpoint = coord;
                 trigger();
             }
@@ -327,6 +336,7 @@ void LC_ActionDrawPointsLine::onCoordinateEvent(const int status, [[maybe_unused
             else {
                 setStatus(SetPoint);
             }
+            addSnappedPointToVisualSnap(coord);
             moveRelativeZero(coord);
             break;
         }

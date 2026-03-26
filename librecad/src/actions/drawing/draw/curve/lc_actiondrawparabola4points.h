@@ -62,5 +62,6 @@ protected:
     void preparePreview(const RS_Vector& mouse, bool rebuild) const;
     RS_Entity* doTriggerCreateEntity() override;
     void doTriggerCompletion(bool success) override;
+    bool isInVisualSnapStatus(int status) override;
 };
 #endif

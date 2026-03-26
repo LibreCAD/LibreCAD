@@ -328,10 +328,10 @@ RS_Vector RS_Spline::getStartpoint() const { return RS_Vector(false); }
 RS_Vector RS_Spline::getEndpoint() const { return RS_Vector(false); }
 
 /** Nearest (invalid overrides) */
-RS_Vector RS_Spline::doGetNearestEndpoint(const RS_Vector &, double *) const {
+RS_Vector RS_Spline::doGetNearestEndpoint(const RS_Vector &, double *, RS_Entity** entity) const {
   return RS_Vector(false);
 }
-RS_Vector RS_Spline::doGetNearestCenter(const RS_Vector &, double *) const {
+RS_Vector RS_Spline::doGetNearestCenter(const RS_Vector &, double *, RS_Entity** centerEntity) const {
   return RS_Vector(false);
 }
 RS_Vector RS_Spline::doGetNearestMiddle(const RS_Vector &, double *, int) const {

@@ -101,6 +101,10 @@ void LC_ActionModifyScale::doLoadOptions() {
     setExplicitFactor(explicitFactor);
 }
 
+bool LC_ActionModifyScale::isInVisualSnapStatus(int status) {
+    return (status == SetReferencePoint) || (status == SetTargetPoint) || (status == SetSourcePoint);
+}
+
 void LC_ActionModifyScale::init(const int status) {
     LC_ActionPreSelectionAwareBase::init(status);
 }
@@ -354,7 +358,9 @@ void LC_ActionModifyScale::tryTrigger() {
 void LC_ActionModifyScale::onCoordinateEvent(const int status, [[maybe_unused]]bool isZero, const RS_Vector &coord) {
     switch(status) {
         case SetReferencePoint: {
+            addSnappedPointToVisualSnap(coord);
             m_actionData->data.referencePoint = coord;
+            addSnappedPointToVisualSnap(coord);
             moveRelativeZero(coord);
             tryTrigger();
             break;
@@ -362,6 +368,7 @@ void LC_ActionModifyScale::onCoordinateEvent(const int status, [[maybe_unused]]b
         case SetSourcePoint: {
             previewRefPoint(m_actionData->data.referencePoint);
             if (coord.squaredTo(m_actionData->data.referencePoint) > RS_TOLERANCE2) {
+                addSnappedPointToVisualSnap(coord);
                 m_actionData->sourcePoint = coord;
                 setStatus(SetTargetPoint);
             }
@@ -369,6 +376,7 @@ void LC_ActionModifyScale::onCoordinateEvent(const int status, [[maybe_unused]]b
         }
         case SetTargetPoint: {
             if (coord.squaredTo(m_actionData->data.referencePoint) > RS_TOLERANCE2) {
+                addSnappedPointToVisualSnap(coord);
                 m_actionData->targetPoint = coord;
                 trigger();
                 finish();

@@ -197,7 +197,7 @@ void LC_PrintPreviewOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     setPaperOrientation(m_action->isPortrait());
 }
 
-QStringList LC_PrintPreviewOptionsWidget::readCustomRatios(const bool metric) {
+QStringList LC_PrintPreviewOptionsWidget::readCustomRatios([[maybe_unused]]const bool metric) {
     QStringList ratios;
     // const char* prefix = metric ? KEY_CUSTOM_SCALE_METRIC_TEMPLATE : KEY_CUSTOM_SCALE_IMPERIAL_TEMPLATE;
     // for (unsigned i = 0; i < MAX_CUSTOM_RATIOS; ++i) {
@@ -499,7 +499,7 @@ void LC_PrintPreviewOptionsWidget::updateScaleBox(const double factor) {
     }
 }
 
-void LC_PrintPreviewOptionsWidget::updateUI(const int mode, const QVariant* value) {
+void LC_PrintPreviewOptionsWidget::updateUI(const int mode, [[maybe_unused]]const QVariant* value) {
     switch (mode) {
         case MODE_UPDATE_ORIENTATION: {
             setPaperOrientation(m_action->isPortrait());

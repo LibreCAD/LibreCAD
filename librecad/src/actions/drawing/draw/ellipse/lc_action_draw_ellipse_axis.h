@@ -66,5 +66,6 @@ protected:
     RS_Entity* doTriggerCreateEntity() override;
     void doSaveOptions() override;
     void doLoadOptions() override;
+    bool isInVisualSnapStatus(int status) override;
 };
 #endif

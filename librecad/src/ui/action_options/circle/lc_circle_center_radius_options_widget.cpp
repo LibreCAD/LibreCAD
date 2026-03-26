@@ -34,7 +34,8 @@
  *  Constructs a QG_CircleOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-LC_CircleCenterRadiusOptionsWidget::LC_CircleCenterRadiusOptionsWidget() {
+LC_CircleCenterRadiusOptionsWidget::LC_CircleCenterRadiusOptionsWidget()
+    :m_action{nullptr}, ui(new Ui::LC_CircleCenterRadiusOptionsWidget{}){
     ui->setupUi(this);
     connect(ui->leRadius, &QLineEdit::editingFinished, this, &LC_CircleCenterRadiusOptionsWidget::onRadiusEditingFinished);
 

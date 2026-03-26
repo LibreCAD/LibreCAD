@@ -117,6 +117,10 @@ RS_Entity* LC_ActionDrawLineRelAngle::doTriggerCreateEntity() {
 void LC_ActionDrawLineRelAngle::doTriggerCompletion([[maybe_unused]] bool success) {
 }
 
+bool LC_ActionDrawLineRelAngle::isInVisualSnapStatus(int status) {
+    return (status == SetPos);
+}
+
 void LC_ActionDrawLineRelAngle::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     const RS_Vector snap = e->snapPoint;
     switch (status) {

@@ -62,6 +62,8 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     // Added declaration
     void reset();
+  bool isInVisualSnapStatus(int status) override;
+
 private:
   RS_Vector focus1{}, focus2{};
   RS_Vector startPoint{}, endPoint{};

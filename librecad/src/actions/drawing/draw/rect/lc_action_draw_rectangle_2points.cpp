@@ -50,6 +50,10 @@ void LC_ActionDrawRectangle2Points::doLoadOptions() {
     m_secondPointSnapMode = loadInt("SecondPointSnapMode", SNAP_CORNER);
 }
 
+bool LC_ActionDrawRectangle2Points::isInVisualSnapStatus(int status) {
+    return (status == SetPoint1) || (status == SetPoint2);
+}
+
 void LC_ActionDrawRectangle2Points::init(const int status){
     LC_ActionDrawRectangleAbstract::init(status);
     m_corner1Set = false;
@@ -256,12 +260,14 @@ void LC_ActionDrawRectangle2Points::doOnLeftMouseButtonRelease([[maybe_unused]] 
         case SetPoint1: {
             moveRelativeZero(snapPoint);
             m_corner1 = snapPoint;
+            addSnappedPointToVisualSnap(snapPoint);
             m_corner1Set = true;
             setMainStatus(SetPoint2);
             break;
         }
         case SetPoint2: {
             createShapeData(snapPoint);
+            addSnappedPointToVisualSnap(snapPoint);
             trigger();
             break;
         }
@@ -274,12 +280,14 @@ void LC_ActionDrawRectangle2Points::doProcessCoordinateEvent(const RS_Vector &co
     switch (status){
         case SetPoint1:
             m_corner1Set = true;
+            addSnappedPointToVisualSnap(coord);
             m_corner1 = coord;
             setMainStatus(SetPoint2);
             stateUpdated(false);
             break;
         case SetPoint2:
             createShapeData(coord);
+            addSnappedPointToVisualSnap(coord);
             trigger();
             break;
         case SetSize: {

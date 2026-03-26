@@ -60,6 +60,7 @@ public:
         return m_cellVector;
     }
     virtual RS_Vector snapGrid(const RS_Vector &coord) const = 0;
+    virtual RS_Vector snapGrid(const RS_Vector& coord, const RS_Vector& rayStart, const RS_Vector& rayEnd) = 0;
     void createGrid(const LC_GraphicViewport* view, const RS_Vector &viewZero, const RS_Vector &viewSize, const RS_Vector &metaGridWidth, const RS_Vector &gridWidth);
     void draw(RS_Painter *painter, LC_GraphicViewport* view);
     void clearGrid() const;

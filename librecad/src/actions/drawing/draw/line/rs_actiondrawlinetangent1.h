@@ -51,6 +51,7 @@ protected:
     void updateActionPrompt() override;
     void doTriggerCompletion(bool success) override;
     RS_Entity* doTriggerCreateEntity() override;
+    bool isInVisualSnapStatus(int status) override;
 private:
     enum Status {
         SetPoint = InitialActionStatus,     /**< Choose the startpoint. */

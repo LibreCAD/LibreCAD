@@ -38,7 +38,7 @@ void LC_SplineFromPolylineOptionsFiller::fillToolOptionsContainer(LC_PropertyCon
                    "a_vertexIsFitPoint",
                    tr("Fit points"),
                    tr("If checked, polyline vertexes are considered as spline points and spline by points will be created. "
-                       "Otherwise, they are considered as control points and orinary spline will be created")
+                       "Otherwise, they are considered as control points and ordinary spline will be created")
                }, [action]()-> bool {
                    return action->isUseFitPoints();
                }, [action](bool val)-> void {
@@ -54,7 +54,7 @@ void LC_SplineFromPolylineOptionsFiller::fillToolOptionsContainer(LC_PropertyCon
                       action->setSegmentPoints(val);
                   }, container);
 
-    addBoolean({"a_keepOriginals", tr("Keep originals"), tr("If unchecked, original spline will be removed, otherwise it will survive")},
+    addBoolean({"a_keepOriginals", tr("Keep originals"), tr("If unchecked, original polyline will be removed, otherwise it will survive")},
                [action]()-> bool {
                    return action->isKeepOriginals();
                }, [action](bool val)-> void {

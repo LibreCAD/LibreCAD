@@ -87,5 +87,6 @@ protected:
     void doTriggerCompletion(bool success) override;
     void doSaveOptions() override;
     void doLoadOptions() override;
+    bool isInVisualSnapStatus(int status) override;
 };
 #endif

@@ -79,7 +79,7 @@ public:
     RS_Vector getContextMenuActionClickPosition() const;
     bool hasSelection() const;
     LC_GraphicViewport* getViewport() const {return m_graphicView == nullptr ? nullptr : m_graphicView->getViewPort();}
-    RS_Graphic* getGraphic(bool resolved = true) const  {return m_graphicView == nullptr ? nullptr : m_graphicView->getGraphic(true);};
+    RS_Graphic* getGraphic(bool resolved = true) const  {return m_graphicView == nullptr ? nullptr : m_graphicView->getGraphic(resolved);};
     LC_Formatter * getFormatter() const;
 
     struct InteractiveInputInfo {

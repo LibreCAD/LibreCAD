@@ -45,6 +45,6 @@ public slots:
 protected:
     void doUpdateByAction(RS_ActionInterface *a) override;
     LC_ActionDrawCircleCenterRadius* m_action = nullptr;
-    std::unique_ptr<Ui::LC_CircleCenterRadiusOptionsWidget> ui;
+    Ui::LC_CircleCenterRadiusOptionsWidget* ui;
 };
 #endif

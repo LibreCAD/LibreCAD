@@ -26,7 +26,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "lc_action_draw_rectangle_abstract.h"
 
-
 class LC_ActionDrawRectangle3Points :public LC_ActionDrawRectangleAbstract {
     Q_OBJECT
 public:
@@ -104,6 +103,7 @@ protected:
     bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
     void doSaveOptions() override;
     void doLoadOptions() override;
+    bool isInVisualSnapStatus(int status) override;
 };
 
 #endif

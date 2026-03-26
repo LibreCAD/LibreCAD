@@ -87,6 +87,10 @@ void LC_ActionModifyOffset::doLoadOptions() {
     setCopiesNumber(copies);
 }
 
+bool LC_ActionModifyOffset::isInVisualSnapStatus(const int status) {
+    return (status == SetReferencePoint) || (status == SetPosition);
+}
+
 bool LC_ActionModifyOffset::doTriggerModifications(LC_DocumentModificationBatch& ctx) {
     return RS_Modification::offset(*m_offsetData, m_selectedEntities, false, ctx);
 }
@@ -162,6 +166,7 @@ void LC_ActionModifyOffset::onMouseLeftButtonReleaseSelected(const int status, c
             m_referencePoint = getRelZeroAwarePoint(e, e->snapPoint);
             m_offsetData->coord = m_referencePoint;
             if (!m_distanceIsFixed){
+                addSnappedPointToVisualSnap(m_referencePoint);
                 moveRelativeZero(m_referencePoint);
             }
             if (m_distanceIsFixed){

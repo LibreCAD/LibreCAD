@@ -59,6 +59,10 @@ void LC_ActionModifyStretch::doLoadOptions() {
     setRemoveOriginals(removeOriginals);
 }
 
+bool LC_ActionModifyStretch::isInVisualSnapStatus(int status) {
+    return (status == SetReferencePoint) || (status == SetTargetPoint) || (status == SetFirstCorner) || (status == SetSecondCorner);
+}
+
 void LC_ActionModifyStretch::init(const int status) {
     RS_PreviewActionInterface::init(status);
 }
@@ -190,23 +194,27 @@ void LC_ActionModifyStretch::onCoordinateEvent(const int status,  [[maybe_unused
     switch (status) {
         case SetFirstCorner: {
             m_actionData->firstCorner = coord;
+            addSnappedPointToVisualSnap(coord);
             setStatus(SetSecondCorner);
             break;
         }
         case SetSecondCorner: {
             m_actionData->secondCorner = coord;
+            addSnappedPointToVisualSnap(coord);
             deletePreview();
             setStatus(SetReferencePoint);
             break;
         }
         case SetReferencePoint: {
             m_actionData->referencePoint = coord;
+            addSnappedPointToVisualSnap(coord);
             moveRelativeZero(m_actionData->referencePoint);
             setStatus(SetTargetPoint);
             break;
         }
         case SetTargetPoint: {
             m_actionData->targetPoint = coord;
+            addSnappedPointToVisualSnap(coord);
             moveRelativeZero(m_actionData->targetPoint);
             trigger();
             break;

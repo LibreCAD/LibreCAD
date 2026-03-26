@@ -113,6 +113,10 @@ void LC_ActionDrawCircle2Points::onMouseMoveEvent(const int status, const LC_Mou
     }
 }
 
+bool LC_ActionDrawCircle2Points::isInVisualSnapStatus(int status) {
+    return (status == SetPoint1) || (status == SetPoint2);
+}
+
 void LC_ActionDrawCircle2Points::onMouseLeftButtonRelease(const int status, const LC_MouseEvent* e) {
     RS_Vector coord = e->snapPoint;
     if (status == SetPoint2) {
@@ -130,12 +134,14 @@ void LC_ActionDrawCircle2Points::onCoordinateEvent(const int status, [[maybe_unu
     switch (status) {
         case SetPoint1: {
             m_actionData->point1 = coord;
+            addSnappedPointToVisualSnap(coord);
             moveRelativeZero(coord);
             setStatus(SetPoint2);
             break;
         }
         case SetPoint2: {
             m_actionData->point2 = coord;
+            addSnappedPointToVisualSnap(coord);
             moveRelativeZero(coord);
             trigger();
             break;

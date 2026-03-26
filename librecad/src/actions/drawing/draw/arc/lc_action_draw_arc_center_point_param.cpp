@@ -63,6 +63,10 @@ void LC_ActionDrawArcCenterPointParam::doLoadOptions() {
     setReversed(reversed);
 }
 
+bool LC_ActionDrawArcCenterPointParam::isInVisualSnapStatus(int status) {
+    return (status == SetCenter) || (status == SetRadius) || (status == SetAngle1) || (status == SetAngle2);
+}
+
 void LC_ActionDrawArcCenterPointParam::reset() {
     double angleMin = 0.;
     double angleMax = 2. * M_PI;
@@ -330,6 +334,7 @@ void LC_ActionDrawArcCenterPointParam::onCoordinateEvent(const int status, [[may
     switch (status) {
         case SetCenter: {
             m_arcData->center = pos;
+            addSnappedPointToVisualSnap(pos);
             moveRelativeZero(pos);
             setStatus(SetRadius);
             break;
@@ -451,6 +456,7 @@ bool LC_ActionDrawArcCenterPointParam::doProcessCommand(const int status, const 
                 }
                 else if (checkCommand("chordlen", command)) {
                     const RS_Vector arcStart = m_arcData->center + RS_Vector::polar(m_arcData->radius, m_arcData->angle1);
+                    addSnappedPointToVisualSnap(arcStart);
                     moveRelativeZero(arcStart);
                     setStatus(SetChordLength);
                     accept = true;

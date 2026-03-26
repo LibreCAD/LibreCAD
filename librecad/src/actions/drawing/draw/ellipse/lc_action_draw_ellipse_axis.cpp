@@ -78,6 +78,10 @@ void RS_ActionDrawEllipseAxis::doLoadOptions() {
     }
 }
 
+bool RS_ActionDrawEllipseAxis::isInVisualSnapStatus(int status) {
+    return (status == SetCenter) || (status == SetMajor) || (status == SetMinor) || (status == SetAngle1) || (status == SetAngle2);
+}
+
 void RS_ActionDrawEllipseAxis::init(const int status) {
     LC_ActionDrawCircleBase::init(status);
 
@@ -270,6 +274,7 @@ void RS_ActionDrawEllipseAxis::onCoordinateEvent(const int status, [[maybe_unuse
     switch (status) {
         case SetCenter: {
             m_actionData->center = coord;
+            addSnappedPointToVisualSnap(coord);
             moveRelativeZero(coord);
             setStatus(SetMajor);
             break;

@@ -263,6 +263,10 @@ bool LC_ActionDrawLineFromPointToLine::doUpdateDistanceByInteractiveInput(const 
     return false;
 }
 
+bool LC_ActionDrawLineFromPointToLine::isInVisualSnapStatus(int status) {
+    return (status == SetPoint);
+}
+
 /**
  * processing of coordinates for start point via mouse click or command widget
  * @param coord
@@ -272,6 +276,7 @@ bool LC_ActionDrawLineFromPointToLine::doUpdateDistanceByInteractiveInput(const 
 void LC_ActionDrawLineFromPointToLine::onCoordinateEvent(const int status, [[maybe_unused]] bool isZero, const RS_Vector& coord) {
     if (m_selectLineFirst) {
         m_startPoint = coord;
+        addSnappedPointToVisualSnap(coord);
         trigger();
         invalidateSnapSpot();
     }
@@ -281,6 +286,7 @@ void LC_ActionDrawLineFromPointToLine::onCoordinateEvent(const int status, [[may
         setFreeSnap();
         setStatus(SelectLine);
         // relative zero will remain in starting point
+        addSnappedPointToVisualSnap(coord);
         moveRelativeZero(coord);
     }
 }

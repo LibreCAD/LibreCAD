@@ -75,12 +75,15 @@ RS_VectorSolutions RS_Line::getRefPoints() const {
     return RS_VectorSolutions({m_data.startpoint, m_data.endpoint});
 }
 
-RS_Vector RS_Line::doGetNearestEndpoint(const RS_Vector& coord, double* dist) const {
+RS_Vector RS_Line::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
     const double dist1((m_data.startpoint - coord).squared());
     const double dist2((m_data.endpoint - coord).squared());
 
     if (dist != nullptr) {
         *dist = std::sqrt(std::min(dist1, dist2));
+    }
+    if (entity != nullptr) {
+        *entity = const_cast<RS_Line*>(this);
     }
     return (dist1 < dist2) ? m_data.startpoint : m_data.endpoint;
 }
@@ -126,7 +129,7 @@ RS_Vector RS_Line::doGetNearestPointOnEntity(const RS_Vector& coord, const bool 
         const double t{RS_Vector::dotP(vpc, direction) / a};
         if (!isConstruction() && onEntity && (t <= -RS_TOLERANCE || t >= 1. + RS_TOLERANCE)) {
             //projection point not within range, find the nearest endpoint
-            return getNearestEndpoint(coord, dist);
+            return getNearestEndpoint(coord, nullptr, dist);
         }
         vpc = m_data.startpoint + direction * t;
     }

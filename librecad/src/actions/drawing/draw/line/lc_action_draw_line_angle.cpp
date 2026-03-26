@@ -48,6 +48,8 @@ LC_ActionDrawLineAngle::LC_ActionDrawLineAngle(LC_ActionContext* actionContext, 
             m_optionsSettingsGroupName = "ActionDrawLineVertical";
             break;
         }
+        default:
+            break;
     }
     m_fixedAngle = fixedAngle;
     reset();
@@ -78,6 +80,7 @@ void LC_ActionDrawLineAngle::doLoadOptions() {
     m_lineSnapMode = static_cast<SnapMode>(loadInt("SnapPoint", 0));
     m_lengthType = static_cast<LengthType>(loadInt("LengthType", 0));
 }
+
 
 void LC_ActionDrawLineAngle::reset() {
     m_lineData = {{}, {}};
@@ -116,6 +119,11 @@ void LC_ActionDrawLineAngle::doTriggerCompletion([[maybe_unused]] bool success) 
     m_persistRelativeZero = false;
     setMainStatus(SetPos);
 }
+
+bool LC_ActionDrawLineAngle::isInVisualSnapStatus(int status) {
+    return (status == SetPos) || (status == SetPoint2);
+}
+
 
 void LC_ActionDrawLineAngle::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     RS_Vector position = e->snapPoint;
@@ -296,6 +304,7 @@ void LC_ActionDrawLineAngle::onCoordinateEvent(const int status, [[maybe_unused]
     switch (status) {
         case SetPos: {
             m_pos = pos;
+            addSnappedPointToVisualSnap(pos);
             if (isFreeLineMode()) {
                 setMainStatus(SetPoint2);
             }
@@ -306,6 +315,7 @@ void LC_ActionDrawLineAngle::onCoordinateEvent(const int status, [[maybe_unused]
         }
         case SetPoint2: {
             m_secondPoint = pos;
+            addSnappedPointToVisualSnap(pos);
             trigger();
             break;
         }

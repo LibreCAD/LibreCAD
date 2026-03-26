@@ -44,9 +44,6 @@
 #include "rs_selection.h"
 #include "rs_settings.h"
 
-namespace {
-    constexpr double DEFAULT_SNAP_ANGLE_STEP = RS_Math::deg2rad(15.0);
-}
 
 /**
  * Constructor.
@@ -61,7 +58,7 @@ namespace {
  */
 RS_ActionInterface::RS_ActionInterface(const QString& actionName, LC_ActionContext* actionContext, const RS2::ActionType actionType)
     : RS_Snapper(actionContext), LC_ActionOptionsBase(actionName, ""), m_graphic{actionContext->getDocument()->getGraphic()},
-      m_actionType{actionType}, m_snapToAngleStep{DEFAULT_SNAP_ANGLE_STEP} {
+      m_actionType{actionType} {
     updateSnapAngleStep();
 }
 
@@ -182,6 +179,16 @@ void RS_ActionInterface::mouseReleaseEvent(QMouseEvent* e) {
     else if (button == Qt::RightButton) {
         onMouseRightButtonRelease(m_status, e);
     }
+    else if (button == Qt::MiddleButton) {
+        if (hasVisualSnap()) {
+            bool control = isControl(e);
+            if (control) {
+                stopVisualSnap();
+                onVisualSnapSolutionRefresh();
+                e->accept();
+            }
+        }
+    }
 }
 
 void RS_ActionInterface::onMouseLeftButtonRelease([[maybe_unused]] int status, [[maybe_unused]] QMouseEvent* e) {
@@ -243,10 +250,10 @@ void RS_ActionInterface::coordinateEvent(RS_CoordinateEvent* e) {
  * Expansion point for coordinate event processing.
  * @param status current status of the action
  * @param isZero true if coordinate is zero (so it's shortcut).
- * @param pos coordinate
+ * @param coord coordinate
  */
 void RS_ActionInterface::onCoordinateEvent([[maybe_unused]] int status, [[maybe_unused]] bool isZero,
-                                           [[maybe_unused]] const RS_Vector& pos) {
+                                           [[maybe_unused]] const RS_Vector& coord) {
 }
 
 /**
@@ -631,46 +638,7 @@ void RS_ActionInterface::commandPrompt(const QString& msg) const {
     m_actionContext->commandPrompt(msg);
 }
 
-void RS_ActionInterface::updateSnapAngleStep() {
-    const int stepType = LC_GET_ONE_INT("Defaults", "AngleSnapStep", 3);
-    double snapStepDegrees;
-    switch (stepType) {
-        case 0:
-            snapStepDegrees = 1.0;
-            break;
-        case 1:
-            snapStepDegrees = 3.0;
-            break;
-        case 2:
-            snapStepDegrees = 5.0;
-            break;
-        case 3:
-            snapStepDegrees = 10.0;
-            break;
-        case 4:
-            snapStepDegrees = 15.0;
-            break;
-        case 5:
-            snapStepDegrees = 18.0;
-            break;
-        case 6:
-            snapStepDegrees = 22.5;
-            break;
-        case 7:
-            snapStepDegrees = 30.0;
-            break;
-        case 8:
-            snapStepDegrees = 45.0;
-            break;
-        case 9:
-            snapStepDegrees = 90.0;
-            break;
-        default:
-            snapStepDegrees = 15.0;
-            break;
-    }
-    m_snapToAngleStep = RS_Math::deg2rad(snapStepDegrees);
-}
+
 
 bool RS_ActionInterface::isControl(const QInputEvent* e) {
     return e->modifiers() & (Qt::ControlModifier | Qt::MetaModifier);

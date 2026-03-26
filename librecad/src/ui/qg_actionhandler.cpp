@@ -195,12 +195,13 @@ bool QG_ActionHandler::command(const QString& cmd) const {
 
     RS_DEBUG->print("QG_ActionHandler::command: %s", cmd.toLatin1().data());
     const QString c = cmd.toLower().trimmed();
-
     if (c == tr("escape", "escape, go back from action steps")) {
-        m_view->back();
+        m_view->back(Qt::KeyboardModifier::NoModifier);
         RS_DEBUG->print("QG_ActionHandler::command: back");
         return true;
     }
+
+    // fixme - visual snap - command to clean/remove last?
 
     // pass command on to running action:
     RS_CommandEvent commandEvent(cmd);

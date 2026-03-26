@@ -1158,7 +1158,7 @@ void LC_Hyperbola::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoin
 //=====================================================================
 // Minimal overrides
 //=====================================================================
-RS_Vector LC_Hyperbola::doGetNearestEndpoint(const RS_Vector& coord, double* dist) const {
+RS_Vector LC_Hyperbola::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
     if (dist) {
         *dist = RS_MAXDOUBLE;
     }
@@ -1184,6 +1184,9 @@ RS_Vector LC_Hyperbola::doGetNearestEndpoint(const RS_Vector& coord, double* dis
     }
     if (dist != nullptr) {
         *dist = distance;
+    }
+    if (entity != nullptr) {
+        *entity = const_cast<LC_Hyperbola*>(this);
     }
     return ret;
 }

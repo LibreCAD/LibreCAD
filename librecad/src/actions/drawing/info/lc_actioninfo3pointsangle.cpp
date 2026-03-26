@@ -66,6 +66,10 @@ void LC_ActionInfo3PointsAngle::doTrigger() {
     }
 }
 
+bool LC_ActionInfo3PointsAngle::isInVisualSnapStatus(int status) {
+    return (status == SetPoint1) || (status == SetPoint2) || (status == SetPoint3);
+}
+
 void LC_ActionInfo3PointsAngle::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     RS_Vector mouse = e->snapPoint;
     switch (status){

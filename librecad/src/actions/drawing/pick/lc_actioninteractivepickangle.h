@@ -64,6 +64,7 @@ protected:
     void updateInfoCursor(const RS_Vector& mouse, const RS_Vector& point2, const RS_Vector& startPoint) const;
     void updateInfoCursor(const RS_Vector &mouse, const RS_Vector &startPoint) const;
     void doTrigger() override;
+    bool isInVisualSnapStatus(int status) override;
 };
 
 #endif

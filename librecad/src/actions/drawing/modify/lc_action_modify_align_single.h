@@ -62,6 +62,8 @@ protected:
 
     void doSaveOptions() override;
     void doLoadOptions() override;
+
+    bool isInVisualSnapStatus(int status) override;
 };
 
 #endif

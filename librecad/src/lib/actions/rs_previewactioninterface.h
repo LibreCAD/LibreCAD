@@ -31,6 +31,7 @@
 #include "rs_actioninterface.h"
 #include "rs_entity.h"
 #include "rs_vector.h"
+#include "rs_preview.h"
 
 class RS_Point;
 class LC_OverlayDrawable;
@@ -73,7 +74,11 @@ public:
     void resume() override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *event) override;
+    void addSnappedPointToVisualSnap(const RS_Vector& v, bool clearOther = false);
+    void keyPressEvent(QKeyEvent* e) override;
     QStringList getAvailableCommands() override;
+    bool isClearVisualSnapMarks();
+    void setStatus(int status) override;
 protected:
     RS_PreviewActionInterface(const QString& actionName,LC_ActionContext *actionContext,RS2::ActionType actionType = RS2::ActionNone);
     ~RS_PreviewActionInterface() override;
@@ -94,6 +99,7 @@ protected:
     bool m_highlightEntitiesOnHover = false;
     bool m_highlightEntitiesRefPointsOnHover = false;
     bool m_doNotAllowNonDecimalAnglesInput = false;
+    LC_MouseEvent m_lastMouseMoveEvent;
     /**
     * This is "major" status of action - it is used for determining, to which status state should be changed after various intermediate statuses (mostly,
     * this is needed for support of command events);
@@ -112,6 +118,7 @@ protected:
     void drawPreview();
     void drawHighlights() const;
     void drawPreviewAndHighlights();
+    bool isVisualSnapApplicable();
 
     void addToHighlights(RS_Entity *e, bool enable = true) const;
 
@@ -158,6 +165,8 @@ protected:
 
     virtual void moveRelativeZero(const RS_Vector &zero);
     void markRelativeZero() const;
+
+    void createVisualSnapGuidesForCurrentPoint();
 
     bool is(const RS_Entity* e, RS2::EntityType type) const;
     bool isLine(const RS_Entity*  e) const{return is(e, RS2::EntityLine);}
@@ -226,6 +235,10 @@ protected:
     bool parseToRelativeAngle(const QString&c, double &ucsBasisAngleRad) const;
     double evalAngleValue(const QString &c, bool *ok) const;
     void initFromSettings() override;
+
+    void onVisualSnapPointRegistered(LC_VisualSnapVertex* point, bool remove) override;
+    void onVisualSnapEntityRegistered(RS_Entity* point) override;
+    void onVisualSnapSolutionRefresh() override;
 
     virtual bool doCheckMayTrigger();
 private:

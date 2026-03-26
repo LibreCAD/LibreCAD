@@ -301,7 +301,7 @@ void LC_DimStylePreviewGraphicView::mouseReleaseEvent(QMouseEvent* event){
 
     switch (event->button()) {
     case Qt::RightButton: {
-        back();
+        back(Qt::KeyboardModifier::NoModifier);
         break;
     }
     case Qt::XButton1:

@@ -88,9 +88,9 @@ protected:
     bool doProcessCommand(int status, const QString& command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector& pos) override;
     bool doUpdateAngleByInteractiveInput(const QString& tag, double angle) override;
-
     void doSaveOptions() override;
     void doLoadOptions() override;
+    bool isInVisualSnapStatus(int status) override;
 };
 
 #endif

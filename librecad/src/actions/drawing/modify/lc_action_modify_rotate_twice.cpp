@@ -82,6 +82,10 @@ void LC_ActionModifyRotateTwice::doLoadOptions() {
     setAngle1(angle1);
 }
 
+bool LC_ActionModifyRotateTwice::isInVisualSnapStatus(int status) {
+    return (status == SetReferencePoint1) || (status == SetReferencePoint2);
+}
+
 void LC_ActionModifyRotateTwice::init(const int status) {
     LC_ActionModifyBase::init(status);
 }
@@ -186,11 +190,13 @@ void LC_ActionModifyRotateTwice::onCoordinateEvent(const int status, [[maybe_unu
     switch (status) {
         case SetReferencePoint1: {
             m_actionData->center1 = pos;
+            addSnappedPointToVisualSnap(pos);
             moveRelativeZero(pos);
             setStatus(SetReferencePoint2);
             break;
         }
         case SetReferencePoint2: {
+            addSnappedPointToVisualSnap(pos);
             m_actionData->center2 = pos;
             doPerformTrigger();
             break;

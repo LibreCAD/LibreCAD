@@ -654,7 +654,7 @@ RS_Vector LC_SplinePoints::getEndpoint() const {
     return (iCount < 1) ? RS_Vector{false} : pts.at(iCount - 1);
 }
 
-RS_Vector LC_SplinePoints::doGetNearestEndpoint(const RS_Vector& coord, double* dist) const {
+RS_Vector LC_SplinePoints::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
     double minDist = RS_MAXDOUBLE;
     RS_Vector ret(false);
     if (!m_data.closed) // no endpoint for closed spline
@@ -674,6 +674,9 @@ RS_Vector LC_SplinePoints::doGetNearestEndpoint(const RS_Vector& coord, double* 
     }
     if (dist != nullptr) {
         *dist = minDist;
+    }
+    if (entity != nullptr) {
+        *entity = const_cast<LC_SplinePoints*>(this);
     }
     return ret;
 }

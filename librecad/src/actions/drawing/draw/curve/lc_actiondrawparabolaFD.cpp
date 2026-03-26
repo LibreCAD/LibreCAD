@@ -130,6 +130,10 @@ void LC_ActionDrawParabolaFD::doTriggerCompletion([[maybe_unused]]bool success) 
     init(SetFocus);
 }
 
+bool LC_ActionDrawParabolaFD::isInVisualSnapStatus(int status) {
+    return (status == SetStartPoint) || (status == SetEndPoint) || (status == SetFocus) || (status == SetDirectrix);
+}
+
 void LC_ActionDrawParabolaFD::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     RS_Vector mouse = e->snapPoint;
     switch (status) {

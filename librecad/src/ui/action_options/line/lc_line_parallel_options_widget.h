@@ -38,7 +38,7 @@ namespace Ui {
 class LC_LineParallelOptionsWidget : public LC_ActionOptionsWidget {
     Q_OBJECT
 public:
-    explicit LC_LineParallelOptionsWidget(RS2::ActionType actionType);
+    explicit LC_LineParallelOptionsWidget();
     ~LC_LineParallelOptionsWidget() override;
 
 public slots :

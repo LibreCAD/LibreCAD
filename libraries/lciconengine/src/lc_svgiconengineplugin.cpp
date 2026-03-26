@@ -22,13 +22,8 @@
 #include <QIconEnginePlugin>
 
 #include "lc_svgiconengine.h"
-
-class LC_SVGIconPlugin : public QIconEnginePlugin{
-   Q_OBJECT
-   Q_PLUGIN_METADATA(IID QIconEngineFactoryInterface_iid FILE "lc_svgicons.json")
-public:
-    QIconEngine *create(const QString &filename = QString()) override;
-};
+#include "lc_svgiconengineplugin.h"
+// #include "lc_svgiconengineplugin.moc"
 
 QIconEngine *LC_SVGIconPlugin::create(const QString &file){
     const auto engine = new LC_SVGIconEngine;
@@ -37,5 +32,3 @@ QIconEngine *LC_SVGIconPlugin::create(const QString &file){
     }
     return engine;
 }
-
-#include "lc_svgiconengineplugin.moc"

@@ -57,6 +57,7 @@ bool LC_ActionPolylineAppend::doTriggerModifications(LC_DocumentModificationBatc
         ctx.replace(m_originalPolyline, newPolyline);
 
         moveRelativeZero(newPolyline->getEndpoint());
+
         return true;
     }
     return false;
@@ -207,13 +208,15 @@ void LC_ActionPolylineAppend::onCoordinateEvent(int status, [[maybe_unused]] boo
 
     switch (status) {
         case SetStartpoint: {
+            RS_Vector point = m_actionData->point;
             m_actionData->history.clear();
-            m_actionData->history.append(m_actionData->point);
+            m_actionData->history.append(point);
             m_actionData->bHistory.clear();
             m_actionData->bHistory.append(0.0);
-            m_actionData->start = m_actionData->point;
+            m_actionData->start = point;
             setStatus(SetNextPoint);
-            moveRelativeZero(getPoint());
+            addSnappedPointToVisualSnap(point);
+            moveRelativeZero(point);
             updateActionPrompt();
             break;
         }
@@ -292,6 +295,7 @@ void LC_ActionPolylineAppend::onCoordinateEvent(int status, [[maybe_unused]] boo
                 updatePromptTRBack(tr("Enter number of polylines")); // fixme - check if this is correct
             }
             drawSnapper();
+            addSnappedPointToVisualSnap(mouse);
             moveRelativeZero(mouse);
             break;
         }

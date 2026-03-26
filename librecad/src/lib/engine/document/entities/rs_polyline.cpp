@@ -403,8 +403,8 @@ bool RS_Polyline::offset(const RS_Vector& coord, double distance) {
         RS_Vector vStart(en0->getStartpoint());
         RS_Vector vEnd(en0->getEndpoint());
         double d0 = 0., d1 = 0.;
-        en1->getNearestEndpoint(vStart, &d0);
-        en1->getNearestEndpoint(vEnd, &d1);
+        en1->getNearestEndpoint(vStart, nullptr, &d0);
+        en1->getNearestEndpoint(vEnd, nullptr, &d1);
         if (d0 < d1) {
             en0->revertDirection();
         }
@@ -413,8 +413,8 @@ bool RS_Polyline::offset(const RS_Vector& coord, double distance) {
             en1 = entityAt(i);
             vStart = en1->getStartpoint();
             vEnd = en1->getEndpoint();
-            en0->getNearestEndpoint(vStart, &d0);
-            en0->getNearestEndpoint(vEnd, &d1);
+            en0->getNearestEndpoint(vStart, nullptr, &d0);
+            en0->getNearestEndpoint(vEnd, nullptr,  &d1);
             if (d0 > d1) {
                 en1->revertDirection();
             }

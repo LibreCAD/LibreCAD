@@ -85,6 +85,10 @@ void LC_ActionEditPasteTransform::doLoadOptions() {
     setSameAngles(sameAngles);
 }
 
+bool LC_ActionEditPasteTransform::isInVisualSnapStatus(int status) {
+    return (status == SetReferencePoint);
+}
+
 bool LC_ActionEditPasteTransform::doTriggerModifications(LC_DocumentModificationBatch& ctx) {
     int numX = m_pasteData->arrayXCount;
     int numY = m_pasteData->arrayYCount;

@@ -44,8 +44,8 @@ public:
     int getLineSnapMode() const{return m_lineSnapMode;}
     void setLineSnapMode(const int value){m_lineSnapMode = value;}
 
-    double getSnapDistance() const{return m_snapDistance;}
-    void setSnapDistance(const double value){m_snapDistance = value;}
+    double getGapSnapDistance() const{return m_gapSnapDistance;}
+    void setGapSnapDistance(const double value){m_gapSnapDistance = value;}
 
     bool isFreeGapSize() const{return m_freeGapSize;}
     void setFreeGapSize(const bool value){m_freeGapSize = value;}
@@ -78,7 +78,7 @@ protected:
     /**
      * distance of gap snap point from line snap point (if not free gap mode)
      */
-    double m_snapDistance = 0.0;
+    double m_gapSnapDistance = 0.0;
 
     /**
      * if true - gap size is selected by the user, if false - it is defined by the option
@@ -119,6 +119,7 @@ protected:
     bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
     void doSaveOptions() override;
     void doLoadOptions() override;
+    bool isInVisualSnapStatus(int status) override;
 };
 
 #endif

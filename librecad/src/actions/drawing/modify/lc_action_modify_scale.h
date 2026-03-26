@@ -86,5 +86,6 @@ protected:
     bool doTriggerModifications(LC_DocumentModificationBatch& ctx) override;
     void doSaveOptions() override;
     void doLoadOptions() override;
+    bool isInVisualSnapStatus(int status) override;
 };
 #endif

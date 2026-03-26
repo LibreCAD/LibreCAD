@@ -33,7 +33,7 @@ void LC_Rotate2OptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* con
                    "a_mirrored",
                    tr("Angles mirrored"),
                    tr(
-                       "Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.")
+                       "Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated")
                }, [action]()-> bool {
                    return action->isMirrorAngles();
                }, [action](bool val)-> void {

@@ -80,9 +80,9 @@ void LC_LineAngleRelOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer
             }, container);
 
     addLinearDistance({"a_snapDistance", tr("Snap Distance"), "Distance of intersection point from specified line snap point"}, [action]() {
-                          return action->getTickLength();
+                          return action->getIntersectionOffsetDistance();
                       }, [action](double val) {
-                          action->setTickLength(val);
+                          action->setIntersectionOffsetDistance(val);
                       }, container);
 
     static LC_EnumDescriptor tickSnapTypeDescriptor = {

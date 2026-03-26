@@ -66,6 +66,10 @@ void LC_ActionModifyMove::doLoadOptions() {
     setCopiesNumber(copiesNum);
 }
 
+bool LC_ActionModifyMove::isInVisualSnapStatus(int status) {
+    return (status == SetReferencePoint) || (status == SetTargetPoint);
+}
+
 bool LC_ActionModifyMove::doTriggerModifications(LC_DocumentModificationBatch& ctx) {
     auto& moveData = m_actionData->data;
     if (m_actionData->createCopy) {
@@ -177,12 +181,14 @@ void LC_ActionModifyMove::onCoordinateEvent(const int status, [[maybe_unused]] b
     switch (status) {
         case SetReferencePoint: {
             m_actionData->referencePoint = pos;
+            addSnappedPointToVisualSnap(pos);
             moveRelativeZero(m_actionData->referencePoint);
             setStatus(SetTargetPoint);
             break;
         }
         case SetTargetPoint: {
             m_actionData->targetPoint = pos;
+            addSnappedPointToVisualSnap(pos);
             m_actionData->data.offset = m_actionData->targetPoint - m_actionData->referencePoint;
             trigger();
             break;

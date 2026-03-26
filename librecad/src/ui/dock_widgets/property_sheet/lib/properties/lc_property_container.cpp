@@ -31,7 +31,7 @@ LC_PropertyContainer::LC_PropertyContainer(QObject* parent)
 }
 
 LC_PropertyContainer::~LC_PropertyContainer() {
-    clearChildProperties();
+    clearChildProperties(false);
 }
 
 QList<LC_Property*> LC_PropertyContainer::findChildProperties(QString name, const Qt::FindChildOptions options) const {
@@ -96,12 +96,13 @@ QList<LC_Property*> LC_PropertyContainer::findChildProperties(const QRegularExpr
     return result;
 }
 
-void LC_PropertyContainer::clearChildProperties() {
+void LC_PropertyContainer::clearChildProperties(bool emitSignals) {
     if (m_childProperties.isEmpty()) {
         return;
     }
-
-    emit beforePropertyChange(PropertyChangeReasonChildRemove, nullptr, 0);
+    if (emitSignals) {
+        emit beforePropertyChange(PropertyChangeReasonChildRemove, nullptr, 0);
+    }
 
     // Original list is cleared to avoid interference with property destructors,
     // where properties are removed from the parent's list.
@@ -112,7 +113,9 @@ void LC_PropertyContainer::clearChildProperties() {
         }
     }
 
-    emit afterPropertyChange(PropertyChangeReasonChildRemove);
+    if (emitSignals) {
+        emit afterPropertyChange(PropertyChangeReasonChildRemove);
+    }
 }
 
 bool LC_PropertyContainer::addChildProperty(LC_Property* childProperty, const bool moveOwnership, int index) {

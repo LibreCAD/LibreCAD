@@ -65,6 +65,10 @@ void RS_ActionInfoDist::doTrigger() {
     }
 }
 
+bool RS_ActionInfoDist::isInVisualSnapStatus(int status) {
+    return (status == SetPoint1) || (status == SetPoint2);
+}
+
 void RS_ActionInfoDist::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     RS_Vector mouse = e->snapPoint;
     switch (status) {
@@ -134,11 +138,13 @@ void RS_ActionInfoDist::onCoordinateEvent(const int status, [[maybe_unused]]bool
     switch (status) {
         case SetPoint1: {
             m_actionData->point1 = coord;
+            addSnappedPointToVisualSnap(coord);
             setStatus(SetPoint2);
             break;
         }
         case SetPoint2: {
             if (m_actionData->point1.valid){
+                addSnappedPointToVisualSnap(coord);
                 m_actionData->point2 = coord;
                 deletePreview();
                 trigger();

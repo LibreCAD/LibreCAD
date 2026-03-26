@@ -43,6 +43,10 @@ void LC_ActionUCSCreate::doLoadOptions() {
     m_fixedAngle = loadBool("AngleIsFixed", true);
 }
 
+bool LC_ActionUCSCreate::isInVisualSnapStatus(int status) {
+    return (status == SetOrigin) || (status == SetAngle);
+}
+
 void LC_ActionUCSCreate::doTrigger() {
 //   LC_ERR << "SET Origin. UCS: " << formatVector(m_originPoint) << " World: "<< formatVectorWCS(m_originPoint) << " Angle: " << formatAngle(m_angle);
 
@@ -119,6 +123,7 @@ void LC_ActionUCSCreate::onCoordinateEvent(const int status, [[maybe_unused]]boo
                 trigger();
             }
             else {
+                addSnappedPointToVisualSnap(m_originPoint);
                 moveRelativeZero(m_originPoint);
                 setStatus(SetAngle);
             }

@@ -177,7 +177,7 @@ void RS_Solid::calculateBorders() {
     }
 }
 
-RS_Vector RS_Solid::doGetNearestEndpoint(const RS_Vector& coord, double* dist) const {
+RS_Vector RS_Solid::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
     double minDist{RS_MAXDOUBLE};
     double curDist{0.0};
     RS_Vector ret;
@@ -193,6 +193,9 @@ RS_Vector RS_Solid::doGetNearestEndpoint(const RS_Vector& coord, double* dist) c
     }
 
     setDistPtr(dist, minDist);
+    if (entity != nullptr) {
+        *entity = const_cast<RS_Solid*>(this);
+    }
     return ret;
 }
 
@@ -346,7 +349,7 @@ RS_Vector RS_Solid::doGetNearestPointOnEntity(const RS_Vector& coord, const bool
     //verify this part
     if (onEntity && !ret.isInWindowOrdered(m_minV, m_maxV)) {
         // projection point not within range, find the nearest endpoint
-        ret = getNearestEndpoint(coord, dist);
+        ret = getNearestEndpoint(coord, nullptr, dist);
         currDist = ret.distanceTo(coord);
     }
 
@@ -355,8 +358,11 @@ RS_Vector RS_Solid::doGetNearestPointOnEntity(const RS_Vector& coord, const bool
     return ret;
 }
 
-RS_Vector RS_Solid::doGetNearestCenter([[maybe_unused]] const RS_Vector& coord, double* dist) const {
+RS_Vector RS_Solid::doGetNearestCenter([[maybe_unused]] const RS_Vector& coord, double* dist, RS_Entity** entity) const {
     setDistPtr(dist, RS_MAXDOUBLE);
+    if (entity != nullptr) {
+        *entity = const_cast<RS_Solid*>(this);
+    }
     return RS_Vector(false);
 }
 

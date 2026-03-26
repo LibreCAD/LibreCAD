@@ -105,6 +105,10 @@ bool LC_ActionDrawCircleCenterRadius::doUpdateDistanceByInteractiveInput(const Q
     return false;
 }
 
+bool LC_ActionDrawCircleCenterRadius::isInVisualSnapStatus(int status) {
+    return (status == SetCenter);
+}
+
 void LC_ActionDrawCircleCenterRadius::onCoordinateEvent(const int status, [[maybe_unused]] bool isZero, const RS_Vector& pos) {
     switch (status) {
         case SetCenter: {

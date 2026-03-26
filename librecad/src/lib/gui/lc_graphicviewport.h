@@ -30,6 +30,7 @@
 #include "lc_formatter.h"
 #include "lc_overlaysmanager.h"
 #include "rs.h"
+#include "rs_entity.h"
 #include "rs_vector.h"
 
 class LC_OverlayDrawablesContainer;
@@ -120,6 +121,8 @@ public:
     RS_Vector snapGrid(const RS_Vector& coord) const;
     void applyUCS(LC_UCS* ucsToSet);
     LC_UCS* getCurrentUCS() const;
+    RS_Vector snapGrid(const RS_Vector& coord, RS_Entity* entity) const;
+    RS_Vector snapGrid(const RS_Vector& coord, const RS_Vector& rayStart, const RS_Vector& rayEnd) const;
     void fillCurrentUCSInfo(RS_Vector& origin, double& xAxisDirection) const;
 
     double toGuiX(const double ucxX) const {return ucxX * m_factor.x + m_offsetX;}

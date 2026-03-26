@@ -46,7 +46,7 @@ public:
     void setQAction(QAction* action);
     QAction* getQAction() const;
 
-    void back();
+    void back(Qt::KeyboardModifiers modifiers);
     void enter();
 
     void mousePressEvent(QMouseEvent *e) const;

@@ -66,6 +66,10 @@ void LC_ActionModifyMirror::doLoadOptions() {
     setKeepOriginals(keepOriginals);
 }
 
+bool LC_ActionModifyMirror::isInVisualSnapStatus(int status) {
+    return (!m_mirrorToExistingLine) && ((status == SetAxisPoint1) || (status == SetAxisPoint2));
+}
+
 bool LC_ActionModifyMirror::doTriggerModifications(LC_DocumentModificationBatch& ctx) {
         ctx.setActiveLayerAndPen(m_actionData->data.useCurrentLayer, m_actionData->data.useCurrentAttributes);
         return RS_Modification::mirror(m_actionData->data, m_selectedEntities, false, ctx);
@@ -214,12 +218,14 @@ void LC_ActionModifyMirror::onCoordinateEvent(const int status, [[maybe_unused]]
         case SetAxisPoint1: {
             m_actionData->axisPoint1 = coord;
             setStatus(SetAxisPoint2);
+            addSnappedPointToVisualSnap(coord);
             moveRelativeZero(coord);
             break;
         }
         case SetAxisPoint2: {
             m_actionData->axisPoint2 = coord;
             setStatus(ShowDialog);
+            addSnappedPointToVisualSnap(coord);
             moveRelativeZero(coord);
             showOptionsAndTrigger();
             break;

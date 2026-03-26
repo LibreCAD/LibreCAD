@@ -76,6 +76,7 @@ protected:
     RS_Entity* doTriggerCreateEntity() override;
     void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
     bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
+    bool isInVisualSnapStatus(int status) override;
     void doSaveOptions() override;
     void doLoadOptions() override;
 };

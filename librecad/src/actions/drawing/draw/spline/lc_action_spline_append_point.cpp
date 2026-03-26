@@ -52,7 +52,7 @@ void LC_ActionSplineAppendPoint::onMouseMove(RS_Vector mouse, const int status, 
         case SetBeforeControlPoint:{
             double dist;
             mouse = getRelZeroAwarePoint(e, mouse);
-            const RS_Vector nearestPoint = m_entityToModify->getNearestEndpoint(mouse, &dist);
+            const RS_Vector nearestPoint = m_entityToModify->getNearestEndpoint(mouse, nullptr, &dist);
             if (nearestPoint.valid) {
                 const bool appendToStart = nearestPoint == m_entityToModify->getStartpoint();
                 previewRefSelectablePoint(mouse);
@@ -68,7 +68,7 @@ void LC_ActionSplineAppendPoint::onMouseMove(RS_Vector mouse, const int status, 
             bool appendMode = m_directionFromStart;
             if (e->isShift){
                 double dist;
-                const RS_Vector nearestPoint = m_entityToModify->getNearestEndpoint(mouse, &dist);
+                const RS_Vector nearestPoint = m_entityToModify->getNearestEndpoint(mouse, nullptr, &dist);
                 appendMode = nearestPoint == m_entityToModify->getStartpoint();
             }
             const RS_Entity *previewUpdatedEntity = createModifiedSplineEntity(m_entityToModify, mouse, appendMode);
@@ -113,7 +113,7 @@ void LC_ActionSplineAppendPoint::onMouseLeftButtonRelease(const int status, cons
             const RS_Vector mouse = e->snapPoint;
             if (e->isShift){
                 double dist;
-                const RS_Vector nearestPoint = m_entityToModify->getNearestEndpoint(mouse, &dist);
+                const RS_Vector nearestPoint = m_entityToModify->getNearestEndpoint(mouse, nullptr, &dist);
                 if (nearestPoint.valid) {
                     m_directionFromStart = nearestPoint == m_entityToModify->getStartpoint();
                 }
@@ -130,12 +130,14 @@ void LC_ActionSplineAppendPoint::onCoordinateEvent(const int status, [[maybe_unu
     switch (status){
         case SetBeforeControlPoint:{
             m_vertexPoint = pos;
+            addSnappedPointToVisualSnap(pos);
             trigger();
             setStatus(SetControlPoint);
             break;
         }
         case SetControlPoint:{
             m_vertexPoint = pos;
+            addSnappedPointToVisualSnap(pos);
             trigger();
             break;
         }

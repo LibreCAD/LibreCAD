@@ -71,8 +71,13 @@ void RS_Preview::addEntity(const RS_Entity* entity) {
             break;
         }*/
         case RS2::EntityRefPoint:
+        case RS2::EntitySnapMark:
         case RS2::EntityRefLine:
+        case RS2::EntitySnapLine:
+        case RS2::EntitySnapCircle:
+        case RS2::EntitySnapArc:
         case RS2::EntityRefConstructionLine:
+        case RS2::EntitySnapConstructionLine:
         case RS2::EntityRefCircle:
         case RS2::EntityRefEllipse:
         case RS2::EntityRefArc: {

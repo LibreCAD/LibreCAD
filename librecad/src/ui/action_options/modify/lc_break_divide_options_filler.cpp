@@ -31,7 +31,7 @@ void LC_BreakDivideOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer*
     addBoolean({
                   "a_remove",
                   tr("Remove segments"),
-                  tr("If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points")
+                  tr("If checked, sеgments between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points")
               }, [action]()-> bool {
                   return action->isRemoveSegment();
               }, [action](bool val)-> void {

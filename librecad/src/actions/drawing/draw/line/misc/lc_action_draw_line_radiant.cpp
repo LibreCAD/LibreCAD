@@ -79,6 +79,7 @@ bool LC_ActionDrawLineRadiant::doTriggerModifications(LC_DocumentModificationBat
 
 void LC_ActionDrawLineRadiant::doTriggerCompletion(const bool success) {
     if (success) {
+        addSnappedPointToVisualSnap(m_startPoint);
         moveRelativeZero(m_startPoint);
         setStatus(SetPoint);
     }
@@ -429,4 +430,8 @@ LC_ActionOptionsWidget* LC_ActionDrawLineRadiant::createOptionsWidget() {
 
 LC_ActionOptionsPropertiesFiller* LC_ActionDrawLineRadiant::createOptionsFiller() {
     return new LC_LineRadiantOptionsFiller();
+}
+
+bool LC_ActionDrawLineRadiant::isInVisualSnapStatus(int status) {
+    return (status == SetPoint) || (status == SetPoint2);
 }

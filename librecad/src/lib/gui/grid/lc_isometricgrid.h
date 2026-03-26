@@ -30,6 +30,7 @@ public:
     explicit LC_IsometricGrid(LC_GridOptions *options, int isoProjection);
 
     RS_Vector snapGrid(const RS_Vector &coord) const override;
+    RS_Vector snapGrid(const RS_Vector& coord, const RS_Vector& rayStart, const RS_Vector& rayEnd) override;
 
     enum Projection{
         ISO_LEFT,

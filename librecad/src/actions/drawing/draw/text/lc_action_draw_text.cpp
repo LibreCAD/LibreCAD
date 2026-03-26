@@ -281,6 +281,10 @@ double LC_ActionDrawText::getUcsAngleDegrees() const {
     return m_ucsBasicAngleDegrees;
 }
 
+bool LC_ActionDrawText::isInVisualSnapStatus(int status) {
+    return status == SetPos || status == SetSecPos;
+}
+
 bool LC_ActionDrawText::doUpdateAngleByInteractiveInput(const QString& tag, const double angleRad) {
     if (tag == "angle") {
         setUcsAngleDegrees(RS_Math::rad2deg(angleRad));

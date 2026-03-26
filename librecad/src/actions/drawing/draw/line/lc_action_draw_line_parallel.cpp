@@ -238,7 +238,7 @@ RS2::CursorType LC_ActionDrawLineParallel::doGetMouseCursor([[maybe_unused]] int
 }
 
 LC_ActionOptionsWidget* LC_ActionDrawLineParallel::createOptionsWidget() {
-    return new LC_LineParallelOptionsWidget(m_actionType);
+    return new LC_LineParallelOptionsWidget();
 }
 
 LC_ActionOptionsPropertiesFiller* LC_ActionDrawLineParallel::createOptionsFiller() {

@@ -345,3 +345,7 @@ void LC_ActionInteractivePickAngle::updateInfoCursor(const RS_Vector& mouse, con
 void LC_ActionInteractivePickAngle::doTrigger() {
     LC_ActionInteractivePickBase::doTrigger();
 }
+
+bool LC_ActionInteractivePickAngle::isInVisualSnapStatus(int status) {
+    return (status == SetPoint1) || (status == SetPoint2) || (status == SetPoint3);
+}

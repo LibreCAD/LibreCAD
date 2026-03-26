@@ -46,7 +46,7 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void updateActionPrompt() override;
     bool doProcessCommand(int status, const QString& command) override;
-    void onCoordinateEvent(int status, bool isZero, const RS_Vector& pos) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector& coord) override;
 
     enum State {
         SetPoint1,
@@ -72,6 +72,7 @@ protected:
     RS_Vector getLastPointPosition(RS_Vector& pos, bool alternateLastPointAdjustment) const;
     bool doTriggerModifications(LC_DocumentModificationBatch& ctx) override;
     void doTriggerCompletion(bool success) override;
+    bool isInVisualSnapStatus(int status) override;
 
     void doSaveOptions() override;
     void doLoadOptions() override;

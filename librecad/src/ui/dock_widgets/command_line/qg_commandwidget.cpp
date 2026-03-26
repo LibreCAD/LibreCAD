@@ -131,8 +131,7 @@ bool QG_CommandWidget::eventFilter(QObject*/*obj*/, QEvent* event) {
         //This should avoid filtering shortcuts, such as Ctl-C
         const Qt::KeyboardModifiers modifiers{e->modifiers()};
         if (!(Qt::GroupSwitchModifier == modifiers && Qt::Key_At == key) // let '@' key pass for relative coords
-            && modifiers != Qt::KeypadModifier && modifiers & (Qt::KeyboardModifierMask ^ Qt::ShiftModifier) & (Qt::KeyboardModifierMask ^
-                Qt::ControlModifier)) {
+            && modifiers != Qt::KeypadModifier && modifiers & (Qt::KeyboardModifierMask ^ Qt::ShiftModifier) & (Qt::KeyboardModifierMask ^ Qt::ControlModifier)) {
             return false;
         }
         const bool isGraphicViewEvent = (key != Qt::Key_Shift) &&
@@ -142,7 +141,8 @@ bool QG_CommandWidget::eventFilter(QObject*/*obj*/, QEvent* event) {
             (key != Qt::Key_Right) &&
             (key != Qt::Key_Down) &&
             (key != Qt::Key_Plus) &&
-            (key != Qt::Key_Minus);
+            (key != Qt::Key_Minus) &&
+            (key != Qt::Key_Tab);
         // prevent focus for graphic-view specific keys
         if (isGraphicViewEvent) {
             focusWidget();

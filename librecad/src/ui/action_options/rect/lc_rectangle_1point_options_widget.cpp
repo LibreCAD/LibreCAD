@@ -173,7 +173,7 @@ void LC_Rectangle1PointOptionsWidget::onCornersIndexChanged(const int index) {
     m_action->updateOptions();
 }
 
-void LC_Rectangle1PointOptionsWidget::updateUI(const int mode, const QVariant* value) {
+void LC_Rectangle1PointOptionsWidget::updateUI(const int mode, [[maybe_unused]]const QVariant* value) {
     if (mode == UPDATE_ANGLE) {
         const double angle = m_action->getUcsAngleDegrees();
         ui->leAngle->blockSignals(true);

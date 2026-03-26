@@ -132,6 +132,10 @@ void LC_ActionDrawParabola4Points::onMouseRightButtonRelease(int status, [[maybe
     }
 }
 
+bool LC_ActionDrawParabola4Points::isInVisualSnapStatus(int status) {
+    return (status == SetPoint1) || (status == SetPoint2) || (status == SetPoint3) || (status == SetPoint4);
+}
+
 void LC_ActionDrawParabola4Points::onCoordinateEvent(const int status, [[maybe_unused]]bool isZero, const RS_Vector &coord) {
     const int nextStatus = status + 1;
     m_actionData->points.resize(nextStatus);

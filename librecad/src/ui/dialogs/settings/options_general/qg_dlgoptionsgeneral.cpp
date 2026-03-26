@@ -374,6 +374,29 @@ void QG_DlgOptionsGeneral::init(){
 
         double gridCellFactor = LC_GET_INT("AdvSnapGridCellSnapFactor", 25) / 100.0;
         sbMinGridCellSnapFactor->setValue(gridCellFactor);
+
+        int visualSnapVertexSize = LC_GET_INT("VSVertexSize", 6);
+        sbVisualSnapVertexSize->setValue(visualSnapVertexSize);
+
+        int visualSnapProjectedSnapSize = LC_GET_INT("VSProjectedSnapSize", 8);
+        sbVisualSnapProjectedSnapSize->setValue(visualSnapProjectedSnapSize);
+
+        int visualSnapHighlightedVertexSize = LC_GET_INT("VSHighlightedVertexSize", 10);
+        sbVisualSnapHighlightedVertexSize->setValue(visualSnapHighlightedVertexSize);
+
+        cbAngleSnapToLinesIfGrid->setChecked(LC_GET_BOOL("AngleSnapToLinesIfGrid", true));
+
+        sbVisualSnapPointAddingDelay->setValue((LC_GET_INT("VSSnapPointAddingDelay", 300)));
+        sbVisualSnapVertexAddingDelay->setValue((LC_GET_INT("VSVertexAddingDelay", 1200)));
+        sbVisualSnapSnapDocEntityAddingDelay->setValue((LC_GET_INT("VSDocEntityAddingDelay", 1500)));
+
+        sbVSCatchDistance->setValue(LC_GET_INT("VSGuidingEntiitesCatchDistance", 24));
+
+        cbVisualSnapRaysAngleSnapVertexes->setChecked(LC_GET_BOOL("VSAngleSnapStepRaysVertexes", true));
+        cbVisualSnapRaysAngleSnapRelative->setChecked(LC_GET_BOOL("VSAngleSnapStepRaysRelative", true));
+
+        cbVisualSnapAutoAddSnapPoint->setChecked(LC_GET_BOOL("VSSnapAutoAddSnapPoint", true));
+        cbVisualSnapManualAddingWithCTRL->setChecked(LC_GET_BOOL("VSSnapManualAddingWithCTRL", false));
     }
     LC_GROUP_END();
 
@@ -510,11 +533,14 @@ void QG_DlgOptionsGeneral::init(){
         initComboBox(cbInfoOverlaySnapColor, LC_GET_STR("info_overlay_snap", RS_Settings::OVERLAY_INFO_CURSOR_SNAP));
         initComboBox(cbInfoOverlayCommandPromptColor, LC_GET_STR("info_overlay_prompt", RS_Settings::OVERLAY_INFO_CURSOR_COMMAND_PROMPT));
         initComboBox(cbInfoOverlayRelativeColor, LC_GET_STR("info_overlay_relative", RS_Settings::OVERLAY_INFO_CURSOR_RELATIVE_POS));
-
         initComboBox(cbDraftModeMarkerColor, LC_GET_STR("draft_mode_marker", RS_Settings::SELECT));
-
         initComboBox(cbAnglesMarkColorDirection, LC_GET_STR("angles_basis_direction", RS_Settings::ANGLES_BASIS_DIRECTION));
         initComboBox(cbAnglesMarkColorAngleRay, LC_GET_STR("angles_basis_angleray", RS_Settings::ANGLES_BASIS_ANGLE_RAY));
+
+        initComboBox(cbColorVisualSnapGuideEntities, LC_GET_STR("VisualSnapGuideEntitiesColor", RS_Settings::VISUAL_SNAP_ENTITIES));
+        initComboBox(cbColorVisualSnapVertexes, LC_GET_STR("VisualSnapVertexesColor", RS_Settings::VISUAL_SNAP_VERTEXES));
+        initComboBox(cbColorVisualSnapProjectedSnap, LC_GET_STR("VisualSnapProjectedSnapColor", RS_Settings::VISUAL_SNAP_PROJECTED_SNAP));
+        initComboBox(cbColorVisualSnapDocumentEntity, LC_GET_STR("VisualSnapDocumentEntitiesColor", RS_Settings::VISUAL_SNAP_PROJECTED_SNAP));
 
         int overlayTransparency = LC_GET_INT("overlay_box_transparency", 90);
         sbOverlayBoxTransparency->setValue(overlayTransparency);
@@ -789,6 +815,23 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("AdvSnapOnEntitySwitchToFreeDistance", static_cast<int>(sbFreeSnapSwitchDistance->value() * 100));
             LC_SET("AdvSnapEntityCatchRange", sbCatchEntitySnapDistance->value());
             LC_SET("AdvSnapGridCellSnapFactor", static_cast<int>(sbMinGridCellSnapFactor->value() * 100));
+            LC_SET("AngleSnapToLinesIfGrid", cbAngleSnapToLinesIfGrid->isChecked());
+
+            LC_SET("VSVertexSize", sbVisualSnapVertexSize->value());
+            LC_SET("VSProjectedSnapSize", sbVisualSnapProjectedSnapSize->value());
+            LC_SET("VSHighlightedVertexSize", sbVisualSnapHighlightedVertexSize->value());
+
+            LC_SET("VSSnapPointAddingDelay", sbVisualSnapPointAddingDelay->value());
+            LC_SET("VSVertexAddingDelay", sbVisualSnapVertexAddingDelay->value());
+            LC_SET("VSDocEntityAddingDelay", sbVisualSnapSnapDocEntityAddingDelay->value());
+
+            LC_SET("VSGuidingEntiitesCatchDistance", sbVSCatchDistance->value());
+
+            LC_SET("VSAngleSnapStepRaysVertexes", cbVisualSnapRaysAngleSnapVertexes->isChecked());
+            LC_SET("VSAngleSnapStepRaysRelative", cbVisualSnapRaysAngleSnapRelative->isChecked());
+
+            LC_SET("VSSnapAutoAddSnapPoint", cbVisualSnapAutoAddSnapPoint->isChecked());
+            LC_SET("VSSnapManualAddingWithCTRL", cbVisualSnapManualAddingWithCTRL->isChecked());
         }
         LC_GROUP_END();
 
@@ -864,6 +907,11 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("angles_basis_angleray", cbAnglesMarkColorAngleRay->currentText());
 
             LC_SET("draft_mode_marker", cbDraftModeMarkerColor->currentText());
+
+            LC_SET("VisualSnapGuideEntitiesColor", cbColorVisualSnapGuideEntities->currentText());
+            LC_SET("VisualSnapVertexesColor", cbColorVisualSnapVertexes->currentText());
+            LC_SET("VisualSnapProjectedSnapColor", cbColorVisualSnapProjectedSnap->currentText());
+            LC_SET("VisualSnapDocumentEntitiesColor", cbColorVisualSnapDocumentEntity->currentText());
         }
         LC_GROUP_END();
 
@@ -1122,6 +1170,24 @@ void QG_DlgOptionsGeneral::on_pbAnglesMarkDirection_clicked(){
 void QG_DlgOptionsGeneral::on_pbAnglesMarkAngleRay_clicked(){
     set_color(cbAnglesMarkColorAngleRay, QColor(RS_Settings::ANGLES_BASIS_ANGLE_RAY));
 }
+
+
+void QG_DlgOptionsGeneral::on_pbVisualSnapGuideEntitiesColor_clicked() {
+    set_color(cbColorVisualSnapGuideEntities, QColor(RS_Settings::VISUAL_SNAP_ENTITIES));
+}
+
+void QG_DlgOptionsGeneral::on_pbVisualSnapVertexesColor_clicked() {
+    set_color(cbColorVisualSnapVertexes, QColor(RS_Settings::VISUAL_SNAP_VERTEXES));
+}
+
+void QG_DlgOptionsGeneral::on_pbVisualSnapProjectedSnapColor_clicked() {
+    set_color(cbColorVisualSnapProjectedSnap, QColor(RS_Settings::VISUAL_SNAP_PROJECTED_SNAP));
+}
+
+void QG_DlgOptionsGeneral::on_pbVisualSnapDocEntitiesColor_clicked() {
+    set_color(cbColorVisualSnapDocumentEntity, QColor(RS_Settings::VISUAL_SNAP_DOCUMENT_ENTITIES));
+}
+
 
 void QG_DlgOptionsGeneral::on_pb_clear_all_clicked(){
     const QMessageBox::StandardButton reply = QMessageBox::question(this, tr("Clear settings"),

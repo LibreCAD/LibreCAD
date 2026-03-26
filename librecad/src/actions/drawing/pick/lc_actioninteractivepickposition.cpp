@@ -82,6 +82,10 @@ void LC_ActionInteractivePickPosition::updateInfoCursor(const RS_Vector &mouse, 
     }
 }
 
+bool LC_ActionInteractivePickPosition::isInVisualSnapStatus(int status) {
+    return (status == SetPoint);
+}
+
 void LC_ActionInteractivePickPosition::onMouseLeftButtonRelease(const int status, const LC_MouseEvent* e) {
     const RS_Vector snap = e->snapPoint;
     switch (status){

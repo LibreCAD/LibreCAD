@@ -90,6 +90,7 @@ void LC_ActionSplineModifyBase::drawSnapper() {
     // completely disable snapper for action
 }
 
+// fixme - review this override... why version with QMouseEvent is used instead of LC_MouseEvent???
 void LC_ActionSplineModifyBase::onMouseRightButtonRelease(const int status, [[maybe_unused]] QMouseEvent *e) {
     deleteSnapper();
     deletePreview();

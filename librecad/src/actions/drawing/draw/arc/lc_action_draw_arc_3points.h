@@ -56,6 +56,7 @@ protected:
     bool m_alternatedPoints = false;
     void reset() override;
     void preparePreview(bool alternatePoints) const;
+    bool isInVisualSnapStatus(int status) override;
     void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
     void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
     void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;

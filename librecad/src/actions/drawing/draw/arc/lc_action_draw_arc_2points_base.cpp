@@ -43,6 +43,10 @@ void LC_ActionDrawArc2PointsBase::doLoadOptions() {
     m_parameterLen = loadDouble("Parameter", 1.0);
 }
 
+bool LC_ActionDrawArc2PointsBase::isInVisualSnapStatus(int status) {
+    return (status == SetPoint1) || (status == SetPoint2);
+}
+
 RS_Entity* LC_ActionDrawArc2PointsBase::doTriggerCreateEntity() {
     RS_Entity* createdEntity = createArc(getStatus(), m_endPoint, m_alternated, true);
     if (createdEntity != nullptr){
@@ -166,12 +170,14 @@ void LC_ActionDrawArc2PointsBase::onCoordinateEvent(const int status, [[maybe_un
     switch (status){
         case SetPoint1:{
             m_startPoint = pos;
+            addSnappedPointToVisualSnap(pos);
             moveRelativeZero(pos);
             setStatus(SetPoint2);
             break;
         }
         case SetPoint2:{
             m_endPoint = pos;
+            addSnappedPointToVisualSnap(pos);
             moveRelativeZero(pos);
             proceedFromSetPoint2();
             break;

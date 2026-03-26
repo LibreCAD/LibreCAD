@@ -64,6 +64,10 @@ void LC_ActionDrawRectangle3Points::doLoadOptions() {
     m_innerAngleDegrees = loadDouble("QuadrangleFixedAngle", 90.0);
 }
 
+bool LC_ActionDrawRectangle3Points::isInVisualSnapStatus(int status) {
+    return (status == SetPoint1) || (status == SetPoint2) || (status == SetPoint3);
+}
+
 void LC_ActionDrawRectangle3Points::doAfterTrigger(){
     LC_ActionDrawRectangleAbstract::doAfterTrigger();
     resetPoints();
@@ -284,6 +288,8 @@ bool LC_ActionDrawRectangle3Points::doCheckMayDrawPreview([[maybe_unused]] const
     return status != SetPoint1 && m_actionData->corner1.valid;
 }
 
+
+
 /**
  * Performing snap on mouse move. Snap depends on state and setting. 
  * If shift is not pressed - ordinary snap is used. 
@@ -357,6 +363,7 @@ void LC_ActionDrawRectangle3Points::doInitialSnapToRelativeZero(const RS_Vector&
 void LC_ActionDrawRectangle3Points::doOnLeftMouseButtonRelease([[maybe_unused]] const LC_MouseEvent* e, const int status, const RS_Vector &snapPoint){
     onCoordinateEvent(status, false, snapPoint);
     if (m_actionData->corner2Set){ // adjust relative zero for point 2 (for point 3 it will be set on trigger)
+        addSnappedPointToVisualSnap(m_actionData->corner2);
         moveRelativeZero(m_actionData->corner2);
     }
 }
@@ -443,6 +450,7 @@ switch (getStatus()) {
         case SetPoint1: {
             doResetPoints(mouse);
             m_actionData->corner1Set = true;
+            addSnappedPointToVisualSnap(mouse);
             moveRelativeZero(mouse);
             setMainStatus(SetPoint2);
             break;
@@ -506,6 +514,7 @@ void LC_ActionDrawRectangle3Points::processCommandValue(const double value, bool
             m_actionData->corner2Set = true;
             m_actionData->corner3 = m_actionData->corner2;
             m_actionData->corner4 - m_actionData->corner2;
+            addSnappedPointToVisualSnap(m_actionData->corner2);
             moveRelativeZero(m_actionData->corner2);
             deletePreview();
             const ShapeData data = createPolyline(RS_Vector(false));

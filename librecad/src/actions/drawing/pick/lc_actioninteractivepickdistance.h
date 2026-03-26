@@ -23,6 +23,7 @@
 
 #ifndef LC_ACTIONINTERACTIVEPICKDISTANCE_H
 #define LC_ACTIONINTERACTIVEPICKDISTANCE_H
+
 #include "lc_actioninteractivepickbase.h"
 #include "rs_previewactioninterface.h"
 
@@ -56,6 +57,7 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateActionPrompt() override;
     void updateInfoCursorForPoint2(const RS_Vector &mouse, const RS_Vector &startPoint) const;
+    bool isInVisualSnapStatus(int status) override;
 };
 
 #endif

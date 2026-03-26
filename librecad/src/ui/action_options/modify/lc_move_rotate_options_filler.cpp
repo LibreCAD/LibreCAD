@@ -29,7 +29,7 @@
 void LC_MoveRotateOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* container) {
     auto action = static_cast<LC_ActionModifyMoveRotate*>(m_action);
 
-    addBoolean({"a_angleFree", tr("Free Angle"), tr("If checked, rotation angle is defined by mouse. Otherwise, specified value is used.")},
+    addBoolean({"a_angleFree", tr("Free Angle"), tr("If checked, rotation angle is defined by mouse. Otherwise, specified value is used")},
                [action]()-> bool {
                    return action->isAngleFree();
                }, [action](bool val)-> void {

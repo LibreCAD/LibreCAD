@@ -265,8 +265,8 @@ public:
      */
     virtual RS_VectorSolutions getRefPoints() const;
 
-    RS_Vector getNearestEndpoint(const RS_Vector& coord, double* dist = nullptr) const {
-        return doGetNearestEndpoint(coord, dist);
+    RS_Vector getNearestEndpoint(const RS_Vector& coord, RS_Entity** entity = nullptr, double* dist = nullptr) const {
+        return doGetNearestEndpoint(coord, dist, entity);
     }
 
     RS_Vector getNearestPointOnEntity(const RS_Vector& coord, const bool onEntity = true, double* dist = nullptr,
@@ -274,8 +274,8 @@ public:
         return doGetNearestPointOnEntity(coord, onEntity, dist, entity);
     }
 
-    RS_Vector getNearestCenter(const RS_Vector& coord, double* dist = nullptr) const {
-        return doGetNearestCenter(coord, dist);
+    RS_Vector getNearestCenter(const RS_Vector& coord, double* dist = nullptr, RS_Entity** centerEntity = nullptr) const {
+        return doGetNearestCenter(coord, dist, centerEntity);
     }
 
 
@@ -557,10 +557,12 @@ protected:
      * distance between 'coord' and the closest endpoint. The passed
      * pointer can also be nullptr in which case the distance will be
      * lost.
+     * @param entity
+     * @param entity
      *
      * @return The closest endpoint.
      */
-    virtual RS_Vector doGetNearestEndpoint(const RS_Vector& coord, double* dist) const = 0;
+    virtual RS_Vector doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const = 0;
 
     /**
      * Must be overwritten to get the nearest reference point for this entity.
@@ -584,10 +586,12 @@ protected:
      * distance between 'coord' and the closest center point. The passed
      * pointer can also be nullptr in which case the distance will be
      * lost.
+     * @param entity
+     * @param entity
      *
      * @return The closest center point.
      */
-    virtual RS_Vector doGetNearestCenter(const RS_Vector& coord, double* dist) const = 0;
+    virtual RS_Vector doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** entity) const = 0;
     virtual RS_Vector doGetNearestMiddle(const RS_Vector& coord, double* dist, int middlePoints) const = 0;
     /**
     * Gets the nearest reference point of this entity if it is selected.

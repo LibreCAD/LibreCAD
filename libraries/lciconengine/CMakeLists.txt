@@ -5,6 +5,7 @@ qt_add_plugin(
         SHARED
         src/lc_svgiconengine.h
         src/lc_svgicons.json
+        src/lc_svgiconengineplugin.h
         src/lc_svgiconengineplugin.cpp
         src/lc_svgiconengine.cpp
 )

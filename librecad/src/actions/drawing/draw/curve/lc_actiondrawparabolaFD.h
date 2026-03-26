@@ -62,5 +62,6 @@ protected:
     void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
     RS_Entity* doTriggerCreateEntity() override;
     void doTriggerCompletion(bool success) override;
+    bool isInVisualSnapStatus(int status) override;
 };
 #endif

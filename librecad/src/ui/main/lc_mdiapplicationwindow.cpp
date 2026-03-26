@@ -22,7 +22,7 @@ LC_MDIApplicationWindow::LC_MDIApplicationWindow(){}
 void LC_MDIApplicationWindow::slotBack() {
     const RS_GraphicView* graphicView = getCurrentGraphicView();
     if (graphicView != nullptr) {
-        graphicView->back();
+        graphicView->back(Qt::KeyboardModifier::NoModifier);
     }
 }
 

@@ -962,6 +962,24 @@ LC_UCS* LC_GraphicViewport::getCurrentUCS() const{
     return result;
 }
 
+RS_Vector LC_GraphicViewport::snapGrid(const RS_Vector& coord, RS_Entity* entity) const {
+    // fixme - reserved for the future
+    Q_ASSERT_X(false, "snapGrid", "Not implemented");
+    return RS_Vector(false);
+}
+
+RS_Vector LC_GraphicViewport::snapGrid(const RS_Vector& coord, const RS_Vector& rayStart, const RS_Vector& rayEnd) const {
+    if (hasUCS()) {
+        // basically, wcs coordinate still should be returned there.
+        // however, it will be rotated according to the grid (which is not rotated in ucs).
+        RS_Vector snap = getGrid()->snapGrid(toUCS(coord), toUCS(rayStart), toUCS(rayEnd));
+        snap = toWorld(snap);
+        return snap;
+    }
+    const RS_Vector snap = getGrid()->snapGrid(coord, rayStart, rayEnd);
+    return snap;
+}
+
 RS_Vector LC_GraphicViewport::snapGrid(const RS_Vector &coord) const {
     if (hasUCS()) {
         // basically, wcs coordinate still should be returned there.

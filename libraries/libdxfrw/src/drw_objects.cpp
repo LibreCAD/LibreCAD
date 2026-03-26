@@ -15,9 +15,6 @@
 #include <cmath>
 #include "drw_objects.h"
 
-#include <boost/geometry/algorithms/is_simple.hpp>
-#include <boost/serialization/base_object.hpp>
-
 #include "intern/dxfreader.h"
 #include "intern/dxfwriter.h"
 #include "intern/dwgbuffer.h"
@@ -1875,6 +1872,7 @@ bool DRW_PlotSettings::parseCode(int code, dxfReader* reader) {
             // 8192 = Initializing
             // 16384 = PrevPlotInit
             plotLayoutFlag = reader->getInt32();
+            break;
         case 72://Plot paper units:
             // 0 = Plot in inches
             // 1 = Plot in millimeters

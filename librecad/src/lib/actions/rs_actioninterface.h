@@ -135,7 +135,6 @@ protected:
     std::shared_ptr<RS_ActionInterface> m_predecessor = nullptr; // fixme - sand - review!!!
     RS2::ActionType m_actionType = RS2::ActionNone;
     std::unique_ptr<LC_ActionOptionsEditor> m_optionsEditor;
-    double m_snapToAngleStep;
 
     virtual bool mayInitWithContextEntity(int status);
     virtual void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos);
@@ -173,8 +172,6 @@ protected:
     virtual void onMouseLeftButtonPress(int status, QMouseEvent * e);
     virtual void onMouseRightButtonPress(int status, QMouseEvent * e);
 
-    void updateSnapAngleStep();
-
     /**
     * Method should be overridden in inherited actions to process command. Should return true if command event should be accepted.
     * @param status status
@@ -194,7 +191,7 @@ protected:
 
     void fireCoordinateEvent(const RS_Vector& coord);
 
-    virtual void onCoordinateEvent(int status, bool isZero, const RS_Vector& pos);
+    virtual void onCoordinateEvent(int status, bool isZero, const RS_Vector& coord);
     void initPrevious(int status);
     void preparePromptForInfoCursorOverlay(const QString &msg, const LC_ModifiersInfo &modifiers) const;
 

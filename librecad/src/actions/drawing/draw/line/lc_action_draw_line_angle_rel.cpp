@@ -51,7 +51,7 @@ void LC_ActionDrawLineAngleRel::doSaveOptions(){
     save("LineSnapMode", m_lineSnapMode);
     save("TickSnapMode", m_tickSnapMode);
     save("DoDivide", m_divideLine);
-    save("SnapDistance", m_snapDistance);
+    save("SnapDistance", m_intersectionPointOffsetDistance);
 }
 
 void LC_ActionDrawLineAngleRel::doLoadOptions() {
@@ -65,7 +65,7 @@ void LC_ActionDrawLineAngleRel::doLoadOptions() {
     m_lineSnapMode = loadInt("LineSnapMode", LC_AbstractActionWithPreview::LINE_SNAP_START);
     m_tickSnapMode = loadInt("TickSnapMode", TICK_SNAP_END);
     m_divideLine = loadBool("DoDivide", false);
-    m_snapDistance = loadDouble("SnapDistance", 0.0);
+    m_intersectionPointOffsetDistance = loadDouble("SnapDistance", 0.0);
 }
 
 LC_ActionDrawLineAngleRel::LC_ActionDrawLineAngleRel(LC_ActionContext* actionContext, const double angle, const bool fixedAngle)
@@ -240,7 +240,7 @@ void LC_ActionDrawLineAngleRel::doOnLeftMouseButtonRelease(const LC_MouseEvent* 
     }
 }
 
-bool LC_ActionDrawLineAngleRel::doCheckMayDrawPreview[[maybe_unused]]([[maybe_unused]] const LC_MouseEvent* event,
+bool LC_ActionDrawLineAngleRel::doCheckMayDrawPreview([[maybe_unused]] const LC_MouseEvent* event,
                                                                       [[maybe_unused]] int status) {
     return true; // can draw preview in any state
 }
@@ -444,12 +444,12 @@ RS_Vector LC_ActionDrawLineAngleRel::obtainLineSnapPointForMode(const RS_Line* t
     // vector will use to move snap point along base original line, if needed
     auto snapDistanceCorrectionVector = RS_Vector(0, 0, 0);
 
-    if (LC_LineMath::isMeaningful(m_snapDistance)) {
+    if (LC_LineMath::isMeaningful(m_intersectionPointOffsetDistance)) {
         // angle of target line
         const double angle = targetLine->getAngle1();
 
         // if some distance from snap is set, calculate shift for snap
-        snapDistanceCorrectionVector = RS_Vector::polar(m_snapDistance, angle);
+        snapDistanceCorrectionVector = RS_Vector::polar(m_intersectionPointOffsetDistance, angle);
     }
 
     switch (m_lineSnapMode) {
@@ -520,7 +520,7 @@ bool LC_ActionDrawLineAngleRel::doUpdateDistanceByInteractiveInput(const QString
         return true;
     }
     if (tag == "snapDistance") {
-        setSnapDistance(distance);
+        setIntersectionOffsetDistance(distance);
         return true;
     }
     return false;
@@ -533,4 +533,8 @@ LC_ActionOptionsWidget* LC_ActionDrawLineAngleRel::createOptionsWidget() {
 
 LC_ActionOptionsPropertiesFiller* LC_ActionDrawLineAngleRel::createOptionsFiller() {
     return new LC_LineAngleRelOptionsFiller();
+}
+
+bool LC_ActionDrawLineAngleRel::isInVisualSnapStatus(int status) {
+    return (status == SetTickLength);
 }

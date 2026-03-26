@@ -98,6 +98,10 @@ public:
 
     static constexpr auto ANGLES_BASIS_DIRECTION = "#017CFF";
     static constexpr auto ANGLES_BASIS_ANGLE_RAY = "#00FFFF";
+    static constexpr auto VISUAL_SNAP_VERTEXES = "#00ff00";
+    static constexpr auto VISUAL_SNAP_ENTITIES = "#00ff00";
+    static constexpr auto VISUAL_SNAP_PROJECTED_SNAP = "#00ffff";
+    static constexpr auto VISUAL_SNAP_DOCUMENT_ENTITIES = "#00ff00";
 
     // Used to have RAII style GroupGuard: endGroup is called automatically whenever a unique_ptr<GroupGuard>
     // goes out of scope

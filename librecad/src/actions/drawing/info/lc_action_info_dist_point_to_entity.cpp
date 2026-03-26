@@ -49,6 +49,10 @@ void LC_ActionInfoDistPointToEntity::doLoadOptions() {
     m_nearestPointShouldBeOnEntity = loadBool("NearestIsOnEntity", true);
 }
 
+bool LC_ActionInfoDistPointToEntity::isInVisualSnapStatus(int status) {
+    return (status == SetPoint);
+}
+
 void LC_ActionInfoDistPointToEntity::init(const int status) {
     RS_PreviewActionInterface::init(status);
     if (status == 0) {
@@ -215,6 +219,7 @@ void LC_ActionInfoDistPointToEntity::onMouseLeftButtonRelease(const int status, 
             switch (m_selectionMode) {
                 case FIRST_IS_POINT: {
                     m_point = snap;
+                    addSnappedPointToVisualSnap(snap);
                     moveRelativeZero(m_point);
                     setStatus(SetEntity);
                     break;
@@ -271,6 +276,7 @@ RS_Entity* LC_ActionInfoDistPointToEntity::doCatchEntity(const LC_MouseEvent* e,
 
 void LC_ActionInfoDistPointToEntity::onCoordinateEvent(const int status, [[maybe_unused]] bool isZero, const RS_Vector& pos) {
     if (status == SetPoint) {
+        addSnappedPointToVisualSnap(m_point);
         m_point = pos;
         moveRelativeZero(m_point);
         switch (m_selectionMode) {

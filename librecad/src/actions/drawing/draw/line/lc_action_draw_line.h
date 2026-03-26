@@ -73,11 +73,10 @@ protected:
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
     RS2::CursorType doGetMouseCursor(int status) override;
-
-
     void addHistory(HistoryAction action, const RS_Vector& previous, const RS_Vector& current, int start) const;
     void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
     void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
+    void setStartPoint(const RS_Vector& v);
     void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &coord) override;
@@ -88,5 +87,6 @@ protected:
     RS_Entity* doTriggerCreateEntity() override;
     void doSaveOptions() override;
     void doLoadOptions() override;
+    bool isInVisualSnapStatus(int status) override;
 };
 #endif

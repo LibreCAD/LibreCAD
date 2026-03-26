@@ -99,5 +99,6 @@ protected:
 
     LC_ActionOptionsWidget* createOptionsWidget() override;
     LC_ActionOptionsPropertiesFiller* createOptionsFiller() override;
+    bool isInVisualSnapStatus(int status) override;
 };
 #endif

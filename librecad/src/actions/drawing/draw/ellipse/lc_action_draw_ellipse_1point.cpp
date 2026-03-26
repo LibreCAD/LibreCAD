@@ -86,6 +86,10 @@ void LC_ActionDrawEllipse1Point::doLoadOptions() {
     }
 }
 
+bool LC_ActionDrawEllipse1Point::isInVisualSnapStatus(int status) {
+    return (status == SetPoint) || (status == SetMajorAngle) || (status == SetAngle1) || (status == SetAngle2);
+}
+
 void LC_ActionDrawEllipse1Point::init(const int status) {
     LC_ActionDrawCircleBase::init(status);
 }
@@ -251,6 +255,7 @@ void LC_ActionDrawEllipse1Point::onCoordinateEvent(const int status, [[maybe_unu
     switch (status) {
         case SetPoint: {
             m_actionData->center = pos;
+            addSnappedPointToVisualSnap(pos);
             moveRelativeZero(pos);
             if (m_actionData->hasAngle && m_actionData->freeAngle) {
                 setStatus(SetMajorAngle);

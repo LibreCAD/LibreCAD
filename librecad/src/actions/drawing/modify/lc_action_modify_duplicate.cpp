@@ -53,6 +53,10 @@ void LC_ActionModifyDuplicate::doLoadOptions() {
     m_layerMode = loadInt("LayerMode", LayerApplyMode::LAYER_ACTIVE);
 }
 
+bool LC_ActionModifyDuplicate::isInVisualSnapStatus(int status) {
+    return (status == SetOffsetDirection);
+}
+
 // support of duplicating already selected entities on action invocation
 bool LC_ActionModifyDuplicate::doCheckMayTriggerOnInit(const int status){
     return status == SelectEntity;
@@ -65,6 +69,7 @@ bool LC_ActionModifyDuplicate::isAcceptSelectedEntityToTriggerOnInit([[maybe_unu
 void LC_ActionModifyDuplicate::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]]const RS_Vector& clickPos) {
     m_selectedEntity = contextEntity;
     const RS_Vector center = getEntityCenterPoint(m_selectedEntity);
+    addSnappedPointToVisualSnap(center);
     moveRelativeZero(center);
     setStatus(SetOffsetDirection);
 }
@@ -172,6 +177,7 @@ void LC_ActionModifyDuplicate::doOnLeftMouseButtonRelease([[maybe_unused]] const
                 m_selectedEntity = en;
                 if (m_alternativeActionMode && !m_duplicateInplace){
                     const RS_Vector center = getEntityCenterPoint(m_selectedEntity);
+                    addSnappedPointToVisualSnap(center);
                     moveRelativeZero(center);
                     setStatus(SetOffsetDirection);
                 } else {
@@ -182,6 +188,7 @@ void LC_ActionModifyDuplicate::doOnLeftMouseButtonRelease([[maybe_unused]] const
         }
         case SetOffsetDirection:
             m_triggerPoint = snapPoint;
+            addSnappedPointToVisualSnap(snapPoint);
             trigger();
             break;
         default:

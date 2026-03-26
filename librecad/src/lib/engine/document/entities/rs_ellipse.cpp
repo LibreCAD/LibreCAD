@@ -287,7 +287,7 @@ RS_VectorSolutions RS_Ellipse::getRefPoints() const {
     return ret;
 }
 
-RS_Vector RS_Ellipse::doGetNearestEndpoint(const RS_Vector& coord, double* dist) const {
+RS_Vector RS_Ellipse::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
     if (!isEllipticArc()) {
         return RS_Vector{false};
     }
@@ -306,6 +306,9 @@ RS_Vector RS_Ellipse::doGetNearestEndpoint(const RS_Vector& coord, double* dist)
     }
     if (dist != nullptr) {
         *dist = sqrt(dist1);
+    }
+    if (entity != nullptr) {
+        *entity = const_cast<RS_Ellipse*>(this);
     }
     return startpoint;
 }
@@ -464,7 +467,7 @@ RS_Vector RS_Ellipse::doGetNearestDist(const double distance, const RS_Vector& c
         return {}; // can not trim more than the current length
     }
     if (distance > l0 - RS_TOLERANCE) {
-        return getNearestEndpoint(coord, dist); // trim to zero length
+        return getNearestEndpoint(coord, nullptr, dist); // trim to zero length
     }
 
     return getNearestDistHelper(e, distance, coord, dist);
@@ -631,7 +634,7 @@ RS_Vector RS_Ellipse::doGetNearestPointOnEntity(const RS_Vector& coord, const bo
         if (!RS_Math::isAngleBetween(getEllipseAngle(ret), getAngle1(), getAngle2(), isReversed())) {
             // not on entity, use the nearest endpoint
             //std::cout<<"not on ellipse, ( "<<getAngle1()<<" "<<getEllipseAngle(ret)<<" "<<getAngle2()<<" ) reversed= "<<isReversed()<<"\n";
-            ret = getNearestEndpoint(coord, dist);
+            ret = getNearestEndpoint(coord, nullptr,dist);
         }
     }
 
@@ -675,7 +678,7 @@ bool RS_Ellipse::doIsPointOnEntity(const RS_Vector& coord, const double toleranc
     return RS_Math::isAngleBetween(vp.angle(), getAngle1(), getAngle2(), isReversed());
 }
 
-RS_Vector RS_Ellipse::doGetNearestCenter(const RS_Vector& coord, double* dist) const {
+RS_Vector RS_Ellipse::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
     RS_Vector vCenter = m_data.center;
     double distCenter = coord.distanceTo(m_data.center);
 
@@ -703,6 +706,9 @@ RS_Vector RS_Ellipse::doGetNearestCenter(const RS_Vector& coord, double* dist) c
 
     if (dist != nullptr) {
         *dist = distCenter;
+    }
+    if (entity != nullptr) {
+        *entity = const_cast<RS_Ellipse*>(this);
     }
     return vCenter;
 }

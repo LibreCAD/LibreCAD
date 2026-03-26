@@ -81,6 +81,11 @@ void LC_ActionModifyAlign::doTriggerCompletion([[maybe_unused]]bool success) {
     m_selectedEntities.clear();
 }
 
+bool LC_ActionModifyAlign::isInVisualSnapStatus([[maybe_unused]]int status) {
+    return m_alignType == LC_Align::POSITION;
+}
+
+
 void LC_ActionModifyAlign::onMouseMoveEventSelected([[maybe_unused]]int status, const LC_MouseEvent* e) {
     RS_Vector snap = e->snapPoint;
 

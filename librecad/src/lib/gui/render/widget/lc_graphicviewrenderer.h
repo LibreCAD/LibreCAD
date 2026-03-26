@@ -90,9 +90,18 @@ protected:
     /** reference entities on preview color */
     RS_Color m_colorPreviewReferenceHighlightedEntities;
 
+    /** guide entities for visual snap*/
+    RS_Color m_colorVisualSnapGuideEntities;
+    /** vertexes in visual snap*/
+    RS_Color m_colorVisualSnapVertexes;
+    /** projected snap points in visual snap*/
+    RS_Color m_colorVisualSnapProjectedSnap;
+    RS_Color m_colorVisualSnapDocumentEntities;
+
     bool m_lastPaintedHighlighted = false;
     bool m_lastPaintedSelected = false;
     bool m_lastPaintOverlay = false;
+    bool m_lastPenInVisualSnap = false;
     bool m_draftMode = false;
 
     QString m_draftMarkText = QObject::tr("Draft");

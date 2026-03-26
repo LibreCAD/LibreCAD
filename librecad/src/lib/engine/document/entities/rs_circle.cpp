@@ -189,9 +189,10 @@ RS_VectorSolutions RS_Circle::getRefPoints() const {
  *
  * @param coord coordinates to compute, e.g. mouse cursor position
  * @param dist double pointer to return distance between mouse pointer and nearest entity point
+ * @param entity
  * @return the nearest intersection of the circle with X/Y axis.
  */
-RS_Vector RS_Circle::doGetNearestEndpoint(const RS_Vector& coord, double* dist) const {
+RS_Vector RS_Circle::doGetNearestEndpoint(const RS_Vector& coord, double* dist,  [[maybe_unused]]RS_Entity** entity) const {
     return getNearestMiddle(coord, dist, 0);
 }
 
@@ -211,6 +212,9 @@ RS_Vector RS_Circle::doGetNearestPointOnEntity(const RS_Vector& coord, [[maybe_u
     if (dist != nullptr) {
         *dist = coord.distanceTo(vp);
         //        RS_DEBUG->print(RS_Debug::D_ERROR, "circle(%g, %g), r=%g: distance to point (%g, %g)=%g\n",data.center.x,data.center.y,coord.x,coord.y,*dist);
+    }
+    if (entity != nullptr) {
+        *entity = const_cast<RS_Circle*>(this);
     }
     return vp;
 }
@@ -260,9 +264,12 @@ RS_Vector RS_Circle::getTangentDirection(const RS_Vector& point) const {
     return RS_Vector(-vp.y, vp.x);
 }
 
-RS_Vector RS_Circle::doGetNearestCenter(const RS_Vector& coord, double* dist) const {
+RS_Vector RS_Circle::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
     if (dist != nullptr) {
         *dist = coord.distanceTo(m_data.center);
+    }
+    if (entity != nullptr) {
+        *entity = const_cast<RS_Circle*>(this);
     }
     return m_data.center;
 }

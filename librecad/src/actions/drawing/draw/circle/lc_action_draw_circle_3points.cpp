@@ -66,6 +66,10 @@ RS_Entity* LC_ActionDrawCircle3Points::doTriggerCreateEntity() {
     return nullptr;
 }
 
+bool LC_ActionDrawCircle3Points::isInVisualSnapStatus(int status) {
+    return (status == SetPoint1) || (status == SetPoint2) || (status == SetPoint3);
+}
+
 void LC_ActionDrawCircle3Points::doTriggerCompletion([[maybe_unused]] bool success) {
     setStatus(SetPoint1);
     reset();
@@ -144,12 +148,14 @@ void LC_ActionDrawCircle3Points::onCoordinateEvent(const int status, [[maybe_unu
     switch (status) {
         case SetPoint1: {
             m_actionData->point1 = coord;
+            addSnappedPointToVisualSnap(coord);
             moveRelativeZero(coord);
             setStatus(SetPoint2);
             break;
         }
         case SetPoint2: {
             m_actionData->point2 = coord;
+            addSnappedPointToVisualSnap(coord);
             moveRelativeZero(coord);
             setStatus(SetPoint3);
             break;

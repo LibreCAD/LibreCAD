@@ -60,9 +60,9 @@ void LC_LineGapOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* con
             }, container);
 
     addLinearDistance({"a_snapDistance", tr("Distance"), tr("Distance from snap point")}, [action]() {
-                          return action->getSnapDistance();
+                          return action->getGapSnapDistance();
                       }, [action](double val) {
-                          action->setSnapDistance(val);
+                          action->setGapSnapDistance(val);
                       }, container, [action](LC_PropertyViewDescriptor&) {
                           return action->getLineSnapMode() == LC_AbstractActionWithPreview::LINE_SNAP_FREE;
                       });

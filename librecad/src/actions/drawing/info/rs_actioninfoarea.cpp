@@ -52,7 +52,12 @@ void RS_ActionInfoArea::init(const int status) {
         m_lastPointRequested = false;
         init(SetFirstPoint);
     }
-// fixme - sand - consider displaying information in EntityInfo widget
+
+    bool RS_ActionInfoArea::isInVisualSnapStatus(int status) {
+        return (status == SetFirstPoint) || (status == SetNextPoint);
+    }
+
+    // fixme - sand - consider displaying information in EntityInfo widget
 // fixme - sand - add area info to entity info widget for coordinates mode
 //todo: we regenerate the whole preview, it's possible to generate needed lines only
 /** display area circumference and preview of polygon **/
@@ -154,6 +159,7 @@ void RS_ActionInfoArea::onCoordinateEvent(const int status, [[maybe_unused]] boo
         trigger();
         return;
     }
+    addSnappedPointToVisualSnap(coord);
     moveRelativeZero(coord);
 
     m_infoArea->push_back(coord);

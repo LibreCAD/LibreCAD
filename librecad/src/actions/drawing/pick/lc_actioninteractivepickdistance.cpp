@@ -187,6 +187,10 @@ void LC_ActionInteractivePickDistance::updateInfoCursorForPoint2(const RS_Vector
     }
 }
 
+bool LC_ActionInteractivePickDistance::isInVisualSnapStatus(int status) {
+    return (status == SetPoint1) || (status == SetPoint2);
+}
+
 void LC_ActionInteractivePickDistance::onMouseLeftButtonRelease(const int status, const LC_MouseEvent* e) {
     RS_Vector snap = e->snapPoint;
     switch (status){
@@ -256,6 +260,7 @@ void LC_ActionInteractivePickDistance::onCoordinateEvent(const int status, [[may
     switch (status) {
         case SetPoint1: {
             m_point1 = pos;
+            addSnappedPointToVisualSnap(pos);
             m_savedRelativeZero = m_viewport->getRelativeZero();
             setStatus(SetPoint2);
             break;
@@ -264,6 +269,7 @@ void LC_ActionInteractivePickDistance::onCoordinateEvent(const int status, [[may
             if (m_point1.valid){
                 if (LC_LineMath::isMeaningfulDistance(m_point1, pos)) {
                     m_point2 = pos;
+                    addSnappedPointToVisualSnap(pos);
                     m_distance = m_point2.distanceTo(m_point1);
                     moveRelativeZero(m_savedRelativeZero);
                     deletePreview();

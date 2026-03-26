@@ -349,7 +349,7 @@ bool RS_Information::isTrimmable(const RS_Entity* e) {
  * container.
  */
 RS_Vector RS_Information::getNearestEndpoint(const RS_Vector& coord, double* dist) const {
-    return m_container->getNearestEndpoint(coord, dist);
+    return m_container->getNearestEndpoint(coord, nullptr,  dist);
 }
 
 /**
@@ -419,8 +419,10 @@ RS_VectorSolutions RS_Information::getIntersection(const RS_Entity* entity1, con
         return ret;
     }
 
-    if (onEntities && !(entity1->isConstruction() || entity2->isConstruction() || e1Type == RS2::EntityConstructionLine || e2Type ==
-        RS2::EntityConstructionLine)) {
+    bool e1Constructional =  e1Type == RS2::EntityConstructionLine ||  e1Type == RS2::EntitySnapConstructionLine || entity1->isConstruction();
+    bool e2Constructional =  e2Type == RS2::EntityConstructionLine ||  e2Type == RS2::EntitySnapConstructionLine || entity2->isConstruction();
+
+    if (onEntities && !(e1Constructional || e2Constructional)) {
         // a little check to avoid doing unneeded intersections, an attempt to avoid O(N^2) increasing of checking two-entity information
         const LC_Rect rect1{entity1->getMin(), entity1->getMax()};
         const LC_Rect rect2{entity2->getMin(), entity2->getMax()};
@@ -450,8 +452,8 @@ RS_VectorSolutions RS_Information::getIntersection(const RS_Entity* entity1, con
         // TODO, implement a robust algorithm for quadratic based solvers, and detecting entity type
         // circles/arcs can be removed
         // issue #523: TangentFinder cannot handle line-line
-        const bool firstIsLine = e1Type == RS2::EntityLine || e1Type == RS2::EntityConstructionLine;
-        const bool secondIsLine = e2Type == RS2::EntityLine || e2Type == RS2::EntityConstructionLine;
+        const bool firstIsLine = e1Type == RS2::EntityLine || e1Type == RS2::EntityConstructionLine || e1Type == RS2::EntitySnapConstructionLine;
+        const bool secondIsLine = e2Type == RS2::EntityLine || e2Type == RS2::EntityConstructionLine || e2Type == RS2::EntitySnapConstructionLine;;
         const bool isLineLine = firstIsLine && secondIsLine;
         if (isLineLine) {
             ret = getIntersectionLineLine(entity1, entity2);
@@ -462,7 +464,7 @@ RS_VectorSolutions RS_Information::getIntersection(const RS_Entity* entity1, con
                 //use specialized arc-arc intersection solver
                 ret = getIntersectionArcArc(entity1, entity2);
             }
-            else if (e1Type == RS2::EntityLine || e1Type == RS2::EntityConstructionLine) {
+            else if (firstIsLine) {
                 ret = getIntersectionLineArc(entity1, entity2);
             }
         }
@@ -487,8 +489,8 @@ RS_VectorSolutions RS_Information::getIntersection(const RS_Entity* entity1, con
         }
         if (onEntities) {
             //ignore intersections not on entity
-            if (!((entity1->isConstruction(true) || entity1->isPointOnEntity(vp, tol)) && (entity2->isConstruction(true) || entity2->
-                isPointOnEntity(vp, tol)))) {
+            if (!((entity1->isConstruction(true) || entity1->isPointOnEntity(vp, tol)) &&
+                 ((entity2->isConstruction(true) || entity2-> isPointOnEntity(vp, tol))))) {
                 //				std::cout<<"Ignored intersection "<<vp<<std::endl;
                 //				std::cout<<"because: e1->isPointOnEntity(ret.get(i), tol)="<<e1->isPointOnEntity(vp, tol)
                 //					<<"\t(e2->isPointOnEntity(ret.get(i), tol)="<<e2->isPointOnEntity(vp, tol)<<std::endl;

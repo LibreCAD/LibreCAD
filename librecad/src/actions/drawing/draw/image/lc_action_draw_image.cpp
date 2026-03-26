@@ -66,6 +66,10 @@ void LC_ActionDrawImage::doLoadOptions() {
     setFactor(m_factor);
 }
 
+bool LC_ActionDrawImage::isInVisualSnapStatus(int status) {
+    return (status == SetTargetPoint)/* || (status == SetAngle)*/;
+}
+
 void LC_ActionDrawImage::init(const int status) {
     RS_PreviewActionInterface::init(status);
     reset();

@@ -67,7 +67,7 @@ protected:
     bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
     void doSaveOptions() override;
     void doLoadOptions() override;
-
+    bool isInVisualSnapStatus(int status) override;
 private:
     /**
      * entity for which duplicate will be created

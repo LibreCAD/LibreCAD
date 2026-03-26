@@ -300,11 +300,11 @@ public:
   friend class RS_FilterDXFRW;
 protected:
     /** Nearest endpoint or control point */
-    RS_Vector doGetNearestEndpoint(const RS_Vector &coord, double *dist) const override;
+    RS_Vector doGetNearestEndpoint(const RS_Vector &coord, double *dist, RS_Entity** entity) const override;
     /** Nearest reference point (overrides container method) */
     RS_Vector doGetNearestRef(const RS_Vector &coord, double *dist = nullptr) const override;
     /** Nearest center (invalid) */
-    RS_Vector doGetNearestCenter(const RS_Vector &coord, double *dist) const override;
+    RS_Vector doGetNearestCenter(const RS_Vector &coord, double *dist, RS_Entity** centerEntity) const override;
     /** Nearest middle point (invalid) */
     RS_Vector doGetNearestMiddle(const RS_Vector &coord, double *dist, int middlePoints) const override;
     /** Nearest selected reference (overrides container method) */

@@ -77,6 +77,7 @@ protected:
     RS_Entity* doTriggerCreateEntity() override;
     void doSaveOptions() override;
     void doLoadOptions() override;
+    bool isInVisualSnapStatus(int status) override;
 
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;

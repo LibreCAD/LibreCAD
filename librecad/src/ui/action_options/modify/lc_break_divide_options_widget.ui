@@ -42,7 +42,7 @@
    <item row="0" column="0">
     <widget class="QCheckBox" name="cbRemoveSegments">
      <property name="toolTip">
-      <string>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </string>
+      <string>If checked, segments between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </string>
      </property>
      <property name="text">
       <string>Remove Segments</string>

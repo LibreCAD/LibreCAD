@@ -74,6 +74,10 @@ RS_Entity* RS_ActionDrawLineTangent1::doTriggerCreateEntity() {
     return nullptr;
 }
 
+bool RS_ActionDrawLineTangent1::isInVisualSnapStatus(int status) {
+    return status == SetPoint;
+}
+
 void RS_ActionDrawLineTangent1::doTriggerCompletion([[maybe_unused]] bool success) {
     setStatus(SetPoint);
     m_tangent.reset();
@@ -172,6 +176,7 @@ void RS_ActionDrawLineTangent1::onCoordinateEvent(const int status, [[maybe_unus
     switch (status) {
         case SetPoint: {
             *m_point = pos;
+            addSnappedPointToVisualSnap(*m_point);
             moveRelativeZero(*m_point);
             if (m_setCircleFirst) {
                 trigger();

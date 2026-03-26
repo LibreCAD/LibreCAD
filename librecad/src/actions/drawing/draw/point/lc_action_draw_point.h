@@ -49,6 +49,8 @@ protected:
     void updateActionPrompt() override;
     void doTriggerCompletion(bool success) override;
     RS_Entity* doTriggerCreateEntity() override;
+    bool isInVisualSnapStatus(int status) override;
+
 private:
     std::unique_ptr<RS_Vector> m_pointPosition;
     RS_Vector getFreeSnapAwarePointAlt(const LC_MouseEvent *e, const RS_Vector &pos) const;

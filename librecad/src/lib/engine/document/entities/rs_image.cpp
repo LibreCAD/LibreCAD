@@ -195,8 +195,11 @@ bool RS_Image::containsPoint(const RS_Vector& coord) const {
     return paf.containsPoint(QPointF(coord.x, coord.y), Qt::OddEvenFill);
 }
 
-RS_Vector RS_Image::doGetNearestEndpoint(const RS_Vector& coord, double* dist) const {
+RS_Vector RS_Image::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
     const RS_VectorSolutions corners = getCorners();
+    if (entity != nullptr) {
+        *entity = const_cast<RS_Image*>(this);
+    }
     return corners.getClosest(coord, dist);
 }
 
@@ -225,7 +228,7 @@ RS_Vector RS_Image::doGetNearestPointOnEntity(const RS_Vector& coord, const bool
     return points.getClosest(coord, dist);
 }
 
-RS_Vector RS_Image::doGetNearestCenter(const RS_Vector& coord, double* dist) const {
+RS_Vector RS_Image::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
     const RS_VectorSolutions& corners{getCorners()};
     //bug#485, there's no clear reason to ignore snapping to center within an image
     //    if(containsPoint(coord)){
@@ -241,6 +244,9 @@ RS_Vector RS_Image::doGetNearestCenter(const RS_Vector& coord, double* dist) con
     }
     points.push_back((corners.get(0) + corners.get(2)) * 0.5);
 
+    if (entity != nullptr) {
+        *entity = const_cast<RS_Image*>(this);
+    }
     return points.getClosest(coord, dist);
 }
 

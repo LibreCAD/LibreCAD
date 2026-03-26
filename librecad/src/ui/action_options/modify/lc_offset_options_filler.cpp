@@ -31,7 +31,7 @@ void LC_OffsetOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* cont
     addBoolean({
                    "a_fixed",
                    tr("Fixed Distance"),
-                   tr("If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.")
+                   tr("If checked, fixed distance of offset will be used, otherwise it will be defined by mouse.")
                }, [action]()-> bool {
                    return action->isFixedDistance();
                }, [action](bool val)-> void {

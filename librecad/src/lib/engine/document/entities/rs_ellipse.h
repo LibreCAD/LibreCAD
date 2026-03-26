@@ -269,7 +269,7 @@ protected:
     RS_Vector doGetNearestPointOnEntity(const RS_Vector& coord,
                                       bool onEntity, double* dist, RS_Entity** entity) const override;
     bool doIsPointOnEntity(const RS_Vector& coord, double tolerance/*=RS_TOLERANCE*/) const override;
-    RS_Vector doGetNearestEndpoint(const RS_Vector& coord, double* dist) const override;
+    RS_Vector doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const override;
     RS_Vector doGetNearestMiddle(const RS_Vector& coord, double* dist, int middlePoints) const override;
     RS_Vector doGetNearestDist(double distance, const RS_Vector& coord, double* dist) const override;
 private:
@@ -284,7 +284,7 @@ private:
     void mergeBoundingBox(LC_Rect& boundingBox, const RS_Vector& direction) const;
     void drawVisible(RS_Painter* painter) const;
     bool isVisibleInWindow(const RS_Painter& painter) const;
-    RS_Vector doGetNearestCenter(const RS_Vector& coord, double* dist) const override;
+    RS_Vector doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const override;
 };
 
 #endif

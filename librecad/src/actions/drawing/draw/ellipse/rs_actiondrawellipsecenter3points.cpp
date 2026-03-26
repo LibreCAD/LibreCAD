@@ -62,6 +62,10 @@ RS_Entity* RS_ActionDrawEllipseCenter3Points::doTriggerCreateEntity() {
     return ellipse;
 }
 
+bool RS_ActionDrawEllipseCenter3Points::isInVisualSnapStatus(int status) {
+    return (status == SetPoint1) || (status == SetPoint2) || (status == SetPoint3) || (status == SetCenter);
+}
+
 void RS_ActionDrawEllipseCenter3Points::doTriggerCompletion([[maybe_unused]] bool success) {
     setStatus(SetCenter);
 }
@@ -143,6 +147,7 @@ void RS_ActionDrawEllipseCenter3Points::onCoordinateEvent(const int status, [[ma
 
     switch (getStatus()) {
         case SetCenter: {
+            addSnappedPointToVisualSnap(coord);
             moveRelativeZero(coord);
             setStatus(SetPoint1);
             break;
@@ -159,6 +164,7 @@ void RS_ActionDrawEllipseCenter3Points::onCoordinateEvent(const int status, [[ma
             // fall-through
             [[fallthrough]];
         case SetPoint3: {
+            addSnappedPointToVisualSnap(coord);
             if (preparePreview()) {
                 if (status == SetPoint3) {
                     trigger();

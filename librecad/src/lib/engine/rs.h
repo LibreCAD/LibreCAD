@@ -87,7 +87,8 @@ namespace RS2 {
         /** Entity is highlighted temporarily (as a user action feedback) */
         FlagHighlighted = 1 << 14,
         FlagTransparent = 1 << 15,
-        FlagHatchChild  = 1 << 16
+        FlagHatchChild  = 1 << 16,
+        FlagInVisualSnap  = 1 << 17
     };
 
     /**
@@ -176,6 +177,11 @@ namespace RS2 {
         EntityRefArc,
         EntityRefCircle,
         EntityRefEllipse,
+        EntitySnapMark,
+        EntitySnapLine,
+        EntitySnapArc,
+        EntitySnapCircle,
+        EntitySnapConstructionLine,
         EntityDimArrowBlock
     };
 
@@ -733,6 +739,48 @@ namespace RS2 {
         RestrictHorizontal, /**< Restrict to 0,180 degrees */
         RestrictVertical, /**< Restrict to 90,270 degrees */
         RestrictOrthogonal /**< Restrict to 90,180,270,0 degrees */
+    };
+
+    enum SnapType {
+        FREE = -1,
+        GRID,
+        ENTITY,
+        ENDPOINT,
+        INTERSECTION,
+        MIDDLE,
+        DISTANCE,
+        CENTER,
+        ANGLE,
+        ANGLE_REL,
+        ANGLE_ON_ENTITY,
+        VISUAL_SNAP,
+        NO_SNAP
+    };
+
+    enum VisualSnapGuideEntityType {
+        VSNAP_NONE,
+        VSNAP_LINE_VERTEX_HORIZONTAL,
+        VSNAP_LINE_VERTEX_VERTICAL,
+        VSNAP_LINE_VERTEX_VERTEX,
+        VSNAP_LINE_VERTEX_ORTHO,
+        VSNAP_LINE_VERTEX_ANGLE_STEP,
+        VSNAP_LINE_ENDPOINT_TANGENT,
+        VSNAP_LINE_ENDPOINT_NORMAL,
+        VSNAP_LINE_ENDPOINT_ANGLE_STEP,
+        VSNAP_LINE_RAY,
+        VSNAP_LINE_TANGENT1,
+        VSNAP_LINE_TANGENT2,
+        VSNAP_POINT_MIDDLE,
+        VSNAP_POINT_DISTANCE_EXPLICIT,
+        VSNAP_POINT_DISTANCE_VERTEX,
+        VSNAP_DOC_ENTITY
+    };
+
+    struct LC_VisualSnapEntersectionPoint {
+        VisualSnapGuideEntityType entity1 = RS2::VSNAP_NONE;
+        VisualSnapGuideEntityType entity2 = RS2::VSNAP_NONE;
+        double rayAngle1{-1.0};
+        double rayAngle2{-1.0};
     };
 
     /**

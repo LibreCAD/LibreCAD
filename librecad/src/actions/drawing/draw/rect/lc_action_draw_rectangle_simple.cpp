@@ -1,4 +1,4 @@
-    /****************************************************************************
+/****************************************************************************
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
@@ -32,31 +32,31 @@
 #include "rs_preview.h"
 
 struct RS_ActionDrawLineRectangle::ActionData {
-/**
- * 1st corner.
- */
+    /**
+     * 1st corner.
+     */
     RS_Vector corner1;
-/**
- * 2nd corner.
- */
+    /**
+     * 2nd corner.
+     */
     RS_Vector corner2;
 };
 
-RS_ActionDrawLineRectangle::RS_ActionDrawLineRectangle(LC_ActionContext *actionContext)
-    :LC_SingleEntityCreationAction("ActionDrawLineRectangle",actionContext, RS2::ActionDrawLineRectangle),
-    m_actionData(std::make_unique<ActionData>()){
+RS_ActionDrawLineRectangle::RS_ActionDrawLineRectangle(LC_ActionContext* actionContext)
+    : LC_SingleEntityCreationAction("ActionDrawLineRectangle", actionContext, RS2::ActionDrawLineRectangle),
+      m_actionData(std::make_unique<ActionData>()) {
 }
 
 RS_ActionDrawLineRectangle::~RS_ActionDrawLineRectangle() = default;
 
 RS_Entity* RS_ActionDrawLineRectangle::doTriggerCreateEntity() {
-    auto *polyline = new RS_Polyline(m_document);
+    auto* polyline = new RS_Polyline(m_document);
 
     // create and add rectangle:
     const RS_Vector worldCorner1 = m_actionData->corner1;
     const RS_Vector worldCorner3 = m_actionData->corner2;
 
-    RS_Vector worldCorner2,worldCorner4;
+    RS_Vector worldCorner2, worldCorner4;
     calcRectCorners(worldCorner1, worldCorner3, worldCorner2, worldCorner4);
 
     polyline->addVertex(worldCorner1);
@@ -71,24 +71,28 @@ RS_Entity* RS_ActionDrawLineRectangle::doTriggerCreateEntity() {
     return polyline;
 }
 
-void RS_ActionDrawLineRectangle::doTriggerCompletion([[maybe_unused]]bool success) {
+bool RS_ActionDrawLineRectangle::isInVisualSnapStatus(int status) {
+    return (status == SetCorner1) || (status == SetCorner2);
+}
+
+void RS_ActionDrawLineRectangle::doTriggerCompletion([[maybe_unused]] bool success) {
 }
 
 void RS_ActionDrawLineRectangle::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     const RS_Vector mouse = e->snapPoint;
-    switch (status){
-        case SetCorner1:{
+    switch (status) {
+        case SetCorner1: {
             trySnapToRelZeroCoordinateEvent(e);
             break;
         }
-        case SetCorner2:{
-            if (m_actionData->corner1.valid){
+        case SetCorner2: {
+            if (m_actionData->corner1.valid) {
                 m_actionData->corner2 = mouse;
 
                 const RS_Vector worldCorner1 = m_actionData->corner1;
                 const RS_Vector worldCorner3 = m_actionData->corner2;
 
-                RS_Vector worldCorner2,worldCorner4;
+                RS_Vector worldCorner2, worldCorner4;
                 calcRectCorners(worldCorner1, worldCorner3, worldCorner2, worldCorner4);
 
                 m_preview->addRectangle(worldCorner1, worldCorner2, worldCorner3, worldCorner4);
@@ -98,11 +102,10 @@ void RS_ActionDrawLineRectangle::onMouseMoveEvent(const int status, const LC_Mou
                     previewRefPoint((m_actionData->corner1 + m_actionData->corner2) * 0.5); // center of rect
                 }
                 if (m_infoCursorOverlayPrefs->enabled && m_infoCursorOverlayPrefs->showEntityInfoOnCreation) {
-                    msg(tr("To be created:"), tr("Rectangle"))
-                        .linear(tr("Width:"), abs(m_actionData->corner1.x - m_actionData->corner2.x))
-                        .linear(tr("Height:"), abs(m_actionData->corner1.y - m_actionData->corner2.y))
-                        .vector(tr("Center:"), (m_actionData->corner1 + m_actionData->corner2) * 0.5)
-                        .toInfoCursorZone2(false);
+                    msg(tr("To be created:"), tr("Rectangle")).linear(tr("Width:"), abs(m_actionData->corner1.x - m_actionData->corner2.x)).
+                                                               linear(tr("Height:"), abs(m_actionData->corner1.y - m_actionData->corner2.y))
+                                                              .vector(tr("Center:"), (m_actionData->corner1 + m_actionData->corner2) * 0.5).
+                                                               toInfoCursorZone2(false);
                 }
             }
             break;
@@ -112,7 +115,7 @@ void RS_ActionDrawLineRectangle::onMouseMoveEvent(const int status, const LC_Mou
     }
 }
 
-void RS_ActionDrawLineRectangle::onMouseLeftButtonRelease([[maybe_unused]]int status, const LC_MouseEvent* e) {
+void RS_ActionDrawLineRectangle::onMouseLeftButtonRelease([[maybe_unused]] int status, const LC_MouseEvent* e) {
     fireCoordinateEventForSnap(e);
 }
 
@@ -121,16 +124,18 @@ void RS_ActionDrawLineRectangle::onMouseRightButtonRelease(const int status, [[m
     initPrevious(status);
 }
 
-void RS_ActionDrawLineRectangle::onCoordinateEvent(const int status, [[maybe_unused]] bool isZero, const RS_Vector &coord) {
+void RS_ActionDrawLineRectangle::onCoordinateEvent(const int status, [[maybe_unused]] bool isZero, const RS_Vector& coord) {
     switch (status) {
         case SetCorner1: {
             m_actionData->corner1 = coord;
+            addSnappedPointToVisualSnap(coord);
             moveRelativeZero(coord);
             setStatus(SetCorner2);
             break;
         }
         case SetCorner2: {
             m_actionData->corner2 = coord;
+            addSnappedPointToVisualSnap(coord);
             trigger();
             setStatus(SetCorner1);
             break;
@@ -140,7 +145,7 @@ void RS_ActionDrawLineRectangle::onCoordinateEvent(const int status, [[maybe_unu
     }
 }
 
-void RS_ActionDrawLineRectangle::updateActionPrompt(){
+void RS_ActionDrawLineRectangle::updateActionPrompt() {
     switch (getStatus()) {
         case SetCorner1:
             updatePromptTRCancel(tr("Specify first corner"), MOD_SHIFT_RELATIVE_ZERO);
@@ -154,6 +159,6 @@ void RS_ActionDrawLineRectangle::updateActionPrompt(){
     }
 }
 
-RS2::CursorType RS_ActionDrawLineRectangle::doGetMouseCursor([[maybe_unused]] int status){
+RS2::CursorType RS_ActionDrawLineRectangle::doGetMouseCursor([[maybe_unused]] int status) {
     return RS2::CadCursor;
 }

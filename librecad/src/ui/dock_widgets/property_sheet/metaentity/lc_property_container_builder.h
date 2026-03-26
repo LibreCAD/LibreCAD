@@ -36,6 +36,7 @@ class LC_PropertyDouble;
 class LC_PropertyQString;
 
 class LC_PropertyContainerBuilder : public QObject{
+    Q_OBJECT
 public:
     struct CommandLinkInfo {
         struct LinkPartInfo {

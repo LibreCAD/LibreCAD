@@ -54,6 +54,10 @@ void LC_ActionDrawStar::doLoadOptions() {
     m_createPolyline = loadBool("Polyline", false);
 }
 
+bool LC_ActionDrawStar::isInVisualSnapStatus(int status) {
+    return (status == SetCenter) || (status == SetInnerPoint) || (status == SetOuterPoint);
+}
+
 int LC_ActionDrawStar::doGetStatusForInitialSnapToRelativeZero() {
     return SetCenter; // we'll snap center to relative zero if center is not set
 }
@@ -119,15 +123,18 @@ void LC_ActionDrawStar::onCoordinateEvent(const int status, const bool isZero, c
     switch (status) {
         case SetCenter: // setting center of star
             m_centerPoint = coord;
+            addSnappedPointToVisualSnap(coord);
             moveRelativeZero(coord);
             setMainStatus(SetOuterPoint);
             break;
         case SetOuterPoint: // setting outer point
             m_outerPoint = coord;
+            addSnappedPointToVisualSnap(coord);
             setMainStatus(SetInnerPoint);
             break;
         case SetInnerPoint: // setting inner point
             m_innerPoint = coord;
+            addSnappedPointToVisualSnap(coord);
             trigger();
             setMainStatus(SetCenter);
             break;

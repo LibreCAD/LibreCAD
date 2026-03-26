@@ -78,6 +78,10 @@ protected slots:
     void on_pbInfoOverlaySnapColor_clicked();
     void on_pbInfoOverlayRelativeColor_clicked();
     void on_pbInfoOverlayCommandPromptColor_clicked();
+    void on_pbVisualSnapGuideEntitiesColor_clicked();
+    void on_pbVisualSnapVertexesColor_clicked();
+    void on_pbVisualSnapProjectedSnapColor_clicked();
+    void on_pbVisualSnapDocEntitiesColor_clicked();
     void setVariableFile();
     void setFontsFolder();
     void setTranslationsFolder();

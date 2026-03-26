@@ -121,7 +121,7 @@ public:
     QIcon getCurrentActionIcon() const;
     void killAllActions() const;
     bool killAllActionsWithResult() const;
-    void back() const;
+    void back(Qt::KeyboardModifiers modifiers) const;
     void processEnterKey() const;
     void commandEvent(RS_CommandEvent *e) const;
     void keyPressEvent(QKeyEvent *event) override;

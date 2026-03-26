@@ -86,6 +86,10 @@ void LC_ActionDrawLine::doLoadOptions() {
     // nothing to load
 }
 
+bool LC_ActionDrawLine::isInVisualSnapStatus(int status) {
+    return status == SetStartpoint || status == SetEndpoint;
+}
+
 void LC_ActionDrawLine::reset(){
     RS_DEBUG->print("RS_ActionDrawLine::reset");
     m_actionData = std::make_unique<ActionData>();
@@ -106,6 +110,7 @@ RS_Entity* LC_ActionDrawLine::doTriggerCreateEntity() {
 }
 
 void LC_ActionDrawLine::doTriggerCompletion([[maybe_unused]]bool success) {
+    // setStatus(SetStartpoint);
 }
 
 void LC_ActionDrawLine::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
@@ -154,6 +159,11 @@ void LC_ActionDrawLine::onMouseRightButtonRelease(const int status, [[maybe_unus
     }
 }
 
+void LC_ActionDrawLine::setStartPoint(const RS_Vector& v) {
+    m_actionData->data.startpoint = v;
+    addSnappedPointToVisualSnap(v);
+}
+
 void LC_ActionDrawLine::onCoordinateEvent(const int status, [[maybe_unused]] bool isZero, const RS_Vector &coord) {
     RS_DEBUG->print("RS_ActionDrawLine::coordinateEvent");
 
@@ -163,10 +173,10 @@ void LC_ActionDrawLine::onCoordinateEvent(const int status, [[maybe_unused]] boo
     }
     switch (status) {
         case SetStartpoint: {
-            m_actionData->data.startpoint = coord;
             m_actionData->startOffset = 0;
             addHistory( HA_SetStartpoint, getRelativeZero(), coord, m_actionData->startOffset);
             setStatus(SetEndpoint);
+            setStartPoint(coord);
             moveRelativeZero(coord);
             updateActionPrompt();
             updateOptions();
@@ -179,7 +189,7 @@ void LC_ActionDrawLine::onCoordinateEvent(const int status, [[maybe_unused]] boo
                 ++m_actionData->startOffset;
                 addHistory( HA_SetEndpoint, m_actionData->data.startpoint, coord, m_actionData->startOffset);
                 trigger();
-                m_actionData->data.startpoint = m_actionData->data.endpoint;
+                setStartPoint(m_actionData->data.endpoint);
                 if (m_actionData->history.size() >= 2) {
                     updateActionPrompt();
                     updateOptions();
@@ -358,14 +368,13 @@ void LC_ActionDrawLine::undo(){
             case HA_Close: {
                 m_document->undo();
                 m_graphicView->redraw(RS2::RedrawDrawing);
-                //switchToAction(RS2::ActionEditUndo);
-                m_actionData->data.startpoint = h.previousPoint;
                 setStatus(SetEndpoint);
+                setStartPoint(h.previousPoint);
                 break;
             }
             case HA_Next: {
-                m_actionData->data.startpoint = h.previousPoint;
                 setStatus(SetEndpoint);
+                setStartPoint(h.previousPoint);
                 break;
             }
         }
@@ -384,8 +393,8 @@ void LC_ActionDrawLine::redo(){
         ++m_actionData->historyIndex;
         const History h( m_actionData->history.at( m_actionData->index()));
         deletePreview();
-        moveRelativeZero(h.currentPoint);
-        m_actionData->data.startpoint = h.currentPoint;
+        auto startPoint = h.currentPoint;
+        moveRelativeZero(startPoint);
         m_actionData->startOffset = h.startOffset;
         switch (h.historicAction) {
             case HA_SetStartpoint: {
@@ -409,6 +418,7 @@ void LC_ActionDrawLine::redo(){
                 break;
             }
         }
+        setStartPoint(startPoint);
     }
     else {
         commandMessage(tr("Cannot redo: End of history reached"));

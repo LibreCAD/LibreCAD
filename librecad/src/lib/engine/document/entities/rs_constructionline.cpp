@@ -61,7 +61,7 @@ void RS_ConstructionLine::calculateBorders() {
     m_maxV = RS_Vector::maximum(m_data.point1, m_data.point2);
 }
 
-RS_Vector RS_ConstructionLine::doGetNearestEndpoint(const RS_Vector& coord, double* dist) const {
+RS_Vector RS_ConstructionLine::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
     const double dist1 = (m_data.point1 - coord).squared();
     const double dist2 = (m_data.point2 - coord).squared();
 
@@ -73,6 +73,9 @@ RS_Vector RS_ConstructionLine::doGetNearestEndpoint(const RS_Vector& coord, doub
     }
     if (dist != nullptr) {
         *dist = sqrt(dist1);
+    }
+    if (entity != nullptr) {
+        *entity = const_cast<RS_ConstructionLine*>(this);
     }
     return m_data.point1;
 }
@@ -100,9 +103,12 @@ RS_Vector RS_ConstructionLine::doGetNearestPointOnEntity(const RS_Vector& coord,
     return m_data.point1 + ba;
 }
 
-RS_Vector RS_ConstructionLine::doGetNearestCenter([[maybe_unused]]const RS_Vector& coord, double* dist) const {
+RS_Vector RS_ConstructionLine::doGetNearestCenter([[maybe_unused]]const RS_Vector& coord, double* dist, RS_Entity** entity) const {
     if (dist != nullptr) {
         *dist = RS_MAXDOUBLE;
+    }
+    if (entity != nullptr) {
+        *entity = const_cast<RS_ConstructionLine*>(this);
     }
     return RS_Vector(false);
 }

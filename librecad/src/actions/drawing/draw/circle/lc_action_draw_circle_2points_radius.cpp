@@ -60,6 +60,10 @@ RS_Entity* LC_ActionDrawCircle2PointsRadius::doTriggerCreateEntity() {
     return circle;
 }
 
+bool LC_ActionDrawCircle2PointsRadius::isInVisualSnapStatus(int status) {
+    return (status == SetPoint1) || (status == SetPoint2);
+}
+
 void LC_ActionDrawCircle2PointsRadius::doTriggerCompletion([[maybe_unused]] bool success) {
     setStatus(SetPoint1);
     reset();
@@ -156,6 +160,7 @@ void LC_ActionDrawCircle2PointsRadius::onCoordinateEvent(const int status, [[may
     switch (status) {
         case SetPoint1: {
             m_actionData->point1 = coord;
+            addSnappedPointToVisualSnap(coord);
             moveRelativeZero(coord);
             setStatus(SetPoint2);
             break;
@@ -164,6 +169,7 @@ void LC_ActionDrawCircle2PointsRadius::onCoordinateEvent(const int status, [[may
             const double distance = coord.distanceTo(m_actionData->point1);
             if (distance <= 2. * m_radius) {
                 m_actionData->point2 = coord;
+                addSnappedPointToVisualSnap(coord);
                 moveRelativeZero(coord);
                 setStatus(SelectCenter);
             }

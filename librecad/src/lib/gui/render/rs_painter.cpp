@@ -241,6 +241,14 @@ void RS_Painter::drawPointEntityUI(const RS_Vector& uiPos, const int pdmode, con
     if (DXF_FORMAT_PDMode_hasEncloseSquare(pdmode)) {
         drawSquare(*this, uiCoords, halfPDSize);
     }
+
+    if (NON_DXF_FORMAT_PDMode_hasEncloseCircleOUTER(pdmode)) {
+        drawOctagon(*this, uiCoords, pdsize);
+    }
+
+    if (NON_DXF_FORMAT_PDMode_hasEncloseSquareOUTER(pdmode)) {
+        drawSquare(*this, uiCoords, pdsize);
+    }
 }
 
 void RS_Painter::drawSolidWCS(const RS_VectorSolutions& wcsVertices) {

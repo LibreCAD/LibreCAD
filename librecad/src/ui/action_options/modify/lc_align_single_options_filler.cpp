@@ -73,7 +73,7 @@ void LC_AlignSingleOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer*
         }
     };
 
-    addEnum({"a_valignMode", tr("Horizontal"), tr("Mode of vertical align")}, &v_alignDescriptor,
+    addEnum({"a_valignMode", tr("Vertical"), tr("Mode of vertical align")}, &v_alignDescriptor,
             [action]() -> LC_PropertyEnumValueType {
                 return action->getVAlign();
             }, [action](const LC_PropertyEnumValueType& v)-> void {

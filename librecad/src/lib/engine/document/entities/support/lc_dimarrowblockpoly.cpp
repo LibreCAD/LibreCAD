@@ -28,7 +28,7 @@ LC_DimArrowPoly::LC_DimArrowPoly(RS_EntityContainer* parent, const RS_Vector& po
     LC_DimArrowPoly::calculateBorders();
 }
 
-RS_Vector LC_DimArrowPoly::doGetNearestEndpoint(const RS_Vector& coord, double* dist) const {
+RS_Vector LC_DimArrowPoly::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
     double minDist{RS_MAXDOUBLE};
     double curDist{0.0};
     RS_Vector ret;
@@ -89,7 +89,7 @@ RS_Vector LC_DimArrowPoly::doGetNearestPointOnEntity(const RS_Vector& coord, con
     }
     if (onEntity && !ret.isInWindowOrdered(m_minV, m_maxV)) {
         // projection point not within range, find the nearest endpoint
-        ret = getNearestEndpoint(coord, dist);
+        ret = getNearestEndpoint(coord, nullptr,  dist);
         currDist = ret.distanceTo(coord);
     }
     setDistPtr(dist, currDist);

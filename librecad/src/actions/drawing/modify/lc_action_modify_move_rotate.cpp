@@ -74,6 +74,10 @@ void LC_ActionModifyMoveRotate::doLoadOptions() {
     setUseSameAngleForCopies(sameAngle);
 }
 
+bool LC_ActionModifyMoveRotate::isInVisualSnapStatus(int status) {
+    return (status == SetReferencePoint) || (status == SetTargetPoint)  || (status == SetAngle);
+}
+
 bool LC_ActionModifyMoveRotate::doTriggerModifications(LC_DocumentModificationBatch& ctx) {
     ctx.setActiveLayerAndPen(m_actionData->data.useCurrentLayer, m_actionData->data.useCurrentAttributes);
     RS_Modification::moveRotate(m_actionData->data, m_selectedEntities, false, ctx);
@@ -237,12 +241,14 @@ void LC_ActionModifyMoveRotate::onCoordinateEvent(const int status, [[maybe_unus
     switch (status) {
         case SetReferencePoint: {
             m_actionData->data.referencePoint = pos;
+            addSnappedPointToVisualSnap(pos);
             moveRelativeZero(pos);
             setStatus(SetTargetPoint);
             break;
         }
         case SetTargetPoint: {
             m_actionData->targetPoint = pos;
+            addSnappedPointToVisualSnap(pos);
             setStatus(ShowDialog);
             m_actionData->data.offset = pos - m_actionData->data.referencePoint;
             if (m_angleIsFixed) {

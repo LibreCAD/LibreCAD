@@ -57,10 +57,12 @@ LC_EventHandler::~LC_EventHandler() {
 /**
  * Go back in current action.
  */
-void LC_EventHandler::back() {
-    QMouseEvent e(QEvent::MouseButtonRelease, QPoint(0, 0), QPoint{0, 0}, Qt::RightButton, Qt::RightButton, Qt::NoModifier);
+void LC_EventHandler::back(Qt::KeyboardModifiers modifiers) {
+    QMouseEvent e(QEvent::MouseButtonRelease, QPoint(0, 0), QPoint{0, 0}, Qt::RightButton, Qt::RightButton, modifiers);
     mouseReleaseEvent(&e);
-    uncheckQAction();
+    // if (modifiers == Qt::NoModifier) {
+    //     uncheckQAction();
+    // }
 }
 
 /**

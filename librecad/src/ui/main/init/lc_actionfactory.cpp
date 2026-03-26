@@ -430,13 +430,19 @@ void LC_ActionFactory::createInfoCursorActions(QMap<QString, QAction *> &map, QA
 
 void LC_ActionFactory::createSnapActions(QMap<QString, QAction *> &map, QActionGroup *group) const {
     createActions(map, group, {
-        {"SnapGrid",         tr("Snap on grid"),       ":/icons/snap_grid.lci"},
+        {"SnapVisual",       tr("Snap Visual"),       ":/icons/snap_visual.lci"},
+        {"SnapGrid",         tr("Snap on Grid"),       ":/icons/snap_grid.lci"},
         {"SnapMiddleManual", tr("Snap Middle Manual"), ":/icons/snap_middle_manual.lci"},
-        {"SnapEnd",          tr("Snap on Endpoints"),  ":/icons/snap_endpoints.lci"},
+        /*{"SnapEnd",          tr("Snap on Endpoints"),  ":/icons/snap_endpoints.lci"},
         {"SnapEntity",       tr("Snap on Entity"),     ":/icons/snap_entity.lci"},
         {"SnapCenter",       tr("Snap Center"),        ":/icons/snap_center.lci"},
         {"SnapMiddle",       tr("Snap Middle"),        ":/icons/snap_middle.lci"},
-        {"SnapDistance",     tr("Snap Distance"),      ":/icons/snap_distance.lci"},
+        {"SnapDistance",     tr("Snap Distance"),      ":/icons/snap_distance.lci"},*/
+        {"SnapEnd", tr("Snap on Endpoints"), ":/icons/snap_endpoints_short.lci"},
+        {"SnapEntity", tr("Snap on Entity"), ":/icons/snap_entity_short.lci"},
+        {"SnapCenter", tr("Snap Center"), ":/icons/snap_center_short.lci"},
+        {"SnapMiddle", tr("Snap Middle"), ":/icons/snap_middle_short.lci"},
+        {"SnapDistance", tr("Snap Distance"), ":/icons/snap_distance_short.lci"},
         {"SnapIntersection", tr("Snap Intersection"),  ":/icons/snap_intersection.lci"},
     });
 }

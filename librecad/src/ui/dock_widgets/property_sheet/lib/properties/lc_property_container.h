@@ -36,7 +36,7 @@ public:
     QList<LC_Property*> findChildProperties(QString name, Qt::FindChildOptions options = Qt::FindChildrenRecursively) const;
     QList<LC_Property*> findChildProperties(const QRegularExpression& re, Qt::FindChildOptions options = Qt::FindChildrenRecursively) const;
 
-    void clearChildProperties();
+    void clearChildProperties(bool emitSignals = true);
     bool addChildProperty(LC_Property* childProperty, bool moveOwnership = true, int index = -1);
     bool removeChildProperty(LC_Property* childProperty);
     LC_PropertyContainer* asContainer() override;

@@ -208,6 +208,10 @@ void LC_ActionDrawCircleTangental1Entity2Points::onMouseMoveEvent(const int stat
     }
 }
 
+bool LC_ActionDrawCircleTangental1Entity2Points::isInVisualSnapStatus(int status) {
+    return (status == SetPoint1) || (status == SetPoint2);
+}
+
 RS_Vector LC_ActionDrawCircleTangental1Entity2Points::getTangentPoint(const RS_Vector& creatingCircleCenter, const bool fromOriginalCircle) const {
     const RS_Vector& circleCenter = m_baseEntity->getCenter();
     if (fromOriginalCircle) {

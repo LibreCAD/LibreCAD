@@ -53,7 +53,7 @@ LC_RotateOptionsWidget::~LC_RotateOptionsWidget() {
     delete ui;
 }
 
-void LC_RotateOptionsWidget::updateUI(const int mode, const QVariant* value) {
+void LC_RotateOptionsWidget::updateUI(const int mode, [[maybe_unused]]const QVariant* value) {
     switch (mode) {
         case UPDATE_ANGLE: {
             // update on SetTargetPoint

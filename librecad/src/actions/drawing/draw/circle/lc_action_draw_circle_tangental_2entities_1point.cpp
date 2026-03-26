@@ -93,6 +93,10 @@ RS_Entity* LC_ActionDrawCircleTangental2Entities1Point::doTriggerCreateEntity() 
     return circle;
 }
 
+bool LC_ActionDrawCircleTangental2Entities1Point::isInVisualSnapStatus(int status) {
+    return (status == SetPoint);
+}
+
 void LC_ActionDrawCircleTangental2Entities1Point::doTriggerCompletion([[maybe_unused]] bool success) {
     m_actionData->circles.clear();
     init(SetCircle1);

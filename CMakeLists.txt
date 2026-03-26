@@ -10,10 +10,10 @@ set (LOCAL_BUILD "sand1024_")
 if (LOCAL_BUILD STREQUAL "sand1024")
     set (CMAKE_VERBOSE_MAKEFILE ON)
     set (MIN_GW_PATH_PREFIX "d:\\Qt\\QT6\\6.9.0\\msvc2022_64")
-    set (BOOST_DIR "r:\\Local\\boost_1_84_0")
-    set (BOOST_ROOT "r:\\Local\\boost_1_84_0")
-    set (Boost_DIR "r:\\Local\\boost_1_84_0")
-    set (Boost_INCLUDE_DIR "r:\\Local\\boost_1_84_0")
+    set (BOOST_DIR "r:\\boost_1_84_0")
+    set (BOOST_ROOT "r:\\boost_1_84_0")
+    set (Boost_DIR "r:\\boost_1_84_0")
+    set (Boost_INCLUDE_DIR "r:\\boost_1_84_0")
     set (CMAKE_PREFIX_PATH "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
     set (Qt6_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
     set (Qt6Core_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6Core")
@@ -1239,8 +1239,8 @@ set (SHARED_SOURCES
      librecad/src/ui/action_options/line/lc_line_angle_options_widget.h
      librecad/src/ui/action_options/line/lc_line_bisector_options_widget.cpp
      librecad/src/ui/action_options/line/lc_line_bisector_options_widget.h
-     librecad/src/ui/action_options/line/lc_line_options_widget.cpp
-     librecad/src/ui/action_options/line/lc_line_options_widget.h
+     librecad/src/ui/action_options/line/lc_line_snake_options_widget.cpp
+     librecad/src/ui/action_options/line/lc_line_snake_options_widget.h
      librecad/src/ui/action_options/line/lc_line_parallel_options_widget.cpp
      librecad/src/ui/action_options/line/lc_line_parallel_options_widget.h
      librecad/src/ui/action_options/line/lc_line_parallel_through_options_widget.cpp
@@ -1953,6 +1953,8 @@ set (SHARED_SOURCES
      librecad/src/ui/action_options/circle/lc_circle_by_arc_options_filler.h
      librecad/src/ui/action_options/line/lc_line_options_filler.cpp
      librecad/src/ui/action_options/line/lc_line_options_filler.h
+     librecad/src/ui/action_options/line/lc_line_options_widget.cpp
+     librecad/src/ui/action_options/line/lc_line_options_widget.h
      librecad/src/ui/action_options/circle/lc_circle_center_radius_options_filler.cpp
      librecad/src/ui/action_options/circle/lc_circle_center_radius_options_filler.h
      librecad/src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_filler.cpp
@@ -2053,6 +2055,18 @@ set (SHARED_SOURCES
      librecad/src/ui/action_options/print_preview/lc_print_preview_options_filler.h
      librecad/src/lib/engine/document/lc_plot_settings.cpp
      librecad/src/lib/engine/document/lc_plot_settings.h
+     librecad/src/lib/engine/overlays/references/lc_ref_snap_mark.cpp
+     librecad/src/lib/engine/overlays/references/lc_ref_snap_mark.h
+     librecad/src/lib/engine/overlays/references/lc_ref_snap_construction_line.cpp
+     librecad/src/lib/engine/overlays/references/lc_ref_snap_construction_line.h
+     librecad/src/lib/engine/overlays/references/lc_ref_snap_line.cpp
+     librecad/src/lib/engine/overlays/references/lc_ref_snap_line.h
+     librecad/src/lib/engine/overlays/references/lc_ref_snap_circle.cpp
+     librecad/src/lib/engine/overlays/references/lc_ref_snap_circle.h
+     librecad/src/lib/engine/overlays/references/lc_ref_snap_entity.cpp
+     librecad/src/lib/engine/overlays/references/lc_ref_snap_entity.h
+     librecad/src/lib/engine/overlays/references/lc_ref_snap_arc.cpp
+     librecad/src/lib/engine/overlays/references/lc_ref_snap_arc.h
 )
 
 set (MUPARSER_SOURCES
@@ -2080,6 +2094,8 @@ set (MUPARSER_SOURCES
      librecad/src/ui/action_options/polygon/lc_star_options_filler.h
      librecad/src/ui/action_options/modify/lc_break_divide_options_filler.cpp
      librecad/src/ui/action_options/modify/lc_break_divide_options_filler.h
+     librecad/src/lib/actions/lc_visual_snap_manager.cpp
+     librecad/src/lib/actions/lc_visual_snap_manager.h
 )
 
 # Static library from shared sources

@@ -49,8 +49,8 @@ public:
     void setLengthIsFree(const bool value)  {m_lengthIsFree = value;}
     bool isDivideLine() const{return m_divideLine;}
     void setDivideLine(const bool value)  {m_divideLine = value;}
-    void setSnapDistance(const double d) {m_snapDistance = d;}
-    double getSnapDistance() const {return m_snapDistance;}
+    void setIntersectionOffsetDistance(const double d) {m_intersectionPointOffsetDistance = d;}
+    double getIntersectionOffsetDistance() const {return m_intersectionPointOffsetDistance;}
     bool isFixedAngleActionMode() const {return m_fixedAngle;}
     /**
     * Snapping for angle tick line
@@ -114,7 +114,7 @@ private:
     /**
      * Distance (offset) from original line snap-point to which intersection line will be shifted
      */
-    double m_snapDistance = 0;
+    double m_intersectionPointOffsetDistance = 0;
 
     /**
      * indicates that angle specified by options is relative (i.e between original line and drawn line).
@@ -154,6 +154,7 @@ protected:
     void doLoadOptions() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     LC_ActionOptionsPropertiesFiller* createOptionsFiller() override;
+    bool isInVisualSnapStatus(int status) override;
 };
 
 #endif

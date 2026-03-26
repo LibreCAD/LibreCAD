@@ -659,9 +659,12 @@ double RS_MText::updateAddLine(LC_TextLine* textLine, const int lineCounter) {
     return textTail;
 }
 
-RS_Vector RS_MText::doGetNearestEndpoint(const RS_Vector& coord, double* dist) const {
+RS_Vector RS_MText::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
     if (dist != nullptr) {
         *dist = m_data.insertionPoint.distanceTo(coord);
+    }
+    if (entity != nullptr) {
+        *entity = const_cast<RS_MText*>(this);
     }
     return m_data.insertionPoint;
 }

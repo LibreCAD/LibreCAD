@@ -82,7 +82,7 @@ void LC_DimArrow::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint
     calculateBorders();
 }
 
-RS_Vector LC_DimArrow::doGetNearestCenter([[maybe_unused]] const RS_Vector& coord, double* dist) const {
+RS_Vector LC_DimArrow::doGetNearestCenter([[maybe_unused]] const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const {
     setDistPtr(dist, RS_MAXDOUBLE);
     return RS_Vector(false);
 }
@@ -117,7 +117,10 @@ void LC_DimArrow::calculateBorders() {
     doCalculateBorders();
 }
 
-RS_Vector LC_DimArrow::doGetNearestEndpoint([[maybe_unused]] const RS_Vector& coord, [[maybe_unused]] double* dist) const {
+RS_Vector LC_DimArrow::doGetNearestEndpoint([[maybe_unused]] const RS_Vector& coord, [[maybe_unused]] double* dist, RS_Entity** entity) const {
+    if (entity != nullptr) {
+        *entity = const_cast<LC_DimArrow*>(this);
+    }
     return m_position;
 }
 

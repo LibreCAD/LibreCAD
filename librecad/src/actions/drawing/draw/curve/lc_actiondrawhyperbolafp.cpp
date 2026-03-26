@@ -43,6 +43,10 @@ void LC_ActionDrawHyperbolaFP::reset() {
     setStatus(SetFocus1);
 }
 
+bool LC_ActionDrawHyperbolaFP::isInVisualSnapStatus(int status) {
+    return (status == SetFocus1) || (status == SetFocus2) || (status == SetEndPoint) || (status == SetStartPoint);
+}
+
 void LC_ActionDrawHyperbolaFP::preparePreview() const {
     if (!focus1.valid || !focus2.valid || !startPoint.valid) {
         return;
@@ -221,12 +225,12 @@ void LC_ActionDrawHyperbolaFP::onCoordinateEvent(const int status, [[maybe_unuse
     if (!pos.valid) {
         return;
     }
-
     moveRelativeZero(pos);
 
     switch (status) {
         case SetFocus1: {
             focus1 = pos;
+            addSnappedPointToVisualSnap(pos);
             setStatus(SetFocus2);
             break;
         }
@@ -236,11 +240,13 @@ void LC_ActionDrawHyperbolaFP::onCoordinateEvent(const int status, [[maybe_unuse
                 return;
             }
             focus2 = pos;
+            addSnappedPointToVisualSnap(pos);
             setStatus(SetStartPoint);
             break;
         }
         case SetStartPoint: {
             startPoint = pos;
+            addSnappedPointToVisualSnap(pos);
             setStatus(SetEndPoint);
             break;
         }
@@ -249,6 +255,7 @@ void LC_ActionDrawHyperbolaFP::onCoordinateEvent(const int status, [[maybe_unuse
                 commandMessage(tr("Start and end points cannot be the same"));
                 return;
             }
+            addSnappedPointToVisualSnap(pos);
             endPoint = pos;
             trigger();
             break;

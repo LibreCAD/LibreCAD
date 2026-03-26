@@ -29,7 +29,7 @@ void LC_RectangleAbstractOptionsFiller::createEdgesModeOption(LC_PropertyContain
     static LC_EnumDescriptor edgesModeDescriptor = {
         "cornerTypeDescriptor",
         {
-            {LC_ActionDrawRectangleAbstract::EdgesMode::EDGES_BOTH, tr("Straight")},
+            {LC_ActionDrawRectangleAbstract::EdgesMode::EDGES_BOTH, tr("Both")},
             {LC_ActionDrawRectangleAbstract::EdgesMode::EDGES_VERT, tr("Vertical")},
             {LC_ActionDrawRectangleAbstract::EdgesMode::EDGES_HOR, tr("Horizontal")}
         }

@@ -70,6 +70,10 @@ RS_Entity* RS_ActionDrawEllipse4Points::doTriggerCreateEntity() {
     return en;
 }
 
+bool RS_ActionDrawEllipse4Points::isInVisualSnapStatus(int status) {
+    return (status == SetPoint1) || (status == SetPoint2) || (status == SetPoint3) || (status == SetPoint4);
+}
+
 void RS_ActionDrawEllipse4Points::doTriggerCompletion([[maybe_unused]] bool success) {
     setStatus(SetPoint1);
 }
@@ -182,6 +186,7 @@ void RS_ActionDrawEllipse4Points::onCoordinateEvent(const int status, [[maybe_un
 
     switch (status) {
         case SetPoint1: {
+            addSnappedPointToVisualSnap(coord);
             moveRelativeZero(coord);
             setStatus(SetPoint2);
             break;
@@ -190,6 +195,7 @@ void RS_ActionDrawEllipse4Points::onCoordinateEvent(const int status, [[maybe_un
         case SetPoint3:
         case SetPoint4: {
             if (preparePreview()) {
+                addSnappedPointToVisualSnap(coord);
                 moveRelativeZero(coord);
                 if (status == SetPoint4 || (m_actionData->points.get(status) - m_actionData->points.get(status - 1)).squared() <
                     RS_TOLERANCE15) {

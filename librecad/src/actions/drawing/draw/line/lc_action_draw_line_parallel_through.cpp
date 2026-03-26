@@ -60,6 +60,10 @@ void LC_ActionDrawLineParallelThrough::doLoadOptions() {
     m_distributeWithin = loadBool("Within", false);
 }
 
+bool LC_ActionDrawLineParallelThrough::isInVisualSnapStatus(int status) {
+    return (status == SetPos);
+}
+
 void LC_ActionDrawLineParallelThrough::finish() {
     if (m_entity) {
         m_entity->setHighlighted(false);
@@ -175,6 +179,7 @@ void LC_ActionDrawLineParallelThrough::onCoordinateEvent(const int status, [[may
     switch (status) {
         case SetPos: {
             *m_coord = coord;
+            addSnappedPointToVisualSnap(coord);
             trigger();
             break;
         }

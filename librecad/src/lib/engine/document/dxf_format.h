@@ -678,6 +678,12 @@
 #define DXF_FORMAT_PDMode_EncloseSquare(centre)   (centre|64)
 #define DXF_FORMAT_PDMode_EncloseCircleSquare(centre) (centre|96)
 
+// these values are not part of DXF format - yet they are used in generic function for drawing snap marks or so
+#define NON_DXF_FORMAT_PDMode_EncloseCircleOUTER(centre) (centre|128)
+#define NON_DXF_FORMAT_PDMode_hasEncloseCircleOUTER(mode)  (mode&128)
+#define NON_DXF_FORMAT_PDMode_EncloseSquareOUTER(centre) (centre|256)
+#define NON_DXF_FORMAT_PDMode_hasEncloseSquareOUTER(mode)  (mode&256)
+
 #define DXF_FORMAT_PDMode_getCentre(mode)    (mode&7)
 #define DXF_FORMAT_PDMode_hasEncloseCircle(mode)  (mode&32)
 #define DXF_FORMAT_PDMode_hasEncloseSquare(mode)  (mode&64)

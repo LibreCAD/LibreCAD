@@ -71,4 +71,5 @@ protected:
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateActionPrompt() override;
     QStringList doGetAvailableCommands(int status) override;
+    bool isInVisualSnapStatus(int status) override;
 };

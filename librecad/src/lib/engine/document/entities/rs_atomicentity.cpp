@@ -97,10 +97,11 @@ double RS_AtomicEntity::getRadius() const {
 * distance between 'coord' and the closest center point. The passed
 * pointer can also be NULL in which case the distance will be
 * lost.
+* @param centerEntity
 *
 * @return The closest center point.
 */
-RS_Vector RS_AtomicEntity::doGetNearestCenter([[maybe_unused]]const RS_Vector& coord, [[maybe_unused]]double* dist) const {
+RS_Vector RS_AtomicEntity::doGetNearestCenter([[maybe_unused]]const RS_Vector& coord, [[maybe_unused]]double* dist, RS_Entity** centerEntity) const {
     return RS_Vector(false);
 }
 

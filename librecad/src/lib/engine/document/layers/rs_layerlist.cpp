@@ -41,6 +41,10 @@ RS_LayerList::RS_LayerList() {
     setModified(false);
 }
 
+RS_LayerList::~RS_LayerList() {
+    // LC_ERR << "LayerList destructor";
+}
+
 /**
  * Removes all layers in the layerlist.
  */

@@ -60,5 +60,6 @@ protected:
     void updateActionPrompt() override;
     void doTriggerCompletion(bool success) override;
     RS_Entity* doTriggerCreateEntity() override;
+    bool isInVisualSnapStatus(int status) override;
 };
 #endif
