@@ -132,6 +132,6 @@ bool LC_ActionPasteToPoints::isEntityAllowedToSelect(RS_Entity *ent) const {
     return ent->rtti() == RS2::EntityPoint;
 }
 
-void LC_ActionPasteToPoints::updateMouseButtonHintsForSelection() {
+void LC_ActionPasteToPoints::updateActionPromptForSelection() {
     updatePromptTRCancel(tr("Select insertion points") + getSelectionCompletionHintMsg(), MOD_CTRL(tr("Select and paste")));
 }

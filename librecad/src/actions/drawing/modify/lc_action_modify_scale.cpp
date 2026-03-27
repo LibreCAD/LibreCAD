@@ -407,7 +407,7 @@ void LC_ActionModifyScale::determineScaleFactor(RS_ScaleData& data,
     data.factor.valid = true;
 }
 
-void LC_ActionModifyScale::updateMouseButtonHintsForSelected(const int status) {
+void LC_ActionModifyScale::updateActionPromptForSelected(const int status) {
     switch (status) {
         case SetReferencePoint:
             updatePromptTRCancel(tr( "Specify scale center"), MOD_SHIFT_AND_CTRL(MSG_REL_ZERO, tr("Snap to center of selection")));
@@ -425,7 +425,7 @@ void LC_ActionModifyScale::updateMouseButtonHintsForSelected(const int status) {
     }
 }
 
-void LC_ActionModifyScale::updateMouseButtonHintsForSelection() {
+void LC_ActionModifyScale::updateActionPromptForSelection() {
     updatePromptTRCancel(tr("Select to scale") + getSelectionCompletionHintMsg(),
                               MOD_SHIFT_AND_CTRL(tr("Select contour"), tr("Scale immediately after selection")));
 }

@@ -56,8 +56,8 @@ protected:
     RS_Vector m_alignMax = RS_Vector(false);
     LC_ActionOptionsWidget *createOptionsWidget() override;
     LC_ActionOptionsPropertiesFiller* createOptionsFiller() override;
-    void updateMouseButtonHintsForSelection() override;
-    void updateMouseButtonHintsForSelected(int status) override;
+    void updateActionPromptForSelection() override;
+    void updateActionPromptForSelected(int status) override;
     void onMouseLeftButtonReleaseSelected(int status, const LC_MouseEvent* e) override;
     void onMouseRightButtonReleaseSelected(int status, const LC_MouseEvent* event) override;
     RS2::CursorType doGetMouseCursorSelected(int status) override;

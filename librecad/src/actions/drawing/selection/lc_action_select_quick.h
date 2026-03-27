@@ -44,7 +44,7 @@ public:
 
 protected:
     bool doTriggerModifications([[maybe_unused]]LC_DocumentModificationBatch& ctx) override {return false;}
-    void updateMouseButtonHintsForSelection() override;
+    void updateActionPromptForSelection() override;
     void onSelectionCompleted(bool singleEntity, bool fromInit) override;
 private:
     enum Status {

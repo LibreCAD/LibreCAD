@@ -65,7 +65,7 @@ void LC_ActionSelectQuick::init(const int status) {
     }
 }
 
-void LC_ActionSelectQuick::updateMouseButtonHintsForSelection() {
+void LC_ActionSelectQuick::updateActionPromptForSelection() {
     updatePromptTRCancel(tr("Choose entities") + getSelectionCompletionHintMsg(),
                               MOD_SHIFT_AND_CTRL(tr("Select contour"), tr("Return to dialog immediately after selection")));
 }

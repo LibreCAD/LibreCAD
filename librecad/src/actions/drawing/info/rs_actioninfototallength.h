@@ -47,7 +47,7 @@ protected:
         Acknowledge = InitialActionStatus   /**< Acknowledge or cancel. */
     };
 
-    void updateMouseButtonHintsForSelection() override;
+    void updateActionPromptForSelection() override;
     void doTrigger() override;
     bool isAllowTriggerOnEmptySelection() override;
     void finishMouseMoveOnSelection(const LC_MouseEvent* event) override;

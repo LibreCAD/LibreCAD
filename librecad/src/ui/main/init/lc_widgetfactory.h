@@ -62,6 +62,8 @@ private:
     QDockWidget *createBlockListWidget(const QG_ActionHandler* actionHandler);
     QDockWidget* createLibraryWidget(const QG_ActionHandler* actionHandler);
     QDockWidget *createCmdWidget(QG_ActionHandler *actionHandler);
+    // Avoid right dock widgets getting too large, when opened for the first time
+    void initializeRightDockWidgets();
     void modifyCommandTitleBar(Qt::DockWidgetArea area) const;
     QDockWidget* createPenWizardWidget();
     void initLeftCADSidebar();

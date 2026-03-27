@@ -247,11 +247,11 @@ void LC_ActionModifyMirror::doPerformTrigger() {
     finish();
 }
 
-void LC_ActionModifyMirror::updateMouseButtonHintsForSelection() {
+void LC_ActionModifyMirror::updateActionPromptForSelection() {
     updatePromptTRCancel(tr("Select to mirror") + getSelectionCompletionHintMsg(), MOD_SHIFT_LC(tr("Select contour")));
 }
 
-void LC_ActionModifyMirror::updateMouseButtonHintsForSelected(const int status) {
+void LC_ActionModifyMirror::updateActionPromptForSelected(const int status) {
     switch (status) {
         case SetAxisPoint1: {
             if (m_mirrorToExistingLine){

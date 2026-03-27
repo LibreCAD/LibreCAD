@@ -60,8 +60,8 @@ protected:
     RS2::CursorType doGetMouseCursorSelected(int status) override;
     void onMouseLeftButtonReleaseSelected(int status, const LC_MouseEvent* e) override;
     void onMouseRightButtonReleaseSelected(int status, const LC_MouseEvent* event) override;
-    void updateMouseButtonHintsForSelection() override;
-    void updateMouseButtonHintsForSelected(int status) override;
+    void updateActionPromptForSelection() override;
+    void updateActionPromptForSelected(int status) override;
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
     void doPerformTrigger();
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &coord) override;

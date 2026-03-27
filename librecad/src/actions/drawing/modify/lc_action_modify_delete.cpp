@@ -37,7 +37,7 @@ bool LC_ActionModifyDelete::doTriggerModifications(LC_DocumentModificationBatch&
     return true;
 }
 
-void LC_ActionModifyDelete::updateMouseButtonHintsForSelection() {
+void LC_ActionModifyDelete::updateActionPromptForSelection() {
     updatePromptTRCancel(tr("Select to delete") + getSelectionCompletionHintMsg(),
                               MOD_SHIFT_AND_CTRL(tr("Select contour"), tr("Delete immediately after selection")));
 }

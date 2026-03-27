@@ -198,7 +198,7 @@ void LC_ActionModifyMove::onCoordinateEvent(const int status, [[maybe_unused]] b
     }
 }
 
-void LC_ActionModifyMove::updateMouseButtonHintsForSelected(const int status) {
+void LC_ActionModifyMove::updateActionPromptForSelected(const int status) {
     switch (status) {
         case SetReferencePoint:
             updatePromptTRCancel(tr("Specify reference point"), MOD_SHIFT_RELATIVE_ZERO);
@@ -212,7 +212,7 @@ void LC_ActionModifyMove::updateMouseButtonHintsForSelected(const int status) {
     }
 }
 
-void LC_ActionModifyMove::updateMouseButtonHintsForSelection() {
+void LC_ActionModifyMove::updateActionPromptForSelection() {
     updatePromptTRCancel(tr("Select to move") + getSelectionCompletionHintMsg(),
                               MOD_SHIFT_AND_CTRL(tr("Select contour"), tr("Move immediately after selection")));
 }

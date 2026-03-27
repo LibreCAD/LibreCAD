@@ -561,6 +561,9 @@ double LC_Hyperbola::getParamFromPoint(const RS_Vector& p, bool /*branchReversed
     // - Rotate so majorP aligns with positive x-axis
     RS_Vector local = p - data.center;
     local.rotate(-data.majorP.angle()); // inverse rotation
+    if (std::signbit(local.x)) {
+        return std::numeric_limits<double>::quiet_NaN();
+    }
 
     //double x_local = local.x;
     const double y_local = local.y;

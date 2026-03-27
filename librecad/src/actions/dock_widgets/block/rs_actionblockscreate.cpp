@@ -102,11 +102,11 @@ void RS_ActionBlocksCreate::onCoordinateEvent(const int status, [[maybe_unused]]
     }
 }
 
-void RS_ActionBlocksCreate::updateMouseButtonHintsForSelection() {
+void RS_ActionBlocksCreate::updateActionPromptForSelection() {
     updatePromptTRCancel(tr("Select to create block") + getSelectionCompletionHintMsg(), MOD_SHIFT_LC(tr("Select contour")));
 }
 
-void RS_ActionBlocksCreate::updateMouseButtonHintsForSelected(const int status) {
+void RS_ActionBlocksCreate::updateActionPromptForSelected(const int status) {
     switch (status) {
         case SetReferencePoint:
             updatePromptTRCancel(tr("Specify reference point"));

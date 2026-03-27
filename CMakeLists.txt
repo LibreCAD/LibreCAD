@@ -32,6 +32,7 @@ set (CMAKE_AUTOMOC ON)
 set (CMAKE_AUTOUIC ON)
 set (CMAKE_AUTORCC ON)
 
+add_compile_definitions(QC_APPDIR=librecad)
 add_compile_definitions (DWGSUPPORT)
 add_compile_definitions (MUPARSER_STATIC)
 
@@ -455,7 +456,9 @@ set (SHARED_SOURCES
      librecad/src/actions/drawing/draw/arc/lc_action_draw_arc_3points.h
      librecad/src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp
      librecad/src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.h
-     librecad/src/actions/drawing/draw/curve/lc_action_draw_line_freehand.cpp
+     librecad/src/actions/drawing/draw/curve/lc_actiondrawdual.cpp
+    librecad/src/actions/drawing/draw/curve/lc_actiondrawdual.h
+    librecad/src/actions/drawing/draw/curve/lc_action_draw_line_freehand.cpp
      librecad/src/actions/drawing/draw/curve/lc_action_draw_line_freehand.h
      librecad/src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp
      librecad/src/actions/drawing/draw/dimensions/lc_actioncircledimbase.h
@@ -803,6 +806,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/container/lc_containertraverser.h
      librecad/src/lib/engine/document/container/lc_looputils.cpp
      librecad/src/lib/engine/document/container/lc_looputils.h
+     librecad/src/lib/engine/document/container/lc_pathbuilder.h
+     librecad/src/lib/engine/document/container/lc_pathbuilder.cpp
      librecad/src/lib/engine/document/container/rs_entitycontainer.cpp
      librecad/src/lib/engine/document/container/rs_entitycontainer.h
      librecad/src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp
@@ -1094,6 +1099,8 @@ set (SHARED_SOURCES
      librecad/src/lib/math/lc_linemath.h
      librecad/src/lib/math/lc_quadratic.cpp
      librecad/src/lib/math/lc_quadratic.h
+     librecad/src/lib/math/lc_quadraticutils.cpp
+     librecad/src/lib/math/lc_quadraticutils.h
      librecad/src/lib/math/rs_math.cpp
      librecad/src/lib/math/rs_math.h
      librecad/src/lib/modification/lc_align.cpp
@@ -1902,7 +1909,7 @@ set (SHARED_SOURCES
      librecad/src/ui/main/workspaces/lc_workspacesinvoker.h
      librecad/src/ui/main/workspaces/lc_workspacesmanager.cpp
      librecad/src/ui/main/workspaces/lc_workspacesmanager.h
-     librecad/src/ui/not_used/LC_DlgParabola.cpp
+
      librecad/src/ui/qg_actionhandler.cpp
      librecad/src/ui/qg_actionhandler.h
      librecad/src/ui/view/lc_centralwidget.cpp
@@ -2109,9 +2116,8 @@ target_compile_definitions (librecad_lib PRIVATE
                             LC_VERSION=2.2.2.5-alpha
                             LC_PRERELEASE=true
 )
-target_include_directories (librecad_lib PRIVATE
-                            ${SHARED_INCLUDES}
-                            ${MUPARSER_SOURCES}
+target_include_directories(librecad_lib PRIVATE
+    ${SHARED_INCLUDES}
 )
 
 target_link_libraries (librecad_lib PRIVATE
@@ -2190,7 +2196,7 @@ set (TS_FILES
      librecad/ts/librecad_he.ts
      librecad/ts/librecad_hi.ts
      librecad/ts/librecad_hu.ts
-     librecad/ts/librecad_id_ID.ts
+     librecad/ts/librecad_id_id.ts
      librecad/ts/librecad_it.ts
      librecad/ts/librecad_ja.ts
      librecad/ts/librecad_ka.ts

@@ -239,14 +239,14 @@ void LC_ActionPreSelectionAwareBase::drawSnapper() {
 
 void LC_ActionPreSelectionAwareBase::updateActionPrompt() {
     if (m_selectionComplete){
-        updateMouseButtonHintsForSelected(getStatus());
+        updateActionPromptForSelected(getStatus());
     }
     else{
         if (m_inBoxSelectionMode){
             updatePromptTRBack(tr("Choose second edge"), MOD_SHIFT_AND_CTRL(tr("Select/Deselect entities"), tr("Select Intersecting")));
         }
         else {
-            updateMouseButtonHintsForSelection();
+            updateActionPromptForSelection();
         }
     }
 }
@@ -270,7 +270,7 @@ void LC_ActionPreSelectionAwareBase::proceedSelectionComplete(const bool allowEm
     const bool proceed = selectedCount > 0 || allowEmptySelection;
     if (proceed) {
         m_selectionComplete = true;
-        updateMouseButtonHintsForSelected(getStatus());
+        updateActionPromptForSelected(getStatus());
     }
     else{
         commandMessage(tr("No valid entities selected, select them first"));
@@ -288,7 +288,7 @@ void LC_ActionPreSelectionAwareBase::setSelectionComplete(const bool allowEmptyS
     proceedSelectionComplete(allowEmptySelection, fromInit, selectedCount);
 }
 
-void LC_ActionPreSelectionAwareBase::updateMouseButtonHintsForSelected([[maybe_unused]]int status) {
+void LC_ActionPreSelectionAwareBase::updateActionPromptForSelected([[maybe_unused]]int status) {
     updatePrompt();
 }
 

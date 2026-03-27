@@ -46,7 +46,7 @@ protected:
     LC_ActionOptionsPropertiesFiller* createOptionsFiller() override;
     bool isAllowTriggerOnEmptySelection() override;
     bool isEntityAllowedToSelect(RS_Entity *ent) const override;
-    void updateMouseButtonHintsForSelection() override;
+    void updateActionPromptForSelection() override;
     bool doUpdateAngleByInteractiveInput(const QString& tag, double angle) override;
     bool doTriggerModifications(LC_DocumentModificationBatch& ctx) override;
     void doTriggerCompletion(bool success) override;

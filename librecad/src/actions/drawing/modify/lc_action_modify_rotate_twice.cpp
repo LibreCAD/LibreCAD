@@ -210,12 +210,12 @@ void LC_ActionModifyRotateTwice::doPerformTrigger() {
     trigger();
 }
 
-void LC_ActionModifyRotateTwice::updateMouseButtonHintsForSelection() {
+void LC_ActionModifyRotateTwice::updateActionPromptForSelection() {
     updatePromptTRCancel(tr("Select for two axis rotation") + getSelectionCompletionHintMsg(),
                               MOD_SHIFT_AND_CTRL(tr("Select contour"), tr("Rotate 2 Axis immediately after selection")));
 }
 
-void LC_ActionModifyRotateTwice::updateMouseButtonHintsForSelected(const int status) {
+void LC_ActionModifyRotateTwice::updateActionPromptForSelected(const int status) {
     switch (status) {
         case SetReferencePoint1:
             updatePromptTRCancel(tr("Specify absolute reference point"), MOD_SHIFT_RELATIVE_ZERO);

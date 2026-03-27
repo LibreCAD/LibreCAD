@@ -349,7 +349,7 @@ double LC_ActionModifyMoveRotate::getAngle() const {
     return adjustRelativeAngleSignByBasis(m_actionData->data.angle);
 }
 
-void LC_ActionModifyMoveRotate::updateMouseButtonHintsForSelected(const int status) {
+void LC_ActionModifyMoveRotate::updateActionPromptForSelected(const int status) {
     switch (status) {
         case SetReferencePoint:
             updatePromptTRCancel(tr("Specify reference point"), MOD_SHIFT_RELATIVE_ZERO);
@@ -370,7 +370,7 @@ RS2::CursorType LC_ActionModifyMoveRotate::doGetMouseCursorSelected([[maybe_unus
     return RS2::CadCursor;
 }
 
-void LC_ActionModifyMoveRotate::updateMouseButtonHintsForSelection() {
+void LC_ActionModifyMoveRotate::updateActionPromptForSelection() {
     updatePromptTRCancel(tr("Select to move and rotate") + getSelectionCompletionHintMsg(),
                               MOD_SHIFT_AND_CTRL(tr("Select contour"), tr("Move and rotate immediately after selection")));
 }

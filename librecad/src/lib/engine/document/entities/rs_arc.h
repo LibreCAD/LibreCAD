@@ -31,6 +31,7 @@
 #include "rs_math.h"
 
 class LC_Quadratic;
+class QPainterPath;
 
 /**
  * Holds the data that defines an arc.
@@ -260,6 +261,7 @@ public:
     void stretch(const RS_Vector& firstCorner, const RS_Vector& secondCorner, const RS_Vector& offset) override;
 
     void draw(RS_Painter* painter) override;
+    void createPainterPath(RS_Painter* painter, QPainterPath& path) const;
 
     friend std::ostream& operator <<(std::ostream& os, const RS_Arc& a);
 

@@ -52,7 +52,7 @@ protected:
     };
     std::unique_ptr<RS_HatchData> m_hatchData;
     bool m_bShowArea{true};
-    void updateMouseButtonHintsForSelection() override;
+    void updateActionPromptForSelection() override;
     bool isAllowTriggerOnEmptySelection() override;
     RS2::CursorType doGetMouseCursorSelected(int status) override;
     void doSelectEntity(RS_Entity* entityToSelect, bool selectContour) const override;

@@ -43,7 +43,7 @@ void LC_PropertiesProviderParabola::doCreateEntitySpecificProperties(LC_Property
               }, */list, contGeometry);
 
     addWCSAngle<LC_Parabola>({"angle", tr("Angle"), tr("Angle of parabola axis")}, [](LC_Parabola* e) -> double {
-                                 return e->getParabolaData().axis.angle();
+                                 return e->getData().m_axis.angle();
                              }, nullptr, /*[](double& v, LC_Parabola* l) -> void {
                                  l->setAngle1(v);
                              }, */list, contGeometry);

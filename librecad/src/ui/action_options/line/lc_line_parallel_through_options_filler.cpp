@@ -38,12 +38,11 @@ void LC_LineParallelThroughOptionsFiller::fillToolOptionsContainer(LC_PropertyCo
     addBoolean({
                    "a_within",
                    tr("Within"),
-                   tr(
-                       "If checked, parallels will be equally distributed between point and line, otherwise they will be distributed starting from point.")
+                   tr("If checked, parallels will be equally distributed between point and line, otherwise they will be distributed starting from point.")
                }, [action]()-> bool {
-                   return action->isSymmetric();
+                   return action->isDistributeWithin();
                }, [action](bool val)-> void {
-                   action->setSymmetric(val);
+                   action->setDistributeWithin(val);
                }, container, [action](LC_PropertyViewDescriptor& d) -> bool {
                    return action->getNumber() == 1;
                });

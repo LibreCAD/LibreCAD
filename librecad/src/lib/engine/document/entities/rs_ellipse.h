@@ -32,6 +32,7 @@
 #include "lc_cachedlengthentity.h"
 
 class LC_Quadratic;
+class QPainterPath;
 
 namespace lc::geo {
     class Area;
@@ -237,6 +238,7 @@ public:
     void revertDirection() override;
 
     void draw(RS_Painter* painter) override;
+    void createPainterPath(RS_Painter* painter, QPainterPath& path) const;
 
     friend std::ostream& operator << (std::ostream& os, const RS_Ellipse& a);
 
@@ -282,8 +284,6 @@ private:
      * @author Dongxu Li
      */
     void mergeBoundingBox(LC_Rect& boundingBox, const RS_Vector& direction) const;
-    void drawVisible(RS_Painter* painter) const;
-    bool isVisibleInWindow(const RS_Painter& painter) const;
     RS_Vector doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const override;
 };
 

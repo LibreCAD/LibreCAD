@@ -68,8 +68,8 @@ protected:
     void onMouseLeftButtonReleaseSelected(int status, const LC_MouseEvent* e) override;
     void onMouseRightButtonReleaseSelected(int status, const LC_MouseEvent* event) override;
     void onMouseMoveEventSelected(int status, const LC_MouseEvent* e) override;
-    void updateMouseButtonHintsForSelection() override;
-    void updateMouseButtonHintsForSelected(int status) override;
+    void updateActionPromptForSelection() override;
+    void updateActionPromptForSelected(int status) override;
     RS2::CursorType doGetMouseCursorSelected(int status) override;
     bool isAllowTriggerOnEmptySelection() override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;

@@ -290,6 +290,8 @@ namespace RS2 {
         ActionDrawCircleTan3Entities,
         ActionDrawCircleByArc,
 
+        ActionDrawDual,
+
         ActionDrawEllipseArcAxis,
         ActionDrawEllipseAxis,
         ActionDrawEllipseFociPoint,

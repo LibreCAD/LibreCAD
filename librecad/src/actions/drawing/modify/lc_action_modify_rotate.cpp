@@ -697,12 +697,12 @@ void LC_ActionModifyRotate::setRefPointAngleAbsolute(const bool val) const {
     m_rotateData->secondAngleIsAbsolute = val;
 }
 
-void LC_ActionModifyRotate::updateMouseButtonHintsForSelection() {
+void LC_ActionModifyRotate::updateActionPromptForSelection() {
     updatePromptTRCancel(tr("Select to rotate") + getSelectionCompletionHintMsg(),
                                MOD_SHIFT_AND_CTRL(tr("Select contour"), tr("Rotate immediately after selection")));
 }
 
-void LC_ActionModifyRotate::updateMouseButtonHintsForSelected(const int status) {
+void LC_ActionModifyRotate::updateActionPromptForSelected(const int status) {
     switch (status) {
         case SetReferencePoint:
             updatePromptTRBack(tr("Specify reference point"),MOD_SHIFT_AND_CTRL(MSG_REL_ZERO, tr("Snap to center of selection")));

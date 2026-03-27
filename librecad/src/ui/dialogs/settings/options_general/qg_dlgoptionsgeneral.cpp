@@ -103,6 +103,9 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget *parent)
 
     connect(cbEnableCADDockWidgets, stateChangedSignal,
             this, &QG_DlgOptionsGeneral::onEnableCADDocWidgetsChanged);
+
+    // hide temporary until support will be added
+    cbShowCommandInMenu->setVisible(false);
 }
 
 void QG_DlgOptionsGeneral::onExpandToolsMenuToggled([[maybe_unused]]bool checked) const {

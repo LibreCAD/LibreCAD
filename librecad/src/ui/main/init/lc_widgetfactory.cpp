@@ -22,6 +22,7 @@
 
 #include "lc_widgetfactory.h"
 
+#include <QMainWindow>
 #include <QStatusBar>
 #include <QToolBar>
 
@@ -382,7 +383,30 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* actionHandler){
     m_appWin->tabifyDockWidget(dock_views, dock_command);
 
     updateDockWidgetsTitleBarType(m_appWin, verticalTitle);
+
+    // Only resize when the app is opened for the first time
+    initializeRightDockWidgets();
 }
+
+void LC_WidgetFactory::initializeRightDockWidgets()
+{
+    LC_GROUP_GUARD("Geometry");
+    if (!LC_GET_STR("WindowGeometry").isEmpty()) {
+        // No-op, if previous Window geometry is found
+        return;
+    }
+
+    for (QDockWidget* dock : m_appWin->findChildren<QDockWidget*>()) {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+        if (dock != nullptr && dock->dockLocation() == Qt::RightDockWidgetArea) {
+#else
+        if (dock != nullptr && m_appWin->dockWidgetArea(dock) == Qt::RightDockWidgetArea) {
+#endif
+            dock->resize(390, dock->height());
+        }
+    }
+}
+
 
 // fixme - sand - remove this method
 void LC_WidgetFactory::makeActionsInvisible(const std::vector<QString> &actionNames) const {

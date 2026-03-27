@@ -58,8 +58,8 @@ protected:
     virtual void onMouseLeftButtonReleaseSelected(int status, const LC_MouseEvent* event);
     virtual void onMouseRightButtonReleaseSelected(int status, const LC_MouseEvent* event);
     virtual void onMouseMoveEventSelected(int status, const LC_MouseEvent* event);
-    virtual void updateMouseButtonHintsForSelection() = 0;
-    virtual void updateMouseButtonHintsForSelected(int status);
+    virtual void updateActionPromptForSelection() = 0;
+    virtual void updateActionPromptForSelected(int status);
     virtual bool isAllowTriggerOnEmptySelection(){return true;}
     virtual void doTriggerSelectionUpdate([[maybe_unused]]bool keepSelected, [[maybe_unused]]const LC_DocumentModificationBatch& ctx) {}
     void doTriggerSelections(const LC_DocumentModificationBatch& ctx) override;

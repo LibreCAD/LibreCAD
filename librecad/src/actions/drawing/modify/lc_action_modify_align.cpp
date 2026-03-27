@@ -254,7 +254,7 @@ void LC_ActionModifyAlign::onMouseRightButtonReleaseSelected(const int status, [
     }
 }
 
-void LC_ActionModifyAlign::updateMouseButtonHintsForSelected([[maybe_unused]]int status) {
+void LC_ActionModifyAlign::updateActionPromptForSelected([[maybe_unused]]int status) {
     switch (m_alignType) {
         case LC_Align::ENTITY:
             updatePromptTRBack(tr("Select base alignment entity"), MOD_CTRL(tr("Select child entities of containers")));
@@ -271,7 +271,7 @@ void LC_ActionModifyAlign::updateMouseButtonHintsForSelected([[maybe_unused]]int
     }
 }
 
-void LC_ActionModifyAlign::updateMouseButtonHintsForSelection() {
+void LC_ActionModifyAlign::updateActionPromptForSelection() {
     updatePromptTRCancel(tr("Select entities to align") + getSelectionCompletionHintMsg(),
                               MOD_SHIFT_AND_CTRL(tr("Select contour"), tr("Select and align")));
 }

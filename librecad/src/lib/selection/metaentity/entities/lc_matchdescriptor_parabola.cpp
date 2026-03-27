@@ -46,7 +46,7 @@ void LC_MatchDescriptorParabola::init(QMap<RS2::EntityType, LC_EntityMatchDescri
     }, tr("Vertex Y"), tr("Y coordinate for parabola vertex point"));
 
     entity->addAngle("angle", [](LC_Parabola* e) {
-        return e->getParabolaData().axis.angle();
+        return e->getData().m_axis.angle();
     }, tr("Axis Angle"), tr("Angle of parabola axis"));
 
     entity->addLength("length", [](const LC_Parabola* e) {

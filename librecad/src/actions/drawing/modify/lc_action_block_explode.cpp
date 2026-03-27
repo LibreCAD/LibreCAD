@@ -58,7 +58,7 @@ bool LC_ActionBlocksExplode::isEntityAllowedToSelect(RS_Entity *ent) const {
     return ent->isContainer();
 }
 
-void LC_ActionBlocksExplode::updateMouseButtonHintsForSelection() {
+void LC_ActionBlocksExplode::updateActionPromptForSelection() {
     updatePromptTRCancel(tr("Select to explode container")+getSelectionCompletionHintMsg(),
         MOD_CTRL(tr("Select and explode")));
 }

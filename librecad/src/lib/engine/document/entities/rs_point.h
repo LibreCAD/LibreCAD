@@ -85,7 +85,17 @@ public:
     void calculateBorders() override;
 
     //RS_Vector point;
-    void draw(RS_Painter* painter) override;
+    void draw(RS_Painter* painter) override;/**
+     * @brief getQuadratic() returns the equation of the entity
+     * for quadratic,
+     *
+     * return a vector contains:
+     * m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
+     *
+     * for linear:
+     * m0 x + m1 y + m2 =0
+     */
+    LC_Quadratic getQuadratic() const override;
 protected:
     RS_PointData m_data;
     RS_Vector doGetNearestPointOnEntity(const RS_Vector& coord, bool onEntity, double* dist, RS_Entity** entity) const override;

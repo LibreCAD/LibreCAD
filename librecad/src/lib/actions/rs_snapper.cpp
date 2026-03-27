@@ -1352,10 +1352,10 @@ QString RS_Snapper::getSnapName(RS2::SnapType snapType) const {
 QString RS_Snapper::getVisualSnapName(const RS2::VisualSnapGuideEntityType entityType, double rayAngle) const {
     switch (entityType) {
         case RS2::VSNAP_NONE: {
-            return tr("None");
+            return tr("None", "visual snap");
         }
         case RS2::VSNAP_LINE_VERTEX_HORIZONTAL: {
-            return tr("Horizontal");
+            return tr("Horizontal", "visual snap");
         }
         case RS2::VSNAP_LINE_VERTEX_ANGLE_STEP: {
             QString name = tr("Angle Ray");
@@ -1380,7 +1380,7 @@ QString RS_Snapper::getVisualSnapName(const RS2::VisualSnapGuideEntityType entit
             return name;
         }
         case RS2::VSNAP_LINE_VERTEX_VERTICAL: {
-            return tr("Vertical");
+            return tr("Vertical", "visual snap");
         }
         case RS2::VSNAP_LINE_RAY: {
             return tr("Line ray");
@@ -1401,10 +1401,10 @@ QString RS_Snapper::getVisualSnapName(const RS2::VisualSnapGuideEntityType entit
             return tr("Tangent Two");
         }
         case RS2::VSNAP_POINT_MIDDLE: {
-            return tr("Middle");
+            return tr("Middle", "visual snap");
         }
         case RS2::VSNAP_LINE_VERTEX_ORTHO: {
-            return tr("Orthogonal");
+            return tr("Orthogonal", "visual snap");
         }
         case RS2::VSNAP_POINT_DISTANCE_EXPLICIT: {
             return tr("Distance (Explicit)");
@@ -1413,7 +1413,7 @@ QString RS_Snapper::getVisualSnapName(const RS2::VisualSnapGuideEntityType entit
             return tr("Distance (Vertex)");
         }
         case RS2::VSNAP_DOC_ENTITY: {
-            return tr("Entity");
+            return tr("Entity", "visual snap");
         }
         default:
             return "";

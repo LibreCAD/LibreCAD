@@ -1,1 +1,11 @@
-  { "Keys": [ ] }
+{
+    "IID": "org.librecad.PluginInterface/1.0",
+    "MetaData": {
+        "Name": "ASCII File Import",
+        "Description": "Imports points from an ASCII text file (x,y[,z] format)",
+        "Version": "1.0",
+        "License": "GPL-2.0-or-later",
+        "Category": "Import",
+        "Keys": ["ascii", "points"]
+    }
+}

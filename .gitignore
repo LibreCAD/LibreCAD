@@ -18,6 +18,9 @@ Info.plist
 *.o
 *.lo
 *.la
+*.moc
+*.xcodeproj
+*.dylib
 
 *.autosave
 *~

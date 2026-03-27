@@ -169,7 +169,7 @@ void RS_ActionEditCopyPaste::onCoordinateEvent( [[maybe_unused]]int status, [[ma
     trigger();
 }
 
-void RS_ActionEditCopyPaste::updateMouseButtonHintsForSelection() {
+void RS_ActionEditCopyPaste::updateActionPromptForSelection() {
    switch (m_actionType) {
        case RS2::ActionEditCut: {
            updatePromptTRCancel(tr("Select to cut") + getSelectionCompletionHintMsg(),
@@ -196,7 +196,7 @@ void RS_ActionEditCopyPaste::updateMouseButtonHintsForSelection() {
    }
 }
 
-void RS_ActionEditCopyPaste::updateMouseButtonHintsForSelected(const int status) {
+void RS_ActionEditCopyPaste::updateActionPromptForSelected(const int status) {
     switch (status) {
         case SetReferencePoint: {
             switch (m_actionType) {

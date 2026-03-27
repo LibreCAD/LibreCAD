@@ -25,6 +25,7 @@
 **
 **********************************************************************/
 
+#include <QPainterPath>
 #include "rs_ellipse.h"
 
 #include "lc_creation_ellipse.h"
@@ -1468,95 +1469,40 @@ double RS_Ellipse::getMinorRadius() const {
 }
 
 void RS_Ellipse::draw(RS_Painter* painter) {
-    const LC_Rect& vpRect = painter->getWcsBoundingRect();
-    if (LC_Rect{getMin(), getMax()}.inArea(vpRect)) {
-        // The whole ellipse/arc is visible in viewport
-        double startAngle = RS_Math::rad2deg(getAngle1());
-        double endAngle = RS_Math::rad2deg(getAngle2());
-        if (isReversed()) {
-            std::swap(startAngle, endAngle);
-        }
-        const double angularLength = RS_Math::rad2deg(getAngleLength());
-        painter->drawEllipseArcWCS(m_data.center, getMajorRadius(), m_data.ratio, m_data.angleDegrees, startAngle, endAngle, angularLength,
-                                   false);
-        return;
-    }
-    painter->updateDashOffset(this);
+  if (painter == nullptr)
+    return;
 
-    // only draw the visible portion of the ellipse/arc
-    // find visible portion by intersection with viewport borders in WCS
-    // coordinates
-    std::array<RS_Vector, 4> vertices = vpRect.vertices();
-    /** angles at cross points */
-    std::vector<double> crossPoints(0);
+  const double uiRadius = painter->toGuiDX((getRatio() > 1.) ? getMajorRadius() : getMinorRadius());
+  if (uiRadius <= double(RS_Painter::getMaximumArcNonErrorRadius())) {
+    const double majorPDegrees = RS_Math::rad2deg(getMajorP().angle());
+    if (isArc()) {
+      painter->drawEllipseArcWCS(getCenter(), getMajorRadius(), getRatio(), majorPDegrees,
+                                 RS_Math::rad2deg(getAngle1()),
+                                 RS_Math::rad2deg(getAngleLength()),
+                                 isReversed());
+    } else {
+      painter->drawEllipseWCS(getCenter(), getMajorRadius(), getRatio(), majorPDegrees);
 
-    double baseAngle = isReversed() ? getAngle2() : getAngle1();
-    for (size_t i = 0; i < vertices.size(); i++) {
-        RS_Line line{vertices.at(i), vertices.at((i + 1) % vertices.size())};
-        RS_VectorSolutions vpIts = RS_Information::getIntersection(this, &line, true);
-        if (vpIts.empty()) {
-            continue;
-        }
-        for (const RS_Vector& vp : vpIts) {
-            auto ap1 = getTangentDirection(vp).angle();
-            auto ap2 = line.getTangentDirection(vp).angle();
-            //ignore tangent points, because the arc doesn't cross over
-            if (std::abs(std::remainder(ap2 - ap1, M_PI)) > RS_TOLERANCE_ANGLE) {
-                crossPoints.push_back(RS_Math::getAngleDifference(baseAngle, getEllipseAngle(vp)));
-            }
-        }
     }
-    RS_Vector vpStart = isReversed() ? getEndpoint() : getStartpoint();
-    RS_Vector vpEnd = isReversed() ? getStartpoint() : getEndpoint();
-    if (vpRect.inArea(vpStart, RS_TOLERANCE)) {
-        crossPoints.push_back(0.);
-    }
-    if (vpRect.inArea(vpEnd, RS_TOLERANCE)) {
-        const bool isArc = !std::isnormal(getAngle1()) || std::abs(getAngle2() - getAngle1() - 2. * M_PI) > RS_TOLERANCE_ANGLE;
-        const double crossAngle = isArc ? RS_Math::getAngleDifference(baseAngle, isReversed() ? getAngle1() : getAngle2()) : 2. * M_PI;
-        crossPoints.push_back(crossAngle);
-    }
+    return;
+  }
 
-    //sorting
-    std::sort(crossPoints.begin(), crossPoints.end());
-    //draw visible
-
-    RS_Ellipse arc(*this);
-    arc.setSelectionFlag(isSelected()); // fixme - tmp angle?
-    arc.setPen(getPen());
-    arc.setReversed(false);
-    arc.calculateBorders();
-    // check for all arc segments to avoid possible tangential points as
-    // intersections. Around a tangential point, both segments could be within
-    // the viewport rectangular
-    for (size_t i = 1; i < crossPoints.size(); ++i) {
-        const RS_Vector& middlePoint = arc.getEllipsePoint(baseAngle + (crossPoints[i - 1] + crossPoints[i]) * 0.5);
-        // use the middle point to determine whether the arc is within the viewport
-        if (vpRect.inArea(middlePoint, RS_TOLERANCE)) {
-            arc.setAngle1(baseAngle + crossPoints[i - 1]);
-            arc.setAngle2(baseAngle + crossPoints[i]);
-            arc.drawVisible(painter);
-        }
-    }
+  RS_Vector startUi = painter->toGui(isArc() ? getStartpoint() : getCenter() + getMajorP());
+  QPointF startPos{startUi.x, startUi.y};
+  QPainterPath path(startPos);
+  path.moveTo(startPos);
+  createPainterPath(painter, path);
+  painter->drawPath(path);
 }
 
-/** directly draw the arc, assuming the whole arc is within visible window */
-void RS_Ellipse::drawVisible(RS_Painter* painter) const {
-    if (!isVisibleInWindow(*painter)) {
-        return;
-    }
-    double startAngle = RS_Math::rad2deg(getAngle1());
-    double endAngle = RS_Math::rad2deg(getAngle2());
-    const double angularLength = RS_Math::rad2deg(getAngleLength());
-    if (m_data.reversed) {
-        std::swap(startAngle, endAngle);
-    }
-    painter->drawEllipseArcWCS(m_data.center, getMajorRadius(), m_data.ratio, m_data.angleDegrees, startAngle, endAngle, angularLength, false);
-}
-
-bool RS_Ellipse::isVisibleInWindow(const RS_Painter& painter) const {
-    const LC_Rect& vpRect = painter.getWcsBoundingRect();
-    return LC_Rect{getMin(), getMax()}.overlaps(vpRect);
+void RS_Ellipse::createPainterPath(RS_Painter* painter, QPainterPath& path) const {
+    double baseAngle = getAngle1();
+    double fullAngleLength = isArc() ? getAngleLength() : 2 * M_PI;
+    if (isArc() && isReversed())
+        fullAngleLength = - fullAngleLength;
+    auto getParamFunc = [this](const RS_Vector& vp) { return getEllipseAngle(vp); };
+    auto getPointFunc = [this](double param) { return getEllipsePoint(param); };
+    painter->pathForEntity(path, this, baseAngle, fullAngleLength, getParamFunc, getPointFunc, getMajorRadius());
 }
 
 /**

@@ -33,7 +33,7 @@ protected:
     void createBoxPolyline(const RS_Vector &selectionMin, const RS_Vector &selectionMax,QList<RS_Entity*> &entitiesList ) const;
     LC_ActionOptionsWidget *createOptionsWidget() override;
     LC_ActionOptionsPropertiesFiller* createOptionsFiller() override;
-    void updateMouseButtonHintsForSelection() override;
+    void updateActionPromptForSelection() override;
     bool isAllowTriggerOnEmptySelection() override;
     bool doUpdateDistanceByInteractiveInput(const QString& tag, double distance) override;
     void doTriggerCompletion(bool success) override;

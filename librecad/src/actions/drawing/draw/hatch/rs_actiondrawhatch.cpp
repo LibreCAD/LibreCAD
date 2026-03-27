@@ -181,7 +181,7 @@ bool RS_ActionDrawHatch::isEntityAllowedToSelect(RS_Entity *ent) const {
     return hatchAble(ent);
 }
 
-void RS_ActionDrawHatch::updateMouseButtonHintsForSelection() {
+void RS_ActionDrawHatch::updateActionPromptForSelection() {
     updatePromptTRCancel(tr("Select to hatch") + getSelectionCompletionHintMsg(), MOD_CTRL(tr("Hatch immediately after selection")));
 }
 

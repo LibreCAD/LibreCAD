@@ -50,6 +50,6 @@ void LC_ActionModifyExplodeText::doTriggerSelectionUpdate(const bool keepSelecte
     }
 }
 
-void LC_ActionModifyExplodeText::updateMouseButtonHintsForSelection() {
+void LC_ActionModifyExplodeText::updateActionPromptForSelection() {
     updatePromptTRCancel(tr("Select to explode text") + getSelectionCompletionHintMsg(), MOD_CTRL(tr("Explode immediately after selection")));
 }

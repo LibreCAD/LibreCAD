@@ -123,7 +123,7 @@ public:
     void addBlockNotification() {m_blockList.addNotification();}
     void removeBlock(RS_Block* block) {m_blockList.remove(block);}
     RS_Block* findBlock(const QString& name) {return m_blockList.find(name);}
-    QString newBlockName() {return m_blockList.newName();}
+    QString newBlockName(const QString& suggestion = {}) {return m_blockList.newName(suggestion);}
     void toggleBlock(const QString& name) {m_blockList.toggle(name);}
     void toggleBlock(RS_Block* block) {m_blockList.toggle(block);}
     void freezeAllBlocks(const bool freeze) {m_blockList.freezeAll(freeze);}

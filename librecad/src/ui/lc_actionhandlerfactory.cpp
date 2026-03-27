@@ -143,6 +143,7 @@
 #include "lc_actiondimordinaterebase.h"
 #include "lc_actiondimstyleapply.h"
 #include "lc_actiondrawdimbaseline.h"
+#include "lc_actiondrawdual.h"
 #include "lc_actiondrawgdtfeaturecontrolframe.h"
 #include "lc_actiondrawhyperbolafp.h"
 #include "lc_actiondrawparabola4points.h"
@@ -646,6 +647,9 @@ namespace InnerFactory{
             }
             case RS2::ActionDrawImage: {
                 return new LC_ActionDrawImage(ctx);
+            }
+            case RS2::ActionDrawDual: {
+                return new LC_ActionDrawDual(ctx);
             }
             case RS2::ActionDimAligned: {
                 return new RS_ActionDimAligned(ctx);

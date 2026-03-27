@@ -23,6 +23,7 @@
 
 #include "lc_propertieseditingwidget_parabola.h"
 
+#include <array>
 #include <QStandardItemModel>
 
 #include "lc_parabola.h"
@@ -46,9 +47,9 @@ void LC_PropertiesEditingWidgetParabola::setEntity(RS_Entity* entity) {
 }
 
 void LC_PropertiesEditingWidgetParabola::updatePoints(){
-    const auto& bData = m_entity->getParabolaData();
-    const auto& pts = bData.controlPoints;
-    const auto model = new QStandardItemModel(pts.size(), 2, this);
+    const LC_ParabolaData& bData = m_entity->getData();
+    const std::array<RS_Vector, 3>& pts = bData.m_controlPoints;
+    auto model = new QStandardItemModel(pts.size(), 2, this);
     model->setHorizontalHeaderLabels({"x", "y"});
 
     //set control data
@@ -92,7 +93,7 @@ void LC_PropertiesEditingWidgetParabola::updateEntityData() {
         RS_DIALOGFACTORY->commandMessage(tr("Parabola control points cannot be collinear"));
         return;
     }
-    auto& d = m_entity->getParabolaData();
-    d.controlPoints = vps;
+    auto& d = m_entity->getData();
+    d.m_controlPoints = vps;
     m_entity->update();
 }

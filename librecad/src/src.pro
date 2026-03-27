@@ -57,7 +57,7 @@ unix {
         TARGET = LibreCAD
         VERSION=$$system(echo "$${LC_VERSION}" | sed -e 's/\-.*//g')
         QMAKE_INFO_PLIST = Info.plist.app
-        DEFINES += QC_APPDIR="\"LibreCAD\""
+        DEFINES += QC_APPDIR=\\\"LibreCAD\\\"
         ICON = ../res/images/librecad.icns
         contains(DISABLE_POSTSCRIPT, false) {
             QMAKE_POST_LINK = /bin/sh $$_PRO_FILE_PWD_/../../scripts/postprocess-osx.sh $$OUT_PWD/$${DESTDIR}/$${TARGET}.app/ $$[QT_INSTALL_BINS];
@@ -66,7 +66,7 @@ unix {
     }
     else {
         TARGET = librecad
-        DEFINES += QC_APPDIR="\"librecad\""
+        DEFINES += QC_APPDIR=\\\"librecad\\\"
         RC_FILE = ../res/images/librecad.icns
         contains(DISABLE_POSTSCRIPT, false) {
             QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-unix.sh
@@ -76,9 +76,9 @@ unix {
 }
 win32 {
     TARGET = LibreCAD
+    DEFINES += QC_APPDIR=\\\"librecad\\\"
 
     CONFIG += console
-    DEFINES += QC_APPDIR="\"LibreCAD\""
 
     # add MSYSGIT_DIR = PathToGitBinFolder (without quotes) in custom.pro file, for commit hash in about dialog
     !isEmpty( MSYSGIT_DIR ) {
@@ -273,18 +273,18 @@ INCLUDEPATH += \
     ui/dock_widgets/property_sheet/metaentity/entities \
     ui/dock_widgets/property_sheet/metaentity/entities/document \
     ui/dock_widgets/property_sheet/properties \
-    ui/dock_widgets/property_sheet/properties/action \    
-    ui/dock_widgets/property_sheet/properties/bool \    
-    ui/dock_widgets/property_sheet/properties/color \    
-    ui/dock_widgets/property_sheet/properties/double \    
-    ui/dock_widgets/property_sheet/properties/enum \    
-    ui/dock_widgets/property_sheet/properties/int \    
-    ui/dock_widgets/property_sheet/properties/layer \    
-    ui/dock_widgets/property_sheet/properties/linetype \    
-    ui/dock_widgets/property_sheet/properties/linewidth \    
+    ui/dock_widgets/property_sheet/properties/action \
+    ui/dock_widgets/property_sheet/properties/bool \
+    ui/dock_widgets/property_sheet/properties/color \
+    ui/dock_widgets/property_sheet/properties/double \
+    ui/dock_widgets/property_sheet/properties/enum \
+    ui/dock_widgets/property_sheet/properties/int \
+    ui/dock_widgets/property_sheet/properties/layer \
+    ui/dock_widgets/property_sheet/properties/linetype \
+    ui/dock_widgets/property_sheet/properties/linewidth \
     ui/dock_widgets/property_sheet/properties/rect \
     ui/dock_widgets/property_sheet/properties/rsvector \
-    ui/dock_widgets/property_sheet/properties/string \    
+    ui/dock_widgets/property_sheet/properties/string \
     ui/dock_widgets/views_list \
     ui/dock_widgets/ucs_list \
     ui/dock_widgets/workspaces \
@@ -371,6 +371,7 @@ HEADERS += \
     actions/drawing/selection/lc_action_select_generic.h \
     lib/actions/lc_actioninfomessagebuilder.h \
     lib/actions/lc_overlayboxaction.h \
+    lib/engine/document/container/lc_pathbuilder.h \
     lib/actions/lc_undoabledocumentmodificationaction.h \
     lib/actions/lc_action_options_base.h \
     lib/actions/lc_visual_snap_manager.h \
@@ -522,6 +523,7 @@ HEADERS += \
     lib/gui/lc_latecompletionrequestor.h \
     lib/gui/render/headless/lc_printviewportrenderer.h \
     lib/gui/render/lc_graphicviewportrenderer.h \
+    lib/math/lc_quadraticutils.h \
     lib/modification/lc_division.h \
     lib/modification/lc_copyutils.h \
     plugins/lc_plugininvoker.h \
@@ -555,7 +557,7 @@ HEADERS += \
     ui/dialogs/entity/lc_propertieseditingwidget_point.h \
     ui/dialogs/entity/lc_propertieseditingwidget_polyline.h \
     ui/dialogs/entity/lc_propertieseditingwidget_spline.h \
-    ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.h \    
+    ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.h \
     ui/dialogs/file/export/image/lc_exporttoimageservice.h \
     ui/dialogs/file/export/layers/lc_exportlayersdialogservice.h \
     ui/dialogs/lc_inputtextdialog.h \
@@ -574,7 +576,7 @@ HEADERS += \
     ui/dialogs/file/export/layers/lc_layerexportoptions.h \
     ui/dock_widgets/lc_dockwidget.h \
     ui/dock_widgets/lc_graphicviewawarewidget.h \
-    ui/dock_widgets/lc_widgets_common.h \    
+    ui/dock_widgets/lc_widgets_common.h \
     ui/lc_actionhandlerfactory.h \
     ui/lc_graphicviewaware.h \
     ui/lc_snapmanager.h \
@@ -642,7 +644,7 @@ HEADERS += \
     lib/gui/rs_commandevent.h \
     lib/gui/rs_coordinateevent.h \
     lib/gui/rs_dialogfactory.h \
-    lib/gui/rs_dialogfactoryinterface.h \    
+    lib/gui/rs_dialogfactoryinterface.h \
     lib/gui/rs_graphicview.h \
     lib/gui/grid/rs_grid.h \
     lib/gui/rs_linetypepattern.h \
@@ -678,7 +680,7 @@ HEADERS += \
     lib/selection/metaentity/entities/lc_matchdescriptor_arc.h           \
     lib/selection/metaentity/entities/lc_matchdescriptor_polyline.h      \
     lib/selection/metaentity/entities/lc_matchdescriptor_spline.h        \
-    lib/selection/metaentity/entities/lc_matchdescriptor_hatch.h         \        
+    lib/selection/metaentity/entities/lc_matchdescriptor_hatch.h         \
     lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.h     \
     lib/selection/metaentity/entities/lc_matchdescriptor_insert.h        \
     lib/selection/metaentity/entities/lc_matchdescriptor_text.h          \
@@ -762,7 +764,7 @@ HEADERS += \
     ui/dock_widgets/property_sheet/lib/widgets/lc_property_combobox.h \
     ui/dock_widgets/property_sheet/properties/lc_property_view_registrator.h \
     ui/dock_widgets/property_sheet/properties/lc_entitypropertyvaluedelegate.h \
-    ui/dock_widgets/property_sheet/properties/action/lc_property_action.h \    
+    ui/dock_widgets/property_sheet/properties/action/lc_property_action.h \
     ui/dock_widgets/property_sheet/properties/action/lc_property_action_link_view.h \
     ui/dock_widgets/property_sheet/properties/bool/lc_property_bool.h \
     ui/dock_widgets/property_sheet/properties/bool/lc_property_bool_checkbox_view.h \
@@ -820,7 +822,7 @@ HEADERS += \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.h \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.h \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.h \
-    ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.h \    
+    ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.h \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hyperbola.h \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.h \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.h \
@@ -894,6 +896,7 @@ SOURCES += \
     actions/drawing/selection/lc_action_select_generic.cpp \
     lib/actions/lc_actioninfomessagebuilder.cpp \
     lib/actions/lc_overlayboxaction.cpp \
+    lib/engine/document/container/lc_pathbuilder.cpp \
     lib/actions/lc_undoabledocumentmodificationaction.cpp \
     lib/engine/document/dimstyles/lc_dimstyle.cpp \
     lib/engine/document/dimstyles/lc_dimstyleslist.cpp \
@@ -942,6 +945,7 @@ SOURCES += \
     lib/gui/lc_eventhandler.cpp \
     lib/gui/lc_graphicviewport.cpp \
     lib/gui/render/headless/lc_printviewportrenderer.cpp \
+    lib/math/lc_quadraticutils.cpp \
     lib/modification/lc_division.cpp \
     lib/modification/lc_copyutils.cpp \
     plugins/lc_plugininvoker.cpp \
@@ -992,10 +996,10 @@ SOURCES += \
     ui/dialogs/settings/options_drawing/lc_dlgnewcustomvariable.cpp \
     ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp \
     ui/dialogs/settings/options_widget/lc_dlgiconssetup.cpp \
-    ui/dialogs/file/export/layers/lc_layerexportoptions.cpp \    
+    ui/dialogs/file/export/layers/lc_layerexportoptions.cpp \
     ui/dock_widgets/cad/lc_caddockwidget.cpp \
     ui/dock_widgets/lc_dockwidget.cpp \
-    ui/dock_widgets/lc_graphicviewawarewidget.cpp \    
+    ui/dock_widgets/lc_graphicviewawarewidget.cpp \
     ui/lc_actionhandlerfactory.cpp \
     ui/lc_snapmanager.cpp \
     ui/lc_uiutils.cpp \
@@ -1286,6 +1290,7 @@ HEADERS += actions/dock_widgets/block/rs_actionblocksadd.h \
     actions/drawing/draw/arc/lc_action_draw_arc_3points.h \
     actions/drawing/draw/arc/lc_action_draw_arc_tangential.h \
     actions/drawing/draw/curve/lc_action_draw_line_freehand.h \
+    actions/drawing/draw/curve/lc_actiondrawdual.h \
     actions/drawing/draw/spline/lc_action_draw_spline.h \
     actions/drawing/draw/dimensions/lc_actiondimarc.h \
     actions/drawing/draw/dimensions/lc_actiondimlinearbase.h \
@@ -1387,7 +1392,7 @@ HEADERS += actions/dock_widgets/block/rs_actionblocksadd.h \
     actions/drawing/pen/lc_actionpensyncactivebylayer.h \
     actions/drawing/rel_zero/rs_actionlockrelativezero.h \
     actions/drawing/rel_zero/rs_actionsetrelativezero.h \
-    actions/drawing/rs_actiondefault.h \    
+    actions/drawing/rs_actiondefault.h \
     actions/drawing/selection/lc_action_select_all.h \
     lib/actions/rs_actionselectbase.h \
     actions/drawing/selection/lc_action_select_contour.h \
@@ -1406,7 +1411,7 @@ HEADERS += actions/dock_widgets/block/rs_actionblocksadd.h \
     actions/drawing/zoom/rs_actionzoomredraw.h \
     actions/drawing/zoom/rs_actionzoomscroll.h \
     actions/drawing/zoom/rs_actionzoomwindow.h \
-    actions/file/lc_actionfileexportmakercam.h \    
+    actions/file/lc_actionfileexportmakercam.h \
     actions/options/rs_actionoptionsdrawing.h \
     actions/print_preview/rs_actionprintpreview.h
 
@@ -1445,12 +1450,13 @@ SOURCES += actions/dock_widgets/block/rs_actionblocksadd.cpp \
     actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp \
     actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp \
     actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp \
-    actions/drawing/draw/spline/lc_action_draw_spline_points.cpp \
-    actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp \
-    actions/drawing/draw/arc/lc_action_draw_arc_3points.cpp \
-    actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp \
-    actions/drawing/draw/curve/lc_action_draw_line_freehand.cpp \
-    actions/drawing/draw/spline/lc_action_draw_spline.cpp \
+    actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp \
+    actions/drawing/draw/curve/rs_actiondrawarc.cpp \
+    actions/drawing/draw/curve/rs_actiondrawarc3p.cpp \
+    actions/drawing/draw/curve/rs_actiondrawarctangential.cpp \
+    actions/drawing/draw/curve/rs_actiondrawlinefree.cpp \
+    actions/drawing/draw/curve/lc_actiondrawdual.cpp \
+    actions/drawing/draw/spline/rs_actiondrawspline.cpp \
     actions/drawing/draw/dimensions/lc_actiondimarc.cpp \
     actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp \
     actions/drawing/draw/dimensions/rs_actiondimaligned.cpp \
@@ -1551,7 +1557,7 @@ SOURCES += actions/dock_widgets/block/rs_actionblocksadd.cpp \
     actions/drawing/pen/lc_actionpensyncactivebylayer.cpp \
     actions/drawing/rel_zero/rs_actionlockrelativezero.cpp \
     actions/drawing/rel_zero/rs_actionsetrelativezero.cpp \
-    actions/drawing/rs_actiondefault.cpp \    
+    actions/drawing/rs_actiondefault.cpp \
     actions/drawing/selection/lc_action_select_all.cpp \
     lib/actions/rs_actionselectbase.cpp \
     actions/drawing/selection/lc_action_select_contour.cpp \
@@ -1715,14 +1721,14 @@ HEADERS += ui/action_options/lc_action_options_manager.h \
     ui/components/textfileviewer.h \
     ui/components/toolbars/qg_pentoolbar.h \
     ui/components/toolbars/qg_snaptoolbar.h \
-    ui/dialogs/actions/quick_selection/lc_dlgquickselection.h \    
-    ui/dialogs/actions/qg_layerdialog.h \    
+    ui/dialogs/actions/quick_selection/lc_dlgquickselection.h \
+    ui/dialogs/actions/qg_layerdialog.h \
     ui/dialogs/entity/qg_blockdialog.h \
-    ui/dialogs/entity/qg_dimensionlabeleditor.h \    
+    ui/dialogs/entity/qg_dimensionlabeleditor.h \
     ui/dialogs/entity/qg_dlg_attributes.h \
     ui/dialogs/entity/lc_dlg_tolerance.h \
     ui/dialogs/entity/qg_dlg_hatch.h \
-    ui/dialogs/file/export/image/qg_dlgimageoptions.h \    
+    ui/dialogs/file/export/image/qg_dlgimageoptions.h \
     ui/dialogs/entity/qg_dlg_mtext.h \
     ui/dialogs/entity/qg_dlg_text.h \
     ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.h \
@@ -1770,7 +1776,7 @@ HEADERS += ui/action_options/lc_action_options_manager.h \
     ui/dock_widgets/pen_palette/lc_penpalettewidget.h \
     ui/dock_widgets/pen_wizard/colorcombobox.h \
     ui/dock_widgets/pen_wizard/colorwizard.h \
-    ui/dock_widgets/pen_wizard/lc_penwizard.h \    
+    ui/dock_widgets/pen_wizard/lc_penwizard.h \
     ui/main/init/lc_actionfactory.h \
     ui/main/init/lc_widgetfactory.h \
     ui/main/init/lc_menufactory.h \
@@ -1781,7 +1787,7 @@ HEADERS += ui/action_options/lc_action_options_manager.h \
     ui/main/mainwindowx.h \
     ui/main/qc_applicationwindow.h \
     ui/main/qc_mdiwindow.h \
-    ui/main/support/qg_recentfiles.h\   
+    ui/main/support/qg_recentfiles.h\
     ui/qg_actionhandler.h \
     ui/view/lc_centralwidget.h \
     ui/view/qg_graphicview.h
@@ -1920,13 +1926,13 @@ SOURCES +=  ui/action_options/circle/lc_circle_by_arc_options_widget.cpp \
     ui/components/textfileviewer.cpp \
     ui/components/toolbars/qg_pentoolbar.cpp \
     ui/components/toolbars/qg_snaptoolbar.cpp \
-    ui/dialogs/actions/quick_selection/lc_dlgquickselection.cpp \    
-    ui/dialogs/actions/qg_layerdialog.cpp \    
+    ui/dialogs/actions/quick_selection/lc_dlgquickselection.cpp \
+    ui/dialogs/actions/qg_layerdialog.cpp \
     ui/dialogs/entity/qg_blockdialog.cpp \
-    ui/dialogs/entity/qg_dimensionlabeleditor.cpp \    
+    ui/dialogs/entity/qg_dimensionlabeleditor.cpp \
     ui/dialogs/entity/qg_dlg_attributes.cpp \
     ui/dialogs/entity/qg_dlg_hatch.cpp \
-    ui/dialogs/file/export/image/qg_dlgimageoptions.cpp \    
+    ui/dialogs/file/export/image/qg_dlgimageoptions.cpp \
     ui/dialogs/entity/qg_dlg_mtext.cpp \
     ui/dialogs/entity/qg_dlg_text.cpp \
     ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp \
@@ -1974,7 +1980,7 @@ SOURCES +=  ui/action_options/circle/lc_circle_by_arc_options_widget.cpp \
     ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp \
     ui/dock_widgets/pen_wizard/colorcombobox.cpp \
     ui/dock_widgets/pen_wizard/colorwizard.cpp \
-    ui/dock_widgets/pen_wizard/lc_penwizard.cpp \    
+    ui/dock_widgets/pen_wizard/lc_penwizard.cpp \
     ui/dock_widgets/property_sheet/lib/properties/lc_property.cpp \
     ui/dock_widgets/property_sheet/lib/properties/lc_property_atomic.cpp \
     ui/dock_widgets/property_sheet/lib/properties/lc_property_container.cpp \
@@ -2002,13 +2008,13 @@ SOURCES +=  ui/action_options/circle/lc_circle_by_arc_options_widget.cpp \
     ui/dock_widgets/property_sheet/lib/widgets/sheet/lc_properties_sheet_model.cpp \
     ui/dock_widgets/property_sheet/lib/widgets/sheet/lc_properties_sheet.cpp \
     ui/dock_widgets/property_sheet/lib/widgets/sheet/lc_properties_sheet_panel.cpp \
-    ui/dock_widgets/property_sheet/lib/widgets/lc_property_double_spinbox.cpp \    
+    ui/dock_widgets/property_sheet/lib/widgets/lc_property_double_spinbox.cpp \
     ui/dock_widgets/property_sheet/lib/widgets/lc_property_lineedit_with_button.cpp \
     ui/dock_widgets/property_sheet/lib/widgets/lc_multilinetexteditdialog.cpp \
     ui/dock_widgets/property_sheet/lib/widgets/lc_property_label_with_button.cpp \
     ui/dock_widgets/property_sheet/lib/widgets/lc_property_combobox.cpp \
     ui/dock_widgets/property_sheet/properties/lc_property_view_registrator.cpp \
-    ui/dock_widgets/property_sheet/properties/action/lc_property_action.cpp \    
+    ui/dock_widgets/property_sheet/properties/action/lc_property_action.cpp \
     ui/dock_widgets/property_sheet/properties/action/lc_property_action_link_view.cpp \
     ui/dock_widgets/property_sheet/properties/bool/lc_property_bool_checkbox_view.cpp \
     ui/dock_widgets/property_sheet/properties/bool/lc_property_bool_combobox_view.cpp \
@@ -2051,7 +2057,7 @@ SOURCES +=  ui/action_options/circle/lc_circle_by_arc_options_widget.cpp \
     ui/dock_widgets/property_sheet/metaentity/lc_property_container_builder.cpp \
     ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp \
-    ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp \    
+    ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp \
     ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp \
@@ -2085,7 +2091,7 @@ SOURCES +=  ui/action_options/circle/lc_circle_by_arc_options_widget.cpp \
     ui/main/mainwindowx.cpp \
     ui/main/qc_applicationwindow.cpp \
     ui/main/qc_mdiwindow.cpp \
-    ui/main/support/qg_recentfiles.cpp \  
+    ui/main/support/qg_recentfiles.cpp \
     ui/qg_actionhandler.cpp \
     ui/view/lc_centralwidget.cpp \
     ui/view/qg_graphicview.cpp
@@ -2171,7 +2177,7 @@ FORMS = ui/action_options/circle/lc_circle_by_arc_options_widget.ui \
        ui/components/status_bar/qg_mousewidget.ui \
        ui/components/status_bar/qg_selectionwidget.ui \
        ui/components/textfileviewer.ui \
-       ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui \      
+       ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui \
        ui/dialogs/actions/qg_layerdialog.ui \
        ui/dialogs/creators/lc_dlg_new_widget.ui \
        ui/dialogs/entity/lc_propertieseditingwidget_arc.ui \
@@ -2191,10 +2197,10 @@ FORMS = ui/action_options/circle/lc_circle_by_arc_options_widget.ui \
        ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui \
        ui/dialogs/entity/lc_propertieseditingwidget_spline.ui \
        ui/dialogs/entity/qg_blockdialog.ui \
-       ui/dialogs/entity/qg_dimensionlabeleditor.ui \       
+       ui/dialogs/entity/qg_dimensionlabeleditor.ui \
        ui/dialogs/entity/qg_dlg_attributes.ui \
        ui/dialogs/entity/qg_dlg_hatch.ui \
-       ui/dialogs/file/export/image/qg_dlgimageoptions.ui \       
+       ui/dialogs/file/export/image/qg_dlgimageoptions.ui \
        ui/dialogs/entity/qg_dlg_mtext.ui \
        ui/dialogs/entity/qg_dlg_text.ui \
        ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui \
@@ -2218,7 +2224,7 @@ FORMS = ui/action_options/circle/lc_circle_by_arc_options_widget.ui \
        ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui \
        ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui \
        ui/dialogs/file/export/layers/lc_layerexportoptions.ui \
-       ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui \       
+       ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui \
        ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui \
        ui/dock_widgets/pen_palette/lc_penpalettewidget.ui \
        ui/dock_widgets/pen_wizard/colorwizard.ui \
@@ -2303,7 +2309,7 @@ TRANSLATIONS = \
     ../ts/librecad_he.ts \
     ../ts/librecad_hi.ts \
     ../ts/librecad_hu.ts \
-    ../ts/librecad_id_ID.ts \
+    ../ts/librecad_id_id.ts \
     ../ts/librecad_it.ts \
     ../ts/librecad_ja.ts \
     ../ts/librecad_ka.ts \

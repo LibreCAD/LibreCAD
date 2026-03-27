@@ -63,7 +63,7 @@ void LC_RotateOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* cont
                    return action->isRelativeAngle();
                }, [action](bool val)-> void {
                    action->setRelativeAngle(val);
-               }, container, [action](LC_PropertyViewDescriptor& d) {
+               }, container, [action]([[maybe_unused]]LC_PropertyViewDescriptor& d) {
                    return !action->isFreeAngle();
                });
 
@@ -82,7 +82,7 @@ void LC_RotateOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* cont
                    return action->isFreeRefPointAngle();
                }, [action](bool val)-> void {
                    action->setFreeRefPointAngle(val);
-               }, container, [action](LC_PropertyViewDescriptor& d) {
+               }, container, [action]([[maybe_unused]]LC_PropertyViewDescriptor& d) {
                    return !action->isRotateAlsoAroundReferencePoint();
                });
 
@@ -100,7 +100,7 @@ void LC_RotateOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* cont
                       return action->isRefPointAngleAbsolute();
                   }, [action](bool val)-> void {
                       action->setRefPointAngleAbsolute(val);
-                  }, container, [action](LC_PropertyViewDescriptor& d) {
+                  }, container, [action]([[maybe_unused]]LC_PropertyViewDescriptor& d) {
                       return !action->isRotateAlsoAroundReferencePoint();
                   });
 

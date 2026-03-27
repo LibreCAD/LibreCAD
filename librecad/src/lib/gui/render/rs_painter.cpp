@@ -758,20 +758,18 @@ void RS_Painter::drawEllipseUI(const RS_Vector& uiCenter, const RS_Vector& uiRad
     }
 }
 
-void RS_Painter::drawEllipseArcWCS(const RS_Vector& wcsCenter, const double wcsMajorRadius, const double ratio,
-                                   const double wcsAngleDegrees, const double angle1Degrees, const double angle2Degrees,
-                                   const double angularLength, const bool reversed) {
+void RS_Painter::drawEllipseArcWCS(const RS_Vector& wcsCenter, double wcsMajorRadius, double ratio, double wcsAngleDegrees,
+                                   double angle1Degrees, double angularLength, bool reversed) {
     double uiMajorRadius = toGuiDX(wcsMajorRadius);
     double uiMinorRadius = ratio * uiMajorRadius;
 
     const RS_Vector uiCenter = toGui(wcsCenter);
-    const double uiAngleDegrees = toUCSAngleDegrees(wcsAngleDegrees);
-    drawEllipseArcUI(uiCenter, {uiMajorRadius, uiMinorRadius}, uiAngleDegrees, angle1Degrees, angle2Degrees, angularLength, reversed);
+    double uiAngleDegrees = toUCSAngleDegrees(wcsAngleDegrees);
+    drawEllipseArcUI(uiCenter, {uiMajorRadius, uiMinorRadius}, uiAngleDegrees, angle1Degrees, angularLength, reversed);
 }
 
-void RS_Painter::drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& uiRadii, const double uiMajorAngleDegrees,
-                                  const double angle1Degrees, [[maybe_unused]] double angle2Degrees, const double angularLength,
-                                  [[maybe_unused]] bool reversed) {
+void RS_Painter::drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& uiRadii, double uiMajorAngleDegrees,
+                                   double angle1Degrees, double angularLength, bool reversed) {
     // TODO - it also should be refactored to be consistent with drawEllipseUI()
     if (std::max(uiRadii.x, uiRadii.y) < m_minEllipseMajorRadius) {
         QPainter::drawPoint(QPointF(uiCenter.x, uiCenter.y));
@@ -792,7 +790,8 @@ void RS_Painter::drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& ui
         const bool useSpline = std::max(uiRadii.x, uiRadii.y) > getMaximumArcNonErrorRadius();
 
         QPainterPath path;
-        addEllipseArcToPath(path, uiRadii, angle1Degrees, angularLength, useSpline);
+        double startDegrees = reversed ? angle1Degrees - angularLength : angle1Degrees;
+        addEllipseArcToPath(path, uiRadii, startDegrees, angularLength, useSpline);
         QPainter::drawPath(path);
     }
 }
@@ -840,89 +839,109 @@ void RS_Painter::drawEllipseSegmentBySplinePointsUI(const RS_Vector& uiRadii, co
     addSplinePointsToPath(spline.getData().controlPoints, closed, path);
 }
 
-void RS_Painter::drawEllipseBySplinePointsUI(const RS_Ellipse& ellipse, QPainterPath& path) const {
-    const RS_Vector uiRadii{toGuiDX(ellipse.getMajorRadius()), toGuiDY(ellipse.getMinorRadius())};
-    const double r = std::max(uiRadii.x, uiRadii.y);
-    // maximum angular step size: using this angular step size keeps the maximum
-    // deviation of an arc from its parabola fitting
-    const double dParam = std::pow(1. / 32. / r, 1. / 4.);
-    const double lenRad = ellipse.getAngleLength();
-    int numSegments = std::max(1, static_cast<int>(std::ceil(std::abs(lenRad) / dParam)));
-    // Avoid performance issue: too many points when zoomed in
-    // The maximum rendering error is relaxed
-    numSegments = std::min(numSegments, 24);
-    // Don't duplicate first point for closed
-    const bool closed = !ellipse.isEllipticArc();
-    const int numPoints = closed ? numSegments : numSegments + 1;
-    const double delta = lenRad / numSegments;
+
+void RS_Painter::drawEllipseBySplinePointsUI(const RS_Ellipse& ellipse, QPainterPath &path) const
+{
+  RS_Vector uiRadii{toGuiDX(ellipse.getMajorRadius()), toGuiDY(ellipse.getMinorRadius())};
+  double r = std::max(uiRadii.x, uiRadii.y);
+  // maximum angular step size: using this angular step size keeps the maximum
+  // deviation of an arc from its parabola fitting
+  const double dParam = std::pow(1./32. / r, 1. / 4.);
+  double lenRad = ellipse.getAngleLength();
+  int numSegments = std::max(1, int(std::ceil(std::abs(lenRad) / dParam)));
+  // Avoid performance issue: too many points when zoomed in
+  // The maximum rendering error is relaxed
+  numSegments = std::min(numSegments, 24);
+  // Don't duplicate first point for closed
+  const bool closed = !ellipse.isEllipticArc();
+  int numPoints = closed ? numSegments : numSegments + 1;
+  double delta = ellipse.isReversed() ? - lenRad / numSegments : lenRad / numSegments;
 
     LC_SplinePointsData data;
     data.closed = closed;
 
-    double param = ellipse.isReversed() ? ellipse.getAngle1() : ellipse.getAngle2();
-    const RS_Vector rotation{-ellipse.getMajorP().angle()};
-    const RS_Vector uiCenter = toGui(ellipse.getCenter());
+  double param = ellipse.getAngle1();
+  RS_Vector rotation{ellipse.getMajorP().angle()};
+  RS_Vector center = ellipse.getCenter();
 
-    const RS_Vector scaleXY{uiRadii.x, -uiRadii.y};
-    for (int i = 0; i < numPoints; ++i) {
-        data.splinePoints.push_back(RS_Vector{param}.scale(scaleXY).rotate(rotation).move(uiCenter));
-        param += delta;
-    }
+  const RS_Vector scaleXY(ellipse.getMajorRadius(), ellipse.getMinorRadius());
+  for (int i = 0; i < numPoints; ++i) {
+    const RS_Vector ellipsePoint = RS_Vector{param}.scale(scaleXY).rotate(rotation).move(center);
+    data.splinePoints.push_back(toGui(ellipsePoint));
+    LC_ERR<<"Ellipse Point: param="<<param<<" , "<<ellipsePoint;
+    param += delta;
+  }
 
     LC_SplinePoints spline(nullptr, data);
     addSplinePointsToPath(spline.getData().controlPoints, ellipse.isEllipticArc(), path);
 }
 
-void RS_Painter::addSplinePointsToPath(const std::vector<RS_Vector>& uiControlPoints, const bool closed, QPainterPath& path) const {
-    const size_t n = uiControlPoints.size();
-    if (n < 2) {
+void RS_Painter::addSplinePointsToPath(const std::vector<RS_Vector> &uiControlPoints, bool closed, QPainterPath &qPath) const
+{
+    size_t n = uiControlPoints.size();
+    if(n < 2){
         return;
     }
 
     RS_Vector vStart = uiControlPoints.front();
+    RS_Vector vControl(false), vEnd(false);
 
-    if (closed) {
-        if (n < 3) {
-            return;
-        }
-        const RS_Vector& cp0 = uiControlPoints[0];
-        const RS_Vector& cpNMinus1 = uiControlPoints[n - 1];
-        vStart = (cpNMinus1 + cp0) / 2.0;
-        path.moveTo(QPointF(vStart.x, vStart.y));
+#ifdef DEBUG_RENDER_SPLINEPOINTS
+    drawPointEntityUI(vStart.x, vStart.y, 2, 15);
+#endif
 
-        RS_Vector vEnd = (cp0 + uiControlPoints[1]) / 2.0;
-        path.quadTo(QPointF(cp0.x, cp0.y), QPointF(vEnd.x, vEnd.y));
-
-        for (size_t i = 1; i < n - 1; i++) {
-            const RS_Vector& cpi = uiControlPoints[i];
-            vEnd = (cpi + uiControlPoints[i + 1]) / 2.0;
-            path.quadTo(QPointF(cpi.x, cpi.y), QPointF(vEnd.x, vEnd.y));
-        }
-        path.quadTo(QPointF(cpNMinus1.x, cpNMinus1.y), QPointF(vStart.x, vStart.y));
-    }
-    else {
-        path.moveTo(QPointF(vStart.x, vStart.y));
-        const RS_Vector& cp1 = uiControlPoints[1];
-        if (n < 3) {
-            path.lineTo(QPointF(cp1.x, cp1.y));
+    if(closed){
+        if(n < 3){
+            qPath.lineTo(QPointF(uiControlPoints[1].x, uiControlPoints[1].y));
         }
         else {
-            const RS_Vector& cp2 = uiControlPoints[2];
+            const RS_Vector &cp0 = uiControlPoints[0];
+            const RS_Vector &cpNMinus1 = uiControlPoints[n - 1];
+            vStart = (cpNMinus1 + cp0) / 2.0;
+            qPath.moveTo(QPointF(vStart.x, vStart.y));
+
+            vEnd = (cp0 + uiControlPoints[1]) / 2.0;
+            qPath.quadTo(QPointF(cp0.x, cp0.y), QPointF(vEnd.x, vEnd.y));
+
+            for (size_t i = 1; i < n - 1; i++) {
+                const RS_Vector &cpi = uiControlPoints[i];
+                vEnd = (cpi + uiControlPoints[i + 1]) / 2.0;
+                qPath.quadTo(QPointF(cpi.x, cpi.y), QPointF(vEnd.x, vEnd.y));
+            }
+            qPath.quadTo(QPointF(cpNMinus1.x, cpNMinus1.y), QPointF(vStart.x, vStart.y));
+        }
+    }
+    else {
+        const RS_Vector &cp1 = uiControlPoints[1];
+        if(n < 3) {
+            qPath.lineTo(QPointF(cp1.x, cp1.y));
+        }
+        else {
+            const RS_Vector &cp2 = uiControlPoints[2];
             if (n < 4) {
-                path.quadTo(QPointF(cp1.x, cp1.y), QPointF(cp2.x, cp2.y));
+                qPath.quadTo(QPointF(cp1.x, cp1.y), QPointF(cp2.x, cp2.y));
             }
             else {
-                RS_Vector vEnd = (cp1 + cp2) / 2.0;
-                path.quadTo(QPointF(cp1.x, cp1.y), QPointF(vEnd.x, vEnd.y));
+                vEnd = (cp1 + cp2) / 2.0;
+                qPath.quadTo(QPointF(cp1.x, cp1.y), QPointF(vEnd.x, vEnd.y));
 
                 for (size_t i = 2; i < n - 2; i++) {
                     const RS_Vector& cpi = uiControlPoints[i];
                     vEnd = (cpi + uiControlPoints[i + 1]) / 2.0;
-                    path.quadTo(QPointF(cpi.x, cpi.y), QPointF(vEnd.x, vEnd.y));
+                    qPath.quadTo(QPointF(cpi.x, cpi.y), QPointF(vEnd.x, vEnd.y));
+#ifdef DEBUG_RENDER_SPLINEPOINTS
+                    drawPointEntityUI(cpi.x, cpi.y, 2, 15);
+                    drawPointEntityUI(vEnd.x, vEnd.y, 4, 15);
+#endif
                 }
 
-                path.quadTo(QPointF(uiControlPoints[n - 2].x, uiControlPoints[n - 2].y),
-                            QPointF(uiControlPoints[n - 1].x, uiControlPoints[n - 1].y));
+                qPath.quadTo(QPointF(uiControlPoints[n - 2].x, uiControlPoints[n - 2].y), QPointF(uiControlPoints[n - 1].x, uiControlPoints[n - 1].y));
+#ifdef DEBUG_RENDER_SPLINEPOINTS
+                drawPointEntityUI(cp1.x, cp1.y, 2, 15);
+                drawPointEntityUI(cp2.x, cp2.y, 2, 15);
+                drawPointEntityUI(uiControlPoints[n - 2].x, uiControlPoints[n - 2].y, 2, 15);
+                drawPointEntityUI(uiControlPoints[n - 1].x, uiControlPoints[n - 1   ].y, 2, 15);
+#endif
             }
         }
     }
@@ -1045,73 +1064,13 @@ void RS_Painter::drawSplinePointsWCS(const std::vector<RS_Vector>& wcsControlPoi
 
 #define DEBUG_RENDER_SPLINEPOINTS_NO
 
-void RS_Painter::drawSplinePointsUI(const std::vector<RS_Vector>& uiControlPoints, const bool closed) {
-    const size_t n = uiControlPoints.size();
-    if (n < 2) {
+void RS_Painter::drawSplinePointsUI(const std::vector<RS_Vector> &uiControlPoints, bool closed){
+    if (uiControlPoints.empty())
         return;
-    }
-
-    RS_Vector vStart = uiControlPoints.front();
-
-    QPainterPath qPath(QPointF(vStart.x, vStart.y));
-#ifdef DEBUG_RENDER_SPLINEPOINTS
-    drawPointEntityUI(vStart.x, vStart.y, 2, 15);
-#endif
-
-    if (closed) {
-        if (n < 3) {
-            qPath.lineTo(QPointF(uiControlPoints[1].x, uiControlPoints[1].y));
-        }
-        else {
-            const RS_Vector& cp0 = uiControlPoints[0];
-            const RS_Vector& cpNMinus1 = uiControlPoints[n - 1];
-            vStart = (cpNMinus1 + cp0) / 2.0;
-            qPath.moveTo(QPointF(vStart.x, vStart.y));
-
-            RS_Vector vEnd = (cp0 + uiControlPoints[1]) / 2.0;
-            qPath.quadTo(QPointF(cp0.x, cp0.y), QPointF(vEnd.x, vEnd.y));
-
-            for (size_t i = 1; i < n - 1; i++) {
-                const RS_Vector& cpi = uiControlPoints[i];
-                vEnd = (cpi + uiControlPoints[i + 1]) / 2.0;
-                qPath.quadTo(QPointF(cpi.x, cpi.y), QPointF(vEnd.x, vEnd.y));
-            }
-            qPath.quadTo(QPointF(cpNMinus1.x, cpNMinus1.y), QPointF(vStart.x, vStart.y));
-        }
-    }
-    else {
-        const RS_Vector& cp1 = uiControlPoints[1];
-        if (n < 3) {
-            qPath.lineTo(QPointF(cp1.x, cp1.y));
-        }
-        else {
-            const RS_Vector& cp2 = uiControlPoints[2];
-            if (n < 4) {
-                qPath.quadTo(QPointF(cp1.x, cp1.y), QPointF(cp2.x, cp2.y));
-            }
-            else {
-                RS_Vector vEnd = (cp1 + cp2) / 2.0;
-                qPath.quadTo(QPointF(cp1.x, cp1.y), QPointF(vEnd.x, vEnd.y));
-
-                for (size_t i = 2; i < n - 2; i++) {
-                    const RS_Vector& cpi = uiControlPoints[i];
-                    vEnd = (cpi + uiControlPoints[i + 1]) / 2.0;
-                    qPath.quadTo(QPointF(cpi.x, cpi.y), QPointF(vEnd.x, vEnd.y));
-#ifdef DEBUG_RENDER_SPLINEPOINTS
-                    drawPointEntityUI(cpi.x, cpi.y, 2, 15); drawPointEntityUI(vEnd.x, vEnd.y, 4, 15);
-#endif
-                }
-
-                qPath.quadTo(QPointF(uiControlPoints[n - 2].x, uiControlPoints[n - 2].y),
-                             QPointF(uiControlPoints[n - 1].x, uiControlPoints[n - 1].y));
-#ifdef DEBUG_RENDER_SPLINEPOINTS
-                drawPointEntityUI(cp1.x, cp1.y, 2, 15); drawPointEntityUI(cp2.x, cp2.y, 2, 15); drawPointEntityUI(
-                    uiControlPoints[n - 2].x, uiControlPoints[n - 2].y, 2, 15); drawPointEntityUI(
-                    uiControlPoints[n - 1].x, uiControlPoints[n - 1].y, 2, 15);
-#endif
-            }
-        }
-    }
+    QPointF startPos{uiControlPoints.front().x, uiControlPoints.front().y};
+    QPainterPath qPath(startPos);
+    qPath.moveTo(startPos);
+    addSplinePointsToPath(uiControlPoints, closed, qPath);
     QPainter::drawPath(qPath);
 }
 
@@ -1143,9 +1102,8 @@ void RS_Painter::drawEntityPolyline(const RS_Polyline* polyline) {
                 const double uiMajorRadius = toGuiDX(data.majorP.magnitude()); // fixme - sand - render - cache?
                 const double uiMinorRadius = data.ratio * uiMajorRadius;
                 if (data.isArc) {
-                    drawEllipseArcUI(uiCenter, {uiMajorRadius, uiMinorRadius}, toWorldAngleDegrees(data.angleDegrees),
-                                     /*view.toWorldAngleDegrees(*/data.startAngleDegrees/*)*/,
-                                     /*view.toWorldAngleDegrees(*/data.otherAngleDegrees/*)*/, data.angularLength, data.reversed);
+                    drawEllipseArcUI(uiCenter, {uiMajorRadius, uiMinorRadius}, toWorldAngleDegrees(data.angleDegrees), /*view.toWorldAngleDegrees(*/data.startAngleDegrees/*)*/,
+                                    data.angularLength, data.reversed);
                 }
                 else {
                     drawEllipseUI(uiCenter, {uiMajorRadius, uiMinorRadius}, toWorldAngleDegrees(data.angleDegrees));
@@ -1764,4 +1722,112 @@ bool RS_Painter::isFullyWithinBoundingRect(const LC_Rect& rect) const {
 
 const LC_Rect& RS_Painter::getWcsBoundingRect() const {
     return m_wcsBoundingRect;
+}
+
+void RS_Painter::pathForParametricCurve(
+    QPainterPath& path,
+    const std::vector<double>& paramPoints,
+    const std::function<RS_Vector(double)>& getPointAtParam,
+    double approxRadius
+) const
+{
+  LC_LOG<<__func__<<"(): begin";
+
+    const LC_Rect& vpRect = getWcsBoundingRect();
+    double scale = toGuiDX(1.);
+    double maxErrorPx = 0.5; // Max approximation error in pixels
+    // Normalized error e_r = maxErrorPx / (approxRadius * scale)
+    double e_r = maxErrorPx / (approxRadius * scale);
+    // Step angle for quadratic approx: theta ≈ pow(24 * e_r, 0.25) (from error ≈ (theta^4)/24 * r)
+    double theta = std::pow(24 * e_r, 0.25);
+
+    RS_Vector startPos = toGui(getPointAtParam(paramPoints.front()));
+    path.moveTo({startPos.x, startPos.y});
+    for (size_t i = 1; i < paramPoints.size(); ++i) {
+        double d1 = paramPoints[i - 1];
+        double d2 = paramPoints[i];
+        double segmentLength = d2 - d1;
+        if (segmentLength < RS_TOLERANCE_ANGLE) continue;
+
+        double midP = (d1 + d2) / 2.0;
+        RS_Vector midPoint = getPointAtParam(midP);
+        bool visible = vpRect.inArea(midPoint, RS_TOLERANCE);
+
+        if (!std::isnormal(theta) || theta < RS_TOLERANCE_ANGLE)
+            theta = M_PI / 12; // Fallback ~15 deg
+        int numSamples = static_cast<int>(std::ceil(segmentLength / theta));
+        numSamples = std::max(numSamples, 2);
+        if (!visible) {
+          // TODO: replace this with a more efficient and error-proof algorithm
+          // The QPainterPath for an invisible segment should never run into the
+          // viewport. If the number of sampling points is small, the path may
+          // become partially visible, causing artifacts in rendering.
+          numSamples = std::min(numSamples, 9);
+        }
+
+        std::vector<RS_Vector> samples;
+        double step = segmentLength / numSamples;
+        for (int j = 0; j <= numSamples; ++j) {
+            double param = d1 + j * step;
+            samples.push_back(getPointAtParam(param));
+        }
+
+        // Approximate with LC_SplinePoints (quadratic Bezier chain)
+        LC_SplinePointsData spd(false, false); // Open, not cut
+        spd.splinePoints = samples;
+        spd.useControlPoints = false;
+        LC_SplinePoints approx(nullptr, spd);
+        approx.update(); // Generates quadratic control points
+
+        const auto& cps = approx.getControlPoints();
+        if (cps.empty()) continue;
+
+        std::vector<RS_Vector> uiCps;
+        for (const auto& cp : cps) {
+            uiCps.push_back(toGui(cp));
+        }
+        addSplinePointsToPath(uiCps, false, path);
+    }
+  LC_LOG<<__func__<<"(): end";
+}
+
+void RS_Painter::pathForEntity(
+    QPainterPath& path,
+    const RS_Entity* entity,
+    double baseAngle,
+    double fullAngleLength,
+    const std::function<double(const RS_Vector&)>& getParamFunc,
+    const std::function<RS_Vector(double)>& getPointFunc,
+    double approxRadius
+    ) const
+{
+  const LC_Rect& vpRect = getWcsBoundingRect();
+  std::vector<double> crossPoints;
+  // Compute intersections with viewport borders
+  std::array<RS_Vector, 4> vertices = vpRect.vertices();
+  for (unsigned short i = 0; i < vertices.size(); ++i) {
+    RS_Line line{vertices.at(i), vertices.at((i + 1) % vertices.size())};
+    RS_VectorSolutions vpIts = RS_Information::getIntersection(entity, &line, true);
+    for (const RS_Vector& vp : vpIts) {
+      double ap1 = entity->getTangentDirection(vp).angle();
+      double ap2 = line.getTangentDirection(vp).angle();
+      if (std::abs(RS_Math::correctAngle(ap2 - ap1)) > RS_TOLERANCE_ANGLE) {
+        crossPoints.push_back(RS_Math::getAngleDifference(baseAngle, getParamFunc(vp)));
+      }
+    }
+  }
+  // Add start/end if visible
+  crossPoints.insert(crossPoints.begin(), 0.0);
+  crossPoints.push_back(fullAngleLength);
+  // Sort and unique
+  std::sort(crossPoints.begin(), crossPoints.end());
+  auto last = std::unique(crossPoints.begin(), crossPoints.end(), [](double a, double b) {
+    return std::abs(a - b) < RS_TOLERANCE_ANGLE;
+  });
+  crossPoints.erase(last, crossPoints.end());
+  // Define point getter
+  auto getPointAtParam = [getPointFunc, baseAngle](double relParam) {
+    return getPointFunc(baseAngle + relParam);
+  };
+  pathForParametricCurve(path, crossPoints, getPointAtParam, approxRadius);
 }

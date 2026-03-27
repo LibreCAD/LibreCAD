@@ -240,11 +240,11 @@ bool LC_ActionModifyAlignRef::doProcessCommand(const int status, const QString &
     return RS_ActionInterface::doProcessCommand(status, command);
 }
 
-void LC_ActionModifyAlignRef::updateMouseButtonHintsForSelection() {
+void LC_ActionModifyAlignRef::updateActionPromptForSelection() {
     updatePromptTRCancel(tr("Select to align")+getSelectionCompletionHintMsg(),  MOD_SHIFT_AND_CTRL(tr("Select contour"),tr("Align immediately after selection")));
 }
 
-void LC_ActionModifyAlignRef::updateMouseButtonHintsForSelected(const int status) {
+void LC_ActionModifyAlignRef::updateActionPromptForSelected(const int status) {
     switch (status){
         case SetRefPoint1:{
             updatePromptTRCancel(tr("Select first reference point")/*, MOD_CTRL(tr("Align immediately after selection"))*/);

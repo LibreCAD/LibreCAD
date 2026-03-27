@@ -26,7 +26,7 @@
 
 LC_ActionSelectGeneric::~LC_ActionSelectGeneric() = default;
 
-void LC_ActionSelectGeneric::updateMouseButtonHintsForSelection() {
+void LC_ActionSelectGeneric::updateActionPromptForSelection() {
     updatePromptTRCancel(tr("Select entities") + getSelectionCompletionHintMsg(),
                          MOD_SHIFT_AND_CTRL(tr("Select contour"), tr("Complete selection")));
 }

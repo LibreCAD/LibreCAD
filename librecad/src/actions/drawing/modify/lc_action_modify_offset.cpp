@@ -230,7 +230,7 @@ void LC_ActionModifyOffset::onMouseRightButtonReleaseSelected(const int status, 
     }
 }
 
-void LC_ActionModifyOffset::updateMouseButtonHintsForSelected(const int status) {
+void LC_ActionModifyOffset::updateActionPromptForSelected(const int status) {
     switch (status) {
         case SetReferencePoint:
             if (m_distanceIsFixed){
@@ -249,7 +249,7 @@ void LC_ActionModifyOffset::updateMouseButtonHintsForSelected(const int status) 
     }
 }
 
-void LC_ActionModifyOffset::updateMouseButtonHintsForSelection() {
+void LC_ActionModifyOffset::updateActionPromptForSelection() {
     updatePromptTRCancel(tr("Select line, polyline, circle or arc to create offset") + getSelectionCompletionHintMsg(),
                               MOD_SHIFT_AND_CTRL(tr("Select contour"), tr("Offset immediately after selection")));
 }

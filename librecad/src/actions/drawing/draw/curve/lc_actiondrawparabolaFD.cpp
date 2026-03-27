@@ -54,7 +54,7 @@ struct LC_ActionDrawParabolaFD::ActionData {
         const double x1 = getX(point);
         const auto& [p1, t1] = fromX(x1);
         data = LC_ParabolaData::FromEndPointsTangents({p0, p1}, {t0, t1});
-        return data.valid;
+        return data.m_valid;
     }
 
     bool setStart(const RS_Vector& point) {
@@ -119,7 +119,7 @@ void LC_ActionDrawParabolaFD::init(const int status) {
 }
 
 RS_Entity* LC_ActionDrawParabolaFD::doTriggerCreateEntity() {
-    if(m_actionData->data.valid){
+  if(m_actionData->data.isValid()){
         auto* en = new LC_Parabola{m_document, m_actionData->data};
         return en;
     }
@@ -219,7 +219,7 @@ void LC_ActionDrawParabolaFD::onMouseMoveEvent(const int status, const LC_MouseE
 }
 
 LC_Parabola* LC_ActionDrawParabolaFD::preparePreview() const {
-    if (m_actionData->data.valid) {
+  if (m_actionData->data.isValid()) {
         auto* pl = new LC_Parabola{m_preview.get(), m_actionData->data};
         previewEntity(pl);
         return pl;

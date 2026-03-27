@@ -578,7 +578,7 @@ void RS_Polyline::rotate(const RS_Vector& center, const RS_Vector& angleVector) 
 void RS_Polyline::scale(const RS_Vector& center, const RS_Vector& factor) {
     // fixme - this is incorrect in-place editing of polyline - it will break undo!!! First, clone should be created and that clone should be modified
     if (!RS_Math::equal(factor.x, factor.y)) {
-        for (int i = 0; i < count(); ++i) {
+        for (size_t i = 0; i < count(); ++i) {
             RS_Entity* e = entityAt(i);
             if (e->rtti() == RS2::EntityArc) {
                 const auto* arc = static_cast<RS_Arc*>(e);

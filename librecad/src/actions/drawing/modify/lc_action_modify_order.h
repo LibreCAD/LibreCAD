@@ -42,9 +42,9 @@ protected:
     RS_Entity* m_targetEntity = nullptr;
     void onMouseLeftButtonReleaseSelected(int status, const LC_MouseEvent* e) override;
     void onMouseRightButtonReleaseSelected(int status, const LC_MouseEvent* event) override;
-    void updateMouseButtonHintsForSelected(int status) override;
+    void updateActionPromptForSelected(int status) override;
     RS2::CursorType doGetMouseCursorSelected(int status) override;
-    void updateMouseButtonHintsForSelection() override;
+    void updateActionPromptForSelection() override;
     void onSelectionCompleted(bool singleEntity, bool fromInit) override;
     void onMouseMoveEventSelected(int status, const LC_MouseEvent* e) override;
     void doTrigger() override;

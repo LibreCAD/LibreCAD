@@ -98,7 +98,7 @@ void LC_ActionDrawParabola4Points::preparePreview(const RS_Vector& mouse, const 
     if (!m_actionData->pData.empty()) {
         double ds = RS_MAXDOUBLE;
         for(const auto& pd: m_actionData->pData) {
-            if (pd.valid) {
+          if (pd.isValid()) {
                 const RS_LineData &axis = pd.getAxis();
                 const auto *l = obtainPreviewRefLine(axis.startpoint, axis.endpoint);
                 double ds0 = RS_MAXDOUBLE;
@@ -158,7 +158,7 @@ void LC_ActionDrawParabola4Points::onCoordinateEvent(const int status, [[maybe_u
             if (!pData.empty()) {
                 m_actionData->pData.clear();
                 std::copy_if(pData.cbegin(), pData.cend(), std::back_inserter(m_actionData->pData), [](const LC_ParabolaData& data){
-                    return data.valid;
+                    return data.m_valid;
                 });
                 if (m_actionData->pData.size() == 1) { // shortcut for single solution
                     m_actionData->data = m_actionData->pData.front();

@@ -64,6 +64,9 @@
 // fixme - sand - files - complete refactoring
 namespace
 {
+// To a plain text string to the compiled binary
+const std::string g_lcVersion{"LC_VISION=" XSTR(LC_VERSION)};
+
 // update splash for alpha/beta names)
     void updateSplash(const std::unique_ptr<QSplashScreen>& splash);
 }

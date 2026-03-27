@@ -50,7 +50,9 @@ struct LC_ParabolaData{
     RS_LineData getAxis() const;
     RS_LineData getDirectrix() const;
     RS_Vector getFocus() const;
-
+    bool isValid() const {
+      return m_valid;
+    }
 
     /** \brief return the equation of the entity
     a quadratic contains coefficients for quadratic:
@@ -67,15 +69,15 @@ struct LC_ParabolaData{
     std::array<RS_Vector, 2> fromXWithTangent(double x) const;
 
     // The three control points, and all other properties are calculated from control points
-    std::array<RS_Vector, 3> controlPoints;
+    std::array<RS_Vector, 3> m_controlPoints;
     void calculatePrimitives();
     // properties should be calculated from control points
-    RS_Vector focus;
+    RS_Vector m_focus;
     // a vector from the vertex to focus
-    RS_Vector axis;
-    RS_Vector vertex;
-    // whether valid for a parabola
-    bool valid = false;
+    RS_Vector m_axis;
+    RS_Vector m_vertex;
+    // whether m_valid for a parabola
+    bool m_valid = false;
 };
 
 std::ostream& operator << (std::ostream& os, const LC_ParabolaData& ld);
@@ -100,11 +102,12 @@ public:
     }
 
     /** @return Copy of data that defines the spline. */
-    const LC_ParabolaData& getParabolaData() const {
+    LC_ParabolaData const& getData() const{
         return m_data;
     }
 
-    LC_ParabolaData& getParabolaData() {
+    LC_ParabolaData& getData()
+    {
         return m_data;
     }
 
@@ -176,8 +179,8 @@ public:
      */
     std::unique_ptr<LC_Parabola> approximateOffset(double dist) const;
 
-    RS_Vector getFocus() const {return m_data.focus;}
-    RS_Vector getVertex() const {return m_data.vertex;}
+    RS_Vector getFocus() const {return m_data.m_focus;}
+    RS_Vector getVertex() const {return m_data.m_vertex;}
 
 private:
     // rotate a point around the parabola vertex so, the parabola is y= ax^2 + bx + c, with a > 0 after the
