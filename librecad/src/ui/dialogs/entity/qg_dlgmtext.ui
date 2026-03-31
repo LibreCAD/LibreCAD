@@ -869,7 +869,7 @@
            </sizepolicy>
           </property>
           <property name="toolTip">
-           <string>Symbol insertion</string>
+           <string>Symbol to insert</string>
           </property>
           <item>
            <property name="text">
@@ -886,21 +886,24 @@
             <string>Plus / Minus (±)</string>
            </property>
           </item>
-          <item>
-           <property name="text">
-            <string>At (@)</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Hash (#)</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Dollar ($)</string>
-           </property>
-          </item>
+// We can use keyboard "Shift + 2"
+//          <item>
+//           <property name="text">
+//            <string>At (@)</string>
+//           </property>
+//          </item>
+// We can use keyboard "Shift + 3"
+//          <item>
+//           <property name="text">
+//            <string>Hash (#)</string>
+//           </property>
+//          </item>
+// We can use keyboard "Shift + 4"
+//          <item>
+//           <property name="text">
+//            <string>Dollar ($)</string>
+//           </property>
+//          </item>
           <item>
            <property name="text">
             <string>Copyright (©)</string>
@@ -929,6 +932,11 @@
           <item>
            <property name="text">
             <string>Yen (¥)</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Euro (€)</string>
            </property>
           </item>
           <item>
