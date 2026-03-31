@@ -17227,7 +17227,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="226" />
         <source>Saving drawing: %1</source>
-        <translation>Сохранение чертежа: % 1</translation>
+        <translation>Сохранение чертежа: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232" />
@@ -17935,8 +17935,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="144" />
         <source>If checked, default line spacing will be used</source>
-        <translation>Если выбрано, то будет испрользоваться межстрочный интервал по умолчанию.
-Иначе, будет использовано использоваться введенное значение.</translation>
+        <translation>Если выбрано, то будет использоваться межстрочный интервал по умолчанию</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="192" />
@@ -17951,7 +17950,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="289" />
         <source>Font to use</source>
-        <translation>Шрифт которым будет отрисовываться текст</translation>
+        <translation>Используемый шрифт</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="631" />
@@ -17966,12 +17965,12 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="674" />
         <source>Left to right text direction</source>
-        <translation>Буквы текста рисуются слева-направо</translation>
+        <translation>Направление текста - слева направо</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="690" />
         <source>Right to left text direction</source>
-        <translation>Буквы текста рисуются справа-налево</translation>
+        <translation>Направление текста - справа налево</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="714" />
@@ -17981,17 +17980,17 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="740" />
         <source>Clear Text</source>
-        <translation>Очистить</translation>
+        <translation>Очистить текст</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="754" />
         <source>Load Text From File</source>
-        <translation>Из файла</translation>
+        <translation>Загрузить текст из файла</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="768" />
         <source>Save Text To File</source>
-        <translation>Сохранить в файл</translation>
+        <translation>Сохранить текст в файл</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="782" />
@@ -18011,7 +18010,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="829" />
         <source>Text lines to insert</source>
-        <translation>Строки текста для вставки в чертеж</translation>
+        <translation>Строки текста для вставки</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="860" />
@@ -18026,12 +18025,12 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="881" />
         <source>Degree (°)</source>
-        <translation>° (Градус)</translation>
+        <translation>Градус (°)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="886" />
         <source>Plus / Minus (±)</source>
-        <translation>± (Плюс / Минус)</translation>
+        <translation>Плюс / Минус (±)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="891" />
@@ -18051,42 +18050,42 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="906" />
         <source>Copyright (©)</source>
-        <translation>© (авторское право)</translation>
+        <translation>Авторское право (©)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="911" />
         <source>Registered (®)</source>
-        <translation>® (зарегистрированная марка)</translation>
+        <translation>Зарегистрированная марка (®)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="916" />
         <source>Paragraph (§)</source>
-        <translation>§ (Параграф)</translation>
+        <translation>Параграф (§)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="921" />
         <source>Pi (π)</source>
-        <translation>π («Пи»)</translation>
+        <translation>Число Пи (π)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="926" />
         <source>Pound (£)</source>
-        <translation>£ (Фунт стерлинг)</translation>
+        <translation>Фунт стерлингов (£)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="931" />
         <source>Yen (¥)</source>
-        <translation>¥ (Иена)</translation>
+        <translation>Йена (¥)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="936" />
         <source>Times (×)</source>
-        <translation>× (Умножение)</translation>
+        <translation>Умножение (×)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="941" />
         <source>Division (÷)</source>
-        <translation>÷ (Деление)</translation>
+        <translation>Деление (÷)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="952" />
@@ -18662,7 +18661,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="876" />
         <source>Diameter (⌀)</source>
-        <translation>⌀ (Диаметр)</translation>
+        <translation>Диаметр (⌀)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="125" />
@@ -18778,7 +18777,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmove.ui" line="26" />
         <source>Move/Copy Options</source>
-        <translation>Переместить/копировать</translation>
+        <translation>Настройки Переместить/Копировать</translation>
     </message>
 </context>
 <context>
@@ -18786,7 +18785,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="26" />
         <source>Move/Rotate Options</source>
-        <translation>Перемещение/Поворот</translation>
+        <translation>Настройки Перемещение/Поворот</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="119" />
@@ -18826,7 +18825,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="41" />
         <source>...</source>
-        <translation>…</translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/modify/qg_dlgmoverotate.ui" line="54" />
@@ -18953,7 +18952,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="400" />
         <source>Are you sure you'd like to delete property [%1]?</source>
-        <translation>Вы уверены что хотите удалить позльзовательское свойство "%1"?</translation>
+        <translation>Вы уверены, что хотите удалить пользовательское свойство [%1]?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="422" />
@@ -18963,7 +18962,7 @@ and your preferred language for Ui and Command.&lt;br&gt;
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="423" />
         <source>Settings were changed. Are you sure you'd like to skip saving changes (so they will not be saved)?</source>
-        <translation>Настройки были изменены. Вы уверены что хотите отменить и не сохранять сделанные изменения?</translation>
+        <translation>Настройки были изменены. Вы уверены, что хотите отменить сохранение сделанных изменений?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="458" />
@@ -22667,17 +22666,17 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="59" />
         <source>Clear Text</source>
-        <translation>Очистить</translation>
+        <translation>Очистить текст</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="73" />
         <source>Load Text From File</source>
-        <translation>Загрузить из файла</translation>
+        <translation>Загрузить текст из файла</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="87" />
         <source>Save Text To File</source>
-        <translation>Сохранить в файл</translation>
+        <translation>Сохранить текст в файл</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="101" />
@@ -22752,12 +22751,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="957" />
         <source>Degree (°)</source>
-        <translation>° (Градус)</translation>
+        <translation>Градус (°)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="962" />
         <source>Plus / Minus (±)</source>
-        <translation>± (плюс / минус)</translation>
+        <translation>Плюс / Минус (±)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="967" />
@@ -22777,42 +22776,42 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="982" />
         <source>Copyright (©)</source>
-        <translation>© (авторское право)</translation>
+        <translation>Авторское право (©)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="987" />
         <source>Registered (®)</source>
-        <translation>® (зарегистрированная марка)</translation>
+        <translation>Зарегистрированная марка (®)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="992" />
         <source>Paragraph (§)</source>
-        <translation>§ (Параграф)</translation>
+        <translation>Параграф (§)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="997" />
         <source>Pi (π)</source>
-        <translation>π («Пи»)</translation>
+        <translation>Число пи (π)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1002" />
         <source>Pound (£)</source>
-        <translation>£ (Фунт стерлингов)</translation>
+        <translation>Фунт стерлингов (£)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1007" />
         <source>Yen (¥)</source>
-        <translation>¥ (Йена)</translation>
+        <translation>Йена (¥)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1012" />
         <source>Times (×)</source>
-        <translation>× (Умножение)</translation>
+        <translation>Умножение (×)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1017" />
         <source>Division (÷)</source>
-        <translation>÷ (Деление)</translation>
+        <translation>Деление (÷)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1028" />
@@ -22853,7 +22852,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="255" />
         <source>Obligue of text</source>
-        <translation>Накло букв</translation>
+        <translation>Наклон букв</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="268" />
@@ -22883,7 +22882,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="948" />
         <source>Symbol to insert</source>
-        <translation>Выбор символа для вставки в текст</translation>
+        <translation>Символ для вставки</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1046" />
@@ -23496,7 +23495,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="952" />
         <source>Diameter (⌀)</source>
-        <translation>⌀ (диаметр)</translation>
+        <translation>Диаметр (⌀)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="516" />
@@ -23662,7 +23661,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/qg_dlgimageoptions.ui" line="264" />
         <source>Black / White</source>
-        <translation>Черно-белое</translation>
+        <translation>Чёрно-белое</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/qg_dlgimageoptions.ui" line="274" />
@@ -28260,7 +28259,7 @@ Do you want to replace it?</source>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180" />
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="205" />
         <source>File "%1" already exists. Do you want to replace it?</source>
-        <translation>Файл "% 1" уже существует. Вы хотите заменить его?</translation>
+        <translation>Файл "%1" уже существует. Вы хотите заменить его?</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="38" />
@@ -29196,12 +29195,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="148" />
         <source>radius=%1 is invalid (negative)</source>
-        <translation>радиус=% 1 недопустим (отрицательный)</translation>
+        <translation>радиус=%1 недопустим (отрицательный)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="151" />
         <source>radius=%1 is invalid (zero)</source>
-        <translation>радиус=% 1 недопустим (ноль)</translation>
+        <translation>радиус=%1 недопустим (ноль)</translation>
     </message>
 </context>
 <context>
