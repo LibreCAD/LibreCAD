@@ -40,6 +40,7 @@
 
 #include <QDir>
 #include <QPushButton>
+#include <QStyleFactory>
 #include <QTimer>
 #include <QToolBar>
 
@@ -252,12 +253,12 @@ int main(int argc, char** argv) {
 
     // Create compilater's error: this QT macros may be in .pro file only.
     //QT_REQUIRE_VERSION(argc, argv, "6.4");
-    
+
     // May be this code must be on begin of main.cpp?
     #if QT_VERSION < QT_VERSION_CHECK(6, 4, 0)
         #error "This programm requires Qt6 ver.6.4.0 or higher."
     #endif
-    
+
     // Check first two arguments in order to decide if we want to run librecad
     // as console dxf2pdf or dxf2png tools. On Linux we can create a link to
     // librecad executable and  name it dxf2pdf. So, we can run either:
@@ -284,16 +285,39 @@ int main(int argc, char** argv) {
     RS_DEBUG->setLevel(RS_Debug::D_WARNING);
 
     LC_Application app(argc, argv);
+
     QCoreApplication::setOrganizationName("LibreCAD");
     QCoreApplication::setApplicationName("LibreCAD");
     QCoreApplication::setApplicationVersion(XSTR(LC_VERSION));
+    RS_Settings::init(app.organizationName(), app.applicationName());
+
+    // Conditionally force a light color scheme regardless of the OS dark theme,
+    // because many toolbar icons are designed for a light background.
+    if (LC_GET_ONE_BOOL("Widgets", "ForceLightTheme", false)) {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
+        app.styleHints()->setColorScheme(Qt::ColorScheme::Light);
+#else
+        // Qt < 6.5: setColorScheme() is unavailable; apply Fusion's standard
+        // palette which is always light regardless of the OS color scheme.
+        QStyle* fusionStyle = QStyleFactory::create("Fusion");
+        if (fusionStyle != nullptr) {
+            QApplication::setPalette(fusionStyle->standardPalette());
+            delete fusionStyle;
+        }
+        // On Linux with XDG icon themes, also reset to "hicolor" (the universal
+        // freedesktop fallback theme with colored icons), so that
+        // QIcon::fromTheme() no longer returns white dark-mode system icons.
+        // Not needed on Windows/macOS which don't use XDG icon themes.
+#ifdef Q_OS_LINUX
+        QIcon::setThemeName("hicolor");
+#endif
+#endif
+    }
 
     // fixme - sand - NEED TO CHECK WHERE lc_svgicons.so is located under linux and mac!!! That's tested for Windows
     auto appDir = app.applicationDirPath();
     auto inconEnginesDir = appDir + "/iconengines";
     app.addLibraryPath(inconEnginesDir);
-
-    RS_Settings::init(app.organizationName(), app.applicationName());
 
     QGuiApplication::setDesktopFileName("librecad");
 
