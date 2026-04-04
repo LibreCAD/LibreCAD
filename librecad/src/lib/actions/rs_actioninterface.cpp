@@ -158,9 +158,15 @@ void RS_ActionInterface::mouseMoveEvent(QMouseEvent*) {
 void RS_ActionInterface::mousePressEvent(QMouseEvent* e) {
     const Qt::MouseButton button = e->button();
     if (button == Qt::LeftButton) {
+        if (m_graphicView->isInRelativePointInput()) {
+            return;
+        }
         onMouseLeftButtonPress(m_status, e);
     }
     else if (button == Qt::RightButton) {
+        if (m_graphicView->isInRelativePointInput()) {
+            return;
+        }
         onMouseRightButtonPress(m_status, e);
     }
 }
@@ -174,9 +180,17 @@ void RS_ActionInterface::mousePressEvent(QMouseEvent* e) {
 void RS_ActionInterface::mouseReleaseEvent(QMouseEvent* e) {
     const Qt::MouseButton button = e->button();
     if (button == Qt::LeftButton) {
+        if (m_graphicView->isInRelativePointInput()) {
+            m_graphicView->hideRelativeInputWidget();
+            return;
+        }
         onMouseLeftButtonRelease(m_status, e);
     }
     else if (button == Qt::RightButton) {
+        if (m_graphicView->isInRelativePointInput()) {
+            m_graphicView->hideRelativeInputWidget();
+            return;
+        }
         onMouseRightButtonRelease(m_status, e);
     }
     else if (button == Qt::MiddleButton) {
@@ -450,13 +464,17 @@ void RS_ActionInterface::updateOptions(const QString& tagToFocus) {
     }
 }
 
-void RS_ActionInterface::postCreateInit() {
-    loadOptions();
+void RS_ActionInterface::createOptionsEditor() {
     m_optionsEditor.reset(new LC_ActionOptionsEditorTyped(this, [this] {
         return createOptionsWidget();
     }, [this] {
         return createOptionsFiller();
     }));
+}
+
+void RS_ActionInterface::postCreateInit() {
+    loadOptions();
+    createOptionsEditor();
 }
 
 void RS_ActionInterface::updateOptionsUI(const int mode, const QVariant *value) const {

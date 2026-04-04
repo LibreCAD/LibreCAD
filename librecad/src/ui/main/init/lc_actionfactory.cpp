@@ -37,6 +37,8 @@
 #include "lc_infocursorsettingsmanager.h"
 #include "lc_shortcutinfo.h"
 #include "qc_applicationwindow.h"
+#include "rs_actioninterface.h"
+#include "rs_previewactioninterface.h"
 #include "rs_settings.h"
 
 LC_ActionFactory::LC_ActionFactory(QC_ApplicationWindow* parent, QG_ActionHandler* actionHandler)
@@ -74,6 +76,7 @@ void LC_ActionFactory::initActionGroupManager(LC_ActionGroupManager* agm) {
         {"select", tr("Select"), tr("Entity selection operations"), ":/icons/select.lci"},
         {"snap", tr("Snap"), tr("Snapping operations"), ":/icons/snap_intersection.lci", false},
         {"snap_extras", tr("Snap Extras"), tr("Additional Snaps"), ":/icons/snap_free.lci", false},
+        {"relative_input", tr("Relative Point Assistant"), tr("Parameters of relative point assitant"), ":/icons/snap_visual.lci", false}, // fixme - change icon
         {"view", tr("View"), tr("View related operations"), ":/icons/zoom_in.lci", false},
         {"namedViews", tr("Named Views"), tr("Persistent Views operations"), ":/icons/visible.lci", false},
         {"workspaces", tr("Workspaces"), tr("Workspaces operations"), ":/icons/workspace.lci", false},
@@ -135,6 +138,7 @@ void LC_ActionFactory::fillActionContainer(LC_ActionGroupManager* agm, const boo
     createFileActions(actionMap, agm->getGroupByName("file"));
 
     createSnapActions(actionMap, agm->getGroupByName("snap"));
+    createRelativeInputActions(actionMap, agm->getGroupByName("relative_input"));
     createInfoCursorActions(actionMap, agm->getGroupByName("infoCursor"));
     createSnapExtraActions(actionMap, agm->getGroupByName("snap_extras"));
     createRestrictActions(actionMap, agm->getGroupByName("restriction"));
@@ -202,7 +206,7 @@ void LC_ActionFactory::createDrawLineActions(QMap<QString, QAction*>& map, QActi
         {"DrawLineAngle",            RS2::ActionDrawLineAngle,           tr("&Angle"),                 ":/icons/line_angle.lci"},
         {"DrawLineHorizontal",       RS2::ActionDrawLineHorizontal,      tr("&Horizontal"),            ":/icons/line_horizontal.lci"},
         {"DrawLineVertical",         RS2::ActionDrawLineVertical,        tr("Vertical"),               ":/icons/line_vertical.lci"},
-        {"DrawLineFree",             RS2::ActionDrawLineFreehand,            tr("&Freehand Line"),         ":/icons/line_freehand.lci"},
+        {"DrawLineFree",             RS2::ActionDrawLineFreehand,        tr("&Freehand Line"),         ":/icons/line_freehand.lci"},
         {"DrawLineParallel",         RS2::ActionDrawLineParallel,        tr("&Parallel"),              ":/icons/line_parallel.lci"},
         {"DrawLineParallelThrough",  RS2::ActionDrawLineParallelThrough, tr("Parallel through point"), ":/icons/line_parallel_p.lci"},
         {"DrawLineBisector",         RS2::ActionDrawLineBisector,        tr("Bisector"),               ":/icons/line_bisector.lci"},
@@ -448,6 +452,65 @@ void LC_ActionFactory::createSnapActions(QMap<QString, QAction *> &map, QActionG
     });
 }
 
+void LC_ActionFactory::createRelativeInputActions(QMap<QString, QAction*>& map, QActionGroup* group) {
+    createActions(map, group, {
+       {"RelativeInputLengh", tr("Relative By Distance"),     ":/icons/relative_len.lci"},
+       {"RelativeInputAngle", tr("Relative By Angle"),      ":/icons/relative_angle.lci"},
+       {"RelativeInputDX",    tr("Relative By X Offset"),":/icons/relative_dx.lci"},
+       {"RelativeInputDY",    tr("Relative By Y Offset"),":/icons/relative_dy.lci"},
+       {"RelativeInputX",     tr("Relative With X"),    ":/icons/relative_x.lci"},
+       {"RelativeInputY",     tr("Relative With Y"),    ":/icons/relative_y.lci"},
+       {"RelativeAddLine",    tr("Add Guiding Line"),    ":/icons/guiding_line.lci"},
+       {"RelativeAddCircle",  tr("Add Guiding Circle"),  ":/icons/guiding_circle.lci"},
+       {"RelativeAddPoint",   tr("Add Guiding Point"),   ":/icons/guiding_point.lci"},
+    });
+
+    auto tryShowRelativeInput = [](QC_ApplicationWindow* appWin, RS2::RelativePointParam type) {
+        LC_ActionContext* ctx = appWin->getActionContext();
+        RS_ActionInterface* currentAction = ctx->getCurrentAction();
+        if (currentAction != nullptr) {
+            currentAction->tryShowRelativeInput(type);
+        }
+    };
+
+    connect(map["RelativeInputLengh"], &QAction::triggered, this, [this, tryShowRelativeInput](bool) {
+        tryShowRelativeInput(m_appWin, RS2::REL_POINT_LENGTH);
+    });
+    connect(map["RelativeInputAngle"], &QAction::triggered, this, [this,tryShowRelativeInput](bool) {
+        tryShowRelativeInput(m_appWin, RS2::REL_POINT_ANGLE);
+    });
+    connect(map["RelativeInputDX"], &QAction::triggered, this, [this,tryShowRelativeInput](bool) {
+        tryShowRelativeInput(m_appWin, RS2::REL_POINT_DX);
+    });
+    connect(map["RelativeInputDY"], &QAction::triggered, this, [this,tryShowRelativeInput](bool) {
+        tryShowRelativeInput(m_appWin, RS2::REL_POINT_DY);
+    });
+    connect(map["RelativeInputX"], &QAction::triggered, this, [this,tryShowRelativeInput](bool) {
+        tryShowRelativeInput(m_appWin, RS2::REL_POINT_X);
+    });
+    connect(map["RelativeInputY"], &QAction::triggered, this, [this,tryShowRelativeInput](bool) {
+        tryShowRelativeInput(m_appWin, RS2::REL_POINT_Y);
+    });
+
+    auto tryAddVisualGuide = [](QC_ApplicationWindow* appWin, bool hasLength, bool hasAngle, bool hasDx, bool hasDy, bool hasNormal) {
+        LC_ActionContext* ctx = appWin->getActionContext();
+        auto currentAction = dynamic_cast<RS_PreviewActionInterface*>(ctx->getCurrentAction());
+        if (currentAction != nullptr) {
+            currentAction->tryAddVisualGuidingPointForCurrentPoint(hasLength, hasAngle, hasDx, hasDy, hasNormal);
+        }
+    };
+
+    connect(map["RelativeAddLine"], &QAction::triggered, this, [this, tryAddVisualGuide](bool) {
+       tryAddVisualGuide(m_appWin, false, true, false, false, true);
+    });
+    connect(map["RelativeAddCircle"], &QAction::triggered, this, [this,tryAddVisualGuide](bool) {
+        tryAddVisualGuide(m_appWin, true, false, false, false, false);
+    });
+    connect(map["RelativeAddPoint"], &QAction::triggered, this, [this,tryAddVisualGuide](bool) {
+        tryAddVisualGuide(m_appWin, true, true, true, true, true);
+    });
+}
+
 void LC_ActionFactory::createRestrictActions(QMap<QString, QAction *> &map, QActionGroup *group) const {
     createActions(map, group, {
         {"RestrictHorizontal", tr("Restrict Horizontal"), ":/icons/restr_hor.lci"},
@@ -538,6 +601,7 @@ void LC_ActionFactory::createViewActions(QMap<QString, QAction*>& map, QActionGr
         {"ViewGridIsoRight", &QC_ApplicationWindow::slotViewGridIsoRight, tr("&Isometric Right Grid"), ":/icons/grid_iso_right.lci"},
     }, true);
 }
+
 
 void LC_ActionFactory::createLayerActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) const {
     createActionHandlerActions(map, group, {
@@ -819,7 +883,8 @@ void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, const L
         {"FileSaveAs", QKeySequence::SaveAs},
         {"FilePrint", QKeySequence::Print},
         {"FileQuit", QKeySequence::Quit},
-        {"FocusCommand", QKeySequence(Qt::CTRL | Qt::Key_M)}, // commandLineShortcuts}, // fixme - restore shortcuts for focus command line!!!
+        {"FocusCommand", QKeySequence(Qt::CTRL | Qt::Key_M)},
+        // commandLineShortcuts}, // fixme - restore shortcuts for focus command line!!!
 #if defined(Q_OS_LINUX)
         {"Fullscreen", QKeySequence("F11")},
 #else
@@ -827,7 +892,15 @@ void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, const L
         {"ExclusiveSnapMode", QKeySequence(Qt::ALT | Qt::Key_X)},
 #endif
         {"MainMenu", QKeySequence("F10")},
+        {"RelativeInputLengh", QKeySequence(Qt::SHIFT | Qt::Key_D)},
+        {"RelativeInputAngle", QKeySequence(Qt::SHIFT | Qt::Key_A)},
+        {"RelativeInputDX", QKeySequence(Qt::SHIFT | Qt::Key_X)},
+        {"RelativeInputDY", QKeySequence(Qt::SHIFT | Qt::Key_Z)},
+        {"RelativeAddLine", QKeySequence(Qt::SHIFT | Qt::Key_L)},
+        {"RelativeAddCircle", QKeySequence(Qt::SHIFT | Qt::Key_C)},
+        {"RelativeAddPoint", QKeySequence(Qt::SHIFT | Qt::Key_P)},
     };
+
 
     map["FileClose"]->setShortcutContext(Qt::WidgetShortcut);
 

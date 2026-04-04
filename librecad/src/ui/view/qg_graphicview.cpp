@@ -32,6 +32,7 @@
 #include <QNativeGestureEvent>
 #include <QPoint>
 #include <QPointingDevice>
+#include <QPushButton>
 #include <QTimer>
 #include <cmath>
 #include <cstdlib>
@@ -54,6 +55,8 @@
 #include "rs_actiondefault.h"
 
 #include "lc_action_select_single.h"
+#include "lc_relative_point_input_widget.h"
+#include "lc_relative_position_editing_widget.h"
 #include "rs_blocklist.h"
 #include "rs_debug.h"
 #include "rs_dialogfactoryinterface.h"
@@ -301,6 +304,11 @@ struct QG_GraphicView::UCSHighlightData {
 
 void createViewRenderer();
 
+void QG_GraphicView::initRelativePointInputWidget() {
+    m_relativePointWidgetHolder = new LC_RelativePointInputWidget(this, m_actionContext);
+    m_relativePointWidgetHolder->setVisible(false);
+}
+
 /**
  * Constructor.
  */
@@ -342,6 +350,7 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, RS_Document* doc, LC_ActionConte
 
 void QG_GraphicView::initView() {
     createViewRenderer();
+    initRelativePointInputWidget();
 }
 
 void QG_GraphicView::createViewRenderer() {
@@ -1050,6 +1059,9 @@ void QG_GraphicView::keyPressEvent(QKeyEvent* e) {
     if (getDocument() == nullptr) {
         return;
     }
+    if (m_relativePointWidgetHolder->isVisible()) {
+        return;
+    }
     bool eventProcessed = false; // due to some weird reasons, even incoming event is already accepted (Win10)... so using own flag
     if (m_allowScrollAndMoveAdjustByKeys) {
         RS2::Direction direction = RS2::Up;
@@ -1185,6 +1197,7 @@ void QG_GraphicView::adjustOffsetControls() {
  */
 void QG_GraphicView::adjustZoomControls() {
 }
+
 
 /**
  * Slot for horizontal scroll events.
@@ -1330,6 +1343,22 @@ void QG_GraphicView::loadSettings() {
     }
     LC_GROUP_END();
     m_ucsMarkOptions->loadSettings();
+
+    LC_GROUP("Colors");
+    {
+        RS_Color bgColor(LC_GET_STR("RelativePositionAssistantBackground", RS_Settings::RELATIVE_POSITION_BACKGROUND));
+        RS_Color txtColor(LC_GET_STR("RelativePositionAssistantText", RS_Settings::RELATIVE_POSITION_BACKGROUND));
+        m_relativePointWidgetHolder->setWidgetColors(bgColor, txtColor);
+    }
+    LC_GROUP_END();
+
+    LC_GROUP("RelativePositionAssistant");
+    {
+        const int fontSize = LC_GET_INT("FontSize", 10);
+        QString fontName = LC_GET_STR("FontName", "Helvetica");
+        m_relativePointWidgetHolder->setFont(fontName, fontSize);
+    }
+    LC_GROUP_END();
 }
 
 void QG_GraphicView::setAntialiasing(const bool state) const {

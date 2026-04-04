@@ -222,7 +222,7 @@ INCLUDEPATH += \
     ui/action_options/text \
     ui/actions \
     ui/components \
-    ui/components \
+    ui/components/relative_position_assistant \
     ui/components/comboboxes \
     ui/components/containers \
     ui/components/creators \
@@ -523,6 +523,8 @@ HEADERS += \
     lib/gui/lc_latecompletionrequestor.h \
     lib/gui/render/headless/lc_printviewportrenderer.h \
     lib/gui/render/lc_graphicviewportrenderer.h \
+    lib/gui/lc_relative_point_data.h \
+    lib/gui/lc_relative_point_input_widget.h \
     lib/math/lc_quadraticutils.h \
     lib/modification/lc_division.h \
     lib/modification/lc_copyutils.h \
@@ -530,6 +532,8 @@ HEADERS += \
     lib/actions/lc_actioncontext.h \
     ui/action_options/line/lc_line_radiant_options_widget.h \
     ui/action_options/line/lc_line_radiant_options_filler.h \
+    ui/components/relative_position_assistant/lc_relative_position_editing_widget.h \
+    ui/components/relative_position_assistant/lc_relative_position_evaluator.h \
     ui/components/utils/lc_entitymetauiutils.h \
     ui/components/utils/lc_guarded_signals_blocker.h \
     ui/components/utils/lc_mouse_tracking_table_view.h \
@@ -945,6 +949,7 @@ SOURCES += \
     lib/gui/lc_eventhandler.cpp \
     lib/gui/lc_graphicviewport.cpp \
     lib/gui/render/headless/lc_printviewportrenderer.cpp \
+    lib/gui/lc_relative_point_input_widget.cpp \
     lib/math/lc_quadraticutils.cpp \
     lib/modification/lc_division.cpp \
     lib/modification/lc_copyutils.cpp \
@@ -954,6 +959,8 @@ SOURCES += \
     lib/actions/lc_visual_snap_manager.cpp \
     ui/action_options/line/lc_line_radiant_options_widget.cpp \
     ui/action_options/line/lc_line_radiant_options_filler.cpp \
+    ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp \
+    ui/components/relative_position_assistant/lc_relative_position_evaluator.cpp \
     ui/components/utils/lc_entitymetauiutils.cpp \
     ui/components/creators/lc_creatorinvoker.cpp \
     ui/components/utils/lc_mouse_tracking_table_view.cpp \
@@ -1435,7 +1442,10 @@ SOURCES += actions/dock_widgets/block/rs_actionblocksadd.cpp \
     actions/dock_widgets/layer/rs_actionlayerstogglelock.cpp \
     actions/dock_widgets/layer/rs_actionlayerstoggleprint.cpp \
     actions/dock_widgets/layer/rs_actionlayerstoggleview.cpp \
-    actions/dock_widgets/library/lc_action_block_library_insert.cpp \
+    actions/dock_widgets/library/lc_action_block_library_insert.cpp \    
+    actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp \
+    actions/drawing/draw/arc/lc_action_draw_arc_3points.cpp \
+    actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp \
     actions/drawing/draw/circle/lc_action_draw_circle_2points_radius.cpp \
     actions/drawing/draw/circle/lc_action_draw_circle_base.cpp \
     actions/drawing/draw/circle/lc_action_draw_circle_by_arc.cpp \
@@ -1450,13 +1460,10 @@ SOURCES += actions/dock_widgets/block/rs_actionblocksadd.cpp \
     actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp \
     actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp \
     actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp \
-    actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp \
-    actions/drawing/draw/curve/rs_actiondrawarc.cpp \
-    actions/drawing/draw/curve/rs_actiondrawarc3p.cpp \
-    actions/drawing/draw/curve/rs_actiondrawarctangential.cpp \
-    actions/drawing/draw/curve/rs_actiondrawlinefree.cpp \
-    actions/drawing/draw/curve/lc_actiondrawdual.cpp \
-    actions/drawing/draw/spline/rs_actiondrawspline.cpp \
+    actions/drawing/draw/curve/lc_action_draw_line_freehand.cpp \
+    actions/drawing/draw/spline/lc_action_draw_spline_points.cpp \
+    actions/drawing/draw/curve/lc_actiondrawdual.cpp \    
+    actions/drawing/draw/spline/lc_action_draw_spline.cpp \
     actions/drawing/draw/dimensions/lc_actiondimarc.cpp \
     actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp \
     actions/drawing/draw/dimensions/rs_actiondimaligned.cpp \
@@ -2165,6 +2172,7 @@ FORMS = ui/action_options/circle/lc_circle_by_arc_options_widget.ui \
        ui/components/comboboxes/comboboxoption.ui \
        ui/components/containers/lc_optionswidgetsholder.ui \
        ui/components/containers/lc_snapoptionswidgetsholder.ui \
+       ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui \
        ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui \
        ui/dialogs/creators/lc_dlg_menu_assigner.ui \
        ui/dialogs/creators/lc_dlg_widget_creator.ui \

@@ -36,5 +36,6 @@ public:
     virtual void hideOptions() = 0;
     virtual void updateOptions(const QString& tagToFocus = "") = 0;
     virtual void updateOptionsUI(int mode, const QVariant *value = nullptr) = 0;
+    virtual void setup(bool showOptionsInToolOptionsWidget, bool showOptionsInPropertySheetWidget) = 0;
 };
 #endif

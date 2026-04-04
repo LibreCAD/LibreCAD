@@ -82,6 +82,9 @@ protected slots:
     void on_pbVisualSnapVertexesColor_clicked();
     void on_pbVisualSnapProjectedSnapColor_clicked();
     void on_pbVisualSnapDocEntitiesColor_clicked();
+    void on_pbRelativePositionAssistantBackgroundColor_clicked();
+    void on_pbRelativePositionAssistantFontColor_clicked();
+
     void setVariableFile();
     void setFontsFolder();
     void setTranslationsFolder();

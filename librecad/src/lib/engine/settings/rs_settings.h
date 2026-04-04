@@ -103,6 +103,9 @@ public:
     static constexpr auto VISUAL_SNAP_PROJECTED_SNAP = "#00ffff";
     static constexpr auto VISUAL_SNAP_DOCUMENT_ENTITIES = "#00ff00";
 
+    static constexpr auto RELATIVE_POSITION_BACKGROUND = BACKGROUND;
+    static constexpr auto RELATIVE_POSITION_FONT = "Cyan";
+
     // Used to have RAII style GroupGuard: endGroup is called automatically whenever a unique_ptr<GroupGuard>
     // goes out of scope
     class GroupGuard {

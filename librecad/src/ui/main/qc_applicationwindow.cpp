@@ -179,6 +179,13 @@ void QC_ApplicationWindow::startAutoSaveTimer(const bool startAutoBackup) {
     }
 }
 
+void QC_ApplicationWindow::tryShowRelativeInput(RS2::RelativePointParam paramType) {
+    RS_ActionInterface* currentAction = m_actionContext->getCurrentAction();
+    if (currentAction != nullptr) {
+        currentAction->tryShowRelativeInput(paramType);
+    }
+}
+
 /**
  * @brief QC_ApplicationWindow::getAppWindow() accessor for the application window singleton instance
  * @return QC_ApplicationWindow* the application window instance

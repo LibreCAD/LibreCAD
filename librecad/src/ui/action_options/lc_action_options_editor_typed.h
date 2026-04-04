@@ -44,7 +44,7 @@ public:
     void hideOptions() override;
     void updateOptions(const QString& tagToFocus = "") override;
     void updateOptionsUI(int mode, const QVariant *value) override;
-
+    void setup(bool showOptionsInToolOptionsWidget, bool showOptionsInPropertySheetWidget) override;
 protected:
     LC_ActionOptionsWidget* createOptionsWidget() const;
     LC_ActionOptionsPropertiesFiller* createOptionsFiller() const;

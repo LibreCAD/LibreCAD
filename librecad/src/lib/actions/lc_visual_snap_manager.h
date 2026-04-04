@@ -26,24 +26,28 @@
 
 #include <QMutex>
 #include <QTimer>
-#include <boost/geometry/algorithms/centroid.hpp>
 
+#include "lc_ref_snap_arc.h"
 #include "lc_ref_snap_circle.h"
 #include "lc_ref_snap_construction_line.h"
 #include "lc_ref_snap_line.h"
+#include "lc_relative_point_data.h"
 #include "rs_arc.h"
 #include "rs_line.h"
 
+
 class LC_CoordinatesMapper;
 class RS_Snapper;
+class RS_Preview;
+class LC_Highlight;
 
 struct LC_VisualSnapVertex {
     RS2::SnapType snapType;
     RS_Vector wcsSnapCoordinate{false};
+
     LC_RefSnapConstructionLine* refLine{nullptr};
     RS_Arc* refArc{nullptr};
     RS_Circle* refCircle{nullptr};
-    RS_Vector ucsSnapCoord{false};
 
     // temporary flags for displaying
     bool flagProcessed{false};
@@ -58,11 +62,11 @@ struct LC_VisualSnapVertex {
             }
             else if (entity->is(RS2::EntityArc)) {
                 const auto arc = static_cast<RS_Arc*>(entity);
-                refArc = new RS_Arc(nullptr, arc->getData());
+                refArc = new LC_RefSnapArc(arc->getData());
             }
             else if (entity->is(RS2::EntityCircle)) {
                 const auto circle = static_cast<RS_Circle*>(entity);
-                refCircle = new RS_Circle(nullptr, circle->getData());
+                refCircle = new LC_RefSnapCircle(circle->getCenter(), circle->getRadius());
             }
         }
     }
@@ -71,6 +75,7 @@ struct LC_VisualSnapVertex {
         refLine = new LC_RefSnapConstructionLine(start, end);
         refCircle = new LC_RefSnapCircle(start, start.distanceTo(end));
     }
+
 
     ~LC_VisualSnapVertex() {
         delete refLine;
@@ -84,6 +89,8 @@ struct EntityHolder {
     RS_Entity* entity;
     RS2::VisualSnapGuideEntityType snapEntityType;
     double wcsRayAngleRad {-1.0};
+
+    EntityHolder() = default;
 
     EntityHolder(RS_Entity* ent, RS2::VisualSnapGuideEntityType snapType) : entity{ent}, snapEntityType{snapType} {
     }
@@ -102,8 +109,8 @@ struct PointHolder {
 };
 
 struct VisualSnapSolution {
-    std::list<EntityHolder> guideEntities;
-    RS2::LC_VisualSnapEntersectionPoint foundSnapPointInfo;
+    std::list<EntityHolder> guidingEntities;
+    RS2::LC_VisualSnapIntersectionInfo foundSnapPointInfo; // fixme - rename class
     RS_Vector foundSnapPoint{false};
     RS_Vector wcsPoint{false};
     RS_Vector restrictedPoint{false};
@@ -112,23 +119,29 @@ struct VisualSnapSolution {
     std::list<RS_Vector> middlePoints;
     bool valid = true;
 
+    ~VisualSnapSolution() {
+        for (const auto& h:guidingEntities) {
+            delete h.entity;
+        }
+    }
+
     bool hasFoundSnapPoint() const {
         return foundSnapPoint.valid;
     }
 
-    void setFoundSnapPoint(RS_Vector& snapPoint, const RS2::LC_VisualSnapEntersectionPoint pointInfo) {
+    void setFoundSnapPoint(RS_Vector& snapPoint, const RS2::LC_VisualSnapIntersectionInfo pointInfo) {
         foundSnapPoint = snapPoint;
         foundSnapPointInfo = pointInfo;
     }
 
-    void addGuideEntity(RS_Entity* entity, const RS2::VisualSnapGuideEntityType entityType) {
+    void addGuidingEntity(RS_Entity* entity, const RS2::VisualSnapGuideEntityType entityType) {
         const EntityHolder holder(entity, entityType);
-        guideEntities.push_back(holder);
+        guidingEntities.push_back(holder);
     }
 
-    void addGuideEntity(RS_Entity* entity, const RS2::VisualSnapGuideEntityType entityType, double wcsRayAngle) {
+    void addGuidingEntity(RS_Entity* entity, const RS2::VisualSnapGuideEntityType entityType, double wcsRayAngle) {
         const EntityHolder holder(entity, entityType, wcsRayAngle);
-        guideEntities.push_back(holder);
+        guidingEntities.push_back(holder);
     }
 
     void addSnapCandidate(const RS_Vector& v) {
@@ -172,7 +185,7 @@ class LC_VisualSnapManager : public QObject {
     void clear();
 
     void previewVertex(RS_EntityContainer* preview, const LC_VisualSnapVertex* point, bool remove) const;
-    bool hasVertexesOrEntities();
+    bool hasVisualSnap();
 
     void setViewport(LC_GraphicViewport* viewport) {
         m_viewport = viewport;
@@ -180,10 +193,9 @@ class LC_VisualSnapManager : public QObject {
 
     VisualSnapSolution* solveVisualSnap(const RS_Vector& wcsPos);
     VisualSnapSolution* getCurrentSolution() const;
-    void previewSolution(RS_EntityContainer* preview);
-    void refreshSolutionPreview(RS_EntityContainer* preview);
-
-    void previewOrdinaryRestrictions(RS_EntityContainer* preview) const;
+    void solveAndVisualizeSolution(RS_Preview* preview, LC_Highlight *highlight);
+    void refreshSolutionVisualization(RS_Preview* preview, LC_Highlight* highlight);
+    void visualizeOrdinaryRestrictions(RS_Preview* preview, LC_Highlight* highlight) const;
     void removeLastAddition();
 
     void setSnapRange(double range);
@@ -200,9 +212,16 @@ class LC_VisualSnapManager : public QObject {
         return m_options.autoAddSnappedPointToVisualSnap;
     }
 
-
     void saveLastSnappedPoint(const RS_Vector& v);
+    RS_Vector getLastSnappedPoint()const;
+    void createRelativePositionEntities(const RS_Vector& wcsPos, VisualSnapSolution& solution, const LC_RelativePositionData& data);
+    void createRelativePositionEntities(const RS_Vector& wcsPos, VisualSnapSolution& solution);
 
+    void addRelativePointInfo(const LC_RelativePositionData* relativePositionData);
+    void addGuidingPoint(const RS_Vector& snapPoint, const RS_Vector& graphPoint, const RS_Vector& relZero, bool hasLength, bool hasAngle,
+                         bool hasDx, bool hasDy, bool hasNormal);
+
+    void updateAndPreviewSolution(RS_EntityContainer* preview, LC_Highlight* highlight, const RS_Vector& wcsPos);
 protected:
     void invalidateSolution();
     void registerVertex(LC_VisualSnapVertex* vertex, bool removeExistingInSamePosition = true);
@@ -211,8 +230,7 @@ protected:
     void addVertexDelayed(RS2::SnapType snapType, const RS_Vector& coord, RS_Entity* entity);
     void createGuideEntitiesByDocumentEntities(const RS_Vector& wcsPos, VisualSnapSolution& solution) const;
     void solveVisualSnap(const RS_Vector& wcsPos, VisualSnapSolution& solut);
-    void previewVisualSnapForPoint(RS_EntityContainer* preview, const RS_Vector& wcsPos);
-    void previewVisualSnapSolution(RS_EntityContainer* preview, VisualSnapSolution& solution) const;
+    void visualizeSolution(RS_EntityContainer* preview, LC_Highlight* highlight, VisualSnapSolution& solution) const;
     void createOrthoRaysForVertexes(const RS_Vector& wcsPos, VisualSnapSolution& solution) const;
     bool isLineIsNotHorizontalOrVerticalInUCS(RS_Vector startPoint, RS_Vector endPoint) const;
     void createLineRays(const RS_Vector& wcsPos, VisualSnapSolution& solution) const;
@@ -226,7 +244,7 @@ protected:
     void createTangentialRaysBetwenCirclesArcs(const RS_Vector& wcsPos, std::vector<PointHolder>& specialPointSnapCandidates, VisualSnapSolution& solution) const;
 
     void createNormalsFromVertexToEntities(const RS_Vector& wcsPos, VisualSnapSolution& solution) const;
-    LC_RefSnapConstructionLine* tryGuideConstructionLine(const RS_Vector& wcsPos, const RS_Vector& start, const RS_Vector& end,
+    LC_RefSnapConstructionLine* tryCreateGuidingConstructionLine(const RS_Vector& wcsPos, const RS_Vector& start, const RS_Vector& end,
                                                          double& dist) const;
     void createExplicitlySetDistanceCirclesForVertexes(const RS_Vector& wcsPos, VisualSnapSolution& solution) const;
     void findSnapPoint(const RS_Vector& wcsPos, VisualSnapSolution& solution, const std::vector<PointHolder>& middlePointSnapCandidates) const;
@@ -240,29 +258,30 @@ protected:
     int getVisualSnapVertexAddingDelay() const;
     int getSnapVertexAddingDelay() const;
     int getDocumentEntityAddingDelay() const;
+    void visualizeSolutionForPoint(RS_Preview* preview, LC_Highlight* highlight, const RS_Vector& wcsPos);
 
     struct DocumentEntityRef {
-        std::unique_ptr<RS_Entity> guideEntity;
+        std::unique_ptr<RS_Entity> guidingEntity;
         RS_Entity* documentEntity{nullptr};
 
         DocumentEntityRef(RS_Entity* ent, RS_Entity* docEntity)
             : documentEntity{docEntity} {
-            guideEntity.reset(ent);
+            guidingEntity.reset(ent);
         }
 
         ~DocumentEntityRef() {
-            guideEntity.reset(nullptr);
+            guidingEntity.reset(nullptr);
         }
     };
 
     struct VisualSnapItem {
         bool isVertexItem = true;
         std::unique_ptr<LC_VisualSnapVertex> vertex{nullptr};
-        std::unique_ptr<DocumentEntityRef> entityRef{nullptr};
+        std::unique_ptr<DocumentEntityRef> docEntityRef{nullptr};
 
         VisualSnapItem(RS_Entity* snapEntity, RS_Entity* docEntity) {
             isVertexItem = false;
-            entityRef.reset(new DocumentEntityRef(snapEntity, docEntity));
+            docEntityRef.reset(new DocumentEntityRef(snapEntity, docEntity));
         }
 
         VisualSnapItem(LC_VisualSnapVertex* v) {
@@ -281,12 +300,13 @@ protected:
             if (isVertexItem) {
                 return nullptr;
             }
-            return entityRef->guideEntity.get();
+            return docEntityRef->guidingEntity.get();
         }
     };
 
     VisualSnapOptions m_options;
     std::unique_ptr<VisualSnapSolution> m_solution;
+    std::list<LC_RelativePositionData> m_relativePositionData;
     std::list<std::unique_ptr<VisualSnapItem>> m_itemsList;
     LC_VisualSnapVertex* m_vertexToProcess{nullptr};
     RS_Entity* m_documentEntityToProcess{nullptr};

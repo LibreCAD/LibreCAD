@@ -45,6 +45,11 @@ void LC_ActionOptionsEditorTyped::updateOptionsUI(int mode, const QVariant *valu
      }
 }
 
+void LC_ActionOptionsEditorTyped::setup(bool showOptionsInToolOptionsWidget, bool showOptionsInPropertySheetWidget) {
+    m_showOptionsInToolOptionsWidget = showOptionsInToolOptionsWidget;
+    m_showOptionsInPropertySheetWidget = showOptionsInPropertySheetWidget;
+}
+
 void LC_ActionOptionsEditorTyped::hideOptions() {
      if (m_showOptionsInToolOptionsWidget) {
          hideOptionsInToolOptionsWidget();

@@ -225,6 +225,7 @@ public slots:
     void checkForNewVersion() const;
     void forceCheckForNewVersion() const;
     void slotShowEntityDescriptionOnHover(bool toggle);
+    void tryShowRelativeInput(RS2::RelativePointParam paramType);
 signals:
     void gridChanged(bool on);
     void draftChanged(bool on);
@@ -239,7 +240,6 @@ signals:
     void workspacesChanged(bool hasWorkspaces);
     void currentActionIconChanged(QAction* actionIcon);
     void currentGraphicViewChanged(RS_GraphicView* graphicView);
-
 public:
     /**
      * @return Pointer to application window.

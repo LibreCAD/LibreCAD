@@ -35,6 +35,7 @@
 #include "rs_graphicview.h"
 #include "rs_layerlistlistener.h"
 
+class LC_RelativePointInputWidget;
 struct LC_UCSMarkOptions;
 class QEnterEvent;
 class QG_ScrollBar;
@@ -57,6 +58,7 @@ class QG_GraphicView:   public RS_GraphicView,
                         public LC_UCSListListener{
     Q_OBJECT
 public:
+    void initRelativePointInputWidget();
     // fixme - sand - files - restore - what if action context is null?? As for hatch dialog?
     explicit QG_GraphicView(QWidget *parent,  RS_Document *doc = nullptr, LC_ActionContext* actionContext = nullptr);
     ~QG_GraphicView() override;
@@ -68,9 +70,6 @@ public:
     void adjustZoomControls() override;
     void setMouseCursor(RS2::CursorType cursorType) override;
     void updateGridStatusWidget(QString text) override;
-protected:
-    void dragEnterEvent(QDragEnterEvent* event) override;
-public:
     void loadSettings() override;
 
     // Methods from RS_LayerListListener Interface:
@@ -117,6 +116,7 @@ protected slots:
     void slotHScrolled(int value);
     void slotVScrolled(int value);
 protected:
+    void dragEnterEvent(QDragEnterEvent* event) override;
     void mousePressEvent(QMouseEvent* event) override;
     bool invokeContextMenuForMouseEvent(QMouseEvent* e);
     void mouseDoubleClickEvent(QMouseEvent* e) override;

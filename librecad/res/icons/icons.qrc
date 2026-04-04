@@ -383,5 +383,16 @@
         <file alias="snap_endpoints_short.lci">snap_endpoints_short.svg</file>
         <file alias="snap_middle_short.lci">snap_middle_short.svg</file>
         <file alias="snap_distance_short.lci">snap_distance_short.svg</file>
+        <file alias="relative_angle.lci">relative_angle.svg</file>
+        <file alias="relative_dx.lci">relative_dx.svg</file>
+        <file alias="relative_dy.lci">relative_dy.svg</file>
+        <file alias="relative_len.lci">relative_len.svg</file>
+        <file alias="relative_x.lci">relative_x.svg</file>
+        <file alias="relative_y.lci">relative_y.svg</file>
+        <file alias="check_mark.lci">check_mark.svg</file>
+        <file alias="aim.lci">aim.svg</file>
+        <file alias="guiding_circle.lci">guiding_circle.svg</file>
+        <file alias="guiding_line.lci">guiding_line.svg</file>
+        <file alias="guiding_point.lci">guiding_point.svg</file>
     </qresource>
 </RCC>

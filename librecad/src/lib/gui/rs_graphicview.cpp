@@ -31,6 +31,7 @@
 #include "lc_cursoroverlayinfo.h"
 #include "lc_eventhandler.h"
 #include "lc_graphicviewport.h"
+#include "lc_relative_point_input_widget.h"
 #include "lc_shortcuts_manager.h"
 #include "lc_widgetviewportrenderer.h"
 #include "rs_actioninterface.h"
@@ -417,4 +418,21 @@ LC_WidgetViewPortRenderer* RS_GraphicView::getRenderer() const{
 
 void RS_GraphicView::setRenderer(std::unique_ptr<LC_WidgetViewPortRenderer> renderer){
     m_renderer = std::move(renderer);
+}
+
+void RS_GraphicView::showRelativeInputWidget(const RS_Vector& wcsPos, const RS_Vector& basePoint, bool baseIsRelativePoint, RS2::RelativePointParam param) {
+    m_relativePointWidgetHolder->show(wcsPos, basePoint,baseIsRelativePoint, param);
+}
+
+void RS_GraphicView::hideRelativeInputWidget() {
+    m_relativePointWidgetHolder->hide();
+}
+
+void RS_GraphicView::restoreRelativeInputWidget() {
+    m_relativePointWidgetHolder->updatePosition(true);
+    m_relativePointWidgetHolder->setVisible(true);
+}
+
+bool RS_GraphicView::isInRelativePointInput() const {
+    return m_relativePointWidgetHolder->isVisible();
 }

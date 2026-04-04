@@ -128,6 +128,18 @@ bool RS_PreviewActionInterface::doCheckMayTrigger() {
     return true;
 }
 
+void RS_PreviewActionInterface::suspendRelativeInputWidget() {
+    m_restoreRelativeInput = m_graphicView->isInRelativePointInput();
+    m_graphicView->hideRelativeInputWidget();
+}
+
+void RS_PreviewActionInterface::resumeRelativeInputWidget() {
+    if (m_restoreRelativeInput) {
+        m_graphicView->restoreRelativeInputWidget();
+        onMouseMoveEvent(getStatus(), &m_relativeInputInvocationEvent);
+    }
+}
+
 /**
  * Deletes the preview from the screen.
  */
@@ -235,6 +247,9 @@ RS_Vector RS_PreviewActionInterface::getSnapAngleAwarePoint(const LC_MouseEvent*
                                                                                  wcsResultingAngle, ucsResultingAngle);
                     constexpr double rayOffset = 10;
                     result = snapGrid(pointOnAngleRay, basepoint, basepoint.relative(rayOffset, wcsResultingAngle));
+                    if (drawMark) {
+                        previewSnapAngleMark(basepoint, result);
+                    }
                 }
                 else { // snap to horizontal and vertical lines
                     const RS_Vector gridPosition = /*snapGrid(e->graphPoint)*/pos;
@@ -274,6 +289,11 @@ RS_Vector RS_PreviewActionInterface::getSnapAngleAwarePoint(const LC_MouseEvent*
             }
         }
     }
+    m_lastAngleSnapPoint = result;
+    m_impData->snapSpot = result;
+    m_impData->snapCoord = result;
+    m_impData->angle = basepoint.angleTo(result);
+    drawSnapper();
     return result;
 }
 
@@ -800,9 +820,9 @@ namespace {
 
 void RS_PreviewActionInterface::onVisualSnapSolutionRefresh() {
     deletePreview();
-    m_visualSnapManager->refreshSolutionPreview(m_preview.get());
+    m_visualSnapManager->refreshSolutionVisualization(m_preview.get(), m_highlight.get());
     drawPreview();
-    m_graphicView->redraw(static_cast<RS2::RedrawMethod>(RS2::RedrawOverlay + RS2::RedrawImmediately));
+    redrawImmediately(RS2::RedrawOverlay);
 }
 
 void RS_PreviewActionInterface::onVisualSnapPointRegistered(LC_VisualSnapVertex* point, bool remove) {
@@ -821,6 +841,9 @@ void RS_PreviewActionInterface::onVisualSnapEntityRegistered(RS_Entity* entity) 
 }
 
 void RS_PreviewActionInterface::mouseMoveEvent(QMouseEvent* event) {
+    if (m_graphicView->isInRelativePointInput()) {
+        return;
+    }
     const int status = getStatus();
     const bool applyVisualSnap = isVisualSnapApplicable();
     m_visualSnapManager->skipDelayedOperations();
@@ -855,10 +878,10 @@ void RS_PreviewActionInterface::mouseMoveEvent(QMouseEvent* event) {
             }
         }
 
-        m_visualSnapManager->previewSolution(m_preview.get());
+        m_visualSnapManager->solveAndVisualizeSolution(m_preview.get(), m_highlight.get());
     }
     // fixme - should it be optional? Which color should be used for restriction lines (same as relzero??)
-    m_visualSnapManager->previewOrdinaryRestrictions(m_preview.get());
+    m_visualSnapManager->visualizeOrdinaryRestrictions(m_preview.get(), m_highlight.get());
     onMouseMoveEvent(status, &lcEvent);
     drawPreviewAndHighlights();
 }
@@ -882,7 +905,62 @@ void RS_PreviewActionInterface::keyPressEvent(QKeyEvent* e) {
         default:
             break;
     }
+}
 
+void RS_PreviewActionInterface::tryShowRelativeInput(RS2::RelativePointParam type) {
+    if (isInVisualSnapStatus(getStatus())) {
+        if (m_lastMouseMoveEvent.graphPoint.valid) {
+            m_relativeInputInvocationEvent = m_lastMouseMoveEvent;
+            RS_Vector basePoint = m_visualSnapManager->getLastSnappedPoint();
+            bool forRelativePoint = false;
+            if (!basePoint.valid) {
+                basePoint = getRelativeZero();
+                forRelativePoint = true;
+            }
+            RS_Vector currentPoint = m_lastMouseMoveEvent.snapPoint;
+            if (m_lastMouseMoveEvent.isShift) { // angle snap support
+                if (m_lastAngleSnapPoint.valid) {
+                    currentPoint = m_lastAngleSnapPoint;
+                }
+            }
+            deleteInfoCursor();
+            m_graphicView->showRelativeInputWidget(currentPoint, basePoint, forRelativePoint, type);
+        }
+    }
+}
+
+void RS_PreviewActionInterface::addProjectedRelativePointToVisualSnap(const LC_RelativePositionData* relativePositionData, bool applyProjectedPosition) {
+    auto projectedPoint = relativePositionData->wcsProjection;
+    bool apply = applyProjectedPosition && relativePositionData->isSingleSolution;
+    if (apply) {
+        m_lastMouseMoveEvent.snapPoint = projectedPoint;
+        m_lastMouseMoveEvent.graphPoint = projectedPoint;
+        onMouseLeftButtonRelease(getStatus(), &m_lastMouseMoveEvent);
+        // fixme - or it's better to use coordinate event? what about modifiers?
+        // fireCoordinateEvent(projectedPoint);
+    }
+    else {
+        m_visualSnapManager->addRelativePointInfo(relativePositionData);
+        moveMouseToRefreshPreview(projectedPoint);
+    }
+    redrawImmediately(RS2::RedrawOverlay);
+}
+
+void RS_PreviewActionInterface::moveMouseToRefreshPreview(const RS_Vector& wcsPos) {
+    m_lastMouseMoveEvent.snapPoint = wcsPos;
+    deletePreviewAndHighlights();
+    onMouseMoveEvent(getStatus(), &m_lastMouseMoveEvent);
+    drawPreviewAndHighlights();
+}
+
+void RS_PreviewActionInterface::tryAddVisualGuidingPointForCurrentPoint(bool hasLength, bool hasAngle, bool hasDx, bool hasDy, bool hasNormal) {
+    if (isInVisualSnapStatus(getStatus())) {
+        m_visualSnapManager->addGuidingPoint(m_lastMouseMoveEvent.snapPoint, m_lastMouseMoveEvent.graphPoint, getRelativeZero(), hasLength, hasAngle, hasDx, hasDy, hasNormal);
+        deletePreviewAndHighlights();
+        m_visualSnapManager->updateAndPreviewSolution(m_preview.get(), m_highlight.get(), m_lastMouseMoveEvent.snapPoint);
+        drawPreviewAndHighlights();
+        redrawImmediately(RS2::RedrawOverlay);
+    }
 }
 
 void RS_PreviewActionInterface::createVisualSnapGuidesForCurrentPoint() {

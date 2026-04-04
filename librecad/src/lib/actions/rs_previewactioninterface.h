@@ -28,6 +28,7 @@
 #define RS_PREVIEWACTIONINTERFACE_H
 
 #include "dxf_format.h"
+#include "lc_relative_position_editing_widget.h"
 #include "rs_actioninterface.h"
 #include "rs_entity.h"
 #include "rs_vector.h"
@@ -79,6 +80,11 @@ public:
     QStringList getAvailableCommands() override;
     bool isClearVisualSnapMarks();
     void setStatus(int status) override;
+    void tryShowRelativeInput(RS2::RelativePointParam type) override;
+    void tryAddVisualGuidingPointForCurrentPoint(bool hasLength, bool hasAngle, bool hasDx, bool hasDy, bool hasNormal);
+    void addProjectedRelativePointToVisualSnap(const LC_RelativePositionData* relativePositionData, bool applyProjectedPosition);
+    void moveMouseToRefreshPreview(const RS_Vector& wcsPos);
+
 protected:
     RS_PreviewActionInterface(const QString& actionName,LC_ActionContext *actionContext,RS2::ActionType actionType = RS2::ActionNone);
     ~RS_PreviewActionInterface() override;
@@ -99,7 +105,11 @@ protected:
     bool m_highlightEntitiesOnHover = false;
     bool m_highlightEntitiesRefPointsOnHover = false;
     bool m_doNotAllowNonDecimalAnglesInput = false;
+
+    bool m_restoreRelativeInput{false};
     LC_MouseEvent m_lastMouseMoveEvent;
+    LC_MouseEvent m_relativeInputInvocationEvent;
+    RS_Vector m_lastAngleSnapPoint {false};
     /**
     * This is "major" status of action - it is used for determining, to which status state should be changed after various intermediate statuses (mostly,
     * this is needed for support of command events);
@@ -239,8 +249,10 @@ protected:
     void onVisualSnapPointRegistered(LC_VisualSnapVertex* point, bool remove) override;
     void onVisualSnapEntityRegistered(RS_Entity* point) override;
     void onVisualSnapSolutionRefresh() override;
-
     virtual bool doCheckMayTrigger();
+
+    void resumeRelativeInputWidget() override;
+    void suspendRelativeInputWidget() override;
 private:
     LC_MouseEvent toLCMouseMoveEvent(QMouseEvent *e);
     friend LC_ActionInfoMessageBuilder;

@@ -79,7 +79,8 @@ void LC_GraphicViewRenderer::loadSettings() {
 
     LC_GROUP_GUARD("Colors");
     {
-        setBackground(RS_Color(LC_GET_STR("background", RS_Settings::BACKGROUND)));
+        RS_Color bgColor(LC_GET_STR("background", RS_Settings::BACKGROUND));
+        setBackground(bgColor);
         m_colorSelectedEntity = RS_Color(LC_GET_STR("select", RS_Settings::SELECT));
         m_colorHighlightedEntity = RS_Color(LC_GET_STR("highlight", RS_Settings::HIGHLIGHT));
         m_colorStartHandle = RS_Color(LC_GET_STR("start_handle", RS_Settings::START_HANDLE));

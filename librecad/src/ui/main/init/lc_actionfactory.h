@@ -68,6 +68,7 @@ private:
     void createDrawShapeActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void createInfoActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void createViewActions(QMap<QString, QAction *> &map, QActionGroup *group);
+    void createRelativeInputActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createDrawCircleActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void createSelectActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void createDrawCurveActions(QMap<QString, QAction *> &map, QActionGroup *group) const;

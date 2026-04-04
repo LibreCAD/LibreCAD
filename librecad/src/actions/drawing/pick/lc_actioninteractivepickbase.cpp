@@ -28,7 +28,13 @@
 #include "lc_actioncontext.h"
 
 LC_ActionInteractivePickBase::LC_ActionInteractivePickBase(const char* name, LC_ActionContext* actionContext, const RS2::ActionType actionType)
-    :RS_PreviewActionInterface(name, actionContext, actionType) {}
+    :RS_PreviewActionInterface(name, actionContext, actionType) {
+}
+
+void LC_ActionInteractivePickBase::createOptionsEditor() {
+    RS_PreviewActionInterface::createOptionsEditor();
+    m_optionsEditor->setup(false, false);
+}
 
 void LC_ActionInteractivePickBase::setPredecessor(std::shared_ptr<RS_ActionInterface> pre) {
     if (pre != nullptr) {

@@ -100,7 +100,11 @@ RS_Vector RS_ConstructionLine::doGetNearestPointOnEntity(const RS_Vector& coord,
     //    RS_Vector be = ea * RS_Vector::dotP(ea, ep)
     //                   / (ea.magnitude()*ea.magnitude());
 
-    return m_data.point1 + ba;
+    auto result = m_data.point1 + ba;
+    if (dist != nullptr) {
+        *dist = coord.distanceTo(result);
+    }
+    return result;
 }
 
 RS_Vector RS_ConstructionLine::doGetNearestCenter([[maybe_unused]]const RS_Vector& coord, double* dist, RS_Entity** entity) const {

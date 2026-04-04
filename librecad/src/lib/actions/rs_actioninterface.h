@@ -101,6 +101,7 @@ public:
     void onLateRequestCompleted(bool shouldBeSkipped) override;
     void updateOptions(const QString& tagToFocus = "");
     void postCreateInit();
+    virtual void tryShowRelativeInput([[maybe_unused]]RS2::RelativePointParam type) {};
 private:
     /**
      * Current status of the action. After an action has
@@ -146,6 +147,7 @@ protected:
     // Accessor for drawing keys
     int getGraphicVariableInt(const QString& key, int def) const;
 
+    virtual void createOptionsEditor();
     virtual LC_ActionOptionsWidget* createOptionsWidget();
     virtual LC_ActionOptionsPropertiesFiller* createOptionsFiller();
 

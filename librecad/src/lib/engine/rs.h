@@ -760,25 +760,39 @@ namespace RS2 {
     };
 
     enum VisualSnapGuideEntityType {
-        VSNAP_NONE,
-        VSNAP_LINE_VERTEX_HORIZONTAL,
-        VSNAP_LINE_VERTEX_VERTICAL,
-        VSNAP_LINE_VERTEX_VERTEX,
-        VSNAP_LINE_VERTEX_ORTHO,
-        VSNAP_LINE_VERTEX_ANGLE_STEP,
-        VSNAP_LINE_ENDPOINT_TANGENT,
-        VSNAP_LINE_ENDPOINT_NORMAL,
-        VSNAP_LINE_ENDPOINT_ANGLE_STEP,
-        VSNAP_LINE_RAY,
-        VSNAP_LINE_TANGENT1,
-        VSNAP_LINE_TANGENT2,
-        VSNAP_POINT_MIDDLE,
-        VSNAP_POINT_DISTANCE_EXPLICIT,
-        VSNAP_POINT_DISTANCE_VERTEX,
-        VSNAP_DOC_ENTITY
+        VSNAP_NONE = 0,
+        VSNAP_LINE_VERTEX_HORIZONTAL = 1,
+        VSNAP_LINE_VERTEX_VERTICAL = 2,
+        VSNAP_LINE_VERTEX_VERTEX = 3,
+        VSNAP_LINE_VERTEX_ORTHO = 4,
+        VSNAP_LINE_VERTEX_ANGLE_STEP = 5,
+        VSNAP_LINE_ENDPOINT_TANGENT = 6,
+        VSNAP_LINE_ENDPOINT_NORMAL = 7,
+        VSNAP_LINE_ENDPOINT_ANGLE_STEP = 8,
+        VSNAP_LINE_RAY = 9,
+        VSNAP_LINE_TANGENT1 = 10,
+        VSNAP_LINE_TANGENT2 = 11,
+        VSNAP_POINT_MIDDLE = 12,
+        VSNAP_POINT_DISTANCE_EXPLICIT = 13,
+        VSNAP_POINT_DISTANCE_VERTEX = 14,
+        VSNAP_POINT_RELATIVE_DISTANCE = 15,
+        VSNAP_POINT_RELATIVE_NORMAL = 16,
+        VSNAP_POINT_RELATIVE_ANGLE_RAY = 17,
+        VSNAP_POINT_RELATIVE_VERTICAL_DX = 18,
+        VSNAP_POINT_RELATIVE_HORIZONTAL_DY = 19,
+        VSNAP_DOC_ENTITY = 20
     };
 
-    struct LC_VisualSnapEntersectionPoint {
+    enum RelativePointParam{
+        REL_POINT_LENGTH,
+        REL_POINT_ANGLE,
+        REL_POINT_DX,
+        REL_POINT_DY,
+        REL_POINT_X,
+        REL_POINT_Y
+    };
+
+    struct LC_VisualSnapIntersectionInfo {
         VisualSnapGuideEntityType entity1 = RS2::VSNAP_NONE;
         VisualSnapGuideEntityType entity2 = RS2::VSNAP_NONE;
         double rayAngle1{-1.0};

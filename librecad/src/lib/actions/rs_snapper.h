@@ -201,7 +201,7 @@ protected:
         int restriction = RS2::RestrictNothing;
         RS_Entity* entity{nullptr};
         RS_Entity* entityOther{nullptr};
-        RS2::LC_VisualSnapEntersectionPoint visualSnapType;
+        RS2::LC_VisualSnapIntersectionInfo visualSnapType;
     };
 
     void deleteSnapper() const;
@@ -293,6 +293,7 @@ protected:
     double toGuiDX(double wcsDX) const;
     double toGraphDX(int wcsDX) const;
     void redraw(RS2::RedrawMethod method = RS2::RedrawMethod::RedrawAll) const;
+    void redrawImmediately(RS2::RedrawMethod method) const;
     void redrawDrawing() const;
     void redrawAll() const;
     void enableCoordinateInput() const;
@@ -357,7 +358,8 @@ protected:
     RS_Entity* catchEntity(const QMouseEvent* e, const EntityTypeList& enTypeList, RS2::ResolveLevel level = RS2::ResolveNone) const;
     RS_Entity* catchEntity(const RS_Vector& pos, const EntityTypeList& enTypeList, RS2::ResolveLevel level = RS2::ResolveNone) const;
 
-
+    virtual void resumeRelativeInputWidget() {};
+    virtual void suspendRelativeInputWidget() {};
     friend LC_VisualSnapManager;
 };
 #endif

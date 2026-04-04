@@ -23,7 +23,7 @@
 
 #include "lc_ref_snap_arc.h"
 
-LC_RefSnapArc::LC_RefSnapArc(RS_EntityContainer *parent, const RS_ArcData &d):RS_Arc(parent, d){}
+LC_RefSnapArc::LC_RefSnapArc(const RS_ArcData &d):RS_Arc(nullptr, d){}
 
 RS2::EntityType LC_RefSnapArc::rtti() const{
     return RS2::EntitySnapArc;

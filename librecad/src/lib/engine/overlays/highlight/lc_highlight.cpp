@@ -39,7 +39,13 @@ void LC_Highlight::addEntity(const RS_Entity* entity, const bool selected) {
     }
     const RS_Pen pen = entity->getPen(true);
     clone->setPen(pen);
-    clone->setHighlighted(true);
+    const bool inVisualSnap = entity->getFlag(RS2::FlagInVisualSnap);
+    if (inVisualSnap) {
+        clone->setFlag(RS2::FlagInVisualSnap);
+    }
+    else {
+        clone->setHighlighted(true);
+    }
     if (selected) {
         clone->setSelectionFlag(true);  // fixme - selection - overlay?
     }

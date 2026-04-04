@@ -35,6 +35,7 @@
 #include "rs.h"
 #include "rs_debug.h"
 
+class LC_RelativePointInputWidget;
 class RS_Document;
 class LC_EventHandler;
 struct LC_InfoCursorOverlayPrefs;
@@ -170,6 +171,11 @@ public:
     bool hasAction() const;
     void notifyLastActionFinished() const;
     void onSwitchToDefaultAction(bool actionIsDefault, RS2::ActionType actionRtti, RS2::ActionType prevActionRtti);
+    void showRelativeInputWidget(const RS_Vector& wcsPos, const RS_Vector& basePoint, bool baseIsRelativePoint, RS2::RelativePointParam param);
+    void hideRelativeInputWidget();
+    void restoreRelativeInputWidget();
+    bool isInRelativePointInput() const;
+    void onViewportRedrawNeeded(RS2::RedrawMethod method) override;
 signals:
     void ucsChanged(LC_UCS* ucs);
     void relativeZeroChanged(const RS_Vector &);
@@ -180,9 +186,9 @@ protected:
     void setRenderer(std::unique_ptr<LC_WidgetViewPortRenderer> renderer);
     LC_WidgetViewPortRenderer* getRenderer() const;
     void resizeEvent(QResizeEvent *event) override;
-    void onViewportRedrawNeeded(RS2::RedrawMethod method) override;
     LC_EventHandler *getEventHandler() const;
 
+    LC_RelativePointInputWidget* m_relativePointWidgetHolder = nullptr;
 private:
     std::unique_ptr<LC_EventHandler> m_eventHandler;
     RS_Document *m_document = nullptr;
@@ -210,7 +216,9 @@ private:
     bool m_showEntityDescriptionOnHover = false;
     bool m_panOnZoom = false;
     bool m_skipFirstZoom = false;
+
     const RS_LineTypePattern *getPattern(RS2::LineType t);
     bool setEventHandlerAction(const std::shared_ptr<RS_ActionInterface>&) const;
+
 };
 #endif

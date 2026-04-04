@@ -217,6 +217,7 @@ set (SHARED_INCLUDES
      librecad/src/ui/components/creators
      librecad/src/ui/components/layouts
      librecad/src/ui/components/pen
+     librecad/src/ui/components/relative_position_assistant
      librecad/src/ui/components/status_bar
      librecad/src/ui/components/toolbars
      librecad/src/ui/components/utils
@@ -457,8 +458,8 @@ set (SHARED_SOURCES
      librecad/src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp
      librecad/src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.h
      librecad/src/actions/drawing/draw/curve/lc_actiondrawdual.cpp
-    librecad/src/actions/drawing/draw/curve/lc_actiondrawdual.h
-    librecad/src/actions/drawing/draw/curve/lc_action_draw_line_freehand.cpp
+     librecad/src/actions/drawing/draw/curve/lc_actiondrawdual.h
+     librecad/src/actions/drawing/draw/curve/lc_action_draw_line_freehand.cpp
      librecad/src/actions/drawing/draw/curve/lc_action_draw_line_freehand.h
      librecad/src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp
      librecad/src/actions/drawing/draw/dimensions/lc_actioncircledimbase.h
@@ -1370,6 +1371,8 @@ set (SHARED_SOURCES
      librecad/src/ui/components/lc_plaintextedit.h
      librecad/src/ui/components/pen/qg_widgetpen.cpp
      librecad/src/ui/components/pen/qg_widgetpen.h
+     librecad/src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.h
+     librecad/src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp
      librecad/src/ui/components/qg_scrollbar.h
      librecad/src/ui/components/status_bar/lc_anglesbasiswidget.cpp
      librecad/src/ui/components/status_bar/lc_anglesbasiswidget.h
@@ -2074,6 +2077,18 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/overlays/references/lc_ref_snap_entity.h
      librecad/src/lib/engine/overlays/references/lc_ref_snap_arc.cpp
      librecad/src/lib/engine/overlays/references/lc_ref_snap_arc.h
+     librecad/src/lib/gui/lc_relative_point_input_widget.cpp
+     librecad/src/lib/gui/lc_relative_point_input_widget.h
+     librecad/src/lib/gui/lc_relative_point_data.h
+     librecad/src/ui/components/relative_position_assistant/lc_relative_position_evaluator.cpp
+     librecad/src/ui/components/relative_position_assistant/lc_relative_position_evaluator.h
+     librecad/src/ui/action_options/polygon/lc_star_options_filler.cpp
+     librecad/src/ui/action_options/polygon/lc_star_options_filler.h
+     librecad/src/ui/action_options/modify/lc_break_divide_options_filler.cpp
+     librecad/src/ui/action_options/modify/lc_break_divide_options_filler.h
+     librecad/src/lib/actions/lc_visual_snap_manager.cpp
+     librecad/src/lib/actions/lc_visual_snap_manager.h
+
 )
 
 set (MUPARSER_SOURCES
@@ -2097,12 +2112,6 @@ set (MUPARSER_SOURCES
      libraries/muparser/src/muParserError.cpp
      libraries/muparser/src/muParserInt.cpp
      libraries/muparser/src/muParserTokenReader.cpp
-     librecad/src/ui/action_options/polygon/lc_star_options_filler.cpp
-     librecad/src/ui/action_options/polygon/lc_star_options_filler.h
-     librecad/src/ui/action_options/modify/lc_break_divide_options_filler.cpp
-     librecad/src/ui/action_options/modify/lc_break_divide_options_filler.h
-     librecad/src/lib/actions/lc_visual_snap_manager.cpp
-     librecad/src/lib/actions/lc_visual_snap_manager.h
 )
 
 # Static library from shared sources

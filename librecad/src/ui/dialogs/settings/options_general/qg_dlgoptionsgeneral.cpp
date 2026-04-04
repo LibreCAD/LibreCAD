@@ -104,6 +104,10 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget *parent)
     connect(cbEnableCADDockWidgets, stateChangedSignal,
             this, &QG_DlgOptionsGeneral::onEnableCADDocWidgetsChanged);
 
+    connect(cbRelativePositionAssistantRememberMode, &QCheckBox::toggled, [this](bool checked) {
+       cbRelativePositionAssistantStartInOffsetMode->setEnabled(!checked);
+    });
+
     // hide temporary until support will be added
     cbShowCommandInMenu->setVisible(false);
 }
@@ -453,6 +457,23 @@ void QG_DlgOptionsGeneral::init(){
         checked = LC_GET_BOOL("ShowPropertiesCreating", true);
         cbInfoOverlayPreviewCreatingEntity->setChecked(checked);
     }
+    LC_GROUP_END();
+
+    LC_GROUP("RelativePositionAssistant");
+    {
+        int fontSize = LC_GET_INT("FontSize", 10);
+        sbRelativePositionAssistantFontSize->setValue(fontSize);
+
+        QString fontName = LC_GET_STR("FontName", "Verdana");
+        QFont font(fontName);
+        fcbRelativePositionAssistant->setCurrentFont(font);
+
+        bool rememberMode = LC_GET_BOOL("RememberCoordinatesMode", false);
+        cbRelativePositionAssistantRememberMode->setChecked(rememberMode);
+        cbRelativePositionAssistantStartInOffsetMode->setEnabled(!rememberMode);
+        cbRelativePositionAssistantStartInOffsetMode->setChecked(LC_GET_BOOL("StartInOffsetMode", true));
+    }
+    LC_GROUP_END();
 
     LC_GROUP("Render"); {
         int minTextHeight = LC_GET_INT("MinRenderableTextHeightPx", 4);
@@ -544,6 +565,9 @@ void QG_DlgOptionsGeneral::init(){
         initComboBox(cbColorVisualSnapVertexes, LC_GET_STR("VisualSnapVertexesColor", RS_Settings::VISUAL_SNAP_VERTEXES));
         initComboBox(cbColorVisualSnapProjectedSnap, LC_GET_STR("VisualSnapProjectedSnapColor", RS_Settings::VISUAL_SNAP_PROJECTED_SNAP));
         initComboBox(cbColorVisualSnapDocumentEntity, LC_GET_STR("VisualSnapDocumentEntitiesColor", RS_Settings::VISUAL_SNAP_PROJECTED_SNAP));
+
+        initComboBox(cbColorRelativePositionAssistantBackground, LC_GET_STR("RelativePositionAssistantBackground", RS_Settings::RELATIVE_POSITION_BACKGROUND));
+        initComboBox(cbColorRelativePositionAssistantText, LC_GET_STR("RelativePositionAssistantText", RS_Settings::RELATIVE_POSITION_BACKGROUND));
 
         int overlayTransparency = LC_GET_INT("overlay_box_transparency", 90);
         sbOverlayBoxTransparency->setValue(overlayTransparency);
@@ -856,6 +880,17 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("ShowPropertiesEdit", cbInfoOverlayPreviewEditingEntity->isChecked());
             LC_SET("ShowPropertiesCreating", cbInfoOverlayPreviewCreatingEntity->isChecked());
         }
+        LC_GROUP_END();
+
+        LC_GROUP("RelativePositionAssistant");
+        {
+            LC_SET("FontSize", sbRelativePositionAssistantFontSize->value());
+            LC_SET("FontName", fcbRelativePositionAssistant->currentText());
+
+            LC_SET("RememberCoordinatesMode", cbRelativePositionAssistantRememberMode->isChecked());
+            LC_SET("StartInOffsetMode",cbRelativePositionAssistantStartInOffsetMode->isChecked());
+        }
+        LC_GROUP_END();
 
         LC_GROUP("Render"); {
             LC_SET("MinRenderableTextHeightPx", sbTextMinHeight->value());
@@ -915,6 +950,9 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("VisualSnapVertexesColor", cbColorVisualSnapVertexes->currentText());
             LC_SET("VisualSnapProjectedSnapColor", cbColorVisualSnapProjectedSnap->currentText());
             LC_SET("VisualSnapDocumentEntitiesColor", cbColorVisualSnapDocumentEntity->currentText());
+
+            LC_SET("RelativePositionAssistantBackground", cbColorRelativePositionAssistantBackground->currentText());
+            LC_SET("RelativePositionAssistantText", cbColorRelativePositionAssistantText->currentText());
         }
         LC_GROUP_END();
 
@@ -1191,6 +1229,13 @@ void QG_DlgOptionsGeneral::on_pbVisualSnapDocEntitiesColor_clicked() {
     set_color(cbColorVisualSnapDocumentEntity, QColor(RS_Settings::VISUAL_SNAP_DOCUMENT_ENTITIES));
 }
 
+void QG_DlgOptionsGeneral::on_pbRelativePositionAssistantBackgroundColor_clicked() {
+    set_color(cbColorRelativePositionAssistantBackground, QColor(RS_Settings::RELATIVE_POSITION_BACKGROUND));
+}
+
+void QG_DlgOptionsGeneral::on_pbRelativePositionAssistantFontColor_clicked() {
+    set_color(cbColorRelativePositionAssistantText, QColor(RS_Settings::RELATIVE_POSITION_FONT));
+}
 
 void QG_DlgOptionsGeneral::on_pb_clear_all_clicked(){
     const QMessageBox::StandardButton reply = QMessageBox::question(this, tr("Clear settings"),
