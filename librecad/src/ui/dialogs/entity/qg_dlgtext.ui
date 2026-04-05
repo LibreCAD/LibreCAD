@@ -974,7 +974,7 @@
             <string>Hash (#)</string>
            </property>
           </item>
-// We can use keyboard "Shift + 4"
+// English keyboard layout can use "Shift + 4"
           <item>
            <property name="text">
             <string>Dollar ($)</string>
@@ -1005,9 +1005,10 @@
             <string>Pound (£)</string>
            </property>
           </item>
+// Chinese keyboard layout can use "Shift + 4"
           <item>
            <property name="text">
-            <string>Yen (¥)</string>
+            <string>Yen / Yuan (¥)</string>
            </property>
           </item>
           <item>
