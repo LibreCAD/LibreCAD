@@ -22,3 +22,37 @@
  */
 
 #include "lc_ref_snap_entity.h"
+
+#include "lc_graphicviewport.h"
+#include "rs_painter.h"
+
+
+
+
+
+void LC_RefSnapEntity::drawMarker(RS_Painter* painter, const QFont& font, const RS_Vector &basePoint, const int uiOffset, const double offsetLevel, const QString& markerLetter) {
+    const QSize &size = QFontMetrics(font).size(Qt::TextSingleLine, markerLetter);
+
+    double nearestX;
+    double nearestY;
+    painter->getViewPort()->toUI(m_snapInfo.nearestPoint, nearestX, nearestY);
+
+    double baseX;
+    double baseY;
+    painter->getViewPort()->toUI(basePoint, baseX, baseY);
+
+    RS_Vector uiNearest(nearestX, nearestY);
+    RS_Vector uiBase(baseX, baseY);
+
+    RS_Vector uiMark = uiNearest.relative( uiOffset * offsetLevel, uiBase.angleTo(uiNearest));
+
+    auto yRect = QRect(QPoint(uiMark.x - size.width()/2, uiMark.y-size.height()/2), size);
+    QRect yBoundingRect;
+
+    // we'll intenctionally will not restore painter - so far, the font is used only in overlays and draft mark... so it' should be ok not to
+    // restore painter state (which is costly from performance point of view)
+    // painter->save();
+    painter->setFont(font);
+    painter->drawText(yRect, Qt::AlignHCenter | Qt::AlignCenter | Qt::TextDontClip, markerLetter, &yBoundingRect);
+    // painter->restore();
+}

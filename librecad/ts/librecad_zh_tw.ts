@@ -8854,8 +8854,8 @@ Are you sure you are going to discard changes?</source>
 <context>
     <name>LC_CreatorInvoker</name>
     <message>
-        <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="96"/>
-        <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="145"/>
+        <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="95"/>
+        <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="144"/>
         <source>Toolbar: %1 (Custom)</source>
         <translation>工具列 :% 1 (自訂)</translation>
     </message>
@@ -40722,7 +40722,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3130"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1891"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1483"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1496"/>
         <source>Dwg Units</source>
         <translation>Dwg 單位</translation>
     </message>
@@ -41670,7 +41670,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1888"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1480"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1493"/>
         <source>Screen %</source>
         <translation>屏幕 %</translation>
     </message>
@@ -41683,17 +41683,17 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>應用程式偏好設定</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5583"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5624"/>
         <source>Language</source>
         <translation>語言</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5596"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5637"/>
         <source>&amp;GUI Language:</source>
         <translation>圖形介面語言(&amp;G)：</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5616"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5657"/>
         <source>&amp;Command Language:</source>
         <translation>指令語言(&amp;C)：</translation>
     </message>
@@ -41751,68 +41751,68 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1637"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1687"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2510"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2567"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2814"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2837"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2880"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2903"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2551"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2603"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2855"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2878"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2921"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2944"/>
         <source>#1E90FF</source>
         <translation># 1E90FF (出自: 1E90FF)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5779"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5820"/>
         <source>&amp;Paths</source>
         <translation>路徑(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5975"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6016"/>
         <source>Translations:</source>
         <translation>翻譯：</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5871"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5912"/>
         <source>Hatch Patterns:</source>
         <translation>剖面線樣式：</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5895"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5936"/>
         <source>Fonts:</source>
         <translation>字型：</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5947"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5988"/>
         <source>Part Libraries:</source>
         <translation>構件函式庫：</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5828"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6009"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5869"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6050"/>
         <source>Click to select file</source>
         <translation>點擊以選擇檔案</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5888"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5929"/>
         <source>Path to folder with hatch patterns</source>
         <translation>有孵出樣式的資料夾路徑</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5846"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5887"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>有相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相相相關相 分頁相關相關資料夾 。 符號函式庫 dxf 檔案必須位于此資料夾的子目錄中 。 子目錄名稱會在圖書館瀏覽器中顯示. &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;p&gt;&lt;span style=&quot;字型相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5864"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5905"/>
         <source>Path to file with variables</source>
         <translation>有變數的檔案路徑</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5985"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6026"/>
         <source>Template:</source>
         <translation>模板:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4824"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4865"/>
         <source>&amp;Defaults</source>
         <translation>預設值(&amp;D)</translation>
     </message>
@@ -41824,98 +41824,103 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1792"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1849"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1930"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3032"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3220"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3454"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3532"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6171"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6222"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6238"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6254"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6277"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6293"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6330"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2066"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2116"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2227"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2416"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2487"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3073"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3261"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3495"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3573"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6212"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6263"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6279"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6295"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6318"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6334"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6371"/>
         <source> px</source>
         <translation>px</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6212"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6253"/>
         <source>Line length:</source>
         <translation>行長 :</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5482"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5645"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5523"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5686"/>
         <source>Startup</source>
         <translation>起步</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5684"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5725"/>
         <source>Display loading screen</source>
         <translation>顯示載入螢幕</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5674"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5715"/>
         <source>Start with main window maximized</source>
         <translation>从主窗口起步已最大化</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5507"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5548"/>
         <source>Enable CAD dockwidgets</source>
         <translation>開啟 CAD 接頭widges</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5497"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5538"/>
         <source>Enable CAD toolbars</source>
         <translation>開啟 CAD 工具列</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5097"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5138"/>
         <source>Defaults for new drawings</source>
         <translation>預設為新圖</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5162"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5203"/>
         <source>&amp;Unit:</source>
         <translation>單位(&amp;U)：</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5316"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5357"/>
         <source>Program Defaults</source>
         <translation>程式預設值</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5388"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5429"/>
         <source>Don&apos;t use native OS file open dialog</source>
         <translation>不要用本地 OS 文件開啟對話框</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5049"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5090"/>
         <source>Keyboard Settings</source>
         <translation>鍵盤設定</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5055"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5096"/>
         <source>Evaluate commands when SPACE BAR is pressed</source>
         <translation>在按下 Space BAR 時評估指令</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5065"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5106"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
         <translation>在按下 Space BAR 時切換自由快取模式</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4983"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5024"/>
         <source>CAD Preferences</source>
         <translation>CAD 偏好</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4989"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5030"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>(出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自: 如果啟用, 啟動一層會把所選取的單位都變更到新的一層 。 要改變多個單位的層: 第一個選取需要的單位; 在層面元件中活化一層 。 因此所有被選取的單位被修改為屬于新地層. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5654"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5695"/>
         <source>Start in tab mode</source>
         <translation>在分頁模式下起步</translation>
     </message>
@@ -41925,7 +41930,7 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>最小网格相距 (p &amp; x) :</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4668"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4709"/>
         <source>N&amp;umber of preview entities:</source>
         <translation>預覽實體的 N/ umber :</translation>
     </message>
@@ -41935,22 +41940,22 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>自動拓宽</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3604"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3645"/>
         <source>Alt+Z</source>
         <translation>替代+Z</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5548"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5589"/>
         <source>Restores program geometry/layout to original state</source>
         <translation>將程式几何/放出回原狀態</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5564"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5605"/>
         <source>Restores the program settings to its original state</source>
         <translation>將程式設定恢复到原狀態</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5839"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5880"/>
         <source>Variable File:</source>
         <translation>變數檔案 :</translation>
     </message>
@@ -42032,24 +42037,24 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1509"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1731"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1751"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2063"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2147"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2161"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2248"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2531"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2614"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2725"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2745"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2785"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2851"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3107"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3144"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3299"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3319"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3561"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3659"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4654"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4760"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2099"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2304"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2350"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2449"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2617"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2637"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2766"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2786"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2826"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2892"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3148"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3185"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3340"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3360"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3602"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3700"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4695"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4801"/>
         <source>Click to select color</source>
         <translation>點擊以選擇顏色</translation>
     </message>
@@ -42456,106 +42461,106 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>如果用行畫出格子, 元格的顏色</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3187"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3228"/>
         <source>Axis Lines</source>
         <translation>轴行</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3276"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3317"/>
         <source>Y-Axis Extension</source>
         <translation>Y- 轴延伸</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3383"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3424"/>
         <source>Short Axis Size</source>
         <translation>短轴大小</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3286"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3327"/>
         <source>X-Axis Extension</source>
         <translation>X 轴延伸</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3193"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3234"/>
         <source>Color for X axis</source>
         <translation>X 轴的顏色</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3333"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3374"/>
         <source>If checked, axises will be inifinite lines</source>
         <translation>如果勾選出, 轴會是相關行</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3336"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3377"/>
         <source>Extend axis lines</source>
         <translation>延伸轴線</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3390"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3431"/>
         <source>Color for Y axis</source>
         <translation>Y 轴的顏色</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3260"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3301"/>
         <source>Y-Axis Color:</source>
         <translation>Y- 轴顏色 :</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3356"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3397"/>
         <source>Defines how to draw extended Y axis</source>
         <translation>定義如何畫出展開的 Y 轴</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3237"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3360"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3278"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3401"/>
         <source>Whole Area</source>
         <translation>全域</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3242"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3365"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3283"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3406"/>
         <source>Positive Values Area</source>
         <translation>正值區域</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3247"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3370"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3288"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3411"/>
         <source>Negative Values Area</source>
         <translation>負值區域</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3252"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3375"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3293"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3416"/>
         <source>None</source>
         <translation>無</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3217"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3258"/>
         <source>Size of Axis Lines drawn in absolute zero point</source>
         <translation>以絕對零點取出轴線的大小</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3343"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3384"/>
         <source>X-Axis Color:</source>
         <translation>X 轴顏色 :</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3233"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3274"/>
         <source>Defines how to draw extended X axis</source>
         <translation>定義如何畫出延伸的 X 轴</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3575"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3616"/>
         <source>Color of relative zero marker</source>
         <translation>相對 0 克的顏色</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3598"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3639"/>
         <source>If checked, relative zero marker will not be drawn</source>
         <translation>如果檢查了, 就不會畫出相對的零標記</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3529"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3570"/>
         <source>Radius of relative zero marker</source>
         <translation>相對 0 克的半徑</translation>
     </message>
@@ -42635,20 +42640,19 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>为&quot;Top&quot;同位素網格畫出垂直行</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3615"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3656"/>
         <source>&amp;Preview</source>
         <translation>預覽( P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3824"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3865"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3906"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3947"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3988"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4029"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4070"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4114"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4146"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4111"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4155"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4187"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4228"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4269"/>
@@ -42660,236 +42664,238 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4515"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4556"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4597"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4638"/>
         <source>...</source>
         <translation>有活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4632"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4673"/>
         <source>Preview</source>
         <translation>預覽</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4638"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4679"/>
         <source>If checked, more informative and explaining preview will be drawn for operations</source>
         <translation>如果檢查了, 在操作中會畫出更通訊和解釋的預覽</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4681"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4722"/>
         <source>If more entities in preview than specified, rect will be drawn instead of entities.</source>
         <translation>如果預覽中的實體比所指定的多, Drot 就被取出取而代之 .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4721"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4762"/>
         <source>Color for selected preview reference entiites</source>
         <translation>所選取的預覽參考項目的顏色</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4774"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4815"/>
         <source>Color for preview reference entities</source>
         <translation>預覽參考單位的顏色</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3634"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3675"/>
         <source>Highlight</source>
         <translation>突顯</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3701"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3742"/>
         <source>Visualize the entity under the mouse cursor</source>
         <translation>在滑鼠游標下可視化實體</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3704"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3745"/>
         <source>Highlight entities on mouse hover</source>
         <translation>在滑鼠徘徊上突出亮實體</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3673"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3714"/>
         <source>Color for highlighted entities</source>
         <translation>有突出亮點实体的顏色</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3691"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3732"/>
         <source>If selected, entity will be highlighted in &quot;Draft&quot; mode using entity&apos;s linewidth instead of 1px</source>
         <translation>如果被選取, 實體會被用實體的行width 而不是 1px 在 “ 草案” 模式下突出顯示</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3796"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3837"/>
         <source>(0 =&gt; 5% relative to screen size)</source>
         <translation>(相對於螢幕大小0-%-5%)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3735"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3776"/>
         <source>Size of reference points</source>
         <translation>參考分數大小</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4641"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4682"/>
         <source>Show operation&apos;s preview explanatory entities </source>
         <translation>顯示操作的預覽說明實體</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3742"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3783"/>
         <source>Dwg Units</source>
         <translation>Dwg 單位</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3773"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3814"/>
         <source>Size relative to screen</source>
         <translation>相對屏幕的大小</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3780"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3821"/>
         <source>Size in drawing units</source>
         <translation>在繪圖單位中的大小</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6206"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6247"/>
         <source>Rendering Minimums</source>
         <translation>三. 最低</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6327"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6368"/>
         <source>If height of text line on the screen is less than specified pixels, placholder will be drawn instead of text</source>
         <translation>如果屏幕上文字行高小于指定的像素, 就取出平面符取出文字</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6267"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6308"/>
         <source>Height of text line:</source>
         <translation>文字行高 :</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6320"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6361"/>
         <source>Ellipse Major Axis:</source>
         <translation>椭圆主轴:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6290"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6331"/>
         <source>If screen size of minor ellipse axis is less than value, ellipse is drawn as line</source>
         <translation>如果小椭圆轴的屏幕大小小于數值, 椭圆被畫出為行</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6235"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6276"/>
         <source>If screen length of line is less than value, the line is drawn as point</source>
         <translation>如果屏幕行距小于值, 取出行取為點</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6274"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6315"/>
         <source>If screen radius of circle is less than value, circle is drawn as point</source>
         <translation>如果相圈的屏幕半徑小于數值, 就取出相圈作點</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6349"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6390"/>
         <source>Circle Radius:</source>
         <translation>圓半徑 :</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6306"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6347"/>
         <source>Arc Radius:</source>
         <translation>弧半徑 :</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6251"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6292"/>
         <source>If screen radius of arc is less than value, arc is drawn as point</source>
         <translation>如果弧的屏幕半徑小于值, 弧被畫出為點</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6313"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6354"/>
         <source>Ellipse Minor Axis:</source>
         <translation>椭圆小轴 :</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6219"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6260"/>
         <source>If screen size for major ellipse axis is less than value, ellipse is drawn as point</source>
         <translation>如果主要椭圆轴的螢幕大小小于值,取出椭圆為點</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6068"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6109"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) during panning. </source>
         <translation>如果被選取, 在平整中會取出文字基准取而不用文字字母 (类似于草稿模式) .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6071"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6112"/>
         <source>Draw text as draft within paning operations</source>
         <translation>在平面操作中以草稿方式畫出文字</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6078"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6119"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) in preview. </source>
         <translation>如果被選取了, 在預覽中會取出文字基线取而代之( 类似于草稿模式) .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6081"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6122"/>
         <source>Draw text as draft in preview</source>
         <translation>在預覽中畫出文字作草稿</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2463"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2504"/>
         <source>Info Cursor</source>
         <translation>信息游標</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2651"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2692"/>
         <source>Informational Cursor Overlay </source>
         <translation>資訊游標覆蓋</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2963"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3004"/>
         <source>Appearance</source>
         <translation>外觀</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2969"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3010"/>
         <source>Font that should be used for drawing elements of informational cursor.</source>
         <translation>用于繪取資訊游標元素的字型 .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2976"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3017"/>
         <source>If checked, components of coordinate will be drawn in one line. Otherwise, each component will be on own line. </source>
         <translation>如果檢查了, 座標的元件會被畫入一行 。 否則相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相相接相接相相接相接相相接相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2979"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3020"/>
         <source>Draw coordinates in one line</source>
         <translation>在一行中畫出座標</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="647"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2594"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2601"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2986"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3486"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2529"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2682"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3027"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3527"/>
         <source>Font:</source>
         <translation>字型 :</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2993"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3034"/>
         <source>If checked, labels for coordinate components will be shown. Otherwise, standard form of coordinates will be displayed.</source>
         <translation>如果檢查了, 會顯示指標元件的標籤 。 否則會顯示標準的地標形式 .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2996"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3037"/>
         <source>Show labels for coordinates</source>
         <translation>为座標顯示標籤</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3003"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3044"/>
         <source>Font size, in points</source>
         <translation>字型大小,分點</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="719"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2578"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3006"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3470"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2262"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2562"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3047"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3511"/>
         <source> pt</source>
         <translation>pt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="735"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2545"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3022"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3430"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2651"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3063"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3471"/>
         <source>Font size:</source>
         <translation>字型大小 :</translation>
     </message>
@@ -42904,228 +42910,228 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>如不畫出網格, 就忽略「 从網格到网格 」</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3029"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3070"/>
         <source>Offset of labels from the cursor point.</source>
         <translation>从游標點去掉標籤 .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3048"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3089"/>
         <source>Cursor position offset:</source>
         <translation>游標位置偏移 :</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2953"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2994"/>
         <source>If checked, informational cursor will be enabled and shown where applicable.</source>
         <translation>如果檢查了, 資訊游標會被開啟并顯示相關地點 .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2956"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2997"/>
         <source>Enable Informational Cursor</source>
         <translation>開啟資訊游標</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2657"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2698"/>
         <source>Operations Preview</source>
         <translation>操作預覽</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2663"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2704"/>
         <source>Show properties for entity that will be created</source>
         <translation>为要建立的实体顯示屬性</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2670"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2711"/>
         <source>Show properties for entity that is edited by handles</source>
         <translation>为被手柄編輯的單位顯示屬性</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2680"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2721"/>
         <source>Content</source>
         <translation>內容</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2799"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2840"/>
         <source>Color for absolute snap coordinates.</source>
         <translation>有相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相通相相通相通相通相通相通相相相通相通相通相通相通相通相相通相相通相相通相通相相相相通相相相通相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2709"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2750"/>
         <source>If checked, relative distance and angle from relative zero point to snap point will be shown.</source>
         <translation>如果檢查了, 就顯示相對零點到相接點相對相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相距相相距相距相距相相相距相距相相相相相距相距相.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2712"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2753"/>
         <source>Show relative distance and angle</source>
         <translation>顯示相距和相距</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2822"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2863"/>
         <source>Color for snap type/restriction</source>
         <translation>Snap 型態/限制的顏色</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2759"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2800"/>
         <source>If checked, the prompt of the active command will be shown.</source>
         <translation>如果檢查了, 將會顯示活性指令的提示 .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2762"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2803"/>
         <source>Show active command prompt</source>
         <translation>顯示活性指令快取</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2686"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2727"/>
         <source>If checked, show relative coordinate</source>
         <translation>如果檢查了, 就顯示相對座標</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2692"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2733"/>
         <source>Show relative coordinate</source>
         <translation>顯示相對座標</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2769"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2810"/>
         <source>If checked, information about the type of snap and restrictions will be shown for snap point (if any)</source>
         <translation>如果檢查了, 就顯示取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2772"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2813"/>
         <source>Show snap info /restriction</source>
         <translation>顯示快取信息/ 限制</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2888"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2929"/>
         <source>Color for the command prompt</source>
         <translation>命令提示的顏色</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2865"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2906"/>
         <source>Color for relative distance and angle</source>
         <translation>相對相距和相角的顏色</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2699"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2740"/>
         <source>If checked, absolute position of snap point will be shown.</source>
         <translation>如果檢查了, 就顯示取點的绝对位置 .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2702"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2743"/>
         <source>Show absolute coordinate</source>
         <translation>顯示絕對座標</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2924"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2965"/>
         <source>If checked, name of active command will be shown before command prompt</source>
         <translation>如果檢查了, 在命令快取前會顯示活性指令名</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2930"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2971"/>
         <source>Show active command name</source>
         <translation>顯示活性命令名稱</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2937"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2978"/>
         <source>If checked, short overview properties of the entity&apos;s that is catched for selection will be shown. </source>
         <translation>如果被勾選出, 將會顯示被抓取的實體的簡短概述屬性 .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2943"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2984"/>
         <source>Show properties of catched entity</source>
         <translation>顯示已抓取實體的屬性</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4992"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5033"/>
         <source>Modify layer of selected entities, at layer activation</source>
         <translation>在層面活化下修改所選取的实体的層面</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5405"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5446"/>
         <source>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</source>
         <translation>如果檢查了, 在分頁中會顯示關閉的按鍵, 如果畫作是分頁模式的話</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5408"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5449"/>
         <source>Show Close button on drawings tabs</source>
         <translation>在圖片分頁上顯示關閉按鍵</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3081"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5426"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3122"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5467"/>
         <source>Always</source>
         <translation>總是</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5431"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5472"/>
         <source>Active Tab</source>
         <translation>活性分頁</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5355"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5396"/>
         <source>If checked, keyboard shortcut will be shown in tooltip for action</source>
         <translation>如果檢查了, 在動作工具提示中會顯示鍵盤捷徑</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5358"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5399"/>
         <source>Show keyboard shortcuts in actions tooltips</source>
         <translation>在動作工具提示中顯示鍵盤捷徑</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4909"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4950"/>
         <source>Auto save backup each</source>
         <translation>自動儲存備份</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5375"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5416"/>
         <source>If checked, location of dialog will not be saved, but size will</source>
         <translation>如果檢查了, 對話框的位置不會被儲存, 但是大小會被儲存</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5381"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5422"/>
         <source>Persist dialog size only</source>
         <translation>只有相簿大小</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4886"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4927"/>
         <source> minutes</source>
         <translation>分</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5439"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5480"/>
         <source>If checked, dialogs will be positioned and resized to position/size of last invocation.</source>
         <translation>如果檢查了, 對話框會被定位并被調整到上次引用的位置/大小 .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5442"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5483"/>
         <source>Persistent dialogs location and size</source>
         <translation>相關對話框位置和大小</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5062"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5103"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>(出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自:出自: 在按下空間列并啟用指令視窗后, 暫時地切換自動抓取: &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5149"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5190"/>
         <source>Drawing units</source>
         <translation>繪取單位</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5192"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5233"/>
         <source>Left  Isometric Grid</source>
         <translation>左相距网格</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5182"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5223"/>
         <source>RIght Isometric Grid</source>
         <translation>三相网格</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5120"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5161"/>
         <source>Orthogonal Grid</source>
         <translation>正弦网格</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5202"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5243"/>
         <source>Top Isometric Grid</source>
         <translation>上相距网格</translation>
     </message>
@@ -43143,18 +43149,18 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="689"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3094"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3545"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3135"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3586"/>
         <source>Marker Color:</source>
         <translation>標示顏色 :</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3522"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3563"/>
         <source>Marker Radius:</source>
         <translation>標示半徑 :</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3601"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3642"/>
         <source>Hide marker</source>
         <translation>隱藏標籤</translation>
     </message>
@@ -43174,27 +43180,27 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>簡單的網格渲染</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4744"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4785"/>
         <source>Active preview&apos;s explanatory entity&apos;s Color:</source>
         <translation>活性預覽的通訊屬性顏色:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4797"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4838"/>
         <source>Preview&apos;s explanatory entity&apos;s Color:</source>
         <translation>預覽的通訊實體顏色:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3640"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3681"/>
         <source>&amp;Highlighted entity Color:</source>
         <translation>突出实体顏色( C) :</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3694"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3735"/>
         <source>Highlight with screen linewidth in &quot;Draft&quot; mode</source>
         <translation>在 “ 草案” 模式下用屏幕行向突顯</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3714"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3755"/>
         <source>Explanatory Reference Point Size</source>
         <translation>解釋性參考點大小</translation>
     </message>
@@ -43234,18 +43240,18 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>模式標示草稿</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3444"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3485"/>
         <source>Font that should be used for drawing name of axis in coordinate system zero.</source>
         <translation>在座標系統0中要用來畫出轴名的字型 .</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="716"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3467"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3508"/>
         <source>Font size that should be used for drawing name of axis in coordinate system zero.</source>
         <translation>在座標系統0中要用來畫出轴名的字型大小 .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3503"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3544"/>
         <source>If selected, marker for coodinate system will be shown in zero point of current user coordinates system. </source>
         <translation>如果被選取, 在目前使用者座標系統的零點上會顯示可編碼系統的標籤 .</translation>
     </message>
@@ -43265,72 +43271,72 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>如果被選取, 在模式草案中, 有文字標籤會被畫入視角</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3424"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3465"/>
         <source>Coordinates Zero Marker</source>
         <translation>平面平面</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3437"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3478"/>
         <source>Marker Size</source>
         <translation>標示大小</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3451"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3492"/>
         <source>Size of axis of coordinate system&apos;s zero marker</source>
         <translation>座標系統的正弦大小</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3493"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3534"/>
         <source>If selected and view is in user coordinate system, the marker for coodinate system will be shown in zero point of world coordinates system. </source>
         <translation>如果被選取并取景于用戶座標系統中, 就以世界座標系統的零點顯示可編碼系統的標籤 .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3496"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3537"/>
         <source>Show WCS zero marker</source>
         <translation>顯示 WCS 零標籤</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3506"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3547"/>
         <source>Show UCS zero marker</source>
         <translation>顯示 UCS 零標籤</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3071"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3112"/>
         <source>Angles Basis Marker</source>
         <translation>角度基准指標</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3062"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3103"/>
         <source>Coordinate System</source>
         <translation>座標系統</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3086"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3127"/>
         <source>Only for non-defaults</source>
         <translation>只對非預設</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3124"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3165"/>
         <source>Show angles basis marker</source>
         <translation>顯示角度根據符號</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3131"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3172"/>
         <source>Base Angle Ray Color:</source>
         <translation>Base 角度 Ray 顏色 :</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3164"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3205"/>
         <source>#017CFF</source>
         <translation>#017CFF (017 CFF) (出自:&quot;活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3177"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3218"/>
         <source>#00FFFF</source>
         <translation>&quot;00FF&quot; (出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出自&quot;出&quot;出自&quot;出自&quot;出&quot;出&quot;出自&quot;出自&quot;出&quot;出自&quot;出自&quot;出&quot;出&quot;出自&quot;出&quot;出自&quot;出&quot;出&quot;出&quot;出&quot;出&quot;出&quot;出&quot;出&quot;出&quot;出&quot;出&quot;出&quot;出&quot;出&quot;出&quot;出&quot;出&quot;出&quot;出&quot;出&quot;出&quot;出&quot;出&quot;出&quot;出&quot;出&quot;出&quot;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3516"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3557"/>
         <source>Relative Zero Marker</source>
         <translation>相對的零分指標</translation>
     </message>
@@ -43410,78 +43416,78 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>相接至相接格的网格因子 .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3068"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3158"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3109"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3199"/>
         <source>Color of the marker</source>
         <translation>標籤的顏色</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3077"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3118"/>
         <source>Defines where to draw angle basis marker</source>
         <translation>定義取向標示</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3121"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3162"/>
         <source>If enabled, angles basis marker will be shown in the orign of coordinates system</source>
         <translation>如果被啟用, 在座標系統的正弦中會顯示角度根基標示</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3171"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3212"/>
         <source>Color of the ray that displays zero angle position</source>
         <translation>顯示零角度位置的射線顏色</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3806"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3847"/>
         <source>Explanatory Reference Point Style</source>
         <translation>解釋性參考點樣式</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5016"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5057"/>
         <source>If checked, it will be possible to enter value of angle in decimal degrees only. Otherwise, angles in surveyor, radiant, imperial degrees and bearing formats are allowed for input.  </source>
         <translation>如果檢查了, 就可能只以小數取入角值 。 有相關的相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相相關相關相相相相相相相關相相相關相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5019"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5060"/>
         <source>Allow angles input in decimal degrees only</source>
         <translation>只允許入入入入小數度</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5332"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5373"/>
         <source>If selected, menu will include top-level items for drawing tools. Otherwise, they will under the same menu item. </source>
         <translation>如果被選取, 選單會包含要畫出工具的上等項目 。 有同樣的菜單相接相接相接相接.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5335"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5376"/>
         <source>Expand &quot;Tools&quot; commands in menu</source>
         <translation>在選單中展開&quot;工具&quot;命令</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5342"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5383"/>
         <source>If selected, separate menu will be created for each group of entity-related commands. Otherwise, these command will be under the same menu. </source>
         <translation>如果被選取, 會為相關單位的指令群組建立相隔的選單 。 否則這些命令會被放在同一個選單下.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5072"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5113"/>
         <source>If enabled, it is possible to do with keys - zooming via +/-, scrolling via arrow keys, moving selected entities position via arrow keys and SHIFT/CTRL modifiers.</source>
         <translation>如果被開啟了, 它可以和按鍵相關 -- -- 通过 +/- 放大、 通过箭頭按鍵滚动、 通过箭頭按鍵移動所選取的实体位置和 SHIFT/ CTRL 變更器相關 .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5075"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5116"/>
         <source>Enable scroll and position adjustment via keyboard</source>
         <translation>通过鍵盤開啟卷轴和位置調整</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5415"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5456"/>
         <source>If selected, controls for picking values from drawing are available in Tool Options toolbar, allowing to pick length and angle values from drawing. </source>
         <translation>如果被選取, 在工具選取工具列中可以選擇取取自圖的值, 以取出長度和角度值 .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5418"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5459"/>
         <source>Tool options toolbar includes pick values controls</source>
         <translation>工具選項工具列包括取取值控制</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5348"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5389"/>
         <source>Separate menu per entity</source>
         <translation>單一單位選單</translation>
     </message>
@@ -43521,819 +43527,851 @@ This recursively modifies all entities of the Block itself.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2077"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2160"/>
         <source>Document entity in visual snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2084"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2432"/>
         <source>Highlighted point size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2091"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2108"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2338"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2452"/>
-        <source>px</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2098"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2439"/>
         <source>If checked, snap point requested by command and specified by the user will be added to visual snap automatically. Otherwise, it should be added manually.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2101"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2442"/>
         <source>Add snapped point automatically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2115"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2113"/>
         <source>Size of marker for projected snap point (like intersection), in pixels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2131"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2191"/>
         <source>Color for guiding entities used in visual snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2175"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2211"/>
         <source>If selected, points will be added manually as guiding points if cursor is over them and CTRL key is pressed. Otherwise - they will be added by placing cursor over only.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2181"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2217"/>
         <source>Manual adding points with CTRL key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2188"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2278"/>
         <source>If checked, visual snap will also consider rays for enpoints of guiding entities with step, similar to angle snap. Otherwise, only tangential and normal rays will be considered for vertexes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2191"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2281"/>
         <source>Angle snap step relative guiding rays for entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2198"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2391"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2412"/>
-        <source>ms</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2205"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2463"/>
         <source>Guiding point size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2212"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2318"/>
         <source>Defines how long the mouse should be over projected snap point until that point will be added to visual snap system as guiding point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2231"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2132"/>
         <source>Guiding entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2238"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2224"/>
         <source>Size of marker used to draw guiding point that is added to visual snap system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2262"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2237"/>
         <source>Defines how long the mouse should be over document entity until that entity will be added to visual snap system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2281"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2063"/>
         <source>Size of marker for visual snap guiding points, in pixels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2297"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2139"/>
         <source>Entity adding/removal delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2304"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2184"/>
         <source>Projected snap point adding delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2311"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2092"/>
         <source>Projected snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2318"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2167"/>
         <source>If checked, visual snap will also consider rays from guiding points with step, similar to angle snap. Otherwise, only vertical and horizontal rays will be considered for vertexes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2321"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2170"/>
         <source>Angle snap step guiding rays for guiding points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2328"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2396"/>
         <source>Color of document entities, explicitly added to visual snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2345"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2082"/>
         <source>If selected, guiding circles for distances between guiding points will be included into visual snap. Otherwise, they will be ignored. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2348"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2085"/>
         <source>Dynamic distance circles for guiding points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2355"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2288"/>
         <source>Color of possible snap point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2365"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2146"/>
         <source>Guiding point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2372"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2374"/>
         <source>Defines how many milliseconds mouse should be over snap point until that point will be added as guiding point to visual snap system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2398"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2406"/>
         <source>Projected snap point size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2405"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2153"/>
         <source>Snap point adding/removal delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2419"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2201"/>
         <source>Color of guide points in visual snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2429"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2177"/>
         <source>Visual snap catch distance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2436"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2413"/>
         <source>Distance in screen coordinates that is used for catching visual snap guiding entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2631"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2668"/>
         <source>Start in coordinates offset mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2488"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2675"/>
         <source>Background:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2638"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2578"/>
         <source>&lt;p&gt;If checked, used coordinates entering mode will be saved and on next invocation the assistant will prompt entering coordinates in that mode. &lt;/p&gt;&lt;p&gt;Otherwise, explicitly specified mode will be used on next invocation.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2641"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2240"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2321"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2377"/>
+        <source> ms</source>
+        <translation type="unfinished">毫</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2259"/>
+        <source>Size of font, in points, used for displaying labels for guiding entities.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2340"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Visual snap solution will be cleared by &lt;span style=&quot; font-weight:700;&quot;&gt;CTRL+Middle Mouse Button&lt;/span&gt; click. &lt;br/&gt;If selected, visual snap solution may be also cleared by &lt;span style=&quot; font-weight:700;&quot;&gt;Right Mouse Button&lt;/span&gt; click. &lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2343"/>
+        <source>Allow clearing visual snap solution by Right mouse button click</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2364"/>
+        <source>If enabled, labels for visual snap guiding entities will be snown. Otherwise - no labels.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2367"/>
+        <source>Show labels on guiding entities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2470"/>
+        <source>Guiding entity label font size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2477"/>
+        <source>Guiding entity label base offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2484"/>
+        <source>Offset of the guiding label from projected snap point, in pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2581"/>
         <source>Remember last used coordinates mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4843"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4884"/>
         <source>Auto-Save Drawings</source>
         <translation>自動儲存繪圖</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4850"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4891"/>
         <source>#</source>
         <translation>#</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4855"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4924"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4896"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4965"/>
         <source>~</source>
         <translation>~</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4860"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4934"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4901"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4975"/>
         <source>_</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4865"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4906"/>
         <source>__</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4870"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4911"/>
         <source>lcauto_</source>
         <translation>有活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4875"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4916"/>
         <source>autosaved_</source>
         <translation>自動儲存</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4899"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4940"/>
         <source>Auto-save file name prefix:</source>
         <translation>自動儲存檔案名前缀 :</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4916"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4957"/>
         <source>Backup file name suffix:</source>
         <translation>備份檔案名后缀:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4929"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4970"/>
         <source>$$</source>
         <translation>(美元)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4939"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4980"/>
         <source>_backup</source>
         <translation>備份( b)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4944"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4985"/>
         <source>_bak</source>
         <translation>巴克( b)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4949"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4990"/>
         <source>.bak</source>
         <translation>.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4954"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4995"/>
         <source>.backup</source>
         <translation>. 備份</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4959"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5000"/>
         <source>.lcb</source>
         <translation>. lcb</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5026"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5067"/>
         <source>If selected, mouse up will finish ad-hock moving operations (so just one click is need). Otherwise, first click initiates move, and second one completes it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5029"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5070"/>
         <source>Finish ad-hock moving of entities or ref points by mouse up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5036"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>If selected, entities selection window is defined with pressed left mouse button. Otherwirse, 2 mouse clicks are used for corners (LibreCAD classic)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5039"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5080"/>
         <source>Select objects in window with pressed mouse button</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5452"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5493"/>
         <source>Command line commands informer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5458"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5499"/>
         <source>If enabled, command aliases will be shown next to menu items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5461"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5502"/>
         <source>Show commands in menu items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5468"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5509"/>
         <source>If selected, invocation of actions with commands via UI will lead to displaying command in Cmd widget.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5471"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5512"/>
         <source>Promote command in Cmd widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5488"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5529"/>
         <source>CAD Tools </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5494"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5535"/>
         <source>If checked, toolbars with commands will be enabled. </source>
         <translation>如果檢查了, 有命令的工具列會被開啟 .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5514"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5555"/>
         <source>If this option is selected, all tools will be shown in one group, so the screen space is used more efficiently.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5520"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5561"/>
         <source>Show all tools in one widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5694"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5735"/>
         <source>UI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5733"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5774"/>
         <source>If enabled, tooltips toolbar&apos;s name will be shown</source>
         <translation>如果被開啟, 工具提示工具列的名稱會被顯示</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5736"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5777"/>
         <source>Show tooltips for toolbars</source>
         <translation>顯示工具列的工具提示</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5785"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5826"/>
         <source>Exchange</source>
         <translation>交流</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5791"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5832"/>
         <source>Exports settings to the file.</source>
         <translation>將設定值匯出到檔案 .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5794"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5835"/>
         <source>Export settings to file</source>
         <translation>將設定值匯出至檔案</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5805"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5846"/>
         <source>Imports application&apos;s preferences from external file</source>
         <translation>从外部檔案匯入應用程式的偏好</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5808"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5849"/>
         <source>Import settings from file</source>
         <translation>从檔案匯入設定值</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5822"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5863"/>
         <source>Paths</source>
         <translation>路由</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5995"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6036"/>
         <source>Other settings locations</source>
         <translation>其他設定值位置</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6002"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6043"/>
         <source>Directory where various settings are located (shortcuts, workspaces, pens etc.)</source>
         <translation>有不同設定的目錄( 短片、 工作區、 筆等 )</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6053"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6094"/>
         <source>Renderer</source>
         <translation>渲染器</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6100"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6141"/>
         <source>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</source>
         <translation>如果檢查了, 拱門會用線段插出 。 它能畫出相近端點的藝術品 但可能會畫出更平滑的弧形 在大縮放上, 在端點上沒有畫出錯誤 .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6110"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6151"/>
         <source>If this method is selected, arcs are drawn using method of QT library.  On large zooms, arcs may be rendered with errors near endpoints.</source>
         <translation>如果選取了此方法, 使用 QT 通訊錄的方法取出弧 。 在大縮放上可能會出錯 .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6113"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6154"/>
         <source>Qt-native drawing method (unexact near endpoints)</source>
         <translation>Qt- 內生地圖繪取法 (不准确相近端點)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6359"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6400"/>
         <source>Fonts Files</source>
         <translation>字型檔案</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6365"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6406"/>
         <source>Amount of letters columns:</source>
         <translation>字母列數 :</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6378"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6419"/>
         <source>Contains the number of columns in one row for rendering font letter blocks. If 0 - all letters in one row. </source>
         <translation>包含一行中要渲染字体字母區塊的列數 。 如果 0 -- -- 一行所有字母.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6059"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6100"/>
         <source>Operations</source>
         <translation>操作</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6065"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6106"/>
         <source>If enabled, during pan operation TEXT and MTEXT objects will be drawn schematically</source>
         <translation>如果啟用, 在平面操作中 TEXT 和 MTEXT 物件會被圖示地畫出</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6091"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6132"/>
         <source>Defines how arcs are rendered in UI. </source>
         <translation>在 UI 中定义弧度的變化方式 .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5504"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5545"/>
         <source>If checked, dock widgets with commands for left sidebar will be enabled. Otherwise, they will be disabled. </source>
         <translation>如果檢查了, 有左邊列命令的接合部件會被開啟 。 不然被禁用.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2482"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2523"/>
         <source>Relative Point Input Assistant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2628"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2665"/>
         <source>&lt;p&gt;If selected, on invocation the assistant will be in relative coordinates (offset) mode. &lt;br/&gt;Otherwise, it will prompt to enter absolute coordinates.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2495"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2588"/>
         <source>Color for relative point input assistant font</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2518"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2658"/>
         <source>Font used by relative point input assistant popup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2552"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2536"/>
         <source>Color for relative point input assistant popup background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2575"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2559"/>
         <source>Font size for relative point input assistant, in points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6094"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6135"/>
         <source>Arcs Rendering Method</source>
         <translation>弧形渲染方法</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6103"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6144"/>
         <source>Interpolate by line segments</source>
         <translation>按行區分被插入</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6120"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6161"/>
         <source>Single segment angle</source>
         <translation>單一分線角度</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6129"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6170"/>
         <source>Determine segments by max sagitta</source>
         <translation>根据最大 sagitta 确定分區</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6136"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6177"/>
         <source>If selected, the fixed angle of line interpolation segment will be used. Smaller angle deliver more smooth arc yet is slower.</source>
         <translation>如果被選取, 就使用行插入段的固定角度 。 有更平滑的弧取出更小的角度 卻更慢了.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6139"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6180"/>
         <source>Use fixed segment angle value</source>
         <translation>使用固定分區角度值</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6146"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6187"/>
         <source>Value of fixed segment&apos;s angle</source>
         <translation>固定片段角度的值</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6149"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6190"/>
         <source> degrees</source>
         <translation>度</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6168"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6209"/>
         <source>Maximal distance betwen arc and segment interpolation line</source>
         <translation>最大相距 Betwen 弧和分區插入行</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6196"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6237"/>
         <source>Render circles in the same way as arcs.</source>
         <translation>有同于相克相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2911"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2952"/>
         <source>If set and user coordinate system is active, absolute coodinate in world coordinate system will be also shown.</source>
         <translation>如果套接字和用戶相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相相相關相相相相關相相相相相相相相關相關相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2917"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2958"/>
         <source>Show world coordinates if in user coordinate system</source>
         <translation>在用戶座標系統中顯示世界座標</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5365"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5406"/>
         <source>If checked, the icon for current action will be shown in options toolbar before action&apos;s options</source>
         <translation>如果檢查了, 在動作選項前, 在選項工具列中顯示目前動作的圖示</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5368"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5409"/>
         <source>Show current command icon in options toolbar</source>
         <translation>在選取工具列中顯示目前的命令圖示</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5322"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5363"/>
         <source>If enabled, internal ID of entity will be shown in properties dialog and Entity Info widget.</source>
         <translation>如果啟用, 在屬性對話框和實體資訊元件中會顯示實體的内部ID .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5325"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5366"/>
         <source>Show internal IDs of entities</source>
         <translation>顯示實體的内部ID</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5395"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5436"/>
         <source>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </source>
         <translation>如果檢查了, 縮放或平面圖畫的任何變更都將標出已修改的圖畫 。 否則, 變更檢視只會影響已修改的地圖狀態 .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5398"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5439"/>
         <source>Changing view only modifies drawing</source>
         <translation>只修改取景地圖</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5006"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5047"/>
         <source>If selected, entities will stay selected after completion of Modify operations. Otherwise, they will be not selected. </source>
         <translation>如果被選取出, 在完成變更操作后, 實體會被選取出 。 不然就不會被選取了.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5009"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5050"/>
         <source>Keep modified entities selected</source>
         <translation>保留已修改的实体</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5720"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5761"/>
         <source>If checked, prompt messages of actions will be also shown in bottom statusbar</source>
         <translation>如果被勾選出, 在下方狀態列也顯示動作的快取訊息</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5726"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5767"/>
         <source>Duplicate prompt messages of actions in statusbar</source>
         <translation>在狀態列中复制動作的即時訊息</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5103"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5144"/>
         <source>Angles Positive Direction:</source>
         <translation>角度正方向 :</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5291"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5332"/>
         <source>If checked, new drawing will be created with grid disabled</source>
         <translation>如果被勾選出, 有網格被禁用而會被建立新的地圖</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5294"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5335"/>
         <source>Grid is Off </source>
         <translation>网格已關閉</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5589"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5630"/>
         <source>Languages for commands in Cmd Widget</source>
         <translation>Cmd 元件中命令的語言</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5609"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5650"/>
         <source>Language to use for GUI and messages</source>
         <translation>使用者介面和信件所要使用的語言</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5746"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5787"/>
         <source>New Versions</source>
         <translation>新版本</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5752"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5793"/>
         <source>Check GitHub for new releases of LibreCAD on program startup</source>
         <translation>在程式啟動時檢查 GitHub 的新放出 LibreCAD</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5755"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5796"/>
         <source>Check for new versions on startup</source>
         <translation>在啟動時檢查新版本</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5762"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5803"/>
         <source>If checked, pre-release versions will be ignored</source>
         <translation>如果檢查了, 在放出前的版本會被忽略</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5768"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5809"/>
         <source>Ignore pre-release versions</source>
         <translation>忽略出行前版本</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5681"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5722"/>
         <source>Defines whether splash screen will be shown on startup</source>
         <translation>定義在啟動時會顯示放出螢幕</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5651"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5692"/>
         <source>Controls default mode for drawings</source>
         <translation>控制圖片的預設模式</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5671"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5712"/>
         <source>If checked, after start the main window will be maximized</source>
         <translation>如果选中, 在啟動后, 主視窗會被最大化</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5661"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5702"/>
         <source>If set, previously opened files during previous closing of the application will be re-opened.</source>
         <translation>如果設定了, 在前一個應用程式關閉時已開啟的檔案會被重新開啟 .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5664"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5705"/>
         <source>Open last opened files</source>
         <translation>開啟上一個已開啟的檔案</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5710"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5751"/>
         <source>If enabled, drop-down menus may become floating</source>
         <translation>如果被開啟, 下放選單可能會被浮起</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5713"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5754"/>
         <source>Allow menus detaching</source>
         <translation>允許取出選單</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5700"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5741"/>
         <source>If unchecked, individual widgets of statusbar are toolbars</source>
         <translation>如果不加控制, 狀態列的單一元件就是工具列</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6126"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6167"/>
         <source>If selected, the angle of the line interpolation segment is calculated to ensure that resulting sagitta (height of arc segment) is less than specified.</source>
         <translation>如果被選取, 則會計出行插段的角度, 以確保所產生的 sagitta ( 弧分取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取取.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6193"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6234"/>
         <source>If selected, the same rendering settings will be applied also to circles.</source>
         <translation>如果被選取, 相同的渲染設定會被套用到圓圈上 .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5703"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5744"/>
         <source>Use &quot;classic&quot; statusbar</source>
         <translation>使用&quot; Classic&quot; 狀態列</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5113"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5154"/>
         <source>Zero base angle:</source>
         <translation>零底角 :</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5136"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5177"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
         <translation>相對于目前使用者座標系統的零基角 。 有相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相相接相接相相接相相相接相接相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相 0.0是3: 00.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5175"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5216"/>
         <source>degrees.</source>
         <translation>有分相.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5242"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5283"/>
         <source>Counterclockwise, 90 degrees is north.</source>
         <translation>有逆時针 有90度向北走.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5271"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5312"/>
         <source>Clockwise, 90 degrees is sourth.</source>
         <translation>有時 有90度有酸.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5853"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5908"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5922"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5933"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5957"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5894"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5949"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5963"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5974"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5998"/>
         <source>Click to select directory</source>
         <translation>點擊以選擇目錄</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5881"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5922"/>
         <source>Path to folder with fonts</source>
         <translation>有字体的資料夾的路徑</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5530"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5571"/>
         <source>Clear Settings</source>
         <translation>清除設定值</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5551"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5592"/>
         <source>Layout</source>
         <translation>布局</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5567"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5608"/>
         <source>All</source>
         <translation>全部</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5968"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6009"/>
         <source>Path to folder with translation files</source>
         <translation>有翻譯檔案的資料夾路徑</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4999"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5040"/>
         <source>Automatically zoom drawing when opening</source>
         <translation>在開啟時自動放大繪圖</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4883"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4924"/>
         <source>Time between automatic saving of the document in minutes.</source>
         <translation>以分鐘為單位的文件自動保存時間間隔。</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4906"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4947"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
         <translation>如果設置，LibreCAD會自動生成當前繪圖的備份。</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1075"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1088"/>
         <source>Preferences</source>
         <translation>偏好設定</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1076"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1089"/>
         <source>Please restart the application to apply all changes.</source>
         <translation>請重新啟動應用程式以套用所有變更。</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1097"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1110"/>
         <source>Select Color</source>
         <translation>選擇顏色</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1241"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1254"/>
         <source>Clear settings</source>
         <translation>清除設定值</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1242"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1255"/>
         <source>This will also include custom menus and toolbars. Continue?</source>
         <translation>包括自訂選單和工具列 。 接下去?</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1246"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1252"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1259"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1265"/>
         <source>You must restart LibreCAD to see the changes.</source>
         <translation>您必須重新啟動 LibreCAD 以查看變更 .</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1268"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1281"/>
         <source>Select Fonts Folder</source>
         <translation>選擇字型資料夾</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1275"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1288"/>
         <source>Select Translations Folder</source>
         <translation>選擇翻譯資料夾</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1282"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1295"/>
         <source>Select Hatch Patterns Folder</source>
         <translation>選擇批量樣式資料夾</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1289"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1302"/>
         <source>Select Other Settings Folder</source>
         <translation>選擇其他設定資料夾</translation>
     </message>
@@ -52304,22 +52342,22 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_ActionInterface</name>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="618"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="624"/>
         <source>Back</source>
         <translation>后退</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="595"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="601"/>
         <source>SHIFT:</source>
         <translation>哦</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="602"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="608"/>
         <source>CTRL:</source>
         <translation>CTRL:</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="627"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="633"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -53463,213 +53501,213 @@ Point: (%8 , %9)</source>
 <context>
     <name>RS_Snapper</name>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1307"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1311"/>
         <source>Vertical</source>
         <translation>垂直</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1309"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1313"/>
         <source>Horizontal</source>
         <translation>水平</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1311"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1315"/>
         <source>Orthogonal</source>
         <translation>二相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1365"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1369"/>
         <source>Grid</source>
         <translation>网格</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1367"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1371"/>
         <source>Entity</source>
         <translation>实体</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1369"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1373"/>
         <source>Endpoint</source>
         <translation>端點</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1371"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1375"/>
         <source>Intersection</source>
         <translation>相交</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1373"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1377"/>
         <source>Middle</source>
         <translation>中</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1375"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1379"/>
         <source>Distance</source>
         <translation>相距</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1377"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1381"/>
         <source>Center</source>
         <translation>居中</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1379"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1383"/>
         <source>Angle</source>
         <translation>角度</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1381"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1385"/>
         <source>Angle Relative</source>
         <translation>角度相對</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1383"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1387"/>
         <source>Angle (on Entity)</source>
         <translation>角度 (实体上)</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1385"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1389"/>
         <source>Visual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1389"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1393"/>
         <source>Free</source>
         <translation type="unfinished">自由</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1398"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1402"/>
         <source>None</source>
         <comment>visual snap</comment>
         <translation type="unfinished">無</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1401"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1405"/>
         <source>Horizontal</source>
         <comment>visual snap</comment>
         <translation type="unfinished">水平</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1404"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1408"/>
         <source>Angle Ray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1415"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1419"/>
         <source>Relative Angle Ray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1426"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1430"/>
         <source>Vertical</source>
         <comment>visual snap</comment>
         <translation type="unfinished">垂直</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1429"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1433"/>
         <source>Line ray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1432"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1436"/>
         <source>Vertex-Vertex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1435"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1439"/>
         <source>Endpoint Tangent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1438"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1442"/>
         <source>Endpoint Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1441"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1445"/>
         <source>Tangent One</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1444"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1448"/>
         <source>Tangent Two</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1447"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1451"/>
         <source>Middle</source>
         <comment>visual snap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1450"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1454"/>
         <source>Orthogonal</source>
         <comment>visual snap</comment>
         <translation type="unfinished">二相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1453"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1457"/>
         <source>Distance (Explicit)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1456"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1460"/>
         <source>Distance (Vertex)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1459"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1463"/>
         <source>Entity</source>
         <comment>visual snap</comment>
         <translation type="unfinished">实体</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1462"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1466"/>
         <source>Relative Normal</source>
         <comment>visual snap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1465"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1469"/>
         <source>Relative Distance</source>
         <comment>visual snap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1468"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1472"/>
         <source>Relative X</source>
         <comment>visual snap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1471"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1475"/>
         <source>Relative Y</source>
         <comment>visual snap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1474"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1478"/>
         <source>Relative Angle</source>
         <comment>visual snap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1650"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1654"/>
         <source>Dist: </source>
         <translation>平分 :</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1655"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1659"/>
         <source>Angle: </source>
         <translation>角度 :</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1660"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1664"/>
         <source>dX: </source>
         <translation>dX:</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1661"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1665"/>
         <source>dY: </source>
         <translation>二Y:</translation>
     </message>

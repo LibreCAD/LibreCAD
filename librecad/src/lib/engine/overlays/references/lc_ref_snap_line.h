@@ -29,9 +29,11 @@
 
 class LC_RefSnapLine : public RS_Line, public LC_RefSnapEntity{
 public:
-    LC_RefSnapLine(RS_EntityContainer *parent, const RS_Vector &pStart, const RS_Vector &pEnd);
+    LC_RefSnapLine(const RS_Vector &pStart, const RS_Vector &pEnd);
     RS2::EntityType rtti() const override;
     RS_Entity *clone() const override;
+    void draw(RS_Painter* painter) override;
+    bool isArcCircleLine() const override {return true;}
 };
 
 #endif

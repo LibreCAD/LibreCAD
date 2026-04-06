@@ -305,6 +305,7 @@ protected:
     double getAngleStep() {return m_snapToAngleStep;}
     virtual void initFromGraphic(RS_Graphic* graphic);
     virtual bool isInVisualSnapStatus(int status);
+    bool isClearVisualSnapByRMB();
 
     virtual void onVisualSnapPointRegistered([[maybe_unused]]LC_VisualSnapVertex* point, [[maybe_unused]]bool remove) {
     };

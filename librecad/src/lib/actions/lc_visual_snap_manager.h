@@ -166,6 +166,14 @@ struct VisualSnapOptions {
     bool manualVertexAddingRequiresCTRL = false;
     int guidingEntitiesSnapDistance = 24;
 
+    bool allowClearingVisualSnapByRMB = false;
+
+    bool showGuidingEntitiesLabels = true;
+    int guidingEntitiesFontSize = 10;
+
+    int baseLabelOffsetPx = 50;
+    QFont guidingEntitiesFont; // fixme - complete
+
     void load();
 };
 
@@ -222,6 +230,7 @@ class LC_VisualSnapManager : public QObject {
                          bool hasDx, bool hasDy, bool hasNormal);
 
     void updateAndPreviewSolution(RS_EntityContainer* preview, LC_Highlight* highlight, const RS_Vector& wcsPos);
+    bool isClearVisualSnapByRMB() const {return m_options.allowClearingVisualSnapByRMB;}
 protected:
     void invalidateSolution();
     void registerVertex(LC_VisualSnapVertex* vertex, bool removeExistingInSamePosition = true);
@@ -233,6 +242,7 @@ protected:
     void visualizeSolution(RS_EntityContainer* preview, LC_Highlight* highlight, VisualSnapSolution& solution) const;
     void createOrthoRaysForVertexes(const RS_Vector& wcsPos, VisualSnapSolution& solution) const;
     bool isLineIsNotHorizontalOrVerticalInUCS(RS_Vector startPoint, RS_Vector endPoint) const;
+    bool isLineIsNotHorizontalOrVerticalInUCS(RS_Vector startPoint, RS_Vector endPoint, bool& horizontal, bool& vertical) const;
     void createLineRays(const RS_Vector& wcsPos, VisualSnapSolution& solution) const;
     void createRelativeRays(const RS_Vector& wcsPos, const RS_Vector& startPoint, const RS_Vector& endPoint,
                             VisualSnapSolution& solution) const;
@@ -245,7 +255,13 @@ protected:
 
     void createNormalsFromVertexToEntities(const RS_Vector& wcsPos, VisualSnapSolution& solution) const;
     LC_RefSnapConstructionLine* tryCreateGuidingConstructionLine(const RS_Vector& wcsPos, const RS_Vector& start, const RS_Vector& end,
-                                                         double& dist) const;
+                                                         double& dist, double wcsLineAngle, RS2::VisualSnapGuideEntityType entityType) const;
+
+    LC_RefSnapConstructionLine* tryCreateGuidingConstructionLine(const RS_Vector& wcsPos, const RS_Vector& start, const RS_Vector& end,
+                                                         double& dist, RS2::VisualSnapGuideEntityType entityType) const;
+
+    LC_RefSnapLine* tryCreateGuidingLine(const RS_Vector& wcsPos, const RS_Vector& start, const RS_Vector&end,double direction,
+                                                         double& dist, RS2::VisualSnapGuideEntityType entityType) const;
     void createExplicitlySetDistanceCirclesForVertexes(const RS_Vector& wcsPos, VisualSnapSolution& solution) const;
     void findSnapPoint(const RS_Vector& wcsPos, VisualSnapSolution& solution, const std::vector<PointHolder>& middlePointSnapCandidates) const;
     void clearVertexProcessedFlag() const;
@@ -315,6 +331,7 @@ protected:
     LC_GraphicViewport* m_viewport = nullptr;
     RS_Snapper* m_snapper{nullptr};
     double m_wcsSnapRange{0.0};
+    double m_wcsLineExtensionLength {0.0};
     QMutex m_mutex;
 };
 

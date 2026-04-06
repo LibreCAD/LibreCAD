@@ -41,11 +41,31 @@ struct EntityHolder;
 
 namespace {
     LC_RefSnapConstructionLine* tryCreateCloseSnapConstructionLine(const RS_Vector& wcsPos, const double ucsSnapSize,
-                                                                   const RS_Vector& start, const RS_Vector& end, double& dist) {
+                                                                   const RS_Vector& start, const RS_Vector& end, double& dist,
+                                                                   double wcsLineAngle, RS2::VisualSnapGuideEntityType guidType) {
         const auto line = new LC_RefSnapConstructionLine(start, end);
         const auto nearestPointOnEntity = line->getNearestPointOnEntity(wcsPos, false, &dist);
         const double wcsDistance = nearestPointOnEntity.distanceTo(wcsPos);
         if (wcsDistance < ucsSnapSize) {
+            line->getRefSnapInfo().guideType = guidType;
+            line->getRefSnapInfo().setAngle(wcsLineAngle);
+            line->getRefSnapInfo().nearestPoint = nearestPointOnEntity;
+            return line;
+        }
+        delete line;
+        return nullptr;
+    }
+
+    LC_RefSnapConstructionLine* tryCreateCloseSnapConstructionLine(const RS_Vector& wcsPos, const double ucsSnapSize,
+                                                                   const RS_Vector& start, const RS_Vector& end, double& dist,
+                                                                   RS2::VisualSnapGuideEntityType guidType) {
+        const auto line = new LC_RefSnapConstructionLine(start, end);
+        const auto nearestPointOnEntity = line->getNearestPointOnEntity(wcsPos, false, &dist);
+        const double wcsDistance = nearestPointOnEntity.distanceTo(wcsPos);
+        if (wcsDistance < ucsSnapSize) {
+            line->getRefSnapInfo().guideType = guidType;
+            line->getRefSnapInfo().setAngle(start.angleTo(end));
+            line->getRefSnapInfo().nearestPoint = nearestPointOnEntity;
             return line;
         }
         delete line;
@@ -53,11 +73,14 @@ namespace {
     }
 
     LC_RefSnapLine* tryCreateCloseSnapLine(const RS_Vector& wcsPos, const double ucsSnapSize, const RS_Vector& start, const RS_Vector& end,
-                                           double& dist) {
-        const auto line = new LC_RefSnapLine(nullptr, start, end);
+                                           double& dist, RS2::VisualSnapGuideEntityType guideType) {
+        const auto line = new LC_RefSnapLine(start, end);
         const auto nearestPointOnEntity = line->getNearestPointOnEntity(wcsPos, false, &dist);
         const double wcsDistance = nearestPointOnEntity.distanceTo(wcsPos);
         if (wcsDistance < ucsSnapSize) {
+            line->getRefSnapInfo().guideType = guideType;
+            line->getRefSnapInfo().nearestPoint = nearestPointOnEntity;
+            line->getRefSnapInfo().setAngle(start.angleTo(end));
             return line;
         }
         delete line;
@@ -65,6 +88,96 @@ namespace {
     }
 
     constexpr double g_rayDirectionOffset = 10.0;
+
+    QString getMarkerString(RS2::VisualSnapGuideEntityType guideType) {
+        QString label = "";
+
+        switch (guideType) {
+            case RS2::VSNAP_LINE_VERTEX_VERTICAL: {
+                label = "Y";
+                break;
+            }
+            case RS2::VSNAP_LINE_VERTEX_HORIZONTAL: {
+                label = "X";
+                break;
+            }
+            case RS2::VSNAP_LINE_VERTEX_VERTEX: {
+                label = "V";
+                break;
+            }
+            case RS2::VSNAP_LINE_VERTEX_ORTHO: {
+                label = "O";
+                break;
+            }
+            case RS2::VSNAP_LINE_VERTEX_ANGLE_STEP: {
+                label = "/";
+                break;
+            }
+            case RS2::VSNAP_LINE_ENDPOINT_TANGENT: {
+                label = "T";
+                break;
+            }
+            case RS2::VSNAP_LINE_ENDPOINT_NORMAL: {
+                label = "N";
+                break;
+            }
+            case RS2::VSNAP_LINE_ENDPOINT_ANGLE_STEP: {
+                label = ">";
+                break;
+            }
+            case RS2::VSNAP_LINE_RAY: {
+                label = "L";
+                break;
+            }
+            case RS2::VSNAP_LINE_TANGENT1: {
+                label = "T1";
+                break;
+            }
+            case RS2::VSNAP_LINE_TANGENT2: {
+                label = "T2";
+                break;
+            }
+            case RS2::VSNAP_POINT_MIDDLE: {
+                label = "M";
+                break;
+            }
+            case RS2::VSNAP_POINT_DISTANCE_EXPLICIT: {
+                label = "~";
+                break;
+            }
+            case RS2::VSNAP_POINT_DISTANCE_VERTEX: {
+                label = "~V";
+                break;
+            }
+            case RS2::VSNAP_POINT_RELATIVE_DISTANCE: {
+                label = "@~";
+                break;
+            }
+            case RS2::VSNAP_POINT_RELATIVE_NORMAL: {
+                label = "@N";
+                break;
+            }
+            case RS2::VSNAP_POINT_RELATIVE_ANGLE_RAY: {
+                label = "@<";
+                break;
+            }
+            case RS2::VSNAP_POINT_RELATIVE_VERTICAL_DX: {
+                label = "@X";
+                break;
+            }
+            case RS2::VSNAP_POINT_RELATIVE_HORIZONTAL_DY: {
+                label = "@Y";
+                break;
+            }
+            case RS2::VSNAP_DOC_ENTITY: {
+                label = "E";
+                break;
+            }
+            default:
+                break;
+        }
+        return label;
+    }
 }
 
 void VisualSnapOptions::load() {
@@ -83,9 +196,23 @@ void VisualSnapOptions::load() {
 
         autoAddSnappedPointToVisualSnap = LC_GET_BOOL("VSSnapAutoAddSnapPoint", true);
         manualVertexAddingRequiresCTRL = LC_GET_BOOL("VSSnapManualAddingWithCTRL", false);
-        guidingEntitiesSnapDistance = LC_GET_INT("VSGuidingEntiitesCatchDistance", 24);
+        guidingEntitiesSnapDistance = LC_GET_INT("VSGuidingEntitiesCatchDistance", 24);
+
+        showGuidingEntitiesLabels = LC_GET_BOOL("VSGuidingEntitiesShowLabels", true);
+        guidingEntitiesFontSize = LC_GET_INT("VSGuidingEntityLabelFontSize", 10);
+
+        allowClearingVisualSnapByRMB = LC_GET_BOOL("VSClearSolutionByRMB", false);
+
+        baseLabelOffsetPx = LC_GET_INT("VSGuidingLabelOffsetPx", 50);
     }
     LC_GROUP_END();
+
+    LC_GROUP("InfoOverlayCursor");
+    {
+       QString fontName = LC_GET_STR("FontName", "Helvetica");
+       guidingEntitiesFont = QFont(fontName, guidingEntitiesFontSize);
+       guidingEntitiesFont.setBold(true);
+    }
 }
 
 LC_VisualSnapManager::LC_VisualSnapManager(RS_Snapper* snapper) : m_snapper{snapper} {
@@ -107,7 +234,7 @@ void LC_VisualSnapManager::solveAndVisualizeSolution(RS_Preview* preview, LC_Hig
             solveVisualSnap(wcsPos);
             visualSnapSolution = m_solution.get();
         }
-        visualizeSolution(preview, highlight,  *visualSnapSolution);
+        visualizeSolution(preview, highlight, *visualSnapSolution);
         m_mutex.unlock();
     }
 }
@@ -121,6 +248,7 @@ VisualSnapSolution* LC_VisualSnapManager::solveVisualSnap(const RS_Vector& wcsPo
 
 void LC_VisualSnapManager::solveVisualSnap(const RS_Vector& wcsPos, VisualSnapSolution& solution) {
     // const double ucsSnapSize = m_viewport->toUcsDX(m_snapSizePx);
+    m_wcsLineExtensionLength = m_viewport->toUcsDX(150);
     solution.wcsPoint = wcsPos;
     createOrthoRaysForVertexes(wcsPos, solution);
     createLineRays(wcsPos, solution);
@@ -337,12 +465,19 @@ void LC_VisualSnapManager::createRelativePositionEntities(const RS_Vector& wcsPo
 
         if (data.explicitLength) {
             const auto distanceCircle = new LC_RefSnapCircle(basePoint, data.length);
+            distanceCircle->getRefSnapInfo().guideType = RS2::VSNAP_POINT_RELATIVE_DISTANCE;
+            // distanceCircle->getRefSnapInfo().nearestPoint = projectionPoint;
+            distanceCircle->getRefSnapInfo().nearestPoint = distanceCircle->getNearestPointOnEntity(wcsPos);
             // distanceCircle->setStrict(true);
             solution.addGuidingEntity(distanceCircle, RS2::VSNAP_POINT_RELATIVE_DISTANCE);
         }
 
         if (data.explicitAngle) {
             const auto lineRay = new LC_RefSnapConstructionLine(basePoint, projectionPoint);
+            lineRay->getRefSnapInfo().guideType = RS2::VSNAP_POINT_RELATIVE_ANGLE_RAY;
+            // lineRay->getRefSnapInfo().nearestPoint = projectionPoint;
+            lineRay->getRefSnapInfo().nearestPoint = lineRay->getNearestPointOnEntity(wcsPos);
+            lineRay->getRefSnapInfo().setAngle(projectionPoint.angleTo(basePoint));
             // lineRay->setStrict(true);
             solution.addGuidingEntity(lineRay, RS2::VSNAP_POINT_RELATIVE_ANGLE_RAY);
         }
@@ -350,22 +485,36 @@ void LC_VisualSnapManager::createRelativePositionEntities(const RS_Vector& wcsPo
         if (data.showLengthNormal) {
             const RS_Vector normal = projectionPoint.relative(g_rayDirectionOffset, angle + M_PI_2);
             const auto normalLine = new LC_RefSnapConstructionLine(projectionPoint, normal);
+            normalLine->getRefSnapInfo().guideType = RS2::VSNAP_POINT_RELATIVE_NORMAL;
+            // normalLine->getRefSnapInfo().nearestPoint = normal;
+            normalLine->getRefSnapInfo().nearestPoint = normalLine->getNearestPointOnEntity(wcsPos);
+            normalLine->getRefSnapInfo().setAngle(projectionPoint.angleTo(basePoint));
             // normalLine->setStrict(true);
             solution.addGuidingEntity(normalLine, RS2::VSNAP_POINT_RELATIVE_NORMAL);
         }
 
         if (data.explicitDX) {
             const auto horizontalPoint = m_viewport->restrictVertical(projectionPoint,
-                                                                RS_Vector(projectionPoint.x, projectionPoint.y + g_rayDirectionOffset));
+                                                                      RS_Vector(projectionPoint.x,
+                                                                                projectionPoint.y + g_rayDirectionOffset));
             const auto horizontalRay = new LC_RefSnapConstructionLine(projectionPoint, horizontalPoint);
+            horizontalRay->getRefSnapInfo().guideType = RS2::VSNAP_POINT_RELATIVE_VERTICAL_DX;
+            // horizontalRay->getRefSnapInfo().nearestPoint = horizontalPoint;
+            horizontalRay->getRefSnapInfo().nearestPoint = horizontalRay->getNearestPointOnEntity(wcsPos);
+            horizontalRay->getRefSnapInfo().setAngle(projectionPoint.angleTo(basePoint));
             // horizontalRay->setStrict(true);
             solution.addGuidingEntity(horizontalRay, RS2::VSNAP_POINT_RELATIVE_VERTICAL_DX);
         }
 
         if (data.explicitDY) {
             const auto verticalPoint = m_viewport->restrictHorizontal(projectionPoint,
-                                                                RS_Vector(projectionPoint.x + g_rayDirectionOffset, projectionPoint.y));
+                                                                      RS_Vector(projectionPoint.x + g_rayDirectionOffset,
+                                                                                projectionPoint.y));
             const auto verticalRay = new LC_RefSnapConstructionLine(projectionPoint, verticalPoint);
+            verticalRay->getRefSnapInfo().guideType = RS2::VSNAP_POINT_RELATIVE_HORIZONTAL_DY;
+            // verticalRay->getRefSnapInfo().nearestPoint = verticalPoint;
+            verticalRay->getRefSnapInfo().nearestPoint = verticalRay->getNearestPointOnEntity(wcsPos);
+            verticalRay->getRefSnapInfo().setAngle(projectionPoint.angleTo(basePoint));
             // verticalRay->setStrict(true);
             solution.addGuidingEntity(verticalRay, RS2::VSNAP_POINT_RELATIVE_HORIZONTAL_DY);
         }
@@ -388,7 +537,8 @@ void LC_VisualSnapManager::addRelativePointInfo(const LC_RelativePositionData* r
 }
 
 void LC_VisualSnapManager::addGuidingPoint(const RS_Vector& snapPoint, const RS_Vector& graphPoint, const RS_Vector& relZero,
-                                           const bool hasLength, const bool hasAngle, const bool hasDx, const bool hasDy, const bool hasNormal) {
+                                           const bool hasLength, const bool hasAngle, const bool hasDx, const bool hasDy,
+                                           const bool hasNormal) {
     m_mutex.lock();
 
     RS_Vector basePoint = snapPoint;
@@ -473,7 +623,7 @@ void LC_VisualSnapManager::registerDocumentEntity() {
                 const auto start = entity->getStartpoint();
                 const auto end = entity->getEndpoint();
                 entity->setFlag(RS2::FlagInVisualSnap);
-                const auto snapEntity = new LC_RefSnapLine(nullptr, start, end);
+                const auto snapEntity = new LC_RefSnapLine(start, end);
                 storeEntityRef(snapEntity, entity);
                 registerEntityEndpoints(entity);
                 m_solution.reset(nullptr);
@@ -544,7 +694,8 @@ void LC_VisualSnapManager::createGuideEntitiesByDocumentEntities(const RS_Vector
                 const auto entity = item->docEntityRef->guidingEntity.get();
                 RS_Vector v = entity->getNearestPointOnEntity(wcsPos, true, &dist);
                 if (dist < m_wcsSnapRange) {
-                    solution.addGuidingEntity(entity->clone(), RS2::VisualSnapGuideEntityType::VSNAP_DOC_ENTITY);
+                    RS_Entity* clone = entity->clone(); // fixme - guide type mark?
+                    solution.addGuidingEntity(clone, RS2::VisualSnapGuideEntityType::VSNAP_DOC_ENTITY);
                 }
                 if (item->docEntityRef->documentEntity->rtti() == RS2::EntityLine) {
                     const auto& endpoint = entity->getEndpoint();
@@ -592,19 +743,100 @@ void LC_VisualSnapManager::visualizeSolution(RS_EntityContainer* preview, LC_Hig
                 preview->addEntity(mark);
             }
         }
-        else{
-            if (i->docEntityRef != nullptr){
-                auto e = i->docEntityRef->documentEntity;
+        else {
+            if (i->docEntityRef != nullptr) {
+                const auto e = i->docEntityRef->documentEntity;
                 highlight->addEntity(e, false);
             };
         }
     }
-    for (const auto& e : solution.guidingEntities) {
+
+    /*for (const auto& e : solution.guidingEntities) {
         preview->addEntity(e.entity->clone());
+    }*/
+
+    std::vector<LC_RefSnapConstructionLine*> lines;
+    std::list<RS_Entity*> clones;
+    for (const auto& e : solution.guidingEntities) {
+        // add to preview all except construction lines
+        const auto clone = e.entity->clone();
+        const int rtti = clone->rtti();
+
+        if (rtti == RS2::EntitySnapConstructionLine) {
+            auto line = static_cast<LC_RefSnapConstructionLine*>(clone);
+            lines.push_back(line);
+        }
+        clones.push_back(clone);
+    }
+
+    if (!m_options.showGuidingEntitiesLabels) {
+        for (const auto clone:clones) {
+            preview->addEntity(clone);
+        }
+    }
+    else  {
+        for (const auto clone:clones) {
+            preview->addEntity(clone);
+
+            const auto snapEntity = dynamic_cast<LC_RefSnapEntity*>(clone);
+            snapEntity->setFont(m_options.guidingEntitiesFont);
+
+            const QString label = getMarkerString(snapEntity->getRefSnapInfo().guideType);
+            snapEntity->setLabel(label);
+
+            snapEntity->setBaseLabelOffset(m_options.baseLabelOffsetPx);
+        }
+
+        // sort lines first by angle, than by nearest point
+        std::sort(lines.begin(), lines.end(), [](LC_RefSnapConstructionLine* a, LC_RefSnapConstructionLine* b) -> bool {
+            const double angleA = a->getRefSnapInfo().wcsBaseAngle;
+            const double angleB = b->getRefSnapInfo().wcsBaseAngle;
+
+            if (LC_LineMath::isSameValue(angleA, angleB)) {
+                // lines has same angle, check that they are in the same point
+                const RS_Vector nearestPointA = a->getRefSnapInfo().nearestPoint;
+                const RS_Vector nearestPointB = b->getRefSnapInfo().nearestPoint;
+
+                if (LC_LineMath::isNotMeaningfulDistance(nearestPointA, nearestPointB)) {
+                    return false;
+                }
+                if (LC_LineMath::isSameValue(nearestPointA.x, nearestPointB.x)) {
+                    return nearestPointA.y < nearestPointB.y;
+                }
+                return nearestPointA.x < nearestPointB.x;
+            }
+            return angleA < angleB;
+        });
+
+
+        // as we have sorted lines, we try to set positions (offset) of labels in such way, that labels will not not overlap
+        double previousAngle = RS_MAXDOUBLE;
+        double currentOffset = 0.5;
+        auto previousRefPoint = RS_Vector(RS_MAXDOUBLE, RS_MAXDOUBLE);
+        auto previousStartPoint = RS_Vector(RS_MINDOUBLE, RS_MINDOUBLE);
+        for (const auto l : lines) {
+            const double angle = l->getRefSnapInfo().wcsBaseAngle;
+            if (!LC_LineMath::isSameAngle(angle, previousAngle)) {
+                currentOffset = 0.5;
+                previousStartPoint = l->getStartpoint();
+                previousAngle = angle;
+            }
+            RS_Vector nearestPoint = l->getRefSnapInfo().nearestPoint;
+            if (LC_LineMath::isMeaningfulDistance(previousRefPoint, nearestPoint)) {
+                previousRefPoint = nearestPoint;
+                // lines with different base points may be still the same, so check by angle to start
+                if (!LC_LineMath::isSameAngle(previousStartPoint.angleTo(nearestPoint), angle)) {
+                    currentOffset = 0.5;
+                    previousStartPoint = l->getStartpoint();
+                }
+            }
+            currentOffset += 0.5;
+            l->getRefSnapInfo().labelOffset = currentOffset;
+        }
     }
 
     if (solution.restrictedPoint.valid) {
-        preview->addEntity(new LC_RefSnapLine(nullptr, solution.foundSnapPoint, solution.restrictedPoint));
+        preview->addEntity(new LC_RefSnapLine(solution.foundSnapPoint, solution.restrictedPoint));
     }
 
     for (const auto& v : solution.snapCandidatesToShow) {
@@ -640,7 +872,8 @@ void LC_VisualSnapManager::createOrthoRaysForVertexes(const RS_Vector& wcsPos, V
             // create horizontal ray
             auto horizontalPoint = m_viewport->restrictHorizontal(vertexWCSPoint,
                                                                   RS_Vector(vertexWCSPoint.x + g_rayDirectionOffset, vertexWCSPoint.y));
-            const auto lineHor = tryCreateGuidingConstructionLine(wcsPos, vertexWCSPoint, horizontalPoint, dist);
+            const auto lineHor = tryCreateGuidingConstructionLine(wcsPos, vertexWCSPoint, horizontalPoint, dist,
+                                                                  RS2::VisualSnapGuideEntityType::VSNAP_LINE_VERTEX_HORIZONTAL);
             if (lineHor != nullptr) {
                 if (dist < minDistHor) {
                     delete minLineHor;
@@ -655,7 +888,8 @@ void LC_VisualSnapManager::createOrthoRaysForVertexes(const RS_Vector& wcsPos, V
             auto verticalPoint = m_viewport->restrictVertical(vertexWCSPoint,
                                                               RS_Vector(vertexWCSPoint.x, vertexWCSPoint.y + g_rayDirectionOffset));
 
-            const auto lineVert = tryCreateGuidingConstructionLine(wcsPos, vertexWCSPoint, verticalPoint, dist);
+            const auto lineVert = tryCreateGuidingConstructionLine(wcsPos, vertexWCSPoint, verticalPoint, dist,
+                                                                   RS2::VisualSnapGuideEntityType::VSNAP_LINE_VERTEX_VERTICAL);
             if (lineVert != nullptr) {
                 if (dist < minDistVert) {
                     delete minLineVert;
@@ -679,7 +913,8 @@ void LC_VisualSnapManager::createOrthoRaysForVertexes(const RS_Vector& wcsPos, V
                         continue;
                     }
                     RS_Vector secondPoint = vertexWCSPoint.relative(g_rayDirectionOffset, angle);
-                    const auto lineRay = tryCreateGuidingConstructionLine(wcsPos, vertexWCSPoint, secondPoint, dist);
+                    const auto lineRay = tryCreateGuidingConstructionLine(wcsPos, vertexWCSPoint, secondPoint, dist, angle,
+                                                                          RS2::VisualSnapGuideEntityType::VSNAP_LINE_VERTEX_ANGLE_STEP);
                     if (lineRay != nullptr) {
                         if (dist < minDistance) {
                             if (minDistanceRay != nullptr) {
@@ -698,7 +933,8 @@ void LC_VisualSnapManager::createOrthoRaysForVertexes(const RS_Vector& wcsPos, V
                 while (angle < wcsRaysEndAngle);
 
                 if (minDistanceRay != nullptr) {
-                    solution.addGuidingEntity(minDistanceRay, RS2::VisualSnapGuideEntityType::VSNAP_LINE_VERTEX_ANGLE_STEP, minDistanceAngle);
+                    solution.addGuidingEntity(minDistanceRay, RS2::VisualSnapGuideEntityType::VSNAP_LINE_VERTEX_ANGLE_STEP,
+                                              minDistanceAngle);
                 }
             }
         }
@@ -721,6 +957,17 @@ bool LC_VisualSnapManager::isLineIsNotHorizontalOrVerticalInUCS(RS_Vector startP
     return !horizontal && !vertical;
 }
 
+bool LC_VisualSnapManager::isLineIsNotHorizontalOrVerticalInUCS(RS_Vector startPoint, RS_Vector endPoint, bool& horizontal,
+                                                                bool& vertical) const {
+    const RS_Vector ucsStart = m_viewport->toUCS(startPoint);
+    const RS_Vector ucsEnd = m_viewport->toUCS(endPoint);
+    const RS_Vector ucsDelta = ucsStart - ucsEnd;
+
+    horizontal = LC_LineMath::isNotMeaningful(ucsDelta.y);
+    vertical = LC_LineMath::isNotMeaningful(ucsDelta.x);
+    return !horizontal && !vertical;
+}
+
 void LC_VisualSnapManager::createLineRays(const RS_Vector& wcsPos, VisualSnapSolution& solution) const {
     // lines extensions rays
     for (const auto& item : m_itemsList) {
@@ -728,23 +975,26 @@ void LC_VisualSnapManager::createLineRays(const RS_Vector& wcsPos, VisualSnapSol
         if (vertex != nullptr) {
             const auto refLine = vertex->refLine;
             if (refLine != nullptr) {
-                const bool nonHorizontalOrVertical = isLineIsNotHorizontalOrVerticalInUCS(refLine->getStartpoint(), refLine->getEndpoint());
-                if (nonHorizontalOrVertical) {
-                    double dist;
-                    auto nearestPointOnEntity = refLine->getNearestPointOnEntity(wcsPos, false, &dist);
-                    const double wcsDistance = nearestPointOnEntity.distanceTo(wcsPos);
-                    if (wcsDistance < m_wcsSnapRange) {
-                        solution.addGuidingEntity(refLine->clone(), RS2::VisualSnapGuideEntityType::VSNAP_LINE_RAY);
-                    }
-                    const double wcsLineAngle = refLine->getDirection1();
-                    const double wcsNormalLineAngle = wcsLineAngle + M_PI_2;
+                double dist;
+                auto nearestPointOnEntity = refLine->getNearestPointOnEntity(wcsPos, false, &dist);
+                const double wcsDistance = nearestPointOnEntity.distanceTo(wcsPos);
+                if (wcsDistance < m_wcsSnapRange) {
+                    const auto clone = refLine->clone();
+                    const auto snapEntity = dynamic_cast<LC_RefSnapEntity*>(clone);
+                    snapEntity->getRefSnapInfo().guideType = RS2::VisualSnapGuideEntityType::VSNAP_LINE_RAY;
+                    snapEntity->getRefSnapInfo().nearestPoint = nearestPointOnEntity;
+                    snapEntity->getRefSnapInfo().setAngle(refLine->getStartpoint().angleTo(refLine->getEndpoint()));
+                    solution.addGuidingEntity(clone, RS2::VisualSnapGuideEntityType::VSNAP_LINE_RAY);
+                }
+                const double wcsLineAngle = refLine->getDirection1();
+                const double wcsNormalLineAngle = wcsLineAngle + M_PI_2;
 
-                    const auto normalLine = tryCreateGuidingConstructionLine(wcsPos, vertex->wcsSnapCoordinate,
-                                                                     vertex->wcsSnapCoordinate.relative(g_rayDirectionOffset, wcsNormalLineAngle),
-                                                                     dist);
-                    if (normalLine != nullptr) {
-                        solution.addGuidingEntity(normalLine, RS2::VisualSnapGuideEntityType::VSNAP_LINE_ENDPOINT_NORMAL);
-                    }
+                RS_Vector secondPoint = vertex->wcsSnapCoordinate.relative(g_rayDirectionOffset, wcsNormalLineAngle);
+                const auto normalLine = tryCreateGuidingConstructionLine(wcsPos, vertex->wcsSnapCoordinate, secondPoint, dist,
+                                                                         wcsNormalLineAngle,
+                                                                         RS2::VisualSnapGuideEntityType::VSNAP_LINE_ENDPOINT_NORMAL);
+                if (normalLine != nullptr) {
+                    solution.addGuidingEntity(normalLine, RS2::VisualSnapGuideEntityType::VSNAP_LINE_ENDPOINT_NORMAL);
                 }
             }
         }
@@ -782,7 +1032,8 @@ void LC_VisualSnapManager::createRelativeRays(const RS_Vector& wcsPos, const RS_
         }
         double dist;
         RS_Vector secondPointStart = startPoint.relative(g_rayDirectionOffset, wcsAngle);
-        const auto rayStart = tryCreateGuidingConstructionLine(wcsPos, startPoint, secondPointStart, dist);
+        const auto rayStart = tryCreateGuidingConstructionLine(wcsPos, startPoint, secondPointStart, dist, wcsAngle,
+                                                               RS2::VisualSnapGuideEntityType::VSNAP_LINE_ENDPOINT_ANGLE_STEP);
         if (rayStart != nullptr) {
             if (dist < minDistanceStartPoint) {
                 delete minDistanceRayStartPoint;
@@ -796,7 +1047,8 @@ void LC_VisualSnapManager::createRelativeRays(const RS_Vector& wcsPos, const RS_
         }
 
         RS_Vector secondPointEnd = endPoint.relative(g_rayDirectionOffset, wcsAngle);
-        const auto rayEnd = tryCreateGuidingConstructionLine(wcsPos, endPoint, secondPointEnd, dist);
+        const auto rayEnd = tryCreateGuidingConstructionLine(wcsPos, endPoint, secondPointEnd, dist, wcsAngle,
+                                                             RS2::VisualSnapGuideEntityType::VSNAP_LINE_ENDPOINT_ANGLE_STEP);
         if (rayEnd != nullptr) {
             if (dist < minDistanceEndPoint) {
                 delete minDistanceRayEndPoint;
@@ -811,11 +1063,11 @@ void LC_VisualSnapManager::createRelativeRays(const RS_Vector& wcsPos, const RS_
 
     if (minDistanceRayStartPoint != nullptr) {
         solution.addGuidingEntity(minDistanceRayStartPoint, RS2::VisualSnapGuideEntityType::VSNAP_LINE_ENDPOINT_ANGLE_STEP,
-                                minDistanceAngleStartPoint - wcsLineAngleRad);
+                                  minDistanceAngleStartPoint - wcsLineAngleRad);
     }
     if (minDistanceRayEndPoint != nullptr) {
         solution.addGuidingEntity(minDistanceRayEndPoint, RS2::VisualSnapGuideEntityType::VSNAP_LINE_ENDPOINT_ANGLE_STEP,
-                                minDistanceAngleEndPoint - wcsLineAngleRad);
+                                  minDistanceAngleEndPoint - wcsLineAngleRad);
     }
 }
 
@@ -826,6 +1078,8 @@ void LC_VisualSnapManager::createDistanceCircle2Points(const RS_Vector& wcsPos, 
     const double distanceDelta = std::abs(distanceBetweenVertexes - distanceFromFirstToMouse);
     if (distanceDelta < m_wcsSnapRange) {
         const auto circle = new LC_RefSnapCircle(centerPoint, distanceBetweenVertexes);
+        circle->getRefSnapInfo().guideType = RS2::VSNAP_POINT_DISTANCE_VERTEX;
+        circle->getRefSnapInfo().nearestPoint = circlePoint;
         solution.addGuidingEntity(circle, RS2::VisualSnapGuideEntityType::VSNAP_POINT_DISTANCE_VERTEX);
     }
 }
@@ -849,7 +1103,8 @@ void LC_VisualSnapManager::createVertexToVertexLinesAndDistances(const RS_Vector
                     auto firstVertexSnap = vertexFirst->wcsSnapCoordinate;
                     auto innerVertexSnap = vertexInner->wcsSnapCoordinate;
                     // create vertex-vertex line
-                    const auto line = tryCreateCloseSnapLine(wcsPos, m_wcsSnapRange, firstVertexSnap, innerVertexSnap, dist);
+                    const auto line = tryCreateCloseSnapLine(wcsPos, m_wcsSnapRange, firstVertexSnap, innerVertexSnap, dist,
+                                                             RS2::VisualSnapGuideEntityType::VSNAP_LINE_VERTEX_VERTEX);
                     if (line != nullptr) {
                         solution.addGuidingEntity(line, RS2::VisualSnapGuideEntityType::VSNAP_LINE_VERTEX_VERTEX);
                         int middlePoints = 2; // just default value for middle point (if no snap to middle)
@@ -911,44 +1166,37 @@ void LC_VisualSnapManager::createTangentialAndNormalRaysFromArcEndpoints(const R
                 RS_Vector second = startPoint.relative(g_rayDirectionOffset, direction1);
                 double dist;
 
-                const bool nonHorizontalOrVerticalTangent1 = isLineIsNotHorizontalOrVerticalInUCS(startPoint, second);
-                if (nonHorizontalOrVerticalTangent1) {
-                    const auto line = tryCreateGuidingConstructionLine(wcsPos, startPoint, second, dist);
-                    if (line != nullptr) {
-                        solution.addGuidingEntity(line, RS2::VisualSnapGuideEntityType::VSNAP_LINE_ENDPOINT_TANGENT);
-                    }
+                const auto tangent1 = tryCreateGuidingConstructionLine(wcsPos, startPoint, second, dist, direction1,
+                                                                       RS2::VisualSnapGuideEntityType::VSNAP_LINE_ENDPOINT_TANGENT);
+                if (tangent1 != nullptr) {
+                    solution.addGuidingEntity(tangent1, RS2::VisualSnapGuideEntityType::VSNAP_LINE_ENDPOINT_TANGENT);
                 }
 
-                // tangent 1
+                // tangent 2
                 const double direction2 = RS_Math::correctAngle(vertex->refArc->getDirection2() + M_PI);
                 RS_Vector endPoint = vertex->refArc->getEndpoint();
                 second = endPoint.relative(g_rayDirectionOffset, direction2);
 
-                const bool nonHorizontalOrVerticalTangent2 = isLineIsNotHorizontalOrVerticalInUCS(endPoint, second);
-                if (nonHorizontalOrVerticalTangent2) {
-                    const auto line = tryCreateGuidingConstructionLine(wcsPos, endPoint, second, dist);
-                    if (line != nullptr) {
-                        solution.addGuidingEntity(line, RS2::VisualSnapGuideEntityType::VSNAP_LINE_ENDPOINT_TANGENT);
-                    }
+                const auto tangent2 = tryCreateGuidingConstructionLine(wcsPos, endPoint, second, dist, direction2,
+                                                                       RS2::VisualSnapGuideEntityType::VSNAP_LINE_ENDPOINT_TANGENT);
+                if (tangent2 != nullptr) {
+                    solution.addGuidingEntity(tangent2, RS2::VisualSnapGuideEntityType::VSNAP_LINE_ENDPOINT_TANGENT);
                 }
 
                 // normal 1
                 auto center = vertex->refArc->getCenter();
-                const bool nonHorizontalOrVerticalNormal1 = isLineIsNotHorizontalOrVerticalInUCS(startPoint, center);
-                if (nonHorizontalOrVerticalNormal1) {
-                    const auto lineToCenter1 = tryCreateGuidingConstructionLine(wcsPos, startPoint, center, dist);
-                    if (lineToCenter1 != nullptr) {
-                        solution.addGuidingEntity(lineToCenter1, RS2::VisualSnapGuideEntityType::VSNAP_LINE_ENDPOINT_NORMAL);
-                    }
+
+                const auto lineToCenter1 = tryCreateGuidingConstructionLine(wcsPos, startPoint, center, dist,
+                                                                            RS2::VisualSnapGuideEntityType::VSNAP_LINE_ENDPOINT_NORMAL);
+                if (lineToCenter1 != nullptr) {
+                    solution.addGuidingEntity(lineToCenter1, RS2::VisualSnapGuideEntityType::VSNAP_LINE_ENDPOINT_NORMAL);
                 }
 
                 // normal 2
-                const bool nonHorizontalOrVerticalNormal2 = isLineIsNotHorizontalOrVerticalInUCS(endPoint, center);
-                if (nonHorizontalOrVerticalNormal2) {
-                    const auto lineToCenter2 = tryCreateGuidingConstructionLine(wcsPos, endPoint, center, dist);
-                    if (lineToCenter2 != nullptr) {
-                        solution.addGuidingEntity(lineToCenter2, RS2::VisualSnapGuideEntityType::VSNAP_LINE_ENDPOINT_NORMAL);
-                    }
+                const auto lineToCenter2 = tryCreateGuidingConstructionLine(wcsPos, endPoint, center, dist,
+                                                                            RS2::VisualSnapGuideEntityType::VSNAP_LINE_ENDPOINT_NORMAL);
+                if (lineToCenter2 != nullptr) {
+                    solution.addGuidingEntity(lineToCenter2, RS2::VisualSnapGuideEntityType::VSNAP_LINE_ENDPOINT_NORMAL);
                 }
             }
         }
@@ -996,7 +1244,8 @@ void LC_VisualSnapManager::createTangentialRaysFromVertexesToArcs(const RS_Vecto
                                                                       altTangentPoint);
                 if (tangentLine != nullptr) {
                     double dist;
-                    auto line = tryCreateGuidingConstructionLine(wcsPos, vertexSnapCoord, tangentPoint, dist);
+                    auto line = tryCreateGuidingConstructionLine(wcsPos, vertexSnapCoord, tangentPoint, dist,
+                                                                 RS2::VisualSnapGuideEntityType::VSNAP_LINE_TANGENT1);
                     if (line != nullptr) {
                         solution.addGuidingEntity(line, RS2::VisualSnapGuideEntityType::VSNAP_LINE_TANGENT1);
                         specialPointSnapCandidates.
@@ -1004,7 +1253,8 @@ void LC_VisualSnapManager::createTangentialRaysFromVertexesToArcs(const RS_Vecto
                         solution.addSnapCandidate(tangentPoint);
                     }
                     if (altTangentPoint.valid) {
-                        line = tryCreateGuidingConstructionLine(wcsPos, vertexSnapCoord, altTangentPoint, dist);
+                        line = tryCreateGuidingConstructionLine(wcsPos, vertexSnapCoord, altTangentPoint, dist,
+                                                                RS2::VisualSnapGuideEntityType::VSNAP_LINE_TANGENT1);
                         if (line != nullptr) {
                             specialPointSnapCandidates.push_back(PointHolder(altTangentPoint,
                                                                              RS2::VisualSnapGuideEntityType::VSNAP_LINE_TANGENT1));
@@ -1082,7 +1332,8 @@ void LC_VisualSnapManager::createTangentialRaysBetwenCirclesArcs(const RS_Vector
                     double dist;
                     auto start = l->getStartpoint();
                     auto end = l->getEndpoint();
-                    const auto line = tryCreateGuidingConstructionLine(wcsPos, start, end, dist);
+                    const auto line = tryCreateGuidingConstructionLine(wcsPos, start, end, dist,
+                                                                       RS2::VisualSnapGuideEntityType::VSNAP_LINE_TANGENT2);
                     if (line != nullptr) {
                         solution.addGuidingEntity(line, RS2::VisualSnapGuideEntityType::VSNAP_LINE_TANGENT2);
                         solution.addSnapCandidate(start); // snap middle
@@ -1105,7 +1356,8 @@ void LC_VisualSnapManager::createNormalsFromVertexToEntities(const RS_Vector& wc
                 if (guideEntity != nullptr) {
                     double dist;
                     auto nearestPointOnEntity = guideEntity->getNearestPointOnEntity(vertex->wcsSnapCoordinate, false, &dist);
-                    const auto normalLine = tryCreateGuidingConstructionLine(wcsPos, vertex->wcsSnapCoordinate, nearestPointOnEntity, dist);
+                    const auto normalLine = tryCreateGuidingConstructionLine(wcsPos, vertex->wcsSnapCoordinate, nearestPointOnEntity, dist,
+                                                                             RS2::VisualSnapGuideEntityType::VSNAP_LINE_VERTEX_ORTHO);
                     if (normalLine != nullptr) {
                         solution.addGuidingEntity(normalLine, RS2::VisualSnapGuideEntityType::VSNAP_LINE_VERTEX_ORTHO);
                     }
@@ -1129,6 +1381,8 @@ void LC_VisualSnapManager::createExplicitlySetDistanceCirclesForVertexes(const R
                 const double distanceDelta = std::abs(distance - distanceWCS);
                 if (distanceDelta < m_wcsSnapRange) {
                     const auto circle = new LC_RefSnapCircle(wcsSnapCoordinate, distanceWCS);
+                    circle->getRefSnapInfo().guideType = RS2::VSNAP_POINT_DISTANCE_EXPLICIT;
+                    circle->getRefSnapInfo().nearestPoint = circle->getNearestPointOnEntity(wcsPos);
                     solution.addGuidingEntity(circle, RS2::VisualSnapGuideEntityType::VSNAP_POINT_DISTANCE_EXPLICIT);
                 }
             }
@@ -1216,8 +1470,30 @@ void LC_VisualSnapManager::findSnapPoint(const RS_Vector& wcsPos, VisualSnapSolu
 }
 
 LC_RefSnapConstructionLine* LC_VisualSnapManager::tryCreateGuidingConstructionLine(const RS_Vector& wcsPos, const RS_Vector& start,
-                                                                                   const RS_Vector& end, double& dist) const {
-    return tryCreateCloseSnapConstructionLine(wcsPos, m_wcsSnapRange, start, end, dist);
+                                                                                   const RS_Vector& end, double& dist, double wcsLineAngle,
+                                                                                   RS2::VisualSnapGuideEntityType entityType) const {
+    return tryCreateCloseSnapConstructionLine(wcsPos, m_wcsSnapRange, start, end, dist, wcsLineAngle, entityType);
+}
+
+LC_RefSnapConstructionLine* LC_VisualSnapManager::tryCreateGuidingConstructionLine(const RS_Vector& wcsPos, const RS_Vector& start,
+                                                                                   const RS_Vector& end, double& dist,
+                                                                                   RS2::VisualSnapGuideEntityType entityType) const {
+    return tryCreateCloseSnapConstructionLine(wcsPos, m_wcsSnapRange, start, end, dist, entityType);
+}
+
+LC_RefSnapLine* LC_VisualSnapManager::tryCreateGuidingLine(const RS_Vector& wcsPos, const RS_Vector& start, const RS_Vector& end,
+                                                           double direction, double& dist,
+                                                           RS2::VisualSnapGuideEntityType entityType) const {
+    const auto lineRay = new LC_RefSnapConstructionLine(start, end);
+    const auto nearestPointOnEntity = lineRay->getNearestPointOnEntity(wcsPos, false, &dist);
+    const double wcsDistance = nearestPointOnEntity.distanceTo(wcsPos);
+    if (wcsDistance < m_wcsSnapRange) {
+        const RS_Vector lineEndPoint = nearestPointOnEntity.relative(direction, m_wcsLineExtensionLength);
+        const auto line = new LC_RefSnapLine(start, lineEndPoint);
+        return line;
+    }
+    delete lineRay;
+    return nullptr;
 }
 
 void LC_VisualSnapManager::clearVertexProcessedFlag() const {
@@ -1282,3 +1558,9 @@ int LC_VisualSnapManager::getSnapVertexAddingDelay() const {
 int LC_VisualSnapManager::getDocumentEntityAddingDelay() const {
     return m_options.delayMsDocumentEntity;
 }
+
+// fixme ****************************************************************************
+// 1)sort created guiding lines by priority and remove duplicated one
+// line has higher priority than vertex, hor/vert - over angle and dx/dy
+// 2)rendering of guided entities labels
+// fixme ****************************************************************************

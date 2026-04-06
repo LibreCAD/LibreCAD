@@ -8784,8 +8784,8 @@ Jste si jistý, že se chystáte zahodit změny?</translation>
 <context>
     <name>LC_CreatorInvoker</name>
     <message>
-        <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="96"/>
-        <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="145"/>
+        <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="95"/>
+        <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="144"/>
         <source>Toolbar: %1 (Custom)</source>
         <translation>Nástrojová lišta:% 1 (Vlastní)</translation>
     </message>
@@ -41559,7 +41559,7 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3130"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1891"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1483"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1496"/>
         <source>Dwg Units</source>
         <translation>Dwg jednotky</translation>
     </message>
@@ -41600,7 +41600,7 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1888"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1480"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1493"/>
         <source>Screen %</source>
         <translation>Screen%</translation>
     </message>
@@ -41608,32 +41608,32 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
 <context>
     <name>QG_DlgOptionsGeneral</name>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1075"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1088"/>
         <source>Preferences</source>
         <translation>Nastavení</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5975"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6016"/>
         <source>Translations:</source>
         <translation>Překlady:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5871"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5912"/>
         <source>Hatch Patterns:</source>
         <translation>Vzory šraf:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5895"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5936"/>
         <source>Fonts:</source>
         <translation>Písma:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5947"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5988"/>
         <source>Part Libraries:</source>
         <translation>Knihovny součástí:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5583"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5624"/>
         <source>Language</source>
         <translation>Jazyk</translation>
     </message>
@@ -41643,32 +41643,32 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation>Nastavení programu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5097"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5138"/>
         <source>Defaults for new drawings</source>
         <translation>Výchozí hodnoty pro nové výkresy</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5596"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5637"/>
         <source>&amp;GUI Language:</source>
         <translation>&amp;Jazyk:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5616"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5657"/>
         <source>&amp;Command Language:</source>
         <translation>Jazyk pro &amp;příkazy:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5779"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5820"/>
         <source>&amp;Paths</source>
         <translation>&amp;Cesty</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4824"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4865"/>
         <source>&amp;Defaults</source>
         <translation>Výcho&amp;zí</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5162"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5203"/>
         <source>&amp;Unit:</source>
         <translation>&amp;Jednotka:</translation>
     </message>
@@ -41684,7 +41684,7 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation>&amp;Automatické měřítko mřížky</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1076"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1089"/>
         <source>Please restart the application to apply all changes.</source>
         <translation>Aby se všechny změny projevily, restartujte prosím program.</translation>
     </message>
@@ -41699,22 +41699,22 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation>Alt+U</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5316"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5357"/>
         <source>Program Defaults</source>
         <translation>Výchozí nastavení programu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4883"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4924"/>
         <source>Time between automatic saving of the document in minutes.</source>
         <translation>Doba mezi automatickým uložením dokumentu v minutách.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4906"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4947"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
         <translation>Pokud je nastaveno, LibreCAD automaticky vytvoří zálohu aktuálního výkresu.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5985"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6026"/>
         <source>Template:</source>
         <translation>Šablony:</translation>
     </message>
@@ -41746,47 +41746,52 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1792"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1849"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1930"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3032"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3220"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3454"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3532"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6171"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6222"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6238"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6254"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6277"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6293"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6330"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2066"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2116"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2227"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2416"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2487"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3073"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3261"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3495"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3573"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6212"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6263"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6279"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6295"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6318"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6334"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6371"/>
         <source> px</source>
         <translation>px</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6212"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6253"/>
         <source>Line length:</source>
         <translation>Délka čáry:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5062"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5103"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt; html &gt; &lt; hlava / &gt; &lt; tělo &gt; &lt; p &gt; Pokud je mezerník stisknut a okno příkazu aktivováno &lt; / p &gt; &lt; / tělo &gt; &lt; / html &gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5192"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5233"/>
         <source>Left  Isometric Grid</source>
         <translation>Levá Isometrická mřížka</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5182"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5223"/>
         <source>RIght Isometric Grid</source>
         <translation>RIght Isometric Grid</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5120"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5161"/>
         <source>Orthogonal Grid</source>
         <translation>Orthogonální mřížka</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5202"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5243"/>
         <source>Top Isometric Grid</source>
         <translation>Horní Isometrická mřížka</translation>
     </message>
@@ -41798,18 +41803,18 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="689"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3094"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3545"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3135"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3586"/>
         <source>Marker Color:</source>
         <translation>Barva znaku:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3522"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3563"/>
         <source>Marker Radius:</source>
         <translation>Marker Radius:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3601"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3642"/>
         <source>Hide marker</source>
         <translation>Skrýt značku</translation>
     </message>
@@ -41829,157 +41834,157 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation>Jednoduché vykreslování mřížky</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4744"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4785"/>
         <source>Active preview&apos;s explanatory entity&apos;s Color:</source>
         <translation>Barva interpretační jednotky aktivního náhledu:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4797"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4838"/>
         <source>Preview&apos;s explanatory entity&apos;s Color:</source>
         <translation>Barva vysvětlující osoby Náhled:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3640"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3681"/>
         <source>&amp;Highlighted entity Color:</source>
         <translation>Barva zvýrazněné entity:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3694"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3735"/>
         <source>Highlight with screen linewidth in &quot;Draft&quot; mode</source>
         <translation>Zvýraznění s šířkou obrazovky v režimu &quot;Návrh&quot;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3714"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3755"/>
         <source>Explanatory Reference Point Size</source>
         <translation>Velikost vysvětlujícího referenčního bodu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3806"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3847"/>
         <source>Explanatory Reference Point Style</source>
         <translation>Vysvětlující referenční bod Styl</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6126"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6167"/>
         <source>If selected, the angle of the line interpolation segment is calculated to ensure that resulting sagitta (height of arc segment) is less than specified.</source>
         <translation>Pokud se zvolí, vypočítá se úhel interpolačního segmentu přímky tak, aby se zajistilo, že výsledná sagitta (výška obloukového segmentu) je menší, než je uvedeno.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6193"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6234"/>
         <source>If selected, the same rendering settings will be applied also to circles.</source>
         <translation>Pokud je zvoleno, bude použito stejné vykreslování i pro kruhy.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5365"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5406"/>
         <source>If checked, the icon for current action will be shown in options toolbar before action&apos;s options</source>
         <translation>Pokud je zaškrtnuto, ikona pro aktuální akci bude zobrazena v nástrojové liště před volbou akce</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5368"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5409"/>
         <source>Show current command icon in options toolbar</source>
         <translation>Zobrazit aktuální ikonu příkazu v nástrojové liště voleb</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5322"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5363"/>
         <source>If enabled, internal ID of entity will be shown in properties dialog and Entity Info widget.</source>
         <translation>Pokud je povoleno, bude interní ID subjektu zobrazeno v dialogovém okně vlastností a widgetu Informace o subjektu.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5325"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5366"/>
         <source>Show internal IDs of entities</source>
         <translation>Zobrazit interní ID subjektů</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5006"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5047"/>
         <source>If selected, entities will stay selected after completion of Modify operations. Otherwise, they will be not selected. </source>
         <translation>Pokud je vybráno, subjekty zůstanou zvoleny po dokončení operací Modify. Jinak nebudou vybrány.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5009"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5050"/>
         <source>Keep modified entities selected</source>
         <translation>Udržet vybrané upravené subjekty</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5720"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5761"/>
         <source>If checked, prompt messages of actions will be also shown in bottom statusbar</source>
         <translation>Pokud je zaškrtnuto, budou v dolní stavové liště zobrazeny také okamžité zprávy o akcích</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5726"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5767"/>
         <source>Duplicate prompt messages of actions in statusbar</source>
         <translation>Duplikovat okamžité zprávy akcí ve stavové liště</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5291"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5332"/>
         <source>If checked, new drawing will be created with grid disabled</source>
         <translation>Pokud je zaškrtnuto, bude vytvořen nový výkres s vypnutou mřížkou</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5294"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5335"/>
         <source>Grid is Off </source>
         <translation>Grid je vypnutý</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5746"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5787"/>
         <source>New Versions</source>
         <translation>Nové verze</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5752"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5793"/>
         <source>Check GitHub for new releases of LibreCAD on program startup</source>
         <translation>Zkontrolovat GitHub pro nové verze LibreCAD při spuštění programu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5755"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5796"/>
         <source>Check for new versions on startup</source>
         <translation>Zkontrolovat nové verze při spuštění</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5762"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5803"/>
         <source>If checked, pre-release versions will be ignored</source>
         <translation>Pokud je zaškrtnuto, budou ignorovány verze před vydáním</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5768"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5809"/>
         <source>Ignore pre-release versions</source>
         <translation>Ignorovat verze před-vydání</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5664"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5705"/>
         <source>Open last opened files</source>
         <translation>Otevřít poslední otevřené soubory</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5710"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5751"/>
         <source>If enabled, drop-down menus may become floating</source>
         <translation>Pokud je zapnuto, může se rozbalovací menu stát plovoucím</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5713"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5754"/>
         <source>Allow menus detaching</source>
         <translation>Povolit oddělení menu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5700"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5741"/>
         <source>If unchecked, individual widgets of statusbar are toolbars</source>
         <translation>Pokud není zaškrtnuto, jednotlivé widgety stavové lišty jsou nástrojové lišty</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5703"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5744"/>
         <source>Use &quot;classic&quot; statusbar</source>
         <translation>Použít &quot;classic&quot; stavusbar</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5530"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5571"/>
         <source>Clear Settings</source>
         <translation>Vyčistit nastavení</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5551"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5592"/>
         <source>Layout</source>
         <translation>Rozvržení</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5567"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5608"/>
         <source>All</source>
         <translation>Všechny</translation>
     </message>
@@ -41994,96 +41999,96 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation>Skrýt kurzor při chytání</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5654"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5695"/>
         <source>Start in tab mode</source>
         <translation>Spustit v režimu karty</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5482"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5645"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5523"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5686"/>
         <source>Startup</source>
         <translation>Startup</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5684"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5725"/>
         <source>Display loading screen</source>
         <translation>Zobrazovat zobrazovací obrazovku</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5674"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5715"/>
         <source>Start with main window maximized</source>
         <translation>Spustit s maximalizovaným hlavním oknem</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5507"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5548"/>
         <source>Enable CAD dockwidgets</source>
         <translation>Povolit CAD dockwidgets</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5497"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5538"/>
         <source>Enable CAD toolbars</source>
         <translation>Povolit CAD nástrojové lišty</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1637"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1687"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2510"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2567"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2814"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2837"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2880"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2903"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2551"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2603"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2855"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2878"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2921"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2944"/>
         <source>#1E90FF</source>
         <translation># 1E90FF</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1097"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1110"/>
         <source>Select Color</source>
         <translation>Vybrat barvu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1241"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1254"/>
         <source>Clear settings</source>
         <translation>Vyčistit nastavení</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1242"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1255"/>
         <source>This will also include custom menus and toolbars. Continue?</source>
         <translation>To bude také zahrnovat vlastní menu a nástrojové lišty. Pokračovat?</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1246"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1252"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1259"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1265"/>
         <source>You must restart LibreCAD to see the changes.</source>
         <translation>Musíte restartovat LibreCAD vidět změny.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1268"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1281"/>
         <source>Select Fonts Folder</source>
         <translation>Vybrat složku fontů</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1275"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1288"/>
         <source>Select Translations Folder</source>
         <translation>Vybrat složku překladů</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1282"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1295"/>
         <source>Select Hatch Patterns Folder</source>
         <translation>Vybrat složku šablon Hatch</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1289"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1302"/>
         <source>Select Other Settings Folder</source>
         <translation>Vybrat další složku nastavení</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4989"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5030"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt; html &gt; &lt; hlava / &gt; &lt; tělo &gt; &lt; p &gt; Aktivování vrstvy by při zapnutí modifikovalo všechny vybrané subjekty na tuto novou vrstvu. Chcete-li změnit vrstvu více subjektů: nejprve vyberte potřebné jednotky; aktivujte vrstvu v widgetu vrstvy. Díky tomu jsou všechny vybrané subjekty upraveny tak, aby patřily do nové vrstvy. &lt; / p &gt; &lt; / tělo &gt; &lt; / html &gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5839"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5880"/>
         <source>Variable File:</source>
         <translation>Proměnný soubor:</translation>
     </message>
@@ -42093,12 +42098,12 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation>Minimální rozklad mřížky (p &amp; x):</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4668"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4709"/>
         <source>N&amp;umber of preview entities:</source>
         <translation>N &amp; amber na náhled subjektů:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5388"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5429"/>
         <source>Don&apos;t use native OS file open dialog</source>
         <translation>Nepoužívat dialogové okno s otevřeným souborem nativního OS</translation>
     </message>
@@ -42108,7 +42113,7 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation>Automatické pannování</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3604"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3645"/>
         <source>Alt+Z</source>
         <translation>Alt + Z</translation>
     </message>
@@ -42190,24 +42195,24 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1509"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1731"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1751"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2063"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2147"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2161"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2248"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2531"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2614"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2725"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2745"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2785"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2851"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3107"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3144"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3299"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3319"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3561"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3659"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4654"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4760"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2099"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2304"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2350"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2449"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2617"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2637"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2766"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2786"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2826"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2892"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3148"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3185"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3340"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3360"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3602"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3700"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4695"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4801"/>
         <source>Click to select color</source>
         <translation>Kliknutím vyberte barvu</translation>
     </message>
@@ -42620,106 +42625,106 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation>Barva mřížky Meta, pokud je mřížka nakreslena čarami</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3187"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3228"/>
         <source>Axis Lines</source>
         <translation>Řádky osy</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3276"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3317"/>
         <source>Y-Axis Extension</source>
         <translation>Rozšíření osy Y- Axis</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3383"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3424"/>
         <source>Short Axis Size</source>
         <translation>Krátká velikost osy</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3286"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3327"/>
         <source>X-Axis Extension</source>
         <translation>Rozšíření osy X- Axis</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3193"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3234"/>
         <source>Color for X axis</source>
         <translation>Barva pro osu X</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3333"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3374"/>
         <source>If checked, axises will be inifinite lines</source>
         <translation>Pokud je zaškrtnuto, axises bude nekonečný řádky</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3336"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3377"/>
         <source>Extend axis lines</source>
         <translation>Rozšiřte osy</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3390"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3431"/>
         <source>Color for Y axis</source>
         <translation>Barva osy Y</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3260"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3301"/>
         <source>Y-Axis Color:</source>
         <translation>Barva osy Y- Axis:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3356"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3397"/>
         <source>Defines how to draw extended Y axis</source>
         <translation>Definuje, jak nakreslit rozšířenou osu Y</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3237"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3360"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3278"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3401"/>
         <source>Whole Area</source>
         <translation>Celá oblast</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3242"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3365"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3283"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3406"/>
         <source>Positive Values Area</source>
         <translation>Oblast kladných hodnot</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3247"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3370"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3288"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3411"/>
         <source>Negative Values Area</source>
         <translation>Oblast záporných hodnot</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3252"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3375"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3293"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3416"/>
         <source>None</source>
         <translation>Žádné</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3217"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3258"/>
         <source>Size of Axis Lines drawn in absolute zero point</source>
         <translation>Velikost čar osy v absolutním nulovém bodě</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3343"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3384"/>
         <source>X-Axis Color:</source>
         <translation>Barva osy X-Axis:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3233"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3274"/>
         <source>Defines how to draw extended X axis</source>
         <translation>Definuje, jak nakreslit rozšířenou osu X</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3575"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3616"/>
         <source>Color of relative zero marker</source>
         <translation>Barva relativní nulové značky</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3598"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3639"/>
         <source>If checked, relative zero marker will not be drawn</source>
         <translation>Pokud je zaškrtnuto, nebude se čerpat relativní nulová značka</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3529"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3570"/>
         <source>Radius of relative zero marker</source>
         <translation>Poloměr relativní nulové značky</translation>
     </message>
@@ -42799,20 +42804,19 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation>Nakreslete svislé čáry pro &quot;horní&quot; izometrickou mřížku</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3615"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3656"/>
         <source>&amp;Preview</source>
         <translation>Náhled</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3824"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3865"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3906"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3947"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3988"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4029"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4070"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4114"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4146"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4111"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4155"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4187"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4228"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4269"/>
@@ -42824,236 +42828,238 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4515"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4556"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4597"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4638"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4632"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4673"/>
         <source>Preview</source>
         <translation>Náhled</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4638"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4679"/>
         <source>If checked, more informative and explaining preview will be drawn for operations</source>
         <translation>Pokud je zaškrtnuto, bude pro operace vypracován informativnější a vysvětlující náhled</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4681"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4722"/>
         <source>If more entities in preview than specified, rect will be drawn instead of entities.</source>
         <translation>Pokud je v náhledu více subjektů, než je uvedeno, rekt bude čerpán místo subjektů.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4721"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4762"/>
         <source>Color for selected preview reference entiites</source>
         <translation>Barva pro vybrané referenční atributy náhledu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4774"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4815"/>
         <source>Color for preview reference entities</source>
         <translation>Barva pro referenční subjekty náhledu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3634"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3675"/>
         <source>Highlight</source>
         <translation>Zvýraznění</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3701"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3742"/>
         <source>Visualize the entity under the mouse cursor</source>
         <translation>Vizualizujte entitu pod kurzorem myši</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3704"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3745"/>
         <source>Highlight entities on mouse hover</source>
         <translation>Zvýraznit subjekty na myši vznášedlo</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3673"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3714"/>
         <source>Color for highlighted entities</source>
         <translation>Barva pro zvýrazněné subjekty</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3691"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3732"/>
         <source>If selected, entity will be highlighted in &quot;Draft&quot; mode using entity&apos;s linewidth instead of 1px</source>
         <translation>Pokud je zvolena, bude účetní jednotka zvýrazněna v režimu &quot;Návrh&quot; pomocí linewide entity namísto 1px</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3796"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3837"/>
         <source>(0 =&gt; 5% relative to screen size)</source>
         <translation>(0 = &gt; 5% vzhledem k velikosti obrazovky)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3735"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3776"/>
         <source>Size of reference points</source>
         <translation>Velikost referenčních bodů</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4641"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4682"/>
         <source>Show operation&apos;s preview explanatory entities </source>
         <translation>Zobrazit ukázkové vysvětlivky operace</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3742"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3783"/>
         <source>Dwg Units</source>
         <translation>Dwg jednotky</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3773"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3814"/>
         <source>Size relative to screen</source>
         <translation>Velikost vzhledem k obrazovce</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3780"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3821"/>
         <source>Size in drawing units</source>
         <translation>Velikost v tažných jednotkách</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6206"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6247"/>
         <source>Rendering Minimums</source>
         <translation>Rendering Minimums</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6327"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6368"/>
         <source>If height of text line on the screen is less than specified pixels, placholder will be drawn instead of text</source>
         <translation>Pokud je výška textové čáry na obrazovce menší než stanovené pixely, bude místo textu nakreslena plachtitelka</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6267"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6308"/>
         <source>Height of text line:</source>
         <translation>Výška textového řádku:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6320"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6361"/>
         <source>Ellipse Major Axis:</source>
         <translation>Elipse Major Axis:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6290"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6331"/>
         <source>If screen size of minor ellipse axis is less than value, ellipse is drawn as line</source>
         <translation>Pokud je velikost obrazovky menší elipsy menší než hodnota, elipsa je nakreslena jako přímka</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6235"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6276"/>
         <source>If screen length of line is less than value, the line is drawn as point</source>
         <translation>Pokud je délka obrazovky přímky menší než hodnota, čára je nakreslena jako bod</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6274"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6315"/>
         <source>If screen radius of circle is less than value, circle is drawn as point</source>
         <translation>Pokud je poloměr obrazovky kružnice menší než hodnota, kružnice je nakreslena jako bod</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6349"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6390"/>
         <source>Circle Radius:</source>
         <translation>Kruhový poloměr:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6306"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6347"/>
         <source>Arc Radius:</source>
         <translation>Arc Radius:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6251"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6292"/>
         <source>If screen radius of arc is less than value, arc is drawn as point</source>
         <translation>Pokud je poloměr oblouku menší než hodnota, oblouk je nakreslený jako bod</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6313"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6354"/>
         <source>Ellipse Minor Axis:</source>
         <translation>Elipse Minor Axis:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6219"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6260"/>
         <source>If screen size for major ellipse axis is less than value, ellipse is drawn as point</source>
         <translation>Pokud velikost obrazovky pro velkou osu elipsy je menší než hodnota, elipsa je kreslena jako bod</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6068"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6109"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) during panning. </source>
         <translation>Pokud je zvoleno, budou během panningu nakresleny základní čáry textu namísto textových písmen (podobných režimu návrhu).</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6071"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6112"/>
         <source>Draw text as draft within paning operations</source>
         <translation>Nakreslete text jako návrh v rámci paining operací</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6078"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6119"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) in preview. </source>
         <translation>Pokud je zvoleno, budou v náhledu vykresleny základní čáry textu namísto textových písmen (podobných režimu návrhu).</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6081"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6122"/>
         <source>Draw text as draft in preview</source>
         <translation>Nakreslete text jako návrh v náhledu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2463"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2504"/>
         <source>Info Cursor</source>
         <translation>Info kurzor</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2651"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2692"/>
         <source>Informational Cursor Overlay </source>
         <translation>Information Cursor overlay</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2963"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3004"/>
         <source>Appearance</source>
         <translation>Vzhled</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2969"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3010"/>
         <source>Font that should be used for drawing elements of informational cursor.</source>
         <translation>Písmo, které by mělo být použito pro kreslení prvků informačního kurzoru.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2976"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3017"/>
         <source>If checked, components of coordinate will be drawn in one line. Otherwise, each component will be on own line. </source>
         <translation>Pokud je zaškrtnuto, části souřadnic budou vykresleny v jednom řádku. Jinak bude každá složka na vlastní lince.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2979"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3020"/>
         <source>Draw coordinates in one line</source>
         <translation>Nakreslete souřadnice v jednom řádku</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="647"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2594"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2601"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2986"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3486"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2529"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2682"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3027"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3527"/>
         <source>Font:</source>
         <translation>Písmo:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2993"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3034"/>
         <source>If checked, labels for coordinate components will be shown. Otherwise, standard form of coordinates will be displayed.</source>
         <translation>Pokud je zaškrtnuto, zobrazí se štítky pro souřadnicové komponenty. Jinak se zobrazí standardní forma souřadnic.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2996"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3037"/>
         <source>Show labels for coordinates</source>
         <translation>Zobrazit štítky pro souřadnice</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3003"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3044"/>
         <source>Font size, in points</source>
         <translation>Velikost písma v bodech</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="719"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2578"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3006"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3470"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2262"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2562"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3047"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3511"/>
         <source> pt</source>
         <translation>pt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="735"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2545"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3022"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3430"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2651"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3063"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3471"/>
         <source>Font size:</source>
         <translation>Velikost písma:</translation>
     </message>
@@ -43068,238 +43074,238 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation>Ignorovat &quot;Snap to Grid&quot;, pokud mřížka není nakreslena</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3029"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3070"/>
         <source>Offset of labels from the cursor point.</source>
         <translation>Offset štítků z kurzoru.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3048"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3089"/>
         <source>Cursor position offset:</source>
         <translation>Odstupňování polohy kurzoru:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2953"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2994"/>
         <source>If checked, informational cursor will be enabled and shown where applicable.</source>
         <translation>Pokud je zaškrtnuto, informační kurzor bude aktivován a případně zobrazen.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2956"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2997"/>
         <source>Enable Informational Cursor</source>
         <translation>Povolit informační kurzor</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2657"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2698"/>
         <source>Operations Preview</source>
         <translation>Náhled operací</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2663"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2704"/>
         <source>Show properties for entity that will be created</source>
         <translation>Zobrazit vlastnosti pro entitu, která bude vytvořena</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2670"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2711"/>
         <source>Show properties for entity that is edited by handles</source>
         <translation>Zobrazit vlastnosti pro entitu, která je editována rukojetí</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2680"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2721"/>
         <source>Content</source>
         <translation>Obsah</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2799"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2840"/>
         <source>Color for absolute snap coordinates.</source>
         <translation>Barva pro absolutní souřadnice.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2709"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2750"/>
         <source>If checked, relative distance and angle from relative zero point to snap point will be shown.</source>
         <translation>Pokud je zaškrtnuto, zobrazí se relativní vzdálenost a úhel od relativního nulového bodu k bodu zlomu.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2712"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2753"/>
         <source>Show relative distance and angle</source>
         <translation>Zobrazit relativní vzdálenost a úhel</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2822"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2863"/>
         <source>Color for snap type/restriction</source>
         <translation>Barva pro typ kliknutí / omezení</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2759"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2800"/>
         <source>If checked, the prompt of the active command will be shown.</source>
         <translation>Pokud je zaškrtnuto, zobrazí se výzva aktivního příkazu.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2762"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2803"/>
         <source>Show active command prompt</source>
         <translation>Zobrazit aktivní příkaz</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2686"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2727"/>
         <source>If checked, show relative coordinate</source>
         <translation>Pokud je zaškrtnuto, zobrazí se relativní souřadnice</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2692"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2733"/>
         <source>Show relative coordinate</source>
         <translation>Zobrazit relativní souřadnice</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2769"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2810"/>
         <source>If checked, information about the type of snap and restrictions will be shown for snap point (if any)</source>
         <translation>Pokud je zaškrtnuto, zobrazí se informace o typu kliknutí a omezení pro klikový bod (pokud existuje)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2772"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2813"/>
         <source>Show snap info /restriction</source>
         <translation>Zobrazit informace o kliknutí / omezení</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2888"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2929"/>
         <source>Color for the command prompt</source>
         <translation>Barva pro příkazové volání</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2865"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2906"/>
         <source>Color for relative distance and angle</source>
         <translation>Barva pro relativní vzdálenost a úhel</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2699"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2740"/>
         <source>If checked, absolute position of snap point will be shown.</source>
         <translation>Pokud je zaškrtnuto, zobrazí se absolutní poloha bodu zlomu.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2702"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2743"/>
         <source>Show absolute coordinate</source>
         <translation>Zobrazit absolutní souřadnice</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2924"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2965"/>
         <source>If checked, name of active command will be shown before command prompt</source>
         <translation>Pokud zaškrtnuto, před příkazem se zobrazí název aktivního příkazu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2930"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2971"/>
         <source>Show active command name</source>
         <translation>Zobrazit aktivní název příkazu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2937"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2978"/>
         <source>If checked, short overview properties of the entity&apos;s that is catched for selection will be shown. </source>
         <translation>Pokud je zaškrtnuto, zobrazí se stručné přehledy vlastností účetní jednotky, které jsou zachyceny pro výběr.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2943"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2984"/>
         <source>Show properties of catched entity</source>
         <translation>Zobrazit vlastnosti chyceného subjektu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4992"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5033"/>
         <source>Modify layer of selected entities, at layer activation</source>
         <translation>Upravit vrstvu vybraných subjektů při aktivaci vrstvy</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5405"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5446"/>
         <source>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</source>
         <translation>Pokud je zaškrtnuto, tlačítko Close cross bude zobrazeno v záložkách pro výkresy, pokud jsou výkresy v režimu Tab</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5408"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5449"/>
         <source>Show Close button on drawings tabs</source>
         <translation>Zobrazit tlačítko Zavřít na kartách výkresů</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3081"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5426"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3122"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5467"/>
         <source>Always</source>
         <translation>Vždy</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5431"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5472"/>
         <source>Active Tab</source>
         <translation>Aktivní karta</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5355"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5396"/>
         <source>If checked, keyboard shortcut will be shown in tooltip for action</source>
         <translation>Pokud je zaškrtnuto, klávesová zkratka se zobrazí v nástrojovém tip pro akci</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5358"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5399"/>
         <source>Show keyboard shortcuts in actions tooltips</source>
         <translation>Zobrazit klávesové zkratky v nástrojových tipech akcí</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4909"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4950"/>
         <source>Auto save backup each</source>
         <translation>Automaticky uložit zálohu každý</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5375"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5416"/>
         <source>If checked, location of dialog will not be saved, but size will</source>
         <translation>Pokud zatrženo, umístění dialogu nebude uloženo, ale velikost bude</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5381"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5422"/>
         <source>Persist dialog size only</source>
         <translation>Pouze velikost dialogového okna</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4886"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4927"/>
         <source> minutes</source>
         <translation>minuty</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5439"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5480"/>
         <source>If checked, dialogs will be positioned and resized to position/size of last invocation.</source>
         <translation>Pokud je zaškrtnuto, budou dialogy umístěny a přeorientovány na pozici / velikost posledního vyvolání.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5442"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5483"/>
         <source>Persistent dialogs location and size</source>
         <translation>Perzistentní umístění a velikost dialogů</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5049"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5090"/>
         <source>Keyboard Settings</source>
         <translation>Nastavení klávesnice</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5055"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5096"/>
         <source>Evaluate commands when SPACE BAR is pressed</source>
         <translation>Hodnotit příkazy při stisknutí SPACE BAR</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5149"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5190"/>
         <source>Drawing units</source>
         <translation>Kreslicí (rýsovací) jednotky</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5589"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5630"/>
         <source>Languages for commands in Cmd Widget</source>
         <translation>Jazyky pro příkazy v Cmd Widget</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5609"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5650"/>
         <source>Language to use for GUI and messages</source>
         <translation>Jazyk pro GUI a zprávy</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5681"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5722"/>
         <source>Defines whether splash screen will be shown on startup</source>
         <translation>Určuje, zda se při spuštění zobrazí split displej</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5651"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5692"/>
         <source>Controls default mode for drawings</source>
         <translation>Ovládání výchozího režimu pro výkresy</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5671"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5712"/>
         <source>If checked, after start the main window will be maximized</source>
         <translation>Pokud zatrženo, po spuštění bude hlavní okno maximalizováno</translation>
     </message>
@@ -43339,18 +43345,18 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation>Značka režimu návrhu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3444"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3485"/>
         <source>Font that should be used for drawing name of axis in coordinate system zero.</source>
         <translation>Písmo, které by mělo být použito pro kreslení názvu osy v souřadnicovém systému nula.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="716"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3467"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3508"/>
         <source>Font size that should be used for drawing name of axis in coordinate system zero.</source>
         <translation>Velikost písma, který by měl být použit pro kreslení názvu osy v souřadnicovém systému nula.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3503"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3544"/>
         <source>If selected, marker for coodinate system will be shown in zero point of current user coordinates system. </source>
         <translation>Pokud je zvoleno, bude značka pro kodinátový systém zobrazena v nulovém bodě aktuálního uživatelského souřadnicového systému.</translation>
     </message>
@@ -43370,72 +43376,72 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation>Pokud je zvoleno, v návrhu režimu bude v rozích pohledu drawin</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3424"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3465"/>
         <source>Coordinates Zero Marker</source>
         <translation>Souřadnice Zero Marker</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3437"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3478"/>
         <source>Marker Size</source>
         <translation>Velikost značky</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3451"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3492"/>
         <source>Size of axis of coordinate system&apos;s zero marker</source>
         <translation>Velikost osy nulové značky souřadnicového systému</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3493"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3534"/>
         <source>If selected and view is in user coordinate system, the marker for coodinate system will be shown in zero point of world coordinates system. </source>
         <translation>Je-li vybrán a pohled je v uživatelském souřadnicovém systému, bude marker pro kodinátový systém zobrazen v nulovém bodě systému souřadnic světa.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3496"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3537"/>
         <source>Show WCS zero marker</source>
         <translation>Zobrazit nulovou značku WCS</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3506"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3547"/>
         <source>Show UCS zero marker</source>
         <translation>Zobrazit nulovou značku UCS</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3071"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3112"/>
         <source>Angles Basis Marker</source>
         <translation>Angles Basis Marker</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3062"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3103"/>
         <source>Coordinate System</source>
         <translation>Souřadnice</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3086"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3127"/>
         <source>Only for non-defaults</source>
         <translation>Pouze pro neselhání</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3124"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3165"/>
         <source>Show angles basis marker</source>
         <translation>Zobrazit úhly baze marker</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3131"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3172"/>
         <source>Base Angle Ray Color:</source>
         <translation>Základní úhel Ray Barva:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3164"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3205"/>
         <source>#017CFF</source>
         <translation># 017CFF</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3177"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3218"/>
         <source>#00FFFF</source>
         <translation># 00FFFF</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3516"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3557"/>
         <source>Relative Zero Marker</source>
         <translation>Relativní nulový marker</translation>
     </message>
@@ -43515,73 +43521,73 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation>Faktor souřadnicové buňky používaný pro přepínání na mřížku.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3068"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3158"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3109"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3199"/>
         <source>Color of the marker</source>
         <translation>Barva značky</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3077"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3118"/>
         <source>Defines where to draw angle basis marker</source>
         <translation>Definuje, kde nakreslit úhel baze marker</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3121"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3162"/>
         <source>If enabled, angles basis marker will be shown in the orign of coordinates system</source>
         <translation>Pokud je zapnuto, bude v originu souřadnicového systému zobrazena značka základu úhlů</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3171"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3212"/>
         <source>Color of the ray that displays zero angle position</source>
         <translation>Barva paprsku, který zobrazuje polohu nulového úhlu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5016"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5057"/>
         <source>If checked, it will be possible to enter value of angle in decimal degrees only. Otherwise, angles in surveyor, radiant, imperial degrees and bearing formats are allowed for input.  </source>
         <translation>Pokud je zaškrtnuto, bude možné zadat hodnotu úhlu pouze v desetinných stupních. V opačném případě jsou pro vstup povoleny úhly v geodetické, zářivé, imperiální a ložiskové formáty.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5019"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5060"/>
         <source>Allow angles input in decimal degrees only</source>
         <translation>Povolit vstup úhlů pouze v desetinných stupních</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5332"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5373"/>
         <source>If selected, menu will include top-level items for drawing tools. Otherwise, they will under the same menu item. </source>
         <translation>Pokud je zvoleno, menu bude obsahovat položky nejvyšší úrovně pro kreslení nástrojů. Jinak budou pod stejnou položkou menu.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5335"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5376"/>
         <source>Expand &quot;Tools&quot; commands in menu</source>
         <translation>Rozbalit příkazy &quot;Nástroje&quot; v menu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5342"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5383"/>
         <source>If selected, separate menu will be created for each group of entity-related commands. Otherwise, these command will be under the same menu. </source>
         <translation>Pokud je zvoleno, pro každou skupinu příkazů souvisejících s entitybude vytvořeno samostatné menu. Jinak bude tento příkaz pod stejným menu.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5072"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5113"/>
         <source>If enabled, it is possible to do with keys - zooming via +/-, scrolling via arrow keys, moving selected entities position via arrow keys and SHIFT/CTRL modifiers.</source>
         <translation>Pokud je zapnuto, lze použít klávesy - zooming přes + / -, rolování pomocí kláves se šipkami, posunutí pozice vybraných subjektů pomocí kláves se šipkami a modifikátory SHIFT / CTRL.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5075"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5116"/>
         <source>Enable scroll and position adjustment via keyboard</source>
         <translation>Povolit nastavení polohy pomocí klávesnice</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5415"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5456"/>
         <source>If selected, controls for picking values from drawing are available in Tool Options toolbar, allowing to pick length and angle values from drawing. </source>
         <translation>Pokud je zvoleno, ovládání pro výběr hodnot z výkresu je dostupné v nástrojové liště Možnosti nástroje, umožňující vybrat hodnoty délky a úhlu z výkresu.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5418"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5459"/>
         <source>Tool options toolbar includes pick values controls</source>
         <translation>Nástroj volby nástrojová lišta obsahuje kontrolu hodnot výběru</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5348"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5389"/>
         <source>Separate menu per entity</source>
         <translation>Samostatné menu pro každý subjekt</translation>
     </message>
@@ -43621,649 +43627,681 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2077"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2160"/>
         <source>Document entity in visual snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2084"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2432"/>
         <source>Highlighted point size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2091"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2108"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2338"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2452"/>
-        <source>px</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2098"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2439"/>
         <source>If checked, snap point requested by command and specified by the user will be added to visual snap automatically. Otherwise, it should be added manually.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2101"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2442"/>
         <source>Add snapped point automatically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2115"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2113"/>
         <source>Size of marker for projected snap point (like intersection), in pixels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2131"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2191"/>
         <source>Color for guiding entities used in visual snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2175"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2211"/>
         <source>If selected, points will be added manually as guiding points if cursor is over them and CTRL key is pressed. Otherwise - they will be added by placing cursor over only.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2181"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2217"/>
         <source>Manual adding points with CTRL key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2188"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2278"/>
         <source>If checked, visual snap will also consider rays for enpoints of guiding entities with step, similar to angle snap. Otherwise, only tangential and normal rays will be considered for vertexes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2191"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2281"/>
         <source>Angle snap step relative guiding rays for entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2198"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2391"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2412"/>
-        <source>ms</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2205"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2463"/>
         <source>Guiding point size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2212"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2318"/>
         <source>Defines how long the mouse should be over projected snap point until that point will be added to visual snap system as guiding point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2231"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2132"/>
         <source>Guiding entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2238"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2224"/>
         <source>Size of marker used to draw guiding point that is added to visual snap system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2262"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2237"/>
         <source>Defines how long the mouse should be over document entity until that entity will be added to visual snap system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2281"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2063"/>
         <source>Size of marker for visual snap guiding points, in pixels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2297"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2139"/>
         <source>Entity adding/removal delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2304"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2184"/>
         <source>Projected snap point adding delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2311"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2092"/>
         <source>Projected snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2318"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2167"/>
         <source>If checked, visual snap will also consider rays from guiding points with step, similar to angle snap. Otherwise, only vertical and horizontal rays will be considered for vertexes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2321"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2170"/>
         <source>Angle snap step guiding rays for guiding points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2328"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2396"/>
         <source>Color of document entities, explicitly added to visual snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2345"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2082"/>
         <source>If selected, guiding circles for distances between guiding points will be included into visual snap. Otherwise, they will be ignored. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2348"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2085"/>
         <source>Dynamic distance circles for guiding points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2355"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2288"/>
         <source>Color of possible snap point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2365"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2146"/>
         <source>Guiding point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2372"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2374"/>
         <source>Defines how many milliseconds mouse should be over snap point until that point will be added as guiding point to visual snap system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2398"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2406"/>
         <source>Projected snap point size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2405"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2153"/>
         <source>Snap point adding/removal delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2419"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2201"/>
         <source>Color of guide points in visual snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2429"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2177"/>
         <source>Visual snap catch distance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2436"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2413"/>
         <source>Distance in screen coordinates that is used for catching visual snap guiding entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2631"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2668"/>
         <source>Start in coordinates offset mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2488"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2675"/>
         <source>Background:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2638"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2578"/>
         <source>&lt;p&gt;If checked, used coordinates entering mode will be saved and on next invocation the assistant will prompt entering coordinates in that mode. &lt;/p&gt;&lt;p&gt;Otherwise, explicitly specified mode will be used on next invocation.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2641"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2240"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2321"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2377"/>
+        <source> ms</source>
+        <translation type="unfinished">ms</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2259"/>
+        <source>Size of font, in points, used for displaying labels for guiding entities.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2340"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Visual snap solution will be cleared by &lt;span style=&quot; font-weight:700;&quot;&gt;CTRL+Middle Mouse Button&lt;/span&gt; click. &lt;br/&gt;If selected, visual snap solution may be also cleared by &lt;span style=&quot; font-weight:700;&quot;&gt;Right Mouse Button&lt;/span&gt; click. &lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2343"/>
+        <source>Allow clearing visual snap solution by Right mouse button click</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2364"/>
+        <source>If enabled, labels for visual snap guiding entities will be snown. Otherwise - no labels.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2367"/>
+        <source>Show labels on guiding entities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2470"/>
+        <source>Guiding entity label font size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2477"/>
+        <source>Guiding entity label base offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2484"/>
+        <source>Offset of the guiding label from projected snap point, in pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2581"/>
         <source>Remember last used coordinates mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4843"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4884"/>
         <source>Auto-Save Drawings</source>
         <translation>Automaticky uložit výkresy</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4850"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4891"/>
         <source>#</source>
         <translation>#</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4855"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4924"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4896"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4965"/>
         <source>~</source>
         <translation>~</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4860"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4934"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4901"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4975"/>
         <source>_</source>
         <translation>_</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4865"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4906"/>
         <source>__</source>
         <translation>_</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4870"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4911"/>
         <source>lcauto_</source>
         <translation>icauto _</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4875"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4916"/>
         <source>autosaved_</source>
         <translation>autosaved _</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4899"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4940"/>
         <source>Auto-save file name prefix:</source>
         <translation>Automaticky uložit prefix názvu souboru:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4916"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4957"/>
         <source>Backup file name suffix:</source>
         <translation>Přípona názvu souboru:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4929"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4970"/>
         <source>$$</source>
         <translation>$</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4939"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4980"/>
         <source>_backup</source>
         <translation>_ záloha</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4944"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4985"/>
         <source>_bak</source>
         <translation>_ bak</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4949"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4990"/>
         <source>.bak</source>
         <translation>.bak</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4954"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4995"/>
         <source>.backup</source>
         <translation>.backup</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4959"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5000"/>
         <source>.lcb</source>
         <translation>.lcb</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5026"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5067"/>
         <source>If selected, mouse up will finish ad-hock moving operations (so just one click is need). Otherwise, first click initiates move, and second one completes it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5029"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5070"/>
         <source>Finish ad-hock moving of entities or ref points by mouse up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5036"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>If selected, entities selection window is defined with pressed left mouse button. Otherwirse, 2 mouse clicks are used for corners (LibreCAD classic)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5039"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5080"/>
         <source>Select objects in window with pressed mouse button</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5452"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5493"/>
         <source>Command line commands informer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5458"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5499"/>
         <source>If enabled, command aliases will be shown next to menu items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5461"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5502"/>
         <source>Show commands in menu items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5468"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5509"/>
         <source>If selected, invocation of actions with commands via UI will lead to displaying command in Cmd widget.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5471"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5512"/>
         <source>Promote command in Cmd widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5488"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5529"/>
         <source>CAD Tools </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5494"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5535"/>
         <source>If checked, toolbars with commands will be enabled. </source>
         <translation>Pokud je zaškrtnuto, budou povoleny nástrojové lišty s příkazy.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5514"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5555"/>
         <source>If this option is selected, all tools will be shown in one group, so the screen space is used more efficiently.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5520"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5561"/>
         <source>Show all tools in one widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5694"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5735"/>
         <source>UI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5733"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5774"/>
         <source>If enabled, tooltips toolbar&apos;s name will be shown</source>
         <translation>Pokud je zapnuto, zobrazí se název nástrojové lišty</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5736"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5777"/>
         <source>Show tooltips for toolbars</source>
         <translation>Zobrazit tipy nástrojů pro nástrojové lišty</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5785"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5826"/>
         <source>Exchange</source>
         <translation>Burza</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5791"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5832"/>
         <source>Exports settings to the file.</source>
         <translation>Exportuje nastavení do souboru.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5794"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5835"/>
         <source>Export settings to file</source>
         <translation>Nastavení exportu do souboru</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5805"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5846"/>
         <source>Imports application&apos;s preferences from external file</source>
         <translation>Přednosti žádosti o dovoz z externího souboru</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5808"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5849"/>
         <source>Import settings from file</source>
         <translation>Importovat nastavení ze souboru</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5822"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5863"/>
         <source>Paths</source>
         <translation>Cesty</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5995"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6036"/>
         <source>Other settings locations</source>
         <translation>Ostatní místa nastavení</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6002"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6043"/>
         <source>Directory where various settings are located (shortcuts, workspaces, pens etc.)</source>
         <translation>Adresář, kde se nacházejí různá nastavení (zkratky, pracovní prostory, pera atd.)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6053"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6094"/>
         <source>Renderer</source>
         <translation>Návratnost</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6100"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6141"/>
         <source>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</source>
         <translation>Pokud je zaškrtnuto, archy se kreslí pomocí interpolace úseček. Tento sliminuje kreslení artefakty v blízkosti koncových bodů, ale může mít za následek kreslení méně hladké oblouky. Žádné chyby v kreslení v blízkosti koncových bodů na velkých zooms.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6110"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6151"/>
         <source>If this method is selected, arcs are drawn using method of QT library.  On large zooms, arcs may be rendered with errors near endpoints.</source>
         <translation>Je-li zvolena tato metoda, vykreslují se oblouky metodou QT knihovny. Na velkých zónách, oblouky mohou být provedeny s chybami v blízkosti koncových bodů.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6113"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6154"/>
         <source>Qt-native drawing method (unexact near endpoints)</source>
         <translation>Qt- native kreslicí metoda (nepřesné blízké koncové body)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6359"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6400"/>
         <source>Fonts Files</source>
         <translation>Soubory písem</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6365"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6406"/>
         <source>Amount of letters columns:</source>
         <translation>Počet písmen sloupce:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6378"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6419"/>
         <source>Contains the number of columns in one row for rendering font letter blocks. If 0 - all letters in one row. </source>
         <translation>Obsahuje počet sloupců v jednom řádku pro vykreslování fontových bloků. Pokud 0 - všechna písmena v jedné řadě.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6059"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6100"/>
         <source>Operations</source>
         <translation>Operace</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6065"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6106"/>
         <source>If enabled, during pan operation TEXT and MTEXT objects will be drawn schematically</source>
         <translation>Pokud je zapnuto, budou během provozu Pan</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6091"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6132"/>
         <source>Defines how arcs are rendered in UI. </source>
         <translation>Určuje, jak jsou oblouky v UI.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5504"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5545"/>
         <source>If checked, dock widgets with commands for left sidebar will be enabled. Otherwise, they will be disabled. </source>
         <translation>Pokud je zaškrtnuto, budou zapnuty widgety doku s příkazy pro levý postranní sloupek. Jinak budou vyřazeni.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2482"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2523"/>
         <source>Relative Point Input Assistant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2628"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2665"/>
         <source>&lt;p&gt;If selected, on invocation the assistant will be in relative coordinates (offset) mode. &lt;br/&gt;Otherwise, it will prompt to enter absolute coordinates.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2495"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2588"/>
         <source>Color for relative point input assistant font</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2518"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2658"/>
         <source>Font used by relative point input assistant popup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2552"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2536"/>
         <source>Color for relative point input assistant popup background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2575"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2559"/>
         <source>Font size for relative point input assistant, in points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6094"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6135"/>
         <source>Arcs Rendering Method</source>
         <translation>Metoda snímání oblouků</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6103"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6144"/>
         <source>Interpolate by line segments</source>
         <translation>Interpolát podle úseků</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6120"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6161"/>
         <source>Single segment angle</source>
         <translation>Jediný úhel segmentu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6129"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6170"/>
         <source>Determine segments by max sagitta</source>
         <translation>Určete segmenty max sagitta</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6136"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6177"/>
         <source>If selected, the fixed angle of line interpolation segment will be used. Smaller angle deliver more smooth arc yet is slower.</source>
         <translation>Bude-li zvoleno, použije se pevný úhel interpolačního segmentu. Menší úhel poskytuje větší hladký oblouk, ale je pomalejší.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6139"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6180"/>
         <source>Use fixed segment angle value</source>
         <translation>Použít pevnou hodnotu úhlu segmentu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6146"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6187"/>
         <source>Value of fixed segment&apos;s angle</source>
         <translation>Hodnota úhlu pevného segmentu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6149"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6190"/>
         <source> degrees</source>
         <translation>stupně</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6168"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6209"/>
         <source>Maximal distance betwen arc and segment interpolation line</source>
         <translation>Maximální vzdálenost mezi obloukovou a segmentovou interpolační linkou</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6196"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6237"/>
         <source>Render circles in the same way as arcs.</source>
         <translation>Render kroužky stejným způsobem jako oblouky.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2911"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2952"/>
         <source>If set and user coordinate system is active, absolute coodinate in world coordinate system will be also shown.</source>
         <translation>Pokud je nastavený a uživatelský souřadnicový systém aktivní, bude také zobrazen absolutní koodinát ve světovém souřadnicovém systému.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2917"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2958"/>
         <source>Show world coordinates if in user coordinate system</source>
         <translation>Zobrazit světové souřadnice, pokud v systému uživatelských souřadnic</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5395"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5436"/>
         <source>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </source>
         <translation>Pokud je zaškrtnuto, jakékoli změny zoomu nebo pánve pro kreslení označí kresbu jako upravenou. Jinak pouze změna pohledu neovlivní upravený stav výkresu.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5398"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5439"/>
         <source>Changing view only modifies drawing</source>
         <translation>Změna pohledu pouze mění kreslení</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5661"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5702"/>
         <source>If set, previously opened files during previous closing of the application will be re-opened.</source>
         <translation>Pokud je nastaveno, budou dříve otevřeny soubory během předchozího uzavření aplikace.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5103"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5144"/>
         <source>Angles Positive Direction:</source>
         <translation>Úhly pozitivní směr:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5113"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5154"/>
         <source>Zero base angle:</source>
         <translation>Nulový úhel základny:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5136"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5177"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
         <translation>Nulový úhel základny vzhledem k aktuálnímu souřadnicovému systému uživatele. Ovlivňuje vstup na polární souřadnice. 0,0 je15:00.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5175"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5216"/>
         <source>degrees.</source>
         <translation>stupně.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5242"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5283"/>
         <source>Counterclockwise, 90 degrees is north.</source>
         <translation>Proti směru hodinových ručiček je 90 stupňů severně.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5271"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5312"/>
         <source>Clockwise, 90 degrees is sourth.</source>
         <translation>Ve směru hodinových ručiček, 90 stupňů je sourth.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5853"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5908"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5922"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5933"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5957"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5894"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5949"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5963"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5974"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5998"/>
         <source>Click to select directory</source>
         <translation>Kliknutím vyberte adresář</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5881"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5922"/>
         <source>Path to folder with fonts</source>
         <translation>Cesta ke složce s písmy</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5548"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5589"/>
         <source>Restores program geometry/layout to original state</source>
         <translation>Obnovit geometrii programu / rozvržení do původního stavu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5564"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5605"/>
         <source>Restores the program settings to its original state</source>
         <translation>Obnovuje nastavení programu do původního stavu</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5828"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6009"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5869"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6050"/>
         <source>Click to select file</source>
         <translation>Kliknutím vyberte soubor</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5888"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5929"/>
         <source>Path to folder with hatch patterns</source>
         <translation>Cesta ke složce se vzory poklopů</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5846"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5887"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt; html &gt; &lt; hlava / &gt; &lt; tělo &gt; &lt; p &gt; &lt; rozpětí styl = &quot;font- family: &apos;-apple-system&apos;, &apos;BlinkMacSystemFont&apos;, &apos;Segoe UI&apos;, &apos;Noto Sans&apos;, &apos;Helvetica&apos;, &apos;Arial&apos;, &apos;sans-serif&apos;, &apos;Apple Color Emoji&apos;, &apos;Segoe UI Emoji&apos;; font-size: 14px; color: # 1f2328; backgroundcolor: # ffff;&quot; &gt; Část složky knihovny. Symbolové soubory dxf knihovny musí být umístěny v podadresářích této složky. Jména podsložek budou zobrazena v prohlížeči Knihovna. &lt; / span &gt; &lt; / p &gt; &lt; p &gt; &lt; span style = &quot;font- family: &apos;-apple-system&apos;, &apos;BlinkMacSystemFont&apos;, &apos;Segoe UI&apos;, &apos;Noto Sans&apos;, &apos;Helvetica&apos;, &apos;Arial&apos;, &apos;sans- serif&apos;, &apos;Apple Color Emoji&apos;, &apos;Segoe UI Emoji&apos;; font- size: 14px; color: # 1f2328; backgroundcolor: # ffff;&quot; &gt; (Menu: Widgets &amp; gt; Dock Widgets &amp; gt; Library Browser) &lt; / span &gt; &lt; / p &gt; &lt; / tělo &gt; &lt; / html &gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5864"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5905"/>
         <source>Path to file with variables</source>
         <translation>Cesta k souboru s proměnnými</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5968"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6009"/>
         <source>Path to folder with translation files</source>
         <translation>Cesta ke složce s překladovými soubory</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5065"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5106"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
         <translation>Při stisknutí SPACE BAR zapněte režim kliknutí zdarma</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4983"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5024"/>
         <source>CAD Preferences</source>
         <translation>Nastavení CAD</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4999"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5040"/>
         <source>Automatically zoom drawing when opening</source>
         <translation>Automaticky zvětšit výkres při otevření</translation>
     </message>
@@ -52238,22 +52276,22 @@ Bod: (% 8,% 9)</translation>
 <context>
     <name>RS_ActionInterface</name>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="618"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="624"/>
         <source>Back</source>
         <translation>Zpět</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="595"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="601"/>
         <source>SHIFT:</source>
         <translation>SHIFT:</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="602"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="608"/>
         <source>CTRL:</source>
         <translation>CTRL:</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="627"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="633"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
@@ -53397,213 +53435,213 @@ Bod: (% 8,% 9)</translation>
 <context>
     <name>RS_Snapper</name>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1307"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1311"/>
         <source>Vertical</source>
         <translation>Vertikální</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1309"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1313"/>
         <source>Horizontal</source>
         <translation>Horizontální</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1311"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1315"/>
         <source>Orthogonal</source>
         <translation>Orthogonal</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1365"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1369"/>
         <source>Grid</source>
         <translation>Mřížka</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1367"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1371"/>
         <source>Entity</source>
         <translation>Subjekt</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1369"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1373"/>
         <source>Endpoint</source>
         <translation>Konečný bod</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1371"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1375"/>
         <source>Intersection</source>
         <translation>Intersekce</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1373"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1377"/>
         <source>Middle</source>
         <translation>Střední</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1375"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1379"/>
         <source>Distance</source>
         <translation>Vzdálenost</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1377"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1381"/>
         <source>Center</source>
         <translation>Střed</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1379"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1383"/>
         <source>Angle</source>
         <translation>Úhel</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1381"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1385"/>
         <source>Angle Relative</source>
         <translation>Relativní úhel</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1383"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1387"/>
         <source>Angle (on Entity)</source>
         <translation>Úhel (u subjektu)</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1385"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1389"/>
         <source>Visual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1389"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1393"/>
         <source>Free</source>
         <translation type="unfinished">Volný</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1398"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1402"/>
         <source>None</source>
         <comment>visual snap</comment>
         <translation type="unfinished">Žádné</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1401"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1405"/>
         <source>Horizontal</source>
         <comment>visual snap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1404"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1408"/>
         <source>Angle Ray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1415"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1419"/>
         <source>Relative Angle Ray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1426"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1430"/>
         <source>Vertical</source>
         <comment>visual snap</comment>
         <translation type="unfinished">Vertikální</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1429"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1433"/>
         <source>Line ray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1432"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1436"/>
         <source>Vertex-Vertex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1435"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1439"/>
         <source>Endpoint Tangent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1438"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1442"/>
         <source>Endpoint Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1441"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1445"/>
         <source>Tangent One</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1444"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1448"/>
         <source>Tangent Two</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1447"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1451"/>
         <source>Middle</source>
         <comment>visual snap</comment>
         <translation type="unfinished">Střední</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1450"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1454"/>
         <source>Orthogonal</source>
         <comment>visual snap</comment>
         <translation type="unfinished">Orthogonal</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1453"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1457"/>
         <source>Distance (Explicit)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1456"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1460"/>
         <source>Distance (Vertex)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1459"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1463"/>
         <source>Entity</source>
         <comment>visual snap</comment>
         <translation type="unfinished">Subjekt</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1462"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1466"/>
         <source>Relative Normal</source>
         <comment>visual snap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1465"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1469"/>
         <source>Relative Distance</source>
         <comment>visual snap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1468"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1472"/>
         <source>Relative X</source>
         <comment>visual snap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1471"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1475"/>
         <source>Relative Y</source>
         <comment>visual snap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1474"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1478"/>
         <source>Relative Angle</source>
         <comment>visual snap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1650"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1654"/>
         <source>Dist: </source>
         <translation>Dist:</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1655"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1659"/>
         <source>Angle: </source>
         <translation>Úhel:</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1660"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1664"/>
         <source>dX: </source>
         <translation>dX:</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1661"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1665"/>
         <source>dY: </source>
         <translation>dY:</translation>
     </message>

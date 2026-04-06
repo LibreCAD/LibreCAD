@@ -23,9 +23,8 @@
 
 #include "lc_ref_snap_construction_line.h"
 
-LC_RefSnapConstructionLine::LC_RefSnapConstructionLine(RS_EntityContainer* parent, const RS_Vector& pStart, const RS_Vector& pEnd) :
-    RS_ConstructionLine(parent, RS_ConstructionLineData(pStart, pEnd)) {
-}
+#include "lc_graphicviewport.h"
+#include "rs_painter.h"
 
 LC_RefSnapConstructionLine::LC_RefSnapConstructionLine(const RS_Vector& pStart, const RS_Vector& pEnd) : RS_ConstructionLine(
     nullptr, RS_ConstructionLineData(pStart, pEnd)) {
@@ -36,6 +35,14 @@ RS2::EntityType LC_RefSnapConstructionLine::rtti() const {
 }
 
 RS_Entity* LC_RefSnapConstructionLine::clone() const {
-    auto* p = new LC_RefSnapConstructionLine(getParent(), getStartpoint(), getEndpoint());
+    auto* p = new LC_RefSnapConstructionLine(getStartpoint(), getEndpoint());
+    p->updateSnapInfo(m_snapInfo);
     return p;
+}
+
+void LC_RefSnapConstructionLine::draw(RS_Painter* painter) {
+    RS_ConstructionLine::draw(painter);
+    if (!m_labelString.isEmpty()) {
+        drawMarker(painter, m_font, getStartpoint(), m_baseLabelOffset, m_snapInfo.labelOffset, m_labelString);
+    }
 }

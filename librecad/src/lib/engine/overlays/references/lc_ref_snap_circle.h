@@ -33,5 +33,8 @@ public:
     LC_RefSnapCircle(const RS_Vector &center, double radius);
     RS2::EntityType rtti() const override;
     RS_Entity *clone() const override;
+    bool isArc() const override {return true;}
+    bool isArcCircleLine() const override {return true;}
+    void draw(RS_Painter* painter) override;
 };
 #endif

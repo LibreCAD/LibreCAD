@@ -38,5 +38,13 @@ RS2::EntityType LC_RefSnapCircle::rtti() const{
 
 RS_Entity *LC_RefSnapCircle::clone() const{
     auto* a = new LC_RefSnapCircle(*this);
+    a->updateSnapInfo(m_snapInfo);
     return a;
+}
+
+void LC_RefSnapCircle::draw(RS_Painter* painter) {
+    RS_Circle::draw(painter);
+    if (!m_labelString.isEmpty()) {
+        drawMarker(painter, m_font, getStartpoint(), -m_baseLabelOffset, m_snapInfo.labelOffset, m_labelString);
+    }
 }

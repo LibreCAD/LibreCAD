@@ -191,6 +191,12 @@ void RS_ActionInterface::mouseReleaseEvent(QMouseEvent* e) {
             m_graphicView->hideRelativeInputWidget();
             return;
         }
+        if (hasVisualSnap() && isClearVisualSnapByRMB()) {
+            stopVisualSnap();
+            onVisualSnapSolutionRefresh();
+            e->accept();
+            return;
+        }
         onMouseRightButtonRelease(m_status, e);
     }
     else if (button == Qt::MiddleButton) {

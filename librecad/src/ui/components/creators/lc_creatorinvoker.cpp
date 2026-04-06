@@ -29,7 +29,6 @@
 #include <QTimer>
 #include <QToolBar>
 #include <QVBoxLayout>
-#include <boost/qvm/mat_traits.hpp>
 
 #include "lc_actiongroupmanager.h"
 #include "lc_dialog.h"

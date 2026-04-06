@@ -29,12 +29,10 @@
 
 class LC_RefSnapConstructionLine : public RS_ConstructionLine, public LC_RefSnapEntity{
 public:
-    LC_RefSnapConstructionLine(RS_EntityContainer *parent, const RS_Vector &pStart, const RS_Vector &pEnd);
     LC_RefSnapConstructionLine(const RS_Vector &pStart, const RS_Vector &pEnd);
     RS2::EntityType rtti() const override;
     RS_Entity *clone() const override;
-
+    void draw(RS_Painter* painter) override;
 };
-
 
 #endif

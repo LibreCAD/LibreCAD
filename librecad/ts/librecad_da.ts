@@ -8731,8 +8731,8 @@ Er du sikker på, at du vil kassere ændringer?</translation>
 <context>
     <name>LC_CreatorInvoker</name>
     <message>
-        <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="96"/>
-        <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="145"/>
+        <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="95"/>
+        <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="144"/>
         <source>Toolbar: %1 (Custom)</source>
         <translation>Værktøjslinje:% 1 (Brugerdefineret)</translation>
     </message>
@@ -41503,7 +41503,7 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3130"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1891"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1483"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1496"/>
         <source>Dwg Units</source>
         <translation>Dwg-enheder</translation>
     </message>
@@ -41544,7 +41544,7 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1888"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1480"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1493"/>
         <source>Screen %</source>
         <translation>Skærm%</translation>
     </message>
@@ -41552,32 +41552,32 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
 <context>
     <name>QG_DlgOptionsGeneral</name>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1075"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1088"/>
         <source>Preferences</source>
         <translation>Egenskaber</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5975"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6016"/>
         <source>Translations:</source>
         <translation>Oversættelser:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5871"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5912"/>
         <source>Hatch Patterns:</source>
         <translation>Mønstre for skravering:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5895"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5936"/>
         <source>Fonts:</source>
         <translation>Skrifttyper:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5947"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5988"/>
         <source>Part Libraries:</source>
         <translation>Skabelon bibliotek:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5583"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5624"/>
         <source>Language</source>
         <translation>Sprog</translation>
     </message>
@@ -41587,32 +41587,32 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>Egenskaber for programmet</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5097"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5138"/>
         <source>Defaults for new drawings</source>
         <translation>Standard for nye tegninger</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5596"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5637"/>
         <source>&amp;GUI Language:</source>
         <translation>&amp;GUI sprog:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5616"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5657"/>
         <source>&amp;Command Language:</source>
         <translation>Sprog i &amp;komandolinien:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5779"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5820"/>
         <source>&amp;Paths</source>
         <translation>St&amp;ier</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4824"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4865"/>
         <source>&amp;Defaults</source>
         <translation>Stan&amp;darder</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5162"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5203"/>
         <source>&amp;Unit:</source>
         <translation>&amp;Målenhed:</translation>
     </message>
@@ -41628,7 +41628,7 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>A&amp;utomatisk skalering af gitter</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1076"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1089"/>
         <source>Please restart the application to apply all changes.</source>
         <translation>Genstart venligst programmet for at ændringerne kan træde i kraft.</translation>
     </message>
@@ -41643,22 +41643,22 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>Alt + U</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5316"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5357"/>
         <source>Program Defaults</source>
         <translation>Programindstillinger</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4883"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4924"/>
         <source>Time between automatic saving of the document in minutes.</source>
         <translation>Tid mellem automatisk lagring af dokumentet i minutter.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4906"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4947"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
         <translation>Når sat, vil LibreCAD automatisk generere en sikkerhedskopi af din nuværende tegning.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5985"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6026"/>
         <source>Template:</source>
         <translation>Skabelon:</translation>
     </message>
@@ -41690,47 +41690,52 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1792"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1849"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1930"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3032"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3220"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3454"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3532"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6171"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6222"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6238"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6254"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6277"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6293"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6330"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2066"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2116"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2227"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2416"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2487"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3073"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3261"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3495"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3573"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6212"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6263"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6279"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6295"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6318"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6334"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6371"/>
         <source> px</source>
         <translation>px</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6212"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6253"/>
         <source>Line length:</source>
         <translation>Linjelængde:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5062"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5103"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt; html &gt; &lt; hoved / &gt; &lt; krop &gt; &lt; p &gt; Midlertidigt slå fri snapning til / fra når mellemrumstasten trykkes og kommandovinduet aktiveres &lt; / p &gt; &lt; / body &gt; &lt; / html &gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5192"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5233"/>
         <source>Left  Isometric Grid</source>
         <translation>Venstre Isometric Grid</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5182"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5223"/>
         <source>RIght Isometric Grid</source>
         <translation>RIGht Isometric Grid</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5120"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5161"/>
         <source>Orthogonal Grid</source>
         <translation>Orthogonal gitter</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5202"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5243"/>
         <source>Top Isometric Grid</source>
         <translation>Top Isometric gitter</translation>
     </message>
@@ -41742,18 +41747,18 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="689"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3094"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3545"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3135"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3586"/>
         <source>Marker Color:</source>
         <translation>Markeringsfarve:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3522"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3563"/>
         <source>Marker Radius:</source>
         <translation>Marker Radius:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3601"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3642"/>
         <source>Hide marker</source>
         <translation>Skjul markør</translation>
     </message>
@@ -41773,157 +41778,157 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>Enkel gittervisning</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4744"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4785"/>
         <source>Active preview&apos;s explanatory entity&apos;s Color:</source>
         <translation>Aktiv forhåndsvisnings forklarende enheds farve:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4797"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4838"/>
         <source>Preview&apos;s explanatory entity&apos;s Color:</source>
         <translation>Forhåndsvisningens forklarende enheds farve:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3640"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3681"/>
         <source>&amp;Highlighted entity Color:</source>
         <translation>&amp; fremhævet enhed Farve:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3694"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3735"/>
         <source>Highlight with screen linewidth in &quot;Draft&quot; mode</source>
         <translation>Fremhævning med skærmlinebredde i &quot;Draft&quot; tilstand</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3714"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3755"/>
         <source>Explanatory Reference Point Size</source>
         <translation>Forklarende referencepunktstørrelse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3806"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3847"/>
         <source>Explanatory Reference Point Style</source>
         <translation>Forklarende referencepunkts stil</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6126"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6167"/>
         <source>If selected, the angle of the line interpolation segment is calculated to ensure that resulting sagitta (height of arc segment) is less than specified.</source>
         <translation>Hvis valgt beregnes vinklen for linjeinterpolationssegmentet for at sikre, at den resulterende sagitta (buesegmenthøjde) er mindre end angivet.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6193"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6234"/>
         <source>If selected, the same rendering settings will be applied also to circles.</source>
         <translation>Hvis valgt, vil de samme rendering indstillinger blive anvendt også på cirkler.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5365"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5406"/>
         <source>If checked, the icon for current action will be shown in options toolbar before action&apos;s options</source>
         <translation>Hvis markeret, vises ikonet for nuværende handling i værktøjslinjen tilvalg før handlingens tilvalg</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5368"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5409"/>
         <source>Show current command icon in options toolbar</source>
         <translation>Vis nuværende kommandoikon i indstillingsværktøjslinjen</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5322"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5363"/>
         <source>If enabled, internal ID of entity will be shown in properties dialog and Entity Info widget.</source>
         <translation>Hvis dette er aktiveret, vil virksomhedens interne id blive vist i egenskabsdialogen og Entity Info kontrol.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5325"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5366"/>
         <source>Show internal IDs of entities</source>
         <translation>Vis interne id &apos;er for enheder</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5006"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5047"/>
         <source>If selected, entities will stay selected after completion of Modify operations. Otherwise, they will be not selected. </source>
         <translation>Hvis valgt, vil enheder forblive valgt efter afslutningen af Ændr operationer. Ellers vil de ikke blive valgt.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5009"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5050"/>
         <source>Keep modified entities selected</source>
         <translation>Hold ændrede enheder valgt</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5720"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5761"/>
         <source>If checked, prompt messages of actions will be also shown in bottom statusbar</source>
         <translation>Hvis markeret, vises hurtige meddelelser om handlinger også i nederste statuslinje</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5726"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5767"/>
         <source>Duplicate prompt messages of actions in statusbar</source>
         <translation>Duplikér hurtige meddelelser om handlinger i statuslinjen</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5291"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5332"/>
         <source>If checked, new drawing will be created with grid disabled</source>
         <translation>Hvis markeret, vil ny tegning blive oprettet med gitter deaktiveret</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5294"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5335"/>
         <source>Grid is Off </source>
         <translation>Grid er slukket</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5746"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5787"/>
         <source>New Versions</source>
         <translation>Nye versioner</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5752"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5793"/>
         <source>Check GitHub for new releases of LibreCAD on program startup</source>
         <translation>Tjek GitHub for nye udgivelser af LibreCAD ved opstart af programmet</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5755"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5796"/>
         <source>Check for new versions on startup</source>
         <translation>Tjek for nye versioner ved opstart</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5762"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5803"/>
         <source>If checked, pre-release versions will be ignored</source>
         <translation>Hvis dette markeres, ignoreres versionerne før udgivelse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5768"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5809"/>
         <source>Ignore pre-release versions</source>
         <translation>Ignorér udgivelsesversioner</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5664"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5705"/>
         <source>Open last opened files</source>
         <translation>Åbn senest åbnede filer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5710"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5751"/>
         <source>If enabled, drop-down menus may become floating</source>
         <translation>Hvis aktiveret, kan drop- down menuer blive flydende</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5713"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5754"/>
         <source>Allow menus detaching</source>
         <translation>Tillad menuadskillelse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5700"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5741"/>
         <source>If unchecked, individual widgets of statusbar are toolbars</source>
         <translation>Hvis umarkeret, er individuelle kontroller af statuslinjen værktøjslinjer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5703"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5744"/>
         <source>Use &quot;classic&quot; statusbar</source>
         <translation>Brug &quot;klassisk&quot; statuslinje</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5530"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5571"/>
         <source>Clear Settings</source>
         <translation>Ryd indstillinger</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5551"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5592"/>
         <source>Layout</source>
         <translation>Layout</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5567"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5608"/>
         <source>All</source>
         <translation>Alle</translation>
     </message>
@@ -41938,96 +41943,96 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>Skjul markør når der snappes</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5654"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5695"/>
         <source>Start in tab mode</source>
         <translation>Start i fanebladstilstand</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5482"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5645"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5523"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5686"/>
         <source>Startup</source>
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5684"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5725"/>
         <source>Display loading screen</source>
         <translation>Vis indlæsningsskærm</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5674"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5715"/>
         <source>Start with main window maximized</source>
         <translation>Start med hovedvinduet maksimeret</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5507"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5548"/>
         <source>Enable CAD dockwidgets</source>
         <translation>Aktivér CAD dockwidgets</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5497"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5538"/>
         <source>Enable CAD toolbars</source>
         <translation>Aktivér CAD- værktøjslinjer</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1637"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1687"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2510"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2567"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2814"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2837"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2880"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2903"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2551"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2603"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2855"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2878"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2921"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2944"/>
         <source>#1E90FF</source>
         <translation># 1E90FF</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1097"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1110"/>
         <source>Select Color</source>
         <translation>Vælg farve</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1241"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1254"/>
         <source>Clear settings</source>
         <translation>Ryd indstillinger</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1242"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1255"/>
         <source>This will also include custom menus and toolbars. Continue?</source>
         <translation>Dette vil også omfatte brugerdefinerede menuer og værktøjslinjer. Fortsæt?</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1246"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1252"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1259"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1265"/>
         <source>You must restart LibreCAD to see the changes.</source>
         <translation>Du skal genstarte LibreCAD for at se ændringerne.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1268"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1281"/>
         <source>Select Fonts Folder</source>
         <translation>Vælg skrifttypemappe</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1275"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1288"/>
         <source>Select Translations Folder</source>
         <translation>Vælg oversættelsesmappe</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1282"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1295"/>
         <source>Select Hatch Patterns Folder</source>
         <translation>Vælg Hatch mønstermappe</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1289"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1302"/>
         <source>Select Other Settings Folder</source>
         <translation>Vælg anden indstillingsmappe</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4989"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5030"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt; html &gt; &lt; hoved / &gt; &lt; krop &gt; &lt; p &gt; Når det er aktiveret, vil aktivering af et lag ændre alle udvalgte enheder til det nye lag. For at ændre lag af flere enheder: først vælge nødvendige enheder; aktivere et lag i lag widget. Dette gør alle markerede enheder ændret til at tilhøre det nye lag. &lt; / p &gt; &lt; / body &gt; &lt; / html &gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5839"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5880"/>
         <source>Variable File:</source>
         <translation>Variabel fil:</translation>
     </message>
@@ -42037,12 +42042,12 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>Minimal Grid mellemrum (p &amp; x):</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4668"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4709"/>
         <source>N&amp;umber of preview entities:</source>
         <translation>N &amp; antal forhåndsvisningsenheder:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5388"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5429"/>
         <source>Don&apos;t use native OS file open dialog</source>
         <translation>Brug ikke lokal OS-fil åben dialog</translation>
     </message>
@@ -42052,7 +42057,7 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>Autopanning</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3604"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3645"/>
         <source>Alt+Z</source>
         <translation>Alt + Z</translation>
     </message>
@@ -42134,24 +42139,24 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1509"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1731"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1751"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2063"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2147"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2161"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2248"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2531"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2614"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2725"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2745"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2785"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2851"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3107"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3144"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3299"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3319"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3561"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3659"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4654"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4760"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2099"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2304"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2350"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2449"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2617"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2637"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2766"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2786"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2826"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2892"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3148"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3185"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3340"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3360"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3602"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3700"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4695"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4801"/>
         <source>Click to select color</source>
         <translation>Klik for at vælge farve</translation>
     </message>
@@ -42564,106 +42569,106 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>Farve på Meta Grid hvis gitteret tegnes af linjer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3187"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3228"/>
         <source>Axis Lines</source>
         <translation>Axis Lines</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3276"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3317"/>
         <source>Y-Axis Extension</source>
         <translation>Y- akseudvidelse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3383"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3424"/>
         <source>Short Axis Size</source>
         <translation>Kort aksestørrelse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3286"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3327"/>
         <source>X-Axis Extension</source>
         <translation>X- Axis Extension</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3193"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3234"/>
         <source>Color for X axis</source>
         <translation>Farve for X- akse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3333"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3374"/>
         <source>If checked, axises will be inifinite lines</source>
         <translation>Hvis markeret, vil aksiser være inifinite linjer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3336"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3377"/>
         <source>Extend axis lines</source>
         <translation>Udvid aksellinjer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3390"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3431"/>
         <source>Color for Y axis</source>
         <translation>Farve for Y-akse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3260"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3301"/>
         <source>Y-Axis Color:</source>
         <translation>Y- Axis farve:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3356"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3397"/>
         <source>Defines how to draw extended Y axis</source>
         <translation>Definerer hvordan du tegner udvidet Y-akse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3237"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3360"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3278"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3401"/>
         <source>Whole Area</source>
         <translation>Hele området</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3242"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3365"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3283"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3406"/>
         <source>Positive Values Area</source>
         <translation>Område med positive værdier</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3247"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3370"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3288"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3411"/>
         <source>Negative Values Area</source>
         <translation>Areal med negative værdier</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3252"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3375"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3293"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3416"/>
         <source>None</source>
         <translation>Ingen</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3217"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3258"/>
         <source>Size of Axis Lines drawn in absolute zero point</source>
         <translation>Axis Lines størrelse tegnet i absolut nulpunkt</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3343"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3384"/>
         <source>X-Axis Color:</source>
         <translation>X- Axis farve:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3233"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3274"/>
         <source>Defines how to draw extended X axis</source>
         <translation>Definerer hvordan man tegner udvidet X- akse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3575"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3616"/>
         <source>Color of relative zero marker</source>
         <translation>Farve på relativ nul markør</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3598"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3639"/>
         <source>If checked, relative zero marker will not be drawn</source>
         <translation>Hvis markeret, tegnes relativ nul markør ikke</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3529"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3570"/>
         <source>Radius of relative zero marker</source>
         <translation>Radius af relativ nul markør</translation>
     </message>
@@ -42743,20 +42748,19 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>Tegn lodrette linjer for &quot;Top&quot; -isometrisk gitter</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3615"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3656"/>
         <source>&amp;Preview</source>
         <translation>&amp; Forhåndsvisning</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3824"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3865"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3906"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3947"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3988"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4029"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4070"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4114"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4146"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4111"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4155"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4187"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4228"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4269"/>
@@ -42768,236 +42772,238 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4515"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4556"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4597"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4638"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4632"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4673"/>
         <source>Preview</source>
         <translation>Forhåndsvisning</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4638"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4679"/>
         <source>If checked, more informative and explaining preview will be drawn for operations</source>
         <translation>Hvis markeret vil der blive tegnet mere informativ og forklaret forhåndsvisning for operationer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4681"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4722"/>
         <source>If more entities in preview than specified, rect will be drawn instead of entities.</source>
         <translation>Hvis flere enheder i forhåndsvisning end angivet, rect vil blive trukket i stedet for enheder.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4721"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4762"/>
         <source>Color for selected preview reference entiites</source>
         <translation>Farve for valgte forhåndsvisningsreferencer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4774"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4815"/>
         <source>Color for preview reference entities</source>
         <translation>Farve for preview referenceenheder</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3634"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3675"/>
         <source>Highlight</source>
         <translation>Fremhævning</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3701"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3742"/>
         <source>Visualize the entity under the mouse cursor</source>
         <translation>Visualiser enheden under musemarkøren</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3704"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3745"/>
         <source>Highlight entities on mouse hover</source>
         <translation>Fremhæv enheder på mus svæver</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3673"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3714"/>
         <source>Color for highlighted entities</source>
         <translation>Farve for fremhævede enheder</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3691"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3732"/>
         <source>If selected, entity will be highlighted in &quot;Draft&quot; mode using entity&apos;s linewidth instead of 1px</source>
         <translation>Hvis valgt, vil enheden blive fremhævet i &quot;draft&quot; tilstand ved hjælp af enhedens linebredde i stedet for 1px</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3796"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3837"/>
         <source>(0 =&gt; 5% relative to screen size)</source>
         <translation>(0 = &gt; 5% i forhold til skærmstørrelse)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3735"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3776"/>
         <source>Size of reference points</source>
         <translation>Referencepunkternes størrelse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4641"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4682"/>
         <source>Show operation&apos;s preview explanatory entities </source>
         <translation>Vis operationens forhåndsvisningsforklarende enheder</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3742"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3783"/>
         <source>Dwg Units</source>
         <translation>Dwg-enheder</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3773"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3814"/>
         <source>Size relative to screen</source>
         <translation>Størrelse i forhold til skærmen</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3780"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3821"/>
         <source>Size in drawing units</source>
         <translation>Størrelse i tegneenheder</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6206"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6247"/>
         <source>Rendering Minimums</source>
         <translation>Udlejning af minimum</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6327"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6368"/>
         <source>If height of text line on the screen is less than specified pixels, placholder will be drawn instead of text</source>
         <translation>Hvis højden af tekstlinjen på skærmen er mindre end angivet pixels, tegnes plakatholder i stedet for tekst</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6267"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6308"/>
         <source>Height of text line:</source>
         <translation>Tekstlinjehøjde:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6320"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6361"/>
         <source>Ellipse Major Axis:</source>
         <translation>Ellipse Major Axis:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6290"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6331"/>
         <source>If screen size of minor ellipse axis is less than value, ellipse is drawn as line</source>
         <translation>Hvis skærmstørrelsen på mindre ellipseakse er mindre end værdien, tegnes ellipse som linje</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6235"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6276"/>
         <source>If screen length of line is less than value, the line is drawn as point</source>
         <translation>Hvis linjens skærmlængde er mindre end værdien, trækkes linjen som punkt</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6274"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6315"/>
         <source>If screen radius of circle is less than value, circle is drawn as point</source>
         <translation>Hvis cirklens skærmradius er mindre end værdien, tegnes cirklen som punkt</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6349"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6390"/>
         <source>Circle Radius:</source>
         <translation>Circle Radius:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6306"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6347"/>
         <source>Arc Radius:</source>
         <translation>Arc Radius:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6251"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6292"/>
         <source>If screen radius of arc is less than value, arc is drawn as point</source>
         <translation>Hvis skærmradius af bue er mindre end værdien, er bue tegnet som punkt</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6313"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6354"/>
         <source>Ellipse Minor Axis:</source>
         <translation>Ellipse Minor akse:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6219"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6260"/>
         <source>If screen size for major ellipse axis is less than value, ellipse is drawn as point</source>
         <translation>Hvis skærmstørrelsen for større ellipseakse er mindre end værdien, tegnes ellipse som punkt</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6068"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6109"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) during panning. </source>
         <translation>Hvis valgt, vil tekstbasislinjer blive tegnet i stedet for tekstbogstaverne (svarende til kladdetilstand) under panorering.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6071"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6112"/>
         <source>Draw text as draft within paning operations</source>
         <translation>Tegn tekst som udkast inden for bøjning operationer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6078"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6119"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) in preview. </source>
         <translation>Hvis markeret, vil tekstbasislinjer blive tegnet i stedet for tekstbogstaverne (svarende til udkast tilstand) i forhåndsvisning.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6081"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6122"/>
         <source>Draw text as draft in preview</source>
         <translation>Tegn tekst som udkast i forhåndsvisning</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2463"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2504"/>
         <source>Info Cursor</source>
         <translation>Info markør</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2651"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2692"/>
         <source>Informational Cursor Overlay </source>
         <translation>Informativ markøroverskrift</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2963"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3004"/>
         <source>Appearance</source>
         <translation>Udseende</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2969"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3010"/>
         <source>Font that should be used for drawing elements of informational cursor.</source>
         <translation>Skrifttype der skal bruges til at tegne elementer af informativ markør.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2976"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3017"/>
         <source>If checked, components of coordinate will be drawn in one line. Otherwise, each component will be on own line. </source>
         <translation>Hvis dette kontrolleres, trækkes koordinatkomponenterne i én linje. Ellers vil hver komponent være på egen linje.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2979"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3020"/>
         <source>Draw coordinates in one line</source>
         <translation>Tegn koordinater i en linje</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="647"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2594"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2601"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2986"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3486"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2529"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2682"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3027"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3527"/>
         <source>Font:</source>
         <translation>Skrifttype:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2993"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3034"/>
         <source>If checked, labels for coordinate components will be shown. Otherwise, standard form of coordinates will be displayed.</source>
         <translation>Hvis markeret vises etiketter for koordinatkomponenter. Ellers vises standardkoordinaterne.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2996"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3037"/>
         <source>Show labels for coordinates</source>
         <translation>Vis etiketter for koordinater</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3003"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3044"/>
         <source>Font size, in points</source>
         <translation>Skrifttypestørrelse, i punkter</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="719"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2578"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3006"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3470"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2262"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2562"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3047"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3511"/>
         <source> pt</source>
         <translation>pt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="735"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2545"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3022"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3430"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2651"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3063"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3471"/>
         <source>Font size:</source>
         <translation>Skrifttypestørrelse:</translation>
     </message>
@@ -43012,238 +43018,238 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>Ignorér &quot;Snap to Grid&quot; hvis gitteret ikke trækkes</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3029"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3070"/>
         <source>Offset of labels from the cursor point.</source>
         <translation>Udbytte af etiketter fra markøren punkt.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3048"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3089"/>
         <source>Cursor position offset:</source>
         <translation>Markør position forskydning:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2953"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2994"/>
         <source>If checked, informational cursor will be enabled and shown where applicable.</source>
         <translation>Hvis markeret, aktiveres og vises informationsmarkøren hvor det er relevant.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2956"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2997"/>
         <source>Enable Informational Cursor</source>
         <translation>Aktivér informativ markør</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2657"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2698"/>
         <source>Operations Preview</source>
         <translation>Operationer Forhåndsvisning</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2663"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2704"/>
         <source>Show properties for entity that will be created</source>
         <translation>Vis egenskaber for enhed der vil blive oprettet</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2670"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2711"/>
         <source>Show properties for entity that is edited by handles</source>
         <translation>Vis egenskaber for enhed, der redigeres af håndtag</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2680"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2721"/>
         <source>Content</source>
         <translation>Indhold</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2799"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2840"/>
         <source>Color for absolute snap coordinates.</source>
         <translation>Farve for absolutte snap koordinater.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2709"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2750"/>
         <source>If checked, relative distance and angle from relative zero point to snap point will be shown.</source>
         <translation>Hvis markeret vises relativ afstand og vinkel fra relativ nulpunkt til snap punkt.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2712"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2753"/>
         <source>Show relative distance and angle</source>
         <translation>Vis relativ afstand og vinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2822"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2863"/>
         <source>Color for snap type/restriction</source>
         <translation>Farve for snap type / begrænsning</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2759"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2800"/>
         <source>If checked, the prompt of the active command will be shown.</source>
         <translation>Hvis markeret, vises prompten for den aktive kommando.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2762"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2803"/>
         <source>Show active command prompt</source>
         <translation>Vis aktiv kommandoprompt</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2686"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2727"/>
         <source>If checked, show relative coordinate</source>
         <translation>Vis relativ koordinat hvis markeret</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2692"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2733"/>
         <source>Show relative coordinate</source>
         <translation>Vis relativ koordinat</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2769"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2810"/>
         <source>If checked, information about the type of snap and restrictions will be shown for snap point (if any)</source>
         <translation>Hvis markeret vises oplysninger om typen af snap og begrænsninger for snap punkt (hvis nogen)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2772"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2813"/>
         <source>Show snap info /restriction</source>
         <translation>Vis snap info / begrænsning</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2888"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2929"/>
         <source>Color for the command prompt</source>
         <translation>Farve for kommandoprompten</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2865"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2906"/>
         <source>Color for relative distance and angle</source>
         <translation>Farve for relativ afstand og vinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2699"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2740"/>
         <source>If checked, absolute position of snap point will be shown.</source>
         <translation>Hvis markeret, vises absolut position for snap point.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2702"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2743"/>
         <source>Show absolute coordinate</source>
         <translation>Vis absolut koordinat</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2924"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2965"/>
         <source>If checked, name of active command will be shown before command prompt</source>
         <translation>Hvis markeret vil navnet på den aktive kommando blive vist før kommandoprompten</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2930"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2971"/>
         <source>Show active command name</source>
         <translation>Vis aktivt kommandonavn</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2937"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2978"/>
         <source>If checked, short overview properties of the entity&apos;s that is catched for selection will be shown. </source>
         <translation>Hvis markeret, vises korte oversigtselementer for virksomhedens egenskaber, som markeres til markering.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2943"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2984"/>
         <source>Show properties of catched entity</source>
         <translation>Vis egenskaber for fanget enhed</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4992"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5033"/>
         <source>Modify layer of selected entities, at layer activation</source>
         <translation>Ændr lag af udvalgte enheder ved aktivering af lag</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5405"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5446"/>
         <source>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</source>
         <translation>Hvis dette markeres, vises en kryds - knap i faneblade for tegninger hvis tegningerne er i fanebladstilstand</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5408"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5449"/>
         <source>Show Close button on drawings tabs</source>
         <translation>Vis Luk knap på tegnefaneblade</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3081"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5426"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3122"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5467"/>
         <source>Always</source>
         <translation>Altid</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5431"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5472"/>
         <source>Active Tab</source>
         <translation>Aktivt faneblad</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5355"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5396"/>
         <source>If checked, keyboard shortcut will be shown in tooltip for action</source>
         <translation>Hvis markeret vises tastaturgenvej i værktøjstip for handling</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5358"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5399"/>
         <source>Show keyboard shortcuts in actions tooltips</source>
         <translation>Vis tastaturgenveje i handlingsværktøjstips</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4909"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4950"/>
         <source>Auto save backup each</source>
         <translation>Autogem backup hver</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5375"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5416"/>
         <source>If checked, location of dialog will not be saved, but size will</source>
         <translation>Hvis markeret, vil placeringen af dialogen ikke blive gemt, men størrelsen vil</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5381"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5422"/>
         <source>Persist dialog size only</source>
         <translation>Kun permanent dialogstørrelse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4886"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4927"/>
         <source> minutes</source>
         <translation>minutter</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5439"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5480"/>
         <source>If checked, dialogs will be positioned and resized to position/size of last invocation.</source>
         <translation>Hvis markeret, vil dialoger blive placeret og ændret til position / størrelse for sidste optagelse.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5442"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5483"/>
         <source>Persistent dialogs location and size</source>
         <translation>Vedvarende dialoger placering og størrelse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5049"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5090"/>
         <source>Keyboard Settings</source>
         <translation>Tastaturindstillinger</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5055"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5096"/>
         <source>Evaluate commands when SPACE BAR is pressed</source>
         <translation>Evaluér kommandoer når mellemrums BAR trykkes</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5149"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5190"/>
         <source>Drawing units</source>
         <translation>Tegneenheder</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5589"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5630"/>
         <source>Languages for commands in Cmd Widget</source>
         <translation>Sprog til kommandoer i Cmd kontrol</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5609"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5650"/>
         <source>Language to use for GUI and messages</source>
         <translation>Sprog der skal bruges til GUI og beskeder</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5681"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5722"/>
         <source>Defines whether splash screen will be shown on startup</source>
         <translation>Definerer om splash-skærmen vises ved opstart</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5651"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5692"/>
         <source>Controls default mode for drawings</source>
         <translation>Kontrollerer standardtilstand for tegninger</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5671"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5712"/>
         <source>If checked, after start the main window will be maximized</source>
         <translation>Hvis markeret, vil hovedvinduet efter start blive maksimeret</translation>
     </message>
@@ -43283,18 +43289,18 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>Udkast til modemarkør</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3444"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3485"/>
         <source>Font that should be used for drawing name of axis in coordinate system zero.</source>
         <translation>Skrifttype der skal bruges til at tegne aksens navn i koordinatsystem nul.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="716"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3467"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3508"/>
         <source>Font size that should be used for drawing name of axis in coordinate system zero.</source>
         <translation>Skrifttypestørrelse som skal bruges til at tegne aksens navn i koordinatsystem nul.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3503"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3544"/>
         <source>If selected, marker for coodinate system will be shown in zero point of current user coordinates system. </source>
         <translation>Hvis valgt vises markør for coodinatsystem i nul punkt i det nuværende brugerkoordinatsystem.</translation>
     </message>
@@ -43314,72 +43320,72 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>Hvis valgt, i udkast tilstand tekst etiket vil blive drawin for visning hjørner</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3424"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3465"/>
         <source>Coordinates Zero Marker</source>
         <translation>Koordinater Nulmarkør</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3437"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3478"/>
         <source>Marker Size</source>
         <translation>Markeringsstørrelse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3451"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3492"/>
         <source>Size of axis of coordinate system&apos;s zero marker</source>
         <translation>Størrelsen af koordinatsystemets akse nul markering</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3493"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3534"/>
         <source>If selected and view is in user coordinate system, the marker for coodinate system will be shown in zero point of world coordinates system. </source>
         <translation>Hvis valgt og visning er i brugerkoordinatsystem, markøren for coodinat system vil blive vist i nul point af verdens koordinater system.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3496"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3537"/>
         <source>Show WCS zero marker</source>
         <translation>Vis WCS nul markør</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3506"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3547"/>
         <source>Show UCS zero marker</source>
         <translation>Vis UCS nul markør</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3071"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3112"/>
         <source>Angles Basis Marker</source>
         <translation>Vinkler Basis Marker</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3062"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3103"/>
         <source>Coordinate System</source>
         <translation>Koordinatsystem</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3086"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3127"/>
         <source>Only for non-defaults</source>
         <translation>Kun for ikke-misligholdelser</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3124"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3165"/>
         <source>Show angles basis marker</source>
         <translation>Vis vinkler grundmarkør</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3131"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3172"/>
         <source>Base Angle Ray Color:</source>
         <translation>Base vinkel Ray farve:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3164"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3205"/>
         <source>#017CFF</source>
         <translation># 017CFF</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3177"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3218"/>
         <source>#00FFFF</source>
         <translation># 00FFFF</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3516"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3557"/>
         <source>Relative Zero Marker</source>
         <translation>Relativ nulmarkør</translation>
     </message>
@@ -43459,73 +43465,73 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>Grid celle faktor, der anvendes til snap til gitter.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3068"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3158"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3109"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3199"/>
         <source>Color of the marker</source>
         <translation>Markørens farve</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3077"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3118"/>
         <source>Defines where to draw angle basis marker</source>
         <translation>Definerer hvor man skal tegne vinkelbasismarkør</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3121"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3162"/>
         <source>If enabled, angles basis marker will be shown in the orign of coordinates system</source>
         <translation>Hvis aktiveret, vises vinkelbasismarkør i koordinatsystemets oprindelse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3171"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3212"/>
         <source>Color of the ray that displays zero angle position</source>
         <translation>Farve på den stråle, der viser nul vinkel position</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5016"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5057"/>
         <source>If checked, it will be possible to enter value of angle in decimal degrees only. Otherwise, angles in surveyor, radiant, imperial degrees and bearing formats are allowed for input.  </source>
         <translation>Hvis markeret, vil det kun være muligt at angive vinklens værdi i decimalgrader. Ellers er vinkler i landmåler, strålende, kejserlig grader og bærende formater tilladt for input.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5019"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5060"/>
         <source>Allow angles input in decimal degrees only</source>
         <translation>Tillad kun vinklers indgang i decimalgrader</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5332"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5373"/>
         <source>If selected, menu will include top-level items for drawing tools. Otherwise, they will under the same menu item. </source>
         <translation>Hvis markeret, vil menuen indeholde topniveau- elementer til tegneværktøjer. Ellers vil de under samme menupunkt.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5335"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5376"/>
         <source>Expand &quot;Tools&quot; commands in menu</source>
         <translation>Udvid &quot;Værktøjer&quot; kommandoer i menuen</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5342"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5383"/>
         <source>If selected, separate menu will be created for each group of entity-related commands. Otherwise, these command will be under the same menu. </source>
         <translation>Hvis markeret oprettes separat menu for hver gruppe af entitetsrelaterede kommandoer. Ellers vil denne kommando være under samme menu.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5072"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5113"/>
         <source>If enabled, it is possible to do with keys - zooming via +/-, scrolling via arrow keys, moving selected entities position via arrow keys and SHIFT/CTRL modifiers.</source>
         <translation>Hvis aktiveret, er det muligt at gøre med nøgler - zoomer via + / -, scrolling via piletasterne, flytte udvalgte enheder position via piletasterne og SHIFT / CTRL modifikatorer.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5075"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5116"/>
         <source>Enable scroll and position adjustment via keyboard</source>
         <translation>Aktivér rulle- og positionsjustering via tastatur</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5415"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5456"/>
         <source>If selected, controls for picking values from drawing are available in Tool Options toolbar, allowing to pick length and angle values from drawing. </source>
         <translation>Hvis dette er valgt, er kontrol til at vælge værdier fra tegning tilgængelig i værktøjslinjen Værktøjstilvalg, så du kan vælge længde og vinkelværdier fra tegning.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5418"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5459"/>
         <source>Tool options toolbar includes pick values controls</source>
         <translation>Værktøjslinjens værktøjslinje omfatter kontrol af valg af værdier</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5348"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5389"/>
         <source>Separate menu per entity</source>
         <translation>Separat menu pr. enhed</translation>
     </message>
@@ -43565,649 +43571,681 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2077"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2160"/>
         <source>Document entity in visual snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2084"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2432"/>
         <source>Highlighted point size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2091"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2108"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2338"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2452"/>
-        <source>px</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2098"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2439"/>
         <source>If checked, snap point requested by command and specified by the user will be added to visual snap automatically. Otherwise, it should be added manually.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2101"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2442"/>
         <source>Add snapped point automatically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2115"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2113"/>
         <source>Size of marker for projected snap point (like intersection), in pixels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2131"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2191"/>
         <source>Color for guiding entities used in visual snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2175"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2211"/>
         <source>If selected, points will be added manually as guiding points if cursor is over them and CTRL key is pressed. Otherwise - they will be added by placing cursor over only.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2181"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2217"/>
         <source>Manual adding points with CTRL key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2188"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2278"/>
         <source>If checked, visual snap will also consider rays for enpoints of guiding entities with step, similar to angle snap. Otherwise, only tangential and normal rays will be considered for vertexes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2191"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2281"/>
         <source>Angle snap step relative guiding rays for entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2198"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2391"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2412"/>
-        <source>ms</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2205"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2463"/>
         <source>Guiding point size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2212"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2318"/>
         <source>Defines how long the mouse should be over projected snap point until that point will be added to visual snap system as guiding point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2231"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2132"/>
         <source>Guiding entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2238"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2224"/>
         <source>Size of marker used to draw guiding point that is added to visual snap system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2262"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2237"/>
         <source>Defines how long the mouse should be over document entity until that entity will be added to visual snap system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2281"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2063"/>
         <source>Size of marker for visual snap guiding points, in pixels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2297"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2139"/>
         <source>Entity adding/removal delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2304"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2184"/>
         <source>Projected snap point adding delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2311"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2092"/>
         <source>Projected snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2318"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2167"/>
         <source>If checked, visual snap will also consider rays from guiding points with step, similar to angle snap. Otherwise, only vertical and horizontal rays will be considered for vertexes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2321"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2170"/>
         <source>Angle snap step guiding rays for guiding points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2328"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2396"/>
         <source>Color of document entities, explicitly added to visual snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2345"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2082"/>
         <source>If selected, guiding circles for distances between guiding points will be included into visual snap. Otherwise, they will be ignored. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2348"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2085"/>
         <source>Dynamic distance circles for guiding points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2355"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2288"/>
         <source>Color of possible snap point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2365"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2146"/>
         <source>Guiding point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2372"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2374"/>
         <source>Defines how many milliseconds mouse should be over snap point until that point will be added as guiding point to visual snap system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2398"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2406"/>
         <source>Projected snap point size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2405"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2153"/>
         <source>Snap point adding/removal delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2419"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2201"/>
         <source>Color of guide points in visual snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2429"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2177"/>
         <source>Visual snap catch distance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2436"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2413"/>
         <source>Distance in screen coordinates that is used for catching visual snap guiding entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2631"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2668"/>
         <source>Start in coordinates offset mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2488"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2675"/>
         <source>Background:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2638"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2578"/>
         <source>&lt;p&gt;If checked, used coordinates entering mode will be saved and on next invocation the assistant will prompt entering coordinates in that mode. &lt;/p&gt;&lt;p&gt;Otherwise, explicitly specified mode will be used on next invocation.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2641"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2240"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2321"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2377"/>
+        <source> ms</source>
+        <translation type="unfinished">ms</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2259"/>
+        <source>Size of font, in points, used for displaying labels for guiding entities.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2340"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Visual snap solution will be cleared by &lt;span style=&quot; font-weight:700;&quot;&gt;CTRL+Middle Mouse Button&lt;/span&gt; click. &lt;br/&gt;If selected, visual snap solution may be also cleared by &lt;span style=&quot; font-weight:700;&quot;&gt;Right Mouse Button&lt;/span&gt; click. &lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2343"/>
+        <source>Allow clearing visual snap solution by Right mouse button click</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2364"/>
+        <source>If enabled, labels for visual snap guiding entities will be snown. Otherwise - no labels.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2367"/>
+        <source>Show labels on guiding entities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2470"/>
+        <source>Guiding entity label font size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2477"/>
+        <source>Guiding entity label base offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2484"/>
+        <source>Offset of the guiding label from projected snap point, in pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2581"/>
         <source>Remember last used coordinates mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4843"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4884"/>
         <source>Auto-Save Drawings</source>
         <translation>Auto- save tegninger</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4850"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4891"/>
         <source>#</source>
         <translation>#</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4855"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4924"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4896"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4965"/>
         <source>~</source>
         <translation>#</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4860"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4934"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4901"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4975"/>
         <source>_</source>
         <translation>Det er ikke mig</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4865"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4906"/>
         <source>__</source>
         <translation>Det er en god idé</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4870"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4911"/>
         <source>lcauto_</source>
         <translation>lcauto _</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4875"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4916"/>
         <source>autosaved_</source>
         <translation>automatisk gemt _</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4899"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4940"/>
         <source>Auto-save file name prefix:</source>
         <translation>Autogem filnavnspræfiks:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4916"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4957"/>
         <source>Backup file name suffix:</source>
         <translation>Backup filnavn suffiks:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4929"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4970"/>
         <source>$$</source>
         <translation>$$</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4939"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4980"/>
         <source>_backup</source>
         <translation>_ backup</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4944"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4985"/>
         <source>_bak</source>
         <translation>_ bak</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4949"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4990"/>
         <source>.bak</source>
         <translation>. bak</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4954"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4995"/>
         <source>.backup</source>
         <translation>.backup</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4959"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5000"/>
         <source>.lcb</source>
         <translation>icb</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5026"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5067"/>
         <source>If selected, mouse up will finish ad-hock moving operations (so just one click is need). Otherwise, first click initiates move, and second one completes it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5029"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5070"/>
         <source>Finish ad-hock moving of entities or ref points by mouse up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5036"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>If selected, entities selection window is defined with pressed left mouse button. Otherwirse, 2 mouse clicks are used for corners (LibreCAD classic)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5039"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5080"/>
         <source>Select objects in window with pressed mouse button</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5452"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5493"/>
         <source>Command line commands informer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5458"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5499"/>
         <source>If enabled, command aliases will be shown next to menu items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5461"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5502"/>
         <source>Show commands in menu items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5468"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5509"/>
         <source>If selected, invocation of actions with commands via UI will lead to displaying command in Cmd widget.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5471"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5512"/>
         <source>Promote command in Cmd widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5488"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5529"/>
         <source>CAD Tools </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5494"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5535"/>
         <source>If checked, toolbars with commands will be enabled. </source>
         <translation>Hvis markeret, aktiveres værktøjslinjer med kommandoer.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5514"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5555"/>
         <source>If this option is selected, all tools will be shown in one group, so the screen space is used more efficiently.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5520"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5561"/>
         <source>Show all tools in one widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5694"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5735"/>
         <source>UI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5733"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5774"/>
         <source>If enabled, tooltips toolbar&apos;s name will be shown</source>
         <translation>Hvis aktiveret, vises værktøjslinjens navn</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5736"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5777"/>
         <source>Show tooltips for toolbars</source>
         <translation>Vis værktøjstips til værktøjslinjer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5785"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5826"/>
         <source>Exchange</source>
         <translation>Børs</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5791"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5832"/>
         <source>Exports settings to the file.</source>
         <translation>Eksportér indstillinger til filen.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5794"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5835"/>
         <source>Export settings to file</source>
         <translation>Eksportér indstillinger til fil</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5805"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5846"/>
         <source>Imports application&apos;s preferences from external file</source>
         <translation>Import applications præferencer fra ekstern fil</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5808"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5849"/>
         <source>Import settings from file</source>
         <translation>Importér indstillinger fra fil</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5822"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5863"/>
         <source>Paths</source>
         <translation>Stier</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5995"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6036"/>
         <source>Other settings locations</source>
         <translation>Andre indstillinger</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6002"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6043"/>
         <source>Directory where various settings are located (shortcuts, workspaces, pens etc.)</source>
         <translation>Mappe hvor forskellige indstillinger er placeret (genveje, arbejdsrum, penne osv.)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6053"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6094"/>
         <source>Renderer</source>
         <translation>Renderer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6100"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6141"/>
         <source>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</source>
         <translation>Hvis markeret, tegnes bueskytter ved hjælp af linjestykker interpolation. Denne lille tegning af artefakter nær slutpunkter, men kan resultere i tegning af mindre glatte buer. Ingen tegningsfejl nær endepunkter på store zoomer.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6110"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6151"/>
         <source>If this method is selected, arcs are drawn using method of QT library.  On large zooms, arcs may be rendered with errors near endpoints.</source>
         <translation>Hvis denne metode vælges, tegnes buer ved hjælp af QT-bibliotekets metode. På store zoomer kan buer leveres med fejl nær endepunkter.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6113"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6154"/>
         <source>Qt-native drawing method (unexact near endpoints)</source>
         <translation>Qt- native tegning metode (unexact near endpoints)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6359"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6400"/>
         <source>Fonts Files</source>
         <translation>Skrifttypefiler</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6365"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6406"/>
         <source>Amount of letters columns:</source>
         <translation>Kolonner med bogstaver:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6378"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6419"/>
         <source>Contains the number of columns in one row for rendering font letter blocks. If 0 - all letters in one row. </source>
         <translation>Indeholder antallet af kolonner i en række for at gøre skrifttype bogstaver blokke. Hvis 0 - alle bogstaver i en række.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6059"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6100"/>
         <source>Operations</source>
         <translation>Operationer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6065"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6106"/>
         <source>If enabled, during pan operation TEXT and MTEXT objects will be drawn schematically</source>
         <translation>Hvis aktiveret, vil der under panoperationen blive tegnet TEXT - og MTEX- objekter skematisk</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6091"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6132"/>
         <source>Defines how arcs are rendered in UI. </source>
         <translation>Definerer hvordan buer bliver leveret i UI.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5504"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5545"/>
         <source>If checked, dock widgets with commands for left sidebar will be enabled. Otherwise, they will be disabled. </source>
         <translation>Hvis markeret, vil dock- kontroller med kommandoer for venstre sidebar blive aktiveret. Ellers vil de være handicappede.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2482"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2523"/>
         <source>Relative Point Input Assistant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2628"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2665"/>
         <source>&lt;p&gt;If selected, on invocation the assistant will be in relative coordinates (offset) mode. &lt;br/&gt;Otherwise, it will prompt to enter absolute coordinates.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2495"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2588"/>
         <source>Color for relative point input assistant font</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2518"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2658"/>
         <source>Font used by relative point input assistant popup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2552"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2536"/>
         <source>Color for relative point input assistant popup background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2575"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2559"/>
         <source>Font size for relative point input assistant, in points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6094"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6135"/>
         <source>Arcs Rendering Method</source>
         <translation>Buer Udlejningsmetode</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6103"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6144"/>
         <source>Interpolate by line segments</source>
         <translation>Interpolere efter linjeafsnit</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6120"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6161"/>
         <source>Single segment angle</source>
         <translation>Enkelt segmentvinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6129"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6170"/>
         <source>Determine segments by max sagitta</source>
         <translation>Bestem segmenter med max sagitta</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6136"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6177"/>
         <source>If selected, the fixed angle of line interpolation segment will be used. Smaller angle deliver more smooth arc yet is slower.</source>
         <translation>Hvis valgt, vil den faste vinkel af linje interpolation segment blive brugt. Mindre vinkel giver mere glat bue endnu er langsommere.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6139"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6180"/>
         <source>Use fixed segment angle value</source>
         <translation>Brug fast segmentvinkelværdi</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6146"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6187"/>
         <source>Value of fixed segment&apos;s angle</source>
         <translation>Værdien af den faste segments vinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6149"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6190"/>
         <source> degrees</source>
         <translation>grader</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6168"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6209"/>
         <source>Maximal distance betwen arc and segment interpolation line</source>
         <translation>Maksimal afstand betwen bue og segment interpolation linje</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6196"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6237"/>
         <source>Render circles in the same way as arcs.</source>
         <translation>Render cirkler på samme måde som buer.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2911"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2952"/>
         <source>If set and user coordinate system is active, absolute coodinate in world coordinate system will be also shown.</source>
         <translation>Hvis sæt og brugerkoordinatsystem er aktivt, vil absolut coodinat i verdens koordinatsystem også blive vist.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2917"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2958"/>
         <source>Show world coordinates if in user coordinate system</source>
         <translation>Vis verdenskoordinater hvis i brugerkoordinatsystemet</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5395"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5436"/>
         <source>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </source>
         <translation>Hvis markeret, vil ændringer af zoom eller pan til tegning markere tegning som ændret. Ellers vil skiftende visning kun påvirke den ændrede status af tegningen.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5398"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5439"/>
         <source>Changing view only modifies drawing</source>
         <translation>Ændrer kun visning ændrer tegning</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5661"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5702"/>
         <source>If set, previously opened files during previous closing of the application will be re-opened.</source>
         <translation>Hvis sat, tidligere åbnede filer under tidligere lukning af ansøgningen vil blive genåbnet.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5103"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5144"/>
         <source>Angles Positive Direction:</source>
         <translation>Vinkler positiv retning:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5113"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5154"/>
         <source>Zero base angle:</source>
         <translation>Nulgrundsvinkel:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5136"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5177"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
         <translation>Nul grundvinkel i forhold til det nuværende brugerkoordinatsystem. Påvirker polære koordinater input, snap til vinkel. 0,0 er 15.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5175"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5216"/>
         <source>degrees.</source>
         <translation>grader.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5242"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5283"/>
         <source>Counterclockwise, 90 degrees is north.</source>
         <translation>90 grader mod uret er nord.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5271"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5312"/>
         <source>Clockwise, 90 degrees is sourth.</source>
         <translation>90 grader.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5853"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5908"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5922"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5933"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5957"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5894"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5949"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5963"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5974"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5998"/>
         <source>Click to select directory</source>
         <translation>Klik for at vælge mappe</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5881"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5922"/>
         <source>Path to folder with fonts</source>
         <translation>Sti til mappe med skrifttyper</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5548"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5589"/>
         <source>Restores program geometry/layout to original state</source>
         <translation>Gendanner programgeometri / layout til original tilstand</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5564"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5605"/>
         <source>Restores the program settings to its original state</source>
         <translation>Gendanner programindstillingerne til dets oprindelige tilstand</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5828"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6009"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5869"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6050"/>
         <source>Click to select file</source>
         <translation>Klik for at vælge fil</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5888"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5929"/>
         <source>Path to folder with hatch patterns</source>
         <translation>Sti til mappe med luge mønstre</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5846"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5887"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt; html &gt; &lt; hoved / &gt; &lt; krop &gt; &lt; p &gt; &lt; span stil = &quot;font- familie: &apos;-apple- system&apos;, &apos;BlinkMacSystemFont&apos;, &apos;Segoe UI&apos;, &apos;Noto Sans&apos;, &apos;Helvetica&apos;, &apos;Arial&apos;, &apos;sans- serif&apos;, &apos;Apple Color Emoji&apos;, &apos;Segoe UI Emoji&apos;; fontstørrelse: 14px; farve: # 1f2328; background- color: # ffff;&quot; &gt; Del biblioteksmappe. Symbolbiblioteket dxf filer skal være placeret i undermapper af denne mappe. Undermappen navne vil blive vist i Library Browser. &lt; / span &gt; &lt; p &gt; &lt; span stil = &quot;font- familie: &apos;-apple- system&apos;, &apos;BlinkMacSystemFont&apos;, &apos;Segoe UI&apos;, &apos;Noto Sans&apos;, &apos;Helvetica&apos;, &apos;Arial&apos;, &apos;sans- serif&apos;, &apos;Apple Color Emoji&apos;, &apos;Segoe UI Emoji&apos;; font- size: 14px; color: # 1f2328; background- color: # ffff;&quot; &gt; (Menu: Widgets &amp; gt; Dock Widgets &amp; gt; Browriser &amp; gt; Browriser) &lt; &lt; span / cture / cture &gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5864"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5905"/>
         <source>Path to file with variables</source>
         <translation>Sti til fil med variabler</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5968"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6009"/>
         <source>Path to folder with translation files</source>
         <translation>Sti til mappe med oversættelsesfiler</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5065"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5106"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
         <translation>Slå gratis snap til / fra når mellemrumstasten BAR trykkes</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4983"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5024"/>
         <source>CAD Preferences</source>
         <translation>CAD-indstillinger</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4999"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5040"/>
         <source>Automatically zoom drawing when opening</source>
         <translation>Zoom automatisk tegning når åbning</translation>
     </message>
@@ -52180,22 +52218,22 @@ Point: (% 8,% 9)</translation>
 <context>
     <name>RS_ActionInterface</name>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="618"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="624"/>
         <source>Back</source>
         <translation>Tilbage</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="595"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="601"/>
         <source>SHIFT:</source>
         <translation>SHIFT:</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="602"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="608"/>
         <source>CTRL:</source>
         <translation>CTRL:</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="627"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="633"/>
         <source>Cancel</source>
         <translation>Annullér</translation>
     </message>
@@ -53339,213 +53377,213 @@ Point: (% 8,% 9)</translation>
 <context>
     <name>RS_Snapper</name>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1307"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1311"/>
         <source>Vertical</source>
         <translation>Lodret</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1309"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1313"/>
         <source>Horizontal</source>
         <translation>Vandret</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1311"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1315"/>
         <source>Orthogonal</source>
         <translation>Orthogonal</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1365"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1369"/>
         <source>Grid</source>
         <translation>Gitter</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1367"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1371"/>
         <source>Entity</source>
         <translation>Enhed</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1369"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1373"/>
         <source>Endpoint</source>
         <translation>Slutpunkt</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1371"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1375"/>
         <source>Intersection</source>
         <translation>Intersection</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1373"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1377"/>
         <source>Middle</source>
         <translation>Mellem</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1375"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1379"/>
         <source>Distance</source>
         <translation>Afstand</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1377"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1381"/>
         <source>Center</source>
         <translation>Center</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1379"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1383"/>
         <source>Angle</source>
         <translation>Vinkel</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1381"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1385"/>
         <source>Angle Relative</source>
         <translation>Vinkel relativ</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1383"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1387"/>
         <source>Angle (on Entity)</source>
         <translation>Vinkle (on Entity)</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1385"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1389"/>
         <source>Visual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1389"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1393"/>
         <source>Free</source>
         <translation type="unfinished">Fri</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1398"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1402"/>
         <source>None</source>
         <comment>visual snap</comment>
         <translation type="unfinished">Ingen</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1401"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1405"/>
         <source>Horizontal</source>
         <comment>visual snap</comment>
         <translation type="unfinished">Vandret</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1404"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1408"/>
         <source>Angle Ray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1415"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1419"/>
         <source>Relative Angle Ray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1426"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1430"/>
         <source>Vertical</source>
         <comment>visual snap</comment>
         <translation type="unfinished">Lodret</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1429"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1433"/>
         <source>Line ray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1432"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1436"/>
         <source>Vertex-Vertex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1435"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1439"/>
         <source>Endpoint Tangent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1438"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1442"/>
         <source>Endpoint Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1441"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1445"/>
         <source>Tangent One</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1444"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1448"/>
         <source>Tangent Two</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1447"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1451"/>
         <source>Middle</source>
         <comment>visual snap</comment>
         <translation type="unfinished">Mellem</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1450"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1454"/>
         <source>Orthogonal</source>
         <comment>visual snap</comment>
         <translation type="unfinished">Orthogonal</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1453"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1457"/>
         <source>Distance (Explicit)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1456"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1460"/>
         <source>Distance (Vertex)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1459"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1463"/>
         <source>Entity</source>
         <comment>visual snap</comment>
         <translation type="unfinished">Enhed</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1462"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1466"/>
         <source>Relative Normal</source>
         <comment>visual snap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1465"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1469"/>
         <source>Relative Distance</source>
         <comment>visual snap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1468"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1472"/>
         <source>Relative X</source>
         <comment>visual snap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1471"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1475"/>
         <source>Relative Y</source>
         <comment>visual snap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1474"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1478"/>
         <source>Relative Angle</source>
         <comment>visual snap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1650"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1654"/>
         <source>Dist: </source>
         <translation>Dist:</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1655"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1659"/>
         <source>Angle: </source>
         <translation>Vinkel:</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1660"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1664"/>
         <source>dX: </source>
         <translation>dX:</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1661"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1665"/>
         <source>dY: </source>
         <translation>dY:</translation>
     </message>

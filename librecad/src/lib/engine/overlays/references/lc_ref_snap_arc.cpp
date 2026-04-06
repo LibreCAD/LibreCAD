@@ -31,5 +31,6 @@ RS2::EntityType LC_RefSnapArc::rtti() const{
 
 RS_Entity *LC_RefSnapArc::clone() const{
     auto* a = new LC_RefSnapArc(*this);
+    a->updateSnapInfo(m_snapInfo);
     return a;
 }

@@ -357,6 +357,10 @@ bool RS_Snapper::isInVisualSnapStatus([[maybe_unused]] int status) {
     return false;
 }
 
+bool RS_Snapper::isClearVisualSnapByRMB() {
+    return m_visualSnapManager->isClearVisualSnapByRMB();
+}
+
 void RS_Snapper::onVisualSnapEntityRegistered([[maybe_unused]] RS_Entity* point) {
 }
 

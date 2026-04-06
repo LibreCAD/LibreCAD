@@ -22,7 +22,6 @@
 #include "lc_graphicviewport.h"
 
 #include <QDateTime>
-#include <boost/container/vector.hpp>
 
 #include "lc_defaults.h"
 #include "lc_graphicviewportlistener.h"

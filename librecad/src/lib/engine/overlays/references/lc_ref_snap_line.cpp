@@ -21,11 +21,10 @@
  * ********************************************************************************
  */
 
-
 #include "lc_ref_snap_line.h"
 
-LC_RefSnapLine::LC_RefSnapLine(RS_EntityContainer* parent, const RS_Vector& pStart, const RS_Vector& pEnd) :
-    RS_Line(parent, RS_LineData(pStart, pEnd)) {
+LC_RefSnapLine::LC_RefSnapLine(const RS_Vector& pStart, const RS_Vector& pEnd) :
+    RS_Line(nullptr, RS_LineData(pStart, pEnd)) {
 }
 
 RS2::EntityType LC_RefSnapLine::rtti() const {
@@ -34,5 +33,13 @@ RS2::EntityType LC_RefSnapLine::rtti() const {
 
 RS_Entity* LC_RefSnapLine::clone() const {
     auto* l = new LC_RefSnapLine(*this);
+    l->updateSnapInfo(m_snapInfo);
     return l;
+}
+
+void LC_RefSnapLine::draw(RS_Painter* painter) {
+    RS_Line::draw(painter);
+    if (!m_labelString.isEmpty()) {
+        drawMarker(painter, m_font, getStartpoint(), m_baseLabelOffset, m_snapInfo.labelOffset, m_labelString);
+    }
 }
