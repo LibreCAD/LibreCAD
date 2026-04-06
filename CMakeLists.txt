@@ -2088,7 +2088,6 @@ set (SHARED_SOURCES
      librecad/src/ui/action_options/modify/lc_break_divide_options_filler.h
      librecad/src/lib/actions/lc_visual_snap_manager.cpp
      librecad/src/lib/actions/lc_visual_snap_manager.h
-
 )
 
 set (MUPARSER_SOURCES

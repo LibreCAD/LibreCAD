@@ -65,3 +65,22 @@ Workspace state now includes the state of main menu and fullscreen.
 2) Parallel through point - added "within" mode for multiple copies, that allows to specify that parallels are between point and entity 
 3) Modify Rotate - added ability to specify which point should be selected first (reference or rotation center) plus added support of relative angle selection (instead of absolute one)
 4) Line Angle (and Horizontal and Vertical) - added new option that defines how to handle length of line. Options are "Line", "By X", "By Y", "Free"
+
+
+### Visual snap
+
+Clear visual snap
+
+ESC - clears solution
+ESC+Shit - removes last addition
+
+Optionally - either RMB click or CTRL+MMB click 
+Last solution - CTRL+RMB
+
+Remove document entity from VS - CTRL+ mouse cursor over it
+
+TAB - add mouse position to VS
+
+SHIFT+P  - adds point
+SHIFT+L - adds line
+SHIFT+C - adds guiding circle

@@ -275,6 +275,8 @@ protected:
     int getSnapVertexAddingDelay() const;
     int getDocumentEntityAddingDelay() const;
     void visualizeSolutionForPoint(RS_Preview* preview, LC_Highlight* highlight, const RS_Vector& wcsPos);
+    void adjustGuidingEntitiesLabelsPositions(std::vector<LC_RefSnapConstructionLine*> lines) const;
+    void assignGuidingEntitiesLabels(RS_EntityContainer* preview, std::list<RS_Entity*> clones) const;
 
     struct DocumentEntityRef {
         std::unique_ptr<RS_Entity> guidingEntity;

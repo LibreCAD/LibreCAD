@@ -90,93 +90,74 @@ namespace {
     constexpr double g_rayDirectionOffset = 10.0;
 
     QString getMarkerString(RS2::VisualSnapGuideEntityType guideType) {
-        QString label = "";
-
         switch (guideType) {
             case RS2::VSNAP_LINE_VERTEX_VERTICAL: {
-                label = "Y";
-                break;
+                return "Y";
             }
             case RS2::VSNAP_LINE_VERTEX_HORIZONTAL: {
-                label = "X";
-                break;
+               return "X";
             }
             case RS2::VSNAP_LINE_VERTEX_VERTEX: {
-                label = "V";
-                break;
+                return "V";
             }
             case RS2::VSNAP_LINE_VERTEX_ORTHO: {
-                label = "O";
-                break;
+                return "O";
+
             }
             case RS2::VSNAP_LINE_VERTEX_ANGLE_STEP: {
-                label = "/";
-                break;
+                return "/";
+
             }
             case RS2::VSNAP_LINE_ENDPOINT_TANGENT: {
-                label = "T";
-                break;
+                return  "T";
+
             }
             case RS2::VSNAP_LINE_ENDPOINT_NORMAL: {
-                label = "N";
-                break;
+                return  "N";
             }
             case RS2::VSNAP_LINE_ENDPOINT_ANGLE_STEP: {
-                label = ">";
-                break;
+                return ">";
             }
             case RS2::VSNAP_LINE_RAY: {
-                label = "L";
-                break;
+                return  "L";
             }
             case RS2::VSNAP_LINE_TANGENT1: {
-                label = "T1";
-                break;
+                return  "T1";
             }
             case RS2::VSNAP_LINE_TANGENT2: {
-                label = "T2";
-                break;
+                return "T2";
             }
             case RS2::VSNAP_POINT_MIDDLE: {
-                label = "M";
-                break;
+                return  "M";
             }
             case RS2::VSNAP_POINT_DISTANCE_EXPLICIT: {
-                label = "~";
-                break;
+                return  "~";
             }
             case RS2::VSNAP_POINT_DISTANCE_VERTEX: {
-                label = "~V";
-                break;
+                return  "~V";
             }
             case RS2::VSNAP_POINT_RELATIVE_DISTANCE: {
-                label = "@~";
-                break;
+                return  "@~";
             }
             case RS2::VSNAP_POINT_RELATIVE_NORMAL: {
-                label = "@N";
-                break;
+                return  "@N";
             }
             case RS2::VSNAP_POINT_RELATIVE_ANGLE_RAY: {
-                label = "@<";
-                break;
+                return "@<";
             }
             case RS2::VSNAP_POINT_RELATIVE_VERTICAL_DX: {
-                label = "@X";
-                break;
+                return  "@X";
             }
             case RS2::VSNAP_POINT_RELATIVE_HORIZONTAL_DY: {
-                label = "@Y";
-                break;
+                return  "@Y";
             }
             case RS2::VSNAP_DOC_ENTITY: {
-                label = "E";
-                break;
+                return  "E";
             }
             default:
                 break;
         }
-        return label;
+        return "";
     }
 }
 
@@ -615,7 +596,6 @@ void LC_VisualSnapManager::registerVertex() {
 void LC_VisualSnapManager::registerDocumentEntity() {
     if (isNotInVisualSnap(m_documentEntityToProcess)) {
         // adding entity to visual snap
-        // LC_ERR << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++ registering entity " << m_entityToAdd->getId();
         const RS2::EntityType type = m_documentEntityToProcess->rtti();
         switch (type) {
             case RS2::EntityLine: {
@@ -728,6 +708,67 @@ void LC_VisualSnapManager::visualizeSolutionForPoint(RS_Preview* preview, LC_Hig
     m_mutex.unlock();
 }
 
+void LC_VisualSnapManager::adjustGuidingEntitiesLabelsPositions(std::vector<LC_RefSnapConstructionLine*> lines) const {
+    // sort lines first by angle, than by nearest point
+    std::sort(lines.begin(), lines.end(), [](LC_RefSnapConstructionLine* a, LC_RefSnapConstructionLine* b) -> bool {
+        const double angleA = a->getRefSnapInfo().wcsBaseAngle;
+        const double angleB = b->getRefSnapInfo().wcsBaseAngle;
+
+        if (LC_LineMath::isSameValue(angleA, angleB)) {
+            // lines has same angle, check that they are in the same point
+            const RS_Vector nearestPointA = a->getRefSnapInfo().nearestPoint;
+            const RS_Vector nearestPointB = b->getRefSnapInfo().nearestPoint;
+
+            if (LC_LineMath::isNotMeaningfulDistance(nearestPointA, nearestPointB)) {
+                return false;
+            }
+            if (LC_LineMath::isSameValue(nearestPointA.x, nearestPointB.x)) {
+                return nearestPointA.y < nearestPointB.y;
+            }
+            return nearestPointA.x < nearestPointB.x;
+        }
+        return angleA < angleB;
+    });
+
+
+    // as we have sorted lines, we try to set positions (offset) of labels in such way, that labels will not not overlap
+    double previousAngle = RS_MAXDOUBLE;
+    double currentOffset = 0.5;
+    auto previousRefPoint = RS_Vector(RS_MAXDOUBLE, RS_MAXDOUBLE);
+    auto previousStartPoint = RS_Vector(RS_MINDOUBLE, RS_MINDOUBLE);
+    for (const auto l : lines) {
+        const double angle = l->getRefSnapInfo().wcsBaseAngle;
+        if (!LC_LineMath::isSameAngle(angle, previousAngle)) {
+            currentOffset = 0.5;
+            previousStartPoint = l->getStartpoint();
+            previousAngle = angle;
+        }
+        RS_Vector nearestPoint = l->getRefSnapInfo().nearestPoint;
+        if (LC_LineMath::isMeaningfulDistance(previousRefPoint, nearestPoint)) {
+            previousRefPoint = nearestPoint;
+            // lines with different base points may be still the same, so check by angle to start
+            if (!LC_LineMath::isSameAngle(previousStartPoint.angleTo(nearestPoint), angle)) {
+                currentOffset = 0.5;
+                previousStartPoint = l->getStartpoint();
+            }
+        }
+        currentOffset += 0.5;
+        l->getRefSnapInfo().labelOffset = currentOffset;
+    }
+}
+
+void LC_VisualSnapManager::assignGuidingEntitiesLabels(RS_EntityContainer* preview, std::list<RS_Entity*> clones) const {
+    for (const auto clone:clones) {
+        const auto snapEntity = dynamic_cast<LC_RefSnapEntity*>(clone);
+        snapEntity->setFont(m_options.guidingEntitiesFont);
+
+        const QString label = getMarkerString(snapEntity->getRefSnapInfo().guideType);
+        snapEntity->setLabel(label);
+
+        snapEntity->setBaseLabelOffset(m_options.baseLabelOffsetPx);
+    }
+}
+
 void LC_VisualSnapManager::visualizeSolution(RS_EntityContainer* preview, LC_Highlight* highlight, VisualSnapSolution& solution) const {
     // add marks
     for (const auto& i : m_itemsList) {
@@ -751,87 +792,30 @@ void LC_VisualSnapManager::visualizeSolution(RS_EntityContainer* preview, LC_Hig
         }
     }
 
-    /*for (const auto& e : solution.guidingEntities) {
-        preview->addEntity(e.entity->clone());
-    }*/
+    if (m_options.showGuidingEntitiesLabels) {
+        std::vector<LC_RefSnapConstructionLine*> lines;
+        std::list<RS_Entity*> clones;
+        for (const auto& e : solution.guidingEntities) {
+            // add to preview all except construction lines
+            const auto clone = e.entity->clone();
+            const int rtti = clone->rtti();
 
-    std::vector<LC_RefSnapConstructionLine*> lines;
-    std::list<RS_Entity*> clones;
-    for (const auto& e : solution.guidingEntities) {
-        // add to preview all except construction lines
-        const auto clone = e.entity->clone();
-        const int rtti = clone->rtti();
-
-        if (rtti == RS2::EntitySnapConstructionLine) {
-            auto line = static_cast<LC_RefSnapConstructionLine*>(clone);
-            lines.push_back(line);
+            if (rtti == RS2::EntitySnapConstructionLine) {
+                auto line = static_cast<LC_RefSnapConstructionLine*>(clone);
+                lines.push_back(line);
+            }
+            clones.push_back(clone);
         }
-        clones.push_back(clone);
-    }
 
-    if (!m_options.showGuidingEntitiesLabels) {
         for (const auto clone:clones) {
             preview->addEntity(clone);
         }
+        assignGuidingEntitiesLabels(preview, clones);
+        adjustGuidingEntitiesLabelsPositions(lines);
     }
     else  {
-        for (const auto clone:clones) {
-            preview->addEntity(clone);
-
-            const auto snapEntity = dynamic_cast<LC_RefSnapEntity*>(clone);
-            snapEntity->setFont(m_options.guidingEntitiesFont);
-
-            const QString label = getMarkerString(snapEntity->getRefSnapInfo().guideType);
-            snapEntity->setLabel(label);
-
-            snapEntity->setBaseLabelOffset(m_options.baseLabelOffsetPx);
-        }
-
-        // sort lines first by angle, than by nearest point
-        std::sort(lines.begin(), lines.end(), [](LC_RefSnapConstructionLine* a, LC_RefSnapConstructionLine* b) -> bool {
-            const double angleA = a->getRefSnapInfo().wcsBaseAngle;
-            const double angleB = b->getRefSnapInfo().wcsBaseAngle;
-
-            if (LC_LineMath::isSameValue(angleA, angleB)) {
-                // lines has same angle, check that they are in the same point
-                const RS_Vector nearestPointA = a->getRefSnapInfo().nearestPoint;
-                const RS_Vector nearestPointB = b->getRefSnapInfo().nearestPoint;
-
-                if (LC_LineMath::isNotMeaningfulDistance(nearestPointA, nearestPointB)) {
-                    return false;
-                }
-                if (LC_LineMath::isSameValue(nearestPointA.x, nearestPointB.x)) {
-                    return nearestPointA.y < nearestPointB.y;
-                }
-                return nearestPointA.x < nearestPointB.x;
-            }
-            return angleA < angleB;
-        });
-
-
-        // as we have sorted lines, we try to set positions (offset) of labels in such way, that labels will not not overlap
-        double previousAngle = RS_MAXDOUBLE;
-        double currentOffset = 0.5;
-        auto previousRefPoint = RS_Vector(RS_MAXDOUBLE, RS_MAXDOUBLE);
-        auto previousStartPoint = RS_Vector(RS_MINDOUBLE, RS_MINDOUBLE);
-        for (const auto l : lines) {
-            const double angle = l->getRefSnapInfo().wcsBaseAngle;
-            if (!LC_LineMath::isSameAngle(angle, previousAngle)) {
-                currentOffset = 0.5;
-                previousStartPoint = l->getStartpoint();
-                previousAngle = angle;
-            }
-            RS_Vector nearestPoint = l->getRefSnapInfo().nearestPoint;
-            if (LC_LineMath::isMeaningfulDistance(previousRefPoint, nearestPoint)) {
-                previousRefPoint = nearestPoint;
-                // lines with different base points may be still the same, so check by angle to start
-                if (!LC_LineMath::isSameAngle(previousStartPoint.angleTo(nearestPoint), angle)) {
-                    currentOffset = 0.5;
-                    previousStartPoint = l->getStartpoint();
-                }
-            }
-            currentOffset += 0.5;
-            l->getRefSnapInfo().labelOffset = currentOffset;
+        for (const auto& e : solution.guidingEntities) {
+            preview->addEntity(e.entity->clone());
         }
     }
 
@@ -1558,9 +1542,3 @@ int LC_VisualSnapManager::getSnapVertexAddingDelay() const {
 int LC_VisualSnapManager::getDocumentEntityAddingDelay() const {
     return m_options.delayMsDocumentEntity;
 }
-
-// fixme ****************************************************************************
-// 1)sort created guiding lines by priority and remove duplicated one
-// line has higher priority than vertex, hor/vert - over angle and dx/dy
-// 2)rendering of guided entities labels
-// fixme ****************************************************************************
