@@ -624,74 +624,83 @@ bool QG_GraphicView::event(QEvent *event)
 /**
  * support for the wacom graphic tablet.
  */
-void QG_GraphicView::tabletEvent(QTabletEvent* e) {
-    if (testAttribute(Qt::WA_UnderMouse)) {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-        switch (e->deviceType()) {
-#else
-        switch (e->device()) {
-#endif
-        case QTabletEvent::Eraser:
-            if (e->type()==QEvent::TabletRelease) {
-                if (container) {
-
-                    RS_ActionSelectSingle* a =
-                        new RS_ActionSelectSingle(*container, *this);
-                    setCurrentAction(a);
-                    QMouseEvent ev(QEvent::MouseButtonRelease, e->pos(),
-                                   Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);//RLZ
-                    mouseReleaseEvent(&ev);
-                    a->finish();
-
-                    if (container->countSelected()>0) {
-                        setCurrentAction(
-                            new RS_ActionModifyDelete(*container, *this));
-                    }
-                }
-            }
-            break;
-
-        case QTabletEvent::Stylus:
-        case QTabletEvent::Puck:
-            if (e->type()==QEvent::TabletPress) {
-                QMouseEvent ev(QEvent::MouseButtonPress, e->pos(),
-                               Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);//RLZ
-                mousePressEvent(&ev);
-            } else if (e->type()==QEvent::TabletRelease) {
-                QMouseEvent ev(QEvent::MouseButtonRelease, e->pos(),
-                               Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);//RLZ
-                mouseReleaseEvent(&ev);
-            } else if (e->type()==QEvent::TabletMove) {
-                QMouseEvent ev(QEvent::MouseMove, e->pos(),
-                               Qt::NoButton, {}, Qt::NoModifier);//RLZ
-                mouseMoveEvent(&ev);
-            }
-            break;
-
-        default:
-            break;
-        }
+/**
+ * Support for Wacom graphic tablets (and other tablet devices).
+ * Converts tablet events into synthetic mouse events so the existing
+ * RS_Action* system can handle them.
+ *
+ * IMPORTANT: e->accept() prevents Qt from generating duplicate mouse events
+ *            (the classic "double-click" bug with tablets).
+ */
+void QG_GraphicView::tabletEvent(QTabletEvent* e)
+{
+    if (!testAttribute(Qt::WA_UnderMouse)) {
+        return;
     }
 
-    // a 'mouse' click:
-    /*if (e->pressure()>10 && lastPressure<10) {
-        QMouseEvent e(QEvent::MouseButtonPress, e->pos(),
-           Qt::LeftButton, Qt::LeftButton);
-        mousePressEvent(&e);
-}
-    else if (e->pressure()<10 && lastPressure>10) {
-        QMouseEvent e(QEvent::MouseButtonRelease, e->pos(),
-           Qt::LeftButton, Qt::LeftButton);
-        mouseReleaseEvent(&e);
-}	else if (lastPos!=e->pos()) {
-        QMouseEvent e(QEvent::MouseMove, e->pos(),
-           Qt::NoButton, 0);
-        mouseMoveEvent(&e);
-}
+    // ------------------------------------------------------------------
+    // Position handling (Qt 6+ uses position(), older Qt uses pos())
+    // ------------------------------------------------------------------
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    const QPoint pos = e->position().toPoint();
+#else
+    const QPoint pos = e->pos();
+#endif
 
-    lastPressure = e->pressure();
-    lastPos = e->pos();
-    */
+    // ------------------------------------------------------------------
+    // Device type (API changed between Qt < 5.15 and >= 5.15)
+    // ------------------------------------------------------------------
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+    auto deviceType = e->deviceType();
+#else
+    auto deviceType = e->device();
+#endif
+
+    switch (deviceType) {
+    // --------------------- Eraser (XFreeEraser) ---------------------
+    case QTabletEvent::XFreeEraser:
+        if (e->type() == QEvent::TabletRelease && container != nullptr) {
+            RS_ActionSelectSingle* a =
+                new RS_ActionSelectSingle(*container, *this);
+            setCurrentAction(a);
+
+            QMouseEvent ev(QEvent::MouseButtonRelease, pos,
+                           Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+            mouseReleaseEvent(&ev);
+
+            a->finish();
+
+            if (container->countSelected() > 0) {
+                setCurrentAction(new RS_ActionModifyDelete(*container, *this));
+            }
+        }
+        break;
+
+    // --------------------- Normal stylus / puck ---------------------
+    case QTabletEvent::Stylus:
+    case QTabletEvent::Puck:
+        if (e->type() == QEvent::TabletPress) {
+            QMouseEvent ev(QEvent::MouseButtonPress, pos,
+                           Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+            mousePressEvent(&ev);
+        }
+        else if (e->type() == QEvent::TabletRelease) {
+            QMouseEvent ev(QEvent::MouseButtonRelease, pos,
+                           Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+            mouseReleaseEvent(&ev);
+        }
+        else if (e->type() == QEvent::TabletMove) {
+            QMouseEvent ev(QEvent::MouseMove, pos,
+                           Qt::NoButton, Qt::NoButton, Qt::NoModifier);
+            mouseMoveEvent(&ev);
+        }
+        break;
+
+    default:
+        break;
+    }
+
+    e->accept();   // ← MUST be called for every handled tablet event
 }
 
 void QG_GraphicView::leaveEvent(QEvent* e) {
@@ -839,7 +848,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     }
 
     if (scroll && scrollbars) {
-		//scroll by scrollbars: issue #479
+        //scroll by scrollbars: issue #479
 
         RS_SETTINGS->beginGroup("/Defaults");
         bool inv_h = (RS_SETTINGS->readNumEntry("/WheelScrollInvertH", 0) == 1);
@@ -848,16 +857,16 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
         int delta = 0;
 
-		switch(direction){
-		case RS2::Left:
-		case RS2::Right:
+        switch(direction){
+        case RS2::Left:
+        case RS2::Right:
             delta = (inv_h) ? -e->angleDelta().x() : e->angleDelta().x();
-			hScrollBar->setValue(hScrollBar->value()+delta);
-			break;
-		default:
+            hScrollBar->setValue(hScrollBar->value()+delta);
+            break;
+        default:
             delta = (inv_v) ? -e->angleDelta().y() : e->angleDelta().y();
-			vScrollBar->setValue(vScrollBar->value()+delta);
-		}
+            vScrollBar->setValue(vScrollBar->value()+delta);
+        }
 
 //        setCurrentAction(new RS_ActionZoomScroll(direction,
 //                         *container, *this));
@@ -1095,18 +1104,18 @@ RS_Vector QG_GraphicView::getMousePosition() const
 
 void QG_GraphicView::getPixmapForView(std::unique_ptr<QPixmap>& pm)
 {
-	QSize const s0(getWidth(), getHeight());
-	if(pm && pm->size()==s0)
-		return;
-	pm.reset(new QPixmap(getWidth(), getHeight()));
+    QSize const s0(getWidth(), getHeight());
+    if(pm && pm->size()==s0)
+        return;
+    pm.reset(new QPixmap(getWidth(), getHeight()));
 }
 
 void QG_GraphicView::layerActivated(RS_Layer *layer) {
-	RS_SETTINGS->beginGroup("/Modify");
-	bool toActivated= (RS_SETTINGS->readNumEntry("/ModifyEntitiesToActiveLayer", 0)==1);
-	RS_SETTINGS->endGroup();
+    RS_SETTINGS->beginGroup("/Modify");
+    bool toActivated= (RS_SETTINGS->readNumEntry("/ModifyEntitiesToActiveLayer", 0)==1);
+    RS_SETTINGS->endGroup();
 
-	if(!toActivated) return;
+    if(!toActivated) return;
     RS_EntityContainer *container = this->getContainer();
     RS_Graphic* graphic = this->getGraphic();
     QList<RS_Entity*> clones;
@@ -1217,7 +1226,7 @@ void QG_GraphicView::paintEvent(QPaintEvent *)
 
 void QG_GraphicView::setAntialiasing(bool state)
 {
-	antialiasing = state;
+    antialiasing = state;
 }
 
 void QG_GraphicView::addScrollbars()
