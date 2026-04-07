@@ -200,6 +200,7 @@ public:
 	bool isPointOnEntity(const RS_Vector& coord,
 								 double tolerance=RS_TOLERANCE) const override;
 
+    bool offset(const RS_Vector& position, const double& distance) override;
 	void move(const RS_Vector& offset) override;
 	void rotate(const double& angle);
 	void rotate(const RS_Vector& angleVector);

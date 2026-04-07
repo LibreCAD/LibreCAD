@@ -1220,6 +1220,40 @@ RS_Vector RS_Ellipse::dualLineTangentPoint(const RS_Vector& line) const
     return lineEqu(vp0) < lineEqu(vp1) ? vp0 : vp1;
 }
 
+/**
+  * this function creates offset
+  *@coord, position indicates the direction of offset
+  *@distance, distance of offset
+  * return true, if success, otherwise, false
+  *
+  *Author: Dongxu Li & qwilvove
+  */
+bool RS_Ellipse::offset(const RS_Vector& coord, const double& distance) {
+    double r0(coord.distanceTo(getCenter()));
+    double r1(r0);
+    double nearestRadius = getNearestPointOnEntity(coord).distanceTo(getCenter());
+    double majorRadius = getMajorRadius();
+    double minorRadius = getMinorRadius();
+    if(r0 > nearestRadius){
+        //external
+        r0 = majorRadius + fabs(distance);
+        r1 = minorRadius + fabs(distance);
+    }else{
+        r0 = majorRadius - fabs(distance);
+        r1 = minorRadius - fabs(distance);
+        if(std::min(r0, r1)<RS_TOLERANCE) {
+            return false;
+        }
+    }
+
+    setRatio(r1 / r0);
+    RS_Vector majorP = getMajorP();
+    majorP.scale(r0 / majorRadius);
+    setMajorP(majorP);
+    calculateBorders();
+    return true;
+}
+
 void RS_Ellipse::move(const RS_Vector& offset) {
     data.center.move(offset);
     //calculateEndpoints();
