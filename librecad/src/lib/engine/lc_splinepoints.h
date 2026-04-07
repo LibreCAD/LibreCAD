@@ -227,7 +227,7 @@ public:
 	void calculateBorders() override;
 
 	bool offset(const RS_Vector& coord, const double& distance) override;
-	std::vector<RS_Entity*> offsetTwoSides(const double& distance) const override;
+	std::vector<RS_Entity*> offsetTwoSides(double distance) const override;
 
 	static RS_VectorSolutions getIntersection(RS_Entity const* e1, RS_Entity const* e2);
 	RS_VectorSolutions getLineIntersect(const RS_Vector& x1, const RS_Vector& x2);

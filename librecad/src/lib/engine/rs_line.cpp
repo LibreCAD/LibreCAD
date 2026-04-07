@@ -459,7 +459,7 @@ RS_Vector RS_Line::getNormalVector() const
 	return RS_Vector{-vp.y,vp.x}/r;
 }
 
-std::vector<RS_Entity* > RS_Line::offsetTwoSides(const double& distance) const
+std::vector<RS_Entity* > RS_Line::offsetTwoSides(double distance) const
 {
 	std::vector<RS_Entity*> ret(0);
 	RS_Vector const& vp=getNormalVector()*distance;

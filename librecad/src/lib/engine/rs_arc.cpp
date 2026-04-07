@@ -605,7 +605,7 @@ bool RS_Arc::offset(const RS_Vector& coord, const double& distance) {
     calculateBorders();
     return true;
 }
-std::vector<RS_Entity* > RS_Arc::offsetTwoSides(const double& distance) const
+std::vector<RS_Entity* > RS_Arc::offsetTwoSides(double distance) const
 {
 	std::vector<RS_Entity*> ret(0,nullptr);
 	ret.push_back(new RS_Arc(nullptr,RS_ArcData(getCenter(),getRadius()+distance,getAngle1(),getAngle2(),isReversed())));

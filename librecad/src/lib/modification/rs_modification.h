@@ -289,11 +289,11 @@ private:
 	bool explodeTextIntoLetters(RS_MText* text, std::vector<RS_Entity*>& addList);
 	bool explodeTextIntoLetters(RS_Text* text, std::vector<RS_Entity*>& addList);
 
-    RS_EntityContainer* container =nullptr;
-    RS_Graphic* graphic = nullptr;
-    RS_Document* document = nullptr;
-    RS_GraphicView* graphicView = nullptr;
-    bool handleUndo = false;
+    RS_EntityContainer* m_container =nullptr;
+    RS_Graphic* m_graphic = nullptr;
+    RS_Document* m_document = nullptr;
+    RS_GraphicView* m_graphicView = nullptr;
+    bool m_handleUndo = false;
 };
 
 #endif

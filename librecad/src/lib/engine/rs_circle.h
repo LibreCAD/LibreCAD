@@ -114,9 +114,9 @@ public:
                       const RS_Vector& p3);
     bool createFrom3P(const RS_VectorSolutions& sol);
 	bool createInscribe(const RS_Vector& coord, const std::vector<RS_Line*>& lines);
-	std::vector<RS_Entity* > offsetTwoSides(const double& distance) const override;
+    std::vector<RS_Entity* > offsetTwoSides(double distance) const override;
 	RS_VectorSolutions createTan1_2P(const RS_AtomicEntity* circle, const std::vector<RS_Vector>& points);
-	static RS_VectorSolutions createTan2(const std::vector<RS_AtomicEntity*>& circles, const double& r);
+    static RS_VectorSolutions createTan2(const std::vector<RS_AtomicEntity*>& circles, double r);
     /** solve one of the eight Appollonius Equations
 | Cx - Ci|^2=(Rx+Ri)^2
 with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are the Center and radius of the i-th existing circle

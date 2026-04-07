@@ -167,7 +167,7 @@ public:
 	RS_Vector getStartpoint() const override;
     /** @return End point of the entity. */
 	RS_Vector getEndpoint() const override;
-	std::vector<RS_Entity* > offsetTwoSides(const double& distance) const override;
+	std::vector<RS_Entity* > offsetTwoSides(double distance) const override;
     /**
           * implementations must revert the direction of an atomic entity
           */

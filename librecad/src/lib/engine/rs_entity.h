@@ -447,7 +447,7 @@ public:
      * Implementations must offset the entity by the distance at both directions
      * used to generate tangential circles
      */
-	virtual std::vector<RS_Entity* > offsetTwoSides(const double& /*distance*/) const
+    virtual std::vector<RS_Entity* > offsetTwoSides(double /*distance*/) const
     {
 		return std::vector<RS_Entity* >();
     }

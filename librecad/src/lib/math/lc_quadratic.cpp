@@ -510,7 +510,7 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
 		std::cout<<*p1<<std::endl;
 		std::cout<<*p2<<std::endl;
 	}
-    if(p1->isQuadratic()==false){
+    if(!p1->isQuadratic()){
         //two lines
 		std::vector<std::vector<double> > ce(2,std::vector<double>(3,0.));
         ce[0][0]=p1->m_vLinear(0);
@@ -525,7 +525,7 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
         }
         return ret;
     }
-    if(p2->isQuadratic()==false){
+    if(!p2->isQuadratic()){
         //one line, one quadratic
         //avoid division by zero
         if(std::abs(p2->m_vLinear(0))+DBL_EPSILON<std::abs(p2->m_vLinear(1))){
@@ -579,6 +579,43 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
             return getIntersection(lc10,lc11);
         }
         return getIntersection(p1->flipXY(),p2->flipXY()).flipXY();
+    }
+    // When both conics have proportional quadratic terms (e.g. two circles),
+    // subtracting one from the other gives the radical axis — a line.
+    // Solve line + conic instead of the full quartic to avoid catastrophic
+    // cancellation in the quartic's constant term (qy[0] = -(l-f)^2 computed
+    // as -l^2 - f^2 + 2fl, which loses precision when l and f are large).
+    {
+        const auto c1 = p1->getCoefficients(); // [a,b,c,d,e,f]
+        const auto c2 = p2->getCoefficients(); // [g,h,i,j,k,l]
+        const double quadScale = std::max({std::abs(c1[0]), std::abs(c1[2]),
+                                           std::abs(c2[0]), std::abs(c2[2]), 1.});
+        double t = 0.;
+        bool canReduce = false;
+        if (std::abs(c1[0]) > RS_TOLERANCE * quadScale) {
+            t = c2[0] / c1[0];
+            canReduce = std::abs(c2[1] - t * c1[1]) <= RS_TOLERANCE * quadScale
+                     && std::abs(c2[2] - t * c1[2]) <= RS_TOLERANCE * quadScale;
+        }
+        if (!canReduce && std::abs(c1[2]) > RS_TOLERANCE * quadScale) {
+            t = c2[2] / c1[2];
+            canReduce = std::abs(c2[0] - t * c1[0]) <= RS_TOLERANCE * quadScale
+                     && std::abs(c2[1] - t * c1[1]) <= RS_TOLERANCE * quadScale;
+        }
+        if (canReduce) {
+            std::vector<double> lineCoeffs = {
+                c2[3] - t * c1[3],
+                c2[4] - t * c1[4],
+                c2[5] - t * c1[5]
+            };
+            const double lineScale = std::max({std::abs(lineCoeffs[0]),
+                                               std::abs(lineCoeffs[1]),
+                                               std::abs(lineCoeffs[2])});
+            if (lineScale > RS_TOLERANCE) {
+                LC_Quadratic radicalAxis(lineCoeffs);
+                return getIntersection(*p1, radicalAxis);
+            }
+        }
     }
     std::vector<std::vector<double> >  ce = { p1->getCoefficients(),
                                               p2->getCoefficients()};

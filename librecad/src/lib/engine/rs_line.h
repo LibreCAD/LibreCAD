@@ -185,7 +185,7 @@ public:
      * implementations must revert the direction of an atomic entity
      */
     void revertDirection() override;
-    std::vector<RS_Entity* > offsetTwoSides(const double& distance) const override;
+    std::vector<RS_Entity* > offsetTwoSides(double distance) const override;
     /**
      * the modify offset action
      */

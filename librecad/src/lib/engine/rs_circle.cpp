@@ -27,6 +27,7 @@
 **********************************************************************/
 
 #include <cmath>
+#include <memory>
 
 #include <QPolygonF>
 
@@ -300,12 +301,14 @@ bool RS_Circle::createInscribe(const RS_Vector& coord, const std::vector<RS_Line
 	return true;
 }
 
-std::vector<RS_Entity* > RS_Circle::offsetTwoSides(const double& distance) const
+std::vector<RS_Entity* > RS_Circle::offsetTwoSides(double distance) const
 {
 	std::vector<RS_Entity*> ret(0,nullptr);
-	ret.push_back(new RS_Circle(nullptr, {getCenter(),getRadius()+distance}));
-    if(std::abs(getRadius()-distance)>RS_TOLERANCE)
-    ret.push_back(new RS_Circle(nullptr, {getCenter(),std::abs(getRadius()-distance)}));
+    double r = std::abs(getRadius());
+    double dr = std::abs(distance);
+    ret.push_back(new RS_Circle(nullptr, {getCenter(), r + dr}));
+    if (r - dr > RS_TOLERANCE)
+        ret.push_back(new RS_Circle(nullptr, {getCenter(), r - dr}));
     return ret;
 }
 
@@ -322,25 +325,45 @@ RS_VectorSolutions RS_Circle::createTan1_2P(const RS_AtomicEntity* circle, const
 /**
   * create a circle of radius r and tangential to two given entities
   */
-RS_VectorSolutions RS_Circle::createTan2(const std::vector<RS_AtomicEntity*>& circles, const double& r)
+RS_VectorSolutions RS_Circle::createTan2(const std::vector<RS_AtomicEntity*>& circles, double r)
 {
-    if(circles.size()<2) return false;
-	auto e0=circles[0]->offsetTwoSides(r);
-	auto e1=circles[1]->offsetTwoSides(r);
+    if(circles.size()<2)
+        return false;
+    auto toUniquePtr = [](std::vector<RS_Entity*> rawPtrs) {
+        return std::vector<std::unique_ptr<RS_Entity>>{rawPtrs.begin(), rawPtrs.end()};
+    };
+    std::vector<std::unique_ptr<RS_Entity>> e0 = toUniquePtr(circles[0]->offsetTwoSides(r));
+    std::vector<std::unique_ptr<RS_Entity>> e1 = toUniquePtr(circles[1]->offsetTwoSides(r));
     RS_VectorSolutions centers;
-	if(e0.size() && e1.size()) {
-        for(auto it0=e0.begin();it0!=e0.end();it0++){
-            for(auto it1=e1.begin();it1!=e1.end();it1++){
-                centers.push_back(RS_Information::getIntersection(*it0,*it1));
+    int index=0;
+    for(const auto& circle0: e0) {
+        for(const auto& circle1: e1) {
+            centers.push_back(RS_Information::getIntersection(circle0.get(), circle1.get()));
+            auto vps = RS_Information::getIntersection(circle0.get(), circle1.get());
+            if (true ) {
+                auto c0 = circle0.get();
+                auto c1 = circle1.get();
+                auto vp1 = RS_Information::getIntersection(c0, c1);
+                if (c0->getRadius() + c1->getRadius() > c0->getCenter().distanceTo(c1->getCenter())) {
+
+                    std::cout<<index++<<" : ";
+                    std::cout<<c0->getCenter()<<": r= "<< c0->getRadius()<<" || ";
+                    std::cout<<c1->getCenter()<<": r= "<< c1->getRadius()<<": ";
+                    std::cout<<vp1<<std::endl;
+                    if (vp1.empty()) {
+                    vp1 = RS_Information::getIntersection(c0, c1);
+                        LC_ERR<<vp1.size();
+                    } else {
+                        std::cout<<index++<<" : ";
+                        std::cout<<c0->getCenter()<<": r= "<< c0->getRadius()<<" || ";
+                        std::cout<<c1->getCenter()<<": r= "<< c1->getRadius()<<": ";
+                        std::cout<<vp1<<"\n";
+                    }
+                }
+
             }
         }
     }
-    for(auto it0=e0.begin();it0!=e0.end();it0++){
-        delete *it0;
-    }
-    for(auto it0=e1.begin();it0!=e1.end();it0++){
-        delete *it0;
-	}
     return centers;
 
 }

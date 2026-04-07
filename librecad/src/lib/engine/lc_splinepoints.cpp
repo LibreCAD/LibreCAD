@@ -3023,7 +3023,7 @@ std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesCut(const double& distanc
     return ret;
 }
 
-std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSides(const double& distance) const
+std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSides(double distance) const
 {
 	if(data.cut) return offsetTwoSidesCut(distance);
 	return offsetTwoSidesSpline(distance);

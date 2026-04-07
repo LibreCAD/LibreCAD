@@ -194,20 +194,29 @@ public:
 
 class TangentFinderAlgoArc : public TangentFinderAlgo
 {
-    // find a Tangent point within tolerance, if at least one entity is circular, i.e. arc/circle
 public:
     std::pair<RS_VectorSolutions, bool> operator () (const RS_Entity* e1, const RS_Entity* e2) const override
     {
         if (isArc(e2))
             std::swap(e1, e2);
         if (!isArc(e1))
-            return {};
+            return {{}, false};
 
+        // === NEW: both entities are circular → use exact analytic solver ===
+        // This completely eliminates false-positive tangent points between
+        // two circles/arcs while still correctly detecting real tangents.
+        if (isArc(e2)) {
+            RS_VectorSolutions sol = RS_Information::getIntersectionArcArc(e1, e2);
+            // getIntersectionArcArc already sets the tangent flag when appropriate
+            return {sol, true};
+        }
+
+        // One circular + one non-circular → numerical offset is still needed
         RS_VectorSolutions ret = FindTangent(e1, e2);
-
         return {ret, true};
     }
 
+    // CreateOffset remains unchanged
     std::unique_ptr<RS_Entity> CreateOffset(const RS_Entity* e1, double offsetValue) const override {
         std::unique_ptr<RS_Entity> circle{ e1->clone()};
         circle->setRadius(e1->getRadius()*(1. + offsetValue));
@@ -263,9 +272,11 @@ public:
     }
 };
 
+// ===================================================================
+// 2. Slightly cleaned-up TangentFinder::GetTangent()
+// ===================================================================
 RS_VectorSolutions TangentFinder::GetTangent() const
 {
-    // TODO: handle splinepoints, parabola, and hyperbola
     std::unique_ptr<TangentFinderAlgo> algos[] = {
         std::make_unique<TangentFinderAlgoLine>(),
         std::make_unique<TangentFinderAlgoArc>(),
@@ -273,40 +284,47 @@ RS_VectorSolutions TangentFinder::GetTangent() const
         std::make_unique<TangentFinderAlgoParabola>()
     };
 
-    for(const std::unique_ptr<TangentFinderAlgo>& algo: algos) {
+    for (const std::unique_ptr<TangentFinderAlgo>& algo : algos) {
         const auto& [points, processed] = (*algo)(m_e1, m_e2);
         if (processed) {
             RS_VectorSolutions ret = points;
-            //
-            if (points.size() == 2) {
-                RS_Vector center = (points.at(0) + points.at(1)) * 0.5;
-                RS_Vector projection = m_e1->getNearestPointOnEntity(center, false);
-                projection = m_e2->getNearestPointOnEntity(projection, false);
-                ret = {projection};
-            }
-            if (!ret.empty())
-                ret.setTangent(true);
 
+            // Collapse two extremely close points into a single tangent point
+            if (ret.size() == 2) {
+                const double d = ret.at(0).distanceTo(ret.at(1));
+                const double len = std::min(m_e1->getLength(), m_e2->getLength());
+                if (d < g_tangentTolerance * len * 3.0) {
+                    RS_Vector mid = (ret.at(0) + ret.at(1)) * 0.5;
+                    mid = m_e1->getNearestPointOnEntity(mid, false);
+                    mid = m_e2->getNearestPointOnEntity(mid, false);
+                    ret = {mid};
+                } else {
+                    ret.clear();               // two distinct points → not a tangent
+                }
+            }
+
+            if (!ret.empty()) {
+                ret.setTangent(true);
+            }
             return ret;
         }
     }
     return {};
 }
+
 }
 
 /**
  * Default constructor.
  *
- * @param container The container to which we will add
+ * @param m_container The m_container to which we will add
  *        entities. Usually that's an RS_Graphic entity but
  *        it can also be a polyline, text, ...
  */
 RS_Information::RS_Information(RS_EntityContainer& container):
-    container(&container)
+    m_container(&container)
 {
 }
-
-
 
 /**
  * @return true: if the entity is a dimensioning entity.
@@ -406,11 +424,11 @@ bool RS_Information::isTrimmable(RS_Entity* e1, RS_Entity* e2) {
  *
  * @return the coordinate found or an invalid vector
  * if there are no elements at all in this graphics
- * container.
+ * m_container.
  */
 RS_Vector RS_Information::getNearestEndpoint(const RS_Vector& coord,
                                              double* dist) const {
-    return container->getNearestEndpoint(coord, dist);
+    return m_container->getNearestEndpoint(coord, dist);
 }
 
 
@@ -425,14 +443,14 @@ RS_Vector RS_Information::getNearestEndpoint(const RS_Vector& coord,
  *
  * @return the coordinate found or an invalid vector
  * if there are no elements at all in this graphics
- * container.
+ * m_container.
  */
 RS_Vector RS_Information::getNearestPointOnEntity(const RS_Vector& coord,
                                                   bool onEntity,
                                                   double* dist,
                                                   RS_Entity** entity) const {
 
-    return container->getNearestPointOnEntity(coord, onEntity, dist, entity);
+    return m_container->getNearestPointOnEntity(coord, onEntity, dist, entity);
 }
 
 
@@ -445,13 +463,13 @@ RS_Vector RS_Information::getNearestPointOnEntity(const RS_Vector& coord,
  * @param level Level of resolving entities.
  *
  * @return the entity found or nullptr if there are no elements
- * at all in this graphics container.
+ * at all in this graphics m_container.
  */
 RS_Entity* RS_Information::getNearestEntity(const RS_Vector& coord,
                                             double* dist,
                                             RS2::ResolveLevel level) const {
 
-    return container->getNearestEntity(coord, dist, level);
+    return m_container->getNearestEntity(coord, dist, level);
 }
 
 
@@ -521,8 +539,28 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
         // issue #484 , quadratic intersection solver is not robust enough for quadratic-quadratic
         // TODO, implement a robust algorithm for quadratic based solvers, and detecting entity type
         // circles/arcs can be removed
-        if (e1->rtti() == RS2::EntityLine && e2->rtti() == RS2::EntityLine) {
+        if (e2->rtti() == RS2::EntityLine) {
+            std::swap(e1, e2);
+        }
+        if (e1->rtti() == RS2::EntityLine) {
+        switch(e2->rtti()) {
+        case RS2::EntityLine:
             ret = getIntersectionLineLine(e1, e2);
+            break;
+        case RS2::EntityArc:
+        case RS2::EntityCircle:
+            ret = getIntersectionLineArc(e1, e2);
+            break;
+        default:
+            break;
+        }
+        }
+
+        if (e2->rtti() == RS2::EntityArc || e2->rtti() == RS2::EntityCircle) {
+            std::swap(e1, e2);
+        }
+        if (e2->rtti() == RS2::EntityArc || e2->rtti() == RS2::EntityCircle) {
+            ret = getIntersectionArcArc(e1, e2);
         }
 
         if (ret.empty()) {

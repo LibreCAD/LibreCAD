@@ -253,7 +253,7 @@ public:
     // void calculateBorders() override;
 
     // bool offset(const RS_Vector& coord, const double& distance) override;
-    // std::vector<RS_Entity*> offsetTwoSides(const double& distance) const override;
+    // std::vector<RS_Entity*> offsetTwoSides(double distance) const override;
     // void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
 
 private:

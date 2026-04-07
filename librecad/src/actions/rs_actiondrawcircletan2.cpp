@@ -121,7 +121,7 @@ void RS_ActionDrawCircleTan2::trigger() {
 
 
 void RS_ActionDrawCircleTan2::mouseMoveEvent(QMouseEvent* e) {
-    RS_DEBUG->print("RS_ActionDrawCircleTan2::mouseMoveEvent begin");
+    //RS_DEBUG->print("RS_ActionDrawCircleTan2::mouseMoveEvent begin");
 
     switch(getStatus() ){
     case SetCenter: {
@@ -142,16 +142,14 @@ void RS_ActionDrawCircleTan2::mouseMoveEvent(QMouseEvent* e) {
     default:
         break;
     }
-    RS_DEBUG->print("RS_ActionDrawCircleTan2::mouseMoveEvent end");
+    //RS_DEBUG->print("RS_ActionDrawCircleTan2::mouseMoveEvent end");
 }
 
 
 bool RS_ActionDrawCircleTan2::setRadius(const QString& sr)
 {
-	bool ok;
-	double r;
-
-	r = RS_Math::eval(sr,&ok);
+    bool ok = false;
+    double r = RS_Math::eval(sr,&ok);
 	if (!ok) {
 		RS_DIALOGFACTORY->commandMessage(tr("Invalid expression '%1' for radius").arg(sr));
 	} else if(r<0) {
