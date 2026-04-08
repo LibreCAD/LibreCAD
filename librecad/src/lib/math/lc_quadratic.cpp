@@ -491,167 +491,110 @@ LC_Quadratic LC_Quadratic::flipXY(void) const
     return qf;
 }
 
+/** find intersections between two quadratics */
 RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const LC_Quadratic& l2)
 {
     RS_VectorSolutions ret;
-	if( l1 == false || l2 == false ) {
-//        DEBUG_HEADER
-//        std::cout<<l1<<std::endl;
-//        std::cout<<l2<<std::endl;
+
+    if (!l1 || !l2) {
         return ret;
     }
-    auto p1=&l1;
-    auto p2=&l2;
-    if(p1->isQuadratic()==false){
-        std::swap(p1,p2);
+
+    // Make sure the first one is quadratic (swap if needed)
+    const LC_Quadratic* p1 = &l1;
+    const LC_Quadratic* p2 = &l2;
+    if (!p1->isQuadratic()) {
+        std::swap(p1, p2);
     }
-	if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
-		DEBUG_HEADER
-		std::cout<<*p1<<std::endl;
-		std::cout<<*p2<<std::endl;
-	}
-    if(!p1->isQuadratic()){
-        //two lines
-		std::vector<std::vector<double> > ce(2,std::vector<double>(3,0.));
-        ce[0][0]=p1->m_vLinear(0);
-        ce[0][1]=p1->m_vLinear(1);
-        ce[0][2]=-p1->m_dConst;
-        ce[1][0]=p2->m_vLinear(0);
-        ce[1][1]=p2->m_vLinear(1);
-        ce[1][2]=-p2->m_dConst;
-		std::vector<double> sn(2,0.);
-        if(RS_Math::linearSolver(ce,sn)){
-            ret.push_back(RS_Vector(sn[0],sn[1]));
+
+    // Both are lines
+    if (!p1->isQuadratic()) {
+        std::vector<std::vector<double>> ce(2, std::vector<double>(3, 0.0));
+        ce[0] = {p1->m_vLinear(0), p1->m_vLinear(1), -p1->m_dConst};
+        ce[1] = {p2->m_vLinear(0), p2->m_vLinear(1), -p2->m_dConst};
+
+        std::vector<double> sn(2, 0.0);
+        if (RS_Math::linearSolver(ce, sn)) {
+            ret.push_back(RS_Vector(sn[0], sn[1]));
         }
         return ret;
     }
-    if(!p2->isQuadratic()){
-        //one line, one quadratic
-        //avoid division by zero
-        if(std::abs(p2->m_vLinear(0))+DBL_EPSILON<std::abs(p2->m_vLinear(1))){
-            ret=getIntersection(p1->flipXY(),p2->flipXY()).flipXY();
-//            for(size_t j=0;j<ret.size();j++){
-//                DEBUG_HEADER
-//                std::cout<<j<<": ("<<ret[j].x<<", "<< ret[j].y<<")"<<std::endl;
-//            }
-            return ret;
+
+    // One quadratic + one line
+    if (!p2->isQuadratic()) {
+        // Use flipXY trick when the line is nearly vertical to improve numerical stability
+        if (std::abs(p2->m_vLinear(0)) + DBL_EPSILON < std::abs(p2->m_vLinear(1))) {
+            return getIntersection(p1->flipXY(), p2->flipXY()).flipXY();
         }
-        std::vector<std::vector<double> >  ce(0);
-        if(std::abs(p2->m_vLinear(1))<RS_TOLERANCE){
-            const double angle=0.25*M_PI;
-            LC_Quadratic p11(*p1);
-            LC_Quadratic p22(*p2);
-            ce.push_back(p11.rotate(angle).getCoefficients());
-            ce.push_back(p22.rotate(angle).getCoefficients());
-            ret=RS_Math::simultaneousQuadraticSolverMixed(ce);
-            ret.rotate(-angle);
-//            for(size_t j=0;j<ret.size();j++){
-//                DEBUG_HEADER
-//                std::cout<<j<<": ("<<ret[j].x<<", "<< ret[j].y<<")"<<std::endl;
-//            }
-            return ret;
-        }
-        ce.push_back(p1->getCoefficients());
-        ce.push_back(p2->getCoefficients());
-        ret=RS_Math::simultaneousQuadraticSolverMixed(ce);
-//        for(size_t j=0;j<ret.size();j++){
-//            DEBUG_HEADER
-//            std::cout<<j<<": ("<<ret[j].x<<", "<< ret[j].y<<")"<<std::endl;
-//        }
-        return ret;
+
+        std::vector<std::vector<double>> ce{{p1->getCoefficients(), p2->getCoefficients()}};
+        return RS_Math::simultaneousQuadraticSolverMixed(ce);
     }
-    if( std::abs(p1->m_mQuad(0,0))<RS_TOLERANCE && std::abs(p1->m_mQuad(0,1))<RS_TOLERANCE
-            &&
-            std::abs(p2->m_mQuad(0,0))<RS_TOLERANCE && std::abs(p2->m_mQuad(0,1))<RS_TOLERANCE
-            ){
-        if(std::abs(p1->m_mQuad(1,1))<RS_TOLERANCE && std::abs(p2->m_mQuad(1,1))<RS_TOLERANCE){
-            //linear
-            std::vector<double> ce(0);
-            ce.push_back(p1->m_vLinear(0));
-            ce.push_back(p1->m_vLinear(1));
-            ce.push_back(p1->m_dConst);
-            LC_Quadratic lc10(ce);
-            ce.clear();
-            ce.push_back(p2->m_vLinear(0));
-            ce.push_back(p2->m_vLinear(1));
-            ce.push_back(p2->m_dConst);
-            LC_Quadratic lc11(ce);
-            return getIntersection(lc10,lc11);
+
+    // Both are quadratics
+
+    // Special case: both degenerate to lines (only linear terms)
+    if (std::abs(p1->m_mQuad(0,0)) < RS_TOLERANCE && std::abs(p1->m_mQuad(0,1)) < RS_TOLERANCE &&
+        std::abs(p2->m_mQuad(0,0)) < RS_TOLERANCE && std::abs(p2->m_mQuad(0,1)) < RS_TOLERANCE) {
+
+        if (std::abs(p1->m_mQuad(1,1)) < RS_TOLERANCE && std::abs(p2->m_mQuad(1,1)) < RS_TOLERANCE) {
+            // Both are pure lines
+            return getIntersection(
+                LC_Quadratic({p1->m_vLinear(0), p1->m_vLinear(1), p1->m_dConst}),
+                LC_Quadratic({p2->m_vLinear(0), p2->m_vLinear(1), p2->m_dConst})
+                );
         }
-        return getIntersection(p1->flipXY(),p2->flipXY()).flipXY();
+        // Degenerate to parabola-like in swapped coordinates
+        return getIntersection(p1->flipXY(), p2->flipXY()).flipXY();
     }
-    // When both conics have proportional quadratic terms (e.g. two circles),
-    // subtracting one from the other gives the radical axis — a line.
-    // Solve line + conic instead of the full quartic to avoid catastrophic
-    // cancellation in the quartic's constant term (qy[0] = -(l-f)^2 computed
-    // as -l^2 - f^2 + 2fl, which loses precision when l and f are large).
-    {
-        const auto c1 = p1->getCoefficients(); // [a,b,c,d,e,f]
-        const auto c2 = p2->getCoefficients(); // [g,h,i,j,k,l]
-        const double quadScale = std::max({std::abs(c1[0]), std::abs(c1[2]),
-                                           std::abs(c2[0]), std::abs(c2[2]), 1.});
-        double t = 0.;
-        bool canReduce = false;
-        if (std::abs(c1[0]) > RS_TOLERANCE * quadScale) {
-            t = c2[0] / c1[0];
-            canReduce = std::abs(c2[1] - t * c1[1]) <= RS_TOLERANCE * quadScale
-                     && std::abs(c2[2] - t * c1[2]) <= RS_TOLERANCE * quadScale;
-        }
-        if (!canReduce && std::abs(c1[2]) > RS_TOLERANCE * quadScale) {
-            t = c2[2] / c1[2];
-            canReduce = std::abs(c2[0] - t * c1[0]) <= RS_TOLERANCE * quadScale
-                     && std::abs(c2[1] - t * c1[1]) <= RS_TOLERANCE * quadScale;
-        }
-        if (canReduce) {
-            std::vector<double> lineCoeffs = {
-                c2[3] - t * c1[3],
-                c2[4] - t * c1[4],
-                c2[5] - t * c1[5]
-            };
-            const double lineScale = std::max({std::abs(lineCoeffs[0]),
-                                               std::abs(lineCoeffs[1]),
-                                               std::abs(lineCoeffs[2])});
-            if (lineScale > RS_TOLERANCE) {
-                LC_Quadratic radicalAxis(lineCoeffs);
-                return getIntersection(*p1, radicalAxis);
-            }
+
+    // Radical axis optimization when quadratic parts are proportional (e.g. two circles)
+    const auto c1 = p1->getCoefficients();
+    const auto c2 = p2->getCoefficients();
+    const double quadScale = std::max({std::abs(c1[0]), std::abs(c1[2]),
+                                       std::abs(c2[0]), std::abs(c2[2]), 1.0});
+
+    double t = 0.0;
+    bool canReduce = false;
+
+    if (std::abs(c1[0]) > RS_TOLERANCE * quadScale) {
+        t = c2[0] / c1[0];
+        canReduce = std::abs(c2[1] - t * c1[1]) <= RS_TOLERANCE * quadScale &&
+                    std::abs(c2[2] - t * c1[2]) <= RS_TOLERANCE * quadScale;
+    }
+    if (!canReduce && std::abs(c1[2]) > RS_TOLERANCE * quadScale) {
+        t = c2[2] / c1[2];
+        canReduce = std::abs(c2[0] - t * c1[0]) <= RS_TOLERANCE * quadScale &&
+                    std::abs(c2[1] - t * c1[1]) <= RS_TOLERANCE * quadScale;
+    }
+
+    if (canReduce) {
+        std::vector<double> lineCoeffs = {
+            c2[3] - t * c1[3],
+            c2[4] - t * c1[4],
+            c2[5] - t * c1[5]
+        };
+
+        const double lineScale = std::max({std::abs(lineCoeffs[0]),
+                                           std::abs(lineCoeffs[1]),
+                                           std::abs(lineCoeffs[2])});
+
+        if (lineScale > RS_TOLERANCE) {
+            LC_Quadratic radicalAxis(lineCoeffs);
+            return getIntersection(*p1, radicalAxis);
         }
     }
-    std::vector<std::vector<double> >  ce = { p1->getCoefficients(),
-                                              p2->getCoefficients()};
-    if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
-        DEBUG_HEADER
-        std::cout<<*p1<<std::endl;
-        std::cout<<*p2<<std::endl;
-    }
-	auto sol= RS_Math::simultaneousQuadraticSolverFull(ce);
-    bool valid= sol.size()>0;
-	for(auto & v: sol){
-        if(v.magnitude()>=RS_MAXDOUBLE){
-            valid=false;
-            break;
+
+    // General case: two full quadratics → solve quartic
+    std::vector<std::vector<double>> ce = {p1->getCoefficients(), p2->getCoefficients()};
+    auto sol = RS_Math::simultaneousQuadraticSolverFull(ce);
+
+    for (const RS_Vector& vp : sol) {
+        if (vp.magnitude() <= RS_MAXDOUBLE) {
+            ret.push_back(vp);
         }
-        const std::vector<double> xyi = {v.x * v.x, v.x * v.y, v.y * v.y, v.x, v.y, 1.};
-        const double e0 = std::inner_product(xyi.cbegin(), xyi.cend(), ce.front().cbegin(), 0.);
-        const double e1 = std::inner_product(xyi.cbegin(), xyi.cend(), ce.back().cbegin(), 0.);
-        LC_LOG<<__func__<<"(): "<<v.x<<","<<v.y<<": equ0= "<<e0;
-        LC_LOG<<__func__<<"(): "<<v.x<<","<<v.y<<": equ1= "<<e1;
     }
-    if(valid) return sol;
-    ce.clear();
-	ce.push_back(p1->getCoefficients());
-	ce.push_back(p2->getCoefficients());
-    sol=RS_Math::simultaneousQuadraticSolverFull(ce);
-    ret.clear();
-	for(auto const& v: sol){
-		if(v.magnitude()<=RS_MAXDOUBLE){
-			ret.push_back(v);
-			if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
-				DEBUG_HEADER
-				std::cout<<v<<std::endl;
-			}
-		}
-	}
+
     return ret;
 }
 
