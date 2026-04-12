@@ -76,8 +76,10 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionG
     m_actionRestrictVertical = addOwnAction("RestrictVertical", actionsMap);
 
     m_actionRestrictOrthogonal = justAddAction("RestrictOrthogonal", actionsMap);
+    // Issue #2526: default shortcut for snapping: restriction orthogonal
+    m_actionRestrictOrthogonal->setShortcut(QKeySequence(Qt::Key_F8));
     connect(m_actionRestrictOrthogonal, &QAction::triggered, this, &QG_SnapToolBar::slotRestrictOrthogonal);
-
+    // Default shortcut for AutoCAD compatibility (F8). Still fully configurable in Options → Keyboard Shortcuts.
     m_actionRestrictNothing = justAddAction("RestrictNothing", actionsMap);
     connect(m_actionRestrictNothing, &QAction::triggered, this, &QG_SnapToolBar::slotRestrictNothing);
     // todo - in general, restrict nothing has no practical sense at all - as buttons are toggled, the amount of clicks is the same
