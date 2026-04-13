@@ -155,6 +155,21 @@ void LC_AbstractActionDrawLine::setAngleIsRelative(bool value){
     updateOptions();
 }
 
+void LC_AbstractActionDrawLine::doMouseMoveEnd(int status, LC_MouseEvent *e)
+{
+  LC_AbstractActionWithPreview::doMouseMoveEnd(status, e);
+  switch(status) {
+  case SetStartPoint:
+  case SetPoint:
+    drawSnapper();
+    break;
+  default:
+    return;
+  }
+
+}
+
+
 /**
  * Return whether specified angle is relative
  * @return

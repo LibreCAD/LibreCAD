@@ -1092,7 +1092,7 @@ or [%2]</source>
         <message>
             <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="377"/>
             <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
-            <translation>指定参考点 [top-top-top-top-top-top-tro-trole-trole-trole-troom-troom-troom-troom-troom-troom-troom-troom-troom-troom-troom-troom-troom-troom-troom-troom-troom-troom-troom-trot-trot-trot-trot-trotto-ttotop-top-top-t-t-tro-t-t-trot-trot-tro-trotal-tall-trotrottrot-trottrot-tall-trotro-tot--trotrot-trot)</translation>
+            <translation>指定參考點 [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</translation>
         </message>
         <message>
             <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="380"/>
@@ -14262,11 +14262,11 @@ Layer: </source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-            <translation>&lt;! DOCTYPE HTML Public &quot;-///W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot; (中文(简体) ).
-: &lt;html&gt;&lt;-head&gt;&lt;-meta name=&quot;qrichtext&quot; 内容=&quot;1&quot; /&gt;&lt; style type=&quot;text/cs&quot; (中文(简体) ).
-p, li { 白- 空格: pre- wrap;}
-&lt;/style\/head\body style=''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-&lt;p样式=''-qt-段落类型:空;边-上:0px;边-下:0px;边-左:0px;边-右:0px;-qt-块-缩进:0;文字-缩进:0px;&quot;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&quot;</translation>
+            <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         </message>
         <message>
             <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="346"/>
@@ -20140,7 +20140,7 @@ This recursively modifies all entities of the Block itself.</source>
         <message>
             <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5172"/>
             <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-            <translation>(原始内容存档于2018-10-21) (中文(中国大陆) ). html\head/&gt;&lt;body\p&gt;&lt;span tyle=&quot;字体-家庭:'-apple-systemFont','Segoe UI','Noto Sans','Helvetica','Arial','san-serif','Apple Color Emoji','Segoe UI Emoji';字体大小:14px;颜色:#1f2328;背景:#ffffff;&quot;). 部分库文件夹 。 符号库 dxf 文件必须位于此文件夹的子目录中. 子文件夹名称将在库浏览器中显示. &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;sp&gt;&lt;span style=&quot;字体-家族:'-apple-systemFont','Segoe UI','Noto Sans','Helvetica','Arial','san-serif','Apple Color Emoji','Segoe UI Emoji';字体大小:14px;颜色:#1f2328;背景-颜色:#ffffff;''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''</translation>
+            <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;元件庫資料夾。符號庫的 DXF 檔案必須位於此資料夾的子目錄中。子資料夾的名稱將顯示在「元件庫瀏覽器」中。&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;(選單：小工具 &gt; 對接小工具 &gt; 元件庫瀏覽器)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         </message>
         <message>
             <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5190"/>
@@ -20177,7 +20177,7 @@ This recursively modifies all entities of the Block itself.</source>
             <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5619"/>
             <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5656"/>
             <source> px</source>
-            <translation>ưμ㼯a</translation>
+            <translation>px</translation>
         </message>
         <message>
             <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5538"/>
@@ -23949,7 +23949,7 @@ p, li { white-space: pre-wrap; }
         <message>
             <location filename="../src/ui/main/support/qg_recentfiles.cpp" line="177"/>
             <source>&amp;%1 %2</source>
-            <translation>&amp;%1 %2</translation>
+            <translation>最近文件：%1 %2</translation>
         </message>
     </context>
     <context>
@@ -24113,8 +24113,7 @@ This action can NOT be undone.</source>
             <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1776"/>
             <source>Remove %n layer(s)</source>
             <translation>
-        删除 %n 层
-                <numerusform/>
+                <numerusform>移除 %n 個圖層</numerusform>
             </translation>
         </message>
         <message>
@@ -24159,8 +24158,7 @@ This action can NOT be undone.</source>
             <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="514"/>
             <source>Remove %n block(s)</source>
             <translation>
-        删除 %n 个块
-                <numerusform/>
+                <numerusform>移除 %n 個區塊</numerusform>
             </translation>
         </message>
         <message>
@@ -25170,7 +25168,7 @@ Do you want to replace it?</source>
             <location filename="../src/cmd/lc_commandItems.h" line="95"/>
             <source>l</source>
             <comment>draw line</comment>
-            <translation>ưμ㼯a</translation>
+            <translation>l</translation>
         </message>
         <message>
             <location filename="../src/cmd/lc_commandItems.h" line="533"/>
@@ -25965,7 +25963,7 @@ Do you want to replace it?</source>
             <location filename="../src/cmd/lc_commandItems.h" line="266"/>
             <source>lp</source>
             <comment>parallel through point</comment>
-            <translation>ưμ㼯a</translation>
+            <translation>lp</translation>
         </message>
         <message>
             <location filename="../src/cmd/lc_commandItems.h" line="272"/>
@@ -26553,7 +26551,7 @@ Do you want to replace it?</source>
             <location filename="../src/cmd/lc_commandItems.h" line="614"/>
             <source>sx</source>
             <comment>deselect all entities</comment>
-            <translation>ưμ㼯a</translation>
+            <translation>sx</translation>
         </message>
         <message>
             <location filename="../src/cmd/lc_commandItems.h" line="620"/>
@@ -27123,7 +27121,7 @@ Do you want to replace it?</source>
             <location filename="../src/cmd/lc_commandItems.h" line="820"/>
             <source>xp</source>
             <comment>explode block/polyline into entities</comment>
-            <translation>ưμ㼯a</translation>
+            <translation>xp</translation>
         </message>
         <message>
             <location filename="../src/cmd/lc_commandItems.h" line="899"/>
@@ -27285,7 +27283,7 @@ Do you want to replace it?</source>
             <location filename="../src/cmd/lc_commandItems.h" line="801"/>
             <source>mp</source>
             <comment>modify properties</comment>
-            <translation>ưμ㼯a</translation>
+            <translation>mp</translation>
         </message>
         <message>
             <location filename="../src/cmd/lc_commandItems.h" line="836"/>
@@ -27779,7 +27777,7 @@ Do you want to replace it?</source>
             <location filename="../src/cmd/lc_commandItems.h" line="1203"/>
             <source>l</source>
             <comment>length</comment>
-            <translation>ưμ㼯a</translation>
+            <translation>l</translation>
         </message>
         <message>
             <location filename="../src/cmd/lc_commandItems.h" line="1205"/>

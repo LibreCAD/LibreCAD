@@ -73,10 +73,11 @@ TRANSLATIONS = ./ts/plugins_ar.ts \
     ./ts/plugins_sk.ts \
     ./ts/plugins_sl.ts \
     ./ts/plugins_sq_al.ts \
+    ./ts/plugins_sr.ts \
+    ./ts/plugins_sr_ba.ts \
+    ./ts/plugins_sr_me.ts \
+    ./ts/plugins_sr_rs.ts \
     ./ts/plugins_sv.ts \
-    ./ts/plugins_sv_ba.ts \
-    ./ts/plugins_sv_me.ts \
-    ./ts/plugins_sv_rs.ts \
     ./ts/plugins_ta.ts \
     ./ts/plugins_tr.ts \
     ./ts/plugins_uk.ts \

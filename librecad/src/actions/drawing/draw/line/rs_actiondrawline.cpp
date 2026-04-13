@@ -123,6 +123,7 @@ void RS_ActionDrawLine::onMouseMoveEvent(int status, LC_MouseEvent *e) {
         default:
             break;
     }
+        drawSnapper();
 }
 
 void RS_ActionDrawLine::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {

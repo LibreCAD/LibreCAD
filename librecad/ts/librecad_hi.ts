@@ -1120,12 +1120,12 @@ or [%2]</source>
         <message>
             <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="283"/>
             <source>Specify point 1 snap [corner|mid-vert|mid-hor|middle]</source>
-            <translation>निर्दिष्ट बिंदु 1 स्नैप [कॉर्नरमिड + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +]</translation>
+            <translation>पहले बिंदु के लिए स्नैप निर्दिष्ट करें [कोना|मध्य-ऊर्ध्वाधर|मध्य-क्षैतिज|मध्य]</translation>
         </message>
         <message>
             <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="286"/>
             <source>Specify point 2 snap [corner|mid-vert|mid-hor|middle]</source>
-            <translation>निर्दिष्ट बिंदु 2 स्नैप [कॉर्नरमिड + + + + + - + - + - + - + - + - + - + - + - + - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</translation>
+            <translation>दूसरे बिंदु के लिए स्नैप निर्दिष्ट करें [कोना|मध्य-ऊर्ध्वाधर|मध्य-क्षैतिज|मध्य]</translation>
         </message>
         <message>
             <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle2points.cpp" line="289"/>
@@ -4381,14 +4381,12 @@ End Edge Point: (%9 , %10)</source>
             <translation>कृपया जांच लें कि यह मौजूद है और इससे पढ़ने की अनुमति है।.</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="206"/>
             <source>Shortcuts mappings were not imported.
  Provided file does exists, however it does not contain LibreCAD shortcuts mapping.</source>
             <translation>शॉर्टकट मैपिंग का आयात नहीं किया गया था।
 हालांकि इसमें LibreCAD शॉर्टकट मैपिंग शामिल नहीं है।.</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="211"/>
             <source>Shortcuts mappings were not imported. 
 XML parsing error occurred during file processing.</source>
             <translation>शॉर्टकट मैपिंग का आयात नहीं किया गया था।
@@ -4405,11 +4403,31 @@ XML पार्सिंग त्रुटि फ़ाइल प्रोस�
             <translation>कृपया जांच लें कि उसे लिखने की अनुमति है।.</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="232"/>
             <source>Shortcuts mappings were not imported. 
 Some error occurred during XML generation.</source>
             <translation>शॉर्टकट मैपिंग का आयात नहीं किया गया था।
 कुछ त्रुटि XML पीढ़ी के दौरान हुई।.</translation>
+        </message>
+        <message>
+            <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="206"/>
+            <source>Shortcuts mappings were not imported.
+ Provided file does exists, however it does not contain LibreCAD shortcuts mapping.</source>
+            <translation>शॉर्टकट मैपिंग आयात नहीं की गई।
+ प्रदान की गई फ़ाइल मौजूद है, हालाँकि इसमें लिब्रेकैड शॉर्टकट मैपिंग शामिल नहीं है।</translation>
+        </message>
+        <message>
+            <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="211"/>
+            <source>Shortcuts mappings were not imported. 
+XML parsing error occurred during file processing.</source>
+            <translation>शॉर्टकट मैपिंग आयात नहीं की गई। 
+फ़ाइल संसाधित करते समय XML पार्सिंग त्रुटि हुई।</translation>
+        </message>
+        <message>
+            <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="232"/>
+            <source>Shortcuts mappings were not imported. 
+Some error occurred during XML generation.</source>
+            <translation>शॉर्टकट मैपिंग आयात नहीं की गई। 
+XML उत्पन्न करते समय कुछ त्रुटि हुई।</translation>
         </message>
         <message>
             <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="293"/>
@@ -5344,7 +5362,6 @@ Are you sure you are going to discard changes?</source>
             <translation>बेसलाइन रिक्ति:</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="150"/>
             <source>Sets the spacing between the dimension lines of a baseline dimension. Enter a distance. For information about baseline dimensions, see DIMBASELINE. (DIMDLI system variable)
 </source>
             <translation>एक बेसलाइन आयाम की आयाम लाइनों के बीच रिक्ति सेट करता है। दूरी दर्ज करें। आधार रेखा आयामों के बारे में जानकारी के लिए, DIMBASELINE देखें। (DIMDLI)</translation>
@@ -5768,6 +5785,12 @@ Are you sure you are going to discard changes?</source>
             <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="904"/>
             <source>Aligned with dimension line</source>
             <translation>आयाम लाइन के साथ संरेखित</translation>
+        </message>
+        <message>
+            <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="150"/>
+            <source>Sets the spacing between the dimension lines of a baseline dimension. Enter a distance. For information about baseline dimensions, see DIMBASELINE. (DIMDLI system variable)
+</source>
+            <translation>यह एक आधार रेखा आयाम के आयाम रेखाओं के बीच की दूरी निर्धारित करता है। एक दूरी दर्ज करें। आधार रेखा आयामों के बारे में जानकारी के लिए, DIMBASELINE देखें। (DIMDLI सिस्टम चर)</translation>
         </message>
         <message>
             <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="577"/>
@@ -7846,7 +7869,7 @@ Are you sure you are going to discard changes?</source>
         <message>
             <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="231"/>
             <source>&lt;a href=&quot;https://api.github.com/repos/LibreCAD/LibreCAD/releases/176244221&quot;&gt;2.2.0.2-rc-alpha&lt;/a&gt;</source>
-            <translation>&lt;a href=&quot;https://api.github.com/repos/LibreCAD/LibreCAD/releases/176244221&quot;&gt;2.2.0.2-rc-alpha&lt;/a&gt;</translation>
+            <translation>नया संस्करण उपलब्ध है: 2.2.0.2-rc-alpha</translation>
         </message>
         <message>
             <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.cpp" line="111"/>
@@ -13059,6 +13082,12 @@ Warning: this action can NOT be undone!</source>
             <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="405"/>
             <source>Location of pens file is changed, please restart the application so new pens file will be used.
 Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
+            <translation>पेन फ़ाइल का स्थान बदल दिया गया है, कृपया एप्लिकेशन को पुनरारंभ करें ताकि नई पेन फ़ाइल का उपयोग किया जा सके।
+कृपया ध्यान दें कि यदि आप पुनरारंभ किए बिना संपादक के माध्यम से पेन सहेजते हैं, तो पैलेट से वर्तमान पेन नई फ़ाइल में सहेजे जाएंगे और इसलिए इसकी मौजूदा सामग्री अधिलेखित हो जाएगी।</translation>
+        </message>
+        <message>
+            <source>Location of pens file is changed, please restart the application so new pens file will be used.
+Please note that if you'll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
             <translation>पेन फ़ाइल का स्थान बदल जाता है, कृपया एप्लिकेशन को पुनः आरंभ करें ताकि नई पेन फ़ाइल का उपयोग किया जा सके।
 कृपया ध्यान दें कि यदि आप पुनरारंभ के बिना संपादक के माध्यम से कलम बचा लेंगे, तो पैलेट से वर्तमान पेन नई फ़ाइल में बचाया जाएगा और इसलिए इसकी मौजूदा सामग्री को ओवरराइड किया जाएगा।.</translation>
         </message>
@@ -14367,7 +14396,7 @@ P, li { white-space: pre-wrap; }
         <message>
             <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
             <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be show in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-            <translation>&lt;html&gt;&lt;head&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&lt;head&gt;&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;head&gt;&gt;&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&lt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;body&gt;&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; यदि चुना गया है, तो लाइनों और चापों के बारे में अधिक विस्तृत जानकारी जो पॉलीलाइन का हिस्सा हैं, को एंटिटी इन्फो विजेट में दिखाया जाएगा। अन्यथा, केवल vertex/bulges के बारे में जानकारी प्रदर्शित की जाएगी।</translation>
+            <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;यदि चयनित है, तो पॉलीलाइन का हिस्सा बनने वाली रेखाओं और चापों के बारे में अधिक विस्तृत जानकारी इकाई जानकारी विजेट में दिखाई जाएगी।&lt;br/&gt;अन्यथा, केवल शीर्षों/बल्जों के बारे में जानकारी प्रदर्शित की जाएगी।&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         </message>
         <message>
             <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="84"/>
@@ -18012,7 +18041,6 @@ This recursively modifies all entities of the Block itself.</source>
             <translation>चिह्न डालें</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="872"/>
             <source>Symbol insertion</source>
             <translation>प्रतीक प्रविष्टि</translation>
         </message>
@@ -18032,627 +18060,641 @@ This recursively modifies all entities of the Block itself.</source>
             <translation>प्लस / मिनस (±)</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="891"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="892"/>
             <source>At (@)</source>
             <translation>(@)</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="896"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="898"/>
             <source>Hash (#)</source>
             <translation>हैश (#)</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="901"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="904"/>
             <source>Dollar ($)</source>
             <translation>डॉलर ($)</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="906"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="909"/>
             <source>Copyright (©)</source>
             <translation>कॉपीराइट (©)</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="911"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="914"/>
             <source>Registered (®)</source>
             <translation>पंजीकृत (®)</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="916"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="919"/>
             <source>Paragraph (§)</source>
             <translation>पैराग्राफ (§)</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="921"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="924"/>
             <source>Pi (π)</source>
             <translation>पाई (π)</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="926"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="929"/>
             <source>Pound (£)</source>
             <translation>पाउंड (£)</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="931"/>
             <source>Yen (¥)</source>
             <translation>येन (¥)</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="936"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="872"/>
+            <source>Symbol to insert</source>
+            <translation>सम्मिलित करने के लिए प्रतीक</translation>
+        </message>
+        <message>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="935"/>
+            <source>Yen / Yuan (¥)</source>
+            <translation>येन / युआन (¥)</translation>
+        </message>
+        <message>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="940"/>
+            <source>Euro (€)</source>
+            <translation>यूरो (€)</translation>
+        </message>
+        <message>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="945"/>
             <source>Times (×)</source>
             <translation>समय (×)</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="941"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="950"/>
             <source>Division (÷)</source>
             <translation>प्रभाग (÷)</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="952"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="961"/>
             <source>Insert Unicode</source>
             <translation>यूनिकोड डालें</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="958"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="967"/>
             <source>Page:</source>
             <translation>पृष्ठ:</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="968"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="977"/>
             <source>Char:</source>
             <translation>चार:</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="990"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="999"/>
             <source>Codepage to use for characted selection</source>
             <translation>वर्णक्रमीय चयन के लिए उपयोग करने के लिए Codepage</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="994"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1003"/>
             <source>[0000-007F] Basic Latin</source>
             <translation>[0000-007F] मूल लैटिन</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="999"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1008"/>
             <source>[0080-00FF] Latin-1 Supplementary</source>
             <translation>[0080-00FF] लैटिन-1 अनुपूरक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1004"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1013"/>
             <source>[0100-017F] Latin Extended-A</source>
             <translation>[0100-017F] लैटिन विस्तारित A</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1009"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1018"/>
             <source>[0180-024F] Latin Extended-B</source>
             <translation>[0180-024F] लैटिन विस्तारित-B</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1014"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1023"/>
             <source>[0250-02AF] IPA Extensions</source>
             <translation>[0250-02AF] IPA एक्सटेंशन</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1019"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1028"/>
             <source>[02B0-02FF] Spacing Modifier Letters</source>
             <translation>[02B0-02FF] स्पेसिंग मॉडिफायर पत्र</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1024"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1033"/>
             <source>[0300-036F] Combining Diacritical Marks</source>
             <translation>[0300-036F] डायक्रिटिकल मार्क्स का संयोजन</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1029"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1038"/>
             <source>[0370-03FF] Greek and Coptic</source>
             <translation>[0370-03FF] यूनानी और कॉप्टिक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1034"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1043"/>
             <source>[0400-04FF] Cyrillic</source>
             <translation>[0400-04FF] सिरिलिक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1039"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1048"/>
             <source>[0500-052F] Cyrillic Supplementary</source>
             <translation>[0500-052F] Cyrillic अनुपूरक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1044"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1053"/>
             <source>[0530-058F] Armenian</source>
             <translation>[0530-058F] आर्मेनियाई</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1049"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1058"/>
             <source>[0590-05FF] Hebrew</source>
             <translation>[0590-05FF] हिब्रू</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1054"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1063"/>
             <source>[0600-06FF] Arabic</source>
             <translation>[0600-06FF] अरबी</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1059"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1068"/>
             <source>[0700-074F] Syriac</source>
             <translation>[0700-074F] सीरियाई</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1064"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1073"/>
             <source>[0780-07BF] Thaana</source>
             <translation>[0780-07BF] थाना</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1069"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1078"/>
             <source>[0900-097F] Devanagari</source>
             <translation>[0900-097F] देवनगरी</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1074"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1083"/>
             <source>[0980-09FF] Bengali</source>
             <translation>[0980-09FF] बंगाली</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1079"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1088"/>
             <source>[0A00-0A7F] Gurmukhi</source>
             <translation>[0A00-0A7F] गुजराती</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1084"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1093"/>
             <source>[0A80-0AFF] Gujarati</source>
             <translation>[0A80-0AFF] गुजराती</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1089"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1098"/>
             <source>[0B00-0B7F] Oriya</source>
             <translation>[0B00-0B7F] ओरिया</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1094"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1103"/>
             <source>[0B80-0BFF] Tamil</source>
             <translation>[0B80-0BFF] तमिल</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1099"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1108"/>
             <source>[0C00-0C7F] Telugu</source>
             <translation>[0C00-0C7F] तेलुगु</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1104"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1113"/>
             <source>[0C80-0CFF] Kannada</source>
             <translation>[0C80-0CFF] कन्नड़</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1109"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1118"/>
             <source>[0D00-0D7F] Malayalam</source>
             <translation>[0D00-0D7F] मलयालम</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1114"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1123"/>
             <source>[0D80-0DFF] Sinhala</source>
             <translation>[0D80-0DFF] सिंहला</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1119"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1128"/>
             <source>[0E00-0E7F] Thai</source>
             <translation>[0E00-0E7F] थाई</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1124"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1133"/>
             <source>[0E80-0EFF] Lao</source>
             <translation>[0E80-0EFF] लाओ</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1129"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1138"/>
             <source>[0F00-0FFF] Tibetan</source>
             <translation>[0F00-0FFF] तिब्बती</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1134"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1143"/>
             <source>[1000-109F] Myanmar</source>
             <translation>[1000-109F] म्यांमार</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1139"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1148"/>
             <source>[10A0-10FF] Georgian</source>
             <translation>[10A0-10FF] जॉर्जिया</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1144"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1153"/>
             <source>[1100-11FF] Hangul Jamo</source>
             <translation>[1100-11FF] हैंगुल जामो</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1149"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1158"/>
             <source>[1200-137F] Ethiopic</source>
             <translation>[1200-137F] इथियोपिक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1154"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1163"/>
             <source>[13A0-13FF] Cherokee</source>
             <translation>[13A0-13FF] चेरोकी</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1159"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1168"/>
             <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
             <translation>[1400-167F] एकीकृत कैनेडियन एबोरिजिनल सिलैबिक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1164"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1173"/>
             <source>[1680-169F] Ogham</source>
             <translation>[1680-169F]</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1169"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1178"/>
             <source>[16A0-16FF] Runic</source>
             <translation>[16A0-16FF] रूणिक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1174"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1183"/>
             <source>[1700-171F] Tagalog</source>
             <translation>[1700-171F] टैगलॉग</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1179"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1188"/>
             <source>[1720-173F] Hanunoo</source>
             <translation>[1720-173F] हनुनू</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1184"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1193"/>
             <source>[1740-175F] Buhid</source>
             <translation>[1740-175F] बुहिद</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1189"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1198"/>
             <source>[1760-177F] Tagbanwa</source>
             <translation>[1760-177F]</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1194"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1203"/>
             <source>[1780-17FF] Khmer</source>
             <translation>[1780-17FF] खमेर</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1199"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1208"/>
             <source>[1800-18AF] Mongolian</source>
             <translation>[1800-18AF] मंगोलिया</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1204"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1213"/>
             <source>[1E00-1EFF] Latin Extended Additional</source>
             <translation>[1E00-1EFF] लैटिन विस्तारित अतिरिक्त</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1209"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1218"/>
             <source>[1F00-1FFF] Greek Extended</source>
             <translation>[1F00-1FFF] यूनानी विस्तारित</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1214"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1223"/>
             <source>[2000-206F] General Punctuation</source>
             <translation>[2000-206F] सामान्य विराम चिह्न</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1219"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1228"/>
             <source>[2070-209F] Superscripts and Subscripts</source>
             <translation>[2070-209F] सुपरस्क्रिप्ट और सबस्क्रिप्ट</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1224"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1233"/>
             <source>[20A0-20CF] Currency Symbols</source>
             <translation>[20A0-20CF] मुद्रा प्रतीक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1229"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1238"/>
             <source>[20D0-20FF] Combining Marks for Symbols</source>
             <translation>[20D0-20FF] चिह्नों के लिए अंक संयोजन</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1234"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1243"/>
             <source>[2100-214F] Letterlike Symbols</source>
             <translation>[2100-214F] लेटरलाइक प्रतीक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1239"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1248"/>
             <source>[2150-218F] Number Forms</source>
             <translation>[2150-218F] संख्या प्रपत्र</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1244"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1253"/>
             <source>[2190-21FF] Arrows</source>
             <translation>[2190-21FF] तीर</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1249"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1258"/>
             <source>[2200-22FF] Mathematical Operators</source>
             <translation>[2200-22FF] गणितीय ऑपरेटर</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1254"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1263"/>
             <source>[2300-23FF] Miscellaneous Technical</source>
             <translation>[2300-23FF] विविध तकनीकी</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1259"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1268"/>
             <source>[2400-243F] Control Pictures</source>
             <translation>[2400-243F] नियंत्रण चित्र</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1264"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1273"/>
             <source>[2440-245F] Optical Character Recognition</source>
             <translation>[2440-245F] ऑप्टिकल चरित्र मान्यता</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1269"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1278"/>
             <source>[2460-24FF] Enclosed Alphanumerics</source>
             <translation>[2460-24FF] घिरे हुए अक्षर और संख्याएँ</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1274"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1283"/>
             <source>[2500-257F] Box Drawing</source>
             <translation>[2500-257F] बॉक्स ड्राइंग</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1279"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1288"/>
             <source>[2580-259F] Block Elements</source>
             <translation>[2580-259F] ब्लॉक तत्व</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1284"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1293"/>
             <source>[25A0-25FF] Geometric Shapes</source>
             <translation>[25A0-25FF] ज्यामितीय आकृति</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1289"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1298"/>
             <source>[2600-26FF] Miscellaneous Symbols</source>
             <translation>[2600-26FF] विविध प्रतीक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1294"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1303"/>
             <source>[2700-27BF] Dingbats</source>
             <translation>[2700-27BF] डिंगबैट्स</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1299"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1308"/>
             <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
             <translation>[27C0-27EF] विविध गणितीय प्रतीक- A</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1304"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1313"/>
             <source>[27F0-27FF] Supplemental Arrows-A</source>
             <translation>[27F0-27FF] अनुपूरक तीर A</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1309"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1318"/>
             <source>[2800-28FF] Braille Patterns</source>
             <translation>[2800-28FF] ब्रेल पैटर्न</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1314"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1323"/>
             <source>[2900-297F] Supplemental Arrows-B</source>
             <translation>[2900-297F] अनुपूरक तीर-B</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1319"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1328"/>
             <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
             <translation>[2980-29FF] विविध गणितीय प्रतीक-B</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1324"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1333"/>
             <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
             <translation>[2A00-2AFF] अनुपूरक गणितीय ऑपरेटर</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1329"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1338"/>
             <source>[2E80-2EFF] CJK Radicals Supplement</source>
             <translation>[2E80-2EFF] CJK Radicals अनुपूरक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1334"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1343"/>
             <source>[2F00-2FDF] Kangxi Radicals</source>
             <translation>[2F00-2FDF] कांग्शी रेडिकल्स</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1339"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1348"/>
             <source>[2FF0-2FFF] Ideographic Description Characters</source>
             <translation>[2FF0-2FFF]</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1344"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1353"/>
             <source>[3000-303F] CJK Symbols and Punctuation</source>
             <translation>[3000-303F] CJK प्रतीक और Punctuation</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1349"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1358"/>
             <source>[3040-309F] Hiragana</source>
             <translation>[3040-309F] हिरागाना</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1354"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1363"/>
             <source>[30A0-30FF] Katakana</source>
             <translation>[30A0-30FF] काताकाना</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1359"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1368"/>
             <source>[3100-312F] Bopomofo</source>
             <translation>[3100-312F] बोपोमोफो</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1364"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1373"/>
             <source>[3130-318F] Hangul Compatibility Jamo</source>
             <translation>[3130-318F] हांगुल संगतता जामो</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1369"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1378"/>
             <source>[3190-319F] Kanbun</source>
             <translation>[3190-319F] कंबुन</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1374"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1383"/>
             <source>[31A0-31BF] Bopomofo Extended</source>
             <translation>[31A0-31BF] Bopomofo विस्तारित</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1379"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1388"/>
             <source>[3200-32FF] Enclosed CJK Letters and Months</source>
             <translation>[3200-32FF] संलग्न CJK पत्र और महीने</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1384"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1393"/>
             <source>[3300-33FF] CJK Compatibility</source>
             <translation>[3300-33FF] CJK संगतता</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1389"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1398"/>
             <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
             <translation>[3400-4DBF] CJK एकीकृत Ideograph एक्सटेंशन A</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1394"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1403"/>
             <source>[4E00-9FAF] CJK Unified Ideographs</source>
             <translation>[4E00-9FAF] CJK एकीकृत Ideograph</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1399"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1408"/>
             <source>[A000-A48F] Yi Syllables</source>
             <translation>[A000-A48F] यी शब्दांश</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1404"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1413"/>
             <source>[A490-A4CF] Yi Radicals</source>
             <translation>[A490-A4CF] यी रेडिकल्स</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1409"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1418"/>
             <source>[AC00-D7AF] Hangul Syllables</source>
             <translation>[AC00-D7AF] हंगुल सिलेबल</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1414"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1423"/>
             <source>[D800-DBFF] High Surrogates</source>
             <translation>[D800-DBFF]</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1419"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1428"/>
             <source>[DC00-DFFF] Low Surrogate Area</source>
             <translation>[DC00-DFFF] लो सरोगेट एरिया</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1424"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1433"/>
             <source>[E000-F8FF] Private Use Area</source>
             <translation>[E000-F8FF] निजी उपयोग क्षेत्र</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1429"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1438"/>
             <source>[F900-FAFF] CJK Compatibility Ideographs</source>
             <translation>[F900-FAFF] CJK संगतता Ideograph</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1434"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1443"/>
             <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
             <translation>[FB00-FB4F] वर्णमाला प्रस्तुति प्रपत्र</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1439"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1448"/>
             <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
             <translation>[FB50-FDFF] अरबी प्रस्तुति फॉर्म- A</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1444"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1453"/>
             <source>[FE00-FE0F] Variation Selectors</source>
             <translation>[FE00-FE0F] [Fe00-FE0F] Variation Selectors</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1449"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1458"/>
             <source>[FE20-FE2F] Combining Half Marks</source>
             <translation>[FE20-FE2F] आधा अंक संयोजन</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1454"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1463"/>
             <source>[FE30-FE4F] CJK Compatibility Forms</source>
             <translation>[FE30-FE4F] CJK संगतता प्रपत्र</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1459"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1468"/>
             <source>[FE50-FE6F] Small Form Variants</source>
             <translation>[FE50-FE6F] [Fe50-FE6F] लघु फार्म Variant</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1464"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1473"/>
             <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
             <translation>[FE70-FEFF] अरबी प्रस्तुति फॉर्म-B</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1469"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1478"/>
             <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
             <translation>[FF00-FFEF] हाफविड्थ और फुलविड्थ फॉर्म</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1474"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1483"/>
             <source>[FFF0-FFFF] Specials</source>
             <translation>[FFF0-FFFF] [FFF0-FFFFFF] विशेष</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1479"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1488"/>
             <source>[10300-1032F] Old Italic</source>
             <translation>[10300-1032F] पुराने इटालिक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1484"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1493"/>
             <source>[10330-1034F] Gothic</source>
             <translation>[10330-1034F] गोथिक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1489"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1498"/>
             <source>[10400-1044F] Deseret</source>
             <translation>[10400-1044F] डेसर्ट</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1494"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1503"/>
             <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
             <translation>[1D000-1D0FF] Byzantine संगीत प्रतीक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1499"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1508"/>
             <source>[1D100-1D1FF] Musical Symbols</source>
             <translation>[1D100-1D1FF] संगीत प्रतीक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1504"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1513"/>
             <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
             <translation>[1D400-1D7FF] गणितीय Alphanumeric प्रतीक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1509"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1518"/>
             <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
             <translation>[20000-2A6DF] CJK एकीकृत Ideograph एक्सटेंशन B</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1514"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1523"/>
             <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
             <translation>[2F800-2FA1F] CJK संगतता Ideographs अनुपूरक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1519"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1528"/>
             <source>[E0000-E007F] Tags</source>
             <translation>[E0000-E007F] टैग</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1524"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1533"/>
             <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
             <translation>[F0000-FFFFD] अनुपूरक निजी उपयोग क्षेत्र- A</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1529"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1538"/>
             <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
             <translation>[100000-10FFFD] अनुपूरक निजी उपयोग क्षेत्र-बी</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1549"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1558"/>
             <source>Selection of character to insert</source>
             <translation>सम्मिलित करने के लिए चरित्र का चयन</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1574"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1583"/>
             <source>Selected character preview. Click to insert to text.</source>
             <translation>चयनित चरित्र पूर्वावलोकन। पाठ में डालने के लिए क्लिक करें।.</translation>
         </message>
@@ -19005,7 +19047,7 @@ This recursively modifies all entities of the Block itself.</source>
         <message>
             <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1469"/>
             <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-            <translation>&lt;html&gt;&lt;head&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&lt;head&gt;&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;head&gt;&gt;&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&lt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;body&gt;&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; आयाम तीर आकार। &lt;a name=&quot;result box&quot;/&gt; जब टिक आकार &lt;a name=&quot;result box&quot;/&gt; 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+            <translation>आयाम तीर का आकार। यदि टिक आकार 0 से भिन्न है, तो इसका कोई प्रभाव नहीं होगा।</translation>
         </message>
         <message>
             <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1523"/>
@@ -19046,7 +19088,7 @@ This recursively modifies all entities of the Block itself.</source>
         <message>
             <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1619"/>
             <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-            <translation>&lt;html&gt;&lt;head&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&lt;head&gt;&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;head&gt;&gt;&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&lt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;body&gt;&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; पाठ संरेखण &lt;a name=&quot;result box&quot;/&gt;आयाम लाइन के सापेक्ष&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+            <translation>आयाम रेखा के सापेक्ष पाठ संरेखण।</translation>
         </message>
         <message>
             <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1629"/>
@@ -19137,7 +19179,7 @@ This recursively modifies all entities of the Block itself.</source>
         <message>
             <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1142"/>
             <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-            <translation>&lt;html&gt;&lt;head&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&lt;head&gt;&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;head&gt;&gt;&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&lt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;body&gt;&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; सभी आयाम मूल्यों को गुणा करने के लिए स्केल&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+            <translation>सभी आयाम मानों को गुणा करने के लिए स्केल।</translation>
         </message>
         <message>
             <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1319"/>
@@ -19147,7 +19189,7 @@ This recursively modifies all entities of the Block itself.</source>
         <message>
             <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1326"/>
             <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance gap around text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-            <translation>&lt;html&gt;&lt;head&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&lt;head&gt;&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;head&gt;&gt;&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&lt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;body&gt;&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; पाठ के आसपास दूरी&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+            <translation>पाठ के चारों ओर दूरी अंतराल।</translation>
         </message>
         <message>
             <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1399"/>
@@ -19414,7 +19456,7 @@ This recursively modifies all entities of the Block itself.</source>
         <message>
             <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1289"/>
             <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-            <translation>&lt;html&gt;&lt;head&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&lt;head&gt;&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;head&gt;&gt;&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&lt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;body&gt;&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; आयाम टिक आकार। इसे 0 से सेट करें आयाम टिक को निष्क्रिय कर देगा। जब आयाम टिक सक्षम होता है तो आयाम तीर नहीं खींचा जाएगा।&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+            <translation>आयाम टिक आकार। इसे 0 पर सेट करने से आयाम टिक अक्षम हो जाएगा। जब आयाम टिक सक्षम होता है, तो आयाम तीर नहीं खींचा जाएगा।</translation>
         </message>
         <message>
             <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1634"/>
@@ -19424,7 +19466,7 @@ This recursively modifies all entities of the Block itself.</source>
         <message>
             <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1675"/>
             <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-            <translation>&lt;html&gt;&lt;head&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&lt;head&gt;&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;head&gt;&gt;&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&lt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;body&gt;&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; मूल बिंदु से ऑफसेट&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+            <translation>मूल बिंदु से ऑफ़सेट।</translation>
         </message>
         <message>
             <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1707"/>
@@ -21098,7 +21140,7 @@ This recursively modifies all entities of the Block itself.</source>
         <message>
             <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4303"/>
             <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-            <translation>&lt;html&gt;&lt;head&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&lt;head&gt;&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;head&gt;&gt;&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&lt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;body&gt;&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; जब स्पेसबार दबाया जाता है तो अस्थायी रूप से फ्री स्नैपिंग को टॉगल करें और कमांड विंडो सक्रिय हो जाती है&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+            <translation>जब स्पेसबार दबाया जाता है और कमांड विंडो सक्रिय होती है, तो अस्थायी रूप से मुक्त स्नैपिंग को टॉगल करें।</translation>
         </message>
         <message>
             <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4538"/>
@@ -22189,7 +22231,7 @@ This recursively modifies all entities of the Block itself.</source>
         <message>
             <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4237"/>
             <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-            <translation>&lt;html&gt;&lt;head&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&lt;head&gt;&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;head&gt;&gt;&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&lt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;body&gt;&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; जब सक्षम हो जाता है, तो एक परत को सक्रिय करने से सभी चयनित संस्थाओं को उस नई परत में बदल दिया जाएगा। एकाधिक संस्थाओं की परत को बदलने के लिए: पहले आवश्यक संस्थाओं का चयन करें; परत विजेट में एक परत को सक्रिय करें। यह सभी चयनित संस्थाओं को नई परत से संबंधित करने के लिए संशोधित करता है।</translation>
+            <translation>जब सक्षम किया जाता है, तो किसी परत को सक्रिय करने से सभी चयनित संस्थाओं को उस नई परत में संशोधित किया जाएगा। कई संस्थाओं की परत बदलने के लिए: पहले आवश्यक संस्थाओं का चयन करें; परत विजेट में एक परत को सक्रिय करें। इससे सभी चयनित संस्थाओं को नई परत में संशोधित किया जाएगा।</translation>
         </message>
         <message>
             <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4769"/>
@@ -22545,7 +22587,7 @@ so default step value required for baking</source>
         <message>
             <location filename="../src/ui/dialogs/actions/modify/qg_dlgscale.ui" line="109"/>
             <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-            <translation>&lt;html&gt;&lt;head&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&lt;head&gt;&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;head&gt;&gt;&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&lt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;body&gt;&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; एक संदर्भ बिंदु और एक लक्ष्य बिंदु द्वारा केंद्र के आसपास स्केलिंग अनुपात का पता लगाएं।&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+            <translation>केंद्र के चारों ओर एक संदर्भ बिंदु और एक लक्ष्य बिंदु द्वारा स्केलिंग अनुपात ज्ञात करें।</translation>
         </message>
         <message>
             <location filename="../src/ui/dialogs/actions/modify/qg_dlgscale.ui" line="142"/>
@@ -22789,82 +22831,81 @@ so default step value required for baking</source>
             <translation>प्लस / मिनस (±)</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="967"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="968"/>
             <source>At (@)</source>
             <translation>(@)</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="972"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="974"/>
             <source>Hash (#)</source>
             <translation>हैश (#)</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="977"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="980"/>
             <source>Dollar ($)</source>
             <translation>डॉलर ($)</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="982"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="985"/>
             <source>Copyright (©)</source>
             <translation>कॉपीराइट (©)</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="987"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="990"/>
             <source>Registered (®)</source>
             <translation>पंजीकृत (®)</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="992"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="995"/>
             <source>Paragraph (§)</source>
             <translation>पैराग्राफ (§)</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="997"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1000"/>
             <source>Pi (π)</source>
             <translation>पाई (π)</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1002"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1005"/>
             <source>Pound (£)</source>
             <translation>पाउंड (£)</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1007"/>
             <source>Yen (¥)</source>
             <translation>येन (¥)</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1012"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1021"/>
             <source>Times (×)</source>
             <translation>समय (×)</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1017"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1026"/>
             <source>Division (÷)</source>
             <translation>प्रभाग (÷)</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1028"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1037"/>
             <source>Insert Unicode</source>
             <translation>यूनिकोड डालें</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1593"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1602"/>
             <source>Page:</source>
             <translation>पृष्ठ:</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1621"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1630"/>
             <source>Selected character preview. Click to insert to text.</source>
             <translation>चयनित चरित्र पूर्वावलोकन। पाठ में डालने के लिए क्लिक करें।.</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1631"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1640"/>
             <source>Char:</source>
             <translation>चार:</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1050"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1059"/>
             <source>[0000-007F] Basic Latin</source>
             <translation>[0000-007F] मूल लैटिन</translation>
         </message>
@@ -22914,547 +22955,557 @@ so default step value required for baking</source>
             <translation>सम्मिलित करने के लिए प्रतीक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1046"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1011"/>
+            <source>Yen / Yuan (¥)</source>
+            <translation>येन / युआन (¥)</translation>
+        </message>
+        <message>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1016"/>
+            <source>Euro (€)</source>
+            <translation>यूरो (€)</translation>
+        </message>
+        <message>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1055"/>
             <source>Codepage selection for selecting character</source>
             <translation>चयन चरित्र के लिए कोडपेज चयन</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1055"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1064"/>
             <source>[0080-00FF] Latin-1 Supplementary</source>
             <translation>[0080-00FF] लैटिन-1 अनुपूरक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1060"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1069"/>
             <source>[0100-017F] Latin Extended-A</source>
             <translation>[0100-017F] लैटिन विस्तारित A</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1065"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1074"/>
             <source>[0180-024F] Latin Extended-B</source>
             <translation>[0180-024F] लैटिन विस्तारित-B</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1070"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1079"/>
             <source>[0250-02AF] IPA Extensions</source>
             <translation>[0250-02AF] IPA एक्सटेंशन</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1075"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1084"/>
             <source>[02B0-02FF] Spacing Modifier Letters</source>
             <translation>[02B0-02FF] स्पेसिंग मॉडिफायर पत्र</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1080"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1089"/>
             <source>[0300-036F] Combining Diacritical Marks</source>
             <translation>[0300-036F] डायक्रिटिकल मार्क्स का संयोजन</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1085"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1094"/>
             <source>[0370-03FF] Greek and Coptic</source>
             <translation>[0370-03FF] यूनानी और कॉप्टिक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1090"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1099"/>
             <source>[0400-04FF] Cyrillic</source>
             <translation>[0400-04FF] सिरिलिक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1095"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1104"/>
             <source>[0500-052F] Cyrillic Supplementary</source>
             <translation>[0500-052F] Cyrillic अनुपूरक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1100"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1109"/>
             <source>[0530-058F] Armenian</source>
             <translation>[0530-058F] आर्मेनियाई</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1105"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1114"/>
             <source>[0590-05FF] Hebrew</source>
             <translation>[0590-05FF] हिब्रू</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1110"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1119"/>
             <source>[0600-06FF] Arabic</source>
             <translation>[0600-06FF] अरबी</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1115"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1124"/>
             <source>[0700-074F] Syriac</source>
             <translation>[0700-074F] सीरियाई</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1120"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1129"/>
             <source>[0780-07BF] Thaana</source>
             <translation>[0780-07BF] थाना</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1125"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1134"/>
             <source>[0900-097F] Devanagari</source>
             <translation>[0900-097F] देवनगरी</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1130"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1139"/>
             <source>[0980-09FF] Bengali</source>
             <translation>[0980-09FF] बंगाली</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1135"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1144"/>
             <source>[0A00-0A7F] Gurmukhi</source>
             <translation>[0A00-0A7F] गुजराती</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1140"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1149"/>
             <source>[0A80-0AFF] Gujarati</source>
             <translation>[0A80-0AFF] गुजराती</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1145"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1154"/>
             <source>[0B00-0B7F] Oriya</source>
             <translation>[0B00-0B7F] ओरिया</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1150"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1159"/>
             <source>[0B80-0BFF] Tamil</source>
             <translation>[0B80-0BFF] तमिल</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1155"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1164"/>
             <source>[0C00-0C7F] Telugu</source>
             <translation>[0C00-0C7F] तेलुगु</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1160"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1169"/>
             <source>[0C80-0CFF] Kannada</source>
             <translation>[0C80-0CFF] कन्नड़</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1165"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1174"/>
             <source>[0D00-0D7F] Malayalam</source>
             <translation>[0D00-0D7F] मलयालम</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1170"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1179"/>
             <source>[0D80-0DFF] Sinhala</source>
             <translation>[0D80-0DFF] सिंहला</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1175"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1184"/>
             <source>[0E00-0E7F] Thai</source>
             <translation>[0E00-0E7F] थाई</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1180"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1189"/>
             <source>[0E80-0EFF] Lao</source>
             <translation>[0E80-0EFF] लाओ</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1185"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1194"/>
             <source>[0F00-0FFF] Tibetan</source>
             <translation>[0F00-0FFF] तिब्बती</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1190"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1199"/>
             <source>[1000-109F] Myanmar</source>
             <translation>[1000-109F] म्यांमार</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1195"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1204"/>
             <source>[10A0-10FF] Georgian</source>
             <translation>[10A0-10FF] जॉर्जिया</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1200"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1209"/>
             <source>[1100-11FF] Hangul Jamo</source>
             <translation>[1100-11FF] हैंगुल जामो</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1205"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1214"/>
             <source>[1200-137F] Ethiopic</source>
             <translation>[1200-137F] इथियोपिक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1210"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1219"/>
             <source>[13A0-13FF] Cherokee</source>
             <translation>[13A0-13FF] चेरोकी</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1215"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1224"/>
             <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
             <translation>[1400-167F] एकीकृत कैनेडियन एबोरिजिनल सिलैबिक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1220"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1229"/>
             <source>[1680-169F] Ogham</source>
             <translation>[1680-169F]</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1225"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1234"/>
             <source>[16A0-16FF] Runic</source>
             <translation>[16A0-16FF] रूणिक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1230"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1239"/>
             <source>[1700-171F] Tagalog</source>
             <translation>[1700-171F] टैगलॉग</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1235"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1244"/>
             <source>[1720-173F] Hanunoo</source>
             <translation>[1720-173F] हनुनू</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1240"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1249"/>
             <source>[1740-175F] Buhid</source>
             <translation>[1740-175F] बुहिद</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1245"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1254"/>
             <source>[1760-177F] Tagbanwa</source>
             <translation>[1760-177F]</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1250"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1259"/>
             <source>[1780-17FF] Khmer</source>
             <translation>[1780-17FF] खमेर</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1255"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1264"/>
             <source>[1800-18AF] Mongolian</source>
             <translation>[1800-18AF] मंगोलिया</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1260"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1269"/>
             <source>[1E00-1EFF] Latin Extended Additional</source>
             <translation>[1E00-1EFF] लैटिन विस्तारित अतिरिक्त</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1265"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1274"/>
             <source>[1F00-1FFF] Greek Extended</source>
             <translation>[1F00-1FFF] यूनानी विस्तारित</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1270"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1279"/>
             <source>[2000-206F] General Punctuation</source>
             <translation>[2000-206F] सामान्य विराम चिह्न</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1275"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1284"/>
             <source>[2070-209F] Superscripts and Subscripts</source>
             <translation>[2070-209F] सुपरस्क्रिप्ट और सबस्क्रिप्ट</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1280"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1289"/>
             <source>[20A0-20CF] Currency Symbols</source>
             <translation>[20A0-20CF] मुद्रा प्रतीक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1285"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1294"/>
             <source>[20D0-20FF] Combining Marks for Symbols</source>
             <translation>[20D0-20FF] चिह्नों के लिए अंक संयोजन</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1290"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1299"/>
             <source>[2100-214F] Letterlike Symbols</source>
             <translation>[2100-214F] लेटरलाइक प्रतीक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1295"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1304"/>
             <source>[2150-218F] Number Forms</source>
             <translation>[2150-218F] संख्या प्रपत्र</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1300"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1309"/>
             <source>[2190-21FF] Arrows</source>
             <translation>[2190-21FF] तीर</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1305"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1314"/>
             <source>[2200-22FF] Mathematical Operators</source>
             <translation>[2200-22FF] गणितीय ऑपरेटर</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1310"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1319"/>
             <source>[2300-23FF] Miscellaneous Technical</source>
             <translation>[2300-23FF] विविध तकनीकी</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1315"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1324"/>
             <source>[2400-243F] Control Pictures</source>
             <translation>[2400-243F] नियंत्रण चित्र</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1320"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1329"/>
             <source>[2440-245F] Optical Character Recognition</source>
             <translation>[2440-245F] ऑप्टिकल चरित्र मान्यता</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1325"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1334"/>
             <source>[2460-24FF] Enclosed Alphanumerics</source>
             <translation>[2460-24FF] संलग्न अल्फ़ान्यूमेरिक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1330"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1339"/>
             <source>[2500-257F] Box Drawing</source>
             <translation>[2500-257F] बॉक्स ड्राइंग</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1335"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1344"/>
             <source>[2580-259F] Block Elements</source>
             <translation>[2580-259F] ब्लॉक तत्व</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1340"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1349"/>
             <source>[25A0-25FF] Geometric Shapes</source>
             <translation>[25A0-25FF] ज्यामितीय आकृति</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1345"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1354"/>
             <source>[2600-26FF] Miscellaneous Symbols</source>
             <translation>[2600-26FF] विविध प्रतीक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1350"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1359"/>
             <source>[2700-27BF] Dingbats</source>
             <translation>[2700-27BF] डिंगबैट्स</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1355"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1364"/>
             <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
             <translation>[27C0-27EF] विविध गणितीय प्रतीक- A</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1360"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1369"/>
             <source>[27F0-27FF] Supplemental Arrows-A</source>
             <translation>[27F0-27FF] अनुपूरक तीर A</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1365"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1374"/>
             <source>[2800-28FF] Braille Patterns</source>
             <translation>[2800-28FF] ब्रेल पैटर्न</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1370"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1379"/>
             <source>[2900-297F] Supplemental Arrows-B</source>
             <translation>[2900-297F] अनुपूरक तीर-B</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1375"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1384"/>
             <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
             <translation>[2980-29FF] विविध गणितीय प्रतीक-B</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1380"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1389"/>
             <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
             <translation>[2A00-2AFF] अनुपूरक गणितीय ऑपरेटर</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1385"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1394"/>
             <source>[2E80-2EFF] CJK Radicals Supplement</source>
             <translation>[2E80-2EFF] CJK Radicals अनुपूरक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1390"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1399"/>
             <source>[2F00-2FDF] Kangxi Radicals</source>
             <translation>[2F00-2FDF] कांग्शी रेडिकल्स</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1395"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1404"/>
             <source>[2FF0-2FFF] Ideographic Description Characters</source>
             <translation>[2FF0-2FFF]</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1400"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1409"/>
             <source>[3000-303F] CJK Symbols and Punctuation</source>
             <translation>[3000-303F] CJK प्रतीक और Punctuation</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1405"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1414"/>
             <source>[3040-309F] Hiragana</source>
             <translation>[3040-309F] हिरागाना</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1410"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1419"/>
             <source>[30A0-30FF] Katakana</source>
             <translation>[30A0-30FF] काताकाना</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1415"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1424"/>
             <source>[3100-312F] Bopomofo</source>
             <translation>[3100-312F] बोपोमोफो</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1420"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1429"/>
             <source>[3130-318F] Hangul Compatibility Jamo</source>
             <translation>[3130-318F] हांगुल संगतता जामो</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1425"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1434"/>
             <source>[3190-319F] Kanbun</source>
             <translation>[3190-319F] कंबुन</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1430"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1439"/>
             <source>[31A0-31BF] Bopomofo Extended</source>
             <translation>[31A0-31BF] Bopomofo विस्तारित</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1435"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1444"/>
             <source>[3200-32FF] Enclosed CJK Letters and Months</source>
             <translation>[3200-32FF] संलग्न CJK पत्र और महीने</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1440"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1449"/>
             <source>[3300-33FF] CJK Compatibility</source>
             <translation>[3300-33FF] CJK संगतता</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1445"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1454"/>
             <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
             <translation>[3400-4DBF] CJK एकीकृत Ideograph एक्सटेंशन A</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1450"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1459"/>
             <source>[4E00-9FAF] CJK Unified Ideographs</source>
             <translation>[4E00-9FAF] CJK एकीकृत Ideograph</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1455"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1464"/>
             <source>[A000-A48F] Yi Syllables</source>
             <translation>[A000-A48F] यी शब्दांश</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1460"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1469"/>
             <source>[A490-A4CF] Yi Radicals</source>
             <translation>[A490-A4CF] यी रेडिकल्स</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1465"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1474"/>
             <source>[AC00-D7AF] Hangul Syllables</source>
             <translation>[AC00-D7AF] हंगुल सिलेबल</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1470"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1479"/>
             <source>[D800-DBFF] High Surrogates</source>
             <translation>[D800-DBFF]</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1475"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1484"/>
             <source>[DC00-DFFF] Low Surrogate Area</source>
             <translation>[DC00-DFFF] लो सरोगेट एरिया</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1480"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1489"/>
             <source>[E000-F8FF] Private Use Area</source>
             <translation>[E000-F8FF] निजी उपयोग क्षेत्र</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1485"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1494"/>
             <source>[F900-FAFF] CJK Compatibility Ideographs</source>
             <translation>[F900-FAFF] CJK संगतता Ideograph</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1490"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1499"/>
             <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
             <translation>[FB00-FB4F] वर्णमाला प्रस्तुति प्रपत्र</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1495"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1504"/>
             <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
             <translation>[FB50-FDFF] अरबी प्रस्तुति फॉर्म- A</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1500"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1509"/>
             <source>[FE00-FE0F] Variation Selectors</source>
             <translation>[FE00-FE0F] [Fe00-FE0F] Variation Selectors</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1505"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1514"/>
             <source>[FE20-FE2F] Combining Half Marks</source>
             <translation>[FE20-FE2F] आधा अंक संयोजन</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1510"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1519"/>
             <source>[FE30-FE4F] CJK Compatibility Forms</source>
             <translation>[FE30-FE4F] CJK संगतता प्रपत्र</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1515"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1524"/>
             <source>[FE50-FE6F] Small Form Variants</source>
             <translation>[FE50-FE6F] [Fe50-FE6F] लघु फार्म Variant</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1520"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1529"/>
             <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
             <translation>[FE70-FEFF] अरबी प्रस्तुति फॉर्म-B</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1525"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1534"/>
             <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
             <translation>[FF00-FFEF] हाफविड्थ और फुलविड्थ फॉर्म</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1530"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1539"/>
             <source>[FFF0-FFFF] Specials</source>
             <translation>[FFF0-FFFF] [FFF0-FFFFFF] विशेष</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1535"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1544"/>
             <source>[10300-1032F] Old Italic</source>
             <translation>[10300-1032F] पुराने इटालिक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1540"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1549"/>
             <source>[10330-1034F] Gothic</source>
             <translation>[10330-1034F] गोथिक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1545"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1554"/>
             <source>[10400-1044F] Deseret</source>
             <translation>[10400-1044F] डेसर्ट</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1550"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1559"/>
             <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
             <translation>[1D000-1D0FF] Byzantine संगीत प्रतीक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1555"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1564"/>
             <source>[1D100-1D1FF] Musical Symbols</source>
             <translation>[1D100-1D1FF] संगीत प्रतीक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1560"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1569"/>
             <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
             <translation>[1D400-1D7FF] गणितीय Alphanumeric प्रतीक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1565"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1574"/>
             <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
             <translation>[20000-2A6DF] CJK एकीकृत Ideograph एक्सटेंशन B</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1570"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1579"/>
             <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
             <translation>[2F800-2FA1F] CJK संगतता Ideographs अनुपूरक</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1575"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1584"/>
             <source>[E0000-E007F] Tags</source>
             <translation>[E0000-E007F] टैग</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1580"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1589"/>
             <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
             <translation>[F0000-FFFFD] अनुपूरक निजी उपयोग क्षेत्र- A</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1585"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1594"/>
             <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
             <translation>[100000-10FFFD] अनुपूरक निजी उपयोग क्षेत्र-बी</translation>
         </message>
         <message>
-            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1653"/>
+            <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1662"/>
             <source>Selection of character to insert</source>
             <translation>सम्मिलित करने के लिए चरित्र का चयन</translation>
         </message>
@@ -23979,32 +24030,32 @@ P, li { white-space: pre-wrap; }
     <context>
         <name>QG_SnapToolBar</name>
         <message>
-            <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="169"/>
+            <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
             <source>Relative zero position is %1</source>
             <translation>सापेक्ष शून्य स्थिति %1 है</translation>
         </message>
         <message>
-            <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="169"/>
+            <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
             <source>locked</source>
             <translation>बंद करना</translation>
         </message>
         <message>
-            <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="169"/>
+            <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
             <source>unlocked</source>
             <translation>खुला</translation>
         </message>
         <message>
-            <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="174"/>
+            <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
             <source>Coordinate system: %1</source>
             <translation>समन्वय प्रणाली: %1</translation>
         </message>
         <message>
-            <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="174"/>
+            <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
             <source>User</source>
             <translation>उपयोगकर्ता</translation>
         </message>
         <message>
-            <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="174"/>
+            <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
             <source>World</source>
             <translation>विश्व</translation>
         </message>
@@ -24203,11 +24254,17 @@ Please specify a different value.</source>
             <translation>खाली परत निकालें</translation>
         </message>
         <message>
-            <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="958"/>
             <source>Layer(s) without entities found, yet they are filtered and not visible.
 Clear filtering mask and repeat.</source>
             <translation>प्राप्त संस्थाओं के बिना परत, फिर भी वे फ़िल्टर किए जाते हैं और दिखाई नहीं देते हैं।
 साफ़ फ़िल्टरिंग मास्क और दोहराएं।.</translation>
+        </message>
+        <message>
+            <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="958"/>
+            <source>Layer(s) without entities found, yet they are filtered and not visible.
+Clear filtering mask and repeat.</source>
+            <translation>परतों में कोई इकाई नहीं मिली, फिर भी वे फ़िल्टर की गई हैं और दिखाई नहीं दे रही हैं।
+फ़िल्टर मास्क साफ़ करें और फिर से प्रयास करें।</translation>
         </message>
         <message>
             <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="968"/>
@@ -24256,6 +24313,14 @@ Please specify a different name.</source>
         </message>
         <message>
             <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1252"/>
+            <source>Replace &quot;By Layer&quot; value to source layers values?
+If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
+If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
+            <translation>क्या &quot;लेयर के अनुसार&quot; मान को स्रोत परतों के मानों से बदलना है?
+यदि हाँ - &quot;लेयर के अनुसार&quot; पेन वाली इकाइयाँ नई परत पर ठीक उसी तरह दिखाई देंगी जैसे पिछली परतों पर थीं, और &quot;लेयर के अनुसार&quot; मान को हल किए गए पेन से बदल दिया जाएगा।
+यदि नहीं - &quot;लेयर के अनुसार&quot; मान अपरिवर्तित रहेंगे, और इसलिए लक्ष्य परत का पेन ऐसी इकाइयों के लिए पेन को परिभाषित करेगा।</translation>
+        </message>
+        <message>
             <source>Replace &quot;By Layer&quot; value to source layers values?
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
@@ -32003,7 +32068,7 @@ Point: (%8 , %9)</source>
         <message>
             <location filename="../src/ui/action_options/circle/qg_circletan2options.ui" line="56"/>
             <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-            <translation>&lt;html&gt;&lt;head&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&lt;head&gt;&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;head&gt;&gt;&gt;&lt;body&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&lt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&lt;body&gt;&gt;&lt;p&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; tangential सर्कल के त्रिज्या को आकर्षित करने के लिए&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+            <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;स्पर्शरेखा वृत्त की त्रिज्या जिसे बनाना है&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         </message>
         <message>
             <location filename="../src/ui/action_options/circle/qg_circletan2options.ui" line="59"/>
