@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TS version="2.1" language="hi_IN">
+<TS version="2.1" language="sr_RS">
  <context>
   <name>AsciiFile</name>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="35"/>
    <source>Read ASCII points</source>
-   <translation>एएससीआईआई बिंदु पढ़ें</translation>
+   <translation>Učitavanje ASCII tačaka</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="36"/>
    <source>Read ASCII test tip...</source>
-   <translation>एएससीआईआई परीक्षण टिप पढ़ें...</translation>
+   <translation>Učitavanje ASCII testa...</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="42"/>
    <source>Read ascii points</source>
-   <translation>एएससीआईआई बिंदु पढ़ें</translation>
+   <translation>Učitavanje ASCII tačaka</translation>
   </message>
  </context>
  <context>
@@ -23,12 +23,12 @@
   <message>
    <location filename="../pointstocsv/pointstocsv.cpp" line="34"/>
    <source>Export points to csv</source>
-   <translation>सीएसवी में बिंदु निर्यात करें</translation>
+   <translation>Izvoz tačaka u CSV</translation>
   </message>
   <message>
    <location filename="../pointstocsv/pointstocsv.cpp" line="41"/>
    <source>Export to csv test tip...</source>
-   <translation>सीएसवी में निर्यात करने के लिए परीक्षण टिप...</translation>
+   <translation>Izvoz u CSV - test...</translation>
   </message>
  </context>
  <context>
@@ -36,62 +36,38 @@
   <message>
    <location filename="../align/align.cpp" line="24"/>
    <source>Align</source>
-   <translation>संरेखित करें</translation>
+   <translation>Poravnanje</translation>
   </message>
   <message>
    <location filename="../align/align.cpp" line="31"/>
    <source>Align settings...</source>
-   <translation>संरेखण सेटिंग्स...</translation>
+   <translation>Postavke poravnanja...</translation>
   </message>
   <message>
    <location filename="../align/align.cpp" line="32"/>
    <source>Align test tip...</source>
-   <translation>संरेखण परीक्षण टिप...</translation>
+   <translation>Test poravnanja...</translation>
   </message>
   <message>
    <location filename="../align/align.cpp" line="47"/>
    <source>Keep original objects</source>
-   <translation>मूल वस्तुओं को रखें</translation>
+   <translation>Zadrži originalne objekte</translation>
   </message>
   <message>
    <location filename="../align/align.cpp" line="48"/>
    <source>Specify base points first</source>
-   <translation>पहले आधार बिंदु निर्दिष्ट करें</translation>
+   <translation>Prvo odredite osnovne tačke</translation>
   </message>
   <message>
    <location filename="../align/align.cpp" line="52"/>
    <source>Align Settings</source>
-   <translation>संरेखण सेटिंग्स</translation>
+   <translation>Подешавања поравнања</translation>
   </message>
   <message>
    <location filename="../align/align.cpp" line="55"/>
    <source>Click on options to set/unset,
 Ok to accept and start alignment.</source>
-   <translation>विकल्पों पर क्लिक करके सेट/अनसेट करें, स्वीकार करने और संरेखण शुरू करने के लिए 'ठीक' पर क्लिक करें।</translation>
-  </message>
-  <message>
-   <source>If 'Keep original objects' is checked,
-Align will copy rather than move the selected objects.
-If 'Specify base points first' is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-   <translation>यदि 'मूल वस्तुओं को रखें' चेक किया गया है, तो संरेखण चयनित वस्तुओं को स्थानांतरित करने के बजाय कॉपी करेगा। यदि 'पहले आधार बिंदु निर्दिष्ट करें' चेक किया गया है, तो संरेखण संरेखण बिंदुओं के लिए संकेत देगा, पहले आधार, दूसरा आधार, पहला लक्ष्य, दूसरा लक्ष्य के क्रम में।</translation>
-  </message>
-  <message>
-   <location filename="../align/align.cpp" line="79"/>
-   <source>first base point:</source>
-   <translation>पहला आधार बिंदु:</translation>
-  </message>
-  <message>
-   <location filename="../align/align.cpp" line="84"/>
-   <source>first target point:</source>
-   <translation>पहला लक्ष्य बिंदु:</translation>
-  </message>
-  <message>
-   <location filename="../align/align.cpp" line="82"/>
-   <location filename="../align/align.cpp" line="87"/>
-   <source>second base point:</source>
-   <translation>दूसरा आधार बिंदु:</translation>
+   <translation>Кликните на опције да бисте postavili/uklonili, a zatim pritisnite „OK“ da biste prihvatili i započeli poравнање.</translation>
   </message>
   <message>
    <location filename="../align/align.cpp" line="58"/>
@@ -100,16 +76,29 @@ Align will copy rather than move the selected objects.
 If 'Specify base points first' is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-   <translation>यदि 'मूल वस्तुओं को रखें' चेक किया गया है,
-एलाइन चयनित वस्तुओं को स्थानांतरित करने के बजाय कॉपी करेगा।
-यदि 'पहले आधार बिंदु निर्दिष्ट करें' चेक किया गया है,
-एलाइन संरेखण बिंदुओं के लिए क्रम में संकेत देगा:
-पहला आधार, दूसरा आधार, पहला लक्ष्य, दूसरा लक्ष्य।</translation>
+   <translation>Ako je opcija „Zadrži originalne objekte“ označena, alat za poравнање će kopirati, a ne premestiti, izabrane objekte.
+Ako je opcija „Prvo odredite osnovne tačke“ označena, alat za poравнање će tražiti tačke za poравнање u sledećem redosledu: prva osnovna tačka, druga osnovna tačka, prva ciljna tačka, druga ciljna tačka.</translation>
+  </message>
+  <message>
+   <location filename="../align/align.cpp" line="79"/>
+   <source>first base point:</source>
+   <translation>prva osnovna tačka:</translation>
+  </message>
+  <message>
+   <location filename="../align/align.cpp" line="82"/>
+   <location filename="../align/align.cpp" line="87"/>
+   <source>second base point:</source>
+   <translation>druga osnovna tačka:</translation>
+  </message>
+  <message>
+   <location filename="../align/align.cpp" line="84"/>
+   <source>first target point:</source>
+   <translation>prva ciljna tačka:</translation>
   </message>
   <message>
    <location filename="../align/align.cpp" line="89"/>
    <source>second target point:</source>
-   <translation>दूसरा लक्ष्य बिंदु:</translation>
+   <translation>druga ciljna tačka:</translation>
   </message>
  </context>
  <context>
@@ -117,18 +106,18 @@ first base, second base, first target, second target.</source>
   <message>
    <location filename="../gear/gear.cpp" line="33"/>
    <source>Gear creation plugin</source>
-   <translation>गियर निर्माण प्लगइन</translation>
+   <translation>dodatak za kreiranje zupčanika</translation>
   </message>
   <message>
    <location filename="../gear/gear.cpp" line="41"/>
    <source>Gear plugin</source>
-   <translation>गियर प्लगइन</translation>
+   <translation>dodatak za zupčanike</translation>
   </message>
   <message>
    <location filename="../gear/gear.cpp" line="42"/>
    <source>Select point for center of gear and press left mouse button.
 Then fill in the fields and press 'Accept' button.</source>
-   <translation>गियर के केंद्र के लिए एक बिंदु का चयन करें और बाएँ माउस बटन दबाएँ। फिर फ़ील्ड भरें और 'स्वीकार करें' बटन दबाएँ।</translation>
+   <translation>Izaberite tačku za centar zupčanika i pritisnite levo dugme miša. Zatim popunite polja i pritisnite dugme „Prihvati“.</translation>
   </message>
  </context>
  <context>
@@ -137,299 +126,299 @@ Then fill in the fields and press 'Accept' button.</source>
    <location filename="../list/list.cpp" line="22"/>
    <location filename="../list/list.cpp" line="29"/>
    <source>List entities</source>
-   <translation>इकाइयों की सूची</translation>
+   <translation>Prikaži entitete</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="30"/>
    <source>List test tip...</source>
-   <translation>परीक्षण टिप की सूची...</translation>
+   <translation>Prikaži testni opis...</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="44"/>
    <source>n</source>
-   <translation>एन</translation>
+   <translation>n</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="58"/>
    <source>Empty Entity</source>
-   <translation>खाली इकाई</translation>
+   <translation>Prazan entitet</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="65"/>
    <source>X</source>
-   <translation>एक्स</translation>
+   <translation>X</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="65"/>
    <source>Y</source>
-   <translation>वाई</translation>
+   <translation>Y</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="75"/>
    <source>Layer</source>
-   <translation>लेयर</translation>
+   <translation>Sloj</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="77"/>
    <source>Color</source>
-   <translation>रंग</translation>
+   <translation>Boja</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="78"/>
    <source>Line type</source>
-   <translation>रेखा प्रकार</translation>
+   <translation>Tip linije</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="79"/>
    <source>Line thickness</source>
-   <translation>रेखा की मोटाई</translation>
+   <translation>Debljina linije</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="80"/>
    <source>ID</source>
-   <translation>आईडी</translation>
+   <translation>ID</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="86"/>
    <source>POINT</source>
-   <translation>बिंदु</translation>
+   <translation>TAČKA</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="87"/>
    <location filename="../list/list.cpp" line="178"/>
    <location filename="../list/list.cpp" line="220"/>
    <source>in point</source>
-   <translation>आरंभिक बिंदु</translation>
+   <translation>u tački</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="92"/>
    <source>LINE</source>
-   <translation>रेखा</translation>
+   <translation>LINIJA</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="97"/>
    <source>from point</source>
-   <translation>आरंभ बिंदु</translation>
+   <translation>od tačke</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="100"/>
    <source>to point</source>
-   <translation>अंतिम बिंदु</translation>
+   <translation>do tačke</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="105"/>
    <location filename="../list/list.cpp" line="129"/>
    <source>length</source>
-   <translation>लंबाई</translation>
+   <translation>dužina</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="110"/>
    <source>Angle in XY plane</source>
-   <translation>XY तल में कोण</translation>
+   <translation>Ugao u XY ravni</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="111"/>
    <source>Inc.</source>
-   <translation>वृद्धि</translation>
+   <translation>Povećanje</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="116"/>
    <source>ARC</source>
-   <translation>चाप</translation>
+   <translation>LUK</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="117"/>
    <location filename="../list/list.cpp" line="133"/>
    <location filename="../list/list.cpp" line="143"/>
    <source>center point</source>
-   <translation>केंद्र बिंदु</translation>
+   <translation>централна тачка</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="123"/>
    <location filename="../list/list.cpp" line="137"/>
    <location filename="../list/list.cpp" line="224"/>
    <source>radius</source>
-   <translation>त्रिज्या</translation>
+   <translation>полупречник</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="124"/>
    <source>initial angle</source>
-   <translation>प्रारंभिक कोण</translation>
+   <translation>почетни угао</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="125"/>
    <source>final angle</source>
-   <translation>अंतिम कोण</translation>
+   <translation>конечни угао</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="132"/>
    <source>CIRCLE</source>
-   <translation>वृत्त</translation>
+   <translation>КРУГ</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="138"/>
    <source>circumference</source>
-   <translation>परिधि</translation>
+   <translation>обим</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="139"/>
    <source>area</source>
-   <translation>क्षेत्रफल</translation>
+   <translation>површина</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="142"/>
    <source>ELLIPSE</source>
-   <translation>दीर्घवृत्त</translation>
+   <translation>ЕЛИПСА</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="146"/>
    <source>major axis</source>
-   <translation>प्रमुख अक्ष</translation>
+   <translation>велика оса</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="164"/>
    <source>CONSTRUCTIONLINE</source>
-   <translation>निर्माण रेखा</translation>
+   <translation>КОНСТРУКТИВНА ЛИНИЈА</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="167"/>
    <source>OVERLAYBOX</source>
-   <translation>ओवरले बॉक्स</translation>
+   <translation>PREKLAPAJUĆA KUTIJA</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="170"/>
    <source>SOLID</source>
-   <translation>ठोस</translation>
+   <translation>PUNO</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="174"/>
    <source>MTEXT</source>
-   <translation>एमटेक्स्ट</translation>
+   <translation>MTEKST</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="177"/>
    <source>TEXT</source>
-   <translation>टेक्स्ट</translation>
+   <translation>TEKST</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="181"/>
    <source>TEXTCONTENT</source>
-   <translation>टेक्स्ट सामग्री</translation>
+   <translation>SADRŽAJ TEKSTA</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="184"/>
    <source>INSERT</source>
-   <translation>सम्मिलित करें</translation>
+   <translation>UBACI</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="187"/>
    <source>Name</source>
-   <translation>नाम</translation>
+   <translation>Име</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="189"/>
    <source>Insertion point</source>
-   <translation>सम्मिलन बिंदु</translation>
+   <translation>Тачка убацивања</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="192"/>
    <source>Scale</source>
-   <translation>स्केल</translation>
+   <translation>Скала</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="195"/>
    <source>Rotation</source>
-   <translation>घूर्णन</translation>
+   <translation>Ротација</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="201"/>
    <source>Columns/Rows</source>
-   <translation>कॉलम/पंक्तियाँ</translation>
+   <translation>Kolone/Redovi</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="205"/>
    <source>Column/Row Spacing</source>
-   <translation>कॉलम/पंक्ति अंतर</translation>
+   <translation>Razmak između kolona/redova</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="212"/>
    <source>POLYLINE</source>
-   <translation>पॉलीलाइन</translation>
+   <translation>POLILINIJA</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="213"/>
    <source>Closed</source>
-   <translation>बंद</translation>
+   <translation>Zatvoreno</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="214"/>
    <source>No</source>
-   <translation>नहीं</translation>
+   <translation>Ne</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="214"/>
    <source>Yes</source>
-   <translation>हाँ</translation>
+   <translation>Da</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="215"/>
    <source>Vertices</source>
-   <translation>शीर्ष</translation>
+   <translation>Teme</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="229"/>
    <source>IMAGE</source>
-   <translation>छवि</translation>
+   <translation>SLIKA</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="232"/>
    <source>SPLINE</source>
-   <translation>स्प्लाइन</translation>
+   <translation>SPLINE</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="235"/>
    <source>SPLINEPOINTS</source>
-   <translation>स्प्लाइन बिंदु</translation>
+   <translation>['SPLINE tačka', 'SPLINE tačke', 'SPLINE tačaka']</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="238"/>
    <source>HATCH</source>
-   <translation>हैच</translation>
+   <translation>ŠABLON</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="241"/>
    <source>DIMLEADER</source>
-   <translation>डिमलीडर</translation>
+   <translation>DIMLEADER</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="244"/>
    <source>DIMALIGNED</source>
-   <translation>डिमएलाइन</translation>
+   <translation>DIMLEADER</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="247"/>
    <source>DIMLINEAR</source>
-   <translation>डिमलीनियर</translation>
+   <translation>DIMLINEAR</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="250"/>
    <source>DIMRADIAL</source>
-   <translation>डिमरेडियल</translation>
+   <translation>DIMRADIAL</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="253"/>
    <source>DIMDIAMETRIC</source>
-   <translation>डिमडायमेट्रिक</translation>
+   <translation>DIMDIAMETRIC</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="256"/>
    <source>DIMANGULAR</source>
-   <translation>डिमएंगुलर</translation>
+   <translation>DIMANGULAR</translation>
   </message>
   <message>
    <location filename="../list/list.cpp" line="259"/>
    <source>UNKNOWN</source>
-   <translation>अज्ञात</translation>
+   <translation>NEPOZNAT</translation>
   </message>
  </context>
  <context>
@@ -438,22 +427,22 @@ Then fill in the fields and press 'Accept' button.</source>
    <location filename="../sameprop/sameprop.cpp" line="21"/>
    <location filename="../sameprop/sameprop.cpp" line="28"/>
    <source>Same properties</source>
-   <translation>समान गुण</translation>
+   <translation>Iste osobine</translation>
   </message>
   <message>
    <location filename="../sameprop/sameprop.cpp" line="29"/>
    <source>Same properties test tip...</source>
-   <translation>समान गुण परीक्षण टिप...</translation>
+   <translation>Test saveta: Iste osobine...</translation>
   </message>
   <message>
    <location filename="../sameprop/sameprop.cpp" line="40"/>
    <source>select original entity:</source>
-   <translation>मूल इकाई का चयन करें:</translation>
+   <translation>изберите оригинални објекат:</translation>
   </message>
   <message>
    <location filename="../sameprop/sameprop.cpp" line="42"/>
    <source>select entities to change</source>
-   <translation>बदलने के लिए इकाइयों का चयन करें</translation>
+   <translation>изберите објекте које желите да промените</translation>
   </message>
  </context>
  <context>
@@ -462,12 +451,12 @@ Then fill in the fields and press 'Accept' button.</source>
    <location filename="../sample/sample.cpp" line="26"/>
    <location filename="../sample/sample.cpp" line="33"/>
    <source>Sample plugin</source>
-   <translation>नमूना प्लगइन</translation>
+   <translation>Примерни додатак</translation>
   </message>
   <message>
    <location filename="../sample/sample.cpp" line="34"/>
    <source>Sample test tip...</source>
-   <translation>नमूना परीक्षण टिप...</translation>
+   <translation>Примерни тест...</translation>
   </message>
  </context>
  <context>
@@ -475,17 +464,17 @@ Then fill in the fields and press 'Accept' button.</source>
   <message>
    <location filename="../picfile/picfile.cpp" line="36"/>
    <source>Read PIC file</source>
-   <translation>पीआईसी फ़ाइल पढ़ें</translation>
+   <translation>Учитај PIC датотеку</translation>
   </message>
   <message>
    <location filename="../picfile/picfile.cpp" line="37"/>
    <source>PIC test tip...</source>
-   <translation>पीआईसी परीक्षण टिप...</translation>
+   <translation>Тест за PIC...</translation>
   </message>
   <message>
    <location filename="../picfile/picfile.cpp" line="43"/>
    <source>import PIC file</source>
-   <translation>पीआईसी फ़ाइल आयात करें</translation>
+   <translation>Увези PIC датотеку</translation>
   </message>
  </context>
  <context>
@@ -493,177 +482,177 @@ Then fill in the fields and press 'Accept' button.</source>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="221"/>
    <source>Read ascii points</source>
-   <translation>एएससीआईआई बिंदु पढ़ें</translation>
+   <translation>Учитај ASCII тачке</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="227"/>
    <source>File...</source>
-   <translation>फ़ाइल...</translation>
+   <translation>Датотека...</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="234"/>
    <source>Format:</source>
-   <translation>प्रारूप:</translation>
+   <translation>Формат:</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="236"/>
    <source>Space Separator</source>
-   <translation>स्पेस विभाजक</translation>
+   <translation>Разделите простором</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="236"/>
    <source>Tab Separator</source>
-   <translation>टैब विभाजक</translation>
+   <translation>Разделите табулатором</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="236"/>
    <source>Comma Separator</source>
-   <translation>कॉमा विभाजक</translation>
+   <translation>Разделите зарезом</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="236"/>
    <source>Space in Columns</source>
-   <translation>कॉलम में स्पेस</translation>
+   <translation>Простор у колонама</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="236"/>
    <source>*.odb for Psion 2</source>
-   <translation>Psion 2 के लिए *.odb</translation>
+   <translation>*.odb за Psion 2</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="238"/>
    <source>Connect points</source>
-   <translation>बिंदुओं को जोड़ें</translation>
+   <translation>Повежите тачке</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="246"/>
    <source>2D Point</source>
-   <translation>2डी बिंदु</translation>
+   <translation>2D тачка</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="246"/>
    <source>Draw 2D Point</source>
-   <translation>2डी बिंदु बनाएं</translation>
+   <translation>Нацртајте 2D тачку</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="247"/>
    <source>3D Point</source>
-   <translation>3डी बिंदु</translation>
+   <translation>3D тачка</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="247"/>
    <source>Draw 3D Point</source>
-   <translation>3डी बिंदु बनाएं</translation>
+   <translation>Нацртајте 3D тачку</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="248"/>
    <source>Point Number</source>
-   <translation>बिंदु संख्या</translation>
+   <translation>Број тачке</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="248"/>
    <source>Draw point number</source>
-   <translation>बिंदु संख्या बनाएं</translation>
+   <translation>Нацртај број тачке</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="249"/>
    <source>Point Elevation</source>
-   <translation>बिंदु ऊंचाई</translation>
+   <translation>Висина тачке</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="249"/>
    <source>Draw point elevation</source>
-   <translation>बिंदु ऊंचाई बनाएं</translation>
+   <translation>Нацртај висину тачке</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="250"/>
    <source>Point Code</source>
-   <translation>बिंदु कोड</translation>
+   <translation>Код тачке</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="250"/>
    <source>Draw point code</source>
-   <translation>बिंदु कोड बनाएं</translation>
+   <translation>Нацртај код тачке</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="264"/>
    <source>Accept</source>
-   <translation>स्वीकार करें</translation>
+   <translation>Прихвати</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="269"/>
    <source>Cancel</source>
-   <translation>रद्द करें</translation>
+   <translation>Откажи</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="299"/>
    <source>Select file</source>
-   <translation>फ़ाइल चुनें</translation>
+   <translation>Изабери датотеку</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="306"/>
    <source>Point 2D layer is empty</source>
-   <translation>2डी परत में कोई बिंदु नहीं है</translation>
+   <translation>Слој 2D тачака је празан</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="309"/>
    <source>Point 3D layer is empty</source>
-   <translation>3D लेयर में कोई बिंदु नहीं है</translation>
+   <translation>Sloj 3D tačaka je prazan</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="312"/>
    <source>Point elevation layer is empty</source>
-   <translation>बिंदु ऊंचाई लेयर खाली है</translation>
+   <translation>Sloj visine tačaka je prazan</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="313"/>
    <source>Point elevation height is empty</source>
-   <translation>बिंदु ऊंचाई मान खाली है</translation>
+   <translation>Visina sloja tačaka je prazna</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="314"/>
    <source>Point elevation separation is empty</source>
-   <translation>बिंदु ऊंचाई का अंतर खाली है</translation>
+   <translation>Razmak sloja visine tačaka je prazan</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="317"/>
    <source>Point number layer is empty</source>
-   <translation>बिंदु संख्या लेयर खाली है</translation>
+   <translation>Sloj broja tačaka je prazan</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="318"/>
    <source>Point number height is empty</source>
-   <translation>बिंदु संख्या की ऊंचाई खाली है</translation>
+   <translation>Visina sloja broja tačaka je prazna</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="319"/>
    <source>Point number separation is empty</source>
-   <translation>बिंदु संख्या का अंतर खाली है</translation>
+   <translation>Razmak sloja broja tačaka je prazan</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="322"/>
    <source>Point code layer is empty</source>
-   <translation>बिंदु कोड लेयर खाली है</translation>
+   <translation>Sloj koda tačaka je prazan</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="323"/>
    <source>Point code height is empty</source>
-   <translation>बिंदु कोड की ऊंचाई खाली है</translation>
+   <translation>Visina sloja koda tačaka je prazna</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="324"/>
    <source>Point code separation is empty</source>
-   <translation>बिंदु कोड का अंतर खाली है</translation>
+   <translation>Razmak sloja koda tačaka je prazan</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="360"/>
    <source>The file %1 not exist</source>
-   <translation>फ़ाइल %1 मौजूद नहीं है</translation>
+   <translation>Фајл %1 не постоји</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="365"/>
    <source>Can't open the file %1</source>
-   <translation>फ़ाइल %1 नहीं खोल सकते</translation>
+   <translation>Не могу да отворим фајл %1</translation>
   </message>
  </context>
  <context>
@@ -672,22 +661,22 @@ Then fill in the fields and press 'Accept' button.</source>
    <location filename="../divide/divide.cpp" line="34"/>
    <location filename="../divide/divide.cpp" line="41"/>
    <source>Divide</source>
-   <translation>विभाजित करें</translation>
+   <translation>Подели</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="42"/>
    <source>Divide test tip...</source>
-   <translation>विभाजन परीक्षण टिप...</translation>
+   <translation>Тест поделе...</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="53"/>
    <source>Select a line, circle or arc and press return</source>
-   <translation>एक रेखा, वृत्त या चाप चुनें और एंटर दबाएं</translation>
+   <translation>Изаберите линију, круг или лук и притисните Enter</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="64"/>
    <source>Error</source>
-   <translation>त्रुटि</translation>
+   <translation>Грешка</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="101"/>
@@ -697,7 +686,7 @@ Then fill in the fields and press 'Accept' button.</source>
   <message>
    <location filename="../divide/divide.cpp" line="441"/>
    <source>Empty Entity</source>
-   <translation>खाली इकाई</translation>
+   <translation>Празан објекат</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="449"/>
@@ -712,136 +701,136 @@ Then fill in the fields and press 'Accept' button.</source>
   <message>
    <location filename="../divide/divide.cpp" line="457"/>
    <source>Layer</source>
-   <translation>लेयर</translation>
+   <translation>Слој</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="459"/>
    <source>Color</source>
-   <translation>रंग</translation>
+   <translation>Боја</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="460"/>
    <source>Line type</source>
-   <translation>रेखा प्रकार</translation>
+   <translation>Тип линије</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="462"/>
    <source>Line thickness</source>
-   <translation>रेखा की मोटाई</translation>
+   <translation>Дебљина линије</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="464"/>
    <source>ID</source>
-   <translation>आईडी</translation>
+   <translation>ID</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="471"/>
    <source>LINE</source>
-   <translation>रेखा</translation>
+   <translation>ЛИНИЈА</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="476"/>
    <source>from point</source>
-   <translation>शुरू बिंदु से</translation>
+   <translation>Од тачке</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="479"/>
    <source>to point</source>
-   <translation>अंत बिंदु तक</translation>
+   <translation>До тачке</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="484"/>
    <location filename="../divide/divide.cpp" line="511"/>
    <source>length</source>
-   <translation>लंबाई</translation>
+   <translation>Дужина</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="489"/>
    <source>Angle in XY plane</source>
-   <translation>XY तल में कोण</translation>
+   <translation>Угао у XY равни</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="491"/>
    <source>Inc.</source>
-   <translation>इंक.</translation>
+   <translation>Inc.</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="496"/>
    <source>ARC</source>
-   <translation>एआरसी</translation>
+   <translation>ARC</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="497"/>
    <location filename="../divide/divide.cpp" line="516"/>
    <source>center point</source>
-   <translation>केंद्र बिंदु</translation>
+   <translation>centar</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="503"/>
    <location filename="../divide/divide.cpp" line="520"/>
    <location filename="../divide/divide.cpp" line="542"/>
    <source>radius</source>
-   <translation>त्रिज्या</translation>
+   <translation>poluprečnik</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="504"/>
    <source>initial angle</source>
-   <translation>प्रारंभिक कोण</translation>
+   <translation>početni ugao</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="506"/>
    <source>final angle</source>
-   <translation>अंतिम कोण</translation>
+   <translation>završni ugao</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="515"/>
    <source>CIRCLE</source>
-   <translation>वृत्त</translation>
+   <translation>KRUG</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="521"/>
    <source>circumference</source>
-   <translation>परिधि</translation>
+   <translation>obim</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="523"/>
    <source>area</source>
-   <translation>क्षेत्रफल</translation>
+   <translation>površina</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="527"/>
    <source>POLYLINE</source>
-   <translation>पॉलीलाइन</translation>
+   <translation>POLILINIJA</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="528"/>
    <source>Closed</source>
-   <translation>बंद</translation>
+   <translation>Затворено</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="530"/>
    <source>No</source>
-   <translation>नहीं</translation>
+   <translation>Не</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="530"/>
    <source>Yes</source>
-   <translation>हाँ</translation>
+   <translation>Да</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="531"/>
    <source>Vertices</source>
-   <translation>शीर्ष</translation>
+   <translation>Врхови</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="536"/>
    <source>in point</source>
-   <translation>बिंदु में</translation>
+   <translation>у тачки</translation>
   </message>
   <message>
    <location filename="../divide/divide.cpp" line="552"/>
    <source>MUST be a line, circle or arc</source>
-   <translation>यह एक रेखा, वृत्त या चाप होना चाहिए</translation>
+   <translation>МОРА бити линија, круг или лук</translation>
   </message>
  </context>
  <context>
@@ -849,52 +838,52 @@ Then fill in the fields and press 'Accept' button.</source>
   <message>
    <location filename="../divide/dividedlg.cpp" line="47"/>
    <source>Divide - </source>
-   <translation>विभाजित करें -</translation>
+   <translation>Подели -</translation>
   </message>
   <message>
    <location filename="../divide/dividedlg.cpp" line="68"/>
    <source>Layers</source>
-   <translation>परतें</translation>
+   <translation>Слоеви</translation>
   </message>
   <message>
    <location filename="../divide/dividedlg.cpp" line="74"/>
    <source>OK</source>
-   <translation>ठीक</translation>
+   <translation>ОК</translation>
   </message>
   <message>
    <location filename="../divide/dividedlg.cpp" line="75"/>
    <source>Cancel</source>
-   <translation>रद्द करें</translation>
+   <translation>Откажи</translation>
   </message>
   <message>
    <location filename="../divide/dividedlg.cpp" line="84"/>
    <source>Divide at</source>
-   <translation>विभाजित करें</translation>
+   <translation>Подели на</translation>
   </message>
   <message>
    <location filename="../divide/dividedlg.cpp" line="91"/>
    <source>Size</source>
-   <translation>आकार</translation>
+   <translation>Величина</translation>
   </message>
   <message>
    <location filename="../divide/dividedlg.cpp" line="114"/>
    <source>places</source>
-   <translation>स्थान</translation>
+   <translation>места</translation>
   </message>
   <message>
    <location filename="../divide/dividedlg.cpp" line="125"/>
    <source>Ticks - Off</source>
-   <translation>टिक - बंद</translation>
+   <translation>Ознаке - Искључено</translation>
   </message>
   <message>
    <location filename="../divide/dividedlg.cpp" line="133"/>
    <source>Breaks - Off</source>
-   <translation>ब्रेक - बंद</translation>
+   <translation>Прекиди - Искључено</translation>
   </message>
   <message>
    <location filename="../divide/dividedlg.cpp" line="178"/>
    <source>&lt;i&gt;New&lt;/i&gt;</source>
-   <translation>&lt;i&gt;नया&lt;/i&gt;</translation>
+   <translation>&lt;i&gt;Ново&lt;/i&gt;</translation>
   </message>
   <message>
    <location filename="../divide/dividedlg.cpp" line="209"/>
@@ -904,37 +893,37 @@ decimal degrees
 0° at 3 o'clock
 goes
 anti-clockwise.</source>
-   <translation>प्रारंभिक कोण दर्ज करें, दशमलव डिग्री में। 3 बजे 0° से शुरू होकर वामावर्त दिशा में घूमेगा।</translation>
+   <translation>Унесите почетни угао у децималним степенима. 0° је у 3 сата и креће се у смеру казаљке на сату.</translation>
   </message>
   <message>
    <location filename="../divide/dividedlg.cpp" line="245"/>
    <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-   <translation>&lt;i&gt;&quot;नया&quot;&lt;/i&gt;&lt;br&gt;एक नए लेयर के लिए नाम दर्ज करें (यदि आवश्यक हो) जिस पर टिक खींचे जाएंगे।</translation>
+   <translation>&lt;i&gt;Ново&lt;/i&gt;&lt;br&gt;Унесите име за нови слој (ако је потребно) на који ћете цртати ознаке.</translation>
   </message>
   <message>
    <location filename="../divide/dividedlg.cpp" line="251"/>
    <source>Ticks</source>
-   <translation>टिक</translation>
+   <translation>Ознаке</translation>
   </message>
   <message>
    <location filename="../divide/dividedlg.cpp" line="257"/>
    <source>Above</source>
-   <translation>ऊपर</translation>
+   <translation>Изнад</translation>
   </message>
   <message>
    <location filename="../divide/dividedlg.cpp" line="258"/>
    <source>Below</source>
-   <translation>नीचे</translation>
+   <translation>Испод</translation>
   </message>
   <message>
    <location filename="../divide/dividedlg.cpp" line="262"/>
    <source>Outside</source>
-   <translation>बाहर</translation>
+   <translation>Споља</translation>
   </message>
   <message>
    <location filename="../divide/dividedlg.cpp" line="263"/>
    <source>Inside</source>
-   <translation>अंदर</translation>
+   <translation>Унутра</translation>
   </message>
  </context>
  <context>
@@ -942,7 +931,7 @@ anti-clockwise.</source>
   <message>
    <location filename="../pointstocsv/pointstocsv.cpp" line="120"/>
    <source>Export to file</source>
-   <translation>फ़ाइल में निर्यात करें</translation>
+   <translation>Извоз у датотеку</translation>
   </message>
   <message>
    <location filename="../pointstocsv/pointstocsv.cpp" line="120"/>
@@ -952,115 +941,115 @@ anti-clockwise.</source>
   <message>
    <location filename="../pointstocsv/pointstocsv.cpp" line="128"/>
    <source>Unable to open file</source>
-   <translation>फ़ाइल खोलने में असमर्थ</translation>
+   <translation>Не могу да отворим датотеку</translation>
   </message>
  </context>
  <context>
   <name>lc_Geardlg</name>
   <message>
-   <location filename="../gear/gear.cpp" line="113"/>
-   <source>Number of teeth</source>
-   <translation>दाँतों की संख्या</translation>
-  </message>
-  <message>
-   <location filename="../gear/gear.cpp" line="115"/>
-   <source>Pressure angle (deg)</source>
-   <translation>दबाव कोण (डिग्री)</translation>
-  </message>
-  <message>
    <location filename="../gear/gear.cpp" line="112"/>
    <source>Rotation angle</source>
-   <translation>घूर्णन कोण</translation>
+   <translation>Угао ротације</translation>
+  </message>
+  <message>
+   <location filename="../gear/gear.cpp" line="113"/>
+   <source>Number of teeth</source>
+   <translation>Број зуба</translation>
   </message>
   <message>
    <location filename="../gear/gear.cpp" line="114"/>
    <source>Modulus</source>
-   <translation>मॉड्यूल</translation>
+   <translation>Модул</translation>
+  </message>
+  <message>
+   <location filename="../gear/gear.cpp" line="115"/>
+   <source>Pressure angle (deg)</source>
+   <translation>Угао притиска (степени)</translation>
   </message>
   <message>
    <location filename="../gear/gear.cpp" line="116"/>
    <source>Addendum (rel. to modulus)</source>
-   <translation>परिशिष्ट (मॉड्यूल के सापेक्ष)</translation>
+   <translation>Додатак (у односу на модул)</translation>
   </message>
   <message>
    <location filename="../gear/gear.cpp" line="117"/>
    <source>Dedendum (rel. to modulus)</source>
-   <translation>निचला भाग (मॉड्यूल के सापेक्ष)</translation>
+   <translation>Одузетак (у односу на модул)</translation>
   </message>
   <message>
    <location filename="../gear/gear.cpp" line="118"/>
    <source>Number of segments to draw (dedendum)</source>
-   <translation>खींचने के लिए खंडों की संख्या (निचला भाग)</translation>
+   <translation>Број сегмената за цртање (одузетак)</translation>
   </message>
   <message>
    <location filename="../gear/gear.cpp" line="119"/>
    <source>Number of segments to draw (addendum)</source>
-   <translation>खींचने के लिए खंडों की संख्या (परिशिष्ट)</translation>
+   <translation>Број сегмената за цртање (додатак)</translation>
   </message>
   <message>
    <location filename="../gear/gear.cpp" line="120"/>
    <source>Draw all teeth?</source>
-   <translation>क्या सभी दांतों को खींचा जाए?</translation>
+   <translation>Да ли треба нацртати све зубе?</translation>
   </message>
   <message>
    <location filename="../gear/gear.cpp" line="121"/>
    <source>Draw symmetric face?</source>
-   <translation>क्या सममित सतह खींची जाए?</translation>
+   <translation>Да ли треба нацртати симетричну страну?</translation>
   </message>
   <message>
    <location filename="../gear/gear.cpp" line="123"/>
    <source>Use layers?</source>
-   <translation>परतों का उपयोग करें?</translation>
+   <translation>Да ли користити слојеве?</translation>
   </message>
   <message>
    <location filename="../gear/gear.cpp" line="124"/>
    <source>Draw addendum circle?</source>
-   <translation>क्या परिशिष्ट वृत्त खींचा जाए?</translation>
+   <translation>Да ли треба нацртати круг додатка?</translation>
   </message>
   <message>
    <location filename="../gear/gear.cpp" line="125"/>
    <source>Draw pitch circle?</source>
-   <translation>क्या पिच वृत्त खींचा जाए?</translation>
+   <translation>Да ли треба нацртати основни круг?</translation>
   </message>
   <message>
    <location filename="../gear/gear.cpp" line="126"/>
    <source>Draw base circle?</source>
-   <translation>क्या आधार वृत्त खींचा जाए?</translation>
+   <translation>Да ли треба нацртати основни круг?</translation>
   </message>
   <message>
    <location filename="../gear/gear.cpp" line="127"/>
    <source>Draw root circle?</source>
-   <translation>रूट सर्कल बनाएं?</translation>
+   <translation>Crta se osnovni krug?</translation>
   </message>
   <message>
    <location filename="../gear/gear.cpp" line="128"/>
    <source>Draw pressure line?</source>
-   <translation>दबाव रेखा बनाएं?</translation>
+   <translation>Crta se linija pritiska?</translation>
   </message>
   <message>
    <location filename="../gear/gear.cpp" line="129"/>
    <source>Draw pressure limits?</source>
-   <translation>दबाव सीमाएं बनाएं?</translation>
+   <translation>Crta se granica pritiska?</translation>
   </message>
   <message>
    <location filename="../gear/gear.cpp" line="131"/>
    <source>Calculate interference?</source>
-   <translation>हस्तक्षेप की गणना करें?</translation>
+   <translation>Izračunava se interferencija?</translation>
   </message>
   <message>
    <location filename="../gear/gear.cpp" line="132"/>
    <source>Number of segments to draw (interference)</source>
-   <translation>हस्तक्षेप के लिए रेखांकित किए जाने वाले खंडों की संख्या</translation>
+   <translation>Broj segmenata za crtanje (interferencija)</translation>
   </message>
   <message>
    <location filename="../gear/gear.cpp" line="134"/>
    <source>Accept</source>
-   <translation>स्वीकार करें</translation>
+   <translation>Prihvati</translation>
   </message>
   <message>
    <location filename="../gear/gear.cpp" line="135"/>
    <source>Cancel</source>
-   <translation>रद्द करें</translation>
+   <translation>Otkaži</translation>
   </message>
  </context>
  <context>
@@ -1068,7 +1057,7 @@ anti-clockwise.</source>
   <message>
    <location filename="../list/list.cpp" line="276"/>
    <source>List entities</source>
-   <translation>इकाइयों की सूची</translation>
+   <translation>Prikaži entitete</translation>
   </message>
  </context>
  <context>
@@ -1076,62 +1065,62 @@ anti-clockwise.</source>
   <message>
    <location filename="../sample/sample.cpp" line="53"/>
    <source>Draw line</source>
-   <translation>रेखा बनाएं</translation>
+   <translation>Crta se linija</translation>
   </message>
   <message>
    <location filename="../sample/sample.cpp" line="59"/>
    <source>Start X:</source>
-   <translation>प्रारंभिक X:</translation>
+   <translation>Početna X koordinata:</translation>
   </message>
   <message>
    <location filename="../sample/sample.cpp" line="65"/>
    <source>Start Y:</source>
-   <translation>प्रारंभिक Y:</translation>
+   <translation>Почетна Y координата:</translation>
   </message>
   <message>
    <location filename="../sample/sample.cpp" line="71"/>
    <source>End X:</source>
-   <translation>अंतिम X:</translation>
+   <translation>Крајња X координата:</translation>
   </message>
   <message>
    <location filename="../sample/sample.cpp" line="77"/>
    <source>End Y:</source>
-   <translation>अंतिम Y:</translation>
+   <translation>Крајња Y координата:</translation>
   </message>
   <message>
    <location filename="../sample/sample.cpp" line="85"/>
    <source>Accept</source>
-   <translation>स्वीकार करें</translation>
+   <translation>Прихвати</translation>
   </message>
   <message>
    <location filename="../sample/sample.cpp" line="90"/>
    <source>Cancel</source>
-   <translation>रद्द करें</translation>
+   <translation>Откажи</translation>
   </message>
   <message>
    <location filename="../sample/sample.cpp" line="106"/>
    <source>Start X is empty</source>
-   <translation>प्रारंभिक X खाली है</translation>
+   <translation>Почетна X координата је празна</translation>
   </message>
   <message>
    <location filename="../sample/sample.cpp" line="107"/>
    <source>Start Y is empty</source>
-   <translation>प्रारंभिक Y खाली है</translation>
+   <translation>Почетна Y координата је празна</translation>
   </message>
   <message>
    <location filename="../sample/sample.cpp" line="108"/>
    <source>End X is empty</source>
-   <translation>अंतिम X खाली है</translation>
+   <translation>Крајња X координата је празна</translation>
   </message>
   <message>
    <location filename="../sample/sample.cpp" line="109"/>
    <source>End Y is empty</source>
-   <translation>अंतिम Y खाली है</translation>
+   <translation>Крајња Y координата је празна</translation>
   </message>
   <message>
    <location filename="../sample/sample.cpp" line="130"/>
    <source>Sample plugin</source>
-   <translation>नमूना प्लगइन</translation>
+   <translation>Пример плугина</translation>
   </message>
  </context>
  <context>
@@ -1139,63 +1128,63 @@ anti-clockwise.</source>
   <message>
    <location filename="../picfile/picfile.cpp" line="65"/>
    <source>File...</source>
-   <translation>फ़ाइल...</translation>
+   <translation>Фајл...</translation>
   </message>
   <message>
    <location filename="../picfile/picfile.cpp" line="75"/>
    <source>Scale:</source>
-   <translation>स्केल:</translation>
+   <translation>Скала:</translation>
   </message>
   <message>
    <location filename="../picfile/picfile.cpp" line="79"/>
    <source>Accept</source>
-   <translation>स्वीकार करें</translation>
+   <translation>Прихвати</translation>
   </message>
   <message>
    <location filename="../picfile/picfile.cpp" line="83"/>
    <source>Cancel</source>
-   <translation>रद्द करें</translation>
+   <translation>Откажи</translation>
   </message>
   <message>
    <location filename="../picfile/picfile.cpp" line="111"/>
    <source>Select file</source>
-   <translation>फ़ाइल चुनें</translation>
+   <translation>Изаберите фајл</translation>
   </message>
   <message>
    <location filename="../picfile/picfile.cpp" line="119"/>
    <source>Scale Factor is empty or invalid</source>
-   <translation>स्केल कारक खाली या अमान्य है</translation>
+   <translation>Фактор скале је празан или неважећи</translation>
   </message>
   <message>
    <location filename="../picfile/picfile.cpp" line="132"/>
    <source>The file %1 not exist</source>
-   <translation>फ़ाइल %1 मौजूद नहीं है</translation>
+   <translation>Фајл %1 не постоји</translation>
   </message>
   <message>
    <location filename="../picfile/picfile.cpp" line="137"/>
    <source>Can't open the file %1</source>
-   <translation>फ़ाइल %1 नहीं खोल सकते</translation>
+   <translation>Не могу да отворим фајл %1</translation>
   </message>
   <message>
    <location filename="../picfile/picfile.cpp" line="144"/>
    <source>%1 objects imported</source>
-   <translation>%1 ऑब्जेक्ट आयात किए गए</translation>
+   <translation>%1 објеката је увезено</translation>
   </message>
   <message>
    <location filename="../picfile/picfile.cpp" line="166"/>
    <source>picPunto drawLine: first point is empty %1</source>
-   <translation>picPunto drawLine: पहला बिंदु खाली है %1</translation>
+   <translation>picPunto drawLine: прва тачка је празна %1</translation>
   </message>
   <message>
    <location filename="../picfile/picfile.cpp" line="179"/>
    <source>picPunto drawLine: next point is empty %1</source>
-   <translation>अगला बिंदु खाली है %1</translation>
+   <translation>picPunto drawLine: следећа тачка је празна %1</translation>
   </message>
   <message>
    <location filename="../picfile/picfile.cpp" line="262"/>
    <location filename="../picfile/picfile.cpp" line="271"/>
    <source>format error in %1</source>
-   <translation>%1 में प्रारूप त्रुटि</translation>
+   <translation>грешка у формату у %1</translation>
   </message>
  </context>
  <context>
@@ -1204,12 +1193,12 @@ anti-clockwise.</source>
    <location filename="../plotequation/plot.cpp" line="30"/>
    <location filename="../plotequation/plot.cpp" line="37"/>
    <source>Plot plugin</source>
-   <translation>प्लॉट प्लगइन</translation>
+   <translation>додатак за графике</translation>
   </message>
   <message>
    <location filename="../plotequation/plot.cpp" line="38"/>
    <source>Plot test tip...</source>
-   <translation>प्लॉट परीक्षण टिप...</translation>
+   <translation>тест додатка за графике...</translation>
   </message>
  </context>
  <context>
@@ -1217,7 +1206,7 @@ anti-clockwise.</source>
   <message>
    <location filename="../plotequation/plotdialog.cpp" line="15"/>
    <source>Plot equation</source>
-   <translation>प्लॉट समीकरण</translation>
+   <translation>једначина графике</translation>
   </message>
   <message>
    <location filename="../plotequation/plotdialog.cpp" line="18"/>
@@ -1226,60 +1215,63 @@ If you don't want to use the parametric form, just leave out &quot;Equation2&quo
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-   <translation>यह प्लगइन आपको गणितीय समीकरणों को प्लॉट करने की अनुमति देता है। यदि आप पैरामीट्रिक रूप का उपयोग नहीं करना चाहते हैं, तो बस &quot;समीकरण2&quot; को छोड़ दें। जब आपको पाई के मान की आवश्यकता हो तो आप पाई का उपयोग कर सकते हैं (जैसे (3*पाई))। अपने समीकरण में t या x को एक चर/पैरामीटर के रूप में उपयोग करें।</translation>
+   <translation>Овај додатак вам омогућава да цртате математичке једначине.
+Ако не желите да користите параметрички облик, једноставно избришите „Једначина2“.
+Можете користити pi када вам је потребна вредност пи (нпр. (3*pi)).
+Користите t или x у својој једначини као променљиву/параметар.</translation>
   </message>
   <message>
    <location filename="../plotequation/plotdialog.cpp" line="22"/>
    <source>Equation 1:</source>
-   <translation>समीकरण 1:</translation>
+   <translation>Једначина 1:</translation>
   </message>
   <message>
    <location filename="../plotequation/plotdialog.cpp" line="23"/>
    <source>Equation 2:</source>
-   <translation>समीकरण 2:</translation>
+   <translation>Једначина 2:</translation>
   </message>
   <message>
    <location filename="../plotequation/plotdialog.cpp" line="26"/>
    <source>start value:</source>
-   <translation>प्रारंभिक मान:</translation>
+   <translation>почетна вредност:</translation>
   </message>
   <message>
    <location filename="../plotequation/plotdialog.cpp" line="27"/>
    <source>end value:</source>
-   <translation>अंतिम मान:</translation>
+   <translation>завршна вредност:</translation>
   </message>
   <message>
    <location filename="../plotequation/plotdialog.cpp" line="28"/>
    <source>step size:</source>
-   <translation>चरण आकार:</translation>
+   <translation>Величина корака:</translation>
   </message>
   <message>
    <location filename="../plotequation/plotdialog.cpp" line="32"/>
    <source>Draw</source>
-   <translation>खींचें</translation>
+   <translation>Цртај</translation>
   </message>
   <message>
    <location filename="../plotequation/plotdialog.cpp" line="33"/>
    <source>Cancel</source>
-   <translation>रद्द करें</translation>
+   <translation>Откажи</translation>
   </message>
   <message>
    <location filename="../plotequation/plotdialog.cpp" line="59"/>
    <source>Line Segments</source>
    <comment>Plot Equation to generate RS_Line segments</comment>
-   <translation>रेखा खंड</translation>
+   <translation>Линијски сегменти</translation>
   </message>
   <message>
    <location filename="../plotequation/plotdialog.cpp" line="60"/>
    <source>Polyline</source>
    <comment>Plot Equation to generate RS_Polyline</comment>
-   <translation>बहुभुज रेखा</translation>
+   <translation>Полилинија</translation>
   </message>
   <message>
    <location filename="../plotequation/plotdialog.cpp" line="61"/>
    <source>SplinePoints</source>
    <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-   <translation>स्प्लाइन बिंदु</translation>
+   <translation>Тачке криве</translation>
   </message>
  </context>
  <context>
@@ -1287,7 +1279,7 @@ Use t or x in your equation as a variable/parameter.
   <message>
    <location filename="../asciifile/asciifile.cpp" line="176"/>
    <source>Layer:</source>
-   <translation>परत:</translation>
+   <translation>Слој:</translation>
   </message>
  </context>
  <context>
@@ -1295,17 +1287,17 @@ Use t or x in your equation as a variable/parameter.
   <message>
    <location filename="../asciifile/asciifile.cpp" line="205"/>
    <source>Style:</source>
-   <translation>शैली:</translation>
+   <translation>Стил:</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="206"/>
    <source>Height:</source>
-   <translation>ऊँचाई:</translation>
+   <translation>Висина:</translation>
   </message>
   <message>
    <location filename="../asciifile/asciifile.cpp" line="207"/>
    <source>Separation</source>
-   <translation>अंतराल</translation>
+   <translation>Размак</translation>
   </message>
  </context>
 </TS>
