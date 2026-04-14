@@ -74,8 +74,6 @@ protected:
     virtual bool doProcessCommandValue(int status, const QString &c);
     virtual const RS_Vector& getStartPointForAngleSnap() const = 0;
     virtual bool isStartPointValid() const;
-    void doMouseMoveEnd(int status, LC_MouseEvent *e) override;
-
     void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapped) override;
     bool doCheckMayDrawPreview(LC_MouseEvent *pEvent, int status) override;
     RS_Vector doGetMouseSnapPoint(LC_MouseEvent *e) override;
