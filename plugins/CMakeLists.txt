@@ -66,7 +66,7 @@ set(PLUGIN_TS_FILES
     plugins_gl.ts
     plugins_hi.ts
     plugins_hu.ts
-    plugins_id_ID.ts
+    plugins_id_id.ts
     plugins_it.ts
     plugins_ja.ts
     plugins_ko.ts
