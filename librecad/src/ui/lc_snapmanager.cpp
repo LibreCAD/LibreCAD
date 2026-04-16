@@ -194,6 +194,7 @@ RS2::SnapRestriction LC_SnapManager::getSnapRestriction() const {
 
 void LC_SnapManager::setGraphicView(RS_GraphicView* gview) {
     m_view = gview;
+    m_snapToolbar->setGraphicView(gview);
 }
 
 void LC_SnapManager::setRelativeZeroLock(const bool on) const {

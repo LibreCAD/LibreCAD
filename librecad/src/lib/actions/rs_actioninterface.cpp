@@ -35,6 +35,7 @@
 #include "lc_cursoroverlayinfo.h"
 #include "lc_graphicviewport.h"
 #include "lc_undosection.h"
+#include "lc_visual_snap_manager.h"
 #include "rs_commandevent.h"
 #include "rs_commands.h"
 #include "rs_coordinateevent.h"
@@ -88,6 +89,12 @@ void RS_ActionInterface::unselectAll() const {
 
 void RS_ActionInterface::unselect(RS_Entity* e) const {
     m_document->unselect(e);
+}
+
+void RS_ActionInterface::clearVisualSnap() const {
+    if (!isSupportsPredecessorAction()) {
+        RS_Snapper::clearVisualSnap();
+    }
 }
 
 void RS_ActionInterface::select(RS_Entity* e) const {
@@ -249,6 +256,8 @@ void RS_ActionInterface::keyReleaseEvent(QKeyEvent* e) {
  * implementation
  */
 void RS_ActionInterface::coordinateEvent(RS_CoordinateEvent* e) {
+    m_graphicView->hideRelativeInputWidget();
+    m_restoreRelativeInput = false;
     if (e == nullptr) {
         return;
     }
@@ -285,6 +294,8 @@ void RS_ActionInterface::onCoordinateEvent([[maybe_unused]] int status, [[maybe_
 * @param e
 */
 void RS_ActionInterface::commandEvent(RS_CommandEvent* e) {
+    m_graphicView->hideRelativeInputWidget();
+    m_restoreRelativeInput = false;
     const QString c = prepareCommand(e);
     if (!c.isEmpty()) {
         if (checkCommand("help", c)) {
@@ -481,6 +492,7 @@ void RS_ActionInterface::createOptionsEditor() {
 void RS_ActionInterface::postCreateInit() {
     loadOptions();
     createOptionsEditor();
+    m_visualSnapManager->setClearSnapData(!isSupportsPredecessorAction());
 }
 
 void RS_ActionInterface::updateOptionsUI(const int mode, const QVariant *value) const {
@@ -696,4 +708,9 @@ void RS_ActionInterface::undoCycleReplace(RS_Entity* entityToReplace, RS_Entity*
 void RS_ActionInterface::setPenAndLayerToActive(RS_Entity* e) {
     e->setLayerToActive();
     e->setPenToActive();
+}
+
+void RS_ActionInterface::suspendRelativeInputWidget() {
+    m_restoreRelativeInput = m_graphicView->isInRelativePointInput();
+    m_graphicView->hideRelativeInputWidget();
 }

@@ -46,11 +46,8 @@ void LC_PolygonOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* con
                    action->setCornersRounded(val);
                }, container);
 
-    addLinearDistance({"a_radiusOuter", tr("Radius"), tr("Rounding radius for vertex fillet")}, [action]() {
-                          return action->getRoundingRadius();
-                      }, [action](double val) {
-                          action->setRoundingRadius(val);
-                      }, container, [action](LC_PropertyViewDescriptor& d) -> bool {
-                          return !action->isCornersRounded();
-                      });
+    addLinearDistance(
+        {"a_radiusOuter", tr("Radius"), tr("Rounding radius for vertex fillet")}, [action]() { return action->getRoundingRadius(); },
+        [action](double val) { action->setRoundingRadius(val); }, container,
+        [action](LC_PropertyViewDescriptor&) -> bool { return !action->isCornersRounded(); });
 }

@@ -223,6 +223,9 @@ void LC_PropertySheetWidget::stopInplaceEdit() const {
 void LC_PropertySheetWidget::refill() {
     // LC_ERR << "On Selection Changed!";
     stopInplaceEdit();
+    if (m_actionContext->getDocument() == nullptr) {
+        return;
+    }
     if (m_operationMode == MODE_SELECTION) {
         if (m_handleSelectionChange) {
             const int selectionIndex = ui->cbSelection->currentIndex();
@@ -323,7 +326,9 @@ void LC_PropertySheetWidget::onUcsChanged([[maybe_unused]] LC_UCS* ucs) {
     refill();
 }
 
-void LC_PropertySheetWidget::onViewDefaultActionActivated(const bool defaultActionActivated, const RS2::ActionType actionRtti, const RS2::ActionType prevActionRtti) {
+void LC_PropertySheetWidget::onViewDefaultActionActivated(const bool defaultActionActivated,
+                                                          [[maybe_unused]] const RS2::ActionType actionRtti,
+                                                          const RS2::ActionType prevActionRtti) {
     setShouldHandleSelectionChange(defaultActionActivated);
     if (defaultActionActivated) {
         // prevent refresh of the widget if activation is called after interactive input  - it might be that update

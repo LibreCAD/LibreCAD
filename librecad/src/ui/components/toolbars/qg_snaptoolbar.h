@@ -28,6 +28,7 @@
 
 #include <QToolBar>
 
+#include "lc_graphicviewaware.h"
 #include "rs_snapper.h"
 
 class LC_SnapOptionsWidgetsHolder;
@@ -35,7 +36,7 @@ class QG_ActionHandler;
 
 class LC_ActionGroupManager;
 
-class QG_SnapToolBar : public QToolBar {
+class QG_SnapToolBar : public QToolBar, public LC_GraphicViewAware{
     Q_OBJECT
 public:
     QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, const LC_ActionGroupManager* agm, const QMap<QString, QAction*>& actionsMap);
@@ -47,26 +48,26 @@ public:
     void setLockedRelativeZero(bool on) const;
     void setUCSActive(bool on) const;
     LC_SnapOptionsWidgetsHolder* getSnapOptionsHolder();
-
-public
-    slots :
+    void setGraphicView(RS_GraphicView* gview) override;
+public slots :
     void setSnaps(const RS_SnapMode& s) const;
     void slotEnableRelativeZeroSnaps(bool) const;
     void slotUnsetSnapMiddleManual() const;
 
-private
-    slots :
+private slots :
     void actionTriggered() const;
     void slotRestrictOrthogonal(bool checked) const;
     void slotRestrictNothing(bool checked) const;
 
 private:
     QAction* addOwnAction(const QString& name, const QMap<QString, QAction*>& actionsMap);
+    void addVisualSnapAction(QMenu* menu, const QMap<QString, QAction*>& actionsMap, const char* actionName, const char* settingKey);
     QAction* justAddAction(const QString& name, const QMap<QString, QAction*>& actionsMap);
 
     QG_ActionHandler* m_actionHandler;
 
     QAction* m_actionSnapVisual;
+    QAction* m_actionSnapVisualLock;
     QAction* m_actionSnapFree;
     QAction* m_actionSnapGrid;
     QAction* m_actionSnapEnd;

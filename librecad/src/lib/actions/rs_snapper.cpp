@@ -36,7 +36,7 @@
 #include "lc_graphicviewport.h"
 #include "lc_linemath.h"
 #include "lc_overlayentitiescontainer.h"
-#include "lc_visual_snap_manager.h"
+#include "visual_snap/lc_visual_snap_manager.h"
 #include "rs_debug.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
@@ -303,6 +303,8 @@ void RS_Snapper::initFromSettings() {
         m_angleSnapSnapToGridLinesIfGrid = LC_GET_BOOL("AngleSnapToLinesIfGrid", true);
     }
     LC_GROUP_END();
+
+    m_visualSnapManager->updateOptions();
 }
 
 void RS_Snapper::updateSnapAngleStep() {
@@ -372,7 +374,7 @@ void RS_Snapper::finish() {
     m_finished = true;
     deleteSnapper();
     deleteInfoCursor();
-    m_visualSnapManager->clear();
+    clearVisualSnap();
     m_graphicView->hideRelativeInputWidget();
 }
 
@@ -396,11 +398,9 @@ RS_Vector RS_Snapper::snapFree(const QMouseEvent* e) const {
         RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Snapper::snapFree: event is nullptr");
         return RS_Vector(false);
     }
-    m_impData->snapSpot = toGraph(e);
+    m_impData->update(toGraph(e), RS2::SnapType::FREE);
     m_impData->snapCoord = m_impData->snapSpot;
     m_snapIndicator->drawLines = true;
-    m_impData->entity = nullptr;
-    m_impData->entityOther = nullptr;
     return m_impData->snapCoord;
 }
 
@@ -412,10 +412,7 @@ void RS_Snapper::snapEndpoint(const RS_Vector& mouseCoord, double& ds2Min) const
 
         if (snap.valid && ds2 < ds2Min) {
             ds2Min = ds2;
-            m_impData->snapSpot = snap;
-            m_impData->snapType = RS2::SnapType::ENDPOINT;
-            m_impData->entity = endpointEntity;
-            m_impData->entityOther = nullptr;
+            m_impData->update(snap, RS2::SnapType::ENDPOINT, endpointEntity);
         }
     }
 }
@@ -427,10 +424,7 @@ void RS_Snapper::snapCenter(const RS_Vector& mouseCoord, double& ds2Min) const {
         const double ds2 = mouseCoord.squaredTo(snap);
         if (ds2 < ds2Min) {
             ds2Min = ds2;
-            m_impData->snapSpot = snap;
-            m_impData->snapType = RS2::SnapType::CENTER;
-            m_impData->entity = centerEntity;
-            m_impData->entityOther = nullptr;
+            m_impData->update(snap, RS2::SnapType::CENTER, centerEntity);
         }
     }
 }
@@ -445,10 +439,7 @@ void RS_Snapper::snapMiddle(const RS_Vector& mouseCoord, double& ds2Min) {
         const double ds2 = mouseCoord.squaredTo(snap);
         if (ds2 < ds2Min) {
             ds2Min = ds2;
-            m_impData->snapSpot = snap;
-            m_impData->snapType = RS2::SnapType::MIDDLE;
-            m_impData->entity = nullptr;
-            m_impData->entityOther = nullptr;
+            m_impData->update(snap, RS2::SnapType::MIDDLE);
         }
     }
 }
@@ -462,10 +453,7 @@ void RS_Snapper::snapDistance(const RS_Vector mouseCoord, double& ds2Min) {
         const double ds2 = mouseCoord.squaredTo(snap);
         if (ds2 < ds2Min) {
             ds2Min = ds2;
-            m_impData->snapSpot = snap;
-            m_impData->snapType = RS2::SnapType::DISTANCE;
-            m_impData->entity = nullptr;
-            m_impData->entityOther = nullptr;
+            m_impData->update(snap, RS2::SnapType::DISTANCE);
         }
     }
 }
@@ -479,10 +467,7 @@ void RS_Snapper::snapIntersection(const RS_Vector& mouseCoord, double& ds2Min) c
         const double ds2 = mouseCoord.squaredTo(snap);
         if (ds2 < ds2Min) {
             ds2Min = ds2;
-            m_impData->snapSpot = snap;
-            m_impData->snapType = RS2::SnapType::INTERSECTION;
-            m_impData->entity = entity1;
-            m_impData->entityOther = entity2;
+            m_impData->update(snap, RS2::SnapType::INTERSECTION, entity1, entity2);
         }
     }
 }
@@ -494,10 +479,7 @@ void RS_Snapper::snapOnEntity(const RS_Vector& mouseCoord, double& ds2Min) {
         const double ds2 = mouseCoord.squaredTo(snap);
         if (ds2 < ds2Min) {
             ds2Min = ds2;
-            m_impData->snapSpot = snap;
-            m_impData->snapType = RS2::SnapType::ENTITY;
-            m_impData->entity = entity;
-            m_impData->entityOther = nullptr;
+            m_impData->update(snap, RS2::SnapType::ENTITY, entity);
         }
     }
 }
@@ -507,11 +489,7 @@ void RS_Snapper::snapGrid(const RS_Vector& mouseCoord, double ds2Min) const {
         const RS_Vector snap = snapGrid(mouseCoord);
         const double ds2 = mouseCoord.squaredTo(snap);
         if (ds2 < ds2Min) {
-            //            ds2Min=ds2;
-            m_impData->snapSpot = snap;
-            m_impData->snapType = RS2::SnapType::GRID;
-            m_impData->entity = nullptr;
-            m_impData->entityOther = nullptr;
+            m_impData->update(snap, RS2::SnapType::GRID);
         }
     }
 }
@@ -534,30 +512,27 @@ bool RS_Snapper::snapVisual(const RS_Vector& mouseCoord, RS_Entity** restricting
     const double range = getSnapRange();
     m_visualSnapManager->setSnapRange(range);
     if (isVisualSnapApplicable() && hasVisualSnap()) {
-        VisualSnapSolution* visualSnapSolution = m_visualSnapManager->solveVisualSnap(mouseCoord);
+        LC_VisualSnapSolution* visualSnapSolution = m_visualSnapManager->solveVisualSnap(mouseCoord);
         visualSnapSolution->restrictedPoint.valid = false;
 
         if (visualSnapSolution != nullptr) {
             if (visualSnapSolution->hasFoundSnapPoint()) {
                 // exact snap found, it's either intersection or vertex point
                 const RS_Vector snap = visualSnapSolution->foundSnapPoint;
-                m_impData->snapSpot = snap;
+                m_impData->update(snap, RS2::SnapType::VISUAL_SNAP);
                 m_impData->snapCoord = snap;
-                m_impData->snapType = RS2::SnapType::VISUAL_SNAP;
                 m_impData->visualSnapType = visualSnapSolution->foundSnapPointInfo;
                 const RS2::SnapType originalSnapType = visualSnapSolution->restrictedOriginalSnapType;
                 if (originalSnapType != RS2::SnapType::NO_SNAP) {
                     m_impData->restrictedSnapType = originalSnapType;
                 }
-                m_impData->entity = nullptr;
-                m_impData->entityOther = nullptr;
                 visualSnapFound = true;
             }
             else {
                 if (!visualSnapSolution->guidingEntities.empty()) {
                     const int size = visualSnapSolution->guidingEntities.size();
                     // LC_ERR << "VSnap entities size: " << size;
-                    EntityHolder holder;
+                    LC_VisualSnapEntityHolder holder;
                     if (size == 1) {
                         holder = visualSnapSolution->guidingEntities.front();
                     }
@@ -586,6 +561,8 @@ bool RS_Snapper::snapVisual(const RS_Vector& mouseCoord, RS_Entity** restricting
                     switch (snapEntityType) {
                         case RS2::VSNAP_LINE_VERTEX_VERTICAL:
                         case RS2::VSNAP_LINE_VERTEX_HORIZONTAL:
+                        case RS2::VSNAP_LINE_RESTR_VERTICAL:
+                        case RS2::VSNAP_LINE_RESTR_HORIZONTAL:
                         case RS2::VSNAP_POINT_RELATIVE_VERTICAL_DX:
                         case RS2::VSNAP_POINT_RELATIVE_HORIZONTAL_DY: {
                             restrictingType = snapEntityType;
@@ -600,6 +577,9 @@ bool RS_Snapper::snapVisual(const RS_Vector& mouseCoord, RS_Entity** restricting
                         case RS2::VSNAP_LINE_ENDPOINT_ANGLE_STEP:
                         case RS2::VSNAP_LINE_VERTEX_ANGLE_STEP:
                         case RS2::VSNAP_LINE_VERTEX_VERTEX:
+                        case RS2::VSNAP_LINE_VERTEX_ORTHO:
+                        case RS2::VSNAP_LINE_DISTANCE_TANGENT2:
+                        case RS2::VSNAP_LINE_VERTEX_VERTEX_ORTHO:
                         case RS2::VSNAP_POINT_RELATIVE_ANGLE_RAY:
                         case RS2::VSNAP_POINT_RELATIVE_NORMAL: {
                             double distanceToRay;
@@ -620,10 +600,8 @@ bool RS_Snapper::snapVisual(const RS_Vector& mouseCoord, RS_Entity** restricting
                                         // LC_ERR << "VS RAY: ";
                                     }
 
-                                    m_impData->snapSpot = snap;
+                                    m_impData->update(snap, RS2::SnapType::VISUAL_SNAP);
                                     m_impData->snapCoord = snap;
-
-                                    m_impData->snapType = RS2::SnapType::VISUAL_SNAP;
                                     RS2::LC_VisualSnapIntersectionInfo snapInfo;
                                     snapInfo.entity1 = RS2::VisualSnapGuideEntityType::VSNAP_NONE;
                                     snapInfo.entity2 = snapEntityType;
@@ -632,8 +610,6 @@ bool RS_Snapper::snapVisual(const RS_Vector& mouseCoord, RS_Entity** restricting
                                         snapInfo.rayAngle2 = holder.wcsRayAngleRad;
                                     }
                                     m_impData->visualSnapType = snapInfo;
-                                    m_impData->entity = nullptr;
-                                    m_impData->entityOther = nullptr;
                                     visualSnapFound = true;
                                     // LC_ERR << "VS POINT ON RAY:  " << snap;
                                 }
@@ -647,13 +623,12 @@ bool RS_Snapper::snapVisual(const RS_Vector& mouseCoord, RS_Entity** restricting
                             break;
                         }
                         default: {
-                            const RS_Entity* ent = holder.entity;
+                            RS_Entity* ent = holder.entity;
                             RS_Vector snap(false);
                             snap = ent->getNearestPointOnEntity(mouseCoord, true, &distance);
                             if (distance < range) {
-                                m_impData->snapSpot = snap;
+                                m_impData->update(snap, RS2::SnapType::VISUAL_SNAP);
                                 m_impData->snapCoord = snap;
-                                m_impData->snapType = RS2::SnapType::VISUAL_SNAP;
                                 RS2::LC_VisualSnapIntersectionInfo snapInfo;
                                 snapInfo.entity1 = RS2::VisualSnapGuideEntityType::VSNAP_NONE;
                                 snapInfo.entity2 = snapEntityType;
@@ -662,8 +637,6 @@ bool RS_Snapper::snapVisual(const RS_Vector& mouseCoord, RS_Entity** restricting
                                     snapInfo.rayAngle2 = holder.wcsRayAngleRad;
                                     }
                                 m_impData->visualSnapType = snapInfo;
-                                m_impData->entity = nullptr;
-                                m_impData->entityOther = nullptr;
                                 visualSnapFound = true;
                             }
                         }
@@ -682,13 +655,10 @@ bool RS_Snapper::snapVisual(const RS_Vector& mouseCoord, RS_Entity** restricting
  * @return The coordinates of the point or an invalid vector.
  */
 RS_Vector RS_Snapper::snapPoint(const QMouseEvent* e) {
-    m_impData->snapType = RS2::NO_SNAP;
     m_impData->restrictedSnapType = RS2::NO_SNAP;
-    m_impData->entity = nullptr;
-    m_impData->entityOther = nullptr;
+    m_impData->update(RS_Vector(false), RS2::SnapType::NO_SNAP);
     m_impData->restriction = RS2::RestrictNothing;
     m_impData->snapCoord = RS_Vector(false);
-    m_impData->snapSpot = RS_Vector(false);
     m_impData->visualSnapType.entity1 = RS2::VSNAP_NONE;
     m_impData->visualSnapType.entity2 = RS2::VSNAP_NONE;
 
@@ -775,7 +745,7 @@ RS_Vector RS_Snapper::snapPoint(const QMouseEvent* e) {
         }
     }
     if (restrictingEntity != nullptr) {
-        VisualSnapSolution* visualSnapSolution = m_visualSnapManager->getCurrentSolution();
+        LC_VisualSnapSolution* visualSnapSolution = m_visualSnapManager->getCurrentSolution();
         visualSnapSolution->restrictedPoint = m_impData->snapSpot;
         visualSnapSolution->restrictedOriginalSnapType = m_impData->snapType;
         m_impData->restrictedSnapType = m_impData->snapType;
@@ -785,25 +755,25 @@ RS_Vector RS_Snapper::snapPoint(const QMouseEvent* e) {
         snapInfo.entity2 = restrictingEntityType;
         m_impData->visualSnapType = snapInfo;
 
-        if (restrictingEntityType == RS2::VSNAP_LINE_VERTEX_VERTICAL || restrictingEntityType == RS2::VSNAP_POINT_RELATIVE_VERTICAL_DX) {
+        if (restrictingEntityType == RS2::VSNAP_LINE_VERTEX_VERTICAL || restrictingEntityType == RS2::VSNAP_POINT_RELATIVE_VERTICAL_DX || restrictingEntityType == RS2::VSNAP_LINE_RESTR_VERTICAL) {
             m_impData->snapSpot = restrictVertical(restrictingEntity->getStartpoint(), m_impData->snapSpot);
             m_impData->snapCoord = m_impData->snapSpot;
         }
         else if (restrictingEntityType == RS2::VSNAP_LINE_VERTEX_HORIZONTAL || restrictingEntityType ==
-            RS2::VSNAP_POINT_RELATIVE_HORIZONTAL_DY) {
+            RS2::VSNAP_POINT_RELATIVE_HORIZONTAL_DY || restrictingEntityType == RS2::VSNAP_LINE_RESTR_HORIZONTAL) {
             m_impData->snapSpot = restrictHorizontal(restrictingEntity->getStartpoint(), m_impData->snapSpot);
             m_impData->snapCoord = m_impData->snapSpot;
         }
         visualSnapSolution->foundSnapPoint = m_impData->snapSpot;
     }
 
-    snapPoint(m_impData->snapSpot, false);
+    setSnapPoint(m_impData->snapSpot, false);
 
     return m_impData->snapCoord;
 }
 
 /**manually set snapPoint*/
-RS_Vector RS_Snapper::snapPoint(const RS_Vector& coord, const bool setSpot) {
+RS_Vector RS_Snapper::setSnapPoint(const RS_Vector& coord, const bool setSpot) {
     if (coord.valid) {
         m_impData->snapSpot = coord;
         if (setSpot) {
@@ -959,7 +929,8 @@ RS_Vector RS_Snapper::snapDist(const RS_Vector& coord) const {
  * @param coord The mouse coordinate.
  * @return The coordinates of the point or an invalid vector.
  */
-RS_Vector RS_Snapper::snapIntersection(const RS_Vector& coord, RS_Entity** entity, [[maybe_unused]] RS_Entity** otherEntity) const {
+RS_Vector RS_Snapper::snapIntersection(const RS_Vector& coord, [[maybe_unused]] RS_Entity** entity,
+                                       [[maybe_unused]] RS_Entity** otherEntity) const {
     const RS_Vector vec = m_document->getNearestIntersection(coord, nullptr);
     return vec;
 }
@@ -1433,19 +1404,22 @@ QString RS_Snapper::getVisualSnapName(const RS2::VisualSnapGuideEntityType entit
             return tr("Line ray");
         }
         case RS2::VSNAP_LINE_VERTEX_VERTEX: {
-            return tr("Vertex-Vertex");
+            return tr("Point-Point");
+        }
+        case RS2::VSNAP_LINE_VERTEX_VERTEX_ORTHO: {
+            return tr("Point-Point Orthogonal");
         }
         case RS2::VSNAP_LINE_ENDPOINT_TANGENT: {
-            return tr("Endpoint Tangent");
+            return tr("Endpoint Tangential");
         }
         case RS2::VSNAP_LINE_ENDPOINT_NORMAL: {
             return tr("Endpoint Normal");
         }
         case RS2::VSNAP_LINE_TANGENT1: {
-            return tr("Tangent One");
+            return tr("Tangential One");
         }
         case RS2::VSNAP_LINE_TANGENT2: {
-            return tr("Tangent Two");
+            return tr("Tangential Two");
         }
         case RS2::VSNAP_POINT_MIDDLE: {
             return tr("Middle", "visual snap");
@@ -1456,8 +1430,11 @@ QString RS_Snapper::getVisualSnapName(const RS2::VisualSnapGuideEntityType entit
         case RS2::VSNAP_POINT_DISTANCE_EXPLICIT: {
             return tr("Distance (Explicit)");
         }
+        case RS2::VSNAP_LINE_DISTANCE_TANGENT2: {
+            return tr("Tangential Distance (Explicit)");
+        }
         case RS2::VSNAP_POINT_DISTANCE_VERTEX: {
-            return tr("Distance (Vertex)");
+            return tr("Distance (Point)");
         }
         case RS2::VSNAP_DOC_ENTITY: {
             return tr("Entity", "visual snap");
@@ -1476,6 +1453,12 @@ QString RS_Snapper::getVisualSnapName(const RS2::VisualSnapGuideEntityType entit
         }
         case RS2::VSNAP_POINT_RELATIVE_ANGLE_RAY: {
             return tr("Relative Angle", "visual snap");
+        }
+        case RS2::VSNAP_LINE_RESTR_HORIZONTAL: {
+            return tr("Restriction Horizontal", "visual snap");
+        }
+        case RS2::VSNAP_LINE_RESTR_VERTICAL: {
+            return tr("Restriction Vertical", "visual snap");
         }
         default:
             return "";
@@ -1513,12 +1496,12 @@ RS_Vector RS_Snapper::snapToRelativeAngle(const double baseAngle, const RS_Vecto
         m_impData->snapSpot = t;
         m_impData->snapType = (t == res) ? RS2::SnapType::ANGLE_REL : RS2::SnapType::ANGLE_ON_ENTITY;
         m_impData->angle = ucsAngleSnapped;
-        snapPoint(m_impData->snapSpot, true);
+        setSnapPoint(m_impData->snapSpot, true);
         return t;
     }
     m_impData->snapType = RS2::SnapType::ANGLE_REL;
     m_impData->angle = ucsAngleSnapped;
-    snapPoint(res, true);
+    setSnapPoint(res, true);
     return res;
 }
 
@@ -1557,12 +1540,12 @@ RS_Vector RS_Snapper::doSnapToAngle(const RS_Vector& currentCoord, const RS_Vect
         m_impData->snapSpot = t;
         m_impData->snapType = (t == res) ? RS2::ANGLE : RS2::ANGLE_ON_ENTITY;
         m_impData->angle = ucsAngleSnapped;
-        snapPoint(m_impData->snapSpot, true);
+        setSnapPoint(m_impData->snapSpot, true);
         return t;
     }
     m_impData->snapType = RS2::ANGLE;
     m_impData->angle = ucsAngleSnapped;
-    snapPoint(res, true);
+    setSnapPoint(res, true);
     return res;
 }
 
@@ -1582,6 +1565,15 @@ double RS_Snapper::toGraphDX(const int wcsDX) const {
 
 const RS_Vector& RS_Snapper::getRelativeZero() const {
     return m_viewport->getRelativeZero();
+}
+
+void RS_Snapper::refreshBySettings() {
+    initFromSettings();
+    m_visualSnapManager->invalidateSolution();
+}
+
+void RS_Snapper::lockVisualSnap(bool performLock) const {
+    m_visualSnapManager->lockData(performLock);
 }
 
 void RS_Snapper::updateCoordinateWidgetFormat() const {
@@ -1807,8 +1799,12 @@ bool RS_Snapper::hasNonDefaultAnglesBasis() const {
     return m_formatter->hasNonDefaultAnglesBasis();
 }
 
-void RS_Snapper::stopVisualSnap() const {
+void RS_Snapper::clearVisualSnap() const {
     m_visualSnapManager->clear();
+}
+
+void RS_Snapper::stopVisualSnap() const {
+    clearVisualSnap();
 }
 
 void RS_Snapper::removePrevioustVisualSnapAddition() {

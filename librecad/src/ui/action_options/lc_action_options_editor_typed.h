@@ -36,9 +36,10 @@ class RS_ActionInterface;
 class LC_ActionOptionsEditorTyped: public LC_ActionOptionsEditor{
 public:
     [[deprecated]] // fixme - move to lib
-    explicit LC_ActionOptionsEditorTyped(RS_ActionInterface *action, const FunOptionsWidgetCreator& funOptionsWidgetCreator,
-        const FunOptionsFillerCreator& funOptionsFillerCreator):m_action{action},
-        m_funCreateOptionsWidget{funOptionsWidgetCreator}, m_funCreateOptionsFiller{funOptionsFillerCreator} {}
+    explicit LC_ActionOptionsEditorTyped(RS_ActionInterface* action, const FunOptionsWidgetCreator& funOptionsWidgetCreator,
+                                         const FunOptionsFillerCreator& funOptionsFillerCreator) :
+        m_funCreateOptionsWidget{funOptionsWidgetCreator}, m_funCreateOptionsFiller{funOptionsFillerCreator}, m_action{action} {
+    }
     ~LC_ActionOptionsEditorTyped() override = default;
     void showOptions() override;
     void hideOptions() override;

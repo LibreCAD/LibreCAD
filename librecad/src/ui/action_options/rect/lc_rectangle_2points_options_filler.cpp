@@ -59,13 +59,10 @@ void LC_Rectangle2PointsOptionsFiller::fillToolOptionsContainer(LC_PropertyConta
                    action->setBaseAngleFixed(val);
                }, container);
 
-    addRawAngleDegrees({"a_angle", tr("Angle"), tr("Rotation angle")}, [action]() -> double {
-                           return action->getUcsAngleDegrees();
-                       }, [action](const double& v)-> void {
-                           action->setUcsAngleDegrees(v);
-                       }, container, [action](LC_PropertyViewDescriptor& d) -> bool {
-                           return !action->hasBaseAngle();
-                       });
+    addRawAngleDegrees(
+        {"a_angle", tr("Angle"), tr("Rotation angle")}, [action]() -> double { return action->getUcsAngleDegrees(); },
+        [action](const double& v) -> void { action->setUcsAngleDegrees(v); }, container,
+        [action](LC_PropertyViewDescriptor&) -> bool { return !action->hasBaseAngle(); });
 
     addBoolean({"a_polyline", tr("Polyline"), tr("If checked, rectangle will be created as polyline instead of individual segments")},
                [action]()-> bool {

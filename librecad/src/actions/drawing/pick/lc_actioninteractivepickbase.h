@@ -30,7 +30,7 @@ class LC_ActionInteractivePickBase :public RS_PreviewActionInterface {
     Q_OBJECT
 public:
     void keyPressEvent(QKeyEvent* e) override;
-    bool isSupportsPredecessorAction() override {return true;}
+    bool isSupportsPredecessorAction() const override {return true;}
     void setPredecessor(std::shared_ptr<RS_ActionInterface> pre) override;
 protected:
     void createOptionsEditor() override;

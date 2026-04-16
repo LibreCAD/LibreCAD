@@ -214,6 +214,9 @@ RS_Vector RS_Arc::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_
         if (dist != nullptr) {
             *dist = sqrt(dist2);
         }
+        if (entity != nullptr) {
+            *entity = const_cast<RS_Arc*>(this);
+        }
         return endpoint;
     }
     if (dist != nullptr) {

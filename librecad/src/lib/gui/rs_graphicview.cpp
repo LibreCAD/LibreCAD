@@ -33,6 +33,7 @@
 #include "lc_graphicviewport.h"
 #include "lc_relative_point_input_widget.h"
 #include "lc_shortcuts_manager.h"
+#include "lc_visual_snap_data.h"
 #include "lc_widgetviewportrenderer.h"
 #include "rs_actioninterface.h"
 #include "rs_entitycontainer.h"
@@ -57,10 +58,15 @@ RS_GraphicView::RS_GraphicView(QWidget *parent, const Qt::WindowFlags f)
     , m_defaultSnapMode{std::make_unique<RS_SnapMode>()}
     , m_infoCursorOverlayPreferences{std::make_unique<LC_InfoCursorOverlayPrefs>()}{
     m_viewport->addViewportListener(this);
+    m_visualSnapData = new LC_VisualSnapData();
 }
 
 RS_GraphicView::~RS_GraphicView() {
     // LC_ERR << "~RS_GraphicView";
+    // we need to clean event hanglder before visual snap data to avoid locking,
+    // to ensure that current action is properly destroyed. So call it explicitly
+    m_eventHandler.reset();
+    delete m_visualSnapData;
 }
 
 void RS_GraphicView::loadSettings() {

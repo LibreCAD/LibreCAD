@@ -57,6 +57,7 @@ struct RS_LineTypePattern;
 struct RS_SnapMode;
 class LC_GraphicViewport;
 class LC_WidgetViewPortRenderer;
+class LC_VisualSnapData;
 
 /**
  * This class is a common GUI interface for the graphic viewer
@@ -176,6 +177,7 @@ public:
     void restoreRelativeInputWidget();
     bool isInRelativePointInput() const;
     void onViewportRedrawNeeded(RS2::RedrawMethod method) override;
+    LC_VisualSnapData* getVisualSnapData() const {return m_visualSnapData;}
 signals:
     void ucsChanged(LC_UCS* ucs);
     void relativeZeroChanged(const RS_Vector &);
@@ -194,6 +196,7 @@ private:
     RS_Document *m_document = nullptr;
     std::unique_ptr<LC_GraphicViewport> m_viewport;
     std::unique_ptr<LC_WidgetViewPortRenderer> m_renderer;
+    LC_VisualSnapData* m_visualSnapData;
 
     /**
      * Current default snap mode for this graphic view. Used for new

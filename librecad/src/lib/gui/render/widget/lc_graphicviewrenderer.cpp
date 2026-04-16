@@ -353,17 +353,65 @@ void LC_GraphicViewRenderer::drawDraftSign(RS_Painter* painter) const {
     painter->setFont(m_draftSignFont);
     const QSize& size = QFontMetrics(painter->font()).size(Qt::TextSingleLine, m_draftMarkText);
 
-    constexpr int TEST_LABEL_OFFSET = 5;
+    constexpr int TEXT_LABEL_OFFSET = 5;
     constexpr int TEXT_LABEL_COUNT = 4;
 
-    QRect boundingRect{TEST_LABEL_OFFSET, TEST_LABEL_OFFSET, size.width(), size.height()};
+    QRect boundingRect{TEXT_LABEL_OFFSET, TEXT_LABEL_OFFSET, size.width(), size.height()};
     for (int i = 1; i <= TEXT_LABEL_COUNT; ++i) {
         painter->drawText(boundingRect, m_draftMarkText, &boundingRect);
         QPoint position{
-            (i & 1) ? m_viewport->getWidth() - boundingRect.width() - TEST_LABEL_OFFSET : TEST_LABEL_OFFSET,
-            (i & 2) ? m_viewport->getHeight() - boundingRect.height() - TEST_LABEL_OFFSET : TEST_LABEL_OFFSET
+            (i & 1) ? m_viewport->getWidth() - boundingRect.width() - TEXT_LABEL_OFFSET : TEXT_LABEL_OFFSET,
+            (i & 2) ? m_viewport->getHeight() - boundingRect.height() - TEXT_LABEL_OFFSET : TEXT_LABEL_OFFSET
         };
         boundingRect.moveTopLeft(position);
+    }
+}
+
+void LC_GraphicViewRenderer::setupRefSnapEntityPen(RS_Painter* painter, RS_Pen &pen, const LC_RefSnapEntity* const ent, bool inVisualSnap) {
+    if (ent->isStrict()) {
+        pen.setLineType(RS2::SolidLine);
+    }
+    else if (ent->isActive()) {
+        pen.setLineType(RS2::DotLineTiny);
+    }
+    else {
+        pen.setLineType(RS2::DotLine2);
+    }
+    pen.setColor(m_colorVisualSnapGuideEntities); // fixme - cache pen for snap marks in painter!
+    if (inVisualSnap) {
+        pen.setColor(m_colorVisualSnapDocumentEntities);
+        pen.setLineType(RS2::DashLineTiny);
+    }
+    else {
+        pen.setWidth(RS2::LineWidth::Width00);
+    }
+
+    const double width = pen.getWidth();
+    if (pen.isFullyOpaque()) {
+        if (width > 0) {
+            // todo - sand - ucs - investigate were it's possible to cache calculated screen width at least during the same render pass.
+            // The amount of pens widths is limited - so probably accessing precalculated width will be slightly faster
+            double screenWidth = painter->toGuiDX(width * m_unitFactor100);
+            // prevent drawing with 1-width which is slow:
+            /* if (RS_Math::round(screenWidth) == 1) {
+                 screenWidth = 0.0;
+             }
+             else*/
+            // fixme - not sure about this check. However, without it, lines will stay transparent and then disappear on zooming out. Probably some other threshold value (instead 1) should be used?
+            if (screenWidth < 1) {
+                screenWidth = 0.0;
+            }
+            pen.setScreenWidth(screenWidth);
+        }
+        else {
+            pen.setScreenWidth(0.0);
+        }
+    }
+    else {
+        // fixme - if we'll support transparency, add necessary processing there
+        if (RS_Math::round(pen.getScreenWidth()) == 1) {
+            pen.setScreenWidth(0.0);
+        }
     }
 }
 
@@ -409,13 +457,7 @@ void LC_GraphicViewRenderer::setPenForOverlayEntity(RS_Painter* painter, const R
             RS_Pen pen;
             pen.setColor(m_colorVisualSnapGuideEntities); // fixme - cache pen for snap marks in painter!
             const auto ent = static_cast<const LC_RefSnapConstructionLine*>(e);
-            if (ent->isStrict()) {
-                pen.setLineType(RS2::SolidLine);
-            }
-            else {
-                pen.setLineType(RS2::DotLineTiny);
-            }
-            pen.setWidth(RS2::LineWidth::Width00);
+            setupRefSnapEntityPen(painter, pen, ent, e->getFlag(RS2::FlagInVisualSnap));
             painter->setPen(pen);
             break;
         }
@@ -423,13 +465,7 @@ void LC_GraphicViewRenderer::setPenForOverlayEntity(RS_Painter* painter, const R
             RS_Pen pen;
             pen.setColor(m_colorVisualSnapGuideEntities); // fixme - cache pen for snap marks in painter!
             const auto ent = static_cast<const LC_RefSnapCircle*>(e);
-            if (ent->isStrict()) {
-                pen.setLineType(RS2::SolidLine);
-            }
-            else {
-                pen.setLineType(RS2::DotLineTiny);
-            }
-            pen.setWidth(RS2::LineWidth::Width00);
+            setupRefSnapEntityPen(painter, pen, ent, e->getFlag(RS2::FlagInVisualSnap));
             painter->setPen(pen);
             break;
         }
@@ -437,28 +473,15 @@ void LC_GraphicViewRenderer::setPenForOverlayEntity(RS_Painter* painter, const R
             RS_Pen pen;
             pen.setColor(m_colorVisualSnapGuideEntities); // fixme - cache pen for snap marks in painter!
             const auto ent = static_cast<const LC_RefSnapCircle*>(e);
-            if (ent->isStrict()) {
-                pen.setLineType(RS2::SolidLine);
-            }
-            else {
-                pen.setLineType(RS2::DotLineTiny);
-            }
-            pen.setWidth(RS2::LineWidth::Width00);
+            setupRefSnapEntityPen(painter, pen, ent, e->getFlag(RS2::FlagInVisualSnap));
             painter->setPen(pen);
             break;
         }
         case RS2::EntitySnapLine:{
-            RS_Pen pen;
-            pen.setColor(m_colorVisualSnapGuideEntities); // fixme - cache pen for snap marks in painter!
+
+            RS_Pen pen = e->getPen(true);
             const auto ent = static_cast<const LC_RefSnapLine*>(e);
-            if (ent->isStrict()) {
-                pen.setLineType(RS2::SolidLine);
-            }
-            else {
-                pen.setLineType(RS2::DotLineTiny);
-            }
-            pen.setWidth(RS2::LineWidth::Width00);
-            // e->setPen(pen);
+            setupRefSnapEntityPen(painter, pen, ent, e->getFlag(RS2::FlagInVisualSnap));
             painter->setPen(pen);
             break;
         }

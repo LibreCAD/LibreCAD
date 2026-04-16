@@ -40,7 +40,7 @@ void LC_PropertiesProviderEllipse::doCreateEntitySpecificProperties(LC_PropertyC
                                 return e->getAngle();
                             }, [](double& v, RS_Ellipse* e) -> void {
                                 const double major = e->getMajorRadius();
-                                const double minor = e->getMinorRadius();
+                                // const double minor = e->getMinorRadius();
                                 const double rotation = v;
 
                                 e->setMajorP(RS_Vector::polar(major, rotation));

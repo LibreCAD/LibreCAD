@@ -35,13 +35,10 @@ void LC_LineAngleRelOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer
                    action->setLengthIsFree(val);
                }, container);
 
-    addLinearDistance({"a_length", tr("Length"), tr("Length of line")}, [action]() {
-                          return action->getTickLength();
-                      }, [action](double val) {
-                          action->setTickLength(val);
-                      }, container, [action](LC_PropertyViewDescriptor& d) -> bool {
-                          return action->isLengthFree();
-                      });
+    addLinearDistance(
+        {"a_length", tr("Length"), tr("Length of line")}, [action]() { return action->getTickLength(); },
+        [action](double val) { action->setTickLength(val); }, container,
+        [action](LC_PropertyViewDescriptor&) -> bool { return action->isLengthFree(); });
 
     if (!action->isFixedAngleActionMode()) {
         // fixme - should there be different angles (wcs and raw) for abs and relative cases?

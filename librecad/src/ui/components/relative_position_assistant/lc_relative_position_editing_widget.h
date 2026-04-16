@@ -28,7 +28,7 @@ class LC_RelativePositionEditingWidget : public QWidget {
     ~LC_RelativePositionEditingWidget() override;
     void updateForPoints(const RS_Vector& wcsPos, const RS_Vector& baseWCSPoint, bool baseIsRelativePoint);
     void activateParamEditor(RS2::RelativePointParam param, bool forceParam = false);
-    void hideAssistant();
+    void hideAssistant() const;
     bool eventFilter(QObject* watched, QEvent* event) override;
     void focusCurrentParam();
     void updateByInteractiveInput(RS2::RelativePointParam paramType, double value);

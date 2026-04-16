@@ -41,7 +41,7 @@
 #include "lc_refellipse.h"
 #include "lc_refline.h"
 #include "lc_refpoint.h"
-#include "lc_visual_snap_manager.h"
+#include "visual_snap/lc_visual_snap_manager.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_debug.h"
@@ -126,11 +126,6 @@ void RS_PreviewActionInterface::trigger() {
  */
 bool RS_PreviewActionInterface::doCheckMayTrigger() {
     return true;
-}
-
-void RS_PreviewActionInterface::suspendRelativeInputWidget() {
-    m_restoreRelativeInput = m_graphicView->isInRelativePointInput();
-    m_graphicView->hideRelativeInputWidget();
 }
 
 void RS_PreviewActionInterface::resumeRelativeInputWidget() {
@@ -831,12 +826,10 @@ void RS_PreviewActionInterface::onVisualSnapPointRegistered(LC_VisualSnapVertex*
     m_graphicView->redraw(static_cast<RS2::RedrawMethod>(RS2::RedrawOverlay + RS2::RedrawImmediately));
 }
 
-void RS_PreviewActionInterface::onVisualSnapEntityRegistered(RS_Entity* entity) {
-    if (entity != nullptr) {
-        // previewEntity(entity);
-        deleteHighlights();
-        drawPreview();
-    }
+void RS_PreviewActionInterface::onVisualSnapEntityRegistered([[maybe_unused]] RS_Entity* entity) {
+    deleteHighlights();
+    drawPreview();
+    drawHighlights();
     m_graphicView->redraw(static_cast<RS2::RedrawMethod>(RS2::RedrawDrawing + RS2::RedrawImmediately));
 }
 
@@ -852,22 +845,32 @@ void RS_PreviewActionInterface::mouseMoveEvent(QMouseEvent* event) {
     if (applyVisualSnap) {
         RS_Entity* ent = catchEntity(lcEvent.graphPoint, g_visualSnapEntities, RS2::ResolveAll);
         bool tryToProcessVertex = true;
+        bool control = isControl(event);
+        bool isManualVertexAddWithCtrl = m_visualSnapManager->isManualVertexAddWithCTRL();
         if (ent != nullptr) {
             if (m_visualSnapManager->isNotInVisualSnap(ent)) {
                 highlightHover(ent);
                 m_visualSnapManager->processEntityDelayed(ent);
             }
             else {
-                if (isControl(event)) {
-                    m_visualSnapManager->processEntityDelayed(ent);
-                    tryToProcessVertex = false;
+                if (control) {
+                    if (!isManualVertexAddWithCtrl) {
+                        m_visualSnapManager->processEntityDelayed(ent);
+                        tryToProcessVertex = false;
+                    }
+                }
+                else {
+                    if (isManualVertexAddWithCtrl) {
+                        m_visualSnapManager->processEntityDelayed(ent);
+                        tryToProcessVertex = false;
+                    }
                 }
             }
         }
 
         if (tryToProcessVertex) {
-            if (m_visualSnapManager->isManualVertexAddWithCTRL()) {
-                if (isControl(event)) {
+            if (isManualVertexAddWithCtrl) {
+                if (control) {
                     m_visualSnapManager->tryProcessVertexDelayed(m_impData->snapType, lcEvent.snapPoint, lcEvent.graphPoint, m_impData->entity,
                                                                  m_impData->entity);
                 }
@@ -877,19 +880,22 @@ void RS_PreviewActionInterface::mouseMoveEvent(QMouseEvent* event) {
                                                              m_impData->entity);
             }
         }
-
         m_visualSnapManager->solveAndVisualizeSolution(m_preview.get(), m_highlight.get());
     }
-    // fixme - should it be optional? Which color should be used for restriction lines (same as relzero??)
-    m_visualSnapManager->visualizeOrdinaryRestrictions(m_preview.get(), m_highlight.get());
+    else {
+        if (isInVisualSnapStatus(getStatus())) {
+            // fixme - should it be optional? Which color should be used for restriction lines (same as relzero??)
+            m_visualSnapManager->visualizeOrdinaryRestrictions(m_preview.get(), m_highlight.get());
+        }
+    }
     onMouseMoveEvent(status, &lcEvent);
     drawPreviewAndHighlights();
 }
 
 // fixme - check and ensure that coordinate is properly set if it is specified by command line
-void RS_PreviewActionInterface::addSnappedPointToVisualSnap(const RS_Vector& v, bool clearOther) {
+void RS_PreviewActionInterface::addSnappedPointToVisualSnap(const RS_Vector& v, RS_Entity* entity, RS2::SnapType snapType, bool clearOther) {
     if (m_visualSnapManager->isAutoAddSnappedPoint()) {
-        m_visualSnapManager->addSnappedPointAsVertex(v, RS2::SnapType::ENDPOINT, nullptr, clearOther);
+        m_visualSnapManager->addSnappedPointAsVertex(v, snapType, entity, clearOther);
     }
     else {
         m_visualSnapManager->saveLastSnappedPoint(v);
@@ -976,12 +982,12 @@ QStringList RS_PreviewActionInterface::getAvailableCommands() {
 void RS_PreviewActionInterface::setStatus(int status) {
     RS_ActionInterface::setStatus(status);
     if (isClearVisualSnapMarks()) {
-        m_visualSnapManager->clear();
+        clearVisualSnap();
     }
 }
 
 bool RS_PreviewActionInterface::isClearVisualSnapMarks() {
-    return false;//!m_snapMode.snapVisualSurvive; // fixme - snap - should it be more intelligent policy?
+    return false;// fixme - snap - should it be more intelligent policy?
 }
 
 void RS_PreviewActionInterface::onMouseLeftButtonRelease(const int status, QMouseEvent* e) {

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1214</width>
+    <width>1395</width>
     <height>922</height>
    </rect>
   </property>
@@ -36,7 +36,7 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0">
+   <item row="1" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
       <number>2</number>
@@ -1571,45 +1571,6 @@
        <string>Snap</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_38">
-       <item row="3" column="1">
-        <widget class="QGroupBox" name="groupBox_24">
-         <property name="title">
-          <string>Behavior</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_46">
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="cursor_hiding_checkbox">
-            <property name="toolTip">
-             <string>If checked, cursor will be hidden during snapping</string>
-            </property>
-            <property name="text">
-             <string>Hide cursor when snapping</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="cbShowSnapOptionsInSnapBar">
-            <property name="toolTip">
-             <string>If checked, snap options (middle, distance) will be shown in snap toolbar instead of tool properties toolbar</string>
-            </property>
-            <property name="text">
-             <string>Show snap options in Snap Selection Toolbar</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QCheckBox" name="cbDontSnapToInvisibleGrid">
-            <property name="toolTip">
-             <string>If checked, &quot;Snap To Grid&quot; is ignored if grid is not drawn.</string>
-            </property>
-            <property name="text">
-             <string>Ignore &quot;Snap to Grid&quot; if grid is not drawn</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
        <item row="0" column="1" rowspan="2">
         <widget class="QGroupBox" name="gbGBSnap">
          <property name="title">
@@ -1834,6 +1795,58 @@
          </layout>
         </widget>
        </item>
+       <item row="3" column="1">
+        <widget class="QGroupBox" name="groupBox_24">
+         <property name="title">
+          <string>Snap Behavior</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_46">
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="cursor_hiding_checkbox">
+            <property name="toolTip">
+             <string>If checked, cursor will be hidden during snapping</string>
+            </property>
+            <property name="text">
+             <string>Hide cursor when snapping</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="cbShowSnapOptionsInSnapBar">
+            <property name="toolTip">
+             <string>If checked, snap options (middle, distance) will be shown in snap toolbar instead of tool properties toolbar</string>
+            </property>
+            <property name="text">
+             <string>Show snap options in Snap Selection Toolbar</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="cbDontSnapToInvisibleGrid">
+            <property name="toolTip">
+             <string>If checked, &quot;Snap To Grid&quot; is ignored if grid is not drawn.</string>
+            </property>
+            <property name="text">
+             <string>Ignore &quot;Snap to Grid&quot; if grid is not drawn</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <spacer name="verticalSpacer_11">
+         <property name="orientation">
+          <enum>Qt::Orientation::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item row="4" column="1">
         <widget class="QGroupBox" name="groupBox_25">
          <property name="title">
@@ -2025,76 +2038,38 @@
          </layout>
         </widget>
        </item>
-       <item row="5" column="1">
-        <spacer name="verticalSpacer_11">
-         <property name="orientation">
-          <enum>Qt::Orientation::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="5" column="2">
-        <spacer name="verticalSpacer_14">
-         <property name="orientation">
-          <enum>Qt::Orientation::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="2" rowspan="5">
+       <item row="0" column="2" rowspan="2">
         <widget class="QGroupBox" name="groupBox_34">
          <property name="title">
           <string>Visual Snap</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_57">
-          <item row="5" column="1">
-           <widget class="QSpinBox" name="sbVisualSnapVertexSize">
-            <property name="toolTip">
-             <string>Size of marker for visual snap guiding points, in pixels</string>
-            </property>
-            <property name="suffix">
-             <string> px</string>
-            </property>
-            <property name="minimum">
-             <number>2</number>
-            </property>
-            <property name="maximum">
-             <number>24</number>
-            </property>
-            <property name="value">
-             <number>6</number>
+          <item row="17" column="3">
+           <widget class="QLabel" name="label_66">
+            <property name="text">
+             <string>Guiding entity label base offset</string>
             </property>
            </widget>
           </item>
-          <item row="18" column="0" colspan="3">
-           <widget class="QCheckBox" name="cbVisualSnapVertexVertexDistanceCircles">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_43">
+            <property name="text">
+             <string>Guiding entities</string>
+            </property>
+           </widget>
+          </item>
+          <item row="15" column="0" colspan="3">
+           <widget class="QCheckBox" name="cbVisualSnapShowNotSnappableGuides">
             <property name="toolTip">
-             <string>If selected, guiding circles for distances between guiding points will be included into visual snap. Otherwise, they will be ignored. </string>
+             <string>&lt;p&gt;If selected, guiding entites that are far from the mouse cursor point and are not within snap range - and therefore will not be snapped will be also shown. That may provide better overview for all possible snap points, yet in some cases may visualy overcrowd the snap by guiding entities. &lt;br/&gt;Otherwise, only guiding entities that are within snap range and thus may be snapped will be visible. &lt;/p&gt;</string>
             </property>
             <property name="text">
-             <string>Dynamic distance circles for guiding points</string>
+             <string>Show not snappable guiding entities </string>
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_57">
-            <property name="text">
-             <string>Projected snap</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2">
-           <widget class="QPushButton" name="pbVisualSnapDocEntitiesColor">
+          <item row="1" column="2">
+           <widget class="QPushButton" name="pbVisualSnapVertexesColor">
             <property name="toolTip">
              <string>Click to select color</string>
             </property>
@@ -2107,153 +2082,7 @@
             </property>
            </widget>
           </item>
-          <item row="7" column="1">
-           <widget class="QSpinBox" name="sbVisualSnapProjectedSnapSize">
-            <property name="toolTip">
-             <string>Size of marker for projected snap point (like intersection), in pixels</string>
-            </property>
-            <property name="suffix">
-             <string> px</string>
-            </property>
-            <property name="minimum">
-             <number>2</number>
-            </property>
-            <property name="maximum">
-             <number>24</number>
-            </property>
-            <property name="value">
-             <number>6</number>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_43">
-            <property name="text">
-             <string>Guiding entities</string>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="0">
-           <widget class="QLabel" name="label_51">
-            <property name="text">
-             <string>Entity adding/removal delay</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_44">
-            <property name="text">
-             <string>Guiding point</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="0">
-           <widget class="QLabel" name="label_47">
-            <property name="text">
-             <string>Snap point adding/removal delay</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_58">
-            <property name="text">
-             <string>Document entity in visual snap</string>
-            </property>
-           </widget>
-          </item>
-          <item row="16" column="0" colspan="3">
-           <widget class="QCheckBox" name="cbVisualSnapRaysAngleSnapVertexes">
-            <property name="toolTip">
-             <string>If checked, visual snap will also consider rays from guiding points with step, similar to angle snap. Otherwise, only vertical and horizontal rays will be considered for vertexes.</string>
-            </property>
-            <property name="text">
-             <string>Angle snap step guiding rays for guiding points</string>
-            </property>
-           </widget>
-          </item>
-          <item row="12" column="0">
-           <widget class="QLabel" name="label_59">
-            <property name="text">
-             <string>Visual snap catch distance</string>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="0">
-           <widget class="QLabel" name="label_49">
-            <property name="text">
-             <string>Projected snap point adding delay</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="cbColorVisualSnapGuideEntities">
-            <property name="toolTip">
-             <string>Color for guiding entities used in visual snap</string>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="cbColorVisualSnapVertexes">
-            <property name="toolTip">
-             <string>Color of guide points in visual snap</string>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="20" column="0" colspan="3">
-           <widget class="QCheckBox" name="cbVisualSnapManualAddingWithCTRL">
-            <property name="toolTip">
-             <string>If selected, points will be added manually as guiding points if cursor is over them and CTRL key is pressed. Otherwise - they will be added by placing cursor over only.</string>
-            </property>
-            <property name="statusTip">
-             <string/>
-            </property>
-            <property name="text">
-             <string>Manual adding points with CTRL key</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="1">
-           <widget class="QSpinBox" name="sbVisualSnapHighlightedVertexSize">
-            <property name="toolTip">
-             <string>Size of marker used to draw guiding point that is added to visual snap system</string>
-            </property>
-            <property name="suffix">
-             <string> px</string>
-            </property>
-            <property name="minimum">
-             <number>2</number>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="1">
-           <widget class="QSpinBox" name="sbVisualSnapSnapDocEntityAddingDelay">
-            <property name="toolTip">
-             <string>Defines how long the mouse should be over document entity until that entity will be added to visual snap system</string>
-            </property>
-            <property name="suffix">
-             <string> ms</string>
-            </property>
-            <property name="minimum">
-             <number>50</number>
-            </property>
-            <property name="maximum">
-             <number>2500</number>
-            </property>
-            <property name="singleStep">
-             <number>25</number>
-            </property>
-            <property name="value">
-             <number>1500</number>
-            </property>
-           </widget>
-          </item>
-          <item row="14" column="1">
+          <item row="17" column="1">
            <widget class="QSpinBox" name="sbVisualSnapGuidingLabelsFontSize">
             <property name="toolTip">
              <string>Size of font, in points, used for displaying labels for guiding entities.</string>
@@ -2272,23 +2101,41 @@
             </property>
            </widget>
           </item>
-          <item row="17" column="0" colspan="3">
-           <widget class="QCheckBox" name="cbVisualSnapRaysAngleSnapRelative">
+          <item row="2" column="2">
+           <widget class="QPushButton" name="pbVisualSnapProjectedSnapColor">
             <property name="toolTip">
-             <string>If checked, visual snap will also consider rays for enpoints of guiding entities with step, similar to angle snap. Otherwise, only tangential and normal rays will be considered for vertexes.</string>
+             <string>Click to select color</string>
             </property>
             <property name="text">
-             <string>Angle snap step relative guiding rays for entities</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../../../res/controls/controls.qrc">
+              <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_57">
+            <property name="text">
+             <string>Projected snap</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
            <widget class="QComboBox" name="cbColorVisualSnapProjectedSnap">
             <property name="toolTip">
              <string>Color of possible snap point</string>
             </property>
             <property name="editable">
              <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="17" column="0">
+           <widget class="QLabel" name="label_65">
+            <property name="text">
+             <string>Guiding entity label font size</string>
             </property>
            </widget>
           </item>
@@ -2312,40 +2159,78 @@
             </property>
            </widget>
           </item>
-          <item row="10" column="1">
-           <widget class="QSpinBox" name="sbVisualSnapVertexAddingDelay">
+          <item row="1" column="1">
+           <widget class="QComboBox" name="cbColorVisualSnapVertexes">
             <property name="toolTip">
-             <string>Defines how long the mouse should be over projected snap point until that point will be added to visual snap system as guiding point</string>
+             <string>Color of guide points in visual snap</string>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="cbColorVisualSnapGuideEntities">
+            <property name="toolTip">
+             <string>Color for guiding entities used in visual snap</string>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_44">
+            <property name="text">
+             <string>Guiding point</string>
+            </property>
+           </widget>
+          </item>
+          <item row="17" column="4">
+           <widget class="QSpinBox" name="sbVSGuidingEntityLabelOffset">
+            <property name="toolTip">
+             <string>Offset of the guiding label from projected snap point, in pixels</string>
             </property>
             <property name="suffix">
-             <string> ms</string>
-            </property>
-            <property name="minimum">
-             <number>50</number>
+             <string> px</string>
             </property>
             <property name="maximum">
-             <number>2000</number>
-            </property>
-            <property name="singleStep">
-             <number>25</number>
+             <number>200</number>
             </property>
             <property name="value">
-             <number>1200</number>
+             <number>50</number>
             </property>
            </widget>
           </item>
-          <item row="21" column="0" colspan="3">
-           <widget class="QCheckBox" name="cbVisualSnapClearSolutionByRMB">
+          <item row="15" column="3" colspan="3">
+           <widget class="QCheckBox" name="cbVSShowLabelsOnGuides">
             <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Visual snap solution will be cleared by &lt;span style=&quot; font-weight:700;&quot;&gt;CTRL+Middle Mouse Button&lt;/span&gt; click. &lt;br/&gt;If selected, visual snap solution may be also cleared by &lt;span style=&quot; font-weight:700;&quot;&gt;Right Mouse Button&lt;/span&gt; click. &lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>If enabled, labels for visual snap guiding entities will be snown. Otherwise - no labels.</string>
             </property>
             <property name="text">
-             <string>Allow clearing visual snap solution by Right mouse button click</string>
+             <string>Show labels on guiding entities</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="2">
-           <widget class="QPushButton" name="pbVisualSnapVertexesColor">
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_58">
+            <property name="text">
+             <string>Involved document entity</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QComboBox" name="cbColorVisualSnapDocumentEntity">
+            <property name="toolTip">
+             <string>Color of document entities, explicitly added to visual snap</string>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QPushButton" name="pbVisualSnapDocEntitiesColor">
             <property name="toolTip">
              <string>Click to select color</string>
             </property>
@@ -2358,17 +2243,173 @@
             </property>
            </widget>
           </item>
-          <item row="13" column="0">
-           <widget class="QCheckBox" name="cbVSShowLabelsOnGuides">
-            <property name="toolTip">
-             <string>If enabled, labels for visual snap guiding entities will be snown. Otherwise - no labels.</string>
-            </property>
+          <item row="0" column="3">
+           <widget class="QLabel" name="label_54">
             <property name="text">
-             <string>Show labels on guiding entities</string>
+             <string>Projected snap point size</string>
             </property>
            </widget>
           </item>
-          <item row="9" column="1">
+          <item row="0" column="4">
+           <widget class="QSpinBox" name="sbVisualSnapProjectedSnapSize">
+            <property name="toolTip">
+             <string>Size of marker for projected snap point (like intersection), in pixels</string>
+            </property>
+            <property name="suffix">
+             <string> px</string>
+            </property>
+            <property name="minimum">
+             <number>2</number>
+            </property>
+            <property name="maximum">
+             <number>24</number>
+            </property>
+            <property name="value">
+             <number>6</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QLabel" name="label_55">
+            <property name="text">
+             <string>Highlighted point size</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="4">
+           <widget class="QSpinBox" name="sbVisualSnapHighlightedVertexSize">
+            <property name="toolTip">
+             <string>Size of marker used to draw guiding point that is added to visual snap system</string>
+            </property>
+            <property name="suffix">
+             <string> px</string>
+            </property>
+            <property name="minimum">
+             <number>2</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QLabel" name="label_45">
+            <property name="text">
+             <string>Guiding point size</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="QLabel" name="label_59">
+            <property name="text">
+             <string>Visual snap catch distance</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="4">
+           <widget class="QSpinBox" name="sbVisualSnapVertexSize">
+            <property name="toolTip">
+             <string>Size of marker for visual snap guiding points, in pixels</string>
+            </property>
+            <property name="suffix">
+             <string> px</string>
+            </property>
+            <property name="minimum">
+             <number>2</number>
+            </property>
+            <property name="maximum">
+             <number>24</number>
+            </property>
+            <property name="value">
+             <number>6</number>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="4">
+           <widget class="QSpinBox" name="sbVSCatchDistance">
+            <property name="toolTip">
+             <string>Distance in screen coordinates that is used for catching visual snap guiding entities</string>
+            </property>
+            <property name="suffix">
+             <string> px</string>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>50</number>
+            </property>
+            <property name="value">
+             <number>24</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QGroupBox" name="groupBox_36">
+         <property name="title">
+          <string>Visual Snap Behavior</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_59">
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="cbVisualSnapAutoAddSnapPoint">
+            <property name="toolTip">
+             <string>If checked, snap point requested by command and specified by the user will be added to visual snap automatically. Otherwise, it should be added manually.</string>
+            </property>
+            <property name="text">
+             <string>Add snapped point to visual snap automatically</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbVisualSnapClearSolutionByRMB">
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Visual snap solution will be cleared by &lt;span style=&quot; font-weight:700;&quot;&gt;CTRL+Middle Mouse Button&lt;/span&gt; click. &lt;br/&gt;If selected, visual snap solution may be also cleared by &lt;span style=&quot; font-weight:700;&quot;&gt;Right Mouse Button&lt;/span&gt; click. &lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="text">
+             <string>Allow clearing visual snap solution by Right mouse button click</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QCheckBox" name="cbVSAutoAddLastSnapOnly">
+            <property name="toolTip">
+             <string>If selected, guiding entities will be added for last snapped point only. </string>
+            </property>
+            <property name="text">
+             <string>Only add guides for last</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="cbVisualSnapManualAddingWithCTRL">
+            <property name="toolTip">
+             <string>If selected, points will be added manually as guiding points if cursor is over them and CTRL key is pressed. Otherwise - they will be added by placing cursor over only.</string>
+            </property>
+            <property name="statusTip">
+             <string/>
+            </property>
+            <property name="text">
+             <string>Manual adding points with CTRL key</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QGroupBox" name="groupBox_37">
+         <property name="title">
+          <string>Visual Snap Timings</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_60">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_47">
+            <property name="text">
+             <string>Point adding/removal delay</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
            <widget class="QSpinBox" name="sbVisualSnapPointAddingDelay">
             <property name="toolTip">
              <string>Defines how many milliseconds mouse should be over snap point until that point will be added as guiding point to visual snap system</string>
@@ -2390,107 +2431,110 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
-           <widget class="QComboBox" name="cbColorVisualSnapDocumentEntity">
+          <item row="1" column="1">
+           <widget class="QSpinBox" name="sbVisualSnapVertexAddingDelay">
             <property name="toolTip">
-             <string>Color of document entities, explicitly added to visual snap</string>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
-           <widget class="QLabel" name="label_54">
-            <property name="text">
-             <string>Projected snap point size</string>
-            </property>
-           </widget>
-          </item>
-          <item row="12" column="1">
-           <widget class="QSpinBox" name="sbVSCatchDistance">
-            <property name="toolTip">
-             <string>Distance in screen coordinates that is used for catching visual snap guiding entities</string>
+             <string>Defines how long the mouse should be over projected snap point until that point will be added to visual snap system as guiding point</string>
             </property>
             <property name="suffix">
-             <string> px</string>
+             <string> ms</string>
             </property>
             <property name="minimum">
-             <number>1</number>
-            </property>
-            <property name="maximum">
              <number>50</number>
             </property>
+            <property name="maximum">
+             <number>2000</number>
+            </property>
+            <property name="singleStep">
+             <number>25</number>
+            </property>
             <property name="value">
-             <number>24</number>
+             <number>1200</number>
             </property>
            </widget>
           </item>
-          <item row="8" column="0">
-           <widget class="QLabel" name="label_55">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_49">
             <property name="text">
-             <string>Highlighted point size</string>
+             <string>Projected point adding delay</string>
             </property>
            </widget>
           </item>
-          <item row="19" column="0" colspan="3">
-           <widget class="QCheckBox" name="cbVisualSnapAutoAddSnapPoint">
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_51">
+            <property name="text">
+             <string>Entity adding/removal delay</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QSpinBox" name="sbVisualSnapSnapDocEntityAddingDelay">
             <property name="toolTip">
-             <string>If checked, snap point requested by command and specified by the user will be added to visual snap automatically. Otherwise, it should be added manually.</string>
-            </property>
-            <property name="text">
-             <string>Add snapped point automatically</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QPushButton" name="pbVisualSnapProjectedSnapColor">
-            <property name="toolTip">
-             <string>Click to select color</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../../../res/controls/controls.qrc">
-              <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_45">
-            <property name="text">
-             <string>Guiding point size</string>
-            </property>
-           </widget>
-          </item>
-          <item row="14" column="0">
-           <widget class="QLabel" name="label_65">
-            <property name="text">
-             <string>Guiding entity label font size</string>
-            </property>
-           </widget>
-          </item>
-          <item row="15" column="0">
-           <widget class="QLabel" name="label_66">
-            <property name="text">
-             <string>Guiding entity label base offset</string>
-            </property>
-           </widget>
-          </item>
-          <item row="15" column="1">
-           <widget class="QSpinBox" name="sbVSGuidingEntityLabelOffset">
-            <property name="toolTip">
-             <string>Offset of the guiding label from projected snap point, in pixels</string>
+             <string>Defines how long the mouse should be over document entity until that entity will be added to visual snap system</string>
             </property>
             <property name="suffix">
-             <string> px</string>
+             <string> ms</string>
+            </property>
+            <property name="minimum">
+             <number>50</number>
             </property>
             <property name="maximum">
-             <number>200</number>
+             <number>2500</number>
+            </property>
+            <property name="singleStep">
+             <number>25</number>
             </property>
             <property name="value">
-             <number>50</number>
+             <number>1500</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QGroupBox" name="groupBox_38">
+         <property name="title">
+          <string>Visual Snap Content</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_61">
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="cbVisualSnapRaysAngleSnapVertexes">
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If checked, visual snap will also consider rays from guiding points with step, similar to angle snap. &lt;/p&gt;&lt;p&gt;Otherwise, only vertical and horizontal rays will be considered for vertexes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="text">
+             <string>Step rays for guiding points</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="cbVisualSnapVertexVertexDistanceCircles">
+            <property name="toolTip">
+             <string>If selected, guiding circles for distances between guiding points will be included into visual snap. Otherwise, they will be ignored. </string>
+            </property>
+            <property name="text">
+             <string>Dynamic distance circles for points</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QCheckBox" name="cbVisualSnapRaysAngleSnapRelative">
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If checked, visual snap will also create guiding rays for enpoints of lines from the document,  added into visual snap with step, similar to angle snap yet which is related to the line's own angle. &lt;/p&gt;&lt;p&gt;Otherwise, only tangential and normal rays will be considered for vertexes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="text">
+             <string>Relative step rays for lines</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QCheckBox" name="cbVisualSnapVertexVertexDistancesTangential">
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, and both &amp;quot;Snap to Distance&amp;quot; and &amp;quot;Snap To Center&amp;quot; snap modes are enabled, tangential guiding rays will be created between distance circles that are created for guiding points. &lt;/p&gt;&lt;p&gt;Otherwise, tangential will not be created. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="text">
+             <string>Tangential rays for distance circles</string>
             </property>
            </widget>
           </item>

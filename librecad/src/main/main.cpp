@@ -282,6 +282,9 @@ int main(int argc, char** argv) {
 
     RS_DEBUG->setLevel(RS_Debug::D_WARNING);
 
+    // scaling for better support of Plasma/KDE - LibreCAD#2529
+    QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
+
     LC_Application app(argc, argv);
     QCoreApplication::setOrganizationName("LibreCAD");
     QCoreApplication::setApplicationName("LibreCAD");

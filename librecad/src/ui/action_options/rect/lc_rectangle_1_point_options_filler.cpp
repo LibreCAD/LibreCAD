@@ -68,25 +68,16 @@ void LC_Rectangle1PointOptionsFiller::fillToolOptionsContainer(LC_PropertyContai
                    action->setBaseAngleFixed(val);
                }, container);
 
-    addBoolean({
-                   "a_angleFree",
-                   tr("Angle is Free"),
-                   tr("If checked, angle will be specified by mouse position. Otherwise, specified value will be used.")
-               }, [action]()-> bool {
-                   return action->isBaseAngleFree();
-               }, [action](bool val)-> void {
-                   action->setBaseAngleFree(val);
-               }, container, [action](LC_PropertyViewDescriptor& d) -> bool {
-                   return !action->hasBaseAngle();
-               });
+    addBoolean(
+        {"a_angleFree", tr("Angle is Free"),
+         tr("If checked, angle will be specified by mouse position. Otherwise, specified value will be used.")},
+        [action]() -> bool { return action->isBaseAngleFree(); }, [action](bool val) -> void { action->setBaseAngleFree(val); }, container,
+        [action](LC_PropertyViewDescriptor&) -> bool { return !action->hasBaseAngle(); });
 
-    addRawAngleDegrees({"a_angle", tr("Angle"), tr("Rotation angle")}, [action]() -> double {
-                           return action->getUcsAngleDegrees();
-                       }, [action](const double& v)-> void {
-                           action->setUcsAngleDegrees(v);
-                       }, container, [action](LC_PropertyViewDescriptor& d) -> bool {
-                           return !action->hasBaseAngle() || action->isBaseAngleFree();
-                       });
+    addRawAngleDegrees(
+        {"a_angle", tr("Angle"), tr("Rotation angle")}, [action]() -> double { return action->getUcsAngleDegrees(); },
+        [action](const double& v) -> void { action->setUcsAngleDegrees(v); }, container,
+        [action](LC_PropertyViewDescriptor&) -> bool { return !action->hasBaseAngle() || action->isBaseAngleFree(); });
 
     addBoolean({"a_polyline", tr("Polyline"), tr("If checked, rectangle will be created as polyline instead of individual segments")},
                [action]()-> bool {

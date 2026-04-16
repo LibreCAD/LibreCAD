@@ -108,6 +108,10 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget *parent)
        cbRelativePositionAssistantStartInOffsetMode->setEnabled(!checked);
     });
 
+    connect(cbVisualSnapAutoAddSnapPoint, &QCheckBox::toggled, [this](bool checked) {
+       cbVSAutoAddLastSnapOnly->setEnabled(checked);
+    });
+
     // hide temporary until support will be added
     cbShowCommandInMenu->setVisible(false);
 }
@@ -402,7 +406,12 @@ void QG_DlgOptionsGeneral::init(){
         cbVisualSnapRaysAngleSnapVertexes->setChecked(LC_GET_BOOL("VSAngleSnapStepRaysVertexes", true));
         cbVisualSnapRaysAngleSnapRelative->setChecked(LC_GET_BOOL("VSAngleSnapStepRaysRelative", true));
         cbVisualSnapVertexVertexDistanceCircles->setChecked(LC_GET_BOOL("VSVertexVertexDistanceCircles", true));
-        cbVisualSnapAutoAddSnapPoint->setChecked(LC_GET_BOOL("VSSnapAutoAddSnapPoint", true));
+        cbVisualSnapVertexVertexDistancesTangential->setChecked(LC_GET_BOOL("VSVertexVertexDistanceTangents", true));
+
+        bool autoAddSnapPoints = LC_GET_BOOL("VSSnapAutoAddSnapPoint", true);
+        cbVisualSnapAutoAddSnapPoint->setChecked(autoAddSnapPoints);
+        cbVSAutoAddLastSnapOnly->setEnabled(autoAddSnapPoints);
+        cbVSAutoAddLastSnapOnly->setChecked(LC_GET_BOOL("VSSnapAutoAddLastSnapPointOnly", true));
         cbVisualSnapManualAddingWithCTRL->setChecked(LC_GET_BOOL("VSSnapManualAddingWithCTRL", false));
 
         cbVSShowLabelsOnGuides->setChecked(LC_GET_BOOL("VSGuidingEntitiesShowLabels", true));
@@ -411,6 +420,8 @@ void QG_DlgOptionsGeneral::init(){
         cbVisualSnapClearSolutionByRMB->setChecked(LC_GET_BOOL("VSClearSolutionByRMB", false));
 
         sbVSGuidingEntityLabelOffset->setValue( LC_GET_INT("VSGuidingLabelOffsetPx", 50));
+
+        cbVisualSnapShowNotSnappableGuides->setChecked(LC_GET_BOOL("VSShowNotSnappableGuides", false));
     }
     LC_GROUP_END();
 
@@ -865,13 +876,16 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("VSAngleSnapStepRaysRelative", cbVisualSnapRaysAngleSnapRelative->isChecked());
 
             LC_SET("VSSnapAutoAddSnapPoint", cbVisualSnapAutoAddSnapPoint->isChecked());
+            LC_SET("VSSnapAutoAddLastSnapPointOnly", cbVSAutoAddLastSnapOnly->isChecked());
             LC_SET("VSSnapManualAddingWithCTRL", cbVisualSnapManualAddingWithCTRL->isChecked());
             LC_SET("VSVertexVertexDistanceCircles", cbVisualSnapVertexVertexDistanceCircles->isChecked());
+            LC_SET("VSVertexVertexDistanceTangents", cbVisualSnapVertexVertexDistancesTangential->isChecked());
 
             LC_SET("VSGuidingEntitiesShowLabels", cbVSShowLabelsOnGuides->isChecked());
             LC_SET("VSGuidingEntityLabelFontSize", sbVisualSnapGuidingLabelsFontSize->value());
             LC_SET("VSClearSolutionByRMB", cbVisualSnapClearSolutionByRMB->isChecked());
             LC_SET("VSGuidingLabelOffsetPx", sbVSGuidingEntityLabelOffset->value());
+            LC_SET("VSShowNotSnappableGuides", cbVisualSnapShowNotSnappableGuides->isChecked());
         }
         LC_GROUP_END();
 

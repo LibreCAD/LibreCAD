@@ -45,21 +45,20 @@ void LC_LineSnakeOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* c
                 action->setDirection(v);
             }, container);
 
-    addRawAngleDegrees({"a_angle", tr("Angle"), tr("Angle of line")}, [action]() {
-                           return action->getAngleDegrees();
-                       }, [action](double val) {
-                           action->setAngleDegrees(val);
-                       }, container, [action](LC_PropertyViewDescriptor& d) -> bool {
-                           return action->getDirection() != LC_AbstractActionDrawLine::Direction::DIRECTION_ANGLE;
-                       });
+    addRawAngleDegrees(
+        {"a_angle", tr("Angle"), tr("Angle of line")}, [action]() { return action->getAngleDegrees(); },
+        [action](double val) { action->setAngleDegrees(val); }, container,
+        [action](LC_PropertyViewDescriptor&) -> bool {
+            return action->getDirection() != LC_AbstractActionDrawLine::Direction::DIRECTION_ANGLE;
+        });
 
-    addBoolean({"a_relAngle", tr("Relative angle"), tr("If checked, angle is relative to previous segment")}, [action]()-> bool {
-                   return action->isAngleRelative();
-               }, [action](bool val)-> void {
-                   action->setAngleIsRelative(val);
-               }, container, [action](LC_PropertyViewDescriptor& d) -> bool {
-                   return action->getDirection() != LC_AbstractActionDrawLine::Direction::DIRECTION_ANGLE;
-               });
+    addBoolean(
+        {"a_relAngle", tr("Relative angle"), tr("If checked, angle is relative to previous segment")},
+        [action]() -> bool { return action->isAngleRelative(); }, [action](bool val) -> void { action->setAngleIsRelative(val); },
+        container,
+        [action](LC_PropertyViewDescriptor&) -> bool {
+            return action->getDirection() != LC_AbstractActionDrawLine::Direction::DIRECTION_ANGLE;
+        });
 
     createCommandsLine(container, "a_commands1", tr("Close"), tr("Form a closed contour from lines drawn"), tr("Polyline"),
                        tr("Creates polyline from line segments"), [action](int linkIndex)-> void {

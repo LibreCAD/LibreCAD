@@ -49,7 +49,7 @@ public:
 
     LC_ActionModifyMoveAdjust(LC_ActionContext *actionContext, MovementInfo info);
     ~LC_ActionModifyMoveAdjust() override = default;
-    bool isSupportsPredecessorAction() override {return true;}
+    bool isSupportsPredecessorAction() const override {return true;}
 protected:
     enum Status {
         Move = InitialActionStatus

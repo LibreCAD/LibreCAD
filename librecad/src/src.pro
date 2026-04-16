@@ -108,6 +108,7 @@ INCLUDEPATH += \
     ../../libraries/jwwlib/src \
     cmd \
     lib/actions \
+    lib/actions/visual_snap \
     lib/creation \
     lib/debug \
     lib/engine \
@@ -373,8 +374,7 @@ HEADERS += \
     lib/actions/lc_overlayboxaction.h \
     lib/engine/document/container/lc_pathbuilder.h \
     lib/actions/lc_undoabledocumentmodificationaction.h \
-    lib/actions/lc_action_options_base.h \
-    lib/actions/lc_visual_snap_manager.h \
+    lib/actions/lc_action_options_base.h \    
     lib/engine/document/dimstyles/lc_dimstyle.h \
     lib/engine/document/dimstyles/lc_dimstyleslist.h \
     lib/engine/document/dimstyles/lc_dimarrowregistry.h \
@@ -415,6 +415,12 @@ HEADERS += \
     lib/engine/overlays/preview/rs_preview.h \
     lib/actions/rs_previewactioninterface.h \
     lib/actions/rs_snapper.h \
+    lib/actions/visual_snap/lc_visual_snap_data.h \
+    lib/actions/visual_snap/lc_visual_snap_solution.h \
+    lib/actions/visual_snap/lc_visual_snap_options.h \
+    lib/actions/visual_snap/lc_visual_snap_solution_solver.h \
+    lib/actions/visual_snap/lc_visual_snap_solution_visualizer.h \
+    lib/actions/visual_snap/lc_visual_snap_manager.h \
     lib/creation/rs_creation.h \
     lib/creation/lc_creation_arc.h \
     lib/creation/lc_creation_circle.h \
@@ -955,8 +961,7 @@ SOURCES += \
     lib/modification/lc_copyutils.cpp \
     plugins/lc_plugininvoker.cpp \
     lib/actions/lc_actioncontext.cpp \
-    lib/actions/lc_action_options_base.cpp \
-    lib/actions/lc_visual_snap_manager.cpp \
+    lib/actions/lc_action_options_base.cpp \    
     ui/action_options/line/lc_line_radiant_options_widget.cpp \
     ui/action_options/line/lc_line_radiant_options_filler.cpp \
     ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp \
@@ -1051,7 +1056,12 @@ SOURCES += \
     lib/actions/rs_actioninterface.cpp \
     lib/engine/overlays/preview/rs_preview.cpp \
     lib/actions/rs_previewactioninterface.cpp \
-    lib/actions/rs_snapper.cpp \
+    lib/actions/rs_snapper.cpp \    
+    lib/actions/visual_snap/lc_visual_snap_data.cpp \
+    lib/actions/visual_snap/lc_visual_snap_options.cpp \
+    lib/actions/visual_snap/lc_visual_snap_solution_solver.cpp \
+    lib/actions/visual_snap/lc_visual_snap_solution_visualizer.cpp \
+    lib/actions/visual_snap/lc_visual_snap_manager.cpp \
     lib/creation/rs_creation.cpp \
     lib/creation/lc_creation_arc.cpp \
     lib/creation/lc_creation_circle.cpp \

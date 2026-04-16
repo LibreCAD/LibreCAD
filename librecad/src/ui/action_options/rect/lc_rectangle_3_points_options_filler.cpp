@@ -44,13 +44,11 @@ void LC_Rectangle3PointsOptionsFiller::fillToolOptionsContainer(LC_PropertyConta
                        action->setInnerAngleFixed(val);
                    }, container);
 
-        addRawAngleDegrees({"a_innerAngle", tr("Inner Angle"), tr("Inner angle of quadrangle")}, [action]() -> double {
-                               return action->getFixedInnerAngle();
-                           }, [action](const double& v)-> void {
-                               action->setFixedInnerAngle(v);
-                           }, container, [action](LC_PropertyViewDescriptor& d) -> bool {
-                               return !action->isInnerAngleFixed();
-                           });
+        addRawAngleDegrees(
+            {"a_innerAngle", tr("Inner Angle"), tr("Inner angle of quadrangle")},
+            [action]() -> double { return action->getFixedInnerAngle(); },
+            [action](const double& v) -> void { action->setFixedInnerAngle(v); }, container,
+            [action](LC_PropertyViewDescriptor&) -> bool { return !action->isInnerAngleFixed(); });
     }
 
     addBoolean({"a_hasBaseAngle", tr("Fixed base angle"), tr("If checked, allows to specify rotation angle for rectangle.")}, [action]()-> bool {
@@ -59,14 +57,10 @@ void LC_Rectangle3PointsOptionsFiller::fillToolOptionsContainer(LC_PropertyConta
                    action->setBaseAngleFixed(val);
                }, container);
 
-    addRawAngleDegrees({"a_angle", tr("Angle"), tr("Rotation angle")}, [action]() -> double {
-                           return action->getUcsAngleDegrees();
-                       }, [action](const double& v)-> void {
-                           action->setUcsAngleDegrees(v);
-                       }, container, [action](LC_PropertyViewDescriptor& d) -> bool {
-                           return !action->hasBaseAngle();
-                       });
-
+    addRawAngleDegrees(
+        {"a_angle", tr("Angle"), tr("Rotation angle")}, [action]() -> double { return action->getUcsAngleDegrees(); },
+        [action](const double& v) -> void { action->setUcsAngleDegrees(v); }, container,
+        [action](LC_PropertyViewDescriptor&) -> bool { return !action->hasBaseAngle(); });
 
     addBoolean({"a_polyline", tr("Polyline"), tr("If checked, rectangle will be created as polyline instead of individual segments")},
                [action]()-> bool {

@@ -41,7 +41,7 @@ public:
     void init(int status) override;
     void trigger() override;
 
-    bool isSupportsPredecessorAction() override {
+    bool isSupportsPredecessorAction() const override {
         return true;
     }
 };

@@ -2411,1226 +2411,1262 @@ or [%2]</source>
 <context>
     <name>LC_ActionFactory</name>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="588"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="597"/>
         <source>&amp;Window Zoom</source>
         <translation>&amp; Vindue Zoom</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="337"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="338"/>
         <source>Zoom &amp;Panning</source>
         <translation>Zoom og panning</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="245"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="246"/>
         <source>Select Entity</source>
         <translation>Vælg enhed</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="246"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="247"/>
         <source>Select Window</source>
         <translation>Vælg vindue</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="247"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="248"/>
         <source>Deselect Window</source>
         <translation>Afmarkér vindue</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="248"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="249"/>
         <source>(De-)Select &amp;Contour</source>
         <translation>(De-) Vælg &amp; contour</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="249"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="250"/>
         <source>Select Intersected Entities</source>
         <translation>Vælg intersected enheder</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="250"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="251"/>
         <source>Deselect Intersected Entities</source>
         <translation>Afmarkér intersected enheder</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="251"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
         <source>(De-)Select Layer</source>
         <translation>(De-) Vælg lag</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="234"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
         <source>&amp;Points</source>
         <translation>&amp; Point</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="205"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="206"/>
         <source>&amp;2 Points</source>
         <translation>&amp; 2 punkter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="206"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="207"/>
         <source>&amp;Angle</source>
         <translation>&amp; Vinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="207"/>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="350"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="208"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="351"/>
         <source>&amp;Horizontal</source>
         <translation>&amp; Vandret</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="208"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="209"/>
         <source>Vertical</source>
         <translation>Lodret</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="209"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="210"/>
         <source>&amp;Freehand Line</source>
         <translation>&amp; Freehand linje</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="210"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="211"/>
         <source>&amp;Parallel</source>
         <translation>&amp; Parallelt</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="211"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="212"/>
         <source>Parallel through point</source>
         <translation>Parallelt gennem punkt</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="191"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="192"/>
         <source>Rectangle</source>
         <translation>Rektangel</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="212"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="213"/>
         <source>Bisector</source>
         <translation>Bisector</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="213"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="214"/>
         <source>Tangent (P,C)</source>
         <translation>Tangent (P, C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="214"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="215"/>
         <source>Tangent (C,C)</source>
         <translation>Tangent (C, C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="215"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="216"/>
         <source>Tangent &amp;Orthogonal</source>
         <translation>Tangent og ortogonal</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="216"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="217"/>
         <source>Orthogonal</source>
         <translation>Orthogonal</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="217"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="218"/>
         <source>Relative angle</source>
         <translation>Relativ vinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="192"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="193"/>
         <source>Pol&amp;ygon (Cen,Cor)</source>
         <translation>Pol &amp; ygon (Cen, Cor)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="195"/>
         <source>Polygo&amp;n (Cor,Cor)</source>
         <translation>Polygo &amp; n (Cor, Cor)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="218"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="219"/>
         <source>Snake</source>
         <translation>Slange</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="219"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="220"/>
         <source>Snake (X)</source>
         <translation>Slange (X)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="220"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="221"/>
         <source>Snake (Y)</source>
         <translation>Slange (Y)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="197"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="198"/>
         <source>Rectangle (1 Point)</source>
         <translation>Rektangel (1 point)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="198"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="199"/>
         <source>Rectangle (2 Points)</source>
         <translation>Rektangel (2 point)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="199"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="200"/>
         <source>Rectangle (3 Points)</source>
         <translation>Rektangel (3 point)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="196"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="197"/>
         <source>Star</source>
         <translation>Stjerne</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="221"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="222"/>
         <source>Angle From Line</source>
         <translation>Vinkel fra linje</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="222"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="223"/>
         <source>Orthogonal From Line</source>
         <translation>Ortogonal fra linje</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="223"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="224"/>
         <source>From Point To Line</source>
         <translation>Fra punkt til linje</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="226"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="227"/>
         <source>Slice/Divide Line</source>
         <translation>Slice / Divide Line</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="227"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="228"/>
         <source>Slice/Divide Circle</source>
         <translation>Slice / Divide Circle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="236"/>
         <source>Line of Points</source>
         <translation>Linje af punkter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="260"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261"/>
         <source>Center, &amp;Point</source>
         <translation>Center, &amp; punkt</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
         <source>By Arc</source>
         <translation>Af Arc</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="263"/>
         <source>Center, &amp;Radius</source>
         <translation>Center, &amp; Radius</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="263"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="264"/>
         <source>2 Points</source>
         <translation>2 punkter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="264"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="265"/>
         <source>2 Points, Radius</source>
         <translation>2 point, Radius</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="265"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="266"/>
         <source>3 Points</source>
         <translation>3 punkter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="266"/>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="285"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="267"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="286"/>
         <source>&amp;Concentric</source>
         <translation>&amp; Koncentrisk</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="267"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="268"/>
         <source>Circle &amp;Inscribed</source>
         <translation>Cirkel &amp; angivet</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="271"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="272"/>
         <source>Tangential, 2 P&amp;oints</source>
         <translation>Tangential, 2 P &amp; ints</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="277"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="278"/>
         <source>&amp;Center, Point, Angles</source>
         <translation>&amp; Center, punkt, vinkler</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="280"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="281"/>
         <source>&amp;3 Points</source>
         <translation>&amp; 3 punkter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="283"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="284"/>
         <source>&amp;2 Points, Length</source>
         <translation>&amp; 2 point, længde</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="284"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="285"/>
         <source>&amp;2 Points, Height</source>
         <translation>&amp; 2 punkter, højde</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="286"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="287"/>
         <source>Arc &amp;Tangential</source>
         <translation>Arc &amp; Tangential</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="298"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="299"/>
         <source>&amp;Append spline point</source>
         <translation>&amp; Tilføj splinepunkt</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="300"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="301"/>
         <source>&amp;Insert spline points</source>
         <translation>&amp; Indsæt spline- punkter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="311"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="312"/>
         <source>&amp;Ellipse (Axis)</source>
         <translation>&amp; Ellipse (akse)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="312"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="313"/>
         <source>Ellipse &amp;Arc (Axis)</source>
         <translation>Ellipse &amp; Arc (akse)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="313"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="314"/>
         <source>Ellipse &amp;Foci Point</source>
         <translation>Ellipse &amp; Foci punkt</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="314"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="315"/>
         <source>Ellipse &amp;4 Point</source>
         <translation>Ellipse &amp; 4 punkt</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="315"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="316"/>
         <source>Ellipse Center and &amp;3 Points</source>
         <translation>Ellipsecenter og &amp; 3 punkter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="316"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="317"/>
         <source>Ellipse &amp;Inscribed</source>
         <translation>Ellipse &amp; angivet</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="296"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="297"/>
         <source>&amp;Spline</source>
         <translation>&amp; Spline</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="80"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="80"/>
         <source>Relative Point Assistant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
-        <source>Parameters of relative point assitant</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="297"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="298"/>
         <source>&amp;Spline through points</source>
         <translation>&amp; Spline gennem punkter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="322"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="323"/>
         <source>&amp;Polyline</source>
         <translation>&amp; Polylin</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="323"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="324"/>
         <source>&amp;Add node</source>
         <translation>&amp; Tilføj node</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="324"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="325"/>
         <source>A&amp;ppend node</source>
         <translation>A &amp; plend node</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="325"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="326"/>
         <source>&amp;Delete node</source>
         <translation>&amp; Slet knude</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="326"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="327"/>
         <source>Delete &amp;between two nodes</source>
         <translation>Slet &amp; mellem to knuder</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="327"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="328"/>
         <source>&amp;Trim segments</source>
         <translation>&amp; Trim segmenter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="328"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="329"/>
         <source>Create &amp;Equidistant Polylines</source>
         <translation>Opret &amp; ekvidistante polyliner</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="330"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331"/>
         <source>Polyline Arcs to Chords</source>
         <translation>Polyline buer til akkorder</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="338"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="339"/>
         <source>&amp;MText</source>
         <translation>&amp; MText</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="339"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="340"/>
         <source>&amp;Text</source>
         <translation>&amp; Tekst</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="340"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="341"/>
         <source>&amp;Hatch</source>
         <translation>&amp; Hatch</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="341"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="342"/>
         <source>Insert &amp;Image</source>
         <translation>Indsæt &amp; billede</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="348"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="349"/>
         <source>&amp;Aligned</source>
         <translation>&amp; Tilpasset</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="349"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="350"/>
         <source>&amp;Linear</source>
         <translation>&amp; Lineær</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="351"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="352"/>
         <source>&amp;Vertical</source>
         <translation>&amp; Lodret</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="352"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="353"/>
         <source>&amp;Radial</source>
         <translation>&amp; Radial</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="353"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="354"/>
         <source>&amp;Diametric</source>
         <translation>&amp; Diametric</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="354"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="355"/>
         <source>&amp;Angular</source>
         <translation>&amp; Angle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="356"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="357"/>
         <source>&amp;Leader</source>
         <translation>&amp; Leader</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="377"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378"/>
         <source>&amp;Attributes</source>
         <translation>&amp; Attributter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="379"/>
         <source>&amp;Delete</source>
         <translation>&amp; Slet</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="379"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="380"/>
         <source>&amp;Move / Copy</source>
         <translation>&amp; Flyt / Kopiér</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="380"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="381"/>
         <source>Re&amp;vert direction</source>
         <translation>Vend retning</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="381"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="382"/>
         <source>&amp;Rotate</source>
         <translation>&amp; Rotér</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="382"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="383"/>
         <source>&amp;Scale</source>
         <translation>&amp; Skalér</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="383"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="384"/>
         <source>&amp;Mirror</source>
         <translation>&amp; Spejl</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="385"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="386"/>
         <source>Rotate T&amp;wo</source>
         <translation>Rotér T &amp; wo</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="386"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="387"/>
         <source>&amp;Properties</source>
         <translation>&amp; Egenskaber</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="387"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="388"/>
         <source>&amp;Trim</source>
         <translation>&amp; Trim</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="389"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="390"/>
         <source>&amp;Lengthen</source>
         <translation>&amp; Lengthen</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="391"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="392"/>
         <source>&amp;Divide</source>
         <translation>&amp; Del</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="392"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="393"/>
         <source>&amp;Stretch</source>
         <translation>&amp; Stræk</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="393"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="394"/>
         <source>&amp;Bevel</source>
         <translation>&amp; Bevel</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="394"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="395"/>
         <source>&amp;Fillet</source>
         <translation>&amp; Fillet</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="395"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="396"/>
         <source>&amp;Explode Text into Letters</source>
         <translation>&amp; Eksplodere tekst i bogstaver</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="438"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="439"/>
         <source>Snap Visual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="439"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="440"/>
+        <source>Toggle Snap Visual Lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="441"/>
+        <source>Show Dynamic Distance Circles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="442"/>
+        <source>Show Distance Tangentials</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="443"/>
+        <source>Show Angle Rays</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="444"/>
+        <source>Show Angle Relative Rays</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="445"/>
+        <source>Add Snap Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="446"/>
+        <source>Add Last Snap Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="447"/>
+        <source>Show Far Guides</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="448"/>
         <source>Snap on Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="574"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="583"/>
         <source>&amp;Distance Point to Point</source>
         <translation>&amp; Afstand til punkt</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="577"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="586"/>
         <source>An&amp;gle between two lines</source>
         <translation>En &amp; gle mellem to linjer</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="579"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="588"/>
         <source>Polygonal &amp;Area</source>
         <translation>Polygonalt &amp; område</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="684"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="693"/>
         <source>Left Dock Area</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="685"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="694"/>
         <source>Right Dock Area</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="686"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="695"/>
         <source>Top Dock Area</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="687"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="696"/>
         <source>Bottom Dock Area</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="688"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="697"/>
         <source>Floating Widgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="689"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="698"/>
         <source>Left Toolbar Area</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="690"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="699"/>
         <source>Right Toolbar Area</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="691"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="700"/>
         <source>Top Toolbar Area</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="692"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="701"/>
         <source>Bottom Toolbar Area</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="742"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="751"/>
         <source>&amp;Undo</source>
         <translation>&amp; Fortryd</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="743"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="752"/>
         <source>&amp;Redo</source>
         <translation>&amp; Gendan</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="764"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="773"/>
         <source>Pick Point X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="765"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="774"/>
         <source>Pick Point Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="773"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="782"/>
         <source>Cu&amp;t</source>
         <translation>Cu &amp; t</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="775"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="784"/>
         <source>&amp;Copy</source>
         <translation>&amp; Kopiér</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="777"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="786"/>
         <source>&amp;Paste</source>
         <translation>&amp; Indsæt</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="195"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="196"/>
         <source>Polygo&amp;n (Tan,Tan)</source>
         <translation>Polygo &amp; n (Tan, Tan)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="236"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="237"/>
         <source>Middle Points</source>
         <translation>Midtpunkter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="237"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="238"/>
         <source>Lattice of Points</source>
         <translation>Punkter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="238"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="239"/>
         <source>Select Points</source>
         <translation>Vælg punkter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="239"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="240"/>
         <source>Paste to Points</source>
         <translation>Indsæt til punkter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="278"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="279"/>
         <source>&amp;Center, Point, Chord</source>
         <translation>&amp; Center, Point, Chord</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="279"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="280"/>
         <source>&amp;Center, Point, Arc Angle</source>
         <translation>&amp; Center, punkt, bue vinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="281"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="282"/>
         <source>&amp;2 Points, Angle</source>
         <translation>&amp; 2 punkter, vinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="282"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="283"/>
         <source>&amp;2 Points, Radius</source>
         <translation>&amp; 2 point, Radius</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="293"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="294"/>
         <source>Para&amp;bola 4 points</source>
         <translation>Para &amp; bola 4 point</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="294"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="295"/>
         <source>Parabola &amp;Focus Directrix</source>
         <translation>Parabola &amp; Focus Directrix</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="299"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="300"/>
         <source>&amp;Remove spline points</source>
         <translation>&amp; Fjern spline- punkter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="301"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="302"/>
         <source>&amp;Explode spline to lines</source>
         <translation>&amp; Eksplodere spline til linjer</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="302"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303"/>
         <source>&amp;Spline from polyline</source>
         <translation>&amp; Spline fra polylin</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="304"/>
         <source>&amp;Remove between two points</source>
         <translation>&amp; Fjern mellem to punkter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="309"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="310"/>
         <source>&amp;Ellipse (1 Point)</source>
         <translation>&amp; Ellipse (1 point)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="310"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="311"/>
         <source>&amp;Ellipse Arc (1 Point)</source>
         <translation>&amp; Ellipsebue (1 point)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="329"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="330"/>
         <source>Polyline from Existing &amp;Segments</source>
         <translation>Polyline fra eksisterende &amp; segmenter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="332"/>
         <source>Polyline Change Segment Type</source>
         <translation>Type af polylinjesegment</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="342"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="343"/>
         <source>Bounding &amp;Box</source>
         <translation>Bounding &amp; Box</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="357"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="358"/>
         <source>&amp;Baseline</source>
         <translation>&amp; Baseline</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="358"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="359"/>
         <source>&amp;Continue</source>
         <translation>&amp; Fortsæt</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="397"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="398"/>
         <source>Break/Divide</source>
         <translation>Break / Divide</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="398"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="399"/>
         <source>Line Gap</source>
         <translation>Line Gap</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="399"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="400"/>
         <source>Line Join</source>
         <translation>Linje Deltag</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="400"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="401"/>
         <source>Duplicate</source>
         <translation>Duplikér</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="401"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="402"/>
         <source>Align</source>
         <translation>Justér</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="402"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="403"/>
         <source>Align One</source>
         <translation>Justér et</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="403"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="404"/>
         <source>Align Reference Points</source>
         <translation>Justér referencepunkter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="409"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
         <translation>Opdater nuværende pen med aktivt lag</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="415"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
         <source>&amp;Pick Pen From Entity</source>
         <translation>&amp; Vælg pen fra enhed</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="417"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
         <translation>&amp; Vælg pen fra enhed (løst)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="417"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="418"/>
         <source>Apply Pen to Entity</source>
         <translation>Anvend Pen på Enheden</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="418"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="419"/>
         <source>Copy Pen</source>
         <translation>Kopiér pen</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="424"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="425"/>
         <source>Show Entity Description</source>
         <translation>Vis enhedens beskrivelse</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="427"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="428"/>
         <source>Enable Info Cursor</source>
         <translation>Aktivér info markør</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="428"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="429"/>
         <source>Absolute Pos</source>
         <translation>Absolut Pos</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77"/>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="429"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="430"/>
         <source>Snap</source>
         <translation>Snap</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="56"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="57"/>
         <source>Block</source>
         <translation>Blok</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="56"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="57"/>
         <source>Block related operations</source>
         <translation>Blokerelaterede operationer</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="57"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="58"/>
         <source>Circle</source>
         <translation>Cirkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="57"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="58"/>
         <source>Circle drawing commands</source>
         <translation>Cirklingskommandoer</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="58"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59"/>
         <source>Arc</source>
         <translation>Arc</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="58"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59"/>
         <source>Arc drawing commands</source>
         <translation>Bue- tegningskommandoer</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"/>
         <source>Spline</source>
         <translation>Spline</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"/>
         <source>Spline drawing commands</source>
         <translation>Spline tegnekommandoer</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="61"/>
         <source>Edit</source>
         <translation>Redigér</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="61"/>
         <source>Editing operations</source>
         <translation>Redningsoperationer</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="61"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="62"/>
         <source>Ellipse</source>
         <translation>Ellipse</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="61"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="62"/>
         <source>Ellipse drawing commands</source>
         <translation>Ellipse- tegnekommandoer</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="62"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="63"/>
         <source>File</source>
         <translation>Fil</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="62"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="63"/>
         <source>File Operations</source>
         <translation>Filoperationer</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="63"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="64"/>
         <source>Dimension</source>
         <translation>Dimension</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="63"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="64"/>
         <source>Dimensions creation commands</source>
         <translation>Dimensioner oprettelse kommandoer</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="64"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="65"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="64"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="65"/>
         <source>Informational commands</source>
         <translation>Informative kommandoer</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="65"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layer</source>
         <translation>Lag</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="65"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
         <source>Layers operations</source>
         <translation>Lag-operationer</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
         <source>Line</source>
         <translation>Linje</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="66"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
         <source>Line drawing commands</source>
         <translation>Kommandoer for linjetegning</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="68"/>
         <source>Point</source>
         <translation>Punkt</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="68"/>
         <source>Point drawing commands</source>
         <translation>Punkttegningskommandoer</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="68"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="69"/>
         <source>Polygon</source>
         <translation>Polygon</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="68"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="69"/>
         <source>Polygon drawing commands</source>
         <translation>Kommandoer til tegning af polygon</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="69"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="70"/>
         <source>Modify</source>
         <translation>Ændr</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="69"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="70"/>
         <source>Modification operations</source>
         <translation>Ændringer</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="70"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="71"/>
         <source>Options</source>
         <translation>Indstillinger</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="70"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="71"/>
         <source>Options management</source>
         <translation>Indstillinger</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="71"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="72"/>
         <source>Other</source>
         <translation>Andre varer</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="71"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="72"/>
         <source>Other operations</source>
         <translation>Andre transaktioner</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="72"/>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="72"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="73"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="73"/>
         <source>Relative Zero</source>
         <translation>Relativ nul</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="73"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
         <source>Polyline</source>
         <translation>Polylin</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="73"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
         <source>Polyline drawing commands</source>
         <translation>Kommandoer for tegning af polyline</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="75"/>
         <source>PenTB</source>
         <translation>PENTB</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="75"/>
         <source>Pen related operations</source>
         <translation>Penderelaterede operationer</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="75"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="76"/>
         <source>Restriction</source>
         <translation>Begrænsning</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="75"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="76"/>
         <source>Snap restrictions</source>
         <translation>Klapbegrænsninger</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="76"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77"/>
         <source>Select</source>
         <translation>Vælg</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="76"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77"/>
         <source>Entity selection operations</source>
         <translation>Enhedsudvælgelse</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78"/>
         <source>Snapping operations</source>
         <translation>Snapoperationer</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
         <source>Snap Extras</source>
         <translation>Snap Extras</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
         <source>Additional Snaps</source>
         <translation>Yderligere snaps</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="80"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="81"/>
         <source>View</source>
         <translation>Vis</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="80"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="81"/>
         <source>View related operations</source>
         <translation>Vis relaterede operationer</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="81"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="82"/>
         <source>Named Views</source>
         <translation>Navngivne visninger</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="81"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="82"/>
         <source>Persistent Views operations</source>
         <translation>Operationer med vedvarende visninger</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="82"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="83"/>
         <source>Workspaces</source>
         <translation>Arbejdsrum</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="82"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="83"/>
         <source>Workspaces operations</source>
         <translation>Drift af arbejdsrum</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="83"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="84"/>
         <source>UCS</source>
         <translation>UCS</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="83"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="84"/>
         <source>UCS operations</source>
         <translation>UCS-operationer</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="84"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="85"/>
         <source>Widgets</source>
         <translation>Kontroller</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="84"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="85"/>
         <source>Widgets management</source>
         <translation>Håndtering af kontroller</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="85"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="86"/>
         <source>InfoCursor</source>
         <translation>Infomarkør</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="85"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="86"/>
         <source>Informational Cursor</source>
         <translation>Informativ markør</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="86"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity Layer</source>
         <translation>Enhedslag</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="86"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity&apos;s Layer</source>
         <translation>Enhedens lag</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="88"/>
         <source>Interactive</source>
         <translation>Interaktiv</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="88"/>
         <source>Interactive Pick</source>
         <translation>Interaktivt valg</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="108"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
         <source>Activate Entity&apos;s Layer</source>
         <translation>Aktivere enhedens lag</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
         <source>Hide Entity&apos;s Layer</source>
         <translation>Skjul enhedens lag</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
         <source>Hide Other Layers than Entity&apos;s</source>
         <translation>Skjul andre lag end Enhedens</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
         <source>Lock Entity&apos;s Layer</source>
         <translation>Lås enhedens lag</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
         <translation>Slå enhedens lagkonstruktion til / fra</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
         <translation>Slå enhedens lagudskrift til / fra</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="224"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
         <source>Centerline</source>
         <translation>Centerlin</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="226"/>
         <source>Center Mark</source>
         <translation>Centrér markering</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="228"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="229"/>
         <source>Radiant Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="253"/>
         <source>Select Quick</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="253"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="254"/>
         <source>Additive/Exclusive Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="254"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="255"/>
         <source>Select Entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="268"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="269"/>
         <source>Tangential 2 Entities, Radius</source>
         <translation>Tangential 2 Enheder, Radius</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="269"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="270"/>
         <source>Tangential 2 Entities, 1 Point</source>
         <translation>Tangential 2 Enheder, 1 point</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="270"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="271"/>
         <source>Tangential &amp;3 Entities</source>
         <translation>Tangential &amp; 3 Enheder</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="287"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="288"/>
         <source>&amp;Dual Curve</source>
         <translation>&amp; Dobbelt kurve</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="295"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="296"/>
         <source>&amp;Hyperbola &amp;Foci Point</source>
         <translation>&amp; Hyperbola &amp; Foci punkt</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="359"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="360"/>
         <source>&amp;Ordinate</source>
         <translation>&amp; Indstil</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="360"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="361"/>
         <source>Select Ordinates by base</source>
         <translation>Vælg begreber efter base</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="361"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="362"/>
         <source>Ordinates Re-base</source>
         <translation>Symboler Re- base</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="362"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="363"/>
         <source>Feature Control Frame</source>
         <translation>Funktionsstyringsramme</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="363"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="364"/>
         <source>Copy Style</source>
         <translation>Kopiér stil</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="364"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="365"/>
         <source>Modify Style</source>
         <translation>Ændr stil</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="430"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="431"/>
         <source>Relative</source>
         <translation>Relativ</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="431"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="432"/>
         <source>Prompt</source>
         <translation>Hurtig</translation>
     </message>
@@ -3639,429 +3675,429 @@ or [%2]</source>
         <translation type="vanished">Snap på nettet</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="440"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
         <translation>Snap Middle Manual</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="446"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="455"/>
         <source>Snap on Endpoints</source>
         <translation>Snap på endepunkter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="447"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="456"/>
         <source>Snap on Entity</source>
         <translation>[indsæt centralbankens navn]:</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="448"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="457"/>
         <source>Snap Center</source>
         <translation>Snap Center</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="458"/>
         <source>Snap Middle</source>
         <translation>Snap Middle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="450"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="459"/>
         <source>Snap Distance</source>
         <translation>Snapafstand</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="451"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="460"/>
         <source>Snap Intersection</source>
         <translation>Snap Intersection</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="516"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="525"/>
         <source>Restrict Horizontal</source>
         <translation>Begræns vandret</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="517"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="526"/>
         <source>Restrict Vertical</source>
         <translation>Begræns lodret</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="518"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="527"/>
         <source>Restrict Orthogonal</source>
         <translation>Restrictive Ortigonal</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="519"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="528"/>
         <source>Restrict Nothing</source>
         <translation>Begræns intet</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="525"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="534"/>
         <source>To WCS</source>
         <translation>Til WCS</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="530"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="539"/>
         <source>Create UCS</source>
         <translation>Opret UCS</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="531"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="540"/>
         <source>Set UCS By Ordinate Dimension</source>
         <translation>Sæt UCS Ved at definere dimension</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="537"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="546"/>
         <source>Save Workspace</source>
         <translation>Gem arbejdsområde</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="538"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="547"/>
         <source>Remove Workspace</source>
         <translation>Fjern arbejdsområde</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="539"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="548"/>
         <source>Restore Workspace</source>
         <translation>Gendan arbejdsområde</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="545"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="554"/>
         <source>Set relative zero position</source>
         <translation>Sæt relativ nulstilling</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="548"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="557"/>
         <source>Lock relative zero position</source>
         <translation>Lås relativ nulstilling</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="556"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="565"/>
         <source>Exclusive Snap Mode</source>
         <translation>Eksklusiv snaptilstand</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="557"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="566"/>
         <source>Free Snap</source>
         <translation>Gratis snap</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="573"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="582"/>
         <source>&amp;Point Coordinates</source>
         <translation>&amp; Punktkoordinater</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="575"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="584"/>
         <source>Distance &amp;Entity to Point</source>
         <translation>Afstand &amp; Enhed til punkt</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="576"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="585"/>
         <source>Distance &amp;Point to Entity</source>
         <translation>Afstand &amp; punkt til enhed</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="578"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="587"/>
         <source>Total &amp;length of selected entities</source>
         <translation>Samlet længde af udvalgte enheder</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="580"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="589"/>
         <source>Entity Pro&amp;perties</source>
         <translation>Entity Pro &amp; perties</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="581"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="590"/>
         <source>Collect &amp;Coordinates</source>
         <translation>Saml &amp; koordinater</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="582"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="591"/>
         <source>Ang&amp;le between 3 points</source>
         <translation>Ang &amp; le mellem 3 punkter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="591"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="600"/>
         <source>&amp;Main Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="595"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="604"/>
         <source>&amp;Draft Lines</source>
         <translation>&amp; Tegn linjer</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="596"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="605"/>
         <source>&amp;Antialiasing</source>
         <translation>&amp; Antialiasing</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="598"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="607"/>
         <source>&amp;Orthogonal Grid</source>
         <translation>&amp; Orthogonal gitter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="599"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="608"/>
         <source>&amp;Isometric Left Grid</source>
         <translation>&amp; Isometrisk venstregitter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="600"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="609"/>
         <source>&amp;Isometric Top Grid</source>
         <translation>&amp; Isometric top gitter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="601"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="610"/>
         <source>&amp;Isometric Right Grid</source>
         <translation>&amp; Isometrisk højregitter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="612"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
         <source>&amp;Add Layer</source>
         <translation>&amp; Tilføj lag</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="613"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="622"/>
         <source>&amp;Remove Layer</source>
         <translation>&amp; Fjern lag</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="614"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="623"/>
         <source>&amp;Edit Layer</source>
         <translation>Redigér lag</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="615"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Toggle Layer Loc&amp;k</source>
         <translation>Slå Layer Loc &amp; k til / fra</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="616"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
         <source>&amp;Toggle Layer Visibility</source>
         <translation>&amp; Slå lay- synlighed til / fra</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
         <source>Toggle Layer &amp;Print</source>
         <translation>Slå lag til og udskriv</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
         <source>Toggle &amp;Construction Layer</source>
         <translation>Slå &amp; byggelag til / fra</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="628"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="637"/>
         <source>&amp;Add Block</source>
         <translation>&amp; Tilføj blok</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="629"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="638"/>
         <source>&amp;Remove Block</source>
         <translation>&amp; Fjern blok</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="630"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="639"/>
         <source>&amp;Rename Block</source>
         <translation>&amp; Omdøb blok</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="631"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="640"/>
         <source>&amp;Edit Block</source>
         <translation>&amp; Redigér blok</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="632"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="641"/>
         <source>&amp;Save Block</source>
         <translation>&amp; Gem blok</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="633"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="642"/>
         <source>&amp;Insert Block</source>
         <translation>&amp; Indsæt blok</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="634"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="643"/>
         <source>Toggle Block &amp;Visibility</source>
         <translation>Slå blok og sigtbarhed til / fra</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="644"/>
         <source>&amp;Create Block</source>
         <translation>&amp; Opret blok</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="396"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="397"/>
         <source>Ex&amp;plode</source>
         <translation>Ex &amp; plode</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="645"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="654"/>
         <source>&amp;Application Preferences</source>
         <translation>&amp; Programindstillinger</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="641"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="650"/>
         <source>Current &amp;Drawing Preferences</source>
         <translation>Nuværende &amp; tegningsindstillinger</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="734"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="743"/>
         <source>Select &amp;All</source>
         <translation>Vælg &amp; alle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="735"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="744"/>
         <source>Deselect &amp;all</source>
         <translation>Afmarkér &amp; alle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="858"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="911"/>
         <source>Ctrl+K</source>
         <translation>Ctrl + K</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="736"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="745"/>
         <source>Invert Selection</source>
         <translation>Invertér markering</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="699"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="708"/>
         <source>Custom Menu Creator</source>
         <translation>Brugerdefineret menuskaber</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="700"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="709"/>
         <source>Custom Toolbar Creator</source>
         <translation>Brugerdefineret værktøjslinjeskaber</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="707"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="716"/>
         <source>Focus on &amp;Options Widget</source>
         <translation>Fokus på &amp; valgkontrol</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="711"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="720"/>
         <source>Zoom &amp;In</source>
         <translation>Zoom &amp; I</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="712"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="721"/>
         <source>Zoom &amp;Out</source>
         <translation>Zoom ud</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="713"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="722"/>
         <source>&amp;Auto Zoom</source>
         <translation>&amp; Auto- zoom</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="714"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="723"/>
         <source>Previous &amp;View</source>
         <translation>Forrige &amp; visning</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="715"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="724"/>
         <source>&amp;Redraw</source>
         <translation>&amp; Træk tilbage</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="669"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="678"/>
         <source>&amp;New</source>
         <translation>&amp; Ny</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="670"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="679"/>
         <source>New From &amp;Template</source>
         <translation>Ny fra &amp; skabelon</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="671"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="680"/>
         <source>&amp;Open...</source>
         <translation>Åbn...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="672"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="681"/>
         <source>&amp;Save</source>
         <translation>&amp; Gem</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="673"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="682"/>
         <source>Save &amp;as...</source>
         <translation>Gem &amp; som...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="665"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="674"/>
         <source>&amp;Export as image</source>
         <translation>&amp; Eksportér som billede</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="661"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="670"/>
         <source>&amp;Close</source>
         <translation>&amp; Luk</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="675"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="684"/>
         <source>&amp;Print...</source>
         <translation>&amp; Udskriv...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="667"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="676"/>
         <source>Export as PDF</source>
         <translation>Eksportér som PDF</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="664"/>
         <source>Print Pre&amp;view</source>
         <translation>Udskriv forhåndsvisning</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="676"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="685"/>
         <source>&amp;Quit</source>
         <translation>&amp; Afslut</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="668"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="677"/>
         <source>&amp;Block</source>
         <translation>&amp; Blok</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="592"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="601"/>
         <source>&amp;Fullscreen</source>
         <translation>&amp; Fuldskærm</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="593"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="602"/>
         <source>&amp;Grid</source>
         <translation>&amp; Gitter</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="875"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="928"/>
         <source>Ctrl+G</source>
         <comment>Toggle Grid</comment>
         <translation>Ctrl + G</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="594"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="603"/>
         <source>&amp;Draft</source>
         <translation>&amp; Kladde</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="597"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="606"/>
         <source>&amp;Statusbar</source>
         <translation>&amp; Statuslinje</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="878"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="931"/>
         <source>Ctrl+I</source>
         <comment>Hide Statusbar</comment>
         <translation>Ctrl + I</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="706"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="715"/>
         <source>Focus on &amp;Command Line</source>
         <translation>Fokus på &amp; kommandolinje</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="646"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
         <source>Widget Options</source>
         <translation>Kontrolindstillinger</translation>
     </message>
@@ -4086,263 +4122,263 @@ or [%2]</source>
         <translation type="vanished">Flydende</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="649"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="658"/>
         <source>Reload Style Sheet</source>
         <translation>Genindlæs stilark</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="648"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="657"/>
         <source>Device Options</source>
         <translation>Enhedsindstillinger</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="384"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="385"/>
         <source>Mo&amp;ve and Rotate</source>
         <translation>Mo &amp; ve og rotér</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="388"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="389"/>
         <source>Tr&amp;im Two</source>
         <translation>Tr &amp; im To</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="390"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="391"/>
         <source>O&amp;ffset</source>
         <translation>O &amp; ffset</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="432"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="433"/>
         <source>Caught Entity</source>
         <translation>Fanget enhed</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="457"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="466"/>
         <source>Relative By Distance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="458"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="467"/>
         <source>Relative By Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="459"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="468"/>
         <source>Relative By X Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="460"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="469"/>
         <source>Relative By Y Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="461"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="470"/>
         <source>Relative With X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="462"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="471"/>
         <source>Relative With Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="463"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="472"/>
         <source>Add Guiding Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="464"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="473"/>
         <source>Add Guiding Circle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="465"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="474"/>
         <source>Add Guiding Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="563"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="572"/>
         <source>Move to Bottom</source>
         <translation>Flyt til bunden</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="564"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="573"/>
         <source>Lower After Entity</source>
         <translation>Lavere efter enhed</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="565"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="574"/>
         <source>Raise Over Entity</source>
         <translation>Løft over enhed</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="566"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="575"/>
         <source>Move to Top</source>
         <translation>Flyt til toppen</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="721"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="730"/>
         <source>&amp;Save View</source>
         <translation>&amp; Gem visning</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="723"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="732"/>
         <source>Restore Current View</source>
         <translation>Gendan nuværende visning</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="724"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="733"/>
         <source>Restore View 1</source>
         <translation>Gendan visning 1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="725"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="734"/>
         <source>Restore View 2</source>
         <translation>Gendan visning 2</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="726"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="735"/>
         <source>Restore View 3</source>
         <translation>Gendan visning 3</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="727"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="736"/>
         <source>Restore View 4</source>
         <translation>Gendan visning 4</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="728"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="737"/>
         <source>Restore View 5</source>
         <translation>Gendan visning 5</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="750"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="759"/>
         <source>Regenerate Dimensions</source>
         <translation>Regenerér dimensioner</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="753"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="762"/>
         <source>&amp;Dimension Styles</source>
         <translation>&amp; Dimensionsstil</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="763"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="772"/>
         <source>Pick Point</source>
         <translation>Vælg punkt</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="766"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="775"/>
         <source>Pick Distance</source>
         <translation>Vælg afstand</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="767"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="776"/>
         <source>Pick Angle</source>
         <translation>Vælg vinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="774"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="783"/>
         <source>Cut Quic&amp;k</source>
         <translation>Klip quic &amp; k</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="776"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="785"/>
         <source>Copy &amp;Quick</source>
         <translation>Kopiér &amp; hurtigt</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="778"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="787"/>
         <source>Paste &amp;Transform</source>
         <translation>Indsæt &amp; transformér</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="744"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="753"/>
         <source>&amp;Delete Selected</source>
         <translation>&amp; Slet markeret</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="745"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="754"/>
         <source>&amp;Selection Pointer</source>
         <translation>&amp; Markeringspointer</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="877"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="930"/>
         <source>Ctrl+D</source>
         <comment>Toggle Draft Mode</comment>
         <translation>Ctrl + D</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="193"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194"/>
         <source>Pol&amp;ygon (Cen,Tan)</source>
         <translation>Pol &amp; ygon (Cen, Tan)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="355"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="356"/>
         <source>&amp;Arc</source>
         <translation>&amp; Arc</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="608"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
         <source>&amp;Show all layers</source>
         <translation>&amp; Vis alle lag</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="609"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="618"/>
         <source>&amp;Hide all layers</source>
         <translation>&amp; Skjul alle lag</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="610"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
         <source>&amp;Unlock all</source>
         <translation>&amp; Lås alle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="611"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
         <source>&amp;Lock all</source>
         <translation>&amp; Lås alle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="628"/>
         <source>&amp;Export Selected Layer(s)</source>
         <translation>&amp; Eksportér valgte lag</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="629"/>
         <source>Export &amp;Visible Layer(s)</source>
         <translation>Eksportér &amp; synligt lag (r)</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="626"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
         <source>&amp;Show all blocks</source>
         <translation>&amp; Vis alle blokke</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="627"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="636"/>
         <source>&amp;Hide all blocks</source>
         <translation>&amp; Skjul alle blokke</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="647"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="656"/>
         <source>Keyboard Shortcuts</source>
         <translation>Tastaturgenveje</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="679"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="688"/>
         <source>Export as CA&amp;M/plain SVG...</source>
         <translation>Eksportér som CA &amp; M / plain SVG...</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="666"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="675"/>
         <source>Close All</source>
         <translation>Luk alle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="698"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="707"/>
         <source>Re-dock Widgets</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="674"/>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="683"/>
         <source>Save A&amp;ll...</source>
         <translation>Gem A &amp; ll...</translation>
     </message>
@@ -8453,49 +8489,49 @@ Er du sikker på, at du vil kassere ændringer?</translation>
         <translation type="unfinished">Hvis markeret, fjernes den oprindelige bue</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="37"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="38"/>
         <source>Radius Shift</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="37"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="38"/>
         <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
         <translation type="unfinished">Delta af cirklens radius til buens radius</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="49"/>
-        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="65"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="45"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="61"/>
         <source>Active</source>
         <translation type="unfinished">Aktiv</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="50"/>
-        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="66"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="46"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="62"/>
         <source>Original</source>
         <translation type="unfinished">Original</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="51"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="47"/>
         <source>Original Resolved</source>
         <translation type="unfinished">Original opløsning</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="55"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="51"/>
         <source>Pen to apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="55"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="51"/>
         <source>Defines which pen should be applied to created circle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="70"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="66"/>
         <source>Layer to apply</source>
         <translation type="unfinished">Lag der skal anvendes</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="70"/>
+        <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="66"/>
         <source>Defines which layer should created circle be placed in</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13371,32 +13407,32 @@ Er du sikker på, at du vil kassere ændringer?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="49"/>
+        <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="50"/>
         <source>Free Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="49"/>
+        <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="50"/>
         <source>If checked, major radius angle is specified by mouse</source>
         <translation type="unfinished">Hvis markeret, angives større radius med musen</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="57"/>
+        <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="55"/>
         <source>Angle</source>
         <translation type="unfinished">Vinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="57"/>
+        <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="55"/>
         <source>Value of angle for major radius</source>
         <translation type="unfinished">Vinkelværdi for større radius</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="67"/>
+        <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="60"/>
         <source>Reversed</source>
         <translation type="unfinished">Omvendt</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="67"/>
+        <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="60"/>
         <source>If selected, arc will be clockwise, otherwise - counterclockwise</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15769,100 +15805,100 @@ Angiv en anden værdi.</translation>
         <translation type="unfinished">Hvis markeret, defineres linjelængden ved museposition i stedet for indstilling</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="38"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="39"/>
         <source>Length</source>
         <translation type="unfinished">Længde</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="38"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="39"/>
         <source>Length of line</source>
         <translation type="unfinished">Linens længde</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="48"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="45"/>
         <source>Angle</source>
         <translation type="unfinished">Vinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="48"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="45"/>
         <source>Angle of line</source>
         <translation type="unfinished">Linjevinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="54"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="51"/>
         <source>Relative angle</source>
         <translation type="unfinished">Relativ vinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="54"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="51"/>
         <source>If checked, angle is relative to angle of selected entity</source>
         <translation type="unfinished">Hvis markeret, er vinklen relativ til vinklen for den valgte enhed</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="65"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="62"/>
         <source>Free</source>
         <translation type="unfinished">Fri</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="66"/>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="91"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="63"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="88"/>
         <source>Start</source>
         <translation type="unfinished">Start</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="67"/>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="92"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="64"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="89"/>
         <source>Middle</source>
         <translation type="unfinished">Mellem</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="68"/>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="93"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="65"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="90"/>
         <source>End</source>
         <translation type="unfinished">Slut</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="74"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="71"/>
         <source>Line Snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="75"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="72"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
         <translation type="unfinished">Snappunkt for skæringspunktet mellem oprettet linje og kildeenhed (inden for den oprindelige linje)</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="82"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="79"/>
         <source>Snap Distance</source>
         <translation type="unfinished">Snapafstand</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="97"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="94"/>
         <source>Tick Snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="97"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="94"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
         <translation type="unfinished">Definerer hvilken del af den oprettede linje der vil blive brudt til skæringspunktet</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="104"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="101"/>
         <source>Offset</source>
         <translation type="unfinished">Offset</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="104"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="101"/>
         <source>Offset of tick snap point from intersection point</source>
         <translation type="unfinished">Offset af kryds snap punkt fra skæringspunktet</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="110"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="107"/>
         <source>Divide</source>
         <translation type="unfinished">Del</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="110"/>
+        <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="107"/>
         <source>If checked, original entity will be divided by intersection point.</source>
         <translation type="unfinished">Hvis markeret, divideres den oprindelige enhed med skæringspunktet.</translation>
     </message>
@@ -16165,77 +16201,77 @@ Angiv en anden værdi.</translation>
         <translation type="unfinished">Hvis markeret, vil oprettet linje være retvinklet til valgt linje</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="39"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="40"/>
         <source>Angle</source>
         <translation type="unfinished">Vinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="39"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="40"/>
         <source>Angle between original line and created one</source>
         <translation type="unfinished">Vinkel mellem oprindelige linje og oprettet en</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="50"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="47"/>
         <source>To Intersection</source>
         <translation type="unfinished">Til Intersection</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="51"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="48"/>
         <source>Fixed Length</source>
         <translation type="unfinished">Fast længde</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="57"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="54"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="58"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="55"/>
         <source>Defines whether created line should be created to intersection point or should have fixed length</source>
         <translation type="unfinished">Definerer om oprettet linje skal oprettes til skæringspunktet eller skulle have fast længde</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="68"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="65"/>
         <source>End Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="68"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="65"/>
         <source>Offset for created line from intersection point</source>
         <translation type="unfinished">Offset for oprettet linje fra skæringspunktet</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="75"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="72"/>
         <source>Length</source>
         <translation type="unfinished">Længde</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="75"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="72"/>
         <source>Fixed length of created line</source>
         <translation type="unfinished">Fast længde af oprettet linje</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="84"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="81"/>
         <source>Start</source>
         <translation type="unfinished">Start</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="85"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="82"/>
         <source>Middle</source>
         <translation type="unfinished">Mellem</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="86"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="83"/>
         <source>End</source>
         <translation type="unfinished">Slut</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="90"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="87"/>
         <source>Snap</source>
         <translation type="unfinished">Snap</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="90"/>
+        <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="87"/>
         <source>Snap point for created line</source>
         <translation type="unfinished">Snap- punkt for oprettet linje</translation>
     </message>
@@ -16935,22 +16971,22 @@ Angiv en anden værdi.</translation>
         <translation type="unfinished">Antal paralleller at oprette</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_filler.cpp" line="40"/>
+        <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_filler.cpp" line="39"/>
         <source>Within</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_filler.cpp" line="41"/>
+        <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_filler.cpp" line="40"/>
         <source>If checked, parallels will be equally distributed between point and line, otherwise they will be distributed starting from point.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_filler.cpp" line="50"/>
+        <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_filler.cpp" line="45"/>
         <source>Symmetric</source>
         <translation type="unfinished">Symmetrisk</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_filler.cpp" line="50"/>
+        <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_filler.cpp" line="45"/>
         <source>If checked, parallels will be created on both sides of entity</source>
         <translation type="unfinished">Hvis markeret, oprettes paralleller på begge sider af enheden</translation>
     </message>
@@ -17495,7 +17531,7 @@ Angiv en anden værdi.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="37"/>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="48"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="49"/>
         <source>Angle</source>
         <translation type="unfinished">Vinkel</translation>
     </message>
@@ -17510,7 +17546,7 @@ Angiv en anden værdi.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="48"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="49"/>
         <source>Angle of line</source>
         <translation type="unfinished">Linjevinkel</translation>
     </message>
@@ -17525,48 +17561,48 @@ Angiv en anden værdi.</translation>
         <translation type="unfinished">Hvis markeret, er vinklen relativ til forrige segment</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="63"/>
         <source>Close</source>
         <translation type="unfinished">Luk</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="63"/>
         <source>Form a closed contour from lines drawn</source>
         <translation type="unfinished">Form en lukket kontur fra linjer trukket</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="63"/>
         <source>Polyline</source>
         <translation type="unfinished">Polylin</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="65"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
         <source>Creates polyline from line segments</source>
         <translation type="unfinished">Opretter polylin fra linjesegmenter</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="72"/>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="82"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="71"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="81"/>
         <source>Generic commands for line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="74"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="73"/>
         <source>Undo</source>
         <translation type="unfinished">Fortryd</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="74"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="73"/>
         <source>Undo the last line drawing</source>
         <translation type="unfinished">Fortryd den sidste linjetegning</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="74"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="73"/>
         <source>Redo</source>
         <translation type="unfinished">Redo</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="74"/>
+        <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="73"/>
         <source>Redo the last line drawing</source>
         <translation type="unfinished">Annullér den sidste linjetegning</translation>
     </message>
@@ -23838,92 +23874,92 @@ Advarsel: denne handling kan IKKE gøres om!</translation>
 <context>
     <name>LC_PasteTransformOptionsFiller</name>
     <message>
-        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="31"/>
+        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="32"/>
         <source>Angle</source>
         <translation type="unfinished">Vinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="31"/>
+        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="32"/>
         <source>Rotation angle for pasted entities</source>
         <translation type="unfinished">Rotationsvinkel for fastgjorte enheder</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="39"/>
+        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="36"/>
         <source>Scale factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="39"/>
+        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="36"/>
         <source>Scale factor for pasted entities</source>
         <translation type="unfinished">Skalafaktor for indsatte enheder</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="45"/>
+        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="42"/>
         <source>Paste As Array</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="45"/>
+        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="42"/>
         <source>If checked, arrays of copies will be created on paste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="51"/>
+        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="49"/>
         <source>Columns number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="51"/>
+        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="49"/>
         <source>Array columns number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="59"/>
+        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="54"/>
         <source>Rows number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="59"/>
+        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="54"/>
         <source>Array rows number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="67"/>
+        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="59"/>
         <source>Columns spacing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="67"/>
+        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="59"/>
         <source>Spacing between insertion points of entities in columns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="75"/>
+        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="64"/>
         <source>Rows spacing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="75"/>
+        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="64"/>
         <source>Spacing between entities insertion points in rows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="83"/>
+        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="69"/>
         <source>Array Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="83"/>
+        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="69"/>
         <source>Rotation angle for array</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="93"/>
+        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="74"/>
         <source>Same Angles</source>
         <translation type="unfinished">Samme vinkler</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="94"/>
+        <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="75"/>
         <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24971,84 +25007,84 @@ Bemærk, at hvis du vil gemme pen via editor uden genstart, vil nuværende penne
         <translation type="unfinished">Hvis markeret, tegnes linjen af punkter med angivet vinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="48"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="49"/>
         <source>Angle</source>
         <translation type="unfinished">Vinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="48"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="49"/>
         <source>Angle of line</source>
         <translation type="unfinished">Linjevinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="56"/>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="114"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="54"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="98"/>
         <source>Points number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="56"/>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="114"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="54"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="98"/>
         <source>Number of points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="67"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="60"/>
         <source>Fixed Distance</source>
         <translation type="unfinished">Fast afstand</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="68"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="61"/>
         <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
         <translation type="unfinished">Hvis markeret, vil der blive brugt fast angivet afstand mellem punkterne. Ellers beregnes afstanden.</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="75"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="69"/>
         <source>Distance</source>
         <translation type="unfinished">Afstand</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="75"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="69"/>
         <source>Distance between points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="85"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="74"/>
         <source>Fit Line</source>
         <translation type="unfinished">Fit Line</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="86"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="75"/>
         <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="99"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="83"/>
         <source>None</source>
         <translation type="unfinished">Ingen</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="100"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="84"/>
         <source>Both</source>
         <translation type="unfinished">Begge dele</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="101"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="85"/>
         <source>Start</source>
         <translation type="unfinished">Start</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="102"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="86"/>
         <source>End</source>
         <translation type="unfinished">Slut</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="106"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="90"/>
         <source>Edge Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="106"/>
+        <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="90"/>
         <source>Controls how points on the edges (start/end points) should be created. </source>
         <translation type="unfinished"></translation>
     </message>
@@ -25086,12 +25122,12 @@ Bemærk, at hvis du vil gemme pen via editor uden genstart, vil nuværende penne
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polygon/lc_polygon_options_filler.cpp" line="49"/>
+        <location filename="../src/ui/action_options/polygon/lc_polygon_options_filler.cpp" line="50"/>
         <source>Radius</source>
         <translation type="unfinished">Radius</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polygon/lc_polygon_options_filler.cpp" line="49"/>
+        <location filename="../src/ui/action_options/polygon/lc_polygon_options_filler.cpp" line="50"/>
         <source>Rounding radius for vertex fillet</source>
         <translation type="unfinished"></translation>
     </message>
@@ -33433,32 +33469,32 @@ p, li {white- space: pre- wrap;}
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="73"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="72"/>
         <source>Angle is Free</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="74"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="73"/>
         <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
         <translation type="unfinished">Hvis markeret, angives vinklen ved museposition. I modsat fald anvendes den angivne værdi.</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="83"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="78"/>
         <source>Angle</source>
         <translation type="unfinished">Vinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="83"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="78"/>
         <source>Rotation angle</source>
         <translation type="unfinished">Rotationsvinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="91"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="82"/>
         <source>Polyline</source>
         <translation type="unfinished">Polylin</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="91"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="82"/>
         <source>If checked, rectangle will be created as polyline instead of individual segments</source>
         <translation type="unfinished"></translation>
     </message>
@@ -33911,22 +33947,22 @@ p, li {white- space: pre- wrap;}
         <translation type="unfinished">Hvis markeret, kan du angive rotationsvinkel for rektangel.</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="62"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="63"/>
         <source>Angle</source>
         <translation type="unfinished">Vinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="62"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="63"/>
         <source>Rotation angle</source>
         <translation type="unfinished">Rotationsvinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="70"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="67"/>
         <source>Polyline</source>
         <translation type="unfinished">Polylin</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="70"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="67"/>
         <source>If checked, rectangle will be created as polyline instead of individual segments</source>
         <translation type="unfinished"></translation>
     </message>
@@ -34280,42 +34316,42 @@ p, li {white- space: pre- wrap;}
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="47"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="48"/>
         <source>Inner Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="47"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="48"/>
         <source>Inner angle of quadrangle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="56"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="54"/>
         <source>Fixed base angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="56"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="54"/>
         <source>If checked, allows to specify rotation angle for rectangle.</source>
         <translation type="unfinished">Hvis markeret, kan du angive rotationsvinkel for rektangel.</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="62"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="61"/>
         <source>Angle</source>
         <translation type="unfinished">Vinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="62"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="61"/>
         <source>Rotation angle</source>
         <translation type="unfinished">Rotationsvinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="71"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="65"/>
         <source>Polyline</source>
         <translation type="unfinished">Polylin</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="71"/>
+        <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="65"/>
         <source>If checked, rectangle will be created as polyline instead of individual segments</source>
         <translation type="unfinished"></translation>
     </message>
@@ -34628,7 +34664,7 @@ p, li {white- space: pre- wrap;}
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="77"/>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="300"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="304"/>
         <source>Base point:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -34850,7 +34886,7 @@ p, li {white- space: pre- wrap;}
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="69"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="70"/>
         <source>Distance</source>
         <translation type="unfinished">Afstand</translation>
     </message>
@@ -34860,7 +34896,7 @@ p, li {white- space: pre- wrap;}
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="70"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="71"/>
         <source>Angle</source>
         <translation type="unfinished">Vinkel</translation>
     </message>
@@ -34880,27 +34916,27 @@ p, li {white- space: pre- wrap;}
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="74"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="73"/>
         <source>Pick input value from drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="75"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="74"/>
         <source>Select manually with entered parameters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="76"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="75"/>
         <source>Confirm edit and try to apply values</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="77"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="76"/>
         <source>Cancel assistant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="300"/>
+        <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="304"/>
         <source>Relative zero:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -36510,52 +36546,52 @@ p, li {white- space: pre- wrap;}
         <translation type="unfinished">Hvis markeret, er det muligt at angive brugerdefineret antal linjesegmenter. Ellers vil værdien fra indstillinger for nuværende tegning blive brugt.</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="44"/>
+        <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="43"/>
         <source>Segments number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="45"/>
+        <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="43"/>
         <source>Defines the number of line segments to be generated for each spline-fit polyline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="56"/>
+        <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="49"/>
         <source>To polyline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="57"/>
+        <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="50"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
         <translation type="unfinished">Hvis markeret, vil linjesegmenter være en del af polylin. Ellers vil de være individuelle linjer</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="64"/>
+        <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="57"/>
         <source>Keep originals</source>
         <translation type="unfinished">Behold originaler</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="64"/>
+        <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="57"/>
         <source>If unchecked, original spline will be removed, otherwise it will survive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="73"/>
+        <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="66"/>
         <source>Current attributes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="74"/>
+        <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="67"/>
         <source>If checked, current attributes will be used for created entities, otherwise - original ones</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="83"/>
+        <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="76"/>
         <source>Current layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="84"/>
+        <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
         <translation type="unfinished">Hvis markeret, vil oprettede enheder blive placeret på nuværende lag, ellers vil de blive placeret i originale lag.</translation>
     </message>
@@ -36691,52 +36727,52 @@ p, li {white- space: pre- wrap;}
         <translation type="unfinished">Definerer graden af splinen</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="39"/>
+        <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="38"/>
         <source>Fit points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="40"/>
+        <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="39"/>
         <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and ordinary spline will be created</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="50"/>
+        <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="44"/>
         <source>Midle points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="50"/>
+        <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="44"/>
         <source>Amount of middle points of polyline segment that will be added to spline. </source>
         <translation type="unfinished">Mængden af midterste punkter i polyline segment, der vil blive tilføjet til spline.</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="57"/>
+        <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="51"/>
         <source>Keep originals</source>
         <translation type="unfinished">Behold originaler</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="57"/>
+        <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="51"/>
         <source>If unchecked, original polyline will be removed, otherwise it will survive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="66"/>
+        <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="60"/>
         <source>Current attributes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="67"/>
+        <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="61"/>
         <source>If checked, current attributes will be used for created entities, otherwise - original ones</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="76"/>
+        <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="70"/>
         <source>Current layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="77"/>
+        <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
         <translation type="unfinished">Hvis markeret, vil oprettede enheder blive placeret på nuværende lag, ellers vil de blive placeret i originale lag.</translation>
     </message>
@@ -37177,42 +37213,42 @@ p, li {white- space: pre- wrap;}
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="49"/>
+        <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="50"/>
         <source>Radius Outer</source>
         <translation type="unfinished">Radius Outer</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="49"/>
+        <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="50"/>
         <source>Radius for outer rays (edges)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="57"/>
+        <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="54"/>
         <source>Round inner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="57"/>
+        <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="54"/>
         <source>If checked, inner edges will be rounded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="63"/>
+        <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="61"/>
         <source>Radius Inner</source>
         <translation type="unfinished">Radius Inner</translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="63"/>
+        <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="61"/>
         <source>Radius for inner edges</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="72"/>
+        <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="65"/>
         <source>As polyline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="72"/>
+        <location filename="../src/ui/action_options/polygon/lc_star_options_filler.cpp" line="65"/>
         <source>If checked, the star will be drawn as polyline</source>
         <translation type="unfinished"></translation>
     </message>
@@ -41503,7 +41539,7 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3130"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1891"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1496"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1510"/>
         <source>Dwg Units</source>
         <translation>Dwg-enheder</translation>
     </message>
@@ -41544,7 +41580,7 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1888"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1493"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1507"/>
         <source>Screen %</source>
         <translation>Skærm%</translation>
     </message>
@@ -41552,32 +41588,32 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
 <context>
     <name>QG_DlgOptionsGeneral</name>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1088"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1102"/>
         <source>Preferences</source>
         <translation>Egenskaber</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6016"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6060"/>
         <source>Translations:</source>
         <translation>Oversættelser:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5912"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5956"/>
         <source>Hatch Patterns:</source>
         <translation>Mønstre for skravering:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5936"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5980"/>
         <source>Fonts:</source>
         <translation>Skrifttyper:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5988"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6032"/>
         <source>Part Libraries:</source>
         <translation>Skabelon bibliotek:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5624"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5668"/>
         <source>Language</source>
         <translation>Sprog</translation>
     </message>
@@ -41587,32 +41623,32 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>Egenskaber for programmet</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5138"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5182"/>
         <source>Defaults for new drawings</source>
         <translation>Standard for nye tegninger</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5637"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5681"/>
         <source>&amp;GUI Language:</source>
         <translation>&amp;GUI sprog:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5657"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5701"/>
         <source>&amp;Command Language:</source>
         <translation>Sprog i &amp;komandolinien:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5820"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5864"/>
         <source>&amp;Paths</source>
         <translation>St&amp;ier</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4865"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4909"/>
         <source>&amp;Defaults</source>
         <translation>Stan&amp;darder</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5203"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5247"/>
         <source>&amp;Unit:</source>
         <translation>&amp;Målenhed:</translation>
     </message>
@@ -41628,12 +41664,12 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>A&amp;utomatisk skalering af gitter</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1089"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1103"/>
         <source>Please restart the application to apply all changes.</source>
         <translation>Genstart venligst programmet for at ændringerne kan træde i kraft.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1651"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1612"/>
         <source>Alt+S</source>
         <translation>Alt+S</translation>
     </message>
@@ -41643,22 +41679,22 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>Alt + U</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5357"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5401"/>
         <source>Program Defaults</source>
         <translation>Programindstillinger</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4924"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4968"/>
         <source>Time between automatic saving of the document in minutes.</source>
         <translation>Tid mellem automatisk lagring af dokumentet i minutter.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4947"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4991"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
         <translation>Når sat, vil LibreCAD automatisk generere en sikkerhedskopi af din nuværende tegning.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6026"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6070"/>
         <source>Template:</source>
         <translation>Skabelon:</translation>
     </message>
@@ -41687,55 +41723,55 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1271"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1375"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1465"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1792"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1849"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1930"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2066"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2116"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2227"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2416"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2487"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3073"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3261"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3495"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3573"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6212"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6263"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6279"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6295"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6318"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6334"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6371"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1753"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1862"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1943"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2195"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2259"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2285"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2312"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2331"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3117"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3305"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3539"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3617"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6256"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6307"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6323"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6339"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6362"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6378"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6415"/>
         <source> px</source>
         <translation>px</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6253"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6297"/>
         <source>Line length:</source>
         <translation>Linjelængde:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5103"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5147"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt; html &gt; &lt; hoved / &gt; &lt; krop &gt; &lt; p &gt; Midlertidigt slå fri snapning til / fra når mellemrumstasten trykkes og kommandovinduet aktiveres &lt; / p &gt; &lt; / body &gt; &lt; / html &gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5233"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5277"/>
         <source>Left  Isometric Grid</source>
         <translation>Venstre Isometric Grid</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5223"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5267"/>
         <source>RIght Isometric Grid</source>
         <translation>RIGht Isometric Grid</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5161"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5205"/>
         <source>Orthogonal Grid</source>
         <translation>Orthogonal gitter</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5243"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5287"/>
         <source>Top Isometric Grid</source>
         <translation>Top Isometric gitter</translation>
     </message>
@@ -41747,18 +41783,18 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="689"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3135"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3586"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3179"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3630"/>
         <source>Marker Color:</source>
         <translation>Markeringsfarve:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3563"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3607"/>
         <source>Marker Radius:</source>
         <translation>Marker Radius:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3642"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3686"/>
         <source>Hide marker</source>
         <translation>Skjul markør</translation>
     </message>
@@ -41778,157 +41814,157 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>Enkel gittervisning</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4785"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4829"/>
         <source>Active preview&apos;s explanatory entity&apos;s Color:</source>
         <translation>Aktiv forhåndsvisnings forklarende enheds farve:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4838"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4882"/>
         <source>Preview&apos;s explanatory entity&apos;s Color:</source>
         <translation>Forhåndsvisningens forklarende enheds farve:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3681"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3725"/>
         <source>&amp;Highlighted entity Color:</source>
         <translation>&amp; fremhævet enhed Farve:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3735"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3779"/>
         <source>Highlight with screen linewidth in &quot;Draft&quot; mode</source>
         <translation>Fremhævning med skærmlinebredde i &quot;Draft&quot; tilstand</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3755"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3799"/>
         <source>Explanatory Reference Point Size</source>
         <translation>Forklarende referencepunktstørrelse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3847"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3891"/>
         <source>Explanatory Reference Point Style</source>
         <translation>Forklarende referencepunkts stil</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6167"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6211"/>
         <source>If selected, the angle of the line interpolation segment is calculated to ensure that resulting sagitta (height of arc segment) is less than specified.</source>
         <translation>Hvis valgt beregnes vinklen for linjeinterpolationssegmentet for at sikre, at den resulterende sagitta (buesegmenthøjde) er mindre end angivet.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6234"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6278"/>
         <source>If selected, the same rendering settings will be applied also to circles.</source>
         <translation>Hvis valgt, vil de samme rendering indstillinger blive anvendt også på cirkler.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5406"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5450"/>
         <source>If checked, the icon for current action will be shown in options toolbar before action&apos;s options</source>
         <translation>Hvis markeret, vises ikonet for nuværende handling i værktøjslinjen tilvalg før handlingens tilvalg</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5409"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5453"/>
         <source>Show current command icon in options toolbar</source>
         <translation>Vis nuværende kommandoikon i indstillingsværktøjslinjen</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5363"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5407"/>
         <source>If enabled, internal ID of entity will be shown in properties dialog and Entity Info widget.</source>
         <translation>Hvis dette er aktiveret, vil virksomhedens interne id blive vist i egenskabsdialogen og Entity Info kontrol.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5366"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5410"/>
         <source>Show internal IDs of entities</source>
         <translation>Vis interne id &apos;er for enheder</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5047"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5091"/>
         <source>If selected, entities will stay selected after completion of Modify operations. Otherwise, they will be not selected. </source>
         <translation>Hvis valgt, vil enheder forblive valgt efter afslutningen af Ændr operationer. Ellers vil de ikke blive valgt.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5050"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5094"/>
         <source>Keep modified entities selected</source>
         <translation>Hold ændrede enheder valgt</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5761"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5805"/>
         <source>If checked, prompt messages of actions will be also shown in bottom statusbar</source>
         <translation>Hvis markeret, vises hurtige meddelelser om handlinger også i nederste statuslinje</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5767"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5811"/>
         <source>Duplicate prompt messages of actions in statusbar</source>
         <translation>Duplikér hurtige meddelelser om handlinger i statuslinjen</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5332"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5376"/>
         <source>If checked, new drawing will be created with grid disabled</source>
         <translation>Hvis markeret, vil ny tegning blive oprettet med gitter deaktiveret</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5335"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5379"/>
         <source>Grid is Off </source>
         <translation>Grid er slukket</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5787"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5831"/>
         <source>New Versions</source>
         <translation>Nye versioner</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5793"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5837"/>
         <source>Check GitHub for new releases of LibreCAD on program startup</source>
         <translation>Tjek GitHub for nye udgivelser af LibreCAD ved opstart af programmet</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5796"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5840"/>
         <source>Check for new versions on startup</source>
         <translation>Tjek for nye versioner ved opstart</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5803"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5847"/>
         <source>If checked, pre-release versions will be ignored</source>
         <translation>Hvis dette markeres, ignoreres versionerne før udgivelse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5809"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5853"/>
         <source>Ignore pre-release versions</source>
         <translation>Ignorér udgivelsesversioner</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5705"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5749"/>
         <source>Open last opened files</source>
         <translation>Åbn senest åbnede filer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5751"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5795"/>
         <source>If enabled, drop-down menus may become floating</source>
         <translation>Hvis aktiveret, kan drop- down menuer blive flydende</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5754"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5798"/>
         <source>Allow menus detaching</source>
         <translation>Tillad menuadskillelse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5741"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5785"/>
         <source>If unchecked, individual widgets of statusbar are toolbars</source>
         <translation>Hvis umarkeret, er individuelle kontroller af statuslinjen værktøjslinjer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5744"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5788"/>
         <source>Use &quot;classic&quot; statusbar</source>
         <translation>Brug &quot;klassisk&quot; statuslinje</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5571"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5615"/>
         <source>Clear Settings</source>
         <translation>Ryd indstillinger</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5592"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5636"/>
         <source>Layout</source>
         <translation>Layout</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5608"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5652"/>
         <source>All</source>
         <translation>Alle</translation>
     </message>
@@ -41938,101 +41974,101 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>Scrollbar</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1586"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1810"/>
         <source>Hide cursor when snapping</source>
         <translation>Skjul markør når der snappes</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5695"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5739"/>
         <source>Start in tab mode</source>
         <translation>Start i fanebladstilstand</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5523"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5686"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5567"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5730"/>
         <source>Startup</source>
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5725"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5769"/>
         <source>Display loading screen</source>
         <translation>Vis indlæsningsskærm</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5715"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5759"/>
         <source>Start with main window maximized</source>
         <translation>Start med hovedvinduet maksimeret</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5548"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5592"/>
         <source>Enable CAD dockwidgets</source>
         <translation>Aktivér CAD dockwidgets</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5538"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5582"/>
         <source>Enable CAD toolbars</source>
         <translation>Aktivér CAD- værktøjslinjer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1637"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1687"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2551"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2603"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2855"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2878"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2921"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2944"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1598"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1648"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2595"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2647"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2899"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2922"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2965"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2988"/>
         <source>#1E90FF</source>
         <translation># 1E90FF</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1110"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1124"/>
         <source>Select Color</source>
         <translation>Vælg farve</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1254"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1268"/>
         <source>Clear settings</source>
         <translation>Ryd indstillinger</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1255"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1269"/>
         <source>This will also include custom menus and toolbars. Continue?</source>
         <translation>Dette vil også omfatte brugerdefinerede menuer og værktøjslinjer. Fortsæt?</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1259"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1265"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1273"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1279"/>
         <source>You must restart LibreCAD to see the changes.</source>
         <translation>Du skal genstarte LibreCAD for at se ændringerne.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1281"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1295"/>
         <source>Select Fonts Folder</source>
         <translation>Vælg skrifttypemappe</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1288"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1302"/>
         <source>Select Translations Folder</source>
         <translation>Vælg oversættelsesmappe</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1295"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1309"/>
         <source>Select Hatch Patterns Folder</source>
         <translation>Vælg Hatch mønstermappe</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1302"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1316"/>
         <source>Select Other Settings Folder</source>
         <translation>Vælg anden indstillingsmappe</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5030"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt; html &gt; &lt; hoved / &gt; &lt; krop &gt; &lt; p &gt; Når det er aktiveret, vil aktivering af et lag ændre alle udvalgte enheder til det nye lag. For at ændre lag af flere enheder: først vælge nødvendige enheder; aktivere et lag i lag widget. Dette gør alle markerede enheder ændret til at tilhøre det nye lag. &lt; / p &gt; &lt; / body &gt; &lt; / html &gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5880"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5924"/>
         <source>Variable File:</source>
         <translation>Variabel fil:</translation>
     </message>
@@ -42042,12 +42078,12 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>Minimal Grid mellemrum (p &amp; x):</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4709"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4753"/>
         <source>N&amp;umber of preview entities:</source>
         <translation>N &amp; antal forhåndsvisningsenheder:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5429"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5473"/>
         <source>Don&apos;t use native OS file open dialog</source>
         <translation>Brug ikke lokal OS-fil åben dialog</translation>
     </message>
@@ -42057,7 +42093,7 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>Autopanning</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3645"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3689"/>
         <source>Alt+Z</source>
         <translation>Alt + Z</translation>
     </message>
@@ -42087,38 +42123,38 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>Snap</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1645"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1606"/>
         <source>If checked, snap indicator will be shown</source>
         <translation>Hvis markeret vises snap-indikator</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1805"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1766"/>
         <source>Type of snap lines indicator</source>
         <translation>Type indikator for bremselinjer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1812"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1773"/>
         <source>Adaptive</source>
         <translation>Tilpasning</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1817"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1778"/>
         <source>Crosshair</source>
         <translation>Crosshair Formand</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1822"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1783"/>
         <source>Spiderweb</source>
         <translation>Spiderweb</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1648"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1658"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1609"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1619"/>
         <source>Snap Indicator lines</source>
         <translation>Snapindikatorlinjer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1622"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1583"/>
         <source>Color for snap lines indicator</source>
         <translation>Farve for snap linjer indikator</translation>
     </message>
@@ -42137,157 +42173,157 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1335"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1439"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1509"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1731"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1751"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2099"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2304"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2350"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2449"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2617"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2637"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2766"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2786"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2826"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2892"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3148"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3185"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3340"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3360"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3602"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3700"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4695"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4801"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1692"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1712"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2074"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2107"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2151"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2235"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2661"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2681"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2810"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2830"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2870"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2936"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3192"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3229"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3384"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3404"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3646"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3744"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4739"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4845"/>
         <source>Click to select color</source>
         <translation>Klik for at vælge farve</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1536"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1830"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1791"/>
         <source>Line Type:</source>
         <translation>Linjetype:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1775"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1736"/>
         <source>Type of line to draw snap indicator</source>
         <translation>Type linje at tegne snap indikator</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1782"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1743"/>
         <source>Line Width</source>
         <translation>Linjebredde</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1789"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1750"/>
         <source>Width of line for snap indicator</source>
         <translation>Bredde af linje for snap indikator</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1765"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1726"/>
         <source>If checked, a shap for snap will be drawn</source>
         <translation>Hvis markeret, tegnes en shap for snap</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1768"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1729"/>
         <source>Snap Indicator shape</source>
         <translation>Snapindikator- form</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1695"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1656"/>
         <source>Type of snap indicator shape</source>
         <translation>Type snap indikator form</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1702"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1663"/>
         <source>Circle</source>
         <translation>Cirkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1707"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1668"/>
         <source>Point</source>
         <translation>Punkt</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1712"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1673"/>
         <source>Square</source>
         <translation>Square</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1717"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1678"/>
         <source>Gap</source>
         <translation>Gap</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1665"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1626"/>
         <source>Snap Indicator Color:</source>
         <translation>Snap- indikatorfarve:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1672"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1633"/>
         <source>Color for snap indicator shape</source>
         <translation>Farve for snap indikator form</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1954"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1967"/>
         <source>Angle snap single step</source>
         <translation>Vinkel snap enkelt trin</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1961"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1974"/>
         <source>Angle between steps for Angle Snap (which is usually by corresponding actions if SHIFT is pressed)</source>
         <translation>Vinkle mellem trin for vinkel Snap (som er normalt ved tilsvarende handlinger, hvis SHIFT er trykket)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1965"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1978"/>
         <source>1</source>
         <translation>1</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1970"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1983"/>
         <source>3</source>
         <translation>3</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1975"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1988"/>
         <source>5</source>
         <translation>5</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1985"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1998"/>
         <source>15</source>
         <translation>15</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2000"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2013"/>
         <source>30</source>
         <translation>30</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2005"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2018"/>
         <source>45</source>
         <translation>45</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2010"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2023"/>
         <source>90</source>
         <translation>90</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1940"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1953"/>
         <source>deg</source>
         <translation>deg</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1583"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1807"/>
         <source>If checked, cursor will be hidden during snapping</source>
         <translation>Hvis markeret, vil markøren blive skjult under snapping</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1593"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1817"/>
         <source>If checked, snap options (middle, distance) will be shown in snap toolbar instead of tool properties toolbar</source>
         <translation>Hvis markeret vises snap indstillinger (mellem-, distance) i snap værktøjslinje i stedet for værktøjselementer værktøjslinje</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1596"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1820"/>
         <source>Show snap options in Snap Selection Toolbar</source>
         <translation>Vis snap indstillinger i Snap markeringsværktøjslinje</translation>
     </message>
@@ -42569,106 +42605,106 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>Farve på Meta Grid hvis gitteret tegnes af linjer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3228"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3272"/>
         <source>Axis Lines</source>
         <translation>Axis Lines</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3317"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3361"/>
         <source>Y-Axis Extension</source>
         <translation>Y- akseudvidelse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3424"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3468"/>
         <source>Short Axis Size</source>
         <translation>Kort aksestørrelse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3327"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3371"/>
         <source>X-Axis Extension</source>
         <translation>X- Axis Extension</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3234"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3278"/>
         <source>Color for X axis</source>
         <translation>Farve for X- akse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3374"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3418"/>
         <source>If checked, axises will be inifinite lines</source>
         <translation>Hvis markeret, vil aksiser være inifinite linjer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3377"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3421"/>
         <source>Extend axis lines</source>
         <translation>Udvid aksellinjer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3431"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3475"/>
         <source>Color for Y axis</source>
         <translation>Farve for Y-akse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3301"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3345"/>
         <source>Y-Axis Color:</source>
         <translation>Y- Axis farve:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3397"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3441"/>
         <source>Defines how to draw extended Y axis</source>
         <translation>Definerer hvordan du tegner udvidet Y-akse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3278"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3401"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3322"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3445"/>
         <source>Whole Area</source>
         <translation>Hele området</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3283"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3406"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3327"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3450"/>
         <source>Positive Values Area</source>
         <translation>Område med positive værdier</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3288"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3411"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3332"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3455"/>
         <source>Negative Values Area</source>
         <translation>Areal med negative værdier</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3293"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3416"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3337"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3460"/>
         <source>None</source>
         <translation>Ingen</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3258"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3302"/>
         <source>Size of Axis Lines drawn in absolute zero point</source>
         <translation>Axis Lines størrelse tegnet i absolut nulpunkt</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3384"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3428"/>
         <source>X-Axis Color:</source>
         <translation>X- Axis farve:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3274"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3318"/>
         <source>Defines how to draw extended X axis</source>
         <translation>Definerer hvordan man tegner udvidet X- akse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3616"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3660"/>
         <source>Color of relative zero marker</source>
         <translation>Farve på relativ nul markør</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3639"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3683"/>
         <source>If checked, relative zero marker will not be drawn</source>
         <translation>Hvis markeret, tegnes relativ nul markør ikke</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3570"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3614"/>
         <source>Radius of relative zero marker</source>
         <translation>Radius af relativ nul markør</translation>
     </message>
@@ -42748,533 +42784,533 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>Tegn lodrette linjer for &quot;Top&quot; -isometrisk gitter</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3656"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3700"/>
         <source>&amp;Preview</source>
         <translation>&amp; Forhåndsvisning</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3865"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3906"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3947"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3988"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4029"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4070"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4111"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3909"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3950"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3991"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4032"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4073"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4114"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4155"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4187"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4228"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4269"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4310"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4351"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4392"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4433"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4474"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4515"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4556"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4597"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4638"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4199"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4231"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4272"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4313"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4354"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4395"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4436"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4477"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4518"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4559"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4600"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4641"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4682"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4673"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4717"/>
         <source>Preview</source>
         <translation>Forhåndsvisning</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4679"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4723"/>
         <source>If checked, more informative and explaining preview will be drawn for operations</source>
         <translation>Hvis markeret vil der blive tegnet mere informativ og forklaret forhåndsvisning for operationer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4722"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4766"/>
         <source>If more entities in preview than specified, rect will be drawn instead of entities.</source>
         <translation>Hvis flere enheder i forhåndsvisning end angivet, rect vil blive trukket i stedet for enheder.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4762"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4806"/>
         <source>Color for selected preview reference entiites</source>
         <translation>Farve for valgte forhåndsvisningsreferencer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4815"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4859"/>
         <source>Color for preview reference entities</source>
         <translation>Farve for preview referenceenheder</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3675"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3719"/>
         <source>Highlight</source>
         <translation>Fremhævning</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3742"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3786"/>
         <source>Visualize the entity under the mouse cursor</source>
         <translation>Visualiser enheden under musemarkøren</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3745"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3789"/>
         <source>Highlight entities on mouse hover</source>
         <translation>Fremhæv enheder på mus svæver</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3714"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3758"/>
         <source>Color for highlighted entities</source>
         <translation>Farve for fremhævede enheder</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3732"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3776"/>
         <source>If selected, entity will be highlighted in &quot;Draft&quot; mode using entity&apos;s linewidth instead of 1px</source>
         <translation>Hvis valgt, vil enheden blive fremhævet i &quot;draft&quot; tilstand ved hjælp af enhedens linebredde i stedet for 1px</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3837"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3881"/>
         <source>(0 =&gt; 5% relative to screen size)</source>
         <translation>(0 = &gt; 5% i forhold til skærmstørrelse)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3776"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3820"/>
         <source>Size of reference points</source>
         <translation>Referencepunkternes størrelse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4682"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4726"/>
         <source>Show operation&apos;s preview explanatory entities </source>
         <translation>Vis operationens forhåndsvisningsforklarende enheder</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3783"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3827"/>
         <source>Dwg Units</source>
         <translation>Dwg-enheder</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3814"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3858"/>
         <source>Size relative to screen</source>
         <translation>Størrelse i forhold til skærmen</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3821"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3865"/>
         <source>Size in drawing units</source>
         <translation>Størrelse i tegneenheder</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6247"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6291"/>
         <source>Rendering Minimums</source>
         <translation>Udlejning af minimum</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6368"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6412"/>
         <source>If height of text line on the screen is less than specified pixels, placholder will be drawn instead of text</source>
         <translation>Hvis højden af tekstlinjen på skærmen er mindre end angivet pixels, tegnes plakatholder i stedet for tekst</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6308"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6352"/>
         <source>Height of text line:</source>
         <translation>Tekstlinjehøjde:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6361"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6405"/>
         <source>Ellipse Major Axis:</source>
         <translation>Ellipse Major Axis:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6331"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6375"/>
         <source>If screen size of minor ellipse axis is less than value, ellipse is drawn as line</source>
         <translation>Hvis skærmstørrelsen på mindre ellipseakse er mindre end værdien, tegnes ellipse som linje</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6276"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6320"/>
         <source>If screen length of line is less than value, the line is drawn as point</source>
         <translation>Hvis linjens skærmlængde er mindre end værdien, trækkes linjen som punkt</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6315"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6359"/>
         <source>If screen radius of circle is less than value, circle is drawn as point</source>
         <translation>Hvis cirklens skærmradius er mindre end værdien, tegnes cirklen som punkt</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6390"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6434"/>
         <source>Circle Radius:</source>
         <translation>Circle Radius:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6347"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6391"/>
         <source>Arc Radius:</source>
         <translation>Arc Radius:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6292"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6336"/>
         <source>If screen radius of arc is less than value, arc is drawn as point</source>
         <translation>Hvis skærmradius af bue er mindre end værdien, er bue tegnet som punkt</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6354"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6398"/>
         <source>Ellipse Minor Axis:</source>
         <translation>Ellipse Minor akse:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6260"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6304"/>
         <source>If screen size for major ellipse axis is less than value, ellipse is drawn as point</source>
         <translation>Hvis skærmstørrelsen for større ellipseakse er mindre end værdien, tegnes ellipse som punkt</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6109"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6153"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) during panning. </source>
         <translation>Hvis valgt, vil tekstbasislinjer blive tegnet i stedet for tekstbogstaverne (svarende til kladdetilstand) under panorering.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6112"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6156"/>
         <source>Draw text as draft within paning operations</source>
         <translation>Tegn tekst som udkast inden for bøjning operationer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6119"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6163"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) in preview. </source>
         <translation>Hvis markeret, vil tekstbasislinjer blive tegnet i stedet for tekstbogstaverne (svarende til udkast tilstand) i forhåndsvisning.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6122"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6166"/>
         <source>Draw text as draft in preview</source>
         <translation>Tegn tekst som udkast i forhåndsvisning</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2504"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2548"/>
         <source>Info Cursor</source>
         <translation>Info markør</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2692"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2736"/>
         <source>Informational Cursor Overlay </source>
         <translation>Informativ markøroverskrift</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3004"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3048"/>
         <source>Appearance</source>
         <translation>Udseende</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3010"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3054"/>
         <source>Font that should be used for drawing elements of informational cursor.</source>
         <translation>Skrifttype der skal bruges til at tegne elementer af informativ markør.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3017"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3061"/>
         <source>If checked, components of coordinate will be drawn in one line. Otherwise, each component will be on own line. </source>
         <translation>Hvis dette kontrolleres, trækkes koordinatkomponenterne i én linje. Ellers vil hver komponent være på egen linje.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3020"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3064"/>
         <source>Draw coordinates in one line</source>
         <translation>Tegn koordinater i en linje</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="647"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2529"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2682"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3027"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3527"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2573"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2726"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3071"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3571"/>
         <source>Font:</source>
         <translation>Skrifttype:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3034"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3078"/>
         <source>If checked, labels for coordinate components will be shown. Otherwise, standard form of coordinates will be displayed.</source>
         <translation>Hvis markeret vises etiketter for koordinatkomponenter. Ellers vises standardkoordinaterne.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3037"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3081"/>
         <source>Show labels for coordinates</source>
         <translation>Vis etiketter for koordinater</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3044"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3088"/>
         <source>Font size, in points</source>
         <translation>Skrifttypestørrelse, i punkter</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="719"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2262"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2562"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3047"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3511"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2091"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2606"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3091"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3555"/>
         <source> pt</source>
         <translation>pt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="735"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2651"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3063"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3471"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2695"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3107"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3515"/>
         <source>Font size:</source>
         <translation>Skrifttypestørrelse:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1603"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1827"/>
         <source>If checked, &quot;Snap To Grid&quot; is ignored if grid is not drawn.</source>
         <translation>Hvis markeret, ignoreres &quot;snap to gitter&quot; hvis gitteret ikke tegnes.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1606"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1830"/>
         <source>Ignore &quot;Snap to Grid&quot; if grid is not drawn</source>
         <translation>Ignorér &quot;Snap to Grid&quot; hvis gitteret ikke trækkes</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3070"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3114"/>
         <source>Offset of labels from the cursor point.</source>
         <translation>Udbytte af etiketter fra markøren punkt.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3089"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3133"/>
         <source>Cursor position offset:</source>
         <translation>Markør position forskydning:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2994"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3038"/>
         <source>If checked, informational cursor will be enabled and shown where applicable.</source>
         <translation>Hvis markeret, aktiveres og vises informationsmarkøren hvor det er relevant.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2997"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3041"/>
         <source>Enable Informational Cursor</source>
         <translation>Aktivér informativ markør</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2698"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2742"/>
         <source>Operations Preview</source>
         <translation>Operationer Forhåndsvisning</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2704"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2748"/>
         <source>Show properties for entity that will be created</source>
         <translation>Vis egenskaber for enhed der vil blive oprettet</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2711"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2755"/>
         <source>Show properties for entity that is edited by handles</source>
         <translation>Vis egenskaber for enhed, der redigeres af håndtag</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2721"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2765"/>
         <source>Content</source>
         <translation>Indhold</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2840"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2884"/>
         <source>Color for absolute snap coordinates.</source>
         <translation>Farve for absolutte snap koordinater.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2750"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2794"/>
         <source>If checked, relative distance and angle from relative zero point to snap point will be shown.</source>
         <translation>Hvis markeret vises relativ afstand og vinkel fra relativ nulpunkt til snap punkt.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2753"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2797"/>
         <source>Show relative distance and angle</source>
         <translation>Vis relativ afstand og vinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2863"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2907"/>
         <source>Color for snap type/restriction</source>
         <translation>Farve for snap type / begrænsning</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2800"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2844"/>
         <source>If checked, the prompt of the active command will be shown.</source>
         <translation>Hvis markeret, vises prompten for den aktive kommando.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2803"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2847"/>
         <source>Show active command prompt</source>
         <translation>Vis aktiv kommandoprompt</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2727"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2771"/>
         <source>If checked, show relative coordinate</source>
         <translation>Vis relativ koordinat hvis markeret</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2733"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2777"/>
         <source>Show relative coordinate</source>
         <translation>Vis relativ koordinat</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2810"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2854"/>
         <source>If checked, information about the type of snap and restrictions will be shown for snap point (if any)</source>
         <translation>Hvis markeret vises oplysninger om typen af snap og begrænsninger for snap punkt (hvis nogen)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2813"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2857"/>
         <source>Show snap info /restriction</source>
         <translation>Vis snap info / begrænsning</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2929"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2973"/>
         <source>Color for the command prompt</source>
         <translation>Farve for kommandoprompten</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2906"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2950"/>
         <source>Color for relative distance and angle</source>
         <translation>Farve for relativ afstand og vinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2740"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2784"/>
         <source>If checked, absolute position of snap point will be shown.</source>
         <translation>Hvis markeret, vises absolut position for snap point.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2743"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2787"/>
         <source>Show absolute coordinate</source>
         <translation>Vis absolut koordinat</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2965"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3009"/>
         <source>If checked, name of active command will be shown before command prompt</source>
         <translation>Hvis markeret vil navnet på den aktive kommando blive vist før kommandoprompten</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2971"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3015"/>
         <source>Show active command name</source>
         <translation>Vis aktivt kommandonavn</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2978"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3022"/>
         <source>If checked, short overview properties of the entity&apos;s that is catched for selection will be shown. </source>
         <translation>Hvis markeret, vises korte oversigtselementer for virksomhedens egenskaber, som markeres til markering.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2984"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3028"/>
         <source>Show properties of catched entity</source>
         <translation>Vis egenskaber for fanget enhed</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5033"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
         <translation>Ændr lag af udvalgte enheder ved aktivering af lag</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5446"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
         <source>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</source>
         <translation>Hvis dette markeres, vises en kryds - knap i faneblade for tegninger hvis tegningerne er i fanebladstilstand</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5449"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5493"/>
         <source>Show Close button on drawings tabs</source>
         <translation>Vis Luk knap på tegnefaneblade</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3122"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5467"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3166"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5511"/>
         <source>Always</source>
         <translation>Altid</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5472"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5516"/>
         <source>Active Tab</source>
         <translation>Aktivt faneblad</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5396"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5440"/>
         <source>If checked, keyboard shortcut will be shown in tooltip for action</source>
         <translation>Hvis markeret vises tastaturgenvej i værktøjstip for handling</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5399"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5443"/>
         <source>Show keyboard shortcuts in actions tooltips</source>
         <translation>Vis tastaturgenveje i handlingsværktøjstips</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4950"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4994"/>
         <source>Auto save backup each</source>
         <translation>Autogem backup hver</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5416"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5460"/>
         <source>If checked, location of dialog will not be saved, but size will</source>
         <translation>Hvis markeret, vil placeringen af dialogen ikke blive gemt, men størrelsen vil</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5422"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5466"/>
         <source>Persist dialog size only</source>
         <translation>Kun permanent dialogstørrelse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4927"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4971"/>
         <source> minutes</source>
         <translation>minutter</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5480"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5524"/>
         <source>If checked, dialogs will be positioned and resized to position/size of last invocation.</source>
         <translation>Hvis markeret, vil dialoger blive placeret og ændret til position / størrelse for sidste optagelse.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5483"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5527"/>
         <source>Persistent dialogs location and size</source>
         <translation>Vedvarende dialoger placering og størrelse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5090"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5134"/>
         <source>Keyboard Settings</source>
         <translation>Tastaturindstillinger</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5096"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5140"/>
         <source>Evaluate commands when SPACE BAR is pressed</source>
         <translation>Evaluér kommandoer når mellemrums BAR trykkes</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5190"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5234"/>
         <source>Drawing units</source>
         <translation>Tegneenheder</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5630"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5674"/>
         <source>Languages for commands in Cmd Widget</source>
         <translation>Sprog til kommandoer i Cmd kontrol</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5650"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5694"/>
         <source>Language to use for GUI and messages</source>
         <translation>Sprog der skal bruges til GUI og beskeder</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5722"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5766"/>
         <source>Defines whether splash screen will be shown on startup</source>
         <translation>Definerer om splash-skærmen vises ved opstart</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5692"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5736"/>
         <source>Controls default mode for drawings</source>
         <translation>Kontrollerer standardtilstand for tegninger</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5712"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5756"/>
         <source>If checked, after start the main window will be maximized</source>
         <translation>Hvis markeret, vil hovedvinduet efter start blive maksimeret</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1921"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1934"/>
         <source>Angle Snap</source>
         <translation>Vinkel Snap</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1980"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1993"/>
         <source>10</source>
         <translation>10</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1990"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2003"/>
         <source>18</source>
         <translation>18</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1995"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2008"/>
         <source>22.5</source>
         <translation>22, 5</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1947"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1960"/>
         <source>Mark Radius:</source>
         <translation>Mark Radius:</translation>
     </message>
@@ -43289,18 +43325,18 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>Udkast til modemarkør</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3485"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3529"/>
         <source>Font that should be used for drawing name of axis in coordinate system zero.</source>
         <translation>Skrifttype der skal bruges til at tegne aksens navn i koordinatsystem nul.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="716"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3508"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3552"/>
         <source>Font size that should be used for drawing name of axis in coordinate system zero.</source>
         <translation>Skrifttypestørrelse som skal bruges til at tegne aksens navn i koordinatsystem nul.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3544"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3588"/>
         <source>If selected, marker for coodinate system will be shown in zero point of current user coordinates system. </source>
         <translation>Hvis valgt vises markør for coodinatsystem i nul punkt i det nuværende brugerkoordinatsystem.</translation>
     </message>
@@ -43320,79 +43356,78 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>Hvis valgt, i udkast tilstand tekst etiket vil blive drawin for visning hjørner</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3465"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3509"/>
         <source>Coordinates Zero Marker</source>
         <translation>Koordinater Nulmarkør</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3478"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3522"/>
         <source>Marker Size</source>
         <translation>Markeringsstørrelse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3492"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3536"/>
         <source>Size of axis of coordinate system&apos;s zero marker</source>
         <translation>Størrelsen af koordinatsystemets akse nul markering</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3534"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3578"/>
         <source>If selected and view is in user coordinate system, the marker for coodinate system will be shown in zero point of world coordinates system. </source>
         <translation>Hvis valgt og visning er i brugerkoordinatsystem, markøren for coodinat system vil blive vist i nul point af verdens koordinater system.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3537"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3581"/>
         <source>Show WCS zero marker</source>
         <translation>Vis WCS nul markør</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3547"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3591"/>
         <source>Show UCS zero marker</source>
         <translation>Vis UCS nul markør</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3112"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3156"/>
         <source>Angles Basis Marker</source>
         <translation>Vinkler Basis Marker</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3103"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3147"/>
         <source>Coordinate System</source>
         <translation>Koordinatsystem</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3127"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3171"/>
         <source>Only for non-defaults</source>
         <translation>Kun for ikke-misligholdelser</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3165"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3209"/>
         <source>Show angles basis marker</source>
         <translation>Vis vinkler grundmarkør</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3172"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3216"/>
         <source>Base Angle Ray Color:</source>
         <translation>Base vinkel Ray farve:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3205"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3249"/>
         <source>#017CFF</source>
         <translation># 017CFF</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3218"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3262"/>
         <source>#00FFFF</source>
         <translation># 00FFFF</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3557"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3601"/>
         <source>Relative Zero Marker</source>
         <translation>Relativ nulmarkør</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1577"/>
         <source>Behavior</source>
-        <translation>Opførsel</translation>
+        <translation type="vanished">Opførsel</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1021"/>
@@ -43410,128 +43445,128 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation>Styrer hyppigheden af større gitterlinjer sammenlignet med mindre gitterlinjer.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1927"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1940"/>
         <source>Radius of arc within angle snap mark.</source>
         <translation>Radius af bue inden vinkel snap mærke.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1616"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1577"/>
         <source>Snap Marker</source>
         <translation>Snapmarkør</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1840"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1853"/>
         <source>Advanced Snap Fine-tuning settings</source>
         <translation>Avancerede snap Fine- tuning indstillinger</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1892"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1905"/>
         <source>Snap on Entity &quot;Free snap&quot; distance switch:</source>
         <translation>Snap på Enheden &quot;Free snap&quot; distance switch:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1899"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1912"/>
         <source>Snap on entity will be invoked if it is enabled and the distance between mouse and snapped point is larger than specified value.</source>
         <translation>Snap på enhed vil blive påberåbt, hvis det er aktiveret, og afstanden mellem musen og knækket punkt er større end angivet værdi.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1902"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1915"/>
         <source> drawing units</source>
         <translation>tegneenheder</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1846"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1859"/>
         <source>Distance in screen coordinates that is used for catching entities </source>
         <translation>Afstand i skærmkoordinater, der anvendes til fangstenheder</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1885"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1898"/>
         <source>Min grid cell snap factor:</source>
         <translation>Min gittercelle snapfaktor:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1859"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1872"/>
         <source>Snap distance (in pixels) for catching entities.</source>
         <translation>Snap distance (i pixels) for fangstenheder.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1862"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1875"/>
         <source>Catch entities Snap Distance:</source>
         <translation>Fangstenheder Snap Afstand:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1869"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1882"/>
         <source>Grid cell factor used for snap to grid.</source>
         <translation>Grid celle faktor, der anvendes til snap til gitter.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3109"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3199"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3153"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3243"/>
         <source>Color of the marker</source>
         <translation>Markørens farve</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3118"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3162"/>
         <source>Defines where to draw angle basis marker</source>
         <translation>Definerer hvor man skal tegne vinkelbasismarkør</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3162"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3206"/>
         <source>If enabled, angles basis marker will be shown in the orign of coordinates system</source>
         <translation>Hvis aktiveret, vises vinkelbasismarkør i koordinatsystemets oprindelse</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3212"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3256"/>
         <source>Color of the ray that displays zero angle position</source>
         <translation>Farve på den stråle, der viser nul vinkel position</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5057"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5101"/>
         <source>If checked, it will be possible to enter value of angle in decimal degrees only. Otherwise, angles in surveyor, radiant, imperial degrees and bearing formats are allowed for input.  </source>
         <translation>Hvis markeret, vil det kun være muligt at angive vinklens værdi i decimalgrader. Ellers er vinkler i landmåler, strålende, kejserlig grader og bærende formater tilladt for input.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5060"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5104"/>
         <source>Allow angles input in decimal degrees only</source>
         <translation>Tillad kun vinklers indgang i decimalgrader</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5373"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5417"/>
         <source>If selected, menu will include top-level items for drawing tools. Otherwise, they will under the same menu item. </source>
         <translation>Hvis markeret, vil menuen indeholde topniveau- elementer til tegneværktøjer. Ellers vil de under samme menupunkt.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5376"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5420"/>
         <source>Expand &quot;Tools&quot; commands in menu</source>
         <translation>Udvid &quot;Værktøjer&quot; kommandoer i menuen</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5383"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5427"/>
         <source>If selected, separate menu will be created for each group of entity-related commands. Otherwise, these command will be under the same menu. </source>
         <translation>Hvis markeret oprettes separat menu for hver gruppe af entitetsrelaterede kommandoer. Ellers vil denne kommando være under samme menu.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5113"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5157"/>
         <source>If enabled, it is possible to do with keys - zooming via +/-, scrolling via arrow keys, moving selected entities position via arrow keys and SHIFT/CTRL modifiers.</source>
         <translation>Hvis aktiveret, er det muligt at gøre med nøgler - zoomer via + / -, scrolling via piletasterne, flytte udvalgte enheder position via piletasterne og SHIFT / CTRL modifikatorer.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5116"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5160"/>
         <source>Enable scroll and position adjustment via keyboard</source>
         <translation>Aktivér rulle- og positionsjustering via tastatur</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5456"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5500"/>
         <source>If selected, controls for picking values from drawing are available in Tool Options toolbar, allowing to pick length and angle values from drawing. </source>
         <translation>Hvis dette er valgt, er kontrol til at vælge værdier fra tegning tilgængelig i værktøjslinjen Værktøjstilvalg, så du kan vælge længde og vinkelværdier fra tegning.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5459"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5503"/>
         <source>Tool options toolbar includes pick values controls</source>
         <translation>Værktøjslinjens værktøjslinje omfatter kontrol af valg af værdier</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5389"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5433"/>
         <source>Separate menu per entity</source>
         <translation>Separat menu pr. enhed</translation>
     </message>
@@ -43556,696 +43591,746 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2018"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2031"/>
         <source>If selected and &quot;Snap to Grid&quot; is active, snapping will be performed to closest intersection of angle ray and grid lines. Otherwirse, angle step will be 90 degrees.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2021"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2034"/>
         <source> Snap to grid lines if &quot;Snap to Grid&quot; is active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2057"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2044"/>
         <source>Visual Snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2160"/>
-        <source>Document entity in visual snap</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2432"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2275"/>
         <source>Highlighted point size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2439"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2356"/>
         <source>If checked, snap point requested by command and specified by the user will be added to visual snap automatically. Otherwise, it should be added manually.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2442"/>
-        <source>Add snapped point automatically</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2113"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2256"/>
         <source>Size of marker for projected snap point (like intersection), in pixels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2191"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2175"/>
         <source>Color for guiding entities used in visual snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2211"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2386"/>
         <source>If selected, points will be added manually as guiding points if cursor is over them and CTRL key is pressed. Otherwise - they will be added by placing cursor over only.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2217"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2392"/>
         <source>Manual adding points with CTRL key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2278"/>
-        <source>If checked, visual snap will also consider rays for enpoints of guiding entities with step, similar to angle snap. Otherwise, only tangential and normal rays will be considered for vertexes.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2281"/>
-        <source>Angle snap step relative guiding rays for entities</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2463"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2295"/>
         <source>Guiding point size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2318"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2437"/>
         <source>Defines how long the mouse should be over projected snap point until that point will be added to visual snap system as guiding point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2132"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2057"/>
         <source>Guiding entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2224"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2282"/>
         <source>Size of marker used to draw guiding point that is added to visual snap system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2237"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2473"/>
         <source>Defines how long the mouse should be over document entity until that entity will be added to visual snap system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2063"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2309"/>
         <source>Size of marker for visual snap guiding points, in pixels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2139"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2466"/>
         <source>Entity adding/removal delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2184"/>
-        <source>Projected snap point adding delay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2092"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2121"/>
         <source>Projected snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2167"/>
-        <source>If checked, visual snap will also consider rays from guiding points with step, similar to angle snap. Otherwise, only vertical and horizontal rays will be considered for vertexes.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2170"/>
-        <source>Angle snap step guiding rays for guiding points</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2396"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2225"/>
         <source>Color of document entities, explicitly added to visual snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2082"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2514"/>
         <source>If selected, guiding circles for distances between guiding points will be included into visual snap. Otherwise, they will be ignored. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2085"/>
-        <source>Dynamic distance circles for guiding points</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2288"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2128"/>
         <source>Color of possible snap point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2146"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2185"/>
         <source>Guiding point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2374"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2415"/>
         <source>Defines how many milliseconds mouse should be over snap point until that point will be added as guiding point to visual snap system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2406"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2249"/>
         <source>Projected snap point size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2153"/>
-        <source>Snap point adding/removal delay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2201"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2165"/>
         <source>Color of guide points in visual snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2177"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2302"/>
         <source>Visual snap catch distance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2413"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2328"/>
         <source>Distance in screen coordinates that is used for catching visual snap guiding entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2668"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2712"/>
         <source>Start in coordinates offset mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2675"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2719"/>
         <source>Background:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2578"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2622"/>
         <source>&lt;p&gt;If checked, used coordinates entering mode will be saved and on next invocation the assistant will prompt entering coordinates in that mode. &lt;/p&gt;&lt;p&gt;Otherwise, explicitly specified mode will be used on next invocation.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2240"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2321"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2377"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2418"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2440"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2476"/>
         <source> ms</source>
         <translation type="unfinished">ms</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2259"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2088"/>
         <source>Size of font, in points, used for displaying labels for guiding entities.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2340"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2366"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Visual snap solution will be cleared by &lt;span style=&quot; font-weight:700;&quot;&gt;CTRL+Middle Mouse Button&lt;/span&gt; click. &lt;br/&gt;If selected, visual snap solution may be also cleared by &lt;span style=&quot; font-weight:700;&quot;&gt;Right Mouse Button&lt;/span&gt; click. &lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2343"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2369"/>
         <source>Allow clearing visual snap solution by Right mouse button click</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2364"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2208"/>
         <source>If enabled, labels for visual snap guiding entities will be snown. Otherwise - no labels.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2367"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2211"/>
         <source>Show labels on guiding entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2470"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2138"/>
         <source>Guiding entity label font size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2477"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1801"/>
+        <source>Snap Behavior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2050"/>
         <source>Guiding entity label base offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2484"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2064"/>
+        <source>&lt;p&gt;If selected, guiding entites that are far from the mouse cursor point and are not within snap range - and therefore will not be snapped will be also shown. That may provide better overview for all possible snap points, yet in some cases may visualy overcrowd the snap by guiding entities. &lt;br/&gt;Otherwise, only guiding entities that are within snap range and thus may be snapped will be visible. &lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2067"/>
+        <source>Show not snappable guiding entities </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2192"/>
         <source>Offset of the guiding label from projected snap point, in pixels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2581"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2218"/>
+        <source>Involved document entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2350"/>
+        <source>Visual Snap Behavior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2359"/>
+        <source>Add snapped point to visual snap automatically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2376"/>
+        <source>If selected, guiding entities will be added for last snapped point only. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2379"/>
+        <source>Only add guides for last</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2402"/>
+        <source>Visual Snap Timings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2408"/>
+        <source>Point adding/removal delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2459"/>
+        <source>Projected point adding delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2498"/>
+        <source>Visual Snap Content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2504"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If checked, visual snap will also consider rays from guiding points with step, similar to angle snap. &lt;/p&gt;&lt;p&gt;Otherwise, only vertical and horizontal rays will be considered for vertexes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2507"/>
+        <source>Step rays for guiding points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2517"/>
+        <source>Dynamic distance circles for points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2524"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If checked, visual snap will also create guiding rays for enpoints of lines from the document,  added into visual snap with step, similar to angle snap yet which is related to the line&apos;s own angle. &lt;/p&gt;&lt;p&gt;Otherwise, only tangential and normal rays will be considered for vertexes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2527"/>
+        <source>Relative step rays for lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2534"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, and both &amp;quot;Snap to Distance&amp;quot; and &amp;quot;Snap To Center&amp;quot; snap modes are enabled, tangential guiding rays will be created between distance circles that are created for guiding points. &lt;/p&gt;&lt;p&gt;Otherwise, tangential will not be created. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2537"/>
+        <source>Tangential rays for distance circles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2625"/>
         <source>Remember last used coordinates mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4884"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4928"/>
         <source>Auto-Save Drawings</source>
         <translation>Auto- save tegninger</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4891"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4935"/>
         <source>#</source>
         <translation>#</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4896"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4965"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4940"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5009"/>
         <source>~</source>
         <translation>#</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4901"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4975"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4945"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5019"/>
         <source>_</source>
         <translation>Det er ikke mig</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4906"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4950"/>
         <source>__</source>
         <translation>Det er en god idé</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4911"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4955"/>
         <source>lcauto_</source>
         <translation>lcauto _</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4916"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4960"/>
         <source>autosaved_</source>
         <translation>automatisk gemt _</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4940"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4984"/>
         <source>Auto-save file name prefix:</source>
         <translation>Autogem filnavnspræfiks:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4957"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5001"/>
         <source>Backup file name suffix:</source>
         <translation>Backup filnavn suffiks:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4970"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5014"/>
         <source>$$</source>
         <translation>$$</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4980"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5024"/>
         <source>_backup</source>
         <translation>_ backup</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4985"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5029"/>
         <source>_bak</source>
         <translation>_ bak</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4990"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5034"/>
         <source>.bak</source>
         <translation>. bak</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4995"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5039"/>
         <source>.backup</source>
         <translation>.backup</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5000"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5044"/>
         <source>.lcb</source>
         <translation>icb</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5067"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5111"/>
         <source>If selected, mouse up will finish ad-hock moving operations (so just one click is need). Otherwise, first click initiates move, and second one completes it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5070"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5114"/>
         <source>Finish ad-hock moving of entities or ref points by mouse up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5121"/>
         <source>If selected, entities selection window is defined with pressed left mouse button. Otherwirse, 2 mouse clicks are used for corners (LibreCAD classic)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5080"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5124"/>
         <source>Select objects in window with pressed mouse button</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5493"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5537"/>
         <source>Command line commands informer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5499"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5543"/>
         <source>If enabled, command aliases will be shown next to menu items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5502"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5546"/>
         <source>Show commands in menu items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5509"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5553"/>
         <source>If selected, invocation of actions with commands via UI will lead to displaying command in Cmd widget.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5512"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5556"/>
         <source>Promote command in Cmd widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5529"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5573"/>
         <source>CAD Tools </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5535"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5579"/>
         <source>If checked, toolbars with commands will be enabled. </source>
         <translation>Hvis markeret, aktiveres værktøjslinjer med kommandoer.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5555"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5599"/>
         <source>If this option is selected, all tools will be shown in one group, so the screen space is used more efficiently.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5561"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5605"/>
         <source>Show all tools in one widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5735"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5779"/>
         <source>UI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5774"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5818"/>
         <source>If enabled, tooltips toolbar&apos;s name will be shown</source>
         <translation>Hvis aktiveret, vises værktøjslinjens navn</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5777"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5821"/>
         <source>Show tooltips for toolbars</source>
         <translation>Vis værktøjstips til værktøjslinjer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5826"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5870"/>
         <source>Exchange</source>
         <translation>Børs</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5832"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5876"/>
         <source>Exports settings to the file.</source>
         <translation>Eksportér indstillinger til filen.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5835"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5879"/>
         <source>Export settings to file</source>
         <translation>Eksportér indstillinger til fil</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5846"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5890"/>
         <source>Imports application&apos;s preferences from external file</source>
         <translation>Import applications præferencer fra ekstern fil</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5849"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5893"/>
         <source>Import settings from file</source>
         <translation>Importér indstillinger fra fil</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5863"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5907"/>
         <source>Paths</source>
         <translation>Stier</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6036"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6080"/>
         <source>Other settings locations</source>
         <translation>Andre indstillinger</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6043"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6087"/>
         <source>Directory where various settings are located (shortcuts, workspaces, pens etc.)</source>
         <translation>Mappe hvor forskellige indstillinger er placeret (genveje, arbejdsrum, penne osv.)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6094"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6138"/>
         <source>Renderer</source>
         <translation>Renderer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6141"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6185"/>
         <source>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</source>
         <translation>Hvis markeret, tegnes bueskytter ved hjælp af linjestykker interpolation. Denne lille tegning af artefakter nær slutpunkter, men kan resultere i tegning af mindre glatte buer. Ingen tegningsfejl nær endepunkter på store zoomer.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6151"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6195"/>
         <source>If this method is selected, arcs are drawn using method of QT library.  On large zooms, arcs may be rendered with errors near endpoints.</source>
         <translation>Hvis denne metode vælges, tegnes buer ved hjælp af QT-bibliotekets metode. På store zoomer kan buer leveres med fejl nær endepunkter.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6154"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6198"/>
         <source>Qt-native drawing method (unexact near endpoints)</source>
         <translation>Qt- native tegning metode (unexact near endpoints)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6400"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6444"/>
         <source>Fonts Files</source>
         <translation>Skrifttypefiler</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6406"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6450"/>
         <source>Amount of letters columns:</source>
         <translation>Kolonner med bogstaver:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6419"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6463"/>
         <source>Contains the number of columns in one row for rendering font letter blocks. If 0 - all letters in one row. </source>
         <translation>Indeholder antallet af kolonner i en række for at gøre skrifttype bogstaver blokke. Hvis 0 - alle bogstaver i en række.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6100"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6144"/>
         <source>Operations</source>
         <translation>Operationer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6106"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6150"/>
         <source>If enabled, during pan operation TEXT and MTEXT objects will be drawn schematically</source>
         <translation>Hvis aktiveret, vil der under panoperationen blive tegnet TEXT - og MTEX- objekter skematisk</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6132"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6176"/>
         <source>Defines how arcs are rendered in UI. </source>
         <translation>Definerer hvordan buer bliver leveret i UI.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5545"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5589"/>
         <source>If checked, dock widgets with commands for left sidebar will be enabled. Otherwise, they will be disabled. </source>
         <translation>Hvis markeret, vil dock- kontroller med kommandoer for venstre sidebar blive aktiveret. Ellers vil de være handicappede.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2523"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2567"/>
         <source>Relative Point Input Assistant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2665"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2709"/>
         <source>&lt;p&gt;If selected, on invocation the assistant will be in relative coordinates (offset) mode. &lt;br/&gt;Otherwise, it will prompt to enter absolute coordinates.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2588"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2632"/>
         <source>Color for relative point input assistant font</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2658"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2702"/>
         <source>Font used by relative point input assistant popup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2536"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2580"/>
         <source>Color for relative point input assistant popup background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2559"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2603"/>
         <source>Font size for relative point input assistant, in points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6135"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6179"/>
         <source>Arcs Rendering Method</source>
         <translation>Buer Udlejningsmetode</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6144"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6188"/>
         <source>Interpolate by line segments</source>
         <translation>Interpolere efter linjeafsnit</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6161"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6205"/>
         <source>Single segment angle</source>
         <translation>Enkelt segmentvinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6170"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6214"/>
         <source>Determine segments by max sagitta</source>
         <translation>Bestem segmenter med max sagitta</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6177"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6221"/>
         <source>If selected, the fixed angle of line interpolation segment will be used. Smaller angle deliver more smooth arc yet is slower.</source>
         <translation>Hvis valgt, vil den faste vinkel af linje interpolation segment blive brugt. Mindre vinkel giver mere glat bue endnu er langsommere.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6180"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6224"/>
         <source>Use fixed segment angle value</source>
         <translation>Brug fast segmentvinkelværdi</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6187"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6231"/>
         <source>Value of fixed segment&apos;s angle</source>
         <translation>Værdien af den faste segments vinkel</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6190"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6234"/>
         <source> degrees</source>
         <translation>grader</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6209"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6253"/>
         <source>Maximal distance betwen arc and segment interpolation line</source>
         <translation>Maksimal afstand betwen bue og segment interpolation linje</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6237"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6281"/>
         <source>Render circles in the same way as arcs.</source>
         <translation>Render cirkler på samme måde som buer.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2952"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2996"/>
         <source>If set and user coordinate system is active, absolute coodinate in world coordinate system will be also shown.</source>
         <translation>Hvis sæt og brugerkoordinatsystem er aktivt, vil absolut coodinat i verdens koordinatsystem også blive vist.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2958"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3002"/>
         <source>Show world coordinates if in user coordinate system</source>
         <translation>Vis verdenskoordinater hvis i brugerkoordinatsystemet</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5436"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5480"/>
         <source>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </source>
         <translation>Hvis markeret, vil ændringer af zoom eller pan til tegning markere tegning som ændret. Ellers vil skiftende visning kun påvirke den ændrede status af tegningen.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5439"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5483"/>
         <source>Changing view only modifies drawing</source>
         <translation>Ændrer kun visning ændrer tegning</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5702"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5746"/>
         <source>If set, previously opened files during previous closing of the application will be re-opened.</source>
         <translation>Hvis sat, tidligere åbnede filer under tidligere lukning af ansøgningen vil blive genåbnet.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5144"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5188"/>
         <source>Angles Positive Direction:</source>
         <translation>Vinkler positiv retning:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5154"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5198"/>
         <source>Zero base angle:</source>
         <translation>Nulgrundsvinkel:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5177"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5221"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
         <translation>Nul grundvinkel i forhold til det nuværende brugerkoordinatsystem. Påvirker polære koordinater input, snap til vinkel. 0,0 er 15.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5216"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5260"/>
         <source>degrees.</source>
         <translation>grader.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5283"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5327"/>
         <source>Counterclockwise, 90 degrees is north.</source>
         <translation>90 grader mod uret er nord.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5312"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5356"/>
         <source>Clockwise, 90 degrees is sourth.</source>
         <translation>90 grader.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5894"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5949"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5963"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5974"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5998"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5938"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5993"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6007"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6018"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6042"/>
         <source>Click to select directory</source>
         <translation>Klik for at vælge mappe</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5922"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5966"/>
         <source>Path to folder with fonts</source>
         <translation>Sti til mappe med skrifttyper</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5589"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5633"/>
         <source>Restores program geometry/layout to original state</source>
         <translation>Gendanner programgeometri / layout til original tilstand</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5605"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5649"/>
         <source>Restores the program settings to its original state</source>
         <translation>Gendanner programindstillingerne til dets oprindelige tilstand</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5869"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6050"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5913"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6094"/>
         <source>Click to select file</source>
         <translation>Klik for at vælge fil</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5929"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5973"/>
         <source>Path to folder with hatch patterns</source>
         <translation>Sti til mappe med luge mønstre</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5887"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5931"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt; html &gt; &lt; hoved / &gt; &lt; krop &gt; &lt; p &gt; &lt; span stil = &quot;font- familie: &apos;-apple- system&apos;, &apos;BlinkMacSystemFont&apos;, &apos;Segoe UI&apos;, &apos;Noto Sans&apos;, &apos;Helvetica&apos;, &apos;Arial&apos;, &apos;sans- serif&apos;, &apos;Apple Color Emoji&apos;, &apos;Segoe UI Emoji&apos;; fontstørrelse: 14px; farve: # 1f2328; background- color: # ffff;&quot; &gt; Del biblioteksmappe. Symbolbiblioteket dxf filer skal være placeret i undermapper af denne mappe. Undermappen navne vil blive vist i Library Browser. &lt; / span &gt; &lt; p &gt; &lt; span stil = &quot;font- familie: &apos;-apple- system&apos;, &apos;BlinkMacSystemFont&apos;, &apos;Segoe UI&apos;, &apos;Noto Sans&apos;, &apos;Helvetica&apos;, &apos;Arial&apos;, &apos;sans- serif&apos;, &apos;Apple Color Emoji&apos;, &apos;Segoe UI Emoji&apos;; font- size: 14px; color: # 1f2328; background- color: # ffff;&quot; &gt; (Menu: Widgets &amp; gt; Dock Widgets &amp; gt; Browriser &amp; gt; Browriser) &lt; &lt; span / cture / cture &gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5905"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5949"/>
         <source>Path to file with variables</source>
         <translation>Sti til fil med variabler</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6009"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6053"/>
         <source>Path to folder with translation files</source>
         <translation>Sti til mappe med oversættelsesfiler</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5106"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5150"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
         <translation>Slå gratis snap til / fra når mellemrumstasten BAR trykkes</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5024"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5068"/>
         <source>CAD Preferences</source>
         <translation>CAD-indstillinger</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5040"/>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5084"/>
         <source>Automatically zoom drawing when opening</source>
         <translation>Zoom automatisk tegning når åbning</translation>
     </message>
@@ -45899,32 +45984,32 @@ p, li {white- space: pre- wrap;}
 <context>
     <name>QG_SnapToolBar</name>
     <message>
-        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="172"/>
+        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="225"/>
         <source>Relative zero position is %1</source>
         <translation>Relativ nulstilling er% 1</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="172"/>
+        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="225"/>
         <source>locked</source>
         <translation>låst</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="172"/>
+        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="225"/>
         <source>unlocked</source>
         <translation>ulåst</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="177"/>
+        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="230"/>
         <source>Coordinate system: %1</source>
         <translation>Koordinatsystem:% 1</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="177"/>
+        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="230"/>
         <source>User</source>
         <translation>Bruger</translation>
     </message>
     <message>
-        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="177"/>
+        <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="230"/>
         <source>World</source>
         <translation>Verden</translation>
     </message>
@@ -50105,7 +50190,7 @@ Vil du overskrive den?</translation>
         <translation>- Uændret -</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1495"/>
+        <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1494"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
         <translation>Hatch mislykkedes på grund af et mellemrum =% 1 mellem (% 2,% 3) og (% 4,% 5)</translation>
     </message>
@@ -52218,22 +52303,22 @@ Point: (% 8,% 9)</translation>
 <context>
     <name>RS_ActionInterface</name>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="624"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="636"/>
         <source>Back</source>
         <translation>Tilbage</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="601"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="613"/>
         <source>SHIFT:</source>
         <translation>SHIFT:</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="608"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="620"/>
         <source>CTRL:</source>
         <translation>CTRL:</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="633"/>
+        <location filename="../src/lib/actions/rs_actioninterface.cpp" line="645"/>
         <source>Cancel</source>
         <translation>Annullér</translation>
     </message>
@@ -53377,213 +53462,235 @@ Point: (% 8,% 9)</translation>
 <context>
     <name>RS_Snapper</name>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1311"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1282"/>
         <source>Vertical</source>
         <translation>Lodret</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1313"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1284"/>
         <source>Horizontal</source>
         <translation>Vandret</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1315"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1286"/>
         <source>Orthogonal</source>
         <translation>Orthogonal</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1369"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1340"/>
         <source>Grid</source>
         <translation>Gitter</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1371"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1342"/>
         <source>Entity</source>
         <translation>Enhed</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1373"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1344"/>
         <source>Endpoint</source>
         <translation>Slutpunkt</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1375"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1346"/>
         <source>Intersection</source>
         <translation>Intersection</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1377"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1348"/>
         <source>Middle</source>
         <translation>Mellem</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1379"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1350"/>
         <source>Distance</source>
         <translation>Afstand</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1381"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1352"/>
         <source>Center</source>
         <translation>Center</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1383"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1354"/>
         <source>Angle</source>
         <translation>Vinkel</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1385"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1356"/>
         <source>Angle Relative</source>
         <translation>Vinkel relativ</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1387"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1358"/>
         <source>Angle (on Entity)</source>
         <translation>Vinkle (on Entity)</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1389"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1360"/>
         <source>Visual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1393"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1364"/>
         <source>Free</source>
         <translation type="unfinished">Fri</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1402"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1373"/>
         <source>None</source>
         <comment>visual snap</comment>
         <translation type="unfinished">Ingen</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1405"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1376"/>
         <source>Horizontal</source>
         <comment>visual snap</comment>
         <translation type="unfinished">Vandret</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1408"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1379"/>
         <source>Angle Ray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1419"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1390"/>
         <source>Relative Angle Ray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1430"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1401"/>
         <source>Vertical</source>
         <comment>visual snap</comment>
         <translation type="unfinished">Lodret</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1433"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1404"/>
         <source>Line ray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1436"/>
-        <source>Vertex-Vertex</source>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1407"/>
+        <source>Point-Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1439"/>
-        <source>Endpoint Tangent</source>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1410"/>
+        <source>Point-Point Orthogonal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1442"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1413"/>
+        <source>Endpoint Tangential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1419"/>
+        <source>Tangential One</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1422"/>
+        <source>Tangential Two</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1434"/>
+        <source>Tangential Distance (Explicit)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1437"/>
+        <source>Distance (Point)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1416"/>
         <source>Endpoint Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1445"/>
-        <source>Tangent One</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1448"/>
-        <source>Tangent Two</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1451"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1425"/>
         <source>Middle</source>
         <comment>visual snap</comment>
         <translation type="unfinished">Mellem</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1454"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1428"/>
         <source>Orthogonal</source>
         <comment>visual snap</comment>
         <translation type="unfinished">Orthogonal</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1457"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1431"/>
         <source>Distance (Explicit)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1460"/>
-        <source>Distance (Vertex)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1463"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1440"/>
         <source>Entity</source>
         <comment>visual snap</comment>
         <translation type="unfinished">Enhed</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1466"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1443"/>
         <source>Relative Normal</source>
         <comment>visual snap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1469"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1446"/>
         <source>Relative Distance</source>
         <comment>visual snap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1472"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1449"/>
         <source>Relative X</source>
         <comment>visual snap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1475"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1452"/>
         <source>Relative Y</source>
         <comment>visual snap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1478"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1455"/>
         <source>Relative Angle</source>
         <comment>visual snap</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1654"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1458"/>
+        <source>Restriction Horizontal</source>
+        <comment>visual snap</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1461"/>
+        <source>Restriction Vertical</source>
+        <comment>visual snap</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1646"/>
         <source>Dist: </source>
         <translation>Dist:</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1659"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1651"/>
         <source>Angle: </source>
         <translation>Vinkel:</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1664"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1656"/>
         <source>dX: </source>
         <translation>dX:</translation>
     </message>
     <message>
-        <location filename="../src/lib/actions/rs_snapper.cpp" line="1665"/>
+        <location filename="../src/lib/actions/rs_snapper.cpp" line="1657"/>
         <source>dY: </source>
         <translation>dY:</translation>
     </message>

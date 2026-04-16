@@ -39,17 +39,10 @@ void LC_SplineExplodeOptionsFiller::fillToolOptionsContainer(LC_PropertyContaine
                    action->setUseCustomSegmentsCount(val);
                }, container);
 
-    addIntSpinbox({
-                      "a_segmentsCount",
-                      tr("Segments number"),
-                      tr("Defines the number of line segments to be generated for each spline-fit polyline")
-                  }, [action]() {
-                      return action->getCustomSegmentsCount();
-                  }, [action](int val) {
-                      action->setSegmentsCountValue(val);
-                  }, container, 1, -1, [action](LC_PropertyViewDescriptor& d) -> bool {
-                      return !action->isUseCustomSegmentsCount();
-                  });
+    addIntSpinbox(
+        {"a_segmentsCount", tr("Segments number"), tr("Defines the number of line segments to be generated for each spline-fit polyline")},
+        [action]() { return action->getCustomSegmentsCount(); }, [action](int val) { action->setSegmentsCountValue(val); }, container, 1,
+        -1, [action](LC_PropertyViewDescriptor&) -> bool { return !action->isUseCustomSegmentsCount(); });
 
     addBoolean({
                    "a_toPolyline",

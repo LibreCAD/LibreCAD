@@ -46,22 +46,15 @@ void LC_Ellipse1PointOptionsFiller::fillToolOptionsContainer(LC_PropertyContaine
                    action->setHasAngle(val);
                }, container);
 
-    addBoolean({"a_freeAngle", tr("Free Angle"), tr("If checked, major radius angle is specified by mouse")}, [action]()-> bool {
-                   return action->isAngleFree();
-               }, [action](bool val) {
-                   action->setAngleFree(val);
-               }, container, [action](LC_PropertyViewDescriptor& d) -> bool {
-                   return !action->hasAngle();
-               });
+    addBoolean(
+        {"a_freeAngle", tr("Free Angle"), tr("If checked, major radius angle is specified by mouse")},
+        [action]() -> bool { return action->isAngleFree(); }, [action](bool val) { action->setAngleFree(val); }, container,
+        [action](LC_PropertyViewDescriptor&) -> bool { return !action->hasAngle(); });
 
-    addRawAngleDegrees({"a_angle", tr("Angle"), tr("Value of angle for major radius")}, [action]() {
-                           return action->getUcsMajorAngleDegrees();
-                       }, [action](double val) {
-                           action->setUcsMajorAngleDegrees(val);
-                       }, container, [action](LC_PropertyViewDescriptor& d) -> bool {
-                           return !action->hasAngle() || action->isAngleFree();
-                       });
-
+    addRawAngleDegrees(
+        {"a_angle", tr("Angle"), tr("Value of angle for major radius")}, [action]() { return action->getUcsMajorAngleDegrees(); },
+        [action](double val) { action->setUcsMajorAngleDegrees(val); }, container,
+        [action](LC_PropertyViewDescriptor&) -> bool { return !action->hasAngle() || action->isAngleFree(); });
 
     if (action->rtti() == RS2::ActionDrawEllipseArc1Point) {
         addBoolean({"a_reversed", tr("Reversed"), tr("If selected, arc will be clockwise, otherwise - counterclockwise")}, [action]()-> bool {

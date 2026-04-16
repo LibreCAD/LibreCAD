@@ -42,7 +42,7 @@ public:
     void init(int status) override;
     void mouseMoveEvent(QMouseEvent* e) override;
     void mousePressEvent(QMouseEvent* e) override;
-    bool isSupportsPredecessorAction() override {return true;}
+    bool isSupportsPredecessorAction() const override {return true;}
 protected:
     enum Status {
         SetFirstCorner,

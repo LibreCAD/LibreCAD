@@ -46,13 +46,10 @@ void LC_StarOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* contai
                    action->setOuterRounded(val);
                }, container);
 
-    addLinearDistance({"a_radiusOuter", tr("Radius Outer"), tr("Radius for outer rays (edges)")}, [action]() {
-                          return action->getRadiusOuter();
-                      }, [action](double val) {
-                          action->setRadiusOuter(val);
-                      }, container, [action](LC_PropertyViewDescriptor& d) -> bool {
-                          return !action->isOuterRounded();
-                      });
+    addLinearDistance(
+        {"a_radiusOuter", tr("Radius Outer"), tr("Radius for outer rays (edges)")}, [action]() { return action->getRadiusOuter(); },
+        [action](double val) { action->setRadiusOuter(val); }, container,
+        [action](LC_PropertyViewDescriptor&) -> bool { return !action->isOuterRounded(); });
 
     addBoolean({"a_roundInner", tr("Round inner"), tr("If checked, inner edges will be rounded")}, [action]()-> bool {
                    return action->isInnerRounded();
@@ -60,14 +57,10 @@ void LC_StarOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* contai
                    action->setInnerRounded(val);
                }, container);
 
-    addLinearDistance({"a_radiusInner", tr("Radius Inner"), tr("Radius for inner edges")}, [action]() {
-                          return action->getRadiusInner();
-                      }, [action](double val) {
-                          action->setRadiusInner(val);
-                      }, container, [action](LC_PropertyViewDescriptor& d) -> bool {
-                          return !action->isInnerRounded();
-                      });
-
+    addLinearDistance(
+        {"a_radiusInner", tr("Radius Inner"), tr("Radius for inner edges")}, [action]() { return action->getRadiusInner(); },
+        [action](double val) { action->setRadiusInner(val); }, container,
+        [action](LC_PropertyViewDescriptor&) -> bool { return !action->isInnerRounded(); });
 
     addBoolean({"a_polyline", tr("As polyline"), tr("If checked, the star will be drawn as polyline")}, [action]()-> bool {
                    return action->isPolyline();

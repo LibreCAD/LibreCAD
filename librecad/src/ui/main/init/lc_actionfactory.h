@@ -97,6 +97,7 @@ private:
     void createNamedViewActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
 
     void createEditActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
+    void updateSnapActionsBySettings(const QMap<QString, QAction*>& map);
     void createSnapActions(QMap<QString, QAction *> &map, QActionGroup *group) const;
     void createInfoCursorActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createSnapExtraActions(QMap<QString, QAction *> &map, QActionGroup *group) const;

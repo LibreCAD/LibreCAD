@@ -31,7 +31,7 @@ public:
     explicit LC_ActionSelectModeToggle(LC_ActionContext *actionContext);
     void init(int status) override;
     void trigger() override;
-    bool isSupportsPredecessorAction() override {return true;}
+    bool isSupportsPredecessorAction() const override {return true;}
 };
 
 #endif

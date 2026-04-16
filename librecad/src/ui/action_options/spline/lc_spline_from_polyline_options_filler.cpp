@@ -34,18 +34,12 @@ void LC_SplineFromPolylineOptionsFiller::fillToolOptionsContainer(LC_PropertyCon
                       action->setSplineDegree(val);
                   }, container, 1, 3);
 
-    addBoolean({
-                   "a_vertexIsFitPoint",
-                   tr("Fit points"),
-                   tr("If checked, polyline vertexes are considered as spline points and spline by points will be created. "
-                       "Otherwise, they are considered as control points and ordinary spline will be created")
-               }, [action]()-> bool {
-                   return action->isUseFitPoints();
-               }, [action](bool val)-> void {
-                   action->setUseFitPoints(val);
-               }, container, [action](LC_PropertyViewDescriptor& d) -> bool {
-                   return action->getSplineDegree() != 2;
-               });
+    addBoolean(
+        {"a_vertexIsFitPoint", tr("Fit points"),
+         tr("If checked, polyline vertexes are considered as spline points and spline by points will be created. "
+            "Otherwise, they are considered as control points and ordinary spline will be created")},
+        [action]() -> bool { return action->isUseFitPoints(); }, [action](bool val) -> void { action->setUseFitPoints(val); }, container,
+        [action](LC_PropertyViewDescriptor&) -> bool { return action->getSplineDegree() != 2; });
 
     addIntSpinbox({"a_midpoints", tr("Midle points"), tr("Amount of middle points of polyline segment that will be added to spline. ")},
                   [action]() {

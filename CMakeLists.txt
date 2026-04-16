@@ -129,6 +129,7 @@ set (SHARED_INCLUDES
      librecad/src/actions/print_preview
      librecad/src/cmd
      librecad/src/lib/actions
+     librecad/src/lib/actions/visual_snap
      librecad/src/lib/creation
      librecad/src/lib/debug
      librecad/src/lib/engine
@@ -2086,8 +2087,17 @@ set (SHARED_SOURCES
      librecad/src/ui/action_options/polygon/lc_star_options_filler.h
      librecad/src/ui/action_options/modify/lc_break_divide_options_filler.cpp
      librecad/src/ui/action_options/modify/lc_break_divide_options_filler.h
-     librecad/src/lib/actions/lc_visual_snap_manager.cpp
-     librecad/src/lib/actions/lc_visual_snap_manager.h
+     librecad/src/lib/actions/visual_snap/lc_visual_snap_manager.cpp
+     librecad/src/lib/actions/visual_snap/lc_visual_snap_manager.h
+     librecad/src/lib/actions/visual_snap/lc_visual_snap_solution_solver.cpp
+     librecad/src/lib/actions/visual_snap/lc_visual_snap_solution_solver.h
+     librecad/src/lib/actions/visual_snap/lc_visual_snap_solution_visualizer.cpp
+     librecad/src/lib/actions/visual_snap/lc_visual_snap_solution_visualizer.h
+     librecad/src/lib/actions/visual_snap/lc_visual_snap_solution.h
+     librecad/src/lib/actions/visual_snap/lc_visual_snap_options.cpp
+     librecad/src/lib/actions/visual_snap/lc_visual_snap_options.h
+     librecad/src/lib/actions/visual_snap/lc_visual_snap_data.cpp
+     librecad/src/lib/actions/visual_snap/lc_visual_snap_data.h
 )
 
 set (MUPARSER_SOURCES
@@ -2111,6 +2121,8 @@ set (MUPARSER_SOURCES
      libraries/muparser/src/muParserError.cpp
      libraries/muparser/src/muParserInt.cpp
      libraries/muparser/src/muParserTokenReader.cpp
+     librecad/src/lib/actions/visual_snap/lc_visual_snap_solution_solver.cpp
+     librecad/src/lib/actions/visual_snap/lc_visual_snap_solution_solver.h
 )
 
 # Static library from shared sources

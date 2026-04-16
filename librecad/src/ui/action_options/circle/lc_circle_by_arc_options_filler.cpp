@@ -34,14 +34,10 @@ void LC_CircleByArcOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer*
                    action->setReplaceArcByCircle(val);
                }, container);
 
-    addLinearDistance({"a_radiusShift", tr("Radius Shift"), tr("Delta of circle's radius to arc's radius")}, [action]() {
-                          return action->getRadiusShift();
-                      }, [action](double val) {
-                          action->setRadiusShift(val);
-                      }, container, [action](LC_PropertyViewDescriptor& d) -> bool {
-                          return action->isReplaceArcByCircle();
-                      });
-
+    addLinearDistance(
+        {"a_radiusShift", tr("Radius Shift"), tr("Delta of circle's radius to arc's radius")},
+        [action]() { return action->getRadiusShift(); }, [action](double val) { action->setRadiusShift(val); }, container,
+        [action](LC_PropertyViewDescriptor&) -> bool { return action->isReplaceArcByCircle(); });
 
     static LC_EnumDescriptor penTypeDescriptor = {
         "penTypeDescriptor",

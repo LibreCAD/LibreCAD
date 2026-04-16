@@ -33,13 +33,12 @@ public:
     explicit LC_WidgetViewPortRenderer(LC_GraphicViewport *viewport, QPaintDevice* paintDevice);
     ~LC_WidgetViewPortRenderer() override;
     void loadSettings() override;
-    void setupPainter(RS_Painter* painter) override;
     void setAntialiasing(const bool state) {m_antialiasing = state;}
     bool isAntialiasing() const {return m_antialiasing;}
     void invalidate(const RS2::RedrawMethod method) {m_redrawMethod = static_cast<RS2::RedrawMethod>(m_redrawMethod | method);}
 protected:
     void doRender() override;
-
+    void setupPainter(RS_Painter* painter) override;
     virtual void doSetupBeforeContainerDraw();
     void paintClassicalBuffered(QPaintDevice* pd);
     void paintSequental(QPaintDevice* pd);

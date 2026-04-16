@@ -66,15 +66,14 @@ LC_RelativePositionEditingWidget::LC_RelativePositionEditingWidget(LC_RelativePo
 
     ui->cbByOffset->setChecked(true);
 
-    const QString tooltip = "<p>"+tr("Relative point assistant. Use keys to activate:")+"</p><p><span style='font-weight:700;'>D</span> - "+tr("Distance")+
-                "<br/><span style='font-weight:700;'>A</span> - "+tr("Angle") +
-                "<br/><span style='font-weight:700;'>X</span> - "+tr("Offset/Abs X")+
-                "<br/><span style='font-weight:700;'>S</span> - "+tr("Offset/Abs Y")+
-                "<br/><span style='font-weight:700;'>T</span> - " + tr("Toggle delta/absolute mode")+
-                "<br/><span style='font-weight:700;'>E</span> - "+tr("Pick input value from drawing")+
-                "<br/><span style='font-weight:700;'>Q</span> - "+tr("Select manually with entered parameters")+
-                "<br/><span style='font-weight:700;'>F, ENTER</span> - "+tr("Confirm edit and try to apply values")+
-                "<br/><span style='font-weight:700;'>ESC</span> - "+tr("Cancel assistant")+"</p>";
+    const QString tooltip = "<p>" + tr("Relative point assistant. Use keys to activate:") +
+        "</p><p><span style='font-weight:700;'>D</span> - " + tr("Distance") + "<br/><span style='font-weight:700;'>A</span> - " +
+        tr("Angle") + "<br/><span style='font-weight:700;'>X</span> - " + tr("Offset/Abs X") +
+        "<br/><span style='font-weight:700;'>S</span> - " + tr("Offset/Abs Y") + "<br/><span style='font-weight:700;'>T</span> - " +
+        tr("Toggle delta/absolute mode") + "<br/><span style='font-weight:700;'>E</span> - " + tr("Pick input value from drawing") +
+        "<br/><span style='font-weight:700;'>Q</span> - " + tr("Select manually with entered parameters") +
+        "<br/><span style='font-weight:700;'>F, ENTER</span> - " + tr("Confirm edit and try to apply values") +
+        "<br/><span style='font-weight:700;'>ESC</span> - " + tr("Cancel assistant") + "</p>";
     setToolTip(tooltip);
 
     setupIconLabel(":/icons/relative_len.lci", ui->lblIconLength);
@@ -89,7 +88,9 @@ LC_RelativePositionEditingWidget::~LC_RelativePositionEditingWidget() {
     delete ui;
 }
 
-void LC_RelativePositionEditingWidget::setupButtons(QToolButton* btnOk, QToolButton* btnInteractivePick, QToolButton* btnManualSnap, const RS2::RelativePointParam relativePointParam, const LC_ActionContext::InteractiveInputInfo::InputType inputType) {
+void LC_RelativePositionEditingWidget::setupButtons(QToolButton* btnOk, QToolButton* btnInteractivePick, QToolButton* btnManualSnap,
+                                                    const RS2::RelativePointParam relativePointParam,
+                                                    const LC_ActionContext::InteractiveInputInfo::InputType inputType) {
     const QVariant type(relativePointParam);
     btnOk->setProperty("_propType", type);
     btnInteractivePick->setProperty("_propType", type);
@@ -102,7 +103,8 @@ void LC_RelativePositionEditingWidget::setupButtons(QToolButton* btnOk, QToolBut
 }
 
 void LC_RelativePositionEditingWidget::connectInteractiveInputButton(QToolButton* button,
-                                                                     const LC_ActionContext::InteractiveInputInfo::InputType inputType, const RS2::RelativePointParam relativePointParam) {
+                                                                     const LC_ActionContext::InteractiveInputInfo::InputType inputType,
+                                                                     const RS2::RelativePointParam relativePointParam) {
     button->setVisible(true);
     button->setProperty("_interactiveInputButton", inputType);
     button->setProperty("_interactiveInputTag", QString::number(relativePointParam));
@@ -119,7 +121,8 @@ void LC_RelativePositionEditingWidget::applyInput(bool applyProjected) {
     }
 }
 
-void LC_RelativePositionEditingWidget::setupLabelAndEditor(QLabel* label, QLineEdit* lineEdit, const RS2::RelativePointParam relativePointParam) {
+void LC_RelativePositionEditingWidget::setupLabelAndEditor(QLabel* label, QLineEdit* lineEdit,
+                                                           const RS2::RelativePointParam relativePointParam) {
     label->setFocusPolicy(Qt::StrongFocus);
     label->setCursor(Qt::PointingHandCursor);
     label->setProperty("_propType", QVariant(relativePointParam));
@@ -134,11 +137,11 @@ void LC_RelativePositionEditingWidget::onEditingReturnPressed() {
     onOKButtonClicked(true);
 }
 
-void LC_RelativePositionEditingWidget::onOKButtonClicked(bool checked) {
+void LC_RelativePositionEditingWidget::onOKButtonClicked([[maybe_unused]] bool checked) {
     applyInput(true);
 }
 
-void LC_RelativePositionEditingWidget::onInteractiveInputButtonClicked(bool checked) {
+void LC_RelativePositionEditingWidget::onInteractiveInputButtonClicked([[maybe_unused]] bool checked) {
     const auto senderButton = dynamic_cast<QToolButton*>(sender());
     if (senderButton != nullptr) {
         const auto property = senderButton->property("_interactiveInputButton");
@@ -151,7 +154,7 @@ void LC_RelativePositionEditingWidget::onInteractiveInputButtonClicked(bool chec
     }
 }
 
-void LC_RelativePositionEditingWidget::onManualSnapButtonClicked(bool checked) {
+void LC_RelativePositionEditingWidget::onManualSnapButtonClicked([[maybe_unused]] bool checked) {
     applyInput(false);
 }
 
@@ -272,7 +275,8 @@ bool LC_RelativePositionEditingWidget::tryProcessActivationKeyMnemonic(QKeyEvent
     return false;
 }
 
-void LC_RelativePositionEditingWidget::updateForPoints(const RS_Vector& wcsPos, const RS_Vector& baseWCSPoint, const bool baseIsRelativePoint) {
+void LC_RelativePositionEditingWidget::updateForPoints(const RS_Vector& wcsPos, const RS_Vector& baseWCSPoint,
+                                                       const bool baseIsRelativePoint) {
     m_relativePositionEvaluator.update(wcsPos, baseWCSPoint);
     updateUIByData(baseIsRelativePoint, m_currentParam);
     LC_GROUP("RelativePositionAssistant");
@@ -297,7 +301,7 @@ void LC_RelativePositionEditingWidget::updateUIByData(const bool baseIsRelativeP
 
     m_baseIsRelativePoint = baseIsRelativePoint;
 
-    const QString basePointLabel = baseIsRelativePoint ? tr("Relative zero:"): tr("Base point:");
+    const QString basePointLabel = baseIsRelativePoint ? tr("Relative zero:") : tr("Base point:");
     ui->lblBasePointType->setText(basePointLabel);
 
     const double length = data->length;
@@ -357,12 +361,12 @@ void LC_RelativePositionEditingWidget::updateUIByData(const bool baseIsRelativeP
         ui->leValueEditY->selectAll();
     }
 
-    ui->lblExplicitLength->setText(data->explicitLength ? "!" :"");
-    ui->lblExplicitAngle->setText(data->explicitAngle ? "!" :"");
-    ui->lblExplicitDX->setText(data->explicitDX ? "!" :"");
-    ui->lblExplicitDY->setText(data->explicitDY ? "!" :"");
-    ui->lblExplicitX->setText(data->explicitDX ? "!" :"");
-    ui->lblExplicitY->setText(data->explicitDY ? "!" :"");
+    ui->lblExplicitLength->setText(data->explicitLength ? "!" : "");
+    ui->lblExplicitAngle->setText(data->explicitAngle ? "!" : "");
+    ui->lblExplicitDX->setText(data->explicitDX ? "!" : "");
+    ui->lblExplicitDY->setText(data->explicitDY ? "!" : "");
+    ui->lblExplicitX->setText(data->explicitDX ? "!" : "");
+    ui->lblExplicitY->setText(data->explicitDY ? "!" : "");
 }
 
 void LC_RelativePositionEditingWidget::refreshPreview() {
@@ -405,14 +409,14 @@ void LC_RelativePositionEditingWidget::activateParamEditor(const RS2::RelativePo
             break;
         }
         case RS2::REL_POINT_X: {
-            if (forceParam  && ui->cbByOffset->isChecked()) {
+            if (forceParam && ui->cbByOffset->isChecked()) {
                 ui->cbByOffset->setChecked(false);
             }
             activateParamUI(ui->swX, ui->leValueEditX);
             break;
         }
         case RS2::REL_POINT_Y: {
-            if (forceParam  && ui->cbByOffset->isChecked()) {
+            if (forceParam && ui->cbByOffset->isChecked()) {
                 ui->cbByOffset->setChecked(false);
             }
             activateParamUI(ui->swY, ui->leValueEditY);
@@ -425,7 +429,7 @@ void LC_RelativePositionEditingWidget::activateParamEditor(const RS2::RelativePo
     updateUIByData(m_baseIsRelativePoint, m_currentParam);
 }
 
-void LC_RelativePositionEditingWidget::hideAssistant() {
+void LC_RelativePositionEditingWidget::hideAssistant() const {
     const auto holder = dynamic_cast<LC_RelativePointInputWidget*>(parent());
     if (holder != nullptr) {
         holder->hide();
@@ -445,6 +449,11 @@ bool LC_RelativePositionEditingWidget::eventFilter(QObject* watched, QEvent* eve
         }
         if (key == Qt::Key_Tab) {
             nextParamType = getNextPointParam();
+            activateParamEditor(nextParamType);
+            return true;
+        }
+        if (key == Qt::Key_Backtab) {
+            nextParamType = getPreviousPointParam();
             activateParamEditor(nextParamType);
             return true;
         }
@@ -503,8 +512,7 @@ void LC_RelativePositionEditingWidget::focusCurrentParam() {
     activateParamEditor(m_currentParam);
 }
 
-void LC_RelativePositionEditingWidget::updateByInteractiveInput(const RS2::RelativePointParam paramType, const double value) {
-    double valueToSet;
+void LC_RelativePositionEditingWidget::updateByInteractiveInput(const RS2::RelativePointParam paramType, const double value) {    
     RS2::RelativePointParam paramTypeToSet;
     switch (paramType) {
         case RS2::REL_POINT_LENGTH: {
@@ -559,7 +567,7 @@ void LC_RelativePositionEditingWidget::updateByEditedValue() {
         case RS2::REL_POINT_LENGTH: {
             const QString txt = ui->leValueEditLength->text();
             if (txt != m_editingStartValueString) {
-                if (toDouble(txt, valueToSet, 1.0, true)) {
+                if (toDouble(txt, valueToSet, 1.0, false)) {
                     hasValue = true;
                 }
             }
@@ -628,8 +636,7 @@ void LC_RelativePositionEditingWidget::updateByEditedValue() {
             paramTypeToSet = RS2::REL_POINT_Y;
             break;
         }
-        default:
-            Q_ASSERT_X(false, "LC_RelativePositionEditingWidget::updateByInteractiveInput", "Unexpected type");
+        default: Q_ASSERT_X(false, "LC_RelativePositionEditingWidget::updateByInteractiveInput", "Unexpected type");
     }
     if (hasValue) {
         m_relativePositionEvaluator.setPositionParam(paramTypeToSet, valueToSet, false);
@@ -783,7 +790,8 @@ RS2::RelativePointParam LC_RelativePositionEditingWidget::getPreviousPointParam(
     }
 }
 
-void LC_RelativePositionEditingWidget::changeParamVisibility(QLabel* icon, QLabel* explicitMark, QLabel* name, QStackedWidget* stacked, const bool visible) const {
+void LC_RelativePositionEditingWidget::changeParamVisibility(QLabel* icon, QLabel* explicitMark, QLabel* name, QStackedWidget* stacked,
+                                                             const bool visible) const {
     icon->setVisible(visible);
     explicitMark->setVisible(visible);
     name->setVisible(visible);

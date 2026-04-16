@@ -27,6 +27,7 @@
 #include "lc_overlayanglesbasemark.h"
 #include "lc_overlayrelativezero.h"
 #include "lc_overlayucszero.h"
+#include "lc_ref_snap_line.h"
 #include "lc_ucs_mark.h"
 #include "lc_widgetviewportrenderer.h"
 
@@ -120,6 +121,7 @@ protected:
     void drawRelativeZero(RS_Painter *painter);
     void drawOverlay(RS_Painter *painter);
     void drawDraftSign(RS_Painter *painter) const;
+    void setupRefSnapEntityPen(RS_Painter* painter, RS_Pen& pen, const LC_RefSnapEntity* ent, bool inVisualSnap);
     void drawCoordinateSystems(RS_Painter *painter);
     void drawEntitiesInOverlay(const LC_OverlaysManager *overlaysManager, RS_Painter *painter, RS2::OverlayGraphics overlayType);
     void drawOverlayEntitiesInOverlay(const LC_OverlaysManager *overlaysManager, RS_Painter *painter, RS2::OverlayGraphics overlayType);

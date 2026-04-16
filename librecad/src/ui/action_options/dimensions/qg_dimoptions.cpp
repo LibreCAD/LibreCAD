@@ -293,7 +293,7 @@ void QG_DimOptions::onAngleCircleTextChanged() {
     }
 }
 
-void QG_DimOptions::updateUI(const int mode, const QVariant* value) {
+void QG_DimOptions::updateUI(const int mode, [[maybe_unused]] const QVariant* value) {
     switch (mode){
         case UI_UPDATE_BASELINE_DISTANCE:{
             const auto dimBaselineAction = static_cast<LC_ActionDrawDimBaseline *>(m_action);

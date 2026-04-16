@@ -247,7 +247,7 @@ RS_Vector LC_ActionModifyScale::getTargetPoint(const LC_MouseEvent* e){
         // project mouse to the line (center, source)
         const RS_Line centerSourceLine{nullptr, {m_actionData->data.referencePoint, m_actionData->sourcePoint}};
         const RS_Vector projected = centerSourceLine.getNearestPointOnEntity(mouse, false);
-        snapPoint(projected, true);
+        setSnapPoint(projected, true);
         return projected;
     }
     return e->snapPoint;

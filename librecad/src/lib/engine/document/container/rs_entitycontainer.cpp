@@ -28,7 +28,6 @@
 #include "rs_entitycontainer.h"
 
 #include <iostream>
-#include <boost/geometry/core/closure.hpp>
 
 #include "lc_containertraverser.h"
 #include "lc_looputils.h"

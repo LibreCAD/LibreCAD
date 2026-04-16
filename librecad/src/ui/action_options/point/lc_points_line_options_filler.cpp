@@ -45,22 +45,15 @@ void LC_PointsLineOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* 
                        }
                    }, container);
 
-        addRawAngleDegrees({"a_angle", tr("Angle"), tr("Angle of line")}, [action]() -> double {
-                               return action->getAngleDegrees();
-                           }, [action](const double& v)-> void {
-                               action->setAngleValueDegrees(v);
-                           }, container, [action](LC_PropertyViewDescriptor& d) -> bool {
-                               return action->getDirection() != LC_AbstractActionDrawLine::DIRECTION_ANGLE;
-                           });
+        addRawAngleDegrees(
+            {"a_angle", tr("Angle"), tr("Angle of line")}, [action]() -> double { return action->getAngleDegrees(); },
+            [action](const double& v) -> void { action->setAngleValueDegrees(v); }, container,
+            [action](LC_PropertyViewDescriptor&) -> bool { return action->getDirection() != LC_AbstractActionDrawLine::DIRECTION_ANGLE; });
 
-        addIntSpinbox({"a_pointsNumber", tr("Points number"), tr("Number of points")}, [action]()-> int {
-                          return action->getPointsCount();
-                      }, [action](int val)-> void {
-                          action->setPointsCount(val);
-                      }, container, 1, -1, [action](LC_PropertyViewDescriptor& d) -> bool {
-                          return action->isWithinLineMode() && action->isFixedDistanceMode();
-                      });
-
+        addIntSpinbox(
+            {"a_pointsNumber", tr("Points number"), tr("Number of points")}, [action]() -> int { return action->getPointsCount(); },
+            [action](int val) -> void { action->setPointsCount(val); }, container, 1, -1,
+            [action](LC_PropertyViewDescriptor&) -> bool { return action->isWithinLineMode() && action->isFixedDistanceMode(); });
 
         addBoolean({
                        "a_hasFixedDistance",
@@ -72,26 +65,17 @@ void LC_PointsLineOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* 
                        action->setFixedDistanceMode(val);
                    }, container);
 
-        addLinearDistance({"a_pointsDistance", tr("Distance"), tr("Distance between points")}, [action]() {
-                              return action->getPointsDistance();
-                          }, [action](double val) {
-                              action->setPointsDistance(val);
-                          }, container, [action](LC_PropertyViewDescriptor& d) -> bool {
-                              return !action->isFixedDistanceMode();
-                          });
+        addLinearDistance(
+            {"a_pointsDistance", tr("Distance"), tr("Distance between points")}, [action]() { return action->getPointsDistance(); },
+            [action](double val) { action->setPointsDistance(val); }, container,
+            [action](LC_PropertyViewDescriptor&) -> bool { return !action->isFixedDistanceMode(); });
 
-        addBoolean({
-                       "a_fitLine",
-                       tr("Fit Line"),
-                       tr(
-                           "Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points")
-                   }, [action]()-> bool {
-                       return action->isWithinLineMode();
-                   }, [action](bool val)-> void {
-                       action->setWithinLineMode(val);
-                   }, container, [action](LC_PropertyViewDescriptor& d) -> bool {
-                       return !action->isFixedDistanceMode();
-                   });
+        addBoolean(
+            {"a_fitLine", tr("Fit Line"),
+             tr("Specifies whether all points should fit between start/end points of line or whether the length of line is calculated "
+                "based on number of points and distance between points")},
+            [action]() -> bool { return action->isWithinLineMode(); }, [action](bool val) -> void { action->setWithinLineMode(val); },
+            container, [action](LC_PropertyViewDescriptor&) -> bool { return !action->isFixedDistanceMode(); });
 
         static LC_EnumDescriptor edgePointsDescriptor = {
             "tickSnapTypeDescriptor",

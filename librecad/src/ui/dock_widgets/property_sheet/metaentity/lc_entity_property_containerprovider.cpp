@@ -102,8 +102,9 @@ void LC_EntityPropertyContainerProvider::fillPropertyContainerForNoSelection([[m
     container->setTag(TAG_CONTAINER_NO_SELECTION);
 }
 
-void LC_EntityPropertyContainerProvider::fillPropertyContainerToolOptions(RS_Document* doc, LC_PropertyContainer* container,
-    LC_ToolOptionsPropertiesContainerProvider* toolOptionsProvider) {
+void LC_EntityPropertyContainerProvider::fillPropertyContainerToolOptions([[maybe_unused]] RS_Document* doc,
+                                                                          LC_PropertyContainer* container,
+                                                                          LC_ToolOptionsPropertiesContainerProvider* toolOptionsProvider) {
     if (!m_entitiesList.empty()) {
         m_entitiesList.clear();
     }

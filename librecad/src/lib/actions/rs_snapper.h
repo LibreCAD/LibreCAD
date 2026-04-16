@@ -191,6 +191,10 @@ class RS_Snapper : public QObject {
     bool hasVisualSnap();
     void stopVisualSnap() const;
     void removePrevioustVisualSnapAddition();
+    double getAngleStep() {return m_snapToAngleStep;}
+    const RS_Vector& getRelativeZero() const;
+    virtual void refreshBySettings();
+    void lockVisualSnap(bool performLock) const;
 protected:
     struct ImpData {
         RS_Vector snapCoord{false};
@@ -202,6 +206,13 @@ protected:
         RS_Entity* entity{nullptr};
         RS_Entity* entityOther{nullptr};
         RS2::LC_VisualSnapIntersectionInfo visualSnapType;
+
+        void update(const RS_Vector& snap, RS2::SnapType type, RS_Entity* ent = nullptr, RS_Entity* ent1 = nullptr) {
+            snapSpot = snap;
+            snapType = type;
+            entity = ent;
+            entityOther = ent1;
+        }
     };
 
     void deleteSnapper() const;
@@ -298,11 +309,9 @@ protected:
     void redrawAll() const;
     void enableCoordinateInput() const;
     void disableCoordinateInput() const;
-    const RS_Vector& getRelativeZero() const;
     void initSettings();
     virtual void initFromSettings();
     void updateSnapAngleStep();
-    double getAngleStep() {return m_snapToAngleStep;}
     virtual void initFromGraphic(RS_Graphic* graphic);
     virtual bool isInVisualSnapStatus(int status);
     bool isClearVisualSnapByRMB();
@@ -315,6 +324,7 @@ protected:
     virtual void onVisualSnapSolutionRefresh() {
     };
     virtual bool isVisualSnapApplicable();
+    virtual void clearVisualSnap() const;
 
     void snapEndpoint(const RS_Vector& mouseCoord, double& ds2Min) const;
     void snapCenter(const RS_Vector& mouseCoord, double& ds2Min) const;
@@ -341,7 +351,7 @@ protected:
     RS_Vector snapToRelativeAngle(double baseAngle, const RS_Vector& currentCoord, const RS_Vector& referenceCoord,
                                   double angularResolution = 15.);
 
-    RS_Vector snapPoint(const RS_Vector& coord, bool setSpot = false);
+    RS_Vector setSnapPoint(const RS_Vector& coord, bool setSpot = false);
     RS_Vector snapPoint(const QMouseEvent* e);
     RS_Vector snapFree(const QMouseEvent* e) const;
 

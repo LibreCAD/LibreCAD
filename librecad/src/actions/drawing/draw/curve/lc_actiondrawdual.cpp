@@ -44,8 +44,8 @@ void LC_ActionDrawDual::init(int status) {
     LC_ActionPreSelectionAwareBase::init(status);
 }
 
-void LC_ActionDrawDual::coordinateEvent(RS_CoordinateEvent* e) {
-    RS_Vector coord = e->getCoordinate();
+void LC_ActionDrawDual::onCoordinateEvent([[maybe_unused]] int status, [[maybe_unused]] bool isZero,
+                                           [[maybe_unused]] const RS_Vector& coord) {
     if (getStatus() == ChooseCenter) {
         m_center = coord;
         trigger();

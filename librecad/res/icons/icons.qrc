@@ -394,5 +394,13 @@
         <file alias="guiding_circle.lci">guiding_circle.svg</file>
         <file alias="guiding_line.lci">guiding_line.svg</file>
         <file alias="guiding_point.lci">guiding_point.svg</file>
+        <file alias="snap_visual_lock.lci">snap_visual_lock.svg</file>
+        <file alias="snap_visual_dynamic_distance.lci">snap_visual_dynamic_distance.svg</file>
+        <file alias="snap_visual_dynamic_distance_tangent.lci">snap_visual_dynamic_distance_tangent.svg</file>
+        <file alias="snap_visual_angle_snap.lci">snap_visual_angle_snap.svg</file>
+        <file alias="snap_visual_rel_angle_snap.lci">snap_visual_rel_angle_snap.svg</file>
+        <file alias="snap_visual_add_snaps_auto.lci">snap_visual_add_snaps_auto.svg</file>
+        <file alias="snap_visual_add_snaps_last.lci">snap_visual_add_snaps_last.svg</file>
+        <file alias="snap_visual_show_far_guides.lci">snap_visual_show_far_guides.svg</file>
     </qresource>
 </RCC>

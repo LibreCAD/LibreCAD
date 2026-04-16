@@ -75,7 +75,7 @@ public:
     void resume() override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *event) override;
-    void addSnappedPointToVisualSnap(const RS_Vector& v, bool clearOther = false);
+    void addSnappedPointToVisualSnap(const RS_Vector& v, RS_Entity* entity = nullptr, RS2::SnapType snapType = RS2::SnapType::ENDPOINT, bool clearOther = false);
     void keyPressEvent(QKeyEvent* e) override;
     QStringList getAvailableCommands() override;
     bool isClearVisualSnapMarks();
@@ -84,7 +84,6 @@ public:
     void tryAddVisualGuidingPointForCurrentPoint(bool hasLength, bool hasAngle, bool hasDx, bool hasDy, bool hasNormal);
     void addProjectedRelativePointToVisualSnap(const LC_RelativePositionData* relativePositionData, bool applyProjectedPosition);
     void moveMouseToRefreshPreview(const RS_Vector& wcsPos);
-
 protected:
     RS_PreviewActionInterface(const QString& actionName,LC_ActionContext *actionContext,RS2::ActionType actionType = RS2::ActionNone);
     ~RS_PreviewActionInterface() override;
@@ -106,7 +105,6 @@ protected:
     bool m_highlightEntitiesRefPointsOnHover = false;
     bool m_doNotAllowNonDecimalAnglesInput = false;
 
-    bool m_restoreRelativeInput{false};
     LC_MouseEvent m_lastMouseMoveEvent;
     LC_MouseEvent m_relativeInputInvocationEvent;
     RS_Vector m_lastAngleSnapPoint {false};
@@ -252,7 +250,6 @@ protected:
     virtual bool doCheckMayTrigger();
 
     void resumeRelativeInputWidget() override;
-    void suspendRelativeInputWidget() override;
 private:
     LC_MouseEvent toLCMouseMoveEvent(QMouseEvent *e);
     friend LC_ActionInfoMessageBuilder;

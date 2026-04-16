@@ -28,13 +28,10 @@
 void LC_PasteTransformOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* container) {
     auto action = static_cast<LC_ActionEditPasteTransform*>(m_action);
 
-    addRawAngle({"a_angle", tr("Angle"), tr("Rotation angle for pasted entities")}, [action]() {
-                    return action->getAngle();
-                }, [action](double val) {
-                    action->setAngle(val);
-                }, container, [action](LC_PropertyViewDescriptor& d) -> bool {
-                    return action->isArrayCreated() && action->isSameAngles();
-                });
+    addRawAngle(
+        {"a_angle", tr("Angle"), tr("Rotation angle for pasted entities")}, [action]() { return action->getAngle(); },
+        [action](double val) { action->setAngle(val); }, container,
+        [action](LC_PropertyViewDescriptor&) -> bool { return action->isArrayCreated() && action->isSameAngles(); });
 
     addLinearDistance({"a_factor", tr("Scale factor"), tr("Scale factor for pasted entities")}, [action]() {
                           return action->getFactor();
@@ -48,56 +45,34 @@ void LC_PasteTransformOptionsFiller::fillToolOptionsContainer(LC_PropertyContain
                    action->setArrayCreated(val);
                }, container);
 
-    addIntSpinbox({"a_x_number", tr("Columns number"), tr("Array columns number")}, [action]()-> int {
-                      return action->getArrayXCount();
-                  }, [action](int val)-> void {
-                      action->setArrayXCount(val);
-                  }, container, 1, -1, [action](LC_PropertyViewDescriptor& d) -> bool {
-                      return !action->isArrayCreated();
-                  });
+    addIntSpinbox(
+        {"a_x_number", tr("Columns number"), tr("Array columns number")}, [action]() -> int { return action->getArrayXCount(); },
+        [action](int val) -> void { action->setArrayXCount(val); }, container, 1, -1,
+        [action](LC_PropertyViewDescriptor&) -> bool { return !action->isArrayCreated(); });
 
-    addIntSpinbox({"a_y_number", tr("Rows number"), tr("Array rows number")}, [action]()-> int {
-                      return action->getArrayYCount();
-                  }, [action](int val)-> void {
-                      action->setArrayYCount(val);
-                  }, container, 1, -1, [action](LC_PropertyViewDescriptor& d) -> bool {
-                      return !action->isArrayCreated();
-                  });
+    addIntSpinbox(
+        {"a_y_number", tr("Rows number"), tr("Array rows number")}, [action]() -> int { return action->getArrayYCount(); },
+        [action](int val) -> void { action->setArrayYCount(val); }, container, 1, -1,
+        [action](LC_PropertyViewDescriptor&) -> bool { return !action->isArrayCreated(); });
 
-    addLinearDistance({"a_x_spacing", tr("Columns spacing"), tr("Spacing between insertion points of entities in columns")}, [action]() {
-                          return action->getArraySpacingX();
-                      }, [action](double val) {
-                          action->setArraySpacingX(val);
-                      }, container, [action](LC_PropertyViewDescriptor& d) -> bool {
-                          return !action->isArrayCreated();
-                      });
+    addLinearDistance(
+        {"a_x_spacing", tr("Columns spacing"), tr("Spacing between insertion points of entities in columns")},
+        [action]() { return action->getArraySpacingX(); }, [action](double val) { action->setArraySpacingX(val); }, container,
+        [action](LC_PropertyViewDescriptor&) -> bool { return !action->isArrayCreated(); });
 
-    addLinearDistance({"a_y_spacing", tr("Rows spacing"), tr("Spacing between entities insertion points in rows")}, [action]() {
-                          return action->getArraySpacingY();
-                      }, [action](double val) {
-                          action->setArraySpacingY(val);
-                      }, container, [action](LC_PropertyViewDescriptor& d) -> bool {
-                          return !action->isArrayCreated();
-                      });
+    addLinearDistance(
+        {"a_y_spacing", tr("Rows spacing"), tr("Spacing between entities insertion points in rows")},
+        [action]() { return action->getArraySpacingY(); }, [action](double val) { action->setArraySpacingY(val); }, container,
+        [action](LC_PropertyViewDescriptor&) -> bool { return !action->isArrayCreated(); });
 
-    addRawAngle({"a_arrayAngle", tr("Array Angle"), tr("Rotation angle for array")}, [action]() {
-                    return action->getArrayAngle();
-                }, [action](double val) {
-                    action->setArrayAngle(val);
-                }, container, [action](LC_PropertyViewDescriptor& d) -> bool {
-                    return !action->isArrayCreated();
-                });
+    addRawAngle(
+        {"a_arrayAngle", tr("Array Angle"), tr("Rotation angle for array")}, [action]() { return action->getArrayAngle(); },
+        [action](double val) { action->setArrayAngle(val); }, container,
+        [action](LC_PropertyViewDescriptor&) -> bool { return !action->isArrayCreated(); });
 
-    addBoolean({
-                   "a_sameAngles",
-                   tr("Same Angles"),
-                   tr(
-                       "If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used")
-               }, [action]()-> bool {
-                   return action->isSameAngles();
-               }, [action](bool val)-> void {
-                   action->setSameAngles(val);
-               }, container, [action](LC_PropertyViewDescriptor& d) -> bool {
-                   return !action->isArrayCreated();
-               });
+    addBoolean(
+        {"a_sameAngles", tr("Same Angles"),
+         tr("If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used")},
+        [action]() -> bool { return action->isSameAngles(); }, [action](bool val) -> void { action->setSameAngles(val); }, container,
+        [action](LC_PropertyViewDescriptor&) -> bool { return !action->isArrayCreated(); });
 }

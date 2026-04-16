@@ -73,7 +73,7 @@ public:
         InitialActionStatus = 0
     };
     virtual RS2::ActionType rtti() const;
-    virtual bool isSupportsPredecessorAction(){return false;}
+    virtual bool isSupportsPredecessorAction() const {return false;}
     QString getName();
     virtual void init(int status);
     virtual void mouseMoveEvent(QMouseEvent*);
@@ -136,6 +136,8 @@ protected:
     std::shared_ptr<RS_ActionInterface> m_predecessor = nullptr; // fixme - sand - review!!!
     RS2::ActionType m_actionType = RS2::ActionNone;
     std::unique_ptr<LC_ActionOptionsEditor> m_optionsEditor;
+
+    bool m_restoreRelativeInput{false};
 
     virtual bool mayInitWithContextEntity(int status);
     virtual void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos);
@@ -200,11 +202,13 @@ protected:
      void undoCycleReplace(RS_Entity* entityToReplace, RS_Entity* entityReplacing) const;
 
     void setPenAndLayerToActive(RS_Entity* e);
+    void suspendRelativeInputWidget() override;
     void select(RS_Entity* e) const;
     void select(const QList<RS_Entity*>& entitiesList) const;
     void unselect(const QList<RS_Entity*>& entitiesList) const;
     void unselectAll() const;
     void unselect(RS_Entity* e) const;
+    void clearVisualSnap() const override;
 
     virtual bool doUpdateAngleByInteractiveInput([[maybe_unused]]const QString& tag,[[maybe_unused]] double angleRad) {return false;}
     virtual bool doUpdateDistanceByInteractiveInput([[maybe_unused]]const QString& tag, [[maybe_unused]]double distance) {return false;}

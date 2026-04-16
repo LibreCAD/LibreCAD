@@ -44,7 +44,7 @@ public:
     explicit RS_ActionSetRelativeZero(LC_ActionContext *actionContext);
     ~RS_ActionSetRelativeZero() override;
     void trigger() override;
-    bool isSupportsPredecessorAction() override {return true;}
+    bool isSupportsPredecessorAction() const override {return true;}
 protected:
     std::unique_ptr<RS_Vector> m_position;
     RS2::CursorType doGetMouseCursor(int status) override;

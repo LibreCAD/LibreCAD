@@ -37,6 +37,7 @@
 #include "lc_infocursorsettingsmanager.h"
 #include "lc_shortcutinfo.h"
 #include "qc_applicationwindow.h"
+#include "qg_actionhandler.h"
 #include "rs_actioninterface.h"
 #include "rs_previewactioninterface.h"
 #include "rs_settings.h"
@@ -76,7 +77,7 @@ void LC_ActionFactory::initActionGroupManager(LC_ActionGroupManager* agm) {
         {"select", tr("Select"), tr("Entity selection operations"), ":/icons/select.lci"},
         {"snap", tr("Snap"), tr("Snapping operations"), ":/icons/snap_intersection.lci", false},
         {"snap_extras", tr("Snap Extras"), tr("Additional Snaps"), ":/icons/snap_free.lci", false},
-        {"relative_input", tr("Relative Point Assistant"), tr("Parameters of relative point assitant"), ":/icons/snap_visual.lci", false}, // fixme - change icon
+        {"relative_input", tr("Relative Point Assistant"), tr("Relative Point Assistant"), ":/icons/snap_visual.lci", false}, // fixme - change icon
         {"view", tr("View"), tr("View related operations"), ":/icons/zoom_in.lci", false},
         {"namedViews", tr("Named Views"), tr("Persistent Views operations"), ":/icons/visible.lci", false},
         {"workspaces", tr("Workspaces"), tr("Workspaces operations"), ":/icons/workspace.lci", false},
@@ -435,20 +436,28 @@ void LC_ActionFactory::createInfoCursorActions(QMap<QString, QAction *> &map, QA
 
 void LC_ActionFactory::createSnapActions(QMap<QString, QAction *> &map, QActionGroup *group) const {
     createActions(map, group, {
-        {"SnapVisual",       tr("Snap Visual"),       ":/icons/snap_visual.lci"},
-        {"SnapGrid",         tr("Snap on Grid"),       ":/icons/snap_grid.lci"},
-        {"SnapMiddleManual", tr("Snap Middle Manual"), ":/icons/snap_middle_manual.lci"},
-        /*{"SnapEnd",          tr("Snap on Endpoints"),  ":/icons/snap_endpoints.lci"},
+        {"SnapVisual",               tr("Snap Visual"),                  ":/icons/snap_visual.lci"},
+        {"SnapVisualLock",           tr("Toggle Snap Visual Lock"),      ":/icons/snap_visual_lock.lci"},
+        {"SnapVisualDynDistance",    tr("Show Dynamic Distance Circles"),":/icons/snap_visual_dynamic_distance.lci"},
+        {"SnapVisualDistanceTan",    tr("Show Distance Tangentials"),    ":/icons/snap_visual_dynamic_distance_tangent.lci"},
+        {"SnapVisualAngleSnap",      tr("Show Angle Rays"),              ":/icons/snap_visual_angle_snap.lci"},
+        {"SnapVisualRelAngleSnap",   tr("Show Angle Relative Rays"),     ":/icons/snap_visual_rel_angle_snap.lci"},
+        {"SnapVisualAutoAddSnap",    tr("Add Snap Points"),              ":/icons/snap_visual_add_snaps_auto.lci"},
+        {"SnapVisualAutoAddSnapLast",tr("Add Last Snap Only"),           ":/icons/snap_visual_add_snaps_last.lci"},
+        {"SnapVisualShowFarGuides",  tr("Show Far Guides"),              ":/icons/snap_visual_show_far_guides.lci"},
+        {"SnapGrid",                 tr("Snap on Grid"),                 ":/icons/snap_grid.lci"},
+        {"SnapMiddleManual",         tr("Snap Middle Manual"),           ":/icons/snap_middle_manual.lci"},
+         /*{"SnapEnd",          tr("Snap on Endpoints"),  ":/icons/snap_endpoints.lci"},
         {"SnapEntity",       tr("Snap on Entity"),     ":/icons/snap_entity.lci"},
         {"SnapCenter",       tr("Snap Center"),        ":/icons/snap_center.lci"},
         {"SnapMiddle",       tr("Snap Middle"),        ":/icons/snap_middle.lci"},
         {"SnapDistance",     tr("Snap Distance"),      ":/icons/snap_distance.lci"},*/
-        {"SnapEnd", tr("Snap on Endpoints"), ":/icons/snap_endpoints_short.lci"},
-        {"SnapEntity", tr("Snap on Entity"), ":/icons/snap_entity_short.lci"},
-        {"SnapCenter", tr("Snap Center"), ":/icons/snap_center_short.lci"},
-        {"SnapMiddle", tr("Snap Middle"), ":/icons/snap_middle_short.lci"},
-        {"SnapDistance", tr("Snap Distance"), ":/icons/snap_distance_short.lci"},
-        {"SnapIntersection", tr("Snap Intersection"),  ":/icons/snap_intersection.lci"},
+        {"SnapEnd",                  tr("Snap on Endpoints"),            ":/icons/snap_endpoints_short.lci"},
+        {"SnapEntity",               tr("Snap on Entity"),               ":/icons/snap_entity_short.lci"},
+        {"SnapCenter",               tr("Snap Center"),                  ":/icons/snap_center_short.lci"},
+        {"SnapMiddle",               tr("Snap Middle"),                  ":/icons/snap_middle_short.lci"},
+        {"SnapDistance",             tr("Snap Distance"),                ":/icons/snap_distance_short.lci"},
+        {"SnapIntersection",         tr("Snap Intersection"),            ":/icons/snap_intersection.lci"},
     });
 }
 
@@ -779,10 +788,28 @@ void LC_ActionFactory::createEditActions(QMap<QString, QAction*>& map, QActionGr
     });
 }
 
+void LC_ActionFactory::updateSnapActionsBySettings(const QMap<QString, QAction*>& map) {
+    LC_GROUP("Snap"); {
+        map["SnapVisualAngleSnap"]->setChecked(LC_GET_BOOL("VSAngleSnapStepRaysVertexes", true));
+        map["SnapVisualRelAngleSnap"]->setChecked(LC_GET_BOOL("VSAngleSnapStepRaysRelative", true));
+        map["SnapVisualDynDistance"]->setChecked(LC_GET_BOOL("VSVertexVertexDistanceCircles", true));
+        map["SnapVisualDistanceTan"]->setChecked(LC_GET_BOOL("VSVertexVertexDistanceTangents", true));
+        map["SnapVisualDistanceTan"]->setChecked(LC_GET_BOOL("VSVertexVertexDistanceTangents", true));
+        map["SnapVisualShowFarGuides"]->setChecked(LC_GET_BOOL("VSShowNotSnappableGuides", true));
+
+        bool autoAddSnapPoints = LC_GET_BOOL("VSSnapAutoAddSnapPoint", true);
+        auto actionAddSnapAuto = map["SnapVisualAutoAddSnap"];
+        actionAddSnapAuto->setChecked(autoAddSnapPoints);
+        auto actionAddLastSnapOnly = map["SnapVisualAutoAddSnapLast"];
+        actionAddLastSnapOnly->setEnabled(autoAddSnapPoints);
+        actionAddLastSnapOnly->setChecked(LC_GET_BOOL("VSSnapAutoAddLastSnapPointOnly", true));
+    }
+}
+
 void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
     map["ZoomPrevious"]->setEnabled(false);
     map["RightDockAreaToggle"]->setChecked(true);
-    LC_GROUP_GUARD("Appearance"); {
+    LC_GROUP("Appearance"); {
         const bool statusBarVisible = LC_GET_BOOL("StatusBarVisible", false);
         const bool mainMenuVisible = LC_GET_BOOL("MainMenuVisible", true);
         const bool fullScreenMode = LC_GET_BOOL("FullscreenMode", false);
@@ -791,7 +818,7 @@ void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
         map["Fullscreen"]->setChecked(fullScreenMode);
         map["OptionsGeneral"]->setMenuRole(QAction::NoRole);
     }
-
+    LC_GROUP_END();
     const bool additiveSelection = LC_GET_ONE_BOOL("Selection", "Additivity", true);
     map["SelectionModeToggle"]->setChecked(additiveSelection);
 
@@ -837,6 +864,32 @@ void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
         }
     });
 
+    updateSnapActionsBySettings(map);
+    QAction* actionSnapVisual = map["SnapVisual"];
+
+    connect(map["SnapVisualLock"], &QAction::toggled, [this, actionSnapVisual](bool toggled) {
+        auto currentAction = m_actionHandler->getCurrentAction();
+        if (currentAction != nullptr) {
+            currentAction->lockVisualSnap(toggled);
+        }
+
+        if (toggled) {
+            actionSnapVisual->setIcon(QIcon(":/icons/snap_visual_lock.lci"));
+        }
+        else {
+            actionSnapVisual->setIcon(QIcon(":/icons/snap_visual.lci"));
+        }
+    });
+
+    connect(RS_SETTINGS, &RS_Settings::optionsChanged, [this, &map]() {
+        updateSnapActionsBySettings(map);
+    });
+
+    auto actionAddLastSnapOnly = map["SnapVisualAutoAddSnapLast"];
+    connect(map["SnapVisualAutoAddSnap"], &QAction::toggled, [actionAddLastSnapOnly](bool checked) {
+           actionAddLastSnapOnly->setEnabled(checked);
+        });
+    LC_GROUP_END();
 }
 
 void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, const LC_ActionGroupManager* agm) {

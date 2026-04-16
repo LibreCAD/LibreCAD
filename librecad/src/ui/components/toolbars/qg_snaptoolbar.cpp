@@ -26,9 +26,14 @@
 
 #include "qg_snaptoolbar.h"
 
+#include <QMenu>
+#include <QToolButton>
+
 #include "lc_actiongroupmanager.h"
 #include "lc_snapoptionswidgetsholder.h"
+#include "lc_visual_snap_data.h"
 #include "qg_actionhandler.h"
+#include "rs_actioninterface.h"
 #include "rs_settings.h"
 
 QAction* QG_SnapToolBar::justAddAction(const QString& name, const QMap<QString, QAction*>& actionsMap) {
@@ -44,16 +49,42 @@ QAction* QG_SnapToolBar::addOwnAction(const QString& name, const QMap<QString, Q
     return action;
 }
 
-/*
- *  Constructs a QG_CadDToolBarSnap as a child of 'parent', with the
- *  name 'name' and widget flags set to 'f'.
- */
+void QG_SnapToolBar::addVisualSnapAction(QMenu* menu, const QMap<QString, QAction*>& actionsMap, const char* actionName, const char* settingKey) {
+    auto vsActionAutoAddSnap = actionsMap[actionName];
+    connect(vsActionAutoAddSnap, &QAction::toggled, [settingKey, this](bool toggled) {
+        LC_SET_ONE("Snap", settingKey, toggled);
+        auto currentAction = m_actionHandler->getCurrentAction();
+        if (currentAction != nullptr) {
+            currentAction->refreshBySettings();
+        }
+    });
+    menu->addAction(vsActionAutoAddSnap);
+}
 
 QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, const LC_ActionGroupManager* agm,
                                const QMap<QString, QAction*>& actionsMap)
     : QToolBar(parent), m_actionHandler(ah) {
 
     m_actionSnapVisual = addOwnAction("SnapVisual", actionsMap);
+
+    QWidget *button = widgetForAction(m_actionSnapVisual);
+    auto tb = dynamic_cast<QToolButton*>(button);
+    m_actionSnapVisualLock = actionsMap["SnapVisualLock"];
+    if (tb != nullptr) {
+        tb->setPopupMode(QToolButton::MenuButtonPopup);
+        auto menu = new QMenu();
+        menu->addAction(m_actionSnapVisualLock);
+        menu->addSeparator();
+        addVisualSnapAction(menu, actionsMap, "SnapVisualAutoAddSnap", "VSSnapAutoAddSnapPoint");
+        addVisualSnapAction(menu, actionsMap, "SnapVisualAutoAddSnapLast", "VSSnapAutoAddLastSnapPointOnly");
+        addVisualSnapAction(menu, actionsMap, "SnapVisualAngleSnap", "VSAngleSnapStepRaysVertexes");
+        addVisualSnapAction(menu, actionsMap, "SnapVisualRelAngleSnap", "VSAngleSnapStepRaysRelative");
+        addVisualSnapAction(menu, actionsMap, "SnapVisualDynDistance", "VSVertexVertexDistanceCircles");
+        addVisualSnapAction(menu, actionsMap, "SnapVisualDistanceTan", "VSVertexVertexDistanceTangents");
+        menu->addSeparator();
+        addVisualSnapAction(menu, actionsMap, "SnapVisualShowFarGuides", "VSShowNotSnappableGuides");
+        tb->setMenu(menu);
+    }
 
     const auto action = justAddAction("ExclusiveSnapMode", actionsMap);
     connect(action, &QAction::triggered, agm, &LC_ActionGroupManager::toggleExclusiveSnapMode);
@@ -96,9 +127,31 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, const LC_A
     m_actionLockRelZero->setCheckable(true);
     connect(m_actionLockRelZero, &QAction::triggered, m_actionHandler, &QG_ActionHandler::slotLockRelativeZero);
 
+    connect(m_actionSnapVisual, &QAction::triggered, m_actionHandler, [this](bool toggled) {
+        m_actionSnapVisualLock->setEnabled(toggled);
+    });
+
     //restore snapMode from saved preferences
     setSnaps(RS_SnapMode::fromInt(LC_GET_ONE_INT("Snap", "SnapMode", 0)));
 }
+
+void QG_SnapToolBar::setGraphicView(RS_GraphicView* gview) {
+    if (gview != nullptr) {
+        auto visualSnapData = gview->getVisualSnapData();
+        bool locked = visualSnapData->isContentLocked();
+        m_actionSnapVisualLock->blockSignals(true);
+        m_actionSnapVisualLock->setChecked(locked);
+        m_actionSnapVisualLock->blockSignals(false);
+        if (locked) {
+            m_actionSnapVisual->setIcon(QIcon(":/icons/snap_visual_lock.lci"));
+        }
+        else {
+            m_actionSnapVisual->setIcon(QIcon(":/icons/snap_visual.lci"));
+        }
+
+    }
+}
+
 
 void QG_SnapToolBar::slotUnsetSnapMiddleManual() const {
     m_actionSnapMiddleManual->setChecked(false);
