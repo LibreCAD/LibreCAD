@@ -7504,7 +7504,6 @@ Questo NON può essere annullato.</translation>
   <message numerus="yes">
    <source>Remove %n block(s)</source>
    <translation>
-        Rimuovi %n blocco/i
     <numerusform>Rimuovi %n blocco</numerusform>
     <numerusform>Rimuovi %n blocchi</numerusform>
    </translation>

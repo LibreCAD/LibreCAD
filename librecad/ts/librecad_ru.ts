@@ -7489,7 +7489,6 @@ This action can NOT be undone.</source>
   <message numerus="yes">
    <source>Remove %n layer(s)</source>
    <translation>
-        Удалить %n слой(ев)
     <numerusform>Удалить слой %n</numerusform>
     <numerusform>Удалить %n слоя</numerusform>
     <numerusform>Удалить %n слоев</numerusform>
@@ -7514,7 +7513,6 @@ This action can NOT be undone.</source>
   <message numerus="yes">
    <source>Remove %n block(s)</source>
    <translation>
-        Удалить %n блок(ов)
     <numerusform>Удалить блок %n</numerusform>
     <numerusform>Удалить %n блока</numerusform>
     <numerusform>Удалить %n блоков</numerusform>

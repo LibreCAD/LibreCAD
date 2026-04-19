@@ -7493,7 +7493,6 @@ Bu işlem geri alınamaz.</translation>
   <message numerus="yes">
    <source>Remove %n layer(s)</source>
    <translation>
-        %n katmanı kaldır
     <numerusform>%n katmanı sil</numerusform>
    </translation>
   </message>
@@ -7516,7 +7515,6 @@ Bu işlem geri alınamaz.</translation>
   <message numerus="yes">
    <source>Remove %n block(s)</source>
    <translation>
-        %n bloğu kaldır
     <numerusform>%n bloğu kaldır</numerusform>
    </translation>
   </message>
